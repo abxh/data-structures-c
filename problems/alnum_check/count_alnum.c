@@ -10,7 +10,7 @@ int set_on(int value) {
 }
 
 int main(void) {
-    Bitarray *bitarray_p = ba_new(8U); // 8 bit/word * 8 words = 64 > 26 letters * 2 + 10 digits
+    Bitarray *bitarray_p = ba_new(8U); // 8 bit/word * 8 words = 64 > 26 letters * 2 + 10 digits = 62
 
     puts("Input (Ctrl+d for EOF):");
     for (int c; c != EOF; c = fgetc(stdin)) {

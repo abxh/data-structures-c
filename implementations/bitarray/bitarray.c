@@ -74,9 +74,7 @@ void ba_print(const Bitarray *bitarray_p) {
             putchar('\n');
         }
     }
-    if (((i + 1) & 0b11) != 0b01) { // i % 4 != 1
-        putchar('\n');
-    }
+    putchar('\n');
 }
 
 void ba_free(Bitarray *bitarray_p) {
