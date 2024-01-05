@@ -50,9 +50,7 @@ int main(void) {
             putchar('\n');
         }
     }
-    if (((i + 1) & 0b11) != 0b01) { // (i + 1) % 8 != 1
-        putchar('\n');
-    }
+    putchar('\n');
 
     ba_free(bitarray_p);
     return 0;
