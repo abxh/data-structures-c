@@ -20,6 +20,12 @@ Bitarray* ba_new(const unsigned int num_of_words) {
 }
 
 void ba_print(const Bitarray *bitarray_p) {
+    /*
+       ~sp              nl
+        | 1 | 2 | 3 | 4 |
+        | 5 | 6 | 7 | 8 |
+        ...
+    */
     for (size_t i = 1; i <= bitarray_p->num_of_words; i++) {
         if (!((i & 0b111) == 0b101 || (i & 0b111) == 0b1)) // i % 4 != 1
             putchar(' ');
