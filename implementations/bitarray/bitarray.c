@@ -22,20 +22,18 @@ Bitarray* ba_new(const unsigned int num_of_words) {
 void ba_print(const Bitarray *bitarray_p) {
     size_t lim = bitarray_p->num_of_words;
     for (size_t i = 1; i <= lim; i++) {
-        if (i % 4 != 1) {
+        if (!((i & 0b111) == 0b101 || (i & 0b111) == 0b1)) // i % 4 != 1
             putchar(' ');
-        }
-        putchar('0' + (bitarray_p->words[i] & 0x80));
-        putchar('0' + (bitarray_p->words[i] & 0x40));
-        putchar('0' + (bitarray_p->words[i] & 0x20));
-        putchar('0' + (bitarray_p->words[i] & 0x10));
-        putchar('0' + (bitarray_p->words[i] & 0x08));
-        putchar('0' + (bitarray_p->words[i] & 0x04));
-        putchar('0' + (bitarray_p->words[i] & 0x02));
-        putchar('0' + (bitarray_p->words[i] & 0x01));
-        if (i % 4 == 0) {
+        putchar('0' + (bitarray_p->words[i] & (1 << 7)));
+        putchar('0' + (bitarray_p->words[i] & (1 << 6)));
+        putchar('0' + (bitarray_p->words[i] & (1 << 5)));
+        putchar('0' + (bitarray_p->words[i] & (1 << 4)));
+        putchar('0' + (bitarray_p->words[i] & (1 << 3)));
+        putchar('0' + (bitarray_p->words[i] & (1 << 2)));
+        putchar('0' + (bitarray_p->words[i] & (1 << 1)));
+        putchar('0' + (bitarray_p->words[i] & (1 << 0)));
+        if ((i & 0b111) == 0b100 || (i & 0b111) == 0b0) // i % 4 == 0
             putchar('\n');
-        }
     }
     putchar('\n');
 }
