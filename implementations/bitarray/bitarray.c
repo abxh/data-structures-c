@@ -20,8 +20,7 @@ Bitarray* ba_new(const unsigned int num_of_words) {
 }
 
 void ba_print(const Bitarray *bitarray_p) {
-    size_t lim = bitarray_p->num_of_words;
-    for (size_t i = 1; i <= lim; i++) {
+    for (size_t i = 1; i <= bitarray_p->num_of_words; i++) {
         if (!((i & 0b111) == 0b101 || (i & 0b111) == 0b1)) // i % 4 != 1
             putchar(' ');
         putchar('0' + (bitarray_p->words[i] & (1 << 7)));
