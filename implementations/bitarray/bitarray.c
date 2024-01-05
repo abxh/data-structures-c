@@ -28,7 +28,7 @@ void ba_print(const Bitarray *bitarray_p) {
     */
     size_t i;
     for (i = 1; i <= bitarray_p->num_of_words; i++) {
-        if (!((i & 0b111) == 5 || (i & 0b111) == 1)) // i % 4 != 1
+        if ((i & 0b11) != 1) // i % 4 != 1
             putchar(' ');
         putchar('0' + ((bitarray_p->words[i] >> 7) & 1));
         putchar('0' + ((bitarray_p->words[i] >> 6) & 1));
@@ -41,7 +41,7 @@ void ba_print(const Bitarray *bitarray_p) {
         if ((i & 0b111) == 4 || (i & 0b111) == 0) // i % 4 == 0
             putchar('\n');
     }
-    if (!((i & 0b111) == 0b101 || (i & 0b111) == 0b1)) // i % 4 != 1
+    if ((i & 0b11) != 1) // i % 4 != 1
         putchar('\n');
 }
 
