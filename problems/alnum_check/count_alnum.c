@@ -1,4 +1,4 @@
-#include "./bitarray.h"
+#include "bitarray.h"
 
 int main(void) {
     Bitarray *bitarray = ba_new(55U);

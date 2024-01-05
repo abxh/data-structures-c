@@ -1,1 +1,1 @@
-/home/arch/desktop/projects/dsa/problems/alnum_check/../../implementations/bitarray/bitarray.h
+../../implementations/bitarray/bitarray.h
