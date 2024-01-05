@@ -30,14 +30,14 @@ void ba_print(const Bitarray *bitarray_p) {
     for (i = 1; i <= bitarray_p->num_of_words; i++) {
         if (!((i & 0b111) == 0b101 || (i & 0b111) == 0b1)) // i % 4 != 1
             putchar(' ');
-        putchar('0' + (bitarray_p->words[i] & (1 << 7)));
-        putchar('0' + (bitarray_p->words[i] & (1 << 6)));
-        putchar('0' + (bitarray_p->words[i] & (1 << 5)));
-        putchar('0' + (bitarray_p->words[i] & (1 << 4)));
-        putchar('0' + (bitarray_p->words[i] & (1 << 3)));
-        putchar('0' + (bitarray_p->words[i] & (1 << 2)));
-        putchar('0' + (bitarray_p->words[i] & (1 << 1)));
-        putchar('0' + (bitarray_p->words[i] & (1 << 0)));
+        putchar('0' + (bitarray_p->words[i] & (1 << 7) >> 7));
+        putchar('0' + (bitarray_p->words[i] & (1 << 6) >> 6));
+        putchar('0' + (bitarray_p->words[i] & (1 << 5) >> 5));
+        putchar('0' + (bitarray_p->words[i] & (1 << 4) >> 4));
+        putchar('0' + (bitarray_p->words[i] & (1 << 3) >> 3));
+        putchar('0' + (bitarray_p->words[i] & (1 << 2) >> 2));
+        putchar('0' + (bitarray_p->words[i] & (1 << 1) >> 1));
+        putchar('0' + (bitarray_p->words[i] & (1 << 0) >> 0));
         if ((i & 0b111) == 0b100 || (i & 0b111) == 0b0) // i % 4 == 0
             putchar('\n');
     }
