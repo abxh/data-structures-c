@@ -42,7 +42,7 @@ int ba_set(Bitarray *bitarray_p, size_t index, int value) {
     return 0;
 }
 
-int ba_update_word(Bitarray *bitarray_p, size_t index, ba_update_word_f update_func) {
+int ba_update_by_word(Bitarray *bitarray_p, size_t index, ba_update_word_f update_func) {
     size_t n = index >> 3; // index / 8
     if (n >= bitarray_p->num_of_words) {
         return -1;

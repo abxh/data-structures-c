@@ -33,7 +33,7 @@ int ba_set(Bitarray *bitarray, size_t index, int value);
    and returns the new word.
    returns 0 if successful. returns -1 if out of bounds.
 */
-int ba_update_word(Bitarray *bitarray_p, size_t index, ba_update_word_f update_func);
+int ba_update_by_word(Bitarray *bitarray_p, size_t index, ba_update_word_f update_func);
 
 /* 
    set the value at an index x using a function, where 0 <= x < num_of_words * 8. 
