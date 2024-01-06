@@ -24,7 +24,7 @@ Bitarray *ba_new(size_t num_of_words) {
 
 int ba_get(Bitarray *bitarray_p, size_t index) {
     size_t n = index >> 3; // index / 8
-    if (!(0 <= n && n < bitarray_p->num_of_words)) {
+    if (n >= bitarray_p->num_of_words) {
         return -1;
     }
     size_t m = ~index & 0b111; // 7 - (index % 8)
@@ -33,7 +33,7 @@ int ba_get(Bitarray *bitarray_p, size_t index) {
 
 int ba_set(Bitarray *bitarray_p, size_t index, int value) {
     size_t n = index >> 3; // index / 8
-    if (!(0 <= n && n < bitarray_p->num_of_words)) {
+    if (n >= bitarray_p->num_of_words) {
         return -1;
     }
     size_t m = ~index & 0b111; // 7 - (index % 8)
@@ -44,7 +44,7 @@ int ba_set(Bitarray *bitarray_p, size_t index, int value) {
 
 int ba_update_word(Bitarray *bitarray_p, size_t index, ba_update_word_f update_func) {
     size_t n = index >> 3; // index / 8
-    if (!(0 <= n && n < bitarray_p->num_of_words)) {
+    if (n >= bitarray_p->num_of_words) {
         return -1;
     }
     bitarray_p->words[n] = update_func(bitarray_p->words[n], index);
@@ -53,7 +53,7 @@ int ba_update_word(Bitarray *bitarray_p, size_t index, ba_update_word_f update_f
 
 int ba_update_at(Bitarray *bitarray_p, size_t index, ba_update_at_f update_func) {
     size_t n = index >> 3; // index / 8
-    if (!(0 <= n && n < bitarray_p->num_of_words)) {
+    if (n >= bitarray_p->num_of_words) {
         return -1;
     }
     size_t m = ~index & 0b111; // 7 - (index % 8)
