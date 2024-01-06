@@ -13,7 +13,7 @@ int main(void) {
     Bitarray *bitarray_p = ba_new(8U); // 8 bit/word * 8 words = 64 > 26 letters * 2 + 10 digits = 62
 
     puts("Input (Ctrl+d for EOF):");
-    for (int c; c != EOF; c = fgetc(stdin)) {
+    for (int c = fgetc(stdin); c != EOF; c = fgetc(stdin)) {
         if (islower(c)) {
             ba_update_by_word(bitarray_p, c - 'a', set_to_true);
         }
