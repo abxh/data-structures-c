@@ -27,7 +27,7 @@ int ba_get(Bitarray *bitarray, size_t index);
 int ba_set(Bitarray *bitarray, size_t index, int value);
 
 /* 
-   set the value at an index x, where 0 <= x < num_of_words * 8. 
+   set the value at an index x using a function, where 0 <= x < num_of_words * 8. 
    update function takes in the bitarray, original word, the index relative
    to entire bit array and the index relative to the word (in that order)
    and returns the new word.
