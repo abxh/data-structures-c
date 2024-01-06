@@ -9,7 +9,7 @@ typedef struct {
     ba_word *words;
 } Bitarray;
 
-typedef ba_word (ba_update_word_f)(ba_word, size_t);
+typedef ba_word (ba_update_word_f)(ba_word, size_t, size_t);
 typedef int (ba_update_at_f)(int, size_t);
 
 Bitarray *ba_new(size_t num_of_words) {
@@ -47,7 +47,8 @@ int ba_update_word(Bitarray *bitarray_p, size_t index, ba_update_word_f update_f
     if (n >= bitarray_p->num_of_words) {
         return -1;
     }
-    bitarray_p->words[n] = update_func(bitarray_p->words[n], index);
+    size_t m = ~index & 0b111; // 7 - (index % 8)
+    bitarray_p->words[n] = update_func(bitarray_p->words[n], index, m);
     return 0;
 }
 

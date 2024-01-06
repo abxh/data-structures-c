@@ -8,7 +8,7 @@ typedef struct {
     ba_word *words;
 } Bitarray;
 
-typedef ba_word (ba_update_word_f)(ba_word, size_t);
+typedef ba_word (ba_update_word_f)(ba_word, size_t, size_t);
 typedef int (ba_update_at_f)(int, size_t);
 
 /* create a new bytearray of size num_of_words * ba_word bits. initializes bits to 0. */
@@ -28,7 +28,8 @@ int ba_set(Bitarray *bitarray, size_t index, int value);
 
 /* 
    set the value at an index x, where 0 <= x < num_of_words * 8. 
-   update function takes in the original word and the index and returns the new word.
+   update function takes in the original word, the index relative to entire bit array and the
+   index relative to the word (in that order) and returns the new word.
    returns 0 if successful. returns -1 if out of bounds.
 */
 int ba_update_word(Bitarray *bitarray_p, size_t index, ba_update_word_f update_func);

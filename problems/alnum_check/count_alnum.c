@@ -5,8 +5,8 @@
 #define NUM_OF_LETTERS ('z' - 'a' + 1)
 #define NUM_OF_DIGITS  ('9' - '0' + 1)
 
-ba_word set_to_true(ba_word word, size_t index) {
-    return word | (1 << (~index & 0b111));
+ba_word set_to_true(ba_word word, size_t index, size_t index_at_word) {
+    return word | (1 << index_at_word);
 }
 
 int main(void) {
