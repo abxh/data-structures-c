@@ -2,10 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// technicalities:
-// - word size is 8 bits.
-// - big endian order.
-
 typedef uint8_t ba_word;
 
 typedef struct {
