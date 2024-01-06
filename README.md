@@ -1,4 +1,4 @@
-# DSA
+# dsa-c
 
 My implementation of DSA and solutions to DSA problems in C.
 
