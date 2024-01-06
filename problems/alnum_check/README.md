@@ -1,6 +1,6 @@
 # alnum_check
 
-This problem is based on K&R chapter 1.
+This problem is based on K&R chapter 1 with an constraint not related to the chapter.
 
 **Problem:**
 
@@ -8,4 +8,4 @@ Tell which of the characters in $\\{'A', \\ldots, 'Z'\\} \cup \\{'a', \\ldots, '
 
 **Constraints:**
 
-Use at most 64 bits to save the information about which characters are in `STDIN` file stream.
+Use at most 64 bits (8 bytes) to save the information about which characters are in `STDIN` file stream.
