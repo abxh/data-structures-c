@@ -16,7 +16,7 @@ Bitarray* ba_new(const unsigned int num_of_words);
 
 /* 
    return the value at an index x, where 0 <= x < num_of_words * 8.
-   returns -1 if out of bounds.
+   returns 0 if successfull. returns -1 if out of bounds.
 */
 int ba_get(Bitarray *bitarray, size_t index);
 
