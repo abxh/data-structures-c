@@ -7,5 +7,5 @@ constant.
 Big endian order is used. This means that we start from the most significant
 bit for the operations. For example, for the bits `1000`, we start from `1`.
 
-Word size is 8 bits (uint8_t), but ideally word size should be set to `size_t`
-for optimal performance and usage of resources in a given machine.
+Word size is 8 bits (uint8_t). Though ideally word size should be set to `size_t`
+for optimal performance and usage of space in a given machine.
