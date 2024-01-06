@@ -1,6 +1,6 @@
 # alnum_check
 
-This problem is based on K&R chapter 1 with an constraint not related to the chapter.
+This problem is based on K&R chapter 1 with an constraint not directly related to the chapter.
 
 **Problem:**
 
