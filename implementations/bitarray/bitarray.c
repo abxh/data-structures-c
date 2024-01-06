@@ -9,8 +9,8 @@ typedef struct {
     ba_word *words;
 } Bitarray;
 
-typedef ba_word (ba_update_word_f)(ba_word, size_t, size_t);
-typedef int (ba_update_at_f)(int, size_t);
+typedef ba_word (ba_update_word_f)(Bitarray*, ba_word, size_t, size_t);
+typedef int (ba_update_at_f)(Bitarray*, int, size_t);
 
 Bitarray *ba_new(size_t num_of_words) {
     Bitarray *bitarray = malloc(sizeof(Bitarray));
@@ -48,7 +48,7 @@ int ba_update_word(Bitarray *bitarray_p, size_t index, ba_update_word_f update_f
         return -1;
     }
     size_t m = ~index & 0b111; // 7 - (index % 8)
-    bitarray_p->words[n] = update_func(bitarray_p->words[n], index, m);
+    bitarray_p->words[n] = update_func(bitarray_p, bitarray_p->words[n], index, m);
     return 0;
 }
 
@@ -60,7 +60,7 @@ int ba_update_at(Bitarray *bitarray_p, size_t index, ba_update_at_f update_func)
     size_t m = ~index & 0b111; // 7 - (index % 8)
     int prev_value = (bitarray_p->words[n] >> m) & 1;
     bitarray_p->words[n] &= ~(1 << m);
-    bitarray_p->words[n] |= update_func(prev_value, index) << m;
+    bitarray_p->words[n] |= update_func(bitarray_p, prev_value, index) << m;
     return 0;
 }
 
