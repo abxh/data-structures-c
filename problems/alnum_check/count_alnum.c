@@ -5,8 +5,8 @@
 #define NUM_OF_LETTERS ('z' - 'a' + 1)
 #define NUM_OF_DIGITS  ('9' - '0' + 1)
 
-int set_on(int value) {
-    return value | 1; // or just 1.
+ba_word set_to_true(ba_word word, size_t index) {
+    return word | (1 << (~index & 0b111));
 }
 
 int main(void) {
@@ -15,13 +15,13 @@ int main(void) {
     puts("Input (Ctrl+d for EOF):");
     for (int c; c != EOF; c = fgetc(stdin)) {
         if (islower(c)) {
-            ba_update_at(bitarray_p, c - 'a', set_on);
+            ba_update_word(bitarray_p, c - 'a', set_to_true);
         }
         else if (isupper(c)) {
-            ba_update_at(bitarray_p, c - 'A' + NUM_OF_LETTERS, set_on);
+            ba_update_word(bitarray_p, c - 'A' + NUM_OF_LETTERS, set_to_true);
         }
         else if (isdigit(c)) {
-            ba_update_at(bitarray_p, c - '0' + 2 * NUM_OF_LETTERS, set_on);
+            ba_update_word(bitarray_p, c - '0' + 2 * NUM_OF_LETTERS, set_to_true);
         }
     }
     
