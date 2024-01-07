@@ -14,14 +14,14 @@ Bitarray* ba_new(const unsigned int num_of_words);
 /* return the value at an index x, where 0 <= x < num_of_words * 8 if not OOB else -1. */
 int ba_get(Bitarray *bitarray, size_t index);
 
-/* set the value at an index x, where 0 <= x < num_of_words * 8 and return 0 if not OOB else -1. */
-int ba_set(Bitarray *bitarray, size_t index);
-
 /* set the value to true at an index x, where 0 <= x < num_of_words * 8 and return 0 if not OOB else -1. */
 int ba_set_true(Bitarray *bitarray, size_t index);
 
 /* set the value to false at an index x, where 0 <= x < num_of_words * 8 and return 0 if not OOB else -1. */
 int ba_set_false(Bitarray *bitarray, size_t index);
+
+/* set the value to a provided bit at an index x, where 0 <= x < num_of_words * 8 and return 0 if not OOB else -1. */
+int ba_set(Bitarray *bitarray, size_t index, int bit);
 
 /* toggle the value at an index x, where 0 <= x < num_of_words * 8 and return 0 if not OOB else -1. */
 int ba_toggle(Bitarray *bitarray, size_t index);

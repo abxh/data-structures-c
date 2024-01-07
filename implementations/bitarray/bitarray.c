@@ -31,17 +31,6 @@ int ba_get(Bitarray *bitarray_p, size_t index) {
     return (bitarray_p->words[n] >> m) & 1;
 }
 
-int ba_set(Bitarray *bitarray_p, size_t index, int value) {
-    size_t n = BA_WORD_INDEX(index);
-    if (n >= bitarray_p->num_of_words) {
-        return -1;
-    }
-    size_t m = BA_BIT_INDEX(index);
-    bitarray_p->words[n] &= ~(1 << m);
-    bitarray_p->words[n] |= value << m;
-    return 0;
-}
-
 int ba_set_true(Bitarray *bitarray_p, size_t index) {
     size_t n = BA_WORD_INDEX(index);
     if (n >= bitarray_p->num_of_words) {
@@ -59,6 +48,17 @@ int ba_set_false(Bitarray *bitarray_p, size_t index) {
     }
     size_t m = BA_BIT_INDEX(index);
     bitarray_p->words[n] &= ~(1 << m);
+    return 0;
+}
+
+int ba_set(Bitarray *bitarray_p, size_t index, int value) {
+    size_t n = BA_WORD_INDEX(index);
+    if (n >= bitarray_p->num_of_words) {
+        return -1;
+    }
+    size_t m = BA_BIT_INDEX(index);
+    bitarray_p->words[n] &= ~(1 << m);
+    bitarray_p->words[n] |= value << m;
     return 0;
 }
 
