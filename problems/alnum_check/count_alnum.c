@@ -5,23 +5,19 @@
 #define NUM_OF_LETTERS ('z' - 'a' + 1)
 #define NUM_OF_DIGITS  ('9' - '0' + 1)
 
-ba_word set_to_true(Bitarray* bitarray_p, ba_word word, size_t index, size_t index_at_word) {
-    return word | (1 << index_at_word);
-}
-
 int main(void) {
     Bitarray *bitarray_p = ba_new(8U); // 8 bit/word * 8 words = 64 > 26 letters * 2 + 10 digits = 62
 
     puts("Input (Ctrl+d for EOF):");
     for (int c = fgetc(stdin); c != EOF; c = fgetc(stdin)) {
         if (islower(c)) {
-            ba_update_by_word(bitarray_p, c - 'a', set_to_true);
+            ba_set_true(bitarray_p, c - 'a');
         }
         else if (isupper(c)) {
-            ba_update_by_word(bitarray_p, c - 'A' + NUM_OF_LETTERS, set_to_true);
+            ba_set_true(bitarray_p, c - 'A');
         }
         else if (isdigit(c)) {
-            ba_update_by_word(bitarray_p, c - '0' + 2 * NUM_OF_LETTERS, set_to_true);
+            ba_set_true(bitarray_p, c - '0' + 2 * NUM_OF_LETTERS);
         }
     }
     

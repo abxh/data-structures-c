@@ -9,8 +9,8 @@ typedef struct {
     ba_word *words;
 } Bitarray;
 
-typedef ba_word (ba_update_word_f)(Bitarray*, ba_word, size_t, size_t);
-typedef int (ba_update_at_f)(Bitarray*, int, size_t);
+#define BA_WORD_INDEX(index) (index >> 3)     // index / 8
+#define BA_BIT_INDEX(index)  (~index & 0b111) // 7 - (index % 8)
 
 Bitarray *ba_new(size_t num_of_words) {
     Bitarray *bitarray = malloc(sizeof(Bitarray));
@@ -23,44 +23,52 @@ Bitarray *ba_new(size_t num_of_words) {
 }
 
 int ba_get(Bitarray *bitarray_p, size_t index) {
-    size_t n = index >> 3; // index / 8
+    size_t n = BA_WORD_INDEX(index);
     if (n >= bitarray_p->num_of_words) {
         return -1;
     }
-    size_t m = ~index & 0b111; // 7 - (index % 8)
+    size_t m = BA_BIT_INDEX(index);
     return (bitarray_p->words[n] >> m) & 1;
 }
 
 int ba_set(Bitarray *bitarray_p, size_t index, int value) {
-    size_t n = index >> 3; // index / 8
+    size_t n = BA_WORD_INDEX(index);
     if (n >= bitarray_p->num_of_words) {
         return -1;
     }
-    size_t m = ~index & 0b111; // 7 - (index % 8)
+    size_t m = BA_BIT_INDEX(index);
     bitarray_p->words[n] &= ~(1 << m);
     bitarray_p->words[n] |= value << m;
     return 0;
 }
 
-int ba_update_by_word(Bitarray *bitarray_p, size_t index, ba_update_word_f update_func) {
-    size_t n = index >> 3; // index / 8
+int ba_set_true(Bitarray *bitarray_p, size_t index) {
+    size_t n = BA_WORD_INDEX(index);
     if (n >= bitarray_p->num_of_words) {
         return -1;
     }
-    size_t m = ~index & 0b111; // 7 - (index % 8)
-    bitarray_p->words[n] = update_func(bitarray_p, bitarray_p->words[n], index, m);
+    size_t m = BA_BIT_INDEX(index);
+    bitarray_p->words[n] |= 1 << m;
     return 0;
 }
 
-int ba_update_at(Bitarray *bitarray_p, size_t index, ba_update_at_f update_func) {
-    size_t n = index >> 3; // index / 8
+int ba_set_false(Bitarray *bitarray_p, size_t index) {
+    size_t n = BA_WORD_INDEX(index);
     if (n >= bitarray_p->num_of_words) {
         return -1;
     }
-    size_t m = ~index & 0b111; // 7 - (index % 8)
-    int prev_value = (bitarray_p->words[n] >> m) & 1;
+    size_t m = BA_BIT_INDEX(index);
     bitarray_p->words[n] &= ~(1 << m);
-    bitarray_p->words[n] |= update_func(bitarray_p, prev_value, index) << m;
+    return 0;
+}
+
+int ba_toggle(Bitarray *bitarray_p, size_t index) {
+    size_t n = BA_WORD_INDEX(index);
+    if (n >= bitarray_p->num_of_words) {
+        return -1;
+    }
+    size_t m = BA_BIT_INDEX(index);
+    bitarray_p->words[n] ^= 1 << m;
     return 0;
 }
 
