@@ -14,7 +14,7 @@ int main(void) {
             ba_set_true(bitarray_p, c - 'a');
         }
         else if (isupper(c)) {
-            ba_set_true(bitarray_p, c - 'A');
+            ba_set_true(bitarray_p, c - 'A' + NUM_OF_LETTERS);
         }
         else if (isdigit(c)) {
             ba_set_true(bitarray_p, c - '0' + 2 * NUM_OF_LETTERS);
