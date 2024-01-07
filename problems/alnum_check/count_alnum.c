@@ -2,11 +2,12 @@
 #include <stdio.h>
 #include "bitarray.h"
 
+// 8 bit/word * 8 words = 64 > 26 letters * 2 + 10 digits = 62
 #define NUM_OF_LETTERS ('z' - 'a' + 1)
 #define NUM_OF_DIGITS  ('9' - '0' + 1)
 
 int main(void) {
-    Bitarray *bitarray_p = ba_new(8U); // 8 bit/word * 8 words = 64 > 26 letters * 2 + 10 digits = 62
+    Bitarray *bitarray_p = ba_new(sizeof(ba_word) * 8 > 64 ? 1U : 64 / (sizeof(ba_word) * 8)); 
 
     puts("Input (Ctrl+d for EOF):");
     for (int c = fgetc(stdin); c != EOF; c = fgetc(stdin)) {

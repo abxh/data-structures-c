@@ -84,7 +84,7 @@ void ba_print(const Bitarray *bitarray_p) {
         if (((i + 1) & 0b11) != 0b01) { // (i + 1) % 4 != 1
             putchar(' ');
         }
-        for (int j = sizeof(ba_word) - 1; i > -1; i--) {
+        for (int j = sizeof(ba_word) - 1; i >= 0; i--) {
             putchar('0' + ((bitarray_p->words[i] >> j) & 1));
         }
         if (((i + 1) & 0b111) == 0b100 || ((i + 1) & 0b111) == 0b000) { // (i + 1) % 4 == 0
