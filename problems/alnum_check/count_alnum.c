@@ -33,7 +33,7 @@ int main(void) {
             putchar('.');
             break;
         }
-        if (((i + 1) & 0b111) != 0b001) { // (i + 1) % 8 != 1
+        if (((i + 1) % 8 != 1)) {
             printf(", ");
         }
         if (i < NUM_OF_LETTERS) {
@@ -43,7 +43,7 @@ int main(void) {
         } else if (i < 2 * NUM_OF_LETTERS + NUM_OF_DIGITS) {
             printf("%c:%c", (int) i - 2 * NUM_OF_LETTERS + '0', ba_get(bitarray_p, i) ? '*' : ' ');
         }
-        if (((i + 1) & 0b1111) == 0b1000 || ((i + 1) & 0b1111) == 0b0000) { // (i + 1) % 8 == 0
+        if (((i + 1) % 8 == 0)) {
             putchar('\n');
         }
     }
