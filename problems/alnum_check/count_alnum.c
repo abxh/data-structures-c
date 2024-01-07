@@ -7,7 +7,7 @@
 #define NUM_OF_DIGITS  ('9' - '0' + 1)
 
 int main(void) {
-    Bitarray *bitarray_p = ba_new(sizeof(ba_word) * 8 > 64 ? 1U : 64 / (sizeof(ba_word) * 8)); 
+    Bitarray *bitarray_p = ba_new(sizeof(ba_word) * 8 > 64 ? 1 : 64 / (sizeof(ba_word) * 8)); 
 
     puts("Input (Ctrl+d for EOF):");
     for (int c = fgetc(stdin); c != EOF; c = fgetc(stdin)) {
