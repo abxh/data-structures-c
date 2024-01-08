@@ -8,7 +8,7 @@ typedef struct {
     ba_word *words;
 } Bitarray;
 
-/* create a new bitarray of size num_of_words * ba_word bits. initialize bits to zero. */
+/* create a new bitarray of size num_of_words * ba_word bits. num_of_words cannot be 0. initialize bits to zero. */
 Bitarray* ba_new(const unsigned int num_of_words);
 
 /* return the value at an index x, where 0 <= x < num_of_words * 8 if not OOB else -1. */

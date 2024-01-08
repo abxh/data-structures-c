@@ -13,6 +13,9 @@ typedef struct {
 #define BA_BIT_INDEX(index)  (~index & 0b111) // 7 - (index % 8)
 
 Bitarray *ba_new(size_t num_of_words) {
+    if (num_of_words == 0) {
+        return NULL;
+    }
     Bitarray *bitarray = malloc(sizeof(Bitarray));
     if (bitarray == NULL) {
         return bitarray;
