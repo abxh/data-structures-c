@@ -1,4 +1,4 @@
-# alnum_check
+# rotating_star_field
 
 This problem is puts some icing on the cake on the problem of bitwise rotation posed in K & R chapter 2.
 
