@@ -10,25 +10,41 @@
 #define VT_MOVTOFRONT "\r"
 
 uint64_t *generate_star_pattern() {
+    uint64_t *star_pattern = calloc(8, sizeof(uint64_t));
     srandom(time(NULL));
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8 * sizeof(uint64_t); j++) {
-            unsigned int s = (random() & 1) && (random() & 1) && (random() & 1) && (random() & 1);
-            putchar(s ? '*' : ' ');
+            uint64_t s = (random() & 1) && (random() & 1) && (random() & 1) && (random() & 1);
+            star_pattern[i] |= s << j;
         }
-        putchar('\n');
     }
+    return star_pattern;
+}
+
+uint64_t rotate_bits_left(uint64_t value, int rotate_bits_by) {
+    return (value << rotate_bits_by) | (value >> (64 - rotate_bits_by));
+}
+
+uint64_t rotate_bits_right(uint64_t value, int rotate_bits_by) {
+    return (value << (64 - rotate_bits_by)) | (value >> rotate_bits_by);
 }
 
 int main(void) {
     uint64_t *star_pattern = generate_star_pattern();
-
-    return 1;
-
-    const struct timespec duration = {0., 1./60.*1e+9};
+    const struct timespec duration = {0., 1./25. * 1e+9}; // 1 / 30 seconds
+    int8_t rotation = 0;
 
     while (true) {
-        system("clear");
+        rotation += 2; // we overflow deliberately
+        if (rotation >= 0) {
+            for (size_t i = 0; i < 8; i++) {
+                star_pattern[i] = rotate_bits_right(star_pattern[i], 1);
+            }
+        } else {
+            for (size_t i = 0; i < 8; i++) {
+                star_pattern[i] = rotate_bits_left(star_pattern[i], 1);
+            }
+        }
         for (size_t i = 0; i < 8; i++) {
             for (size_t j = 0; j < 8 * sizeof(uint64_t); j++) {
                 printf("%c", ((star_pattern[i] >> j) & 1) ? '*' : ' ');
@@ -36,6 +52,11 @@ int main(void) {
             putchar('\n');
         }
         nanosleep(&duration, NULL);
+        for (int i = 0; i < 8; i++) {
+            printf(VT_CLEARLINE);
+            printf(VT_MOVUP);
+        }
+        printf(VT_MOVTOFRONT);
     }
     free(star_pattern);
     return 0;
