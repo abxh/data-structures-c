@@ -11,10 +11,10 @@
 
 uint64_t *generate_star_pattern() {
     uint64_t *star_pattern = calloc(8, sizeof(uint64_t));
-    srandom(time(NULL));
+    srand(time(NULL));
     for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8 * sizeof(uint64_t); j++) {
-            uint64_t s = (random() & 1) && (random() & 1) && (random() & 1) && (random() & 1);
+        for (size_t j = 0; j < 8 * sizeof(uint64_t); j++) {
+            uint64_t s = (rand() & 1) && (rand() & 1) && (rand() & 1) && (rand() & 1);
             star_pattern[i] |= s << j;
         }
     }
