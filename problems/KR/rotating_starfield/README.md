@@ -1,7 +1,7 @@
 # rotating_starfield
 This problem puts some extra "spice" onto the problem of bitwise rotation posed in K & R chapter 2.
 
-> **note**: my solution does have some windows-specific elements.
+> **note**: my solution may have some linux-specific elements.
 
 **Problem:**
 
