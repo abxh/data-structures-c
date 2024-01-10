@@ -32,11 +32,11 @@ uint64_t rotate_bits_right(uint64_t value, int rotate_bits_by) {
 int main(void) {
     uint64_t *star_pattern = generate_star_pattern();
     const struct timespec duration = {0., 1./25. * 1e+9}; // 1 / 30 seconds
-    int8_t rotation = 0;
+    int8_t rotation_dir = 0;
 
     while (true) {
-        rotation += 2; // we overflow deliberately
-        if (rotation >= 0) {
+        rotation_dir += 2; // we overflow deliberately
+        if (rotation_dir >= 0) {
             for (size_t i = 0; i < 8; i++) {
                 star_pattern[i] = rotate_bits_right(star_pattern[i], 1);
             }
