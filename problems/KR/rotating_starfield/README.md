@@ -1,6 +1,8 @@
 # rotating_starfield
 This problem puts some extra "spice" onto the problem of bitwise rotation posed in K & R chapter 2.
 
+> **note**: my solution does have some windows-specific elements.
+
 **Problem:**
 
 Generate a "sparse" random bit pattern of 1's and 0's of size 8 x 64, and rotate the bit patterns left to right or
