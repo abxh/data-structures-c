@@ -1,3 +1,4 @@
+#include <stdalign.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -83,6 +84,7 @@ void ba_print(const Bitarray *bitarray_p) {
         }
         putchar('\n');
     }
+    printf("%d\n", alignof(Bitarray));
 }
 
 void ba_free(Bitarray *bitarray_p) {
