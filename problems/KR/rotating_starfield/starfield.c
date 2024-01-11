@@ -31,7 +31,7 @@ uint64_t rotate_bits_right(uint64_t value, int rotate_bits_by) {
 
 int main(void) {
     uint64_t *star_pattern = generate_star_pattern();
-    const struct timespec duration = {0., 1./25. * 1e+9}; // 1 / 30 seconds
+    const struct timespec duration = {0., 1./25. * 1e+9}; // 1 / 25 seconds
     int8_t rotation_dir = 0;
 
     while (true) {
