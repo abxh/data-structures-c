@@ -10,3 +10,5 @@ per the book "Effective C".
 
 Big endian order is used. This means that we start from the most significant
 bit for the operations. For example, for the bits `1000`, we start from `1`.
+
+Finally, `NULL` is not checked for, so it must be checked manually after the allocation.
