@@ -9,6 +9,10 @@
 int main(void) {
     Bitarray *bitarray_p = ba_new(sizeof(ba_word) * 8 > 64 ? 1 : 64 / (sizeof(ba_word) * 8)); 
 
+    if (bitarray_p == NULL) {
+        return 1;
+    }
+
     puts("Input (Ctrl+d for EOF):");
     for (int c = fgetc(stdin); c != EOF; c = fgetc(stdin)) {
         if (islower(c)) {
