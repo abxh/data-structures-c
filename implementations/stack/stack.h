@@ -18,13 +18,13 @@ typedef struct {
 stack *st_new();
 
 /* return if the stack is empty. stack pointer cannot be NULL.*/
-bool st_empty(stack *stack);
+bool st_empty(stack *stack_p);
 
 /* 
    peek at the next value to be popped. stack pointer cannot be NULL.
    must check if stack is empty beforehand. stack pointer cannot be NULL.
 */
-value_t st_peek(stack *stack);
+value_t st_peek(stack *stack_p);
 
 /* 
    push a value onto the stack. returns if memory was able to be allocated

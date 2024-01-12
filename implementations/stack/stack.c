@@ -21,10 +21,10 @@ stack *st_new() {
     return st;
 }
 
-bool st_empty(stack *stack) { return stack->head == NULL; }
+bool st_empty(stack *stack_p) { return stack_p->head == NULL; }
 
-value_t st_peek(stack *stack) {
-    return stack->head->value;
+value_t st_peek(stack *stack_p) {
+    return stack_p->head->value;
 }
 
 bool st_push(stack* stack_p, value_t value) {
