@@ -1,8 +1,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-// Technicalities:
-// - Last In [is] First Out (LIFO).
 
 typedef int value_t;
 
