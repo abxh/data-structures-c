@@ -8,4 +8,4 @@ For a given input, check if there are any unbalanced parentheses, brackets and c
 for single, double and back quotes. And finally check for the C comment symbol pair `/*` and `*/`.
 
 Every starting symbol cannot end with the wrong ending symbol in between which there can be zero or more
-characters. These characters _can_ include correctly written pairs of parantheses, brackets, etc.
+characters. These characters _can_ include correctly written pairs of parantheses, brackets and etc.
