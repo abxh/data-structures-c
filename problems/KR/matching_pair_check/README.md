@@ -1,6 +1,6 @@
 # matching_pair_check
 
-This is a problem based on K & R chapter 1 with some tweaks.
+This is a problem based on K & R chapter 1 exercise `1-24` with some tweaks.
 
 **Problem:**
 
