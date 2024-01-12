@@ -47,7 +47,7 @@ int main(void) {
         }
         for (size_t i = 0; i < 8; i++) {
             for (size_t j = 0; j < 8 * sizeof(uint64_t); j++) {
-                printf("%c", ((star_pattern[i] >> j) & 1) ? '*' : ' ');
+                printf("%c", ((star_pattern[i] >> j) & 1) ? '1' : '0');
             }
             putchar('\n');
         }

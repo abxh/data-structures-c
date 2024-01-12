@@ -1,6 +1,8 @@
 #include <inttypes.h>
 #include <stdlib.h>
 
+#pragma once
+
 typedef uint8_t ba_word;
 
 typedef struct {

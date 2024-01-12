@@ -1,6 +1,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#pragma once
+
 typedef int value_t;
 
 typedef struct element {
