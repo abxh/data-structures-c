@@ -27,10 +27,10 @@ bool st_empty(stack *stack);
 value_t st_peek(stack *stack);
 
 /* 
-   push a value onto the stack. returns the element pointer, which can be
-   NULL if memory could not be allocated. stack pointer cannot be NULL.
+   push a value onto the stack. returns if memory was able to be allocated
+   for the value. stack pointer cannot be NULL.
 */
-element* st_push(stack* stack_p, value_t value);
+bool st_push(stack* stack_p, value_t value);
 
 /* 
    return the popped value from the stack. must check if stack is empty

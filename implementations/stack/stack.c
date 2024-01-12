@@ -27,14 +27,14 @@ value_t st_peek(stack *stack) {
     return stack->head->value;
 }
 
-element* st_push(stack* stack_p, value_t value) {
+bool st_push(stack* stack_p, value_t value) {
     element *elm = malloc(sizeof(element));
     if (elm != NULL) {
         elm->value = value;
         elm->next = stack_p->head;
         stack_p->head = elm;
     }
-    return elm;
+    return elm != NULL;
 }
 
 value_t st_pop(stack* stack_p) {
