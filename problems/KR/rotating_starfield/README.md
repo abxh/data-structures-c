@@ -1,5 +1,5 @@
 # rotating_starfield
-This problem puts some extra "spice" onto the problem of bitwise rotation posed in K & R chapter 2.
+This problem puts some extra "spice" onto the problem of bitwise rotation posed in K & R chapter 2 exercise 8.
 
 > **note**: my solution may have some linux-specific elements.
 
