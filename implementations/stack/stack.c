@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-typedef int value_t;
+typedef int st_value;
 
 typedef struct element {
     value_t value;

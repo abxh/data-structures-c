@@ -53,7 +53,7 @@ int main(void) {
     bool double_quote_used = false;
     bool back_quote_used = false;
     ssize_t i = 0;
-    value_t left_side;
+    st_value left_side;
     for (i = 0; i < n; i++) {
         switch (str[i]) {
         case '(':
