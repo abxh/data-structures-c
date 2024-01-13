@@ -48,7 +48,7 @@ st_value st_pop(stack* stack_p) {
 void st_free(stack *stack_p) {
     st_element *l = stack_p->head;
     st_element *r = NULL;
-    while (l) {
+    while (l != NULL) {
         r = l->next;
         free(l);
         l = r;
