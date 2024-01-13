@@ -4,50 +4,50 @@
 
 typedef int st_value;
 
-typedef struct element {
-    value_t value;
-    struct element *next;
-} element;
+typedef struct st_element {
+    st_value value;
+    struct st_element *next;
+} st_element;
 
 typedef struct {
-    element *head;
+    st_element *head;
 } stack;
 
 stack *st_new() {
-    stack *st = malloc(sizeof(stack));
-    if (st != NULL) {
-        st->head = NULL;
+    stack *st_p = malloc(sizeof(stack));
+    if (st_p != NULL) {
+        st_p->head = NULL;
     }
-    return st;
+    return st_p;
 }
 
 bool st_empty(stack *stack_p) { return stack_p->head == NULL; }
 
-value_t st_peek(stack *stack_p) {
+st_value st_peek(stack *stack_p) {
     return stack_p->head->value;
 }
 
-bool st_push(stack* stack_p, value_t value) {
-    element *elm = malloc(sizeof(element));
-    if (elm != NULL) {
-        elm->value = value;
-        elm->next = stack_p->head;
-        stack_p->head = elm;
+bool st_push(stack* stack_p, st_value value) {
+    st_element *elm_p = malloc(sizeof(st_element));
+    if (elm_p != NULL) {
+        elm_p->value = value;
+        elm_p->next = stack_p->head;
+        stack_p->head = elm_p;
     }
-    return elm != NULL;
+    return elm_p != NULL;
 }
 
-value_t st_pop(stack* stack_p) {
-    element *next = stack_p->head->next;
-    value_t value = stack_p->head->value;
+st_value st_pop(stack* stack_p) {
+    st_element *next_p = stack_p->head->next;
+    st_value value = stack_p->head->value;
     free(stack_p->head);
-    stack_p->head = next;
+    stack_p->head = next_p;
     return value;
 }
 
 void st_free(stack *stack_p) {
-    element *l = stack_p->head;
-    element *r = NULL;
+    st_element *l = stack_p->head;
+    st_element *r = NULL;
     while (l) {
         r = l->next;
         free(l);
