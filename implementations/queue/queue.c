@@ -5,9 +5,9 @@
 typedef int q_value;
 #endif
 
-typedef struct element {
+typedef struct q_element {
     q_value value;
-    struct element *next;
+    struct q_element *next;
 } q_element;
 
 typedef struct {
@@ -19,6 +19,7 @@ queue *q_new() {
     queue *q = malloc(sizeof(queue));
     if (q != NULL) {
         q->front = NULL;
+        q->back = NULL;
     }
     return q;
 }
@@ -50,6 +51,9 @@ q_value q_dequeue(queue* queue_p) {
     q_value value = queue_p->front->value;
     free(queue_p->front);
     queue_p->front = next;
+    if (queue_p->front == NULL) {
+        queue_p->back = NULL;
+    }
     return value;
 }
 
