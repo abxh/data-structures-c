@@ -11,5 +11,5 @@ Every starting symbol cannot end with the wrong ending symbol in between which t
 characters. These characters _can_ include correctly written pairs of parentheses, brackets and etc.
 
 Quotes cannot be "stacked" like parentheses, brackets and curly braces. That is, you can have `([()])`,
-but not `"'""'"`. The comment sign cannot "stack" as well, but you can have `/* /* */`. Pairing rules in
-the comment block is ignored.
+but not `"'""'"`. The comment sign cannot "stack" as well, but you can have `/* /* */`, but not `/* /*
+*/ */`. Pairing rules in the comment block is ignored.
