@@ -53,6 +53,23 @@ int main(void) {
     ssize_t i = 0;
     st_value left_side;
     for (i = 0; i < n; i++) {
+        if (str[i] == '\\' && i + 1 < n) {
+            switch (str[i + 1]) {
+            case '/':
+            case '*':
+            case '(':
+            case ')':
+            case '[':
+            case ']':
+            case '{':
+            case '}':
+            case '"':
+            case '\'':
+            case '`':
+                i++;
+                continue;
+            }
+        }
         switch (str[i]) {
         case '/':
             if (i + 1 < n && str[i + 1] == '*') {
