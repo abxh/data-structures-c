@@ -8,7 +8,6 @@ typedef enum {
     SINGLE_QUOTE,
     DOUBLE_QUOTE,
     BACK_QUOTE,
-    LC_COMMENT_SIGN,
 } SIGN_ENUM;
 
 char get_sign(SIGN_ENUM se) {
@@ -25,8 +24,6 @@ char get_sign(SIGN_ENUM se) {
         return '"';
     case BACK_QUOTE:
         return '`';
-    case LC_COMMENT_SIGN:
-        return 'C';
     }
 }
 
@@ -52,9 +49,34 @@ int main(void) {
     bool single_quote_used = false;
     bool double_quote_used = false;
     bool back_quote_used = false;
+    bool comment_sign_used = false;
     ssize_t i = 0;
     st_value left_side;
     for (i = 0; i < n; i++) {
+        switch (str[i]) {
+        case '/':
+            if (i + 1 < n && str[i + 1] == '*') {
+                if (!comment_sign_used) {
+                    comment_sign_used = true;
+                    i++; // skip next char
+                }
+            }
+            break;
+        case '*':
+            if (i + 1 < n && str[i + 1] == '/') {
+                if (comment_sign_used) {
+                    comment_sign_used = false;
+                    i++; // skip next char
+                } else {
+                    no_errors = false;
+                }
+            }
+            break;
+        default:
+            if (no_errors && comment_sign_used) {
+                continue; // continue loop without checking
+            }
+        }
         switch (str[i]) {
         case '(':
             st_push(stack_p, LPARAN);
@@ -74,19 +96,9 @@ int main(void) {
             printf("stack push: %c\n", str[i]);
 #endif
             break;
-        case '/':
-            if (i + 1 < n && str[i + 1] == '*') {
-                st_push(stack_p, LC_COMMENT_SIGN);
-#ifdef DEBUG
-                printf("stack push: %s\n", "/*");
-#endif
-                i++; // skip next char.
-            }
-            break;
         case ')':
         case '}':
         case ']':
-        case '*':
             if (st_empty(stack_p)) {
                 no_errors = false;
                 break;
@@ -105,12 +117,6 @@ int main(void) {
                 break;
             case LBRACKET:
                 no_errors = str[i] == ']';
-                break;
-            case LC_COMMENT_SIGN:
-                if (i + 1 < n) {
-                    no_errors = str[i] == '*' && str[i + 1] == '/';
-                    i++; // skip next char
-                }
                 break;
             case SINGLE_QUOTE:
             case DOUBLE_QUOTE:
@@ -182,11 +188,12 @@ int main(void) {
     if (no_errors) {
         printf("\nno errors : )\n");
     } else {
-        // these numbers are hand picked from testing and counting. just for pretty printing.
+        // these numbers are hand picked from testing and counting. just for
+        // pretty printing.
         if (i <= 8) {
-            printf("%*c error at\n", (int) i + 1, '^');
+            printf("%*c error at\n", (int)i + 1, '^');
         } else {
-            printf("%*s ^\n", (int) i - 1, "error at");
+            printf("%*s ^\n", (int)i - 1, "error at");
         }
     }
 #endif
