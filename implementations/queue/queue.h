@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#pragma once
+
 #ifndef CUSTOM_QUEUE_VALUE
 typedef int q_value;
 #endif
