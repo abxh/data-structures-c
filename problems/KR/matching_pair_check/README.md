@@ -1,6 +1,7 @@
 # matching_pair_check
 
-This is a problem based on K & R chapter 1 exercise 24 with some tweaks.
+This is a problem based on K & R chapter 1 exercise 24 with some rules I have made up that may or may not
+match how they are usually used.
 
 **Problem:**
 
@@ -14,4 +15,4 @@ Quotes cannot be "stacked" like parentheses, brackets and curly braces. That is,
 but not `"'""'"`. The comment sign cannot "stack" as well, but you can have `/* /* */`. Pairing rules in
 the comment block is ignored.
 
-If you have implemented the above, then support escape sequences using `\` and the special characters checked.
+If you have implemented the above, then support escape sequences using `\<special-char>`.
