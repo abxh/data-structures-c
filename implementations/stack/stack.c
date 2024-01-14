@@ -1,8 +1,9 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-
+#ifndef CUSTOM_STACK_VALUE
 typedef int st_value;
+#endif
 
 typedef struct st_element {
     st_value value;

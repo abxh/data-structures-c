@@ -3,7 +3,9 @@
 
 #pragma once
 
+#ifndef CUSTOM_STACK_VALUE
 typedef int st_value;
+#endif
 
 typedef struct element {
     st_value value;
