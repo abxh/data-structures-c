@@ -1,19 +1,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
-
-#ifndef CUSTOM_QUEUE_VALUE
-typedef int q_value;
-#endif
-
-typedef struct q_element {
-    q_value value;
-    struct q_element *next;
-} q_element;
-
-typedef struct {
-    q_element *front;
-    q_element *back;
-} queue;
+#include <stdio.h>
+#include "queue.h"
 
 queue *q_new() {
     queue *q = malloc(sizeof(queue));
@@ -24,13 +12,15 @@ queue *q_new() {
     return q;
 }
 
-bool q_empty(queue *queue_p) { return queue_p->front == NULL; }
+bool q_empty(queue *queue_p) {
+    return queue_p->front == NULL;
+}
 
-q_value q_peek(queue *queue_p) {
+Q_VALUE q_peek(queue *queue_p) {
     return queue_p->front->value;
 }
 
-bool q_enqueue(queue* queue_p, q_value value) {
+bool q_enqueue(queue* queue_p, Q_VALUE value) {
     q_element *elm_p = malloc(sizeof(q_element));
     if (elm_p != NULL) {
         elm_p->value = value;
@@ -46,9 +36,9 @@ bool q_enqueue(queue* queue_p, q_value value) {
     return elm_p != NULL;
 }
 
-q_value q_dequeue(queue* queue_p) {
+Q_VALUE q_dequeue(queue* queue_p) {
     q_element *next = queue_p->front->next;
-    q_value value = queue_p->front->value;
+    Q_VALUE value = queue_p->front->value;
     free(queue_p->front);
     queue_p->front = next;
     if (queue_p->front == NULL) {

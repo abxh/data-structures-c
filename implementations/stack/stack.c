@@ -1,18 +1,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
-
-#ifndef CUSTOM_STACK_VALUE
-typedef int st_value;
-#endif
-
-typedef struct st_element {
-    st_value value;
-    struct st_element *next;
-} st_element;
-
-typedef struct {
-    st_element *head;
-} stack;
+#include "stack.h"
 
 stack *st_new() {
     stack *st_p = malloc(sizeof(stack));
@@ -24,11 +12,11 @@ stack *st_new() {
 
 bool st_empty(stack *stack_p) { return stack_p->head == NULL; }
 
-st_value st_peek(stack *stack_p) {
+ST_VALUE st_peek(stack *stack_p) {
     return stack_p->head->value;
 }
 
-bool st_push(stack* stack_p, st_value value) {
+bool st_push(stack* stack_p, ST_VALUE value) {
     st_element *elm_p = malloc(sizeof(st_element));
     if (elm_p != NULL) {
         elm_p->value = value;
@@ -38,9 +26,9 @@ bool st_push(stack* stack_p, st_value value) {
     return elm_p != NULL;
 }
 
-st_value st_pop(stack* stack_p) {
+ST_VALUE st_pop(stack* stack_p) {
     st_element *next_p = stack_p->head->next;
-    st_value value = stack_p->head->value;
+    ST_VALUE value = stack_p->head->value;
     free(stack_p->head);
     stack_p->head = next_p;
     return value;

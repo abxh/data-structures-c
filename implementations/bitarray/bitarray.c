@@ -1,17 +1,7 @@
 #include <stdalign.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef uint8_t ba_word;
-
-typedef struct {
-    size_t num_of_words;
-    ba_word *words;
-} Bitarray;
-
-#define BA_WORD_INDEX(index) (index >> 3)     // index / 8
-#define BA_BIT_INDEX(index)  (~index & 0b111) // 7 - (index % 8)
+#include "bitarray.h"
 
 Bitarray *ba_new(size_t num_of_words) {
     if (num_of_words == 0) {
@@ -21,7 +11,7 @@ Bitarray *ba_new(size_t num_of_words) {
     if (bitarray == NULL) {
         return bitarray;
     }
-    bitarray->words = calloc(num_of_words, sizeof(ba_word));
+    bitarray->words = calloc(num_of_words, sizeof(BA_WORD));
     bitarray->num_of_words = num_of_words;
     return bitarray;
 }
@@ -79,7 +69,7 @@ int ba_toggle(Bitarray *bitarray_p, size_t index) {
 void ba_print(const Bitarray *bitarray_p) {
     for (size_t i = 0; i < bitarray_p->num_of_words; i++) {
         printf("%p: ", (void*) bitarray_p->words + i);
-        for (size_t j = sizeof(ba_word) * 8 - 1; j > 0; j--) {
+        for (size_t j = sizeof(BA_WORD) * 8 - 1; j > 0; j--) {
             putchar('0' + ((bitarray_p->words[i] >> j) & 1));
         }
         putchar('\n');

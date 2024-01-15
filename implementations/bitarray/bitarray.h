@@ -3,19 +3,23 @@
 
 #pragma once
 
-typedef uint8_t ba_word;
+#define BA_WORD uint8_t
+#define BA_WORD_INDEX(index) (index >> 3)     // index / 8
+#define BA_BIT_INDEX(index)  (~index & 0b111) // 7 - (index % 8)
 
 typedef struct {
     size_t num_of_words;
-    ba_word *words;
+    BA_WORD *words;
 } Bitarray;
 
+
+
 /* 
-   Create a new bitarray of size num_of_words * ba_word bits.
+   Create a new bitarray of size num_of_words * BA_WORD bits.
    num_of_words should not be 0. Initialize bits to zero.
    Can return NULL and it must be checked manually.
 */
-Bitarray* ba_new(const unsigned int num_of_words);
+Bitarray* ba_new(size_t num_of_words);
 
 /* 
    Return the value at an index x, where 0 <= x < num_of_words * 8

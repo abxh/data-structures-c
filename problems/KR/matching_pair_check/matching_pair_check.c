@@ -51,7 +51,7 @@ int main(void) {
     bool back_quote_used = false;
     bool comment_sign_used = false;
     ssize_t i = 0;
-    st_value left_side;
+    ST_VALUE left_side;
     for (i = 0; i < n; i++) {
         if (str[i] == '\\' && i + 1 < n) {
             switch (str[i + 1]) {
