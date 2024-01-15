@@ -31,8 +31,7 @@ char* preprocess_exp(const char* lineptr, ssize_t* n_p) {
     // > `--1` -> ` +1`
     // > `---1` -> ` +-1` -> `  -1`
     // > `- -1` -> ` --1` -> `  +1`
-    for (ssize_t i = 0; i < n - 1;
-         i++) { // n-1, since the last character is a newline.
+    for (ssize_t i = 0; i < n - 1; i++) { // n-1 is possible since the last character is a newline.
         switch (str[i]) {
         case '-':
             switch (str[i + 1]) {

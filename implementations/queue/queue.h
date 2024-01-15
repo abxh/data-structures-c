@@ -3,6 +3,8 @@
 
 #define Q_VALUE int
 
+#pragma once
+
 typedef struct q_element {
     Q_VALUE value;
     struct q_element *next;
