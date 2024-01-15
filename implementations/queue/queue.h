@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define Q_VALUE int
-
 #pragma once
+
+#ifndef Q_VALUE
+#define Q_VALUE int
+#endif
 
 typedef struct q_element {
     Q_VALUE value;

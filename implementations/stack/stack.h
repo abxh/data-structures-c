@@ -3,11 +3,13 @@
 
 #pragma once
 
-#define ST_VALUE int
+#ifndef ST_VALUE
+#define ST_VALUE double
+#endif
 
-typedef struct element {
+typedef struct st_element {
     ST_VALUE value;
-    struct element *next;
+    struct st_element *next;
 } st_element;
 
 typedef struct {
