@@ -29,11 +29,12 @@ bool stack_push(Stack* stack_p, void* value_p);
  * beforehand.*/
 void* stack_pop(Stack* stack_p);
 
-/* Free the memory of the stack appropiately.*/
-void stack_free(Stack* stack_p);
+/* Clear the elements from the stack and free the memory of the elements in the
+ * stack appropiately.*/
+void stack_clear(Stack* stack_p);
 
 /* Create inline functions to directly work with stack values with appropiate
- * memory handling. */
+ * memory handling.*/
 #define CREATE_STACK_INLINE_FUNCTIONS(name, type)                              \
     static inline type stack_peek_##name(const Stack stack) {                  \
         return *(type*)stack_peek(stack);                                      \

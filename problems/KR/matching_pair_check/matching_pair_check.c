@@ -214,7 +214,7 @@ int main(void) {
         }
     }
 #endif
-    stack_free(&stack);
+    stack_clear(&stack);
     free(str);
     return 0;
 }
