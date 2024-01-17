@@ -10,31 +10,28 @@ typedef struct StackNode {
     struct StackNode* next_p;
 } StackNode;
 
-typedef StackNode Stack;
+typedef StackNode* Stack;
 
-/* Create a new stack. Can return NULL and it must be checked manually.*/
-Stack* stack_new(void);
+/* Create a new stack.*/
+static inline Stack stack_new(void) { return NULL; }
 
 /* Return if the stack is empty. */
 static inline bool stack_empty(const Stack* stack_p) {
-    return stack_p->next_p == NULL;
+    return *stack_p == NULL;
 }
 
 /* Peek at the next value pointer to be popped. Must check if stack is empty
  * beforehand.*/
 static inline void* stack_peek(const Stack* stack_p) {
-    return stack_p->next_p->value_p;
+    return (*stack_p)->value_p;
 }
 
 /* Push a value pointer onto the stack. Returns if successful. */
-bool stack_push(Stack* stack_p, void* element_p);
+bool stack_push(Stack* stack_p, void* value_p);
 
 /* Pop the stack and return the value pointer. Must check if stack is empty
  * beforehand.*/
 void* stack_pop(Stack* stack_p);
-
-/* Clear the stack of it's elements.*/
-void stack_clear(Stack* stack_p);
 
 /* Free the memory of the stack appropiately.*/
 void stack_free(Stack* stack_p);
@@ -58,8 +55,8 @@ void stack_free(Stack* stack_p);
         return false;                                                          \
     }                                                                          \
     static inline type stack_pop_##name(Stack* stack_p) {                      \
-        void* value_t = stack_pop(stack_p);                                    \
-        type value = *(type*)value_t;                                          \
-        free(value_t);                                                         \
+        void* value_p = stack_pop(stack_p);                                    \
+        type value = *(type*)value_p;                                          \
+        free(value_p);                                                         \
         return value;                                                          \
     }
