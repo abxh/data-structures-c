@@ -116,7 +116,7 @@ int main(void) {
         case ')':
         case '}':
         case ']':
-            if (stack_empty(&stack)) {
+            if (stack_empty(stack)) {
                 no_errors = false;
                 break;
             }
