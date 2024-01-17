@@ -1,4 +1,4 @@
-# Bitarray
+# bitarr
 
 This is a implementation of a bitarray using a fixed length array of one byte
 long words (8 bits). The operations treat the words as one contigious whole and
