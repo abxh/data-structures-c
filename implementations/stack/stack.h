@@ -12,11 +12,11 @@ typedef struct StackNode {
 
 typedef StackNode* Stack;
 
-/* Create a new stack.*/
-static inline Stack stack_new(void) { return NULL; }
+/* Initialize empty stacks using this constant. */
+static const Stack stack_empty = NULL;
 
 /* Return if the stack is empty. */
-static inline bool stack_empty(const Stack stack) { return stack == NULL; }
+static inline bool stack_isempty(const Stack stack) { return stack == NULL; }
 
 /* Peek at the next value pointer to be popped. Must check if stack is empty
  * beforehand.*/

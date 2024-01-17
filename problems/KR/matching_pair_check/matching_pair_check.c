@@ -31,7 +31,7 @@ char get_sign(SIGN_ENUM se) {
 }
 
 int main(void) {
-    Stack stack = stack_new();
+    Stack stack = stack_empty;
 
     puts("Input line:");
 
@@ -116,7 +116,7 @@ int main(void) {
         case ')':
         case '}':
         case ']':
-            if (stack_empty(stack)) {
+            if (stack_isempty(stack)) {
                 no_errors = false;
                 break;
             }
