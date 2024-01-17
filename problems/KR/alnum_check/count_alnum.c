@@ -7,7 +7,7 @@
 #define NUM_OF_DIGITS  ('9' - '0' + 1)
 
 int main(void) {
-    bitarr *bitarr_p = bitarr_new((sizeof(uint8_t) * 8)); // 8 bit/word * 8 words = 64 > 26 letters * 2 + 10 digits = 62
+    Bitarr *bitarr_p = bitarr_new((sizeof(uint8_t) * 8)); // 8 bit/word * 8 words = 64 > 26 letters * 2 + 10 digits = 62
 
     if (bitarr_p == NULL) {
         return 1;
