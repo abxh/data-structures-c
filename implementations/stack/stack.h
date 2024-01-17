@@ -5,24 +5,26 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct StackElement {
+typedef struct StackNode {
     void* value_p;
-    struct StackElement* next_p;
-} StackElement;
+    struct StackNode* next_p;
+} StackNode;
 
-typedef struct {
-    StackElement* head_p;
-} Stack;
+typedef StackNode Stack;
 
 /* Create a new stack. Can return NULL and it must be checked manually.*/
 Stack* stack_new(void);
 
 /* Return if the stack is empty. */
-bool stack_empty(const Stack* stack_p);
+static inline bool stack_empty(const Stack* stack_p) {
+    return stack_p->next_p == NULL;
+}
 
 /* Peek at the next value pointer to be popped. Must check if stack is empty
  * beforehand.*/
-void* stack_peek(const Stack* stack_p);
+static inline void* stack_peek(const Stack* stack_p) {
+    return stack_p->next_p->value_p;
+}
 
 /* Push a value pointer onto the stack. Returns if successful. */
 bool stack_push(Stack* stack_p, void* element_p);
