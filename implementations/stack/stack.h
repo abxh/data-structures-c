@@ -16,11 +16,11 @@ typedef StackNode* Stack;
 static inline Stack stack_new(void) { return NULL; }
 
 /* Return if the stack is empty. */
-static inline bool stack_empty(const Stack stack_p) { return stack_p == NULL; }
+static inline bool stack_empty(const Stack stack) { return stack == NULL; }
 
 /* Peek at the next value pointer to be popped. Must check if stack is empty
  * beforehand.*/
-static inline void* stack_peek(const Stack stack_p) { return stack_p->value_p; }
+static inline void* stack_peek(const Stack stack) { return stack->value_p; }
 
 /* Push a value pointer onto the stack. Returns if successful. */
 bool stack_push(Stack* stack_p, void* value_p);

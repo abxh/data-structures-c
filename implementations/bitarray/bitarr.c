@@ -24,11 +24,11 @@ Bitarr* bitarr_clone(const Bitarr* bitarr_p) {
     return bitarr_clone_p;
 }
 
-bool bitarr_equal(const Bitarr* bitarr1_p, const Bitarr* bitarr2_p) {
-    for (size_t i = 0; i < bitarr1_p->num_of_words; i++) {
+bool bitarr_equal(const Bitarr* bitarr_p, const Bitarr* bitarr_other_p) {
+    for (size_t i = 0; i < bitarr_p->num_of_words; i++) {
         for (size_t j = 0; j < sizeof(uint8_t) * 8; j++) {
-            int b1 = (bitarr1_p->words[i] >> j) & 1;
-            int b2 = (bitarr2_p->words[i] >> j) & 1;
+            int b1 = (bitarr_p->words[i] >> j) & 1;
+            int b2 = (bitarr_other_p->words[i] >> j) & 1;
             if (b1 != b2) {
                 return false;
             }

@@ -32,4 +32,5 @@ void stack_free(Stack* stack_p) {
         free(head_p);
         head_p = next_p;
     }
+    *stack_p = NULL;
 }
