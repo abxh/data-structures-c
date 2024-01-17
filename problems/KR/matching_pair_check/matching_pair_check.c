@@ -31,7 +31,7 @@ char get_sign(SIGN_ENUM se) {
 }
 
 int main(void) {
-    Stack stack = stack_empty;
+    Stack* stack_p = stack_new();
 
     puts("Input line:");
 
@@ -96,19 +96,19 @@ int main(void) {
         }
         switch (str[i]) {
         case '(':
-            stack_push_int(&stack, LPARAN);
+            stack_push_int(stack_p, LPARAN);
 #ifdef DEBUG
             printf("stack push: %c\n", str[i]);
 #endif
             break;
         case '{':
-            stack_push_int(&stack, LCURLY);
+            stack_push_int(stack_p, LCURLY);
 #ifdef DEBUG
             printf("stack push: %c\n", str[i]);
 #endif
             break;
         case '[':
-            stack_push_int(&stack, LBRACKET);
+            stack_push_int(stack_p, LBRACKET);
 #ifdef DEBUG
             printf("stack push: %c\n", str[i]);
 #endif
@@ -116,11 +116,11 @@ int main(void) {
         case ')':
         case '}':
         case ']':
-            if (stack_isempty(stack)) {
+            if (stack_isempty(stack_p)) {
                 no_errors = false;
                 break;
             }
-            left_side = stack_pop_int(&stack);
+            left_side = stack_pop_int(stack_p);
 #ifdef DEBUG
             printf("stack pop: %c\n", get_sign(left_side));
             printf("comparing %c with %c\n", get_sign(left_side), str[i]);
@@ -148,9 +148,9 @@ int main(void) {
 #ifdef DEBUG
                 printf("stack push: %c\n", '\'');
 #endif
-                stack_push_int(&stack, SINGLE_QUOTE);
+                stack_push_int(stack_p, SINGLE_QUOTE);
             } else {
-                left_side = stack_pop_int(&stack);
+                left_side = stack_pop_int(stack_p);
 #ifdef DEBUG
                 printf("stack pop: %c\n", get_sign(left_side));
                 printf("comparing %c with %c\n", get_sign(left_side), str[i]);
@@ -165,9 +165,9 @@ int main(void) {
 #ifdef DEBUG
                 printf("stack push: %c\n", '"');
 #endif
-                stack_push_int(&stack, DOUBLE_QUOTE);
+                stack_push_int(stack_p, DOUBLE_QUOTE);
             } else {
-                left_side = stack_pop_int(&stack);
+                left_side = stack_pop_int(stack_p);
 #ifdef DEBUG
                 printf("stack pop: %c\n", get_sign(left_side));
                 printf("comparing %c with %c\n", get_sign(left_side), str[i]);
@@ -182,9 +182,9 @@ int main(void) {
 #ifdef DEBUG
                 printf("stack push: %c\n", '`');
 #endif
-                stack_push_int(&stack, BACK_QUOTE);
+                stack_push_int(stack_p, BACK_QUOTE);
             } else {
-                left_side = stack_pop_int(&stack);
+                left_side = stack_pop_int(stack_p);
 #ifdef DEBUG
                 printf("stack pop: %c\n", get_sign(left_side));
                 printf("comparing %c with %c\n", get_sign(left_side), str[i]);
@@ -214,7 +214,7 @@ int main(void) {
         }
     }
 #endif
-    stack_clear(&stack);
+    stack_free(stack_p);
     free(str);
     return 0;
 }

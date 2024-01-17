@@ -12,15 +12,18 @@ typedef struct StackNode {
 
 typedef StackNode* Stack;
 
-/* Initialize an empty stack using this constant.*/
-static const Stack stack_empty = NULL;
+/* create a new stack on the heap and return it's pointer. can return NULL and
+ * it must be checked manually.*/
+static inline Stack* stack_new(void) {
+    return (Stack*)calloc(1, sizeof(Stack));
+}
 
 /* Return if the stack is empty. */
-static inline bool stack_isempty(const Stack stack) { return stack == NULL; }
+static inline bool stack_isempty(Stack* stack_p) { return *stack_p == NULL; }
 
 /* Peek at the next value pointer to be popped. Must check if stack is empty
  * beforehand.*/
-static inline void* stack_peek(const Stack stack) { return stack->value_p; }
+static inline void* stack_peek(Stack* stack_p) { return (*stack_p)->value_p; }
 
 /* Push a value pointer onto the stack. Returns if successful.*/
 bool stack_push(Stack* stack_p, void* value_p);
@@ -29,15 +32,14 @@ bool stack_push(Stack* stack_p, void* value_p);
  * beforehand.*/
 void* stack_pop(Stack* stack_p);
 
-/* Clear the elements from the stack and free the memory of the elements in the
- * stack appropiately.*/
-void stack_clear(Stack* stack_p);
+/* Free the memory of stack appropiately.*/
+void stack_free(Stack* stack_p);
 
 /* Create inline functions to directly work with stack values with appropiate
  * memory handling.*/
 #define CREATE_STACK_INLINE_FUNCTIONS(name, type)                              \
-    static inline type stack_peek_##name(const Stack stack) {                  \
-        return *(type*)stack_peek(stack);                                      \
+    static inline type stack_peek_##name(Stack* stack_p) {                     \
+        return *(type*)stack_peek(stack_p);                                    \
     }                                                                          \
     static inline bool stack_push_##name(Stack* stack_p, type value) {         \
         void* value_p = malloc(sizeof(type));                                  \

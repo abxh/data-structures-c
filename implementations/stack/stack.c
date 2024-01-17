@@ -23,7 +23,7 @@ void* stack_pop(Stack* stack_p) {
     return value_p;
 }
 
-void stack_clear(Stack* stack_p) {
+void stack_free(Stack* stack_p) {
     StackNode* head_p = *stack_p;
     StackNode* next_p = NULL;
     while (head_p != NULL) {
@@ -32,5 +32,5 @@ void stack_clear(Stack* stack_p) {
         free(head_p);
         head_p = next_p;
     }
-    *stack_p = NULL;
+    free(stack_p);
 }
