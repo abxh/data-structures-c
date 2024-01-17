@@ -12,7 +12,7 @@ typedef struct StackNode {
 
 typedef StackNode* Stack;
 
-/* Initialize empty stacks using this constant. */
+/* Initialize an empty stack using this constant.*/
 static const Stack stack_empty = NULL;
 
 /* Return if the stack is empty. */
@@ -22,7 +22,7 @@ static inline bool stack_isempty(const Stack stack) { return stack == NULL; }
  * beforehand.*/
 static inline void* stack_peek(const Stack stack) { return stack->value_p; }
 
-/* Push a value pointer onto the stack. Returns if successful. */
+/* Push a value pointer onto the stack. Returns if successful.*/
 bool stack_push(Stack* stack_p, void* value_p);
 
 /* Pop the stack and return the value pointer. Must check if stack is empty
