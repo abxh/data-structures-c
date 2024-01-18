@@ -1,5 +1,4 @@
 #include <stdbool.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "stack.h"
@@ -17,9 +16,9 @@ bool stack_push(Stack* stack_p, void* value_p) {
 
 void* stack_pop(Stack* stack_p) {
     void* value_p = (*stack_p)->value_p;
-    StackNode* head_p = (*stack_p)->next_p;
+    StackNode* head_p_new = (*stack_p)->next_p;
     free(*stack_p);
-    *stack_p = head_p;
+    *stack_p = head_p_new;
     return value_p;
 }
 

@@ -32,7 +32,10 @@ char get_sign(SIGN_ENUM se) {
 
 int main(void) {
     Stack* stack_p = stack_new();
-
+    if (stack_p == NULL) {
+        return 1;
+    }
+    
     puts("Input line:");
 
     char* str = NULL;
