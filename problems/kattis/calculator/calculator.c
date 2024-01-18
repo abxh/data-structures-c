@@ -171,17 +171,17 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p,
                 other_token = POW_OP;
             }
             fractional_number = false;
+            prefix_zero = true;
             if (first_term_paran_state == 2) {
                 queue_enqueue_token(queue_p, (Token){.type = RPARAN});
-                first_term_paran_state = 0;
             }
             queue_enqueue_token(queue_p, (Token){.type = other_token});
             queue_enqueue_token(queue_p, (Token){.type = LPARAN});
-            prefix_zero = true;
             first_term_paran_state = 1;
             break;
         case '(':
             fractional_number = false;
+            prefix_zero = true;
             if (!stack_isempty(pm_stack_p)) {
                 TokenType tt = ADD_OP;
                 while (!stack_isempty(pm_stack_p)) {
@@ -201,7 +201,6 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p,
                 }
                 queue_enqueue_token(queue_p, (Token){.type = tt});
             }
-            prefix_zero = true;
             queue_enqueue_token(queue_p, (Token){.type = LPARAN});
             break;
         case ')':
