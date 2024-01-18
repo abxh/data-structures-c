@@ -1,3 +1,4 @@
+#include <math.h> // note: use -lm beside gcc
 #include <stdio.h>
 
 #include "queue.h"
@@ -9,18 +10,22 @@ typedef enum {
     SUB_OP,
     MUL_OP,
     DIV_OP,
+    POW_OP,
     LPARAN,
     RPARAN
 } TokenType;
 
+typedef enum { UNDEFINED_OP_ASC = -1, LEFT_OP_ASC, RIGHT_OP_ASC } OP_ASC;
+
 typedef struct {
     TokenType type;
-    float value;
+    double value;
 } Token;
 
 CREATE_QUEUE_INLINE_FUNCTIONS(token, Token)
 CREATE_STACK_INLINE_FUNCTIONS(tokentype, TokenType)
 CREATE_STACK_INLINE_FUNCTIONS(token, Token)
+CREATE_STACK_INLINE_FUNCTIONS(num, double)
 
 void fprintf_token(Token token, FILE* stream) {
     switch (token.type) {
@@ -39,6 +44,9 @@ void fprintf_token(Token token, FILE* stream) {
     case DIV_OP:
         fputc('/', stream);
         break;
+    case POW_OP:
+        fputc('^', stream);
+        break;
     case LPARAN:
         fputc('(', stream);
         break;
@@ -48,34 +56,143 @@ void fprintf_token(Token token, FILE* stream) {
     }
 }
 
+int cmp_operator_precedence(TokenType operator, TokenType other_operator) {
+    // -1: l < r, 0: l = r, 1: l > r
+    int l = -1, r = -1;
+    switch (operator) {
+    case ADD_OP:
+    case SUB_OP:
+        l = 0;
+        break;
+    case MUL_OP:
+    case DIV_OP:
+        l = 1;
+        break;
+    case POW_OP:
+        l = 2;
+        break;
+    default:
+        break;
+    }
+    switch (other_operator) {
+    case ADD_OP:
+    case SUB_OP:
+        r = 0;
+        break;
+    case MUL_OP:
+    case DIV_OP:
+        r = 1;
+        break;
+    case POW_OP:
+        r = 2;
+        break;
+    default:
+        break;
+    }
+    if (l == r) {
+        return 0;
+    } else if (l > r) {
+        return 1;
+    } else {
+        return -1;
+    }
+}
+
+OP_ASC operator_associativity(TokenType operator) {
+    switch (operator) {
+    case ADD_OP:
+    case SUB_OP:
+    case MUL_OP:
+    case DIV_OP:
+        return LEFT_OP_ASC;
+    case POW_OP:
+        return RIGHT_OP_ASC;
+    default:
+        return UNDEFINED_OP_ASC;
+    }
+}
+
 void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p) {
     bool prefix_zero = true;
+    int first_term_paran_state = 0;
     Stack* pm_stack_p = stack_new();
     for (ssize_t i = 0; i < len; i++) {
         switch (line_p[i]) {
         case '+':
             if (prefix_zero) {
                 queue_enqueue_token(queue_p,
-                                    (Token){.type = NUMBER, .value = 0.F});
+                                    (Token){.type = NUMBER, .value = 0.});
                 prefix_zero = false;
+            }
+            if (first_term_paran_state == 2) {
+                queue_enqueue_token(queue_p, (Token){.type = RPARAN});
+                first_term_paran_state = 0;
             }
             stack_push_tokentype(pm_stack_p, ADD_OP);
             break;
         case '-':
             if (prefix_zero) {
                 queue_enqueue_token(queue_p,
-                                    (Token){.type = NUMBER, .value = 0.F});
+                                    (Token){.type = NUMBER, .value = 0.});
                 prefix_zero = false;
+            }
+            if (first_term_paran_state == 2) {
+                queue_enqueue_token(queue_p, (Token){.type = RPARAN});
+                first_term_paran_state = 0;
             }
             stack_push_tokentype(pm_stack_p, SUB_OP);
             break;
         case '*':
+            if (first_term_paran_state == 2) {
+                queue_enqueue_token(queue_p, (Token){.type = RPARAN});
+                first_term_paran_state = 0;
+            }
             queue_enqueue_token(queue_p, (Token){.type = MUL_OP});
+            queue_enqueue_token(queue_p, (Token){.type = LPARAN});
+            prefix_zero = true;
+            first_term_paran_state = 1;
             break;
         case '/':
+            if (first_term_paran_state == 2) {
+                queue_enqueue_token(queue_p, (Token){.type = RPARAN});
+                first_term_paran_state = 0;
+            }
             queue_enqueue_token(queue_p, (Token){.type = DIV_OP});
+            queue_enqueue_token(queue_p, (Token){.type = LPARAN});
+            prefix_zero = true;
+            first_term_paran_state = 1;
+            break;
+        case '^':
+            if (first_term_paran_state == 2) {
+                queue_enqueue_token(queue_p, (Token){.type = RPARAN});
+                first_term_paran_state = 0;
+            }
+            queue_enqueue_token(queue_p, (Token){.type = POW_OP});
+            queue_enqueue_token(queue_p, (Token){.type = LPARAN});
+            prefix_zero = true;
+            first_term_paran_state = 1;
             break;
         case '(':
+            if (!stack_isempty(pm_stack_p)) {
+                TokenType tt = ADD_OP;
+                while (!stack_isempty(pm_stack_p)) {
+                    TokenType tt_next = stack_pop_tokentype(pm_stack_p);
+                    if (tt_next == SUB_OP) {
+                        switch (tt) {
+                        case ADD_OP:
+                            tt = SUB_OP;
+                            break;
+                        case SUB_OP:
+                            tt = ADD_OP;
+                            break;
+                        default:
+                            break;
+                        }
+                    }
+                }
+                queue_enqueue_token(queue_p, (Token){.type = tt});
+            }
+            prefix_zero = true;
             queue_enqueue_token(queue_p, (Token){.type = LPARAN});
             break;
         case ')':
@@ -92,6 +209,9 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p) {
         case '8':
         case '9':
             prefix_zero = false;
+            if (first_term_paran_state == 1) {
+                first_term_paran_state = 2;
+            }
             if (!stack_isempty(pm_stack_p)) {
                 TokenType tt = ADD_OP;
                 while (!stack_isempty(pm_stack_p)) {
@@ -117,7 +237,7 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p) {
                     queue_p->back_p,
                     (Token){.type = NUMBER,
                             .value = qelement_get_token(queue_p->back_p).value *
-                                         10.F +
+                                         10. +
                                      line_p[i] - '0'});
             } else {
                 queue_enqueue_token(
@@ -129,7 +249,10 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p) {
         }
     }
     if (prefix_zero) {
-        queue_enqueue_token(queue_p, (Token){.type = NUMBER, .value = 0.F});
+        queue_enqueue_token(queue_p, (Token){.type = NUMBER, .value = 0.});
+    }
+    if (first_term_paran_state == 2) {
+        queue_enqueue_token(queue_p, (Token){.type = RPARAN});
     }
     stack_free(pm_stack_p);
 }
@@ -147,9 +270,17 @@ void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
         case SUB_OP:
         case MUL_OP:
         case DIV_OP:
+        case POW_OP:
         case RPARAN:
             while (!stack_isempty(op_stack_p) &&
-                   stack_peek_tokentype(op_stack_p) != LPARAN) {
+                   stack_peek_tokentype(op_stack_p) != LPARAN &&
+                   (0 < cmp_operator_precedence(
+                            stack_peek_tokentype(op_stack_p), tk.type) ||
+                    (0 == cmp_operator_precedence(
+                              stack_peek_tokentype(op_stack_p), tk.type) &&
+                     operator_associativity(tk.type) == LEFT_OP_ASC))
+
+            ) {
                 queue_enqueue_token(
                     out_queue_p,
                     (Token){.type = stack_pop_tokentype(op_stack_p)});
@@ -173,6 +304,9 @@ void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
         case DIV_OP:
             stack_push_tokentype(op_stack_p, DIV_OP);
             break;
+        case POW_OP:
+            stack_push_tokentype(op_stack_p, POW_OP);
+            break;
         case LPARAN:
             stack_push_tokentype(op_stack_p, LPARAN);
             break;
@@ -191,6 +325,54 @@ void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
     stack_free(op_stack_p);
 }
 
+double eval_postfix_exp(Queue* queue_p) {
+    Stack* stack_p = stack_new();
+    double r, l;
+    while (!queue_empty(queue_p)) {
+        Token t = queue_dequeue_token(queue_p);
+        if (t.type == NUMBER) {
+            stack_push_num(stack_p, t.value);
+            continue;
+        }
+        if (!stack_isempty(stack_p)) {
+            r = stack_pop_num(stack_p);
+        } else {
+            return 0.;
+        }
+        if (!stack_isempty(stack_p)) {
+            l = stack_pop_num(stack_p);
+        } else {
+            return 0.;
+        }
+        switch (t.type) {
+            case ADD_OP:
+                stack_push_num(stack_p, l + r);
+                break;
+            case SUB_OP:
+                stack_push_num(stack_p, l - r);
+                break;
+            case MUL_OP:
+                stack_push_num(stack_p, l * r);
+                break;
+            case DIV_OP:
+                stack_push_num(stack_p, l / r);
+                break;
+            case POW_OP:
+                stack_push_num(stack_p, pow(l, r));
+                break;
+            default:
+                break;
+        }
+    }
+    if (!stack_isempty(stack_p)) {
+        l = stack_pop_num(stack_p);
+    } else {
+        return 0.;
+    }
+    stack_free(stack_p);
+    return l;
+}
+
 int main() {
     char* line_p = NULL;
     size_t n = 0;
@@ -201,8 +383,9 @@ int main() {
             return 1;
         }
         parse_math_exp(line_p, len, queue_p);
-        QElement* elm_p = queue_p->front_p;
 
+#ifdef DEBUG
+        QElement* elm_p = queue_p->front_p;
         printf("[calc] parsing w. +- eval:");
         while (elm_p) {
             putchar(' ');
@@ -210,9 +393,10 @@ int main() {
             elm_p = elm_p->next_p;
         }
         putchar('\n');
+#endif
 
         conv_math_infix_exp_to_postfix(&queue_p);
-
+#ifdef DEBUG
         printf("[calc] postfix conversion:");
         elm_p = queue_p->front_p;
         while (elm_p) {
@@ -221,12 +405,18 @@ int main() {
             elm_p = elm_p->next_p;
         }
         putchar('\n');
+#endif
 
+#ifdef DEBUG
+        printf("[calc] eval of postfix:    ");
+#endif
+        printf("%.2f\n", eval_postfix_exp(queue_p));
+
+        queue_free(queue_p);
         free(line_p);
-        free(queue_p);
         line_p = NULL;
         n = 0;
     }
-
+    free(line_p);
     return 0;
 }
