@@ -1,6 +1,6 @@
 # queue
-This is a simple implementation of a queue using a singly-linked list with an extra pointer
-pointer to the last node in the list.
+This is a implementation of a queue using a singly-linked list with an extra pointer pointer to the last
+node in the list.
 
 The front element is the first to be dequeued and the back element is the last enqueued.
 
