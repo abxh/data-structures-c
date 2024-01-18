@@ -139,7 +139,7 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p,
             if (pm_token == UNDEFINED_OP) {
                 pm_token = ADD_OP;
             }
-            [[fallthrough]];
+            [[fallthrough]]; // to signal purposeful fallthrough.
         case '-':
             if (pm_token == UNDEFINED_OP) {
                 pm_token = SUB_OP;
