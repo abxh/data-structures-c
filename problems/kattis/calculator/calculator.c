@@ -18,9 +18,9 @@ typedef struct {
     float value;
 } Token;
 
-CREATE_QUEUE_INLINE_FUNCTIONS(token, Token);
-CREATE_STACK_INLINE_FUNCTIONS(tokentype, TokenType);
-CREATE_STACK_INLINE_FUNCTIONS(token, Token);
+CREATE_QUEUE_INLINE_FUNCTIONS(token, Token)
+CREATE_STACK_INLINE_FUNCTIONS(tokentype, TokenType)
+CREATE_STACK_INLINE_FUNCTIONS(token, Token)
 
 void fprintf_token(Token token, FILE* stream) {
     switch (token.type) {
@@ -132,7 +132,7 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p) {
         queue_enqueue_token(queue_p, (Token){.type = NUMBER, .value = 0.F});
     }
     stack_free(pm_stack_p);
-};
+}
 
 void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
     // variation of the shunting yard algorithm.
