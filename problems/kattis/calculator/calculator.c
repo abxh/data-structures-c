@@ -5,14 +5,15 @@
 #include "stack.h"
 
 typedef enum {
-    NUMBER = 0,
+    UNDEFINED_OP = 0,
+    NUMBER,
     ADD_OP,
     SUB_OP,
     MUL_OP,
     DIV_OP,
     POW_OP,
     LPARAN,
-    RPARAN
+    RPARAN,
 } TokenType;
 
 typedef enum { UNDEFINED_OP_ASC = -1, LEFT_OP_ASC, RIGHT_OP_ASC } OP_ASC;
@@ -30,7 +31,11 @@ CREATE_STACK_INLINE_FUNCTIONS(num, double)
 void fprintf_token(Token token, FILE* stream) {
     switch (token.type) {
     case NUMBER:
+#ifdef KATTIS
         fprintf(stream, "%.2f", token.value);
+#else
+        fprintf(stream, "%.9g", token.value);
+#endif
         break;
     case ADD_OP:
         fputc('+', stream);
@@ -52,6 +57,9 @@ void fprintf_token(Token token, FILE* stream) {
         break;
     case RPARAN:
         fputc(')', stream);
+        break;
+    case UNDEFINED_OP:
+        fputc(' ', stream);
         break;
     }
 }
@@ -112,25 +120,31 @@ OP_ASC operator_associativity(TokenType operator) {
     }
 }
 
-void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p) {
+void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p,
+                    double last_value) {
     bool prefix_zero = true;
     int first_term_paran_state = 0;
+    bool fractional_number = false;
+    double multiplierl = 10.;
+    double multiplierr = 1.;
+    TokenType pm_token;
+    TokenType other_token;
+
     Stack* pm_stack_p = stack_new();
     for (ssize_t i = 0; i < len; i++) {
+        pm_token = UNDEFINED_OP;
+        other_token = UNDEFINED_OP;
         switch (line_p[i]) {
         case '+':
-            if (prefix_zero) {
-                queue_enqueue_token(queue_p,
-                                    (Token){.type = NUMBER, .value = 0.});
-                prefix_zero = false;
+            if (pm_token == UNDEFINED_OP) {
+                pm_token = ADD_OP;
             }
-            if (first_term_paran_state == 2) {
-                queue_enqueue_token(queue_p, (Token){.type = RPARAN});
-                first_term_paran_state = 0;
-            }
-            stack_push_tokentype(pm_stack_p, ADD_OP);
-            break;
+            [[fallthrough]];
         case '-':
+            if (pm_token == UNDEFINED_OP) {
+                pm_token = SUB_OP;
+            }
+            fractional_number = false;
             if (prefix_zero) {
                 queue_enqueue_token(queue_p,
                                     (Token){.type = NUMBER, .value = 0.});
@@ -140,39 +154,34 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p) {
                 queue_enqueue_token(queue_p, (Token){.type = RPARAN});
                 first_term_paran_state = 0;
             }
-            stack_push_tokentype(pm_stack_p, SUB_OP);
+            stack_push_tokentype(pm_stack_p, pm_token);
             break;
         case '*':
-            if (first_term_paran_state == 2) {
-                queue_enqueue_token(queue_p, (Token){.type = RPARAN});
-                first_term_paran_state = 0;
+            if (other_token == UNDEFINED_OP) {
+                other_token = MUL_OP;
             }
-            queue_enqueue_token(queue_p, (Token){.type = MUL_OP});
-            queue_enqueue_token(queue_p, (Token){.type = LPARAN});
-            prefix_zero = true;
-            first_term_paran_state = 1;
-            break;
+            [[fallthrough]];
         case '/':
-            if (first_term_paran_state == 2) {
-                queue_enqueue_token(queue_p, (Token){.type = RPARAN});
-                first_term_paran_state = 0;
+            if (other_token == UNDEFINED_OP) {
+                other_token = DIV_OP;
             }
-            queue_enqueue_token(queue_p, (Token){.type = DIV_OP});
-            queue_enqueue_token(queue_p, (Token){.type = LPARAN});
-            prefix_zero = true;
-            first_term_paran_state = 1;
-            break;
+            [[fallthrough]];
         case '^':
+            if (other_token == UNDEFINED_OP) {
+                other_token = POW_OP;
+            }
+            fractional_number = false;
             if (first_term_paran_state == 2) {
                 queue_enqueue_token(queue_p, (Token){.type = RPARAN});
                 first_term_paran_state = 0;
             }
-            queue_enqueue_token(queue_p, (Token){.type = POW_OP});
+            queue_enqueue_token(queue_p, (Token){.type = other_token});
             queue_enqueue_token(queue_p, (Token){.type = LPARAN});
             prefix_zero = true;
             first_term_paran_state = 1;
             break;
         case '(':
+            fractional_number = false;
             if (!stack_isempty(pm_stack_p)) {
                 TokenType tt = ADD_OP;
                 while (!stack_isempty(pm_stack_p)) {
@@ -208,6 +217,8 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p) {
         case '7':
         case '8':
         case '9':
+        case '_':
+        case '.':
             prefix_zero = false;
             if (first_term_paran_state == 1) {
                 first_term_paran_state = 2;
@@ -231,17 +242,34 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p) {
                 }
                 queue_enqueue_token(queue_p, (Token){.type = tt});
             }
+            if (line_p[i] == '_') {
+                queue_enqueue_token(
+                    queue_p, (Token){.type = NUMBER, .value = last_value});
+                break;
+            }
+            if (!fractional_number && line_p[i] == '.') {
+                fractional_number = true;
+                multiplierl = 1.;
+                multiplierr = 1.;
+                continue;
+            } else if (fractional_number) {
+                multiplierr /= 10.;
+            } else {
+                multiplierl = 10.;
+                multiplierr = 1.;
+            }
             if (!queue_empty(queue_p) &&
                 qelement_get_token(queue_p->back_p).type == NUMBER) {
                 qelement_set_token(
                     queue_p->back_p,
                     (Token){.type = NUMBER,
                             .value = qelement_get_token(queue_p->back_p).value *
-                                         10. +
-                                     line_p[i] - '0'});
+                                         multiplierl +
+                                     (line_p[i] - '0') * multiplierr});
             } else {
                 queue_enqueue_token(
-                    queue_p, (Token){.type = NUMBER, .value = line_p[i] - '0'});
+                    queue_p, (Token){.type = NUMBER,
+                                     .value = (line_p[i] - '0') * multiplierr});
             }
             break;
         default:
@@ -313,6 +341,8 @@ void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
         case RPARAN:
             stack_pop_token(op_stack_p); // pop LPARAN
             break;
+        case UNDEFINED_OP:
+            break;
         }
     }
     while (!stack_isempty(op_stack_p) &&
@@ -345,23 +375,23 @@ double eval_postfix_exp(Queue* queue_p) {
             return 0.;
         }
         switch (t.type) {
-            case ADD_OP:
-                stack_push_num(stack_p, l + r);
-                break;
-            case SUB_OP:
-                stack_push_num(stack_p, l - r);
-                break;
-            case MUL_OP:
-                stack_push_num(stack_p, l * r);
-                break;
-            case DIV_OP:
-                stack_push_num(stack_p, l / r);
-                break;
-            case POW_OP:
-                stack_push_num(stack_p, pow(l, r));
-                break;
-            default:
-                break;
+        case ADD_OP:
+            stack_push_num(stack_p, l + r);
+            break;
+        case SUB_OP:
+            stack_push_num(stack_p, l - r);
+            break;
+        case MUL_OP:
+            stack_push_num(stack_p, l * r);
+            break;
+        case DIV_OP:
+            stack_push_num(stack_p, l / r);
+            break;
+        case POW_OP:
+            stack_push_num(stack_p, pow(l, r));
+            break;
+        default:
+            break;
         }
     }
     if (!stack_isempty(stack_p)) {
@@ -377,12 +407,13 @@ int main() {
     char* line_p = NULL;
     size_t n = 0;
     ssize_t len = 0;
+    double last_value = 0;
     while (0 < (len = getline(&line_p, &n, stdin))) {
         Queue* queue_p = queue_new();
         if (queue_p == NULL) {
             return 1;
         }
-        parse_math_exp(line_p, len, queue_p);
+        parse_math_exp(line_p, len, queue_p, last_value);
 
 #ifdef DEBUG
         QElement* elm_p = queue_p->front_p;
@@ -410,7 +441,12 @@ int main() {
 #ifdef DEBUG
         printf("[calc] eval of postfix:    ");
 #endif
-        printf("%.2f\n", eval_postfix_exp(queue_p));
+        last_value = eval_postfix_exp(queue_p);
+#ifdef KATTIS
+        printf("%.2f\n", last_value);
+#else
+        printf("%.9g\n", last_value);
+#endif
 
         queue_free(queue_p);
         free(line_p);
