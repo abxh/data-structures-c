@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* note to myself: front is popped first, back is added to */
-
 typedef struct QElement {
     void* value_p;
     struct QElement* next_p;
