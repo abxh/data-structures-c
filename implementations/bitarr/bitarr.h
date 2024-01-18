@@ -29,11 +29,6 @@ Bitarr* bitarr_clone(const Bitarr* bitarr_p);
 /* Convert bytes to bitarray.*/
 bool bitarr_from_bytes(const char* bytes, size_t n);
 
-/* Convert bitarray to bytes.*/
-static inline char* bitarr_to_bytes(const Bitarr* bitarr_p) {
-    return (char*)bitarr_p->words;
-}
-
 /* Check if two bitarrays are equal. */
 bool bitarr_equal(const Bitarr* bitarr_p, const Bitarr* bitarr_other_p);
 
