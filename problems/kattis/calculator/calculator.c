@@ -286,7 +286,9 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p,
 }
 
 void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
-    // variation of the shunting yard algorithm.
+    // using the shunting yard algorithm.
+    // https://en.wikipedia.org/wiki/Shunting_yard_algorithm
+    
     Stack* op_stack_p = stack_new();
     Queue* inp_queue_p = *queue_pp;
     Queue* out_queue_p = queue_new();
