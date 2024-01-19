@@ -17,7 +17,7 @@ typedef struct {
 /* Create a new queue and returns it's pointer. Can return NULL and it should be
  * checked manually. */
 static inline Queue* queue_new(void) {
-    return (Queue*)calloc(1, sizeof(Queue));
+    return (Queue*)calloc(1, sizeof(Queue)); // Also makes front_p and back_p NULL.
 }
 
 /* Return if the queue is empty.*/
