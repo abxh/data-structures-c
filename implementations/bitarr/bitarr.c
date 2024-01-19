@@ -18,8 +18,7 @@ Bitarr* bitarr_new(size_t num_of_words) {
 
 Bitarr* bitarr_clone(const Bitarr* bitarr_p) {
     Bitarr* bitarr_clone_p = malloc(sizeof(Bitarr));
-    bitarr_clone_p->words =
-        (uint8_t*)strndup((char*)bitarr_p->words, bitarr_p->num_of_words);
+    bitarr_clone_p->words = (uint8_t*)strndup((char*)bitarr_p->words, bitarr_p->num_of_words);
     bitarr_clone_p->num_of_words = bitarr_p->num_of_words;
     return bitarr_clone_p;
 }
@@ -29,7 +28,7 @@ bool bitarr_from_bytes(const char* bytes, size_t n) {
     if (bitarr_p == NULL) {
         return false;
     }
-    bitarr_p->words = (uint8_t*) bytes;
+    bitarr_p->words = (uint8_t*)bytes;
     bitarr_p->num_of_words = n;
     return true;
 }
@@ -38,8 +37,7 @@ bool bitarr_equal(const Bitarr* bitarr_p, const Bitarr* bitarr_other_p) {
     if (bitarr_p->num_of_words != bitarr_other_p->num_of_words) {
         return false;
     }
-    return strncmp((char*)bitarr_p->words, (char*)bitarr_other_p->words,
-                   bitarr_p->num_of_words) == 0;
+    return strncmp((char*)bitarr_p->words, (char*)bitarr_other_p->words, bitarr_p->num_of_words) == 0;
 }
 
 int bitarr_get(const Bitarr* bitarr_p, size_t index) {

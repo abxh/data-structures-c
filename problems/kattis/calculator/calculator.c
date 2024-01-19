@@ -120,8 +120,7 @@ OP_ASC operator_associativity(TokenType operator) {
     }
 }
 
-void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p,
-                    double last_value) {
+void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p, double last_value) {
     bool prefix_zero = true;
     int first_term_paran_state = 0;
     bool fractional_number = false;
@@ -146,8 +145,7 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p,
             }
             fractional_number = false;
             if (prefix_zero) {
-                queue_enqueue_token(queue_p,
-                                    (Token){.type = NUMBER, .value = 0.});
+                queue_enqueue_token(queue_p, (Token){.type = NUMBER, .value = 0.});
                 prefix_zero = false;
             }
             if (first_term_paran_state == 2) {
@@ -242,8 +240,7 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p,
                 queue_enqueue_token(queue_p, (Token){.type = tt});
             }
             if (line_p[i] == '_') {
-                queue_enqueue_token(
-                    queue_p, (Token){.type = NUMBER, .value = last_value});
+                queue_enqueue_token(queue_p, (Token){.type = NUMBER, .value = last_value});
                 break;
             }
             if (!fractional_number && line_p[i] == '.') {
@@ -257,18 +254,12 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p,
                 multiplierl = 10.;
                 multiplierr = 1.;
             }
-            if (!queue_empty(queue_p) &&
-                qelement_get_token(queue_p->back_p).type == NUMBER) {
-                qelement_set_token(
-                    queue_p->back_p,
-                    (Token){.type = NUMBER,
-                            .value = qelement_get_token(queue_p->back_p).value *
-                                         multiplierl +
-                                     (line_p[i] - '0') * multiplierr});
+            if (!queue_empty(queue_p) && qelement_get_token(queue_p->back_p).type == NUMBER) {
+                qelement_set_token(queue_p->back_p, (Token){.type = NUMBER,
+                                                            .value = qelement_get_token(queue_p->back_p).value * multiplierl +
+                                                                     (line_p[i] - '0') * multiplierr});
             } else {
-                queue_enqueue_token(
-                    queue_p, (Token){.type = NUMBER,
-                                     .value = (line_p[i] - '0') * multiplierr});
+                queue_enqueue_token(queue_p, (Token){.type = NUMBER, .value = (line_p[i] - '0') * multiplierr});
             }
             break;
         default:
@@ -287,7 +278,7 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p,
 void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
     // using the shunting yard algorithm.
     // https://en.wikipedia.org/wiki/Shunting_yard_algorithm
-    
+
     Stack* op_stack_p = stack_new();
     Queue* inp_queue_p = *queue_pp;
     Queue* out_queue_p = queue_new();
@@ -301,18 +292,13 @@ void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
         case DIV_OP:
         case POW_OP:
         case RPARAN:
-            while (!stack_isempty(op_stack_p) &&
-                   stack_peek_tokentype(op_stack_p) != LPARAN &&
-                   (0 < cmp_operator_precedence(
-                            stack_peek_tokentype(op_stack_p), tk.type) ||
-                    (0 == cmp_operator_precedence(
-                              stack_peek_tokentype(op_stack_p), tk.type) &&
+            while (!stack_isempty(op_stack_p) && stack_peek_tokentype(op_stack_p) != LPARAN &&
+                   (0 < cmp_operator_precedence(stack_peek_tokentype(op_stack_p), tk.type) ||
+                    (0 == cmp_operator_precedence(stack_peek_tokentype(op_stack_p), tk.type) &&
                      operator_associativity(tk.type) == LEFT_OP_ASC))
 
             ) {
-                queue_enqueue_token(
-                    out_queue_p,
-                    (Token){.type = stack_pop_tokentype(op_stack_p)});
+                queue_enqueue_token(out_queue_p, (Token){.type = stack_pop_tokentype(op_stack_p)});
             }
         default:
             break;
@@ -346,10 +332,8 @@ void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
             break;
         }
     }
-    while (!stack_isempty(op_stack_p) &&
-           stack_peek_tokentype(op_stack_p) != LPARAN) {
-        queue_enqueue_token(out_queue_p,
-                            (Token){.type = stack_pop_tokentype(op_stack_p)});
+    while (!stack_isempty(op_stack_p) && stack_peek_tokentype(op_stack_p) != LPARAN) {
+        queue_enqueue_token(out_queue_p, (Token){.type = stack_pop_tokentype(op_stack_p)});
     }
     *queue_pp = out_queue_p;
     queue_free(inp_queue_p);

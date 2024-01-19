@@ -35,7 +35,7 @@ int main(void) {
     if (stack_p == NULL) {
         return 1;
     }
-    
+
     puts("Input line:");
 
     char* str = NULL;
@@ -81,7 +81,8 @@ int main(void) {
                     comment_sign_used = true;
                     i++; // skip next char
                 }
-            } break;
+            }
+            break;
         case '*':
             if (i + 1 < n && str[i + 1] == '/') {
                 if (comment_sign_used) {
@@ -202,8 +203,7 @@ int main(void) {
         }
     }
 #ifdef DEBUG
-    printf("[result] no errors: %s, index stopped at: %lu\n",
-           no_errors ? "true" : "false", i);
+    printf("[result] no errors: %s, index stopped at: %lu\n", no_errors ? "true" : "false", i);
 #else
     if (no_errors) {
         printf("\nno errors : )\n");

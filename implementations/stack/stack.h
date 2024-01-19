@@ -2,6 +2,7 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct StackNode {
     void* value_p;
@@ -39,32 +40,31 @@ void stack_free(Stack* stack_p);
 
 /* Create inline functions to directly work with stack values with appropiate
  * memory handling.*/
-#define CREATE_STACK_INLINE_FUNCTIONS(name, type)                              \
-    static inline type stack_peek_##name(const Stack* stack_p) {               \
-        return *(type*)stack_peek(stack_p);                                    \
-    }                                                                          \
-    static inline bool stack_push_##name(Stack* stack_p, type value) {         \
-        void* value_p = malloc(sizeof(type));                                  \
-        if (value_p == NULL) {                                                 \
-            return false;                                                      \
-        }                                                                      \
-        memcpy(value_p, &value, sizeof(type));                                 \
-        if (stack_push(stack_p, value_p)) {                                    \
-            return true;                                                       \
-        }                                                                      \
-        free(value_p);                                                         \
-        return false;                                                          \
-    }                                                                          \
-    static inline type stack_pop_##name(Stack* stack_p) {                      \
-        void* value_p = stack_pop(stack_p);                                    \
-        type value = *(type*)value_p;                                          \
-        free(value_p);                                                         \
-        return value;                                                          \
-    }                                                                          \
-    static inline type stacknode_get_##name(StackNode* stacknode_p) {          \
-        return *(type*)stacknode_p->value_p;                                   \
-    }                                                                          \
-    static inline void stacknode_set_##name(StackNode* stacknode_p,            \
-                                            type value) {                      \
-        memcpy(stacknode_p->value_p, &value, sizeof(type));                    \
+#define CREATE_STACK_INLINE_FUNCTIONS(name, type)                                 \
+    static inline type stack_peek_##name(const Stack* stack_p) {                  \
+        return *(type*)stack_peek(stack_p);                                       \
+    }                                                                             \
+    static inline bool stack_push_##name(Stack* stack_p, type value) {            \
+        void* value_p = malloc(sizeof(type));                                     \
+        if (value_p == NULL) {                                                    \
+            return false;                                                         \
+        }                                                                         \
+        memcpy(value_p, &value, sizeof(type));                                    \
+        if (stack_push(stack_p, value_p)) {                                       \
+            return true;                                                          \
+        }                                                                         \
+        free(value_p);                                                            \
+        return false;                                                             \
+    }                                                                             \
+    static inline type stack_pop_##name(Stack* stack_p) {                         \
+        void* value_p = stack_pop(stack_p);                                       \
+        type value = *(type*)value_p;                                             \
+        free(value_p);                                                            \
+        return value;                                                             \
+    }                                                                             \
+    static inline type stacknode_get_##name(StackNode* stacknode_p) {             \
+        return *(type*)stacknode_p->value_p;                                      \
+    }                                                                             \
+    static inline void stacknode_set_##name(StackNode* stacknode_p, type value) { \
+        memcpy(stacknode_p->value_p, &value, sizeof(type));                       \
     }

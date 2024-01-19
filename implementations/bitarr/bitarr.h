@@ -45,9 +45,7 @@ bool bitarr_set_false(Bitarr* bitarray_p, size_t index);
 bool bitarr_set(Bitarr* bitarray_p, size_t index, bool bit);
 
 /* Set the value at an index at compile time. Return if not OOB.*/
-#define BITARR_SET(bitarray_p, index, bit)                                     \
-    ((bit) ? bitarr_set_true((bitarray_p), (index))                            \
-           : bitarr_set_false((bitarray_p), (index)))
+#define BITARR_SET(bitarray_p, index, bit) ((bit) ? bitarr_set_true((bitarray_p), (index)) : bitarr_set_false((bitarray_p), (index)))
 
 /* Toggle the value at an index. Return if not OOB. */
 bool bitarr_toggle(Bitarr* bitarray_p, size_t index);

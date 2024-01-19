@@ -5,12 +5,12 @@
 #include <time.h>
 #include <unistd.h>
 
-#define VT_MOVUP      "\033[A"
-#define VT_CLEARLINE  "\33[2K"
+#define VT_MOVUP "\033[A"
+#define VT_CLEARLINE "\33[2K"
 #define VT_MOVTOFRONT "\r"
 
-uint64_t *generate_star_pattern() {
-    uint64_t *star_pattern = calloc(8, sizeof(uint64_t));
+uint64_t* generate_star_pattern() {
+    uint64_t* star_pattern = calloc(8, sizeof(uint64_t));
     srand(time(NULL));
     for (int i = 0; i < 8; i++) {
         for (size_t j = 0; j < 8 * sizeof(uint64_t); j++) {
@@ -30,8 +30,8 @@ uint64_t rotate_bits_right(uint64_t value, int rotate_bits_by) {
 }
 
 int main(void) {
-    uint64_t *star_pattern = generate_star_pattern();
-    const struct timespec duration = {0., 1./25. * 1e+9}; // 1 / 25 seconds
+    uint64_t* star_pattern = generate_star_pattern();
+    const struct timespec duration = {0., 1. / 25. * 1e+9}; // 1 / 25 seconds
     int8_t rotation_dir = 0;
 
     while (true) {

@@ -1,9 +1,19 @@
+# see https://clang.llvm.org/docs/ClangFormatStyleOptions.html
 ---
-# We'll use defaults from the LLVM style, but with 4 columns indentation.
 BasedOnStyle: LLVM
+Language: Cpp
+Standard: Cpp11
+
+ColumnLimit: 135
+
+AccessModifierOffset: -4
 IndentWidth: 4
-# ---
-# Language: Cpp
-# Force pointers to the type for C++.
-DerivePointerAlignment: false
+UseTab: Never
+
+AlignEscapedNewlines: Left
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortLambdasOnASingleLine: Empty
+AlwaysBreakTemplateDeclarations: true
+BreakConstructorInitializers: BeforeComma
+IndentPPDirectives: AfterHash
 PointerAlignment: Left
