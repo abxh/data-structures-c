@@ -2,16 +2,17 @@
 
 #include "stack.h"
 
-CREATE_STACK_INLINE_FUNCTIONS(int, int) // name, type
-
 typedef enum {
-    LBRACKET = 0,
+    UNDEFINED_SIGN_ENUM = 0,
+    LBRACKET,
     LCURLY,
     LPARAN,
     SINGLE_QUOTE,
     DOUBLE_QUOTE,
     BACK_QUOTE,
 } SIGN_ENUM;
+
+CREATE_STACK_INLINE_FUNCTIONS(se, SIGN_ENUM, UNDEFINED_SIGN_ENUM) // name, type, default_
 
 char get_sign(SIGN_ENUM se) {
     switch (se) {
@@ -27,7 +28,10 @@ char get_sign(SIGN_ENUM se) {
         return '"';
     case BACK_QUOTE:
         return '`';
+    case UNDEFINED_SIGN_ENUM:
+        break;
     }
+    return ' ';
 }
 
 int main(void) {
@@ -100,19 +104,19 @@ int main(void) {
         }
         switch (str[i]) {
         case '(':
-            stack_push_int(stack_p, LPARAN);
+            stack_push_se(stack_p, LPARAN);
 #ifdef DEBUG
             printf("stack push: %c\n", str[i]);
 #endif
             break;
         case '{':
-            stack_push_int(stack_p, LCURLY);
+            stack_push_se(stack_p, LCURLY);
 #ifdef DEBUG
             printf("stack push: %c\n", str[i]);
 #endif
             break;
         case '[':
-            stack_push_int(stack_p, LBRACKET);
+            stack_push_se(stack_p, LBRACKET);
 #ifdef DEBUG
             printf("stack push: %c\n", str[i]);
 #endif
@@ -124,7 +128,7 @@ int main(void) {
                 no_errors = false;
                 break;
             }
-            left_side = stack_pop_int(stack_p);
+            left_side = stack_pop_se(stack_p);
 #ifdef DEBUG
             printf("stack pop: %c\n", get_sign(left_side));
             printf("comparing %c with %c\n", get_sign(left_side), str[i]);
@@ -152,9 +156,9 @@ int main(void) {
 #ifdef DEBUG
                 printf("stack push: %c\n", '\'');
 #endif
-                stack_push_int(stack_p, SINGLE_QUOTE);
+                stack_push_se(stack_p, SINGLE_QUOTE);
             } else {
-                left_side = stack_pop_int(stack_p);
+                left_side = stack_pop_se(stack_p);
 #ifdef DEBUG
                 printf("stack pop: %c\n", get_sign(left_side));
                 printf("comparing %c with %c\n", get_sign(left_side), str[i]);
@@ -169,9 +173,9 @@ int main(void) {
 #ifdef DEBUG
                 printf("stack push: %c\n", '"');
 #endif
-                stack_push_int(stack_p, DOUBLE_QUOTE);
+                stack_push_se(stack_p, DOUBLE_QUOTE);
             } else {
-                left_side = stack_pop_int(stack_p);
+                left_side = stack_pop_se(stack_p);
 #ifdef DEBUG
                 printf("stack pop: %c\n", get_sign(left_side));
                 printf("comparing %c with %c\n", get_sign(left_side), str[i]);
@@ -186,9 +190,9 @@ int main(void) {
 #ifdef DEBUG
                 printf("stack push: %c\n", '`');
 #endif
-                stack_push_int(stack_p, BACK_QUOTE);
+                stack_push_se(stack_p, BACK_QUOTE);
             } else {
-                left_side = stack_pop_int(stack_p);
+                left_side = stack_pop_se(stack_p);
 #ifdef DEBUG
                 printf("stack pop: %c\n", get_sign(left_side));
                 printf("comparing %c with %c\n", get_sign(left_side), str[i]);

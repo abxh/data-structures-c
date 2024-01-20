@@ -23,10 +23,10 @@ typedef struct {
     double value;
 } Token;
 
-CREATE_QUEUE_INLINE_FUNCTIONS(token, Token)
-CREATE_STACK_INLINE_FUNCTIONS(tokentype, TokenType)
-CREATE_STACK_INLINE_FUNCTIONS(token, Token)
-CREATE_STACK_INLINE_FUNCTIONS(num, double)
+CREATE_QUEUE_INLINE_FUNCTIONS(token, Token, (Token){.type = UNDEFINED_OP})
+CREATE_STACK_INLINE_FUNCTIONS(tokentype, TokenType, (TokenType)UNDEFINED_OP)
+CREATE_STACK_INLINE_FUNCTIONS(token, Token, (Token){.type = UNDEFINED_OP})
+CREATE_STACK_INLINE_FUNCTIONS(num, double, 0.)
 
 void fprintf_token(Token token, FILE* stream) {
     switch (token.type) {
@@ -130,6 +130,9 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p, double last_value
     TokenType other_token;
 
     Stack* pm_stack_p = stack_new();
+    if (pm_stack_p == NULL) {
+        return;
+    }
     for (ssize_t i = 0; i < len; i++) {
         pm_token = UNDEFINED_OP;
         other_token = UNDEFINED_OP;
@@ -280,9 +283,14 @@ void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
     // https://en.wikipedia.org/wiki/Shunting_yard_algorithm
 
     Stack* op_stack_p = stack_new();
+    if (op_stack_p == NULL) {
+        return;
+    }
     Queue* inp_queue_p = *queue_pp;
     Queue* out_queue_p = queue_new();
-
+    if (out_queue_p == NULL) {
+        return;
+    }
     while (!queue_empty(inp_queue_p)) {
         Token tk = queue_dequeue_token(inp_queue_p);
         switch (tk.type) {
@@ -342,6 +350,9 @@ void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
 
 double eval_postfix_exp(Queue* queue_p) {
     Stack* stack_p = stack_new();
+    if (stack_p == NULL) {
+        return 0.;
+    }
     double r, l;
     while (!queue_empty(queue_p)) {
         Token t = queue_dequeue_token(queue_p);

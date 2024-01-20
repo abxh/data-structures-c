@@ -42,9 +42,13 @@ void queue_free(Queue* queue_p);
 
 /* Create inline functions to directly work with queue values with appropiate
  * memory handling.*/
-#define CREATE_QUEUE_INLINE_FUNCTIONS(name, type)                              \
+#define CREATE_QUEUE_INLINE_FUNCTIONS(name, type, default_)                    \
     static inline type queue_peek_##name(Queue* queue_p) {                     \
-        return *(type*)queue_peek(queue_p);                                    \
+        void* value_p = queue_peek(queue_p);                                   \
+        if (value_p == NULL) {                                                 \
+            return (default_);                                                 \
+        }                                                                      \
+        return *(type*)value_p;                                                \
     }                                                                          \
     static inline bool queue_enqueue_##name(Queue* queue_p, type value) {      \
         void* value_p = malloc(sizeof(type));                                  \
@@ -60,12 +64,19 @@ void queue_free(Queue* queue_p);
     }                                                                          \
     static inline type queue_dequeue_##name(Queue* queue_p) {                  \
         void* value_p = queue_dequeue(queue_p);                                \
+        if (value_p == NULL) {                                                 \
+            return (default_);                                                 \
+        }                                                                      \
         type value = *(type*)value_p;                                          \
         free(value_p);                                                         \
         return value;                                                          \
     }                                                                          \
     static inline type qelement_get_##name(QElement* qelement_p) {             \
-        return *(type*)qelement_p->value_p;                                    \
+        void* value_p = qelement_p->value_p;                                   \
+        if (value_p == NULL) {                                                 \
+            return (default_);                                                 \
+        }                                                                      \
+        return *(type*)value_p;                                                \
     }                                                                          \
     static inline void qelement_set_##name(QElement* qelement_p, type value) { \
         memcpy(qelement_p->value_p, &value, sizeof(type));                     \
