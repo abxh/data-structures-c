@@ -7,13 +7,20 @@
 #include "bitarr.h"
 
 Bitarr* bitarr_new(size_t num_of_words) {
-    Bitarr* bitarray = malloc(sizeof(Bitarr));
-    if (bitarray == NULL) {
-        return bitarray;
+    if (num_of_words == 0) {
+        return NULL;
     }
-    bitarray->words = calloc(num_of_words, sizeof(uint8_t));
-    bitarray->num_of_words = num_of_words;
-    return bitarray;
+    Bitarr* bitarr = malloc(sizeof(Bitarr));
+    if (bitarr == NULL) {
+        return NULL;
+    }
+    bitarr->words = calloc(num_of_words, sizeof(uint8_t));
+    if (bitarr->words == NULL) {
+        free(bitarr);
+        return NULL;
+    }
+    bitarr->num_of_words = num_of_words;
+    return bitarr;
 }
 
 Bitarr* bitarr_clone(const Bitarr* bitarr_p) {
@@ -37,7 +44,7 @@ bool bitarr_equal(const Bitarr* bitarr_p, const Bitarr* bitarr_other_p) {
     if (bitarr_p->num_of_words != bitarr_other_p->num_of_words) {
         return false;
     }
-    return strncmp((char*)bitarr_p->words, (char*)bitarr_other_p->words, bitarr_p->num_of_words) == 0;
+    return memcmp((char*)bitarr_p->words, (char*)bitarr_other_p->words, bitarr_p->num_of_words) == 0;
 }
 
 int bitarr_get(const Bitarr* bitarr_p, size_t index) {
