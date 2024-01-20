@@ -14,7 +14,7 @@ typedef StackNode* Stack;
 /* create a new stack on the heap and return it's pointer. can return NULL and
  * it should be checked manually.*/
 static inline Stack* stack_new(void) {
-    return (Stack*)calloc(1, sizeof(Stack));
+    return (Stack*)calloc(1, sizeof(Stack)); // also sets the value and next pointer to NULL
 }
 
 /* Return if the stack is empty. */
