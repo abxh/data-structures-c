@@ -289,6 +289,7 @@ void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
     Queue* inp_queue_p = *queue_pp;
     Queue* out_queue_p = queue_new();
     if (out_queue_p == NULL) {
+        stack_free(op_stack_p);
         return;
     }
     while (!queue_empty(inp_queue_p)) {
@@ -363,11 +364,13 @@ double eval_postfix_exp(Queue* queue_p) {
         if (!stack_isempty(stack_p)) {
             r = stack_pop_num(stack_p);
         } else {
+            stack_free(stack_p);
             return 0.;
         }
         if (!stack_isempty(stack_p)) {
             l = stack_pop_num(stack_p);
         } else {
+            stack_free(stack_p);
             return 0.;
         }
         switch (t.type) {
@@ -393,6 +396,7 @@ double eval_postfix_exp(Queue* queue_p) {
     if (!stack_isempty(stack_p)) {
         l = stack_pop_num(stack_p);
     } else {
+        stack_free(stack_p);
         return 0.;
     }
     stack_free(stack_p);
