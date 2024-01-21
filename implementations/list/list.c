@@ -41,7 +41,7 @@ size_t roundup_powof2(size_t v) {
     return v;
 }
 
-size_t roundup_log2(size_t v) {
+size_t log2int(size_t v) {
     // compute the  log base 2 of an 32-bit integer v with a lookup table.
     // portable and reasonably fast.
     //
@@ -56,7 +56,7 @@ size_t roundup_log2(size_t v) {
         LT(7), LT(7), LT(7), LT(7), LT(7), LT(7), LT(7), LT(7)
     };
 
-    unsigned r;     // r will be lg(v)
+    unsigned r;                  // r will be lg(v)
     register unsigned int t, tt; // temporaries
 
     if ((tt = v >> 16))
@@ -75,7 +75,7 @@ List* list_new(size_t data_size, size_t list_size) {
         return NULL;
     }
     size_t data_size_aligned = roundup_powof2(data_size);
-    size_t data_size_aligned_log2 = roundup_log2(data_size_aligned);
+    size_t data_size_aligned_log2 = log2int(data_size_aligned);
     size_t list_size_actual = roundup_powof2(list_size);
     void* start_p = calloc(list_size_actual, data_size_aligned);
     if (start_p == NULL) {
@@ -117,7 +117,6 @@ void* list_pop(List* list) {
         free(value_p);
         return false;
     }
-    
     list->size -= 1;
     list->used_p = (byte*)list->used_p - list->data_size_aligned;
     return value_p;
