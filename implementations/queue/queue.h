@@ -31,17 +31,17 @@ static inline void* queue_peek(const Queue* queue_p) {
     return queue_p->front_p->value_p;
 }
 
-/* Enqueue a value pointer onto the queue. Returns if successful. */
+/* Enqueue a heap allocated value pointer onto the queue. Returns if successful. */
 bool queue_enqueue(Queue* queue_p, void* value_p);
 
-/* Dequeue a value pointer from the queue and return it. */
+/* Dequeue a heap allocated value pointer from the queue and return it. */
 void* queue_dequeue(Queue* queue_p);
 
-/* Free the queue from the heap. */
+/* Free the memory of the queue appropiately. */
 void queue_free(Queue* queue_p);
 
 /* Create inline functions to directly work with queue values with appropiate
- * memory handling.*/
+ * memory handling for storing and freeing memory from heap.*/
 #define CREATE_QUEUE_INLINE_FUNCTIONS(name, type, default_)                    \
     static inline type queue_peek_##name(Queue* queue_p) {                     \
         void* value_p = queue_peek(queue_p);                                   \

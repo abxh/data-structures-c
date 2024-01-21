@@ -11,7 +11,7 @@ typedef struct StackNode {
 
 typedef StackNode* Stack;
 
-/* create a new stack and return it's pointer. can return NULL and it should
+/* Create a new stack and return it's pointer. can return NULL and it should
  * be checked manually.*/
 static inline Stack* stack_new(void) {
     return (Stack*)calloc(1, sizeof(Stack)); // also sets the value and next pointer to NULL
@@ -28,11 +28,11 @@ static inline void* stack_peek(const Stack* stack_p) {
     return (*stack_p)->value_p;
 }
 
-/* Push a value pointer onto the stack. Returns if successful.*/
+/* Push a heap allocated value pointer onto the stack. Returns if successful.*/
 bool stack_push(Stack* stack_p, void* value_p);
 
-/* Pop the stack and return the value pointer. Must check if stack is empty
- * beforehand.*/
+/* Pop the stack and return the heap allocated value pointer. Must check if stack
+ * is empty beforehand.*/
 void* stack_pop(Stack* stack_p);
 
 /* Free the memory of stack appropiately.*/
