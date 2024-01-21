@@ -6,10 +6,11 @@
 _Static_assert(sizeof(size_t) == 8, "Code is assumed to run on a 64-bit machine.");
 
 typedef struct {
-    size_t length;
+    size_t size;
     size_t capacity;
     size_t data_size;
     size_t data_size_aligned;
+    size_t data_size_aligned_log2;
     void* start_p;
     void* used_p;
 } List;
@@ -20,26 +21,26 @@ typedef uint8_t byte;
  * checked manually. */
 List* list_new(size_t data_size, size_t list_size);
 
-/* Get the length of the list. */
+/* Get the size of the list. */
 static inline size_t list_length(const List* list) {
-    return list->length;
+    return list->size;
 }
 
 /* Get the pointer of a value at an index. */
 static inline void* list_get(const List* list, size_t index) {
-    if (index >= list->length) {
+    if (index >= list->size) {
         return NULL;
     }
-    return (byte*)list->start_p + index * list->data_size_aligned;
+    return (byte*)list->start_p + (index << list->data_size_aligned_log2);
 }
 
 /* Set the value at an index by providing the value pointer and a size that does
  *  exceed data_size. */
 static inline bool list_set(const List* list, size_t index, void* value_p, size_t size) {
-    if (index >= list->length || size > list->data_size) {
+    if (index >= list->size || size > list->data_size) {
         return false;
     }
-    memcpy((byte*)list->start_p + index * list->data_size_aligned, value_p, size);
+    memcpy((byte*)list->start_p + (index << list->data_size_aligned_log2), value_p, size);
     return true;
 }
 
