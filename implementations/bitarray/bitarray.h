@@ -17,7 +17,7 @@ static inline size_t bitarray_word_index(const size_t index) {
 
 /* Get index relative to bits in the array */
 static inline size_t bitarray_bit_index(const size_t index) {
-    return ~index & 0b111;
+    return ~index & 7;
 }
 
 /* Create a new bitarray of size num_of_words bytes. */
@@ -25,9 +25,6 @@ Bitarray* bitarray_new(size_t num_of_words);
 
 /* Clone the bitarray. */
 Bitarray* bitarray_clone(const Bitarray* bitarray_p);
-
-/* Convert bytes to bitarray.*/
-bool bitarray_from_bytes(const char* bytes, size_t n);
 
 /* Check if two bitarrays are equal. */
 bool bitarray_equal(const Bitarray* bitarray_p, const Bitarray* bitarray_other_p);
@@ -41,11 +38,12 @@ bool bitarray_set_true(Bitarray* bitarray_p, size_t index);
 /* Set the value to false at an index. Return if not OOB.*/
 bool bitarray_set_false(Bitarray* bitarray_p, size_t index);
 
-/* Set the value at an index at run time. Return if not OOB.*/
+/* Set a provided value at an index at run time. Return if not OOB.*/
 bool bitarray_set(Bitarray* bitarray_p, size_t index, bool bit);
 
-/* Set the value at an index at compile time. Return if not OOB.*/
-#define BITARRAY_SET(bitarray_p, index, bit) ((bit) ? bitarray_set_true((bitarray_p), (index)) : bitarray_set_false((bitarray_p), (index)))
+/* Set a provided value at an index at compile time. Return if not OOB.*/
+#define BITARRAY_SET(bitarray_p, index, bit) \
+	((bit) ? bitarray_set_true((bitarray_p), (index)) : bitarray_set_false((bitarray_p), (index)))
 
 /* Toggle the value at an index. Return if not OOB. */
 bool bitarray_toggle(Bitarray* bitarray_p, size_t index);

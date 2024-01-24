@@ -30,16 +30,6 @@ Bitarray* bitarray_clone(const Bitarray* bitarray_p) {
     return bitarray_clone_p;
 }
 
-bool bitarray_from_bytes(const char* bytes, size_t n) {
-    Bitarray* bitarray_p = malloc(sizeof(Bitarray));
-    if (bitarray_p == NULL) {
-        return false;
-    }
-    bitarray_p->words = (uint8_t*)bytes;
-    bitarray_p->num_of_words = n;
-    return true;
-}
-
 bool bitarray_equal(const Bitarray* bitarray_p, const Bitarray* bitarray_other_p) {
     if (bitarray_p->num_of_words != bitarray_other_p->num_of_words) {
         return false;
@@ -98,12 +88,31 @@ bool bitarray_toggle(Bitarray* bitarray_p, size_t index) {
 }
 
 void bitarray_print(const Bitarray* bitarray_p) {
-    for (size_t i = 0; i < bitarray_p->num_of_words; i++) {
-        printf("%p: ", (void*)bitarray_p->words + i);
-        for (size_t j = sizeof(uint8_t) * 8 - 1; j > 0; j--) {
-            putchar('0' + ((bitarray_p->words[i] >> j) & 1));
-        }
-        putchar('\n');
+    size_t i;
+    uint8_t* ptr = bitarray_p->words;
+
+    for (i = 0; i < bitarray_p->num_of_words; i++) {
+    	if (i % 4 == 0) {
+            printf("%p:", ptr);
+	    ptr += 4;
+	}
+	putchar(' ');
+
+	putchar('0' + ((bitarray_p->words[i] >> 7) & 1));
+	putchar('0' + ((bitarray_p->words[i] >> 6) & 1));
+	putchar('0' + ((bitarray_p->words[i] >> 5) & 1));
+	putchar('0' + ((bitarray_p->words[i] >> 4) & 1));
+	putchar('0' + ((bitarray_p->words[i] >> 3) & 1));
+	putchar('0' + ((bitarray_p->words[i] >> 2) & 1));
+	putchar('0' + ((bitarray_p->words[i] >> 1) & 1));
+	putchar('0' + ((bitarray_p->words[i] >> 0) & 1));
+
+    	if ((i + 1) % 4 == 0) {
+            putchar('\n');
+	}
+    }
+    if ((i + 1) % 4 != 1) {
+	putchar('\n');
     }
 }
 
