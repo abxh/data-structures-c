@@ -134,11 +134,7 @@ void bitarray_set_false_safe(Bitarray* bitarray_p, size_t index, char* filename,
 }
 
 void bitarray_set_safe(Bitarray* bitarray_p, size_t index, bool bit, char* filename, int linenr) {
-    if (bit != true || bit != false) {
-        fprintf(stderr, "Bit value provided is %d. Invalid bit value provided file '%s' at line %i\n", bit, filename, linenr);
-        exit(1);
-    }
-    else if (index > bitarray_p->num_of_bits) {
+    if (index > bitarray_p->num_of_bits) {
         fprintf(stderr, "Index %lu is OOB. Going OOB in file '%s' at line %i\n", index, filename, linenr);
         exit(1);
     }
