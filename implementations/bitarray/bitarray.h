@@ -43,7 +43,7 @@ bool bitarray_set(Bitarray* bitarray_p, size_t index, bool bit);
 
 /* Set a provided value at an index at compile time. Return if not OOB.*/
 #define BITARRAY_SET(bitarray_p, index, bit) \
-	((bit) ? bitarray_set_true((bitarray_p), (index)) : bitarray_set_false((bitarray_p), (index)))
+    ((bit) ? bitarray_set_true((bitarray_p), (index)) : bitarray_set_false((bitarray_p), (index)))
 
 /* Toggle the value at an index. Return if not OOB. */
 bool bitarray_toggle(Bitarray* bitarray_p, size_t index);

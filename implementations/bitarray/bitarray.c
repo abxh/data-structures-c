@@ -92,27 +92,27 @@ void bitarray_print(const Bitarray* bitarray_p) {
     uint8_t* ptr = bitarray_p->words;
 
     for (i = 0; i < bitarray_p->num_of_words; i++) {
-    	if (i % 4 == 0) {
+        if (i % 4 == 0) {
             printf("%p:", ptr);
-	    ptr += 4;
-	}
-	putchar(' ');
+            ptr += 4;
+        }
+        putchar(' ');
 
-	putchar('0' + ((bitarray_p->words[i] >> 7) & 1));
-	putchar('0' + ((bitarray_p->words[i] >> 6) & 1));
-	putchar('0' + ((bitarray_p->words[i] >> 5) & 1));
-	putchar('0' + ((bitarray_p->words[i] >> 4) & 1));
-	putchar('0' + ((bitarray_p->words[i] >> 3) & 1));
-	putchar('0' + ((bitarray_p->words[i] >> 2) & 1));
-	putchar('0' + ((bitarray_p->words[i] >> 1) & 1));
-	putchar('0' + ((bitarray_p->words[i] >> 0) & 1));
+        putchar('0' + ((bitarray_p->words[i] >> 7) & 1));
+        putchar('0' + ((bitarray_p->words[i] >> 6) & 1));
+        putchar('0' + ((bitarray_p->words[i] >> 5) & 1));
+        putchar('0' + ((bitarray_p->words[i] >> 4) & 1));
+        putchar('0' + ((bitarray_p->words[i] >> 3) & 1));
+        putchar('0' + ((bitarray_p->words[i] >> 2) & 1));
+        putchar('0' + ((bitarray_p->words[i] >> 1) & 1));
+        putchar('0' + ((bitarray_p->words[i] >> 0) & 1));
 
-    	if ((i + 1) % 4 == 0) {
+        if ((i + 1) % 4 == 0) {
             putchar('\n');
-	}
+        }
     }
     if ((i + 1) % 4 != 1) {
-	putchar('\n');
+        putchar('\n');
     }
 }
 
