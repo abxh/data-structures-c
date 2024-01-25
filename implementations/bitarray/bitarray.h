@@ -10,7 +10,7 @@ typedef struct {
     uint8_t* words;
 } Bitarray;
 
-Bitarray* bitarray_new(size_t num_of_bits); /* Create a new bitarray of a given size. Return value is NULL if OOM. */
+Bitarray* bitarray_new(size_t num_of_bits); /* Create a new bitarray of a given size. Return value is NULL if OOM or num_of_bits is 0. */
 Bitarray* bitarray_copy(const Bitarray* bitarray_p); /* Copy a given bitarray. */
 bool bitarray_equal(const Bitarray* bitarray_p, const Bitarray* bitarray_other_p); /* Check if two bitarrays are equal. */
 void bitarray_print(const Bitarray* bitarray_p); /* Print the bits in the bitarray. */
