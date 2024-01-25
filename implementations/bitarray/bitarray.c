@@ -24,23 +24,50 @@ Bitarray* bitarray_new(size_t num_of_bits) {
     if (num_of_bits == 0) {
         return NULL;
     }
-    Bitarray* bitarr = malloc(sizeof(Bitarray));
-    if (bitarr == NULL) {
+    Bitarray* bitarray_p = malloc(sizeof(Bitarray));
+    if (bitarray_p == NULL) {
         return NULL;
     }
-    bitarr->num_of_bits = num_of_bits;
-    bitarr->capacity = nextpow2(num_of_bits);
-    bitarr->words = calloc(bitarr->capacity, sizeof(uint8_t));
-    if (bitarr->words == NULL) {
-        free(bitarr);
+    bitarray_p->num_of_bits = num_of_bits;
+    bitarray_p->capacity = nextpow2(num_of_bits) >> 3;
+    bitarray_p->words = calloc(bitarray_p->capacity, sizeof(uint8_t));
+    if (bitarray_p->words == NULL) {
+        free(bitarray_p);
         return NULL;
     }
-    return bitarr;
+    return bitarray_p;
+}
+
+Bitarray* bitarray_new_from(void* bytes, size_t num_of_bits) {
+    if (num_of_bits == 0) {
+        return NULL;
+    }
+    Bitarray* bitarray_p = malloc(sizeof(Bitarray));
+    if (bitarray_p == NULL) {
+        return NULL;
+    }
+    bitarray_p->num_of_bits = num_of_bits;
+    bitarray_p->capacity = nextpow2(num_of_bits) >> 3;
+    bitarray_p->words = malloc(bitarray_p->capacity);
+    if (bitarray_p->words == NULL) {
+        free(bitarray_p);
+        return NULL;
+    }
+    memcpy(bitarray_p->words, bytes, bitarray_p->capacity);
+    return bitarray_p;
 }
 
 Bitarray* bitarray_copy(const Bitarray* bitarray_p) {
     Bitarray* bitarray_clone_p = malloc(sizeof(Bitarray));
-    bitarray_clone_p->words = (uint8_t*)strndup((char*)bitarray_p->words, bitarray_p->capacity);
+    if (bitarray_clone_p == NULL) {
+        return NULL;
+    }
+    bitarray_clone_p->words = malloc(bitarray_p->capacity);
+    if (bitarray_clone_p->words == NULL) {
+        free(bitarray_clone_p);
+        return NULL;
+    }
+    bitarray_clone_p->num_of_bits = bitarray_p->num_of_bits;
     bitarray_clone_p->capacity = bitarray_p->capacity;
     return bitarray_clone_p;
 }
