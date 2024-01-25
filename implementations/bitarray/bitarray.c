@@ -111,7 +111,7 @@ void bitarray_toggle_unsafe(Bitarray* bitarray_p, size_t index) {
 
 bool bitarray_get_safe(const Bitarray* bitarray_p, size_t index, char* filename, int linenr) {
     if (index > bitarray_p->num_of_bits) {
-        fprintf(stderr, "Error: Going OOB in file '%s' at line %i\n", filename, linenr);
+        fprintf(stderr, "Index %lu is OOB. Going OOB in file '%s' at line %i\n", index, filename, linenr);
         exit(1);
     }
     return bitarray_get_unsafe(bitarray_p, index);
@@ -119,7 +119,7 @@ bool bitarray_get_safe(const Bitarray* bitarray_p, size_t index, char* filename,
 
 void bitarray_set_true_safe(Bitarray* bitarray_p, size_t index, char* filename, int linenr) {
     if (index > bitarray_p->num_of_bits) {
-        fprintf(stderr, "Error: Going OOB in file '%s' at line %i\n", filename, linenr);
+        fprintf(stderr, "Index %lu is OOB. Going OOB in file '%s' at line %i\n", index, filename, linenr);
         exit(1);
     }
     bitarray_set_true_unsafe(bitarray_p, index);
@@ -127,15 +127,19 @@ void bitarray_set_true_safe(Bitarray* bitarray_p, size_t index, char* filename, 
 
 void bitarray_set_false_safe(Bitarray* bitarray_p, size_t index, char* filename, int linenr) {
     if (index > bitarray_p->num_of_bits) {
-        fprintf(stderr, "Error: Going OOB in file '%s' at line %i\n", filename, linenr);
+        fprintf(stderr, "Index %lu is OOB. Going OOB in file '%s' at line %i\n", index, filename, linenr);
         exit(1);
     }
     bitarray_set_false_unsafe(bitarray_p, index);
 }
 
 void bitarray_set_safe(Bitarray* bitarray_p, size_t index, bool bit, char* filename, int linenr) {
-    if (index > bitarray_p->num_of_bits) {
-        fprintf(stderr, "Error: Going OOB in file '%s' at line %i\n", filename, linenr);
+    if (bit != true || bit != false) {
+        fprintf(stderr, "Bit value provided is %d. Invalid bit value provided file '%s' at line %i\n", bit, filename, linenr);
+        exit(1);
+    }
+    else if (index > bitarray_p->num_of_bits) {
+        fprintf(stderr, "Index %lu is OOB. Going OOB in file '%s' at line %i\n", index, filename, linenr);
         exit(1);
     }
     bitarray_set_unsafe(bitarray_p, index, bit);
@@ -143,7 +147,7 @@ void bitarray_set_safe(Bitarray* bitarray_p, size_t index, bool bit, char* filen
 
 void bitarray_toggle_safe(Bitarray* bitarray_p, size_t index, char* filename, int linenr) {
     if (index > bitarray_p->num_of_bits) {
-        fprintf(stderr, "Error: Going OOB in file '%s' at line %i\n", filename, linenr);
+        fprintf(stderr, "Index %lu is OOB. Going OOB in file '%s' at line %i\n", index, filename, linenr);
         exit(1);
     }
     bitarray_toggle_unsafe(bitarray_p, index);
