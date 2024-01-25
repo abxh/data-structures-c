@@ -17,11 +17,11 @@ int main(void) {
     puts("Input (Ctrl+d for EOF):");
     for (int c = fgetc(stdin); c != EOF; c = fgetc(stdin)) {
         if (islower(c)) {
-            bitarray_set_true_safe(bitarray_p, c - 'a');
+            bitarray_set_true(bitarray_p, c - 'a');
         } else if (isupper(c)) {
-            bitarray_set_true_safe(bitarray_p, c - 'A' + NUM_OF_LETTERS);
+            bitarray_set_true(bitarray_p, c - 'A' + NUM_OF_LETTERS);
         } else if (isdigit(c)) {
-            bitarray_set_true_safe(bitarray_p, c - '0' + 2 * NUM_OF_LETTERS);
+            bitarray_set_true(bitarray_p, c - '0' + 2 * NUM_OF_LETTERS);
         }
     }
 
@@ -40,11 +40,11 @@ int main(void) {
             printf(", ");
         }
         if (i < NUM_OF_LETTERS) {
-            printf("%c:%c", (int)i + 'a', bitarray_get_safe(bitarray_p, i) ? '*' : ' ');
+            printf("%c:%c", (int)i + 'a', bitarray_get(bitarray_p, i) ? '*' : ' ');
         } else if (i < 2 * NUM_OF_LETTERS) {
-            printf("%c:%c", (int)i - 1 * NUM_OF_LETTERS + 'A', bitarray_get_safe(bitarray_p, i) ? '*' : ' ');
+            printf("%c:%c", (int)i - 1 * NUM_OF_LETTERS + 'A', bitarray_get(bitarray_p, i) ? '*' : ' ');
         } else if (i < 2 * NUM_OF_LETTERS + NUM_OF_DIGITS) {
-            printf("%c:%c", (int)i - 2 * NUM_OF_LETTERS + '0', bitarray_get_safe(bitarray_p, i) ? '*' : ' ');
+            printf("%c:%c", (int)i - 2 * NUM_OF_LETTERS + '0', bitarray_get(bitarray_p, i) ? '*' : ' ');
         }
         if (((i + 1) % 8 == 0)) {
             putchar('\n');
