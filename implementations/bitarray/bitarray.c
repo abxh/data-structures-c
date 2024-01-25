@@ -5,8 +5,8 @@
 
 #include "bitarray.h"
 
-#define bitarray_word_index(index) (index >> 3)
-#define bitarray_bit_index(index) (~index & 7)
+#define BITARRAY_WORD_INDEX(index) (index >> 3)
+#define BITARRAY_BIT_INDEX(index) (~index & 7)
 
 uint64_t nextpow2(uint32_t v) {
     // https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
@@ -56,7 +56,7 @@ void bitarray_print(const Bitarray* bitarray_p) {
         if (i % 8 == 0) {
             putchar(' ');
         }
-        printf("%d", (bitarray_p->words[bitarray_word_index(i)] >> bitarray_bit_index(i)) & 1);
+        printf("%d", (bitarray_p->words[BITARRAY_WORD_INDEX(i)] >> BITARRAY_BIT_INDEX(i)) & 1);
         if ((i + 1) % 32 == 0) {
             putchar('\n');
         }
@@ -79,33 +79,33 @@ bool bitarray_equal(const Bitarray* bitarray_p, const Bitarray* bitarray_other_p
 }
 
 bool bitarray_get_unsafe(const Bitarray* bitarray_p, size_t index) {
-    size_t n = bitarray_word_index(index);
-    size_t m = bitarray_bit_index(index);
+    size_t n = BITARRAY_WORD_INDEX(index);
+    size_t m = BITARRAY_BIT_INDEX(index);
     return (bitarray_p->words[n] >> m) & 1;
 }
 
 void bitarray_set_true_unsafe(Bitarray* bitarray_p, size_t index) {
-    size_t n = bitarray_word_index(index);
-    size_t m = bitarray_bit_index(index);
+    size_t n = BITARRAY_WORD_INDEX(index);
+    size_t m = BITARRAY_BIT_INDEX(index);
     bitarray_p->words[n] |= 1 << m;
 }
 
 void bitarray_set_false_unsafe(Bitarray* bitarray_p, size_t index) {
-    size_t n = bitarray_word_index(index);
-    size_t m = bitarray_bit_index(index);
+    size_t n = BITARRAY_WORD_INDEX(index);
+    size_t m = BITARRAY_BIT_INDEX(index);
     bitarray_p->words[n] &= ~(1 << m);
 }
 
 void bitarray_set_unsafe(Bitarray* bitarray_p, size_t index, bool value) {
-    size_t n = bitarray_word_index(index);
-    size_t m = bitarray_bit_index(index);
+    size_t n = BITARRAY_WORD_INDEX(index);
+    size_t m = BITARRAY_BIT_INDEX(index);
     bitarray_p->words[n] &= ~(1 << m);
     bitarray_p->words[n] |= (value << m);
 }
 
 void bitarray_toggle_unsafe(Bitarray* bitarray_p, size_t index) {
-    size_t n = bitarray_word_index(index);
-    size_t m = bitarray_bit_index(index);
+    size_t n = BITARRAY_WORD_INDEX(index);
+    size_t m = BITARRAY_BIT_INDEX(index);
     bitarray_p->words[n] ^= 1 << m;
 }
 
