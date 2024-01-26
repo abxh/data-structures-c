@@ -58,7 +58,7 @@ void stack_free(Stack* stack_p);
     static inline type stack_pop_##name(Stack* stack_p) {                         \
         void* value_p = stack_pop(stack_p);                                       \
         if (value_p == NULL) {                                                    \
-            fprintf(stderr, "Error: Stack is empty. Returning default value."); \
+            fprintf(stderr, "Error: Stack is empty. Returning default value.");   \
             return (default_);                                                    \
         }                                                                         \
         type value = *(type*)value_p;                                             \
