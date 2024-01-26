@@ -42,42 +42,45 @@ void queue_free(Queue* queue_p);
 
 /* Create inline functions to directly work with queue values with appropiate
  * memory handling for storing and freeing memory from heap.*/
-#define CREATE_QUEUE_INLINE_FUNCTIONS(name, type, default_)                    \
-    static inline type queue_peek_##name(Queue* queue_p) {                     \
-        void* value_p = queue_peek(queue_p);                                   \
-        if (value_p == NULL) {                                                 \
-            return (default_);                                                 \
-        }                                                                      \
-        return *(type*)value_p;                                                \
-    }                                                                          \
-    static inline bool queue_enqueue_##name(Queue* queue_p, type value) {      \
-        void* value_p = malloc(sizeof(type));                                  \
-        if (value_p == NULL) {                                                 \
-            return false;                                                      \
-        }                                                                      \
-        memcpy(value_p, &value, sizeof(type));                                 \
-        if (queue_enqueue(queue_p, value_p)) {                                 \
-            return true;                                                       \
-        }                                                                      \
-        free(value_p);                                                         \
-        return false;                                                          \
-    }                                                                          \
-    static inline type queue_dequeue_##name(Queue* queue_p) {                  \
-        void* value_p = queue_dequeue(queue_p);                                \
-        if (value_p == NULL) {                                                 \
-            return (default_);                                                 \
-        }                                                                      \
-        type value = *(type*)value_p;                                          \
-        free(value_p);                                                         \
-        return value;                                                          \
-    }                                                                          \
-    static inline type qelement_get_##name(QElement* qelement_p) {             \
-        void* value_p = qelement_p->value_p;                                   \
-        if (value_p == NULL) {                                                 \
-            return (default_);                                                 \
-        }                                                                      \
-        return *(type*)value_p;                                                \
-    }                                                                          \
-    static inline void qelement_set_##name(QElement* qelement_p, type value) { \
-        memcpy(qelement_p->value_p, &value, sizeof(type));                     \
+#define CREATE_QUEUE_INLINE_FUNCTIONS(name, type, default_)                     \
+    static inline type queue_peek_##name(Queue* queue_p) {                      \
+        void* value_p = queue_peek(queue_p);                                    \
+        if (value_p == NULL) {                                                  \
+            fprintf(stderr, "Error: Queue is empty. Returning default value."); \
+            return (default_);                                                  \
+        }                                                                       \
+        return *(type*)value_p;                                                 \
+    }                                                                           \
+    static inline bool queue_enqueue_##name(Queue* queue_p, type value) {       \
+        void* value_p = malloc(sizeof(type));                                   \
+        if (value_p == NULL) {                                                  \
+            return false;                                                       \
+        }                                                                       \
+        memcpy(value_p, &value, sizeof(type));                                  \
+        if (queue_enqueue(queue_p, value_p)) {                                  \
+            return true;                                                        \
+        }                                                                       \
+        free(value_p);                                                          \
+        return false;                                                           \
+    }                                                                           \
+    static inline type queue_dequeue_##name(Queue* queue_p) {                   \
+        void* value_p = queue_dequeue(queue_p);                                 \
+        if (value_p == NULL) {                                                  \
+            fprintf(stderr, "Error: Queue is empty. Returning default value."); \
+            return (default_);                                                  \
+        }                                                                       \
+        type value = *(type*)value_p;                                           \
+        free(value_p);                                                          \
+        return value;                                                           \
+    }                                                                           \
+    static inline type qelement_get_##name(QElement* qelement_p) {              \
+        void* value_p = qelement_p->value_p;                                    \
+        if (value_p == NULL) {                                                  \
+            fprintf(stderr, "Error: Queue is empty. Returning default value."); \
+            return (default_);                                                  \
+        }                                                                       \
+        return *(type*)value_p;                                                 \
+    }                                                                           \
+    static inline void qelement_set_##name(QElement* qelement_p, type value) {  \
+        memcpy(qelement_p->value_p, &value, sizeof(type));                      \
     }

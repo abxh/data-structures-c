@@ -3,6 +3,18 @@
 
 #include "stack.h"
 
+Stack* stack_new(void) {
+    return (Stack*)calloc(1, sizeof(Stack));
+}
+
+bool stack_isempty(const Stack* stack_p) {
+    return *stack_p == NULL;
+}
+
+void* stack_peek(const Stack* stack_p) {
+    return (*stack_p)->value_p;
+}
+
 bool stack_push(Stack* stack_p, void* value_p) {
     StackNode* head_p = malloc(sizeof(StackNode));
     if (head_p == NULL) {
