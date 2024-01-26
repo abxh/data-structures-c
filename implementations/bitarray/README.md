@@ -6,3 +6,4 @@ get and set bits at a given index.
 
 Big endian order is used. This means that we start from the most significant
 bit for the operations. For example, for the bits `1000`, we start from `1`.
+
