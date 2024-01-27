@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #include "bitarray.h"
 
@@ -21,9 +22,7 @@ uint64_t nextpow2(uint32_t v) {
 }
 
 Bitarray* bitarray_new(size_t num_of_bits) {
-    if (num_of_bits == 0) {
-        return NULL;
-    }
+    assert(num_of_bits != 0);
     Bitarray* bitarray_p = malloc(sizeof(Bitarray));
     if (bitarray_p == NULL) {
         return NULL;
@@ -39,9 +38,7 @@ Bitarray* bitarray_new(size_t num_of_bits) {
 }
 
 Bitarray* bitarray_new_from(void* bytes, size_t num_of_bits) {
-    if (num_of_bits == 0) {
-        return NULL;
-    }
+    assert(num_of_bits != 0);
     Bitarray* bitarray_p = malloc(sizeof(Bitarray));
     if (bitarray_p == NULL) {
         return NULL;
@@ -99,58 +96,40 @@ void bitarray_free(Bitarray* bitarray_p) {
 }
 
 bool bitarray_equal(const Bitarray* bitarray_p, const Bitarray* bitarray_other_p) {
-    if (bitarray_p->num_of_bits != bitarray_other_p->num_of_bits) {
-        return false;
-    }
+    assert(bitarray_p->num_of_bits != bitarray_other_p->num_of_bits);
     return memcmp((char*)bitarray_p->words, (char*)bitarray_other_p->words, bitarray_p->capacity) == 0;
 }
 
 bool bitarray_get(const Bitarray* bitarray_p, size_t index) {
-    if (index > bitarray_p->num_of_bits) {
-        fprintf(stderr, "Index %lu is OOB.\n", index);
-        return DEFAULT_RTR_VAL;
-    }
+    assert(index < bitarray_p->num_of_bits);
     size_t n = BITARRAY_WORD_INDEX(index);
     size_t m = BITARRAY_BIT_INDEX(index);
     return (bitarray_p->words[n] >> m) & 1;
 }
 
-void bitarray_set_true_unsafe(Bitarray* bitarray_p, size_t index) {
-    if (index > bitarray_p->num_of_bits) {
-        fprintf(stderr, "Index %lu is OOB.\n", index);
-        return;
-    }
+void bitarray_set_true(Bitarray* bitarray_p, size_t index) {
+    assert(index < bitarray_p->num_of_bits);
     size_t n = BITARRAY_WORD_INDEX(index);
     size_t m = BITARRAY_BIT_INDEX(index);
     bitarray_p->words[n] |= 1 << m;
 }
 
-void bitarray_set_false_unsafe(Bitarray* bitarray_p, size_t index) {
-    if (index > bitarray_p->num_of_bits) {
-        fprintf(stderr, "Index %lu is OOB.\n", index);
-        return;
-    }
+void bitarray_set_false(Bitarray* bitarray_p, size_t index) {
+    assert(index < bitarray_p->num_of_bits);
     size_t n = BITARRAY_WORD_INDEX(index);
     size_t m = BITARRAY_BIT_INDEX(index);
     bitarray_p->words[n] &= ~(1 << m);
 }
 
-void bitarray_set_unsafe(Bitarray* bitarray_p, size_t index, bool value) {
-    if (index > bitarray_p->num_of_bits) {
-        fprintf(stderr, "Index %lu is OOB.\n", index);
-        return;
-    }
+void bitarray_set(Bitarray* bitarray_p, size_t index, bool value) {
+    assert(index < bitarray_p->num_of_bits);
     size_t n = BITARRAY_WORD_INDEX(index);
     size_t m = BITARRAY_BIT_INDEX(index);
-    bitarray_p->words[n] &= ~(1 << m);
-    bitarray_p->words[n] |= (value << m);
+    bitarray_p->words[n] = (bitarray_p->words[n] & ~(1 << m)) | (value << m);
 }
 
-void bitarray_toggle_unsafe(Bitarray* bitarray_p, size_t index) {
-    if (index > bitarray_p->num_of_bits) {
-        fprintf(stderr, "Index %lu is OOB.\n", index);
-        return;
-    }
+void bitarray_toggle(Bitarray* bitarray_p, size_t index) {
+    assert(index < bitarray_p->num_of_bits);
     size_t n = BITARRAY_WORD_INDEX(index);
     size_t m = BITARRAY_BIT_INDEX(index);
     bitarray_p->words[n] ^= 1 << m;
