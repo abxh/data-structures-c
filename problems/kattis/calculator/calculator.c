@@ -23,10 +23,10 @@ typedef struct {
     double value;
 } Token;
 
-CREATE_QUEUE_INLINE_FUNCTIONS(token, Token, (Token){.type = UNDEFINED_OP})
-CREATE_STACK_INLINE_FUNCTIONS(tokentype, TokenType, (TokenType)UNDEFINED_OP)
-CREATE_STACK_INLINE_FUNCTIONS(token, Token, (Token){.type = UNDEFINED_OP})
-CREATE_STACK_INLINE_FUNCTIONS(num, double, 0.)
+CREATE_QUEUE_INLINE_FUNCTIONS(token, Token)
+CREATE_STACK_INLINE_FUNCTIONS(tokentype, TokenType)
+CREATE_STACK_INLINE_FUNCTIONS(token, Token)
+CREATE_STACK_INLINE_FUNCTIONS(num, double)
 
 void fprintf_token(Token token, FILE* stream) {
     switch (token.type) {
@@ -129,7 +129,7 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p, double last_value
     TokenType pm_token;
     TokenType other_token;
 
-    Stack* pm_stack_p = stack_new();
+    Stack* pm_stack_p = stack_new_tokentype();
     if (pm_stack_p == NULL) {
         return;
     }
@@ -257,9 +257,9 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p, double last_value
                 multiplierl = 10.;
                 multiplierr = 1.;
             }
-            if (!queue_empty(queue_p) && qelement_get_token(queue_p->back_p).type == NUMBER) {
-                qelement_set_token(queue_p->back_p, (Token){.type = NUMBER,
-                                                            .value = qelement_get_token(queue_p->back_p).value * multiplierl +
+            if (!queue_empty(queue_p) && queue_element_get_token(queue_p->back_p).type == NUMBER) {
+                queue_element_set_token(queue_p->back_p, (Token){.type = NUMBER,
+                                                            .value = queue_element_get_token(queue_p->back_p).value * multiplierl +
                                                                      (line_p[i] - '0') * multiplierr});
             } else {
                 queue_enqueue_token(queue_p, (Token){.type = NUMBER, .value = (line_p[i] - '0') * multiplierr});
@@ -282,12 +282,12 @@ void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
     // using the shunting yard algorithm.
     // https://en.wikipedia.org/wiki/Shunting_yard_algorithm
 
-    Stack* op_stack_p = stack_new();
+    Stack* op_stack_p = stack_new_tokentype();
     if (op_stack_p == NULL) {
         return;
     }
     Queue* inp_queue_p = *queue_pp;
-    Queue* out_queue_p = queue_new();
+    Queue* out_queue_p = queue_new_token();
     if (out_queue_p == NULL) {
         stack_free(op_stack_p);
         return;
@@ -350,7 +350,7 @@ void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
 }
 
 double eval_postfix_exp(Queue* queue_p) {
-    Stack* stack_p = stack_new();
+    Stack* stack_p = stack_new_num();
     if (stack_p == NULL) {
         return 0.;
     }
@@ -409,18 +409,18 @@ int main() {
     ssize_t len = 0;
     double last_value = 0;
     while (0 < (len = getline(&line_p, &n, stdin))) {
-        Queue* queue_p = queue_new();
+        Queue* queue_p = queue_new_token();
         if (queue_p == NULL) {
             return 1;
         }
         parse_math_exp(line_p, len, queue_p, last_value);
 
 #ifdef DEBUG
-        QElement* elm_p = queue_p->front_p;
+        QueueElement* elm_p = queue_p->front_p;
         printf("[calc] parsing w. +- eval:");
         while (elm_p) {
             putchar(' ');
-            fprintf_token(qelement_get_token(elm_p), stdout);
+            fprintf_token(queue_element_get_token(elm_p), stdout);
             elm_p = elm_p->next_p;
         }
         putchar('\n');
@@ -432,7 +432,7 @@ int main() {
         elm_p = queue_p->front_p;
         while (elm_p) {
             putchar(' ');
-            fprintf_token(qelement_get_token(elm_p), stdout);
+            fprintf_token(queue_element_get_token(elm_p), stdout);
             elm_p = elm_p->next_p;
         }
         putchar('\n');
