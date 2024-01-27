@@ -12,7 +12,7 @@ typedef enum {
     BACK_QUOTE,
 } SIGN_ENUM;
 
-CREATE_STACK_INLINE_FUNCTIONS(se, SIGN_ENUM, UNDEFINED_SIGN_ENUM) // name, type, default_
+CREATE_STACK_INLINE_FUNCTIONS(se, SIGN_ENUM)
 
 char get_sign(SIGN_ENUM se) {
     switch (se) {
@@ -31,11 +31,11 @@ char get_sign(SIGN_ENUM se) {
     case UNDEFINED_SIGN_ENUM:
         break;
     }
-    return ' ';
+    return 'U';
 }
 
 int main(void) {
-    Stack* stack_p = stack_new();
+    Stack* stack_p = stack_new_se();
     if (stack_p == NULL) {
         return 1;
     }
