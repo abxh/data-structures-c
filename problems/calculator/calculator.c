@@ -257,7 +257,7 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p, double last_value
                 multiplierl = 10.;
                 multiplierr = 1.;
             }
-            if (!queue_empty(queue_p) && queue_element_get_token(queue_p->back_p).type == NUMBER) {
+            if (!queue_isempty(queue_p) && queue_element_get_token(queue_p->back_p).type == NUMBER) {
                 queue_element_set_token(queue_p->back_p, (Token){.type = NUMBER,
                                                             .value = queue_element_get_token(queue_p->back_p).value * multiplierl +
                                                                      (line_p[i] - '0') * multiplierr});
@@ -292,7 +292,7 @@ void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
         stack_free(op_stack_p);
         return;
     }
-    while (!queue_empty(inp_queue_p)) {
+    while (!queue_isempty(inp_queue_p)) {
         Token tk = queue_dequeue_token(inp_queue_p);
         switch (tk.type) {
         case ADD_OP:
@@ -355,7 +355,7 @@ double eval_postfix_exp(Queue* queue_p) {
         return 0.;
     }
     double r, l;
-    while (!queue_empty(queue_p)) {
+    while (!queue_isempty(queue_p)) {
         Token t = queue_dequeue_token(queue_p);
         if (t.type == NUMBER) {
             stack_push_num(stack_p, t.value);

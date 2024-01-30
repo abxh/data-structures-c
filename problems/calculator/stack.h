@@ -1,1 +1,1 @@
-../../../implementations/stack/stack.h
+../../implementations/stack/stack.h

@@ -9,13 +9,13 @@ Queue* queue_new(size_t data_size) {
     if (queue_p == NULL) {
         return queue_p;
     }
+    queue_p->data_size = data_size;
     queue_p->front_p = NULL;
     queue_p->back_p = NULL;
-    queue_p->data_size = data_size;
     return queue_p;
 }
 
-bool queue_empty(const Queue* queue_p) {
+bool queue_isempty(const Queue* queue_p) {
     return queue_p->front_p == NULL;
 }
 
@@ -47,20 +47,17 @@ bool queue_enqueue(Queue* queue_p, void* value_p, size_t size) {
     return true;
 }
 
-QueueElement* queue_dequeue(Queue* queue_p, size_t size) {
+void* queue_dequeue(Queue* queue_p, size_t size) {
     assert(queue_p->front_p != NULL);
     assert(size == queue_p->data_size);
-    void* front_p_old = queue_p->front_p;
-    queue_p->front_p = queue_p->front_p->next_p;
-    if (queue_p->front_p == NULL) {
+    void* value_p = queue_p->front_p->value_p;
+    QueueElement* next_p = queue_p->front_p->next_p;
+    free(queue_p->front_p);
+    queue_p->front_p = next_p;
+    if (next_p == NULL) {
         queue_p->back_p = NULL; // optional
     }
-    return front_p_old;
-}
-
-void queue_element_free(QueueElement* queue_element_p) {
-    free(queue_element_p->value_p);
-    free(queue_element_p);
+    return value_p;
 }
 
 void queue_free(Queue* queue_p) {
@@ -68,7 +65,8 @@ void queue_free(Queue* queue_p) {
     QueueElement* next_p = NULL;
     while (front_p != NULL) {
         next_p = front_p->next_p;
-        queue_element_free(front_p);
+        free(front_p->value_p);
+        free(front_p);
         front_p = next_p;
     }
     free(queue_p);

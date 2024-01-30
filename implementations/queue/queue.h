@@ -19,19 +19,17 @@ typedef struct {
 Queue* queue_new(size_t data_size);
 
 /* Return if the queue is empty. */
-bool queue_empty(const Queue* queue_p);
+bool queue_isempty(const Queue* queue_p);
 
-/* Peek at the next value pointer to be dequeued. Should check for empty queue beforehand. */
+/* Peek at the next value to be dequeued. Should check for empty queue beforehand. */
 void* queue_peek(const Queue* queue_p);
 
 /* Enqueue a value onto the queue. Returns if successful. */
 bool queue_enqueue(Queue* queue_p, void* value_p, size_t size);
 
-/* Dequeue a queue element from the queue and return it. Should check for empty queue beforehand, and free the element after use. */
-QueueElement* queue_dequeue(Queue* queue_p, size_t size);
-
-/* Free the memory of a queue element appropiately. */
-void queue_element_free(QueueElement* queue_element_p);
+/* Dequeue a value from the queue and return it. Should check for empty queue beforehand
+ * and free the value returned from heap. */
+void* queue_dequeue(Queue* queue_p, size_t size);
 
 /* Free the memory of the queue appropiately. */
 void queue_free(Queue* queue_p);
@@ -48,9 +46,9 @@ void queue_free(Queue* queue_p);
         return queue_enqueue(queue_p, &value, sizeof(type));                                 \
     }                                                                                        \
     static inline type queue_dequeue_##name(Queue* queue_p) {                                \
-        QueueElement* elm_p = queue_dequeue(queue_p, sizeof(type));                          \
-        type value = *(type*)elm_p->value_p;                                                 \
-        queue_element_free(elm_p);                                                           \
+        void* value_p = queue_dequeue(queue_p, sizeof(type));                                \
+        type value = *(type*)value_p;                                                        \
+        free(value_p);                                                                       \
         return value;                                                                        \
     }                                                                                        \
     static inline type queue_element_get_##name(QueueElement* queue_element_p) {             \
