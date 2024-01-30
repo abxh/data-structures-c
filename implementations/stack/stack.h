@@ -7,6 +7,7 @@
 
 typedef struct {
     size_t data_size;
+    size_t pow2_data_size;
     size_t used_bytes;
     size_t capacity_bytes;
     uint8_t* darr;
@@ -26,6 +27,12 @@ bool stack_push(Stack* stack_p, void* value_p, size_t size);
 
 /* Pop a value from the stack. Should check that stack is not empty beforehand. */
 void* stack_pop(Stack* stack_p, size_t size);
+
+/* Shrink the stack if it's capacity is much larger than what is used. */
+bool stack_shrink(Stack* stack_p);
+
+/* Clear the stack of it's elements. */
+void stack_clear(Stack* stack_p);
 
 /* Free the memory of the stack appropiately. */
 void stack_free(Stack* stack_p);
