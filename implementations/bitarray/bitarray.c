@@ -1,25 +1,13 @@
+#include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 
 #include "bitarray.h"
 
 #define BITARRAY_WORD_INDEX(index) (index >> 3)
 #define BITARRAY_BIT_INDEX(index) (~index & 7)
-
-uint64_t nextpow2(uint32_t v) {
-    // https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
-    v--;
-    v |= v >> 1;
-    v |= v >> 2;
-    v |= v >> 4;
-    v |= v >> 8;
-    v |= v >> 16;
-    v++;
-    return v;
-}
 
 Bitarray* bitarray_new(size_t num_of_bits) {
     assert(num_of_bits != 0);
@@ -28,7 +16,7 @@ Bitarray* bitarray_new(size_t num_of_bits) {
         return NULL;
     }
     bitarray_p->num_of_bits = num_of_bits;
-    bitarray_p->capacity = nextpow2(num_of_bits) >> 3;
+    bitarray_p->capacity = (num_of_bits + 7) / 8;
     bitarray_p->words = calloc(bitarray_p->capacity, sizeof(uint8_t));
     if (bitarray_p->words == NULL) {
         free(bitarray_p);
@@ -44,7 +32,7 @@ Bitarray* bitarray_new_from(void* bytes, size_t num_of_bits) {
         return NULL;
     }
     bitarray_p->num_of_bits = num_of_bits;
-    bitarray_p->capacity = nextpow2(num_of_bits) >> 3;
+    bitarray_p->capacity = (num_of_bits + 7) / 8;
     bitarray_p->words = malloc(bitarray_p->capacity);
     if (bitarray_p->words == NULL) {
         free(bitarray_p);
