@@ -31,6 +31,10 @@ bool million_element_test(void) {
     bool res = true;
     for (int i = 1; i <= 1000000; i++) {
         res &= queue_enqueue(queue_p, &i, sizeof(int));
+        if (!res) {
+            queue_free(queue_p);
+            return false;
+        }
     }
     for (int i = 1; i <= 1000000; i++) {
         void* value_p_rtr = queue_dequeue(queue_p, sizeof(int));

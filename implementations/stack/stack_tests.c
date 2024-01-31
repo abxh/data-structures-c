@@ -31,6 +31,10 @@ bool million_nodes_test(void) {
     bool res = true;
     for (int i = 1; i <= 1000000; i++) {
         res &= stack_push(stack_p, &i, sizeof(int));
+        if (!res) {
+            stack_free(stack_p);
+            return false;
+        }
     }
     for (int i = 1000000; i >= 1; i--) {
         void* value_p_rtr = stack_pop(stack_p, sizeof(int));
