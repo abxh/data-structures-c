@@ -16,7 +16,7 @@ Bitarray* bitarray_new(size_t num_of_bits) {
         return NULL;
     }
     bitarray_p->num_of_bits = num_of_bits;
-    bitarray_p->capacity = (num_of_bits + 7) / 8;
+    bitarray_p->capacity = (num_of_bits + 7) / 8; // round up to the next multiple of 8
     bitarray_p->words = calloc(bitarray_p->capacity, sizeof(uint8_t));
     if (bitarray_p->words == NULL) {
         free(bitarray_p);
