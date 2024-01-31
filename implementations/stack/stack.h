@@ -44,7 +44,7 @@ void stack_free(Stack* stack_p);
     static inline bool stack_push_##name(Stack* stack_p, type value) {              \
         return stack_push(stack_p, &value, sizeof(type));                           \
     }                                                                               \
-    static inline type stack_pop_##name(Stack* stack_p) {                            \
+    static inline type stack_pop_##name(Stack* stack_p) {                           \
         void* value_p = stack_pop(stack_p, sizeof(type));                           \
         type value = *(type*)value_p;                                               \
         free(value_p);                                                              \
