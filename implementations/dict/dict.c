@@ -1,3 +1,9 @@
+#include <stdlib.h> // size_t, malloc, calloc, free, reallocarray, NULL
+#include <stdint.h> // uint8_t, uint64_t
+#include <stdbool.h> // bool, true, false
+#include <string.h> // memcpy, memcmp
+#include <assert.h> // assert
+
 #include "dict.h"
 
 uint64_t fnv_hash64(uint8_t* data, size_t data_size) {

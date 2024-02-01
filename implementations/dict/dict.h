@@ -1,8 +1,6 @@
-#include <stdlib.h> // size_t, malloc, calloc, free, reallocarray, NULL
-#include <stdint.h> // uint8_t, uint64_t
-#include <stdbool.h> // bool, true, false
-#include <string.h> // memcpy, memcmp
-#include <assert.h> // assert, static_assert
+#include <stdbool.h> // bool
+#include <assert.h> // static_assert
+#include <stdlib.h> // size_t
 
 typedef struct {
     void* key_p;
