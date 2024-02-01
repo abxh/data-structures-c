@@ -141,7 +141,6 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p, double last_value
             if (pm_token == UNDEFINED_OP) {
                 pm_token = ADD_OP;
             }
-            [[fallthrough]]; // to signal purposeful fallthrough.
         case '-':
             if (pm_token == UNDEFINED_OP) {
                 pm_token = SUB_OP;
@@ -161,12 +160,10 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p, double last_value
             if (other_token == UNDEFINED_OP) {
                 other_token = MUL_OP;
             }
-            [[fallthrough]];
         case '/':
             if (other_token == UNDEFINED_OP) {
                 other_token = DIV_OP;
             }
-            [[fallthrough]];
         case '^':
             if (other_token == UNDEFINED_OP) {
                 other_token = POW_OP;
