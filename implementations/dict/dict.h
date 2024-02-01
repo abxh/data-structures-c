@@ -1,6 +1,8 @@
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdbool.h>
+#include <stdlib.h> // size_t, malloc, calloc, free, reallocarray, NULL
+#include <stdint.h> // uint8_t, uint64_t
+#include <stdbool.h> // bool, true, false
+#include <string.h> // memcpy, memcmp
+#include <assert.h> // assert, static_assert
 
 typedef struct {
     void* key_p;
@@ -15,7 +17,10 @@ typedef struct {
     size_t value_size;
 } Dict;
 
-#define INITIAL_CAPACITY 128 // must be a multiple of 2
+#define INITIAL_CAPACITY 128
+
+static_assert(INITIAL_CAPACITY >= 8, "initial capacity must be larger than or equal to 8");
+static_assert((INITIAL_CAPACITY & (INITIAL_CAPACITY - 1)) == 0, "initial capacity must be a power of 2");
 
 /* Try create a new dict and returns it's pointer. Returns NULL if OOM. */
 Dict* dict_new(size_t key_size, size_t value_size);
