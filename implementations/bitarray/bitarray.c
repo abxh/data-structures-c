@@ -1,9 +1,3 @@
-#include <assert.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "bitarray.h"
 
 #define BITARRAY_WORD_INDEX(index) (index >> 3)
@@ -32,7 +26,7 @@ Bitarray* bitarray_new_from(void* bytes, size_t num_of_bits) {
         return NULL;
     }
     bitarray_p->num_of_bits = num_of_bits;
-    bitarray_p->capacity = (num_of_bits + 7) / 8;
+    bitarray_p->capacity = (num_of_bits + 7) / 8; // round up to the next multiple of 8
     bitarray_p->words = malloc(bitarray_p->capacity);
     if (bitarray_p->words == NULL) {
         free(bitarray_p);

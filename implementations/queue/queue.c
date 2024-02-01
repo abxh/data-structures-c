@@ -1,7 +1,3 @@
-#include <assert.h>
-#include <stdbool.h>
-#include <stdlib.h>
-
 #include "queue.h"
 
 Queue* queue_new(size_t data_size) {

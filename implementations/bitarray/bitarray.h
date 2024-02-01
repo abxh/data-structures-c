@@ -1,8 +1,11 @@
 #pragma once
 
-#include <stdbool.h>
-#include <stdint.h>
-#include <string.h>
+#include <stdlib.h> // malloc, alloc, size_t, NULL
+#include <stdint.h> // uint8_t
+#include <stdbool.h> // bool
+#include <string.h> // memcmp, memcpy
+#include <assert.h> // assert.
+#include <stdio.h> // putchar, printf
 
 typedef struct {
     size_t num_of_bits;
