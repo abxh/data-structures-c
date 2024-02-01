@@ -1,6 +1,9 @@
-#include "queue.h"
-#include <stdbool.h>
-#include <stdio.h>
+
+#include <stdbool.h> // bool, true, false
+#include <stdlib.h> // free
+#include <stdio.h> // printf
+
+#include "queue.h" // queue_*
 
 // note:
 // test using sanitizers as well.

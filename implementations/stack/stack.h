@@ -1,9 +1,9 @@
 #pragma once
 
-#include <stdlib.h> // malloc, size_t, NULL
-#include <stdbool.h> // bool, true, false
+#include <stdlib.h> // size_t, free
+#include <stdbool.h> // bool
 #include <string.h> // memcpy
-#include <assert.h> // assert
+
 
 typedef struct StackNode {
     void* value_p;

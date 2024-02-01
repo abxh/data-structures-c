@@ -1,6 +1,9 @@
-#include "stack.h"
-#include <stdbool.h>
-#include <stdio.h>
+#include <stdbool.h> // bool, true, false
+#include <stdlib.h> // free
+#include <stdio.h> // printf
+
+#include "stack.h" // stack_*
+
 
 // note:
 // test using sanitizers as well.

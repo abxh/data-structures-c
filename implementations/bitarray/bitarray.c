@@ -1,3 +1,10 @@
+#include <stdlib.h> // malloc, alloc, size_t, NULL
+#include <stdint.h> // uint8_t
+#include <stdbool.h> // bool
+#include <string.h> // memcmp, memcpy
+#include <assert.h> // assert.
+#include <stdio.h> // putchar, printf
+
 #include "bitarray.h"
 
 #define BITARRAY_WORD_INDEX(index) (index >> 3)

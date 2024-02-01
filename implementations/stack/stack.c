@@ -1,3 +1,8 @@
+#include <stdlib.h> // malloc, size_t, NULL
+#include <stdbool.h> // bool, true, false
+#include <string.h> // memcpy
+#include <assert.h> // assert
+
 #include "stack.h"
 
 Stack* stack_new(size_t data_size) {

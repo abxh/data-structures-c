@@ -1,9 +1,8 @@
 #pragma once
 
-#include <stdlib.h> // size_t, malloc, free, NULL
-#include <stdbool.h> // bool, true, false
-#include <assert.h> // assert
+#include <stdlib.h> // size_t, free
 #include <string.h> // memcpy
+#include <stdbool.h> // bool
 
 typedef struct QueueElement {
     void* value_p;

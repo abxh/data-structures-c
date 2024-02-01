@@ -1,3 +1,8 @@
+#include <stdlib.h> // size_t, malloc, free, NULL
+#include <stdbool.h> // bool, true, false
+#include <assert.h> // assert
+#include <string.h> // memcpy
+
 #include "queue.h"
 
 Queue* queue_new(size_t data_size) {
