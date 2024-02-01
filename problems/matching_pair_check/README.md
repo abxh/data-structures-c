@@ -1,7 +1,6 @@
 # matching_pair_check
 
-This is a problem based on K & R chapter 1 exercise 24 with some rules I have made up that may or may not
-match how they are usually used.
+This is a problem based on K & R chapter 1 exercise 24 with my interpetation of the rules. 
 
 **Problem:**
 
