@@ -59,7 +59,7 @@ int main(void) {
     func_plus bool_f_arr[3] = {
         {empty_test, "empty test"},
         {one_node_test, "one node test"},
-        {million_nodes_test, "billion nodes test"}
+        {million_nodes_test, "million nodes test"}
     };
     for (int i = 0; i < 3; i++) {
         printf("[%s] %s\n", bool_f_arr[i].func() ? "true" : "false", bool_f_arr[i].desc);
