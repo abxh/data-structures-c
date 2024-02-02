@@ -15,12 +15,14 @@ typedef struct {
     size_t value_size;
 } Dict;
 
-static const DictEntry dict_entry_empty = (DictEntry) {.key_p = NULL, .value_p = NULL};
+static const DictEntry dict_entry_empty = {.key_p = NULL, .value_p = NULL};
 
-#define INITIAL_CAPACITY 128
+#ifndef DICT_INITIAL_CAPACITY_SET_CUSTOM
+#define DICT_INITIAL_CAPACITY 128
+#endif
 
-static_assert(INITIAL_CAPACITY > 0, "initial capacity must be larger than 0");
-static_assert((INITIAL_CAPACITY & (INITIAL_CAPACITY - 1)) == 0, "initial capacity must be a power of 2");
+static_assert(DICT_INITIAL_CAPACITY > 0, "initial capacity must be larger than 0");
+static_assert((DICT_INITIAL_CAPACITY & (DICT_INITIAL_CAPACITY - 1)) == 0, "initial capacity must be a power of 2");
 
 /* Try create a new dict and returns it's pointer. Returns NULL if OOM. */
 Dict* dict_new(size_t key_size, size_t value_size);
