@@ -17,7 +17,7 @@ typedef struct {
 
 #define INITIAL_CAPACITY 128
 
-static_assert(INITIAL_CAPACITY >= 4, "initial capacity must be larger than or equal to 4");
+static_assert(INITIAL_CAPACITY > 0, "initial capacity must be larger than 0");
 static_assert((INITIAL_CAPACITY & (INITIAL_CAPACITY - 1)) == 0, "initial capacity must be a power of 2");
 
 /* Try create a new dict and returns it's pointer. Returns NULL if OOM. */
