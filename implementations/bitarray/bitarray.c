@@ -1,4 +1,4 @@
-#include <stdlib.h> // malloc, alloc, size_t, NULL
+#include <stdlib.h> // malloc, calloc, size_t, NULL
 #include <stdint.h> // uint8_t
 #include <stdbool.h> // bool
 #include <string.h> // memcmp, memcpy

@@ -1,9 +1,8 @@
 #pragma once
 
-#include <stdlib.h> // size_t, free
 #include <stdbool.h> // bool
-#include <string.h> // memcpy
-
+#include <stdlib.h>  // size_t, free
+#include <string.h>  // memcpy
 
 typedef struct StackNode {
     void* value_p;
@@ -35,7 +34,7 @@ void* stack_pop(Stack* stack_p, size_t size);
 void stack_free(Stack* stack_p);
 
 /* Create inline functions to directly work with stack values. */
-#define CREATE_STACK_INLINE_FUNCTIONS(name, type)                                   \
+#define STACK_CREATE_INLINE_FUNCTIONS(name, type)                                   \
     static inline Stack* stack_new_##name(void) {                                   \
         return stack_new(sizeof(type));                                             \
     }                                                                               \

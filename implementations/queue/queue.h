@@ -1,8 +1,8 @@
 #pragma once
 
-#include <stdlib.h> // size_t, free
-#include <string.h> // memcpy
 #include <stdbool.h> // bool
+#include <stdlib.h>  // size_t, free
+#include <string.h>  // memcpy
 
 typedef struct QueueElement {
     void* value_p;
@@ -35,7 +35,7 @@ void* queue_dequeue(Queue* queue_p, size_t size);
 void queue_free(Queue* queue_p);
 
 /* Create inline functions to directly work with queue values. */
-#define CREATE_QUEUE_INLINE_FUNCTIONS(name, type)                                            \
+#define QUEUE_CREATE_INLINE_FUNCTIONS(name, type)                                            \
     static inline Queue* queue_new_##name(void) {                                            \
         return queue_new(sizeof(type));                                                      \
     }                                                                                        \
