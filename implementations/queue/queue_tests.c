@@ -59,7 +59,7 @@ int main(void) {
     func_plus bool_f_arr[3] = {
         {empty_test, "empty test"},
         {one_element_test, "one element test"},
-        {million_element_test, "billion element test"}
+        {million_element_test, "million element test"}
     };
     for (int i = 0; i < 3; i++) {
         printf("[%s] %s\n", bool_f_arr[i].func() ? "true" : "false", bool_f_arr[i].desc);
