@@ -1,12 +1,18 @@
 
 #include <stdbool.h> // bool, true, false
-#include <stdlib.h> // free
-#include <stdio.h> // printf
+#include <stdio.h>   // printf
+#include <stdlib.h>  // free
 
 #include "queue.h" // queue_*
 
 // note:
-// test using sanitizers as well.
+// test using valgrind as well.
+
+#define PRINTLNIFN(b)                                      \
+    {                                                      \
+        if (!(b))                                          \
+            printf("failed at line number: %d", __LINE__); \
+    }
 
 bool empty_test(void) {
     Queue* queue_p = queue_new(sizeof(int));
@@ -19,12 +25,16 @@ bool one_element_test(void) {
     Queue* queue_p = queue_new(sizeof(int));
     bool res = true;
     int value = 5;
-    queue_enqueue(queue_p, &value, sizeof(int));
-    res &= value == *(int*) queue_peek(queue_p);
+    res &= queue_enqueue(queue_p, &value, sizeof(int));
+    PRINTLNIFN(res);
+    res &= value == *(int*)queue_peek(queue_p);
+    PRINTLNIFN(res);
     void* value_p_rtr = queue_dequeue(queue_p, sizeof(int));
-    res &= value == *(int*) value_p_rtr;
+    res &= value == *(int*)value_p_rtr;
+    PRINTLNIFN(res);
     free(value_p_rtr);
     res &= queue_isempty(queue_p);
+    PRINTLNIFN(res);
     queue_free(queue_p);
     return res;
 }
@@ -34,6 +44,7 @@ bool million_element_test(void) {
     bool res = true;
     for (int i = 1; i <= 1000000; i++) {
         res &= queue_enqueue(queue_p, &i, sizeof(int));
+        PRINTLNIFN(res);
         if (!res) {
             queue_free(queue_p);
             return false;
@@ -41,7 +52,8 @@ bool million_element_test(void) {
     }
     for (int i = 1; i <= 1000000; i++) {
         void* value_p_rtr = queue_dequeue(queue_p, sizeof(int));
-        res &= i == *(int*) value_p_rtr;
+        res &= i == *(int*)value_p_rtr;
+        PRINTLNIFN(res);
         free(value_p_rtr);
     }
     queue_free(queue_p);
@@ -55,13 +67,12 @@ typedef struct {
     const char* desc;
 } func_plus;
 
+#define SIZEOF(arr) (sizeof(arr) / sizeof(*arr))
+
 int main(void) {
-    func_plus bool_f_arr[3] = {
-        {empty_test, "empty test"},
-        {one_element_test, "one element test"},
-        {million_element_test, "million element test"}
-    };
-    for (int i = 0; i < 3; i++) {
+    func_plus bool_f_arr[] = {
+        {empty_test, "empty test"}, {one_element_test, "one element test"}, {million_element_test, "million element test"}};
+    for (int i = 0; i < SIZEOF(bool_f_arr); i++) {
         printf("[%s] %s\n", bool_f_arr[i].func() ? "true" : "false", bool_f_arr[i].desc);
     }
     return 0;

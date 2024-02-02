@@ -1,12 +1,17 @@
 #include <stdbool.h> // bool, true, false
-#include <stdlib.h> // free
-#include <stdio.h> // printf
+#include <stdio.h>   // printf
+#include <stdlib.h>  // free
 
 #include "stack.h" // stack_*
 
-
 // note:
-// test using sanitizers as well.
+// test using valgrind as well.
+
+#define PRINTLNIFN(b)                                      \
+    {                                                      \
+        if (!(b))                                          \
+            printf("failed at line number: %d", __LINE__); \
+    }
 
 bool empty_test(void) {
     Stack* stack_p = stack_new(sizeof(int));
@@ -19,12 +24,16 @@ bool one_node_test(void) {
     Stack* stack_p = stack_new(sizeof(int));
     bool res = true;
     int value = 5;
-    stack_push(stack_p, &value, sizeof(int));
-    res &= value == *(int*) stack_peek(stack_p);
+    res &= stack_push(stack_p, &value, sizeof(int));
+    PRINTLNIFN(res);
+    res &= value == *(int*)stack_peek(stack_p);
+    PRINTLNIFN(res);
     void* value_p_rtr = stack_pop(stack_p, sizeof(int));
-    res &= value == *(int*) value_p_rtr;
+    res &= value == *(int*)value_p_rtr;
+    PRINTLNIFN(res);
     free(value_p_rtr);
     res &= stack_isempty(stack_p);
+    PRINTLNIFN(res);
     stack_free(stack_p);
     return res;
 }
@@ -41,7 +50,7 @@ bool million_nodes_test(void) {
     }
     for (int i = 1000000; i >= 1; i--) {
         void* value_p_rtr = stack_pop(stack_p, sizeof(int));
-        res &= i == *(int*) value_p_rtr;
+        res &= i == *(int*)value_p_rtr;
         free(value_p_rtr);
     }
     stack_free(stack_p);
@@ -55,13 +64,12 @@ typedef struct {
     const char* desc;
 } func_plus;
 
+#define SIZEOF(arr) (sizeof(arr) / sizeof(*arr))
+
 int main(void) {
-    func_plus bool_f_arr[3] = {
-        {empty_test, "empty test"},
-        {one_node_test, "one node test"},
-        {million_nodes_test, "million nodes test"}
-    };
-    for (int i = 0; i < 3; i++) {
+    func_plus bool_f_arr[] = {
+        {empty_test, "empty test"}, {one_node_test, "one node test"}, {million_nodes_test, "million nodes test"}};
+    for (int i = 0; i < SIZEOF(bool_f_arr); i++) {
         printf("[%s] %s\n", bool_f_arr[i].func() ? "true" : "false", bool_f_arr[i].desc);
     }
     return 0;
