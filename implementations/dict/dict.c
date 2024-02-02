@@ -36,7 +36,7 @@ bool dict_grow(Dict* dict_p, size_t used_new) {
 }
 
 bool dict_shrink(Dict* dict_p, size_t used_new) {
-    if (dict_p->capacity > 1 && used_new <= dict_p->capacity >> 2) {
+    if (used_new < dict_p->capacity >> 2) {
         size_t capacity_new = dict_p->capacity >> 1;
         DictEntry* darr_new = reallocarray(darr_new, capacity_new, sizeof(DictEntry));
         if (darr_new == NULL) {
