@@ -15,6 +15,8 @@ typedef struct {
     size_t value_size;
 } Dict;
 
+static const DictEntry dict_entry_empty = (DictEntry) {.key_p = NULL, .value_p = NULL};
+
 #define INITIAL_CAPACITY 128
 
 static_assert(INITIAL_CAPACITY >= 8, "initial capacity must be larger than or equal to 8");
