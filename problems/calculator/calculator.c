@@ -23,10 +23,10 @@ typedef struct {
     double value;
 } Token;
 
-CREATE_QUEUE_INLINE_FUNCTIONS(token, Token)
-CREATE_STACK_INLINE_FUNCTIONS(tokentype, TokenType)
-CREATE_STACK_INLINE_FUNCTIONS(token, Token)
-CREATE_STACK_INLINE_FUNCTIONS(num, double)
+QUEUE_CREATE_INLINE_FUNCTIONS(token, Token)
+STACK_CREATE_INLINE_FUNCTIONS(tokentype, TokenType)
+STACK_CREATE_INLINE_FUNCTIONS(token, Token)
+STACK_CREATE_INLINE_FUNCTIONS(num, double)
 
 void fprintf_token(Token token, FILE* stream) {
     switch (token.type) {
@@ -401,6 +401,7 @@ double eval_postfix_exp(Queue* queue_p) {
 }
 
 int main() {
+    return 0;
     char* line_p = NULL;
     size_t n = 0;
     ssize_t len = 0;

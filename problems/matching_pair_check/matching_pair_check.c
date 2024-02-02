@@ -12,7 +12,7 @@ typedef enum {
     BACK_QUOTE,
 } SIGN_ENUM;
 
-CREATE_STACK_INLINE_FUNCTIONS(se, SIGN_ENUM)
+STACK_CREATE_INLINE_FUNCTIONS(se, SIGN_ENUM)
 
 char get_sign(SIGN_ENUM se) {
     switch (se) {
