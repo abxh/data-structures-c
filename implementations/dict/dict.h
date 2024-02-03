@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdbool.h> // bool
 #include <assert.h> // static_assert
 #include <stdlib.h> // size_t
@@ -15,17 +17,9 @@ typedef struct {
     size_t value_size;
 } Dict;
 
-static const DictEntry dict_entry_empty = {.key_p = NULL, .value_p = NULL};
-
-#ifndef DICT_INITIAL_CAPACITY_SET_CUSTOM
-#define DICT_INITIAL_CAPACITY 128
-#endif
-
-static_assert(DICT_INITIAL_CAPACITY > 0, "initial capacity must be larger than 0");
-static_assert((DICT_INITIAL_CAPACITY & (DICT_INITIAL_CAPACITY - 1)) == 0, "initial capacity must be a power of 2");
-
-/* Try create a new dict and returns it's pointer. Returns NULL if OOM. */
-Dict* dict_new(size_t key_size, size_t value_size);
+/* Try create a new dict and returns it's pointer. Returns NULL if OOM.
+ * Initial capacity must be a power of 2 and larger than 0. */
+Dict* dict_new(size_t initial_capacity, size_t key_size, size_t value_size);
 
 /* Check if a key exists. */
 bool dict_exists(Dict* dict_p, void* key_p, size_t key_size);

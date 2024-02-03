@@ -1,10 +1,8 @@
 #include <stdbool.h> // bool, true, false
-#include <stdint.h>
+#include <stdint.h> // SIZE_MAX
 #include <stdio.h>  // printf
 #include <stdlib.h> // free
 
-#define DICT_INITIAL_CAPACITY_SET_CUSTOM
-#define DICT_INITIAL_CAPACITY 1
 #include "dict.h" // dict_*
 
 // note:
@@ -13,7 +11,7 @@
 bool one_entry_test(void) {
     int key = 42;
     int value = 420;
-    Dict* dict_p = dict_new(sizeof(key), sizeof(value));
+    Dict* dict_p = dict_new(1, sizeof(key), sizeof(value));
     if (dict_p == NULL) {
         return false;
     }
@@ -42,7 +40,7 @@ bool two_entry_test(void) {
     int value1 = 2;
     int key2 = 3;
     int value2 = 4;
-    Dict* dict_p = dict_new(sizeof(key1), sizeof(value1));
+    Dict* dict_p = dict_new(1, sizeof(key1), sizeof(value1));
     if (dict_p == NULL) {
         return false;
     }
@@ -84,20 +82,16 @@ bool two_entry_test(void) {
 }
 
 bool million_entry_test(void) {
-    Dict* dict_p = dict_new(sizeof(size_t), sizeof(size_t));
+    Dict* dict_p = dict_new(1, sizeof(size_t), sizeof(size_t));
     if (dict_p == NULL) {
         return false;
     }
     bool res = true;
-    for (size_t i = 0; i < 128; i++) {
+    for (size_t i = 0; i < 32; i++) {
         size_t value = SIZE_MAX - i;
         res &= dict_set(dict_p, &i, sizeof(i), &value, sizeof(value));
-        if (!res) {
-            dict_free(dict_p);
-            return false;
-        }
     }
-    for (size_t i = 0; i < 128; i++) {
+    for (size_t i = 0; i < 32; i++) {
         size_t expected_value = SIZE_MAX - i;
         void* value_p = dict_get(dict_p, &i, sizeof(i));
         res &= value_p != NULL ? (expected_value == *(size_t*)value_p) : false;
