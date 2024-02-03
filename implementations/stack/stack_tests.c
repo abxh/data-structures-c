@@ -7,12 +7,6 @@
 // note:
 // test using valgrind as well.
 
-#define PRINTLNIFN(b)                                      \
-    {                                                      \
-        if (!(b))                                          \
-            printf("failed at line number: %d", __LINE__); \
-    }
-
 bool empty_test(void) {
     Stack* stack_p = stack_new(sizeof(int));
     bool res = true; // stack_isempty(stack_p);
@@ -25,15 +19,11 @@ bool one_node_test(void) {
     bool res = true;
     int value = 5;
     res &= stack_push(stack_p, &value, sizeof(int));
-    PRINTLNIFN(res);
     res &= value == *(int*)stack_peek(stack_p);
-    PRINTLNIFN(res);
     void* value_p_rtr = stack_pop(stack_p, sizeof(int));
     res &= value == *(int*)value_p_rtr;
-    PRINTLNIFN(res);
     free(value_p_rtr);
     res &= stack_isempty(stack_p);
-    PRINTLNIFN(res);
     stack_free(stack_p);
     return res;
 }

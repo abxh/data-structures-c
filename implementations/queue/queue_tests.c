@@ -8,12 +8,6 @@
 // note:
 // test using valgrind as well.
 
-#define PRINTLNIFN(b)                                      \
-    {                                                      \
-        if (!(b))                                          \
-            printf("failed at line number: %d", __LINE__); \
-    }
-
 bool empty_test(void) {
     Queue* queue_p = queue_new(sizeof(int));
     bool res = true; // queue_isempty(queue_p);
@@ -26,15 +20,11 @@ bool one_element_test(void) {
     bool res = true;
     int value = 5;
     res &= queue_enqueue(queue_p, &value, sizeof(int));
-    PRINTLNIFN(res);
     res &= value == *(int*)queue_peek(queue_p);
-    PRINTLNIFN(res);
     void* value_p_rtr = queue_dequeue(queue_p, sizeof(int));
     res &= value == *(int*)value_p_rtr;
-    PRINTLNIFN(res);
     free(value_p_rtr);
     res &= queue_isempty(queue_p);
-    PRINTLNIFN(res);
     queue_free(queue_p);
     return res;
 }
@@ -44,7 +34,6 @@ bool million_element_test(void) {
     bool res = true;
     for (int i = 1; i <= 1000000; i++) {
         res &= queue_enqueue(queue_p, &i, sizeof(int));
-        PRINTLNIFN(res);
         if (!res) {
             queue_free(queue_p);
             return false;
@@ -53,7 +42,6 @@ bool million_element_test(void) {
     for (int i = 1; i <= 1000000; i++) {
         void* value_p_rtr = queue_dequeue(queue_p, sizeof(int));
         res &= i == *(int*)value_p_rtr;
-        PRINTLNIFN(res);
         free(value_p_rtr);
     }
     queue_free(queue_p);
