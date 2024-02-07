@@ -1,8 +1,8 @@
 #pragma once
 
-#include <stdbool.h> // bool
-#include <stdlib.h>  // size_t
-#include <stdalign.h>
+#include <stdalign.h> // alignof, alignas
+#include <stdbool.h>  // bool
+#include <stdlib.h>   // size_t
 
 typedef struct {
     size_t used;
@@ -42,7 +42,7 @@ void stack_free(Stack* stack_p);
         return *(type*)stack_peek(stack_p);                            \
     }                                                                  \
     static inline void stack_push_##name(Stack* stack_p, type value) { \
-        stack_push(stack_p, (unsigned char*)&value);                            \
+        stack_push(stack_p, (unsigned char*)&value);                   \
     }                                                                  \
     static inline type stack_pop_##name(Stack* stack_p) {              \
         return *(type*)stack_pop(stack_p);                             \

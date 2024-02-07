@@ -2,7 +2,6 @@
 #include <stdbool.h> // bool
 #include <stddef.h>  // offsetof
 #include <stdint.h>  // uint32_t
-#include <stdio.h>
 #include <stdlib.h>  // size_t, malloc, free, NULL
 #include <string.h>  // memcpy
 

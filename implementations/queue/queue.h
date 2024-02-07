@@ -1,8 +1,8 @@
 #pragma once
 
-#include <stdalign.h>
-#include <stdbool.h> // bool
-#include <stdlib.h>  // size_t, free
+#include <stdalign.h> // alignof, alignas
+#include <stdbool.h>  // bool
+#include <stdlib.h>   // size_t, free
 
 typedef struct {
     size_t start_index;
