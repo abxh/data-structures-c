@@ -44,7 +44,7 @@ bool million_elements_test(void) {
     return res;
 }
 
-bool zigzag_test(void) {
+bool wraparound_test(void) {
     Queue* queue_p = queue_new(1000000, sizeof(int));
     bool res = true;
     for (int i = 1; i <= 750000; i++) {
@@ -74,7 +74,7 @@ int main(void) {
     func_plus bool_f_arr[] = {{empty_test, "empty test"},
                               {one_element_test, "one element test"},
                               {million_elements_test, "million elements test"},
-                              {zigzag_test, "zigzag test"}};
+                              {wraparound_test, "wraparound test"}};
     for (size_t i = 0; i < sizeof(bool_f_arr) / sizeof(func_plus); i++) {
         printf("[%s] %s\n", bool_f_arr[i].func() ? "true" : "false", bool_f_arr[i].desc);
     }

@@ -7,7 +7,7 @@
 typedef struct {
     size_t start_index;
     size_t end_index;
-    size_t capacity_sub_1;
+    size_t capacity_sub_one;
     size_t data_size;
     bool isempty;
     alignas(alignof(size_t)) unsigned char arr[];
