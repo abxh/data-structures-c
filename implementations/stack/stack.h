@@ -24,7 +24,7 @@ bool stack_isfull(const Stack* stack_p);
 char* stack_peek(Stack* stack_p);
 
 /* Push value onto the stack as bytes. Should check for full stack beforehand. */
-void stack_push(Stack* stack_p, char* bytes);
+void stack_push(Stack* stack_p, char* value);
 
 /* Pop a value from the stack and return the pointer to it. Should check for empty stack
  * beforehand and free the returned value from heap. */
