@@ -1,7 +1,8 @@
 #include <assert.h>  // assert
-#include <stdbool.h> // bool, true, false
+#include <stdbool.h> // bool
 #include <stddef.h>  // offsetof
 #include <stdlib.h>  // malloc, size_t, NULL
+#include <string.h>  // memcpy
 
 #include "stack.h"
 

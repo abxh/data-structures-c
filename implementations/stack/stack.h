@@ -2,7 +2,6 @@
 
 #include <stdbool.h> // bool
 #include <stdlib.h>  // size_t, free
-#include <string.h>  // memcpy
 
 typedef struct {
     size_t used;
