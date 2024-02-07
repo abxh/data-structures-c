@@ -1,13 +1,14 @@
 #pragma once
 
 #include <stdbool.h> // bool
-#include <stdlib.h>  // size_t, free
+#include <stdlib.h>  // size_t
+#include <stdalign.h>
 
 typedef struct {
     size_t used;
     size_t capacity;
     size_t data_size;
-    char arr[];
+    alignas(alignof(size_t)) unsigned char arr[];
 } Stack;
 
 /* Create a new stack of some maximum capacity for some data size. Returns NULL if OOM. */
@@ -20,14 +21,14 @@ bool stack_isempty(const Stack* stack_p);
 bool stack_isfull(const Stack* stack_p);
 
 /* Peek at the next bytes. Should check for empty stack beforehand. */
-char* stack_peek(Stack* stack_p);
+unsigned char* stack_peek(Stack* stack_p);
 
 /* Push value onto the stack as bytes. Should check for full stack beforehand. */
-void stack_push(Stack* stack_p, char* value);
+void stack_push(Stack* stack_p, unsigned char* value);
 
 /* Pop a value from the stack and return the pointer to it. Should check for empty stack
  * beforehand and free the returned value from heap. */
-char* stack_pop(Stack* stack_p);
+unsigned char* stack_pop(Stack* stack_p);
 
 /* Free the memory of the stack appropiately. */
 void stack_free(Stack* stack_p);
@@ -41,7 +42,7 @@ void stack_free(Stack* stack_p);
         return *(type*)stack_peek(stack_p);                            \
     }                                                                  \
     static inline void stack_push_##name(Stack* stack_p, type value) { \
-        stack_push(stack_p, (char*)&value);                            \
+        stack_push(stack_p, (unsigned char*)&value);                            \
     }                                                                  \
     static inline type stack_pop_##name(Stack* stack_p) {              \
         return *(type*)stack_pop(stack_p);                             \

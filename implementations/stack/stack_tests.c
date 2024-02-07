@@ -17,7 +17,7 @@ bool one_element_test(void) {
     Stack* stack_p = stack_new(1, sizeof(int));
     bool res = true;
     int value = 5;
-    stack_push(stack_p, (char*)&value);
+    stack_push(stack_p, (unsigned char*)&value);
     res &= value == *(int*)stack_peek(stack_p);
     res &= !stack_isempty(stack_p);
     res &= stack_isfull(stack_p);
@@ -32,7 +32,7 @@ bool million_elements_test(void) {
     Stack* stack_p = stack_new(1000000, sizeof(int));
     bool res = true;
     for (int i = 1; i <= 1000000; i++) {
-        stack_push(stack_p, (char*)&i);
+        stack_push(stack_p, (unsigned char*)&i);
     }
     for (int i = 1000000; i >= 1; i--) {
         res &= i == *(int*)stack_pop(stack_p);
