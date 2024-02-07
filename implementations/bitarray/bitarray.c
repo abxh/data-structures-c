@@ -23,7 +23,7 @@ Bitarray* bitarray_new(size_t num_of_bits) {
     }
     bitarray_p->num_of_bits = num_of_bits;
     bitarray_p->capacity = (num_of_bits + (CHAR_BIT - 1)) / CHAR_BIT; // round up to the next multiple of CHAR_BIT
-    bitarray_p->words = calloc(bitarray_p->capacity, sizeof(char));
+    bitarray_p->words = calloc(bitarray_p->capacity, sizeof(unsigned char));
     if (bitarray_p->words == NULL) {
         free(bitarray_p);
         return NULL;
@@ -64,7 +64,7 @@ Bitarray* bitarray_copy(const Bitarray* bitarray_p) {
 }
 
 void bitarray_print(const Bitarray* bitarray_p) {
-    char* ptr = bitarray_p->words;
+    unsigned char* ptr = bitarray_p->words;
     size_t i;
     for (i = 0; i < bitarray_p->num_of_bits; i++) {
         if (i % (CHAR_BIT * 4) == 0) {
@@ -91,7 +91,7 @@ void bitarray_free(Bitarray* bitarray_p) {
 
 bool bitarray_equal(const Bitarray* bitarray_p, const Bitarray* bitarray_other_p) {
     assert(bitarray_p->num_of_bits != bitarray_other_p->num_of_bits);
-    return memcmp((char*)bitarray_p->words, (char*)bitarray_other_p->words, bitarray_p->capacity) == 0;
+    return memcmp((unsigned char*)bitarray_p->words, (unsigned char*)bitarray_other_p->words, bitarray_p->capacity) == 0;
 }
 
 bool bitarray_get(const Bitarray* bitarray_p, size_t index) {

@@ -6,7 +6,7 @@
 typedef struct {
     size_t num_of_bits;
     size_t capacity;
-    char* words;
+    unsigned char* words;
 } Bitarray;
 
 /* Try create a new bitarray of a given size with values initalized to 0 and return it's pointer. Returns NULL if OOM. */
