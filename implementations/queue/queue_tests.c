@@ -63,6 +63,80 @@ bool wraparound_test(void) {
     return res;
 }
 
+bool grow_test(void) {
+    Queue* queue_p = queue_new(50, sizeof(int));
+    bool res = true;
+    for (int i = 1; i <= 50; i++) {
+        queue_enqueue(queue_p, (unsigned char*)&i);
+    }
+    queue_resize(queue_p, 100);
+    for (int i = 51; i <= 100; i++) {
+        queue_enqueue(queue_p, (unsigned char*)&i);
+    }
+    for (int i = 1; i <= 100; i++) {
+        res &= i == *(int*)queue_dequeue(queue_p);
+    }
+    queue_free(queue_p);
+    return res;
+}
+
+bool shrink_test(void) {
+    Queue* queue_p = queue_new(50, sizeof(int));
+    bool res = true;
+    for (int i = 1; i <= 25; i++) {
+        queue_enqueue(queue_p, (unsigned char*)&i);
+    }
+    queue_resize(queue_p, 25);
+    for (int i = 1; i <= 25; i++) {
+        res &= i == *(int*)queue_dequeue(queue_p);
+    }
+    queue_free(queue_p);
+    return res;
+}
+
+bool grow_and_wraparound_test(void) {
+    Queue* queue_p = queue_new(50, sizeof(int));
+    bool res = true;
+    for (int i = 1; i <= 25; i++) {
+        queue_enqueue(queue_p, (unsigned char*)&i);
+    }
+    for (int i = 1; i <= 25; i++) {
+        res &= i == *(int*)queue_dequeue(queue_p);
+    }
+    for (int i = 1; i <= 50; i++) {
+        queue_enqueue(queue_p, (unsigned char*)&i);
+    }
+    queue_resize(queue_p, 100);
+    for (int i = 51; i <= 100; i++) {
+        queue_enqueue(queue_p, (unsigned char*)&i);
+    }
+    for (int i = 1; i <= 100; i++) {
+        res &= i == *(int*)queue_dequeue(queue_p);
+    }
+    queue_free(queue_p);
+    return res;
+}
+
+bool shrink_and_wraparound_test(void) {
+    Queue* queue_p = queue_new(100, sizeof(int));
+    bool res = true;
+    for (int i = 1; i <= 50; i++) {
+        queue_enqueue(queue_p, (unsigned char*)&i);
+    }
+    for (int i = 1; i <= 50; i++) {
+        res &= i == *(int*)queue_dequeue(queue_p);
+    }
+    for (int i = 1; i <= 25; i++) {
+        queue_enqueue(queue_p, (unsigned char*)&i);
+    }
+    queue_resize(queue_p, 25);
+    for (int i = 1; i <= 25; i++) {
+        res &= i == *(int*)queue_dequeue(queue_p);
+    }
+    queue_free(queue_p);
+    return res;
+}
+
 typedef bool (*bool_f)(void);
 
 typedef struct {
@@ -74,7 +148,11 @@ int main(void) {
     func_plus bool_f_arr[] = {{empty_test, "empty test"},
                               {one_element_test, "one element test"},
                               {million_elements_test, "million elements test"},
-                              {wraparound_test, "wraparound test"}};
+                              {wraparound_test, "wraparound test"},
+                              {grow_test, "grow test"},
+                              {shrink_test, "shrink test"},
+                              {grow_and_wraparound_test, "grow and wraparound test"},
+                              {shrink_and_wraparound_test, "shrink and wraparound test"}};
     for (size_t i = 0; i < sizeof(bool_f_arr) / sizeof(func_plus); i++) {
         printf("[%s] %s\n", bool_f_arr[i].func() ? "true" : "false", bool_f_arr[i].desc);
     }

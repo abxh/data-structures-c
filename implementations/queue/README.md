@@ -1,3 +1,4 @@
 # queue
 
-This is a implementation of a circular queue using a fixed size byte array. 
+This is a implementation of a circular queue using a fixed size byte array. The queue can be
+manually resized.
