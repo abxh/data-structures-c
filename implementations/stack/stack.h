@@ -1,17 +1,17 @@
 #pragma once
 
-#include <stdalign.h> // alignof, alignas
-#include <stdbool.h>  // bool
-#include <stdlib.h>   // size_t
+#include <stdbool.h> // bool
+#include <stdlib.h>  // size_t
 
 typedef struct {
     size_t used;
     size_t capacity;
     size_t data_size;
-    alignas(alignof(size_t)) unsigned char arr[];
+    unsigned char* arr_p;
 } Stack;
 
-/* Create a new stack of some maximum capacity for some data size. Returns NULL if OOM. */
+/* Create a new stack of some maximum capacity for some data size. Returns
+   NULL if OOM or `capacity * data_size` exceeds SIZE_MAX. */
 Stack* stack_new(size_t capacity, size_t data_size);
 
 /* Return if the stack is empty. */
@@ -20,17 +20,20 @@ bool stack_isempty(const Stack* stack_p);
 /* Return if the stack is full. */
 bool stack_isfull(const Stack* stack_p);
 
-/* Peek at the next bytes. Should check for empty stack beforehand. */
+/* Peek at a non-empty stack. */
 unsigned char* stack_peek(Stack* stack_p);
 
-/* Push value onto the stack as bytes. Should check for full stack beforehand. */
+/* Push value onto a non-full stack. */
 void stack_push(Stack* stack_p, unsigned char* value);
 
-/* Pop a value from the stack and return the pointer to it. Should check for empty stack
- * beforehand and free the returned value from heap. */
+/* Pop a value from a non-empty stack and return the pointer to it. */
 unsigned char* stack_pop(Stack* stack_p);
 
-/* Free the memory of the stack appropiately. */
+/* Resize stack to have a new non-zero capacity. Returns false if OOM or
+   `new_capacity x data_size` exceeds SIZE_MAX. */
+bool stack_resize(Stack* stack_p, size_t new_capacity);
+
+/* Free the memory of a stack appropiately. */
 void stack_free(Stack* stack_p);
 
 /* Create inline functions to directly work with stack values. */

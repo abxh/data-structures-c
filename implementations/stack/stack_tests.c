@@ -41,6 +41,41 @@ bool million_elements_test(void) {
     return res;
 }
 
+bool grow_test(void) {
+    Stack* stack_p = stack_new(50, sizeof(int));
+    bool res = true;
+    for (int i = 1; i <= 50; i++) {
+        stack_push(stack_p, (unsigned char*)&i);
+    }
+    res &= stack_isfull(stack_p);
+    res &= stack_resize(stack_p, stack_p->used << 1);
+    res &= !stack_isfull(stack_p);
+    for (int i = 51; i <= 100; i++) {
+        stack_push(stack_p, (unsigned char*)&i);
+    }
+    for (int i = 100; i >= 1; i--) {
+        res &= i == *(int*)stack_pop(stack_p);
+    }
+    stack_free(stack_p);
+    return res;
+}
+
+bool shrink_test(void) {
+    Stack* stack_p = stack_new(50, sizeof(int));
+    bool res = true;
+    for (int i = 1; i <= 25; i++) {
+        stack_push(stack_p, (unsigned char*)&i);
+    }
+    res &= !stack_isfull(stack_p);
+    res &= stack_resize(stack_p, stack_p->used);
+    res &= stack_isfull(stack_p);
+    for (int i = 25; i >= 1; i--) {
+        res &= i == *(int*)stack_pop(stack_p);
+    }
+    stack_free(stack_p);
+    return res;
+}
+
 typedef bool (*bool_f)(void);
 
 typedef struct {
@@ -49,8 +84,11 @@ typedef struct {
 } func_plus;
 
 int main(void) {
-    func_plus bool_f_arr[] = {
-        {empty_test, "empty test"}, {one_element_test, "one element test"}, {million_elements_test, "million elements test"}};
+    func_plus bool_f_arr[] = {{empty_test, "empty test"},
+                              {one_element_test, "one element test"},
+                              {million_elements_test, "million elements test"},
+                              {grow_test, "grow test"},
+                              {shrink_test, "shrink test"}};
     for (size_t i = 0; i < sizeof(bool_f_arr) / sizeof(func_plus); i++) {
         printf("[%s] %s\n", bool_f_arr[i].func() ? "true" : "false", bool_f_arr[i].desc);
     }
