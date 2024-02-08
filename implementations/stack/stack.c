@@ -39,9 +39,9 @@ unsigned char* stack_peek(Stack* stack_p) {
     return stack_p->arr_p + stack_p->data_size * (stack_p->used - 1);
 }
 
-void stack_push(Stack* stack_p, unsigned char* value) {
+void stack_push(Stack* stack_p, unsigned char* bytes) {
     assert(stack_p->used != stack_p->capacity);
-    memcpy(stack_p->arr_p + stack_p->data_size * stack_p->used++, value, stack_p->data_size);
+    memcpy(stack_p->arr_p + stack_p->data_size * stack_p->used++, bytes, stack_p->data_size);
 }
 
 unsigned char* stack_pop(Stack* stack_p) {

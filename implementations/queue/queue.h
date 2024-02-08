@@ -1,7 +1,7 @@
 #pragma once
 
-#include <stdbool.h>  // bool
-#include <stdlib.h>   // size_t, free
+#include <stdbool.h> // bool
+#include <stdlib.h>  // size_t, free
 
 typedef struct {
     size_t start_index;
@@ -23,16 +23,16 @@ bool queue_isempty(const Queue* queue_p);
 /* Return if the queue is full. */
 bool queue_isfull(const Queue* queue_p);
 
-/* Peek at the next dequeued value of a non-empty queue. */
+/* Peek at the next dequeued value of a non-empty queue as bytes. */
 unsigned char* queue_peek_next(Queue* queue_p);
 
-/* Peek at the last enqueued value of a non-empty queue. */
+/* Peek at the last enqueued value of a non-empty queue as bytes. */
 unsigned char* queue_peek_last(Queue* queue_p);
 
-/* Enqueue a value onto a non-full queue. */
-void queue_enqueue(Queue* queue_p, unsigned char* value);
+/* Enqueue a value onto a non-full queue as bytes. */
+void queue_enqueue(Queue* queue_p, unsigned char* bytes);
 
-/* Dequeue a value from a non-empty queue and return it. */
+/* Dequeue a value from a non-empty queue and return it as bytes. */
 unsigned char* queue_dequeue(Queue* queue_p);
 
 /* Resize queue to have a new capacity that is rounded up to a power of 2.

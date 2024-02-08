@@ -20,13 +20,13 @@ bool stack_isempty(const Stack* stack_p);
 /* Return if the stack is full. */
 bool stack_isfull(const Stack* stack_p);
 
-/* Peek at a non-empty stack. */
+/* Peek at the next popped value of a non-empty stack as bytes. */
 unsigned char* stack_peek(Stack* stack_p);
 
-/* Push value onto a non-full stack. */
-void stack_push(Stack* stack_p, unsigned char* value);
+/* Push value onto a non-full stack as bytes. */
+void stack_push(Stack* stack_p, unsigned char* bytes);
 
-/* Pop a value from a non-empty stack and return the pointer to it. */
+/* Pop a value from a non-empty stack and return it as bytes. */
 unsigned char* stack_pop(Stack* stack_p);
 
 /* Resize stack to have a new non-zero capacity. Returns false if OOM or

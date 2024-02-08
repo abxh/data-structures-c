@@ -2,7 +2,7 @@
 #include <stdbool.h> // bool
 #include <stdint.h>  // uint32_t
 #include <stdlib.h>  // size_t, malloc, free, NULL
-#include <string.h>  // memcpy
+#include <string.h>  // memcpy, memmove
 
 #include <stdio.h> // REMOVE
 
@@ -61,9 +61,9 @@ unsigned char* queue_peek_last(Queue* queue_p) {
     return queue_p->arr_p + queue_p->data_size * (queue_p->end_index - 1);
 }
 
-void queue_enqueue(Queue* queue_p, unsigned char* value) {
+void queue_enqueue(Queue* queue_p, unsigned char* bytes) {
     assert(queue_p->used != queue_p->capacity_sub_one + 1);
-    memcpy(queue_p->arr_p + queue_p->data_size * queue_p->end_index, value, queue_p->data_size);
+    memcpy(queue_p->arr_p + queue_p->data_size * queue_p->end_index, bytes, queue_p->data_size);
     queue_p->end_index++;
     queue_p->end_index &= queue_p->capacity_sub_one;
     queue_p->used++;
@@ -71,11 +71,11 @@ void queue_enqueue(Queue* queue_p, unsigned char* value) {
 
 unsigned char* queue_dequeue(Queue* queue_p) {
     assert(queue_p->used != 0);
-    unsigned char* value = queue_p->arr_p + queue_p->data_size * queue_p->start_index;
+    unsigned char* bytes = queue_p->arr_p + queue_p->data_size * queue_p->start_index;
     queue_p->start_index++;
     queue_p->start_index &= queue_p->capacity_sub_one;
     queue_p->used--;
-    return value;
+    return bytes;
 }
 
 void rotleft(unsigned char* bytes, size_t len, size_t n) {
