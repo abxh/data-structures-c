@@ -12,7 +12,7 @@ static inline size_t BITARRAY_WORD_INDEX(size_t index) {
 }
 
 static inline size_t BITARRAY_BIT_INDEX(size_t index) {
-    return ~index & (CHAR_BIT - 1);
+    return (CHAR_BIT == 8) ? ~index & (CHAR_BIT - 1) : (CHAR_BIT - 1) - (index % CHAR_BIT);
 }
 
 Bitarray* bitarray_new(size_t num_of_bits) {
