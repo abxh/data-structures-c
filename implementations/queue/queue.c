@@ -4,8 +4,6 @@
 #include <stdlib.h>  // size_t, malloc, free, NULL
 #include <string.h>  // memcpy, memmove
 
-#include <stdio.h> // REMOVE
-
 #include "queue.h"
 
 size_t rounduppow2(uint32_t v) {

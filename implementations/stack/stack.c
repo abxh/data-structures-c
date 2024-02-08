@@ -4,8 +4,6 @@
 #include <string.h>  // memcpy
 #include <stdint.h>  // SIZE_MAX
 
-#include <stdio.h>
-
 #include "stack.h"
 
 Stack* stack_new(size_t capacity, size_t data_size) {
