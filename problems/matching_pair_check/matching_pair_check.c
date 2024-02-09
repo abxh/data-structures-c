@@ -27,7 +27,27 @@ SYMBOL_ENUM encode_symbol(char c) {
     case '}':
         return RCURLY;
     case ')':
-        return LPARAN;
+        return RPARAN;
+    default:
+        break;
+    }
+    return SYMBOL_ENUM_DEFAULT;
+}
+
+SYMBOL_ENUM matching_symbol(SYMBOL_ENUM symb) {
+    switch (symb) {
+    case LBRACKET:
+        return RBRACKET;
+    case LCURLY:
+        return RCURLY;
+    case LPARAN:
+        return RPARAN;
+    case RBRACKET:
+        return LBRACKET;
+    case RCURLY:
+        return RCURLY;
+    case RPARAN:
+        return RPARAN;
     default:
         break;
     }
@@ -87,7 +107,7 @@ int main(void) {
                 no_errors = false;
                 break;
             }
-            no_errors = str[i] == decode_symbol(stack_pop_symb(stack_p));
+            no_errors = encode_symbol(str[i]) == matching_symbol(stack_pop_symb(stack_p));
         }
         if (!no_errors) {
             break;
