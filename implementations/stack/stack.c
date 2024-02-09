@@ -9,8 +9,11 @@
 Stack* stack_new(size_t capacity, size_t data_size) {
     assert(capacity != 0);
     assert(data_size != 0);
+    if (capacity > SIZE_MAX / data_size) {
+        return NULL;
+    }
     Stack* stack_p = malloc(sizeof(Stack));
-    if (stack_p == NULL || capacity > SIZE_MAX / data_size) {
+    if (stack_p == NULL) {
         return NULL;
     }
     stack_p->arr_p = malloc(capacity * data_size);
