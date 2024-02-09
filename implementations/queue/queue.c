@@ -23,9 +23,11 @@ Queue* queue_new(size_t capacity, size_t data_size) {
     assert(capacity != 0);
     assert(data_size != 0);
     capacity = rounduppow2(capacity);
-    size_t capacity_sub_one = capacity - 1;
+    if (capacity > SIZE_MAX / data_size) {
+        return NULL;
+    }
     Queue* queue_p = malloc(sizeof(Queue));
-    if (queue_p == NULL || capacity > SIZE_MAX / data_size) {
+    if (queue_p == NULL) {
         return NULL;
     }
     queue_p->arr_p = malloc(capacity * data_size);
@@ -36,7 +38,7 @@ Queue* queue_new(size_t capacity, size_t data_size) {
     queue_p->start_index = 0;
     queue_p->end_index = 0;
     queue_p->used = 0;
-    queue_p->capacity_sub_one = capacity_sub_one;
+    queue_p->capacity_sub_one = capacity - 1;
     queue_p->data_size = data_size;
     return queue_p;
 }
