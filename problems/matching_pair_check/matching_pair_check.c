@@ -87,20 +87,7 @@ int main(void) {
                 no_errors = false;
                 break;
             }
-            switch (stack_pop_symb(stack_p)) {
-            case LPARAN:
-                no_errors = str[i] == ')';
-                break;
-            case LCURLY:
-                no_errors = str[i] == '}';
-                break;
-            case LBRACKET:
-                no_errors = str[i] == ']';
-                break;
-            default:
-                break;
-            }
-            break;
+            no_errors = str[i] == decode_symbol(stack_pop_symb(stack_p));
         }
         if (!no_errors) {
             break;
