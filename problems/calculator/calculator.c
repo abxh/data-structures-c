@@ -49,14 +49,14 @@ STACK_CREATE_INLINE_FUNCTIONS(op, Operation)
 static const double RTR_VALUE_DEFAULT = 0.;
 static double RTR_VALUE_LAST = RTR_VALUE_DEFAULT;
 
-double eval(char* str, size_t n) {
+double eval(char* str, ssize_t len) {
     double rtr_value = RTR_VALUE_DEFAULT;
 
-    Queue* inp_queue = queue_new_lex(n);
+    Queue* inp_queue = queue_new_lex(len);
 
     // error handling:
     char* error_msg = NULL;
-    size_t error_index = 0;
+    ssize_t error_index = 0;
     size_t opening_paren_count = 0;
     size_t closing_paren_count = 0;
     bool incomplete_input = true;
@@ -65,7 +65,7 @@ double eval(char* str, size_t n) {
     Operation sign = DEFAULT_OP;
     bool first_term_exists = false;
 
-    for (size_t i = 0; i < n; i++) {
+    for (ssize_t i = 0; i < len; i++) {
         Token last_token = queue_isempty(inp_queue) ? DEFAULT_TOKEN : queue_peek_last_lex(inp_queue).token;
         switch (str[i]) {
         case '+':
@@ -73,7 +73,7 @@ double eval(char* str, size_t n) {
             incomplete_input = true;
             sign = str[i] == '+' ? ADD_OP : SUB_OP;
             error_index = i;
-            while (i + 1 < n && (str[i + 1] == '-' || str[i + 1] == '+' || str[i + 1] == ' ')) {
+            while (i + 1 < len && (str[i + 1] == '-' || str[i + 1] == '+' || str[i + 1] == ' ')) {
                 if (str[i + 1] == '-') {
                     sign = sign == SUB_OP ? ADD_OP : SUB_OP;
                 }
@@ -126,20 +126,20 @@ double eval(char* str, size_t n) {
             }
             i--;
             double value = 0.;
-            while (i + 1 < n && isdigit(str[i + 1])) {
+            while (i + 1 < len && isdigit(str[i + 1])) {
                 value = 10. * value + digit_to_num(str[i + 1]);
                 i++;
             }
             value = (sign != SUB_OP) * value - (sign == SUB_OP) * value;
             if (str[i + 1] == '.') {
-                if (i + 2 < n && !isdigit(str[i + 2])) {
+                if (i + 2 < len && !isdigit(str[i + 2])) {
                     error_msg = "No digits after '.'.";
                     error_index = i + 1;
                     goto on_inp_error;
                 }
                 i++;
                 double c = 10.;
-                while (i + 1 < n && isdigit(str[i + 1])) {
+                while (i + 1 < len && isdigit(str[i + 1])) {
                     value = value + digit_to_num(str[i + 1]) / c;
                     c *= 10.;
                     i++;
@@ -188,7 +188,7 @@ double eval(char* str, size_t n) {
 
     if (opening_paren_count != closing_paren_count) {
         error_msg = "Not all open parenthesis are closed.";
-        error_index = n - 2;
+        error_index = len - 2;
         goto on_inp_error;
     }
 
