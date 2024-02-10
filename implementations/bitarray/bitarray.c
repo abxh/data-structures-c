@@ -31,7 +31,7 @@ Bitarray* bitarray_new(size_t num_of_bits) {
     return bitarray_p;
 }
 
-Bitarray* bitarray_from(void* bytes, size_t num_of_bits) {
+Bitarray* bitarray_from(const unsigned char* bytes, size_t num_of_bits) {
     assert(num_of_bits != 0);
     Bitarray* bitarray_p = malloc(sizeof(Bitarray));
     if (bitarray_p == NULL) {

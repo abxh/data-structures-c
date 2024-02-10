@@ -13,7 +13,7 @@ typedef struct {
 Bitarray* bitarray_new(size_t num_of_bits);
 
 /* Try create a new bitarray from given bytes and number of bits to copy and return it's pointer. Returns NULL if OOM. */
-Bitarray* bitarray_from(void* bytes, size_t num_of_bits);
+Bitarray* bitarray_from(const unsigned char* bytes, size_t num_of_bits);
 
 /* Try copy a given bitarray and returns it's pointer. Returns NULL if OOM. */
 Bitarray* bitarray_copy(const Bitarray* bitarray_p);
