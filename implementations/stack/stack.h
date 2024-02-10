@@ -21,10 +21,10 @@ bool stack_isempty(const Stack* stack_p);
 bool stack_isfull(const Stack* stack_p);
 
 /* Peek at the next popped value of a non-empty stack as bytes. */
-unsigned char* stack_peek(Stack* stack_p);
+unsigned char* stack_peek(const Stack* stack_p);
 
 /* Push value onto a non-full stack as bytes. */
-void stack_push(Stack* stack_p, unsigned char* bytes);
+void stack_push(Stack* stack_p, const unsigned char* bytes);
 
 /* Pop a value from a non-empty stack and return it as bytes. */
 unsigned char* stack_pop(Stack* stack_p);

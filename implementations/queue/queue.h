@@ -24,13 +24,13 @@ bool queue_isempty(const Queue* queue_p);
 bool queue_isfull(const Queue* queue_p);
 
 /* Peek at the next dequeued value of a non-empty queue as bytes. */
-unsigned char* queue_peek_next(Queue* queue_p);
+unsigned char* queue_peek_next(const Queue* queue_p);
 
 /* Peek at the last enqueued value of a non-empty queue as bytes. */
-unsigned char* queue_peek_last(Queue* queue_p);
+unsigned char* queue_peek_last(const Queue* queue_p);
 
 /* Enqueue a value onto a non-full queue as bytes. */
-void queue_enqueue(Queue* queue_p, unsigned char* bytes);
+void queue_enqueue(Queue* queue_p, const unsigned char* bytes);
 
 /* Dequeue a value from a non-empty queue and return it as bytes. */
 unsigned char* queue_dequeue(Queue* queue_p);

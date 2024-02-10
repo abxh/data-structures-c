@@ -51,17 +51,17 @@ bool queue_isfull(const Queue* queue_p) {
     return queue_p->used == queue_p->capacity_sub_one + 1;
 }
 
-unsigned char* queue_peek_next(Queue* queue_p) {
+unsigned char* queue_peek_next(const Queue* queue_p) {
     assert(queue_p->used != 0);
     return queue_p->arr_p + queue_p->data_size * queue_p->start_index;
 }
 
-unsigned char* queue_peek_last(Queue* queue_p) {
+unsigned char* queue_peek_last(const Queue* queue_p) {
     assert(queue_p->used != 0);
     return queue_p->arr_p + queue_p->data_size * (queue_p->end_index - 1);
 }
 
-void queue_enqueue(Queue* queue_p, unsigned char* bytes) {
+void queue_enqueue(Queue* queue_p, const unsigned char* bytes) {
     assert(queue_p->used != queue_p->capacity_sub_one + 1);
     memcpy(queue_p->arr_p + queue_p->data_size * queue_p->end_index, bytes, queue_p->data_size);
     queue_p->end_index++;

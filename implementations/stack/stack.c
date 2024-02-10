@@ -35,12 +35,12 @@ bool stack_isfull(const Stack* stack_p) {
     return stack_p->used == stack_p->capacity;
 }
 
-unsigned char* stack_peek(Stack* stack_p) {
+unsigned char* stack_peek(const Stack* stack_p) {
     assert(stack_p->used != 0);
     return stack_p->arr_p + stack_p->data_size * (stack_p->used - 1);
 }
 
-void stack_push(Stack* stack_p, unsigned char* bytes) {
+void stack_push(Stack* stack_p, const unsigned char* bytes) {
     assert(stack_p->used != stack_p->capacity);
     memcpy(stack_p->arr_p + stack_p->data_size * stack_p->used++, bytes, stack_p->data_size);
 }
