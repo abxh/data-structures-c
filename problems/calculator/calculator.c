@@ -1,208 +1,102 @@
-#include <math.h> // note: use -lm beside gcc
+#include <ctype.h> // isdigit
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "queue.h"
 #include "stack.h"
 
-typedef enum {
-    UNDEFINED_OP = 0,
-    NUMBER,
-    ADD_OP,
-    SUB_OP,
-    MUL_OP,
-    DIV_OP,
-    POW_OP,
-    LPARAN,
-    RPARAN,
-} TokenType;
+typedef struct {
+    char* str_p;
+    size_t len;
+} StringView;
 
-typedef enum { UNDEFINED_OP_ASC = -1, LEFT_OP_ASC, RIGHT_OP_ASC } OP_ASC;
+typedef enum { DEFAULT_TOKEN, NUMBER_TOKEN, OP_TOKEN, PAREN_TOKEN } Token;
+
+typedef enum { DEFAULT_OP, ADD_OP, SUB_OP, MUL_OP, DIV_OP } Operation;
+
+typedef enum { OPENING_PAREN, CLOSING_PAREN } Paren;
 
 typedef struct {
-    TokenType type;
-    double value;
-} Token;
+    Token token;
+    union {
+        double num;
+        Operation op;
+        Paren paren;
+    } metadata;
+} Lexeme;
 
-QUEUE_CREATE_INLINE_FUNCTIONS(token, Token)
-STACK_CREATE_INLINE_FUNCTIONS(tokentype, TokenType)
-STACK_CREATE_INLINE_FUNCTIONS(token, Token)
-STACK_CREATE_INLINE_FUNCTIONS(num, double)
-
-void fprintf_token(Token token, FILE* stream) {
-    switch (token.type) {
-    case NUMBER:
-#ifdef KATTIS
-        fprintf(stream, "%.2f", token.value);
-#else
-        fprintf(stream, "%.9g", token.value);
-#endif
-        break;
+char decode_op(Operation op) {
+    switch (op) {
     case ADD_OP:
-        fputc('+', stream);
-        break;
+        return '+';
     case SUB_OP:
-        fputc('-', stream);
-        break;
+        return '-';
     case MUL_OP:
-        fputc('*', stream);
-        break;
+        return '*';
     case DIV_OP:
-        fputc('/', stream);
-        break;
-    case POW_OP:
-        fputc('^', stream);
-        break;
-    case LPARAN:
-        fputc('(', stream);
-        break;
-    case RPARAN:
-        fputc(')', stream);
-        break;
-    case UNDEFINED_OP:
-        fputc(' ', stream);
-        break;
-    }
-}
-
-int cmp_operator_precedence(TokenType operator, TokenType other_operator) {
-    // -1: l < r, 0: l = r, 1: l > r
-    int l = -1, r = -1;
-    switch (operator) {
-    case ADD_OP:
-    case SUB_OP:
-        l = 0;
-        break;
-    case MUL_OP:
-    case DIV_OP:
-        l = 1;
-        break;
-    case POW_OP:
-        l = 2;
-        break;
+        return '/';
     default:
         break;
     }
-    switch (other_operator) {
-    case ADD_OP:
-    case SUB_OP:
-        r = 0;
-        break;
-    case MUL_OP:
-    case DIV_OP:
-        r = 1;
-        break;
-    case POW_OP:
-        r = 2;
-        break;
-    default:
-        break;
-    }
-    if (l == r) {
-        return 0;
-    } else if (l > r) {
-        return 1;
-    } else {
-        return -1;
-    }
+    return DEFAULT_OP;
 }
 
-OP_ASC operator_associativity(TokenType operator) {
-    switch (operator) {
-    case ADD_OP:
-    case SUB_OP:
-    case MUL_OP:
-    case DIV_OP:
-        return LEFT_OP_ASC;
-    case POW_OP:
-        return RIGHT_OP_ASC;
-    default:
-        return UNDEFINED_OP_ASC;
-    }
-}
+#define digit_to_num(v) ((v) - '0')
 
-void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p, double last_value) {
-    bool prefix_zero = true;
-    int first_term_paran_state = 0;
-    bool fractional_number = false;
-    double multiplierl = 10.;
-    double multiplierr = 1.;
-    TokenType pm_token;
-    TokenType other_token;
+QUEUE_CREATE_INLINE_FUNCTIONS(lex, Lexeme)
+STACK_CREATE_INLINE_FUNCTIONS(op, Operation)
 
-    Stack* pm_stack_p = stack_new_tokentype();
-    if (pm_stack_p == NULL) {
-        return;
-    }
-    for (ssize_t i = 0; i < len; i++) {
-        pm_token = UNDEFINED_OP;
-        other_token = UNDEFINED_OP;
-        switch (line_p[i]) {
+static const double RTR_VALUE_DEFAULT = 0.;
+static double RTR_VALUE_LAST = RTR_VALUE_DEFAULT;
+
+double eval(char* str, size_t n) {
+    double rtr_value = RTR_VALUE_DEFAULT;
+
+    Queue* inp_queue = queue_new_lex(n);
+
+    // error handling:
+    char* error_msg = NULL;
+    size_t error_index = 0;
+    size_t opening_paren_count = 0;
+    size_t closing_paren_count = 0;
+    bool incomplete_input = true;
+
+    // variables used for signed numbers:
+    Operation sign = DEFAULT_OP;
+    bool first_term_exists = false;
+
+    for (size_t i = 0; i < n; i++) {
+        Token last_token = queue_isempty(inp_queue) ? DEFAULT_TOKEN : queue_peek_last_lex(inp_queue).token;
+        switch (str[i]) {
         case '+':
-            if (pm_token == UNDEFINED_OP) {
-                pm_token = ADD_OP;
-            }
         case '-':
-            if (pm_token == UNDEFINED_OP) {
-                pm_token = SUB_OP;
+            incomplete_input = true;
+            sign = str[i] == '+' ? ADD_OP : SUB_OP;
+            error_index = i;
+            while (i + 1 < n && (str[i + 1] == '-' || str[i + 1] == '+' || str[i + 1] == ' ')) {
+                if (str[i + 1] == '-') {
+                    sign = sign == SUB_OP ? ADD_OP : SUB_OP;
+                }
+                i++;
+                if (str[i] == '+' || str[i] == '-') {
+                    error_index = i;
+                }
             }
-            fractional_number = false;
-            if (prefix_zero) {
-                queue_enqueue_token(queue_p, (Token){.type = NUMBER, .value = 0.});
-                prefix_zero = false;
+            if (first_term_exists) {
+                queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
             }
-            if (first_term_paran_state == 2) {
-                queue_enqueue_token(queue_p, (Token){.type = RPARAN});
-                first_term_paran_state = 0;
-            }
-            stack_push_tokentype(pm_stack_p, pm_token);
             break;
         case '*':
-            if (other_token == UNDEFINED_OP) {
-                other_token = MUL_OP;
-            }
         case '/':
-            if (other_token == UNDEFINED_OP) {
-                other_token = DIV_OP;
+            incomplete_input = true;
+            error_index = i;
+            if (last_token == DEFAULT_TOKEN || (last_token == OP_TOKEN && (queue_peek_last_lex(inp_queue).metadata.op == MUL_OP ||
+                                                                           queue_peek_last_lex(inp_queue).metadata.op == DIV_OP))) {
+                error_msg = "Incorrect use of '*' or '/'.";
+                error_index = i;
+                goto on_inp_error;
             }
-        case '^':
-            if (other_token == UNDEFINED_OP) {
-                other_token = POW_OP;
-            }
-            fractional_number = false;
-            prefix_zero = true;
-            if (first_term_paran_state == 2) {
-                queue_enqueue_token(queue_p, (Token){.type = RPARAN});
-            }
-            queue_enqueue_token(queue_p, (Token){.type = other_token});
-            queue_enqueue_token(queue_p, (Token){.type = LPARAN});
-            first_term_paran_state = 1;
-            break;
-        case '(':
-            fractional_number = false;
-            prefix_zero = true;
-            if (!stack_isempty(pm_stack_p)) {
-                TokenType tt = ADD_OP;
-                while (!stack_isempty(pm_stack_p)) {
-                    TokenType tt_next = stack_pop_tokentype(pm_stack_p);
-                    if (tt_next == SUB_OP) {
-                        switch (tt) {
-                        case ADD_OP:
-                            tt = SUB_OP;
-                            break;
-                        case SUB_OP:
-                            tt = ADD_OP;
-                            break;
-                        default:
-                            break;
-                        }
-                    }
-                }
-                queue_enqueue_token(queue_p, (Token){.type = tt});
-            }
-            queue_enqueue_token(queue_p, (Token){.type = LPARAN});
-            break;
-        case ')':
-            queue_enqueue_token(queue_p, (Token){.type = RPARAN});
+            queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = str[i] == '*' ? MUL_OP : DIV_OP}});
             break;
         case '0':
         case '1':
@@ -214,242 +108,112 @@ void parse_math_exp(char* line_p, ssize_t len, Queue* queue_p, double last_value
         case '7':
         case '8':
         case '9':
-        case '_':
         case '.':
-            prefix_zero = false;
-            if (first_term_paran_state == 1) {
-                first_term_paran_state = 2;
+        case '_':
+            first_term_exists = true;
+            incomplete_input = false;
+            if (last_token == NUMBER_TOKEN) {
+                error_msg = "Two numbers in a row.";
+                error_index = i;
+                goto on_inp_error;
             }
-            if (!stack_isempty(pm_stack_p)) {
-                TokenType tt = ADD_OP;
-                while (!stack_isempty(pm_stack_p)) {
-                    TokenType tt_next = stack_pop_tokentype(pm_stack_p);
-                    if (tt_next == SUB_OP) {
-                        switch (tt) {
-                        case ADD_OP:
-                            tt = SUB_OP;
-                            break;
-                        case SUB_OP:
-                            tt = ADD_OP;
-                            break;
-                        default:
-                            break;
-                        }
-                    }
-                }
-                queue_enqueue_token(queue_p, (Token){.type = tt});
+            if (last_token == PAREN_TOKEN && queue_peek_last_lex(inp_queue).metadata.paren == CLOSING_PAREN) {
+                queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
             }
-            if (line_p[i] == '_') {
-                queue_enqueue_token(queue_p, (Token){.type = NUMBER, .value = last_value});
-                break;
-            }
-            if (!fractional_number && line_p[i] == '.') {
-                fractional_number = true;
-                multiplierl = 1.;
-                multiplierr = 1.;
+            if (str[i] == '_') {
+                queue_enqueue_lex(inp_queue, (Lexeme){.token = NUMBER_TOKEN, .metadata = {.num = RTR_VALUE_LAST}});
                 continue;
-            } else if (fractional_number) {
-                multiplierr /= 10.;
-            } else {
-                multiplierl = 10.;
-                multiplierr = 1.;
             }
-            if (!queue_isempty(queue_p) && queue_element_get_token(queue_p->back_p).type == NUMBER) {
-                queue_element_set_token(queue_p->back_p, (Token){.type = NUMBER,
-                                                            .value = queue_element_get_token(queue_p->back_p).value * multiplierl +
-                                                                     (line_p[i] - '0') * multiplierr});
-            } else {
-                queue_enqueue_token(queue_p, (Token){.type = NUMBER, .value = (line_p[i] - '0') * multiplierr});
+            i--;
+            double value = 0.;
+            while (i + 1 < n && isdigit(str[i + 1])) {
+                value = 10. * value + digit_to_num(str[i + 1]);
+                i++;
             }
+            value = (sign != SUB_OP) * value - (sign == SUB_OP) * value;
+            if (str[i + 1] == '.') {
+                if (i + 2 < n && !isdigit(str[i + 2])) {
+                    error_msg = "No digits after '.'.";
+                    error_index = i + 1;
+                    goto on_inp_error;
+                }
+                i++;
+                double c = 10.;
+                while (i + 1 < n && isdigit(str[i + 1])) {
+                    value = value + digit_to_num(str[i + 1]) / c;
+                    c *= 10.;
+                    i++;
+                }
+            }
+            queue_enqueue_lex(inp_queue, (Lexeme){.token = NUMBER_TOKEN, .metadata = {.num = value}});
             break;
-        default:
+        case '(':
+        case ')':
+            opening_paren_count += (str[i] == '(');
+            closing_paren_count += (str[i] == ')');
+            if (opening_paren_count < closing_paren_count) {
+                error_msg = "Closed parenthesis before opening one.";
+                error_index = i;
+                goto on_inp_error;
+            }
+            if (str[i] == '(') {
+                first_term_exists = false;
+                incomplete_input = true;
+                error_index = i;
+                if (last_token == NUMBER_TOKEN) {
+                    queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
+                }
+            } else if (incomplete_input) {
+                error_msg = "Incomplete input.";
+                goto on_inp_error;
+            } 
+            queue_enqueue_lex(inp_queue,
+                              (Lexeme){.token = PAREN_TOKEN, .metadata = {.paren = str[i] == '(' ? OPENING_PAREN : CLOSING_PAREN}});
+            break;
+        case ' ':
+        case '\n':
+        case '\0':
             continue;
-        }
-    }
-    if (prefix_zero) {
-        queue_enqueue_token(queue_p, (Token){.type = NUMBER, .value = 0.});
-    }
-    if (first_term_paran_state == 2) {
-        queue_enqueue_token(queue_p, (Token){.type = RPARAN});
-    }
-    stack_free(pm_stack_p);
-}
-
-void conv_math_infix_exp_to_postfix(Queue** queue_pp) {
-    // using the shunting yard algorithm.
-    // https://en.wikipedia.org/wiki/Shunting_yard_algorithm
-
-    Stack* op_stack_p = stack_new_tokentype();
-    if (op_stack_p == NULL) {
-        return;
-    }
-    Queue* inp_queue_p = *queue_pp;
-    Queue* out_queue_p = queue_new_token();
-    if (out_queue_p == NULL) {
-        stack_free(op_stack_p);
-        return;
-    }
-    while (!queue_isempty(inp_queue_p)) {
-        Token tk = queue_dequeue_token(inp_queue_p);
-        switch (tk.type) {
-        case ADD_OP:
-        case SUB_OP:
-        case MUL_OP:
-        case DIV_OP:
-        case POW_OP:
-        case RPARAN:
-            while (!stack_isempty(op_stack_p) && stack_peek_tokentype(op_stack_p) != LPARAN &&
-                   (0 < cmp_operator_precedence(stack_peek_tokentype(op_stack_p), tk.type) ||
-                    (0 == cmp_operator_precedence(stack_peek_tokentype(op_stack_p), tk.type) &&
-                     operator_associativity(tk.type) == LEFT_OP_ASC))
-
-            ) {
-                queue_enqueue_token(out_queue_p, (Token){.type = stack_pop_tokentype(op_stack_p)});
-            }
         default:
-            break;
-        }
-        switch (tk.type) {
-        case NUMBER:
-            queue_enqueue_token(out_queue_p, tk);
-            break;
-        case ADD_OP:
-            stack_push_tokentype(op_stack_p, ADD_OP);
-            break;
-        case SUB_OP:
-            stack_push_tokentype(op_stack_p, SUB_OP);
-            break;
-        case MUL_OP:
-            stack_push_tokentype(op_stack_p, MUL_OP);
-            break;
-        case DIV_OP:
-            stack_push_tokentype(op_stack_p, DIV_OP);
-            break;
-        case POW_OP:
-            stack_push_tokentype(op_stack_p, POW_OP);
-            break;
-        case LPARAN:
-            stack_push_tokentype(op_stack_p, LPARAN);
-            break;
-        case RPARAN:
-            stack_pop_token(op_stack_p); // pop LPARAN
-            break;
-        case UNDEFINED_OP:
-            break;
+            error_msg = "Unknown character.";
+            error_index = i;
+            goto on_inp_error;
         }
     }
-    while (!stack_isempty(op_stack_p) && stack_peek_tokentype(op_stack_p) != LPARAN) {
-        queue_enqueue_token(out_queue_p, (Token){.type = stack_pop_tokentype(op_stack_p)});
-    }
-    *queue_pp = out_queue_p;
-    queue_free(inp_queue_p);
-    stack_free(op_stack_p);
-}
 
-double eval_postfix_exp(Queue* queue_p) {
-    Stack* stack_p = stack_new_num();
-    if (stack_p == NULL) {
-        return 0.;
+    if (incomplete_input) {
+        error_msg = "Incomplete input.";
+        goto on_inp_error;
     }
-    double r, l;
-    while (!queue_isempty(queue_p)) {
-        Token t = queue_dequeue_token(queue_p);
-        if (t.type == NUMBER) {
-            stack_push_num(stack_p, t.value);
-            continue;
-        }
-        if (!stack_isempty(stack_p)) {
-            r = stack_pop_num(stack_p);
-        } else {
-            stack_free(stack_p);
-            return 0.;
-        }
-        if (!stack_isempty(stack_p)) {
-            l = stack_pop_num(stack_p);
-        } else {
-            stack_free(stack_p);
-            return 0.;
-        }
-        switch (t.type) {
-        case ADD_OP:
-            stack_push_num(stack_p, l + r);
-            break;
-        case SUB_OP:
-            stack_push_num(stack_p, l - r);
-            break;
-        case MUL_OP:
-            stack_push_num(stack_p, l * r);
-            break;
-        case DIV_OP:
-            stack_push_num(stack_p, l / r);
-            break;
-        case POW_OP:
-            stack_push_num(stack_p, pow(l, r));
-            break;
-        default:
-            break;
-        }
+
+    if (opening_paren_count != closing_paren_count) {
+        error_msg = "Not all open parenthesis are closed.";
+        error_index = n - 2;
+        goto on_inp_error;
     }
-    if (!stack_isempty(stack_p)) {
-        l = stack_pop_num(stack_p);
-    } else {
-        stack_free(stack_p);
-        return 0.;
+
+    /*
+    Queue* inp_queue_postfix = queue_new_lex(inp_queue->used);
+    Stack* op_stack = stack_new_op(inp_queue->used);
+    */
+
+    RTR_VALUE_LAST = rtr_value;
+
+on_inp_error:
+    if (error_msg != NULL) {
+        fprintf(stderr, "%*c %s\n", (int)(error_index + 1), '^', error_msg);
     }
-    stack_free(stack_p);
-    return l;
+    queue_free(inp_queue);
+    return rtr_value;
 }
 
 int main() {
-    return 0;
     char* line_p = NULL;
     size_t n = 0;
     ssize_t len = 0;
-    double last_value = 0;
+
     while (0 < (len = getline(&line_p, &n, stdin))) {
-        Queue* queue_p = queue_new_token();
-        if (queue_p == NULL) {
-            return 1;
-        }
-        parse_math_exp(line_p, len, queue_p, last_value);
-
-#ifdef DEBUG
-        QueueElement* elm_p = queue_p->front_p;
-        printf("[calc] parsing w. +- eval:");
-        while (elm_p) {
-            putchar(' ');
-            fprintf_token(queue_element_get_token(elm_p), stdout);
-            elm_p = elm_p->next_p;
-        }
-        putchar('\n');
-#endif
-
-        conv_math_infix_exp_to_postfix(&queue_p);
-#ifdef DEBUG
-        printf("[calc] postfix conversion:");
-        elm_p = queue_p->front_p;
-        while (elm_p) {
-            putchar(' ');
-            fprintf_token(queue_element_get_token(elm_p), stdout);
-            elm_p = elm_p->next_p;
-        }
-        putchar('\n');
-#endif
-
-#ifdef DEBUG
-        printf("[calc] eval of postfix:    ");
-#endif
-        last_value = eval_postfix_exp(queue_p);
-#ifdef KATTIS
-        printf("%.2f\n", last_value);
-#else
-        printf("%.9g\n", last_value);
-#endif
-
-        queue_free(queue_p);
-        free(line_p);
-        line_p = NULL;
-        n = 0;
+        printf("res: %g\n", eval(line_p, len));
     }
     free(line_p);
     return 0;
