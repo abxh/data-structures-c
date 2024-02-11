@@ -3,7 +3,7 @@
 #include "stack.h"
 
 typedef enum {
-    SYMBOL_ENUM_DEFAULT,
+    DEFAULT_SYMBOL_ENUM,
     LBRACKET,
     LCURLY,
     LPARAN,
@@ -31,7 +31,7 @@ SYMBOL_ENUM encode_symbol(char c) {
     default:
         break;
     }
-    return SYMBOL_ENUM_DEFAULT;
+    return DEFAULT_SYMBOL_ENUM;
 }
 
 SYMBOL_ENUM matching_symbol(SYMBOL_ENUM symb) {
@@ -51,7 +51,7 @@ SYMBOL_ENUM matching_symbol(SYMBOL_ENUM symb) {
     default:
         break;
     }
-    return SYMBOL_ENUM_DEFAULT;
+    return DEFAULT_SYMBOL_ENUM;
 }
 
 char decode_symbol(SYMBOL_ENUM symb) {
