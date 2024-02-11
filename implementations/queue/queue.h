@@ -60,3 +60,9 @@ void queue_free(Queue* queue_p);
     static inline type queue_dequeue_##name(Queue* queue_p) {             \
         return *(type*)queue_dequeue(queue_p);                            \
     }
+
+/* Iterate through the queue starting from the next dequeued value. */
+#define QUEUE_FOREACH(queue_p, var)                                                                                \
+    for (size_t i_ = (queue_p)->start_index;                                                                       \
+         i_ != (queue_p)->end_index && ((var) = *(typeof(var)*)((queue_p)->arr_p + i_ * (queue_p)->data_size), 1); \
+         i_ = (i_ + 1) & (queue_p)->capacity_sub_one)
