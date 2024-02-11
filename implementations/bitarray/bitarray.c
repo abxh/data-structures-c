@@ -8,14 +8,6 @@
 
 #include "bitarray.h"
 
-static inline size_t BITARRAY_WORD_INDEX(size_t index) {
-    return (CHAR_BIT == 8) ? index >> 3 : index / CHAR_BIT;
-}
-
-static inline size_t BITARRAY_BIT_INDEX(size_t index) {
-    return (CHAR_BIT == 8) ? ~index & (CHAR_BIT - 1) : (CHAR_BIT - 1) - (index % CHAR_BIT);
-}
-
 Bitarray* bitarray_new(size_t num_of_bits) {
     assert(num_of_bits != 0);
     if (num_of_bits > SIZE_MAX / sizeof(unsigned char)) {

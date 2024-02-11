@@ -1,7 +1,11 @@
 #pragma once
 
-#include <stdlib.h> // size_t
+#include <assert.h>  // static_assert
+#include <limits.h>  // CHAR_BIT
 #include <stdbool.h> // bool
+#include <stdlib.h>  // size_t
+
+static_assert(CHAR_BIT == 8);
 
 typedef struct {
     size_t num_of_bits;
@@ -9,13 +13,17 @@ typedef struct {
     unsigned char* words;
 } Bitarray;
 
-/* Create a new bitarray of a given size with values initalized to 0 and return it's pointer. Returns NULL if OOM or `CHAR_BIT * num_of_bits` exceeds SIZE_MAX. */
+#define BITARRAY_WORD_INDEX(index) ((index) >> 3)
+#define BITARRAY_BIT_INDEX(index) (~(index) & 7)
+
+/* Create a new bitarray of a given size with values initalized to 0 and return it's pointer. Returns NULL if OOM or `CHAR_BIT *
+ * num_of_bits` exceeds SIZE_MAX. */
 Bitarray* bitarray_new(size_t num_of_bits);
 
-/* Try create a new bitarray from given bytes and number of bits to copy and return it's pointer. Returns NULL if OOM. */
+/* Create a new bitarray from given bytes and number of bits to copy and return it's pointer. Returns NULL if OOM. */
 Bitarray* bitarray_from(const unsigned char* bytes, size_t num_of_bits);
 
-/* Try copy a given bitarray and returns it's pointer. Returns NULL if OOM. */
+/* Copy a given bitarray and returns it's pointer. Returns NULL if OOM. */
 Bitarray* bitarray_copy(const Bitarray* bitarray_p);
 
 /* Check if two bitarrays are equal. */

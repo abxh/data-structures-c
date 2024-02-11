@@ -2,7 +2,7 @@
 
 #include <stdalign.h> // alignof
 #include <stdbool.h>  // bool
-#include <stdlib.h>   // size_t
+#include <stdlib.h>   // size_t, typeof
 
 typedef struct {
     size_t used;
@@ -51,3 +51,7 @@ void stack_free(Stack* stack_p);
     static inline type stack_pop_##name(Stack* stack_p) {              \
         return *(type*)stack_pop(stack_p);                             \
     }
+
+/* Iterate through the stack starting from the next popped value. */
+#define STACK_FOREACH(stack_p, var) \
+    for (size_t i_ = 0; i_ < stack_p->used && ((var) = *(typeof(var)*)((stack_p)->arr_p + i_ * (stack_p)->data_size), 1); i_++)

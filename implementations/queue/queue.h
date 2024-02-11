@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdbool.h> // bool
-#include <stdlib.h>  // size_t, free
+#include <stdlib.h>  // size_t, free, typeof
 
 typedef struct {
     size_t start_index;
