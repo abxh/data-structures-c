@@ -7,14 +7,14 @@
 // test using valgrind as well.
 
 bool empty_test(void) {
-    Stack* stack_p = stack_new(1, sizeof(int));
+    Stack* stack_p = stack_new(1, alignof(int), sizeof(int));
     bool res = true; // stack_isempty(stack_p);
     stack_free(stack_p);
     return res;
 }
 
 bool one_element_test(void) {
-    Stack* stack_p = stack_new(1, sizeof(int));
+    Stack* stack_p = stack_new(1, alignof(int), sizeof(int));
     bool res = true;
     int value = 5;
     stack_push(stack_p, (unsigned char*)&value);
@@ -29,7 +29,7 @@ bool one_element_test(void) {
 }
 
 bool million_elements_test(void) {
-    Stack* stack_p = stack_new(1000000, sizeof(int));
+    Stack* stack_p = stack_new(1000000, alignof(int), sizeof(int));
     bool res = true;
     for (int i = 1; i <= 1000000; i++) {
         stack_push(stack_p, (unsigned char*)&i);
@@ -42,7 +42,7 @@ bool million_elements_test(void) {
 }
 
 bool grow_test(void) {
-    Stack* stack_p = stack_new(50, sizeof(int));
+    Stack* stack_p = stack_new(50, alignof(int), sizeof(int));
     bool res = true;
     for (int i = 1; i <= 50; i++) {
         stack_push(stack_p, (unsigned char*)&i);
@@ -61,7 +61,7 @@ bool grow_test(void) {
 }
 
 bool shrink_test(void) {
-    Stack* stack_p = stack_new(50, sizeof(int));
+    Stack* stack_p = stack_new(50, alignof(int), sizeof(int));
     bool res = true;
     for (int i = 1; i <= 25; i++) {
         stack_push(stack_p, (unsigned char*)&i);

@@ -78,12 +78,14 @@ unsigned char* queue_dequeue(Queue* queue_p) {
     return bytes;
 }
 
-void rotleft(unsigned char* bytes, size_t len, size_t n) {
+void rotleft(unsigned char* bytes, size_t len, size_t data_size, size_t n) {
+    unsigned char* buffer = malloc(data_size);
     for (size_t i = 0; i < n; i++) {
-        unsigned char temp = bytes[0];
-        memmove(bytes, bytes + 1, len - 1);
-        bytes[len - 1] = temp;
+        memcpy(buffer, bytes, data_size);
+        memmove(bytes, bytes + data_size, len - data_size);
+        memcpy(bytes + len - data_size, buffer, data_size);
     }
+    free(buffer);
 }
 
 bool queue_resize(Queue* queue_p, size_t new_capacity) {
@@ -93,7 +95,7 @@ bool queue_resize(Queue* queue_p, size_t new_capacity) {
         return true;
     }
 
-    rotleft(queue_p->arr_p, queue_p->data_size * (queue_p->capacity_sub_one + 1), queue_p->data_size * queue_p->start_index);
+    rotleft(queue_p->arr_p, queue_p->data_size * (queue_p->capacity_sub_one + 1), queue_p->data_size, queue_p->start_index);
     queue_p->start_index = 0;
     queue_p->end_index = queue_p->used;
 

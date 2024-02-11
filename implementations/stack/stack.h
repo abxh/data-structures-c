@@ -1,7 +1,8 @@
 #pragma once
 
-#include <stdbool.h> // bool
-#include <stdlib.h>  // size_t
+#include <stdalign.h> // alignof
+#include <stdbool.h>  // bool
+#include <stdlib.h>   // size_t
 
 typedef struct {
     size_t used;
@@ -12,7 +13,7 @@ typedef struct {
 
 /* Create a new stack of some maximum capacity for some data size. Returns
    NULL if OOM or `capacity * data_size` exceeds SIZE_MAX. */
-Stack* stack_new(size_t capacity, size_t data_size);
+Stack* stack_new(size_t capacity, size_t alignment, size_t data_size);
 
 /* Return if the stack is empty. */
 bool stack_isempty(const Stack* stack_p);
@@ -39,7 +40,7 @@ void stack_free(Stack* stack_p);
 /* Create inline functions to directly work with stack values. */
 #define STACK_CREATE_INLINE_FUNCTIONS(name, type)                      \
     static inline Stack* stack_new_##name(size_t capacity) {           \
-        return stack_new(capacity, sizeof(type));                      \
+        return stack_new(capacity, alignof(type), sizeof(type));       \
     }                                                                  \
     static inline type stack_peek_##name(Stack* stack_p) {             \
         return *(type*)stack_peek(stack_p);                            \
