@@ -14,7 +14,7 @@ typedef enum { DEFAULT_TOKEN, NUMBER_TOKEN, OP_TOKEN, PAREN_TOKEN } Token;
 
 typedef enum { DEFAULT_OP, ADD_OP, SUB_OP, MUL_OP, DIV_OP } Operation;
 
-typedef enum { OPENING_PAREN, CLOSING_PAREN } Paren;
+typedef enum { DEFAULT_PAREN, OPENING_PAREN, CLOSING_PAREN } Paren;
 
 typedef struct {
     Token token;
@@ -61,9 +61,7 @@ double eval(char* str, ssize_t len) {
     size_t closing_paren_count = 0;
     bool incomplete_input = true;
 
-    // variables used for signed numbers:
     Operation sign = DEFAULT_OP;
-    bool first_term_exists = false;
 
     for (ssize_t i = 0; i < len; i++) {
         Token last_token = queue_isempty(inp_queue) ? DEFAULT_TOKEN : queue_peek_last_lex(inp_queue).token;
@@ -81,9 +79,6 @@ double eval(char* str, ssize_t len) {
                 if (str[i] == '+' || str[i] == '-') {
                     error_index = i;
                 }
-            }
-            if (first_term_exists) {
-                queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
             }
             break;
         case '*':
@@ -110,9 +105,11 @@ double eval(char* str, ssize_t len) {
         case '9':
         case '.':
         case '_':
-            first_term_exists = true;
             incomplete_input = false;
-            if (last_token == NUMBER_TOKEN) {
+            if (last_token == NUMBER_TOKEN && sign != DEFAULT_OP) {
+                queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
+                sign = ADD_OP;
+            } else if (last_token == NUMBER_TOKEN) {
                 error_msg = "Two numbers in a row.";
                 error_index = i;
                 goto on_inp_error;
@@ -131,6 +128,7 @@ double eval(char* str, ssize_t len) {
                 i++;
             }
             value = (sign != SUB_OP) * value - (sign == SUB_OP) * value;
+            sign = DEFAULT_OP;
             if (str[i + 1] == '.') {
                 if (i + 2 < len && !isdigit(str[i + 2])) {
                     error_msg = "No digits after '.'.";
@@ -157,16 +155,17 @@ double eval(char* str, ssize_t len) {
                 goto on_inp_error;
             }
             if (str[i] == '(') {
-                first_term_exists = false;
                 incomplete_input = true;
                 error_index = i;
+                queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
+                sign = DEFAULT_OP;
                 if (last_token == NUMBER_TOKEN) {
                     queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
                 }
             } else if (incomplete_input) {
                 error_msg = "Incomplete input.";
                 goto on_inp_error;
-            } 
+            }
             queue_enqueue_lex(inp_queue,
                               (Lexeme){.token = PAREN_TOKEN, .metadata = {.paren = str[i] == '(' ? OPENING_PAREN : CLOSING_PAREN}});
             break;
@@ -192,6 +191,42 @@ double eval(char* str, ssize_t len) {
         goto on_inp_error;
     }
 
+    // #ifdef DEBUG
+    printf("Input queue:");
+    Lexeme lex;
+    QUEUE_FOREACH(inp_queue, lex) {
+        switch (lex.token) {
+        case NUMBER_TOKEN:
+            printf(" %g", lex.metadata.num);
+            break;
+        case OP_TOKEN:
+            switch (lex.metadata.op) {
+            case ADD_OP:
+                printf(" +");
+                break;
+            case SUB_OP:
+                printf(" -");
+                break;
+            case MUL_OP:
+                printf(" *");
+                break;
+            case DIV_OP:
+                printf(" /");
+                break;
+            default:
+                break;
+            }
+            break;
+        case PAREN_TOKEN:
+            printf(" %c", lex.metadata.paren == OPENING_PAREN ? '(' : ')');
+            break;
+        default:
+            break;
+        }
+    }
+    putchar('\n');
+    // #endif
+
     /*
     Queue* inp_queue_postfix = queue_new_lex(inp_queue->used);
     Stack* op_stack = stack_new_op(inp_queue->used);
@@ -213,7 +248,7 @@ int main() {
     ssize_t len = 0;
 
     while (0 < (len = getline(&line_p, &n, stdin))) {
-        printf("res: %g\n", eval(line_p, len));
+        eval(line_p, len);
     }
     free(line_p);
     return 0;
