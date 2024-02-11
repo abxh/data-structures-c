@@ -1,6 +1,7 @@
 #include <assert.h>  // assert.
 #include <limits.h>  // CHAR_BIT
 #include <stdbool.h> // bool
+#include <stdint.h>  // SIZE_MAX
 #include <stdio.h>   // putchar, printf
 #include <stdlib.h>  // malloc, calloc, size_t, NULL
 #include <string.h>  // memcmp, memcpy
@@ -17,6 +18,9 @@ static inline size_t BITARRAY_BIT_INDEX(size_t index) {
 
 Bitarray* bitarray_new(size_t num_of_bits) {
     assert(num_of_bits != 0);
+    if (num_of_bits > SIZE_MAX / sizeof(unsigned char)) {
+        return NULL;
+    }
     Bitarray* bitarray_p = malloc(sizeof(Bitarray));
     if (bitarray_p == NULL) {
         return NULL;
