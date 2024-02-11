@@ -5,11 +5,6 @@
 #include "queue.h"
 #include "stack.h"
 
-typedef struct {
-    char* str_p;
-    size_t len;
-} StringView;
-
 typedef enum { DEFAULT_TOKEN, NUMBER_TOKEN, OP_TOKEN, PAREN_TOKEN } Token;
 
 typedef enum { DEFAULT_OP, ADD_OP, SUB_OP, MUL_OP, DIV_OP } Operation;
@@ -64,7 +59,11 @@ double eval(char* str, ssize_t len) {
     Operation sign = DEFAULT_OP;
 
     for (ssize_t i = 0; i < len; i++) {
+
         Token last_token = queue_isempty(inp_queue) ? DEFAULT_TOKEN : queue_peek_last_lex(inp_queue).token;
+        Paren last_paren = queue_isempty(inp_queue) ? DEFAULT_PAREN : queue_peek_last_lex(inp_queue).metadata.paren;
+        Operation last_op = queue_isempty(inp_queue) ? DEFAULT_OP : queue_peek_last_lex(inp_queue).metadata.op;
+
         switch (str[i]) {
         case '+':
         case '-':
@@ -85,8 +84,7 @@ double eval(char* str, ssize_t len) {
         case '/':
             incomplete_input = true;
             error_index = i;
-            if (last_token == DEFAULT_TOKEN || (last_token == OP_TOKEN && (queue_peek_last_lex(inp_queue).metadata.op == MUL_OP ||
-                                                                           queue_peek_last_lex(inp_queue).metadata.op == DIV_OP))) {
+            if (last_token == DEFAULT_TOKEN || (last_token == OP_TOKEN && (last_op == MUL_OP || last_op == DIV_OP))) {
                 error_msg = "Incorrect use of '*' or '/'.";
                 error_index = i;
                 goto on_inp_error;
@@ -114,7 +112,7 @@ double eval(char* str, ssize_t len) {
                 error_index = i;
                 goto on_inp_error;
             }
-            if (last_token == PAREN_TOKEN && queue_peek_last_lex(inp_queue).metadata.paren == CLOSING_PAREN) {
+            if (last_token == PAREN_TOKEN && last_paren == CLOSING_PAREN) {
                 queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
             }
             if (str[i] == '_') {
@@ -159,7 +157,7 @@ double eval(char* str, ssize_t len) {
                 error_index = i;
                 queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
                 sign = DEFAULT_OP;
-                if (last_token == NUMBER_TOKEN) {
+                if (last_token == NUMBER_TOKEN || (last_token == PAREN_TOKEN && last_paren == CLOSING_PAREN)) {
                     queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
                 }
             } else if (incomplete_input) {
