@@ -5,18 +5,15 @@
 #include "queue.h"
 #include "stack.h"
 
-typedef enum { DEFAULT_TOKEN, NUMBER_TOKEN, OP_TOKEN, PAREN_TOKEN } Token;
+typedef enum { DEFAULT_TOKEN, NUMBER_TOKEN, OP_TOKEN } Token;
 
-typedef enum { DEFAULT_OP, ADD_OP, SUB_OP, MUL_OP, DIV_OP } Operation;
-
-typedef enum { DEFAULT_PAREN, OPENING_PAREN, CLOSING_PAREN } Paren;
+typedef enum { DEFAULT_OP, ADD_OP, SUB_OP, MUL_OP, DIV_OP, OPENING_PAREN_OP, CLOSING_PAREN_OP } Operation;
 
 typedef struct {
     Token token;
     union {
         double num;
         Operation op;
-        Paren paren;
     } metadata;
 } Lexeme;
 
@@ -30,6 +27,10 @@ char decode_op(Operation op) {
         return '*';
     case DIV_OP:
         return '/';
+    case OPENING_PAREN_OP:
+        return '(';
+    case CLOSING_PAREN_OP:
+        return ')';
     default:
         break;
     }
@@ -48,6 +49,9 @@ double eval(char* str, ssize_t len) {
     double rtr_value = RTR_VALUE_DEFAULT;
 
     Queue* inp_queue = queue_new_lex(len);
+    if (inp_queue == NULL) {
+        goto on_oom_inp_queue;
+    }
 
     // error handling:
     char* error_msg = NULL;
@@ -61,7 +65,6 @@ double eval(char* str, ssize_t len) {
     for (ssize_t i = 0; i < len; i++) {
 
         Token last_token = queue_isempty(inp_queue) ? DEFAULT_TOKEN : queue_peek_last_lex(inp_queue).token;
-        Paren last_paren = queue_isempty(inp_queue) ? DEFAULT_PAREN : queue_peek_last_lex(inp_queue).metadata.paren;
         Operation last_op = queue_isempty(inp_queue) ? DEFAULT_OP : queue_peek_last_lex(inp_queue).metadata.op;
 
         switch (str[i]) {
@@ -112,7 +115,7 @@ double eval(char* str, ssize_t len) {
                 error_index = i;
                 goto on_inp_error;
             }
-            if (last_token == PAREN_TOKEN && last_paren == CLOSING_PAREN) {
+            if (last_token == OP_TOKEN && last_op == CLOSING_PAREN_OP) {
                 queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
             }
             if (str[i] == '_') {
@@ -157,7 +160,7 @@ double eval(char* str, ssize_t len) {
                 error_index = i;
                 queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
                 sign = DEFAULT_OP;
-                if (last_token == NUMBER_TOKEN || (last_token == PAREN_TOKEN && last_paren == CLOSING_PAREN)) {
+                if (last_token == NUMBER_TOKEN || (last_token == OP_TOKEN && last_op == CLOSING_PAREN_OP)) {
                     queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
                 }
             } else if (incomplete_input) {
@@ -165,7 +168,7 @@ double eval(char* str, ssize_t len) {
                 goto on_inp_error;
             }
             queue_enqueue_lex(inp_queue,
-                              (Lexeme){.token = PAREN_TOKEN, .metadata = {.paren = str[i] == '(' ? OPENING_PAREN : CLOSING_PAREN}});
+                              (Lexeme){.token = OP_TOKEN, .metadata = {.op = str[i] == '(' ? OPENING_PAREN_OP : CLOSING_PAREN_OP}});
             break;
         case ' ':
         case '\n':
@@ -215,9 +218,6 @@ double eval(char* str, ssize_t len) {
                 break;
             }
             break;
-        case PAREN_TOKEN:
-            printf(" %c", lex.metadata.paren == OPENING_PAREN ? '(' : ')');
-            break;
         default:
             break;
         }
@@ -225,18 +225,36 @@ double eval(char* str, ssize_t len) {
     putchar('\n');
     // #endif
 
-    /*
     Queue* inp_queue_postfix = queue_new_lex(inp_queue->used);
+    if (inp_queue_postfix == NULL) {
+        goto on_oom_inp_queue_postfix;
+    }   
     Stack* op_stack = stack_new_op(inp_queue->used);
-    */
+    if (op_stack == NULL) {
+        goto on_oom_op_stack;
+    }
+
+    // shunting yard algorithm (with simplified assumptions).
+    size_t nmemb = inp_queue->used;
+    for (size_t i = 0; i < nmemb; i++) {
+
+    }
 
     RTR_VALUE_LAST = rtr_value;
 
+    stack_free(op_stack);
+on_oom_op_stack:
+    queue_free(inp_queue_postfix);
 on_inp_error:
     if (error_msg != NULL) {
         fprintf(stderr, "%*c %s\n", (int)(error_index + 1), '^', error_msg);
     }
+on_oom_inp_queue_postfix:
     queue_free(inp_queue);
+on_oom_inp_queue:
+    if (inp_queue == NULL || inp_queue_postfix == NULL || op_stack == NULL) {
+        fprintf(stderr, "Out of memory.\n");
+    }
     return rtr_value;
 }
 
