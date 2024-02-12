@@ -1,8 +1,8 @@
-#include <ctype.h> // isdigit
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef _MATH_H_
+#ifdef KATTIS
 
 double pow(double, double) { return 0.; }
 #define EVAL_STR "%.2f"
