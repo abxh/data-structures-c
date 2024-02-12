@@ -2,12 +2,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <math.h> // pow
+
+// Note:
+// Must link math library using `gcc -lm` or the sorts.
+
 #include "queue.h"
 #include "stack.h"
 
 typedef enum { DEFAULT_TOKEN, NUMBER_TOKEN, OP_TOKEN } Token;
 
-typedef enum { DEFAULT_OP, ADD_OP, SUB_OP, MUL_OP, DIV_OP, OPENING_PAREN_OP, CLOSING_PAREN_OP } Operation;
+typedef enum { DEFAULT_OP, ADD_OP, SUB_OP, MUL_OP, DIV_OP, POW_OP, OPENING_PAREN_OP, CLOSING_PAREN_OP } Operation;
 
 typedef struct {
     Token token;
@@ -16,6 +21,9 @@ typedef struct {
         Operation op;
     } metadata;
 } Lexeme;
+
+QUEUE_CREATE_INLINE_FUNCTIONS(lex, Lexeme)
+STACK_CREATE_INLINE_FUNCTIONS(lex, Lexeme)
 
 char decode_op(Operation op) {
     switch (op) {
@@ -27,6 +35,8 @@ char decode_op(Operation op) {
         return '*';
     case DIV_OP:
         return '/';
+    case POW_OP:
+        return '^';
     case OPENING_PAREN_OP:
         return '(';
     case CLOSING_PAREN_OP:
@@ -37,20 +47,44 @@ char decode_op(Operation op) {
     return '\0';
 }
 
-#define digit_to_num(v) ((v) - '0')
+int op_precedence(Operation op) {
+    switch (op) {
+    case POW_OP:
+        return 3;
+    case DIV_OP:
+    case MUL_OP:
+        return 2;
+    case SUB_OP:
+    case ADD_OP:
+        return 1;
+    default:
+        return 0;
+    }
+}
 
-QUEUE_CREATE_INLINE_FUNCTIONS(lex, Lexeme)
-STACK_CREATE_INLINE_FUNCTIONS(op, Operation)
+int op_precedence_cmp(Operation o1, Operation o2) {
+    int o1_prec = op_precedence(o1);
+    int o2_prec = op_precedence(o2);
+    return -(o1_prec < o2_prec) + (o1_prec > o2_prec);
+}
 
 static const double RTR_VALUE_DEFAULT = 0.;
 static double RTR_VALUE_LAST = RTR_VALUE_DEFAULT;
 
+#define digit_to_num(v) ((v) - '0')
+#define last_token(inp_queue) (queue_isempty(inp_queue) ? DEFAULT_TOKEN : queue_peek_last_lex(inp_queue).token)
+#define last_op(inp_queue) (queue_isempty(inp_queue) ? DEFAULT_OP : queue_peek_last_lex(inp_queue).metadata.op)
+
 double eval(char* str, ssize_t len) {
     double rtr_value = RTR_VALUE_DEFAULT;
+    Queue* inp_queue = NULL;
+    Queue* inp_queue_postfix = NULL;
+    Stack* op_stack = NULL;
+    Stack* num_stack = NULL;
 
-    Queue* inp_queue = queue_new_lex(len);
+    inp_queue = queue_new_lex(len);
     if (inp_queue == NULL) {
-        goto on_oom_inp_queue;
+        goto on_oom_error;
     }
 
     // error handling:
@@ -63,10 +97,6 @@ double eval(char* str, ssize_t len) {
     Operation sign = DEFAULT_OP;
 
     for (ssize_t i = 0; i < len; i++) {
-
-        Token last_token = queue_isempty(inp_queue) ? DEFAULT_TOKEN : queue_peek_last_lex(inp_queue).token;
-        Operation last_op = queue_isempty(inp_queue) ? DEFAULT_OP : queue_peek_last_lex(inp_queue).metadata.op;
-
         switch (str[i]) {
         case '+':
         case '-':
@@ -88,12 +118,23 @@ double eval(char* str, ssize_t len) {
         case '/':
             incomplete_input = true;
             error_index = i;
-            if (queue_isempty(inp_queue) || (last_token == OP_TOKEN && (last_op == MUL_OP || last_op == DIV_OP))) {
+            if (queue_isempty(inp_queue) ||
+                (last_token(inp_queue) == OP_TOKEN && (last_op(inp_queue) == MUL_OP || last_op(inp_queue) == DIV_OP))) {
                 error_msg = "Incorrect use of '*' or '/'.";
                 error_index = i;
                 goto on_inp_error;
             }
             queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = str[i] == '*' ? MUL_OP : DIV_OP}});
+            break;
+        case '^':
+            incomplete_input = true;
+            error_index = i;
+            if (queue_isempty(inp_queue) || (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == POW_OP)) {
+                error_msg = "Two '^' in a row.";
+                error_index = i;
+                goto on_inp_error;
+            }
+            queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = POW_OP}});
             break;
         case '0':
         case '1':
@@ -108,15 +149,17 @@ double eval(char* str, ssize_t len) {
         case '.':
         case '_':
             incomplete_input = false;
-            if ((last_token == NUMBER_TOKEN || (last_token == PAREN_TOKEN && last_paren == CLOSING_PAREN)) && sign != DEFAULT_OP) {
+            if ((last_token(inp_queue) == NUMBER_TOKEN ||
+                 (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) &&
+                sign != DEFAULT_OP) {
                 queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
                 sign = DEFAULT_OP;
-            } else if (last_token == NUMBER_TOKEN) {
+            } else if (last_token(inp_queue) == NUMBER_TOKEN) {
                 error_msg = "Two numbers in a row.";
                 error_index = i;
                 goto on_inp_error;
             }
-            if (last_token == OP_TOKEN && last_op == CLOSING_PAREN_OP) {
+            if (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP) {
                 queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
             }
             if (str[i] == '_') {
@@ -161,7 +204,8 @@ double eval(char* str, ssize_t len) {
                 error_index = i;
                 queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
                 sign = DEFAULT_OP;
-                if (last_token == NUMBER_TOKEN || (last_token == OP_TOKEN && last_op == CLOSING_PAREN_OP)) {
+                if (last_token(inp_queue) == NUMBER_TOKEN ||
+                    (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) {
                     queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
                 }
             } else if (incomplete_input) {
@@ -194,7 +238,7 @@ double eval(char* str, ssize_t len) {
     }
 
     // #ifdef DEBUG
-    printf("Input queue:");
+    printf("Input queue (prefix): ");
     Lexeme lex;
     QUEUE_FOREACH(inp_queue, lex) {
         switch (lex.token) {
@@ -211,36 +255,120 @@ double eval(char* str, ssize_t len) {
     putchar('\n');
     // #endif
 
-    Queue* inp_queue_postfix = queue_new_lex(inp_queue->used);
+    inp_queue_postfix = queue_new_lex(inp_queue->used);
     if (inp_queue_postfix == NULL) {
-        goto on_oom_inp_queue_postfix;
-    }   
-    Stack* op_stack = stack_new_op(inp_queue->used);
+        goto on_oom_error;
+    }
+    op_stack = stack_new_lex(inp_queue->used);
     if (op_stack == NULL) {
-        goto on_oom_op_stack;
+        goto on_oom_error;
     }
 
     // shunting yard algorithm (with simplified assumptions).
-    size_t nmemb = inp_queue->used;
-    for (size_t i = 0; i < nmemb; i++) {
-
+    QUEUE_FOREACH(inp_queue, lex) {
+        switch (lex.token) {
+        case NUMBER_TOKEN:
+            queue_enqueue_lex(inp_queue_postfix, lex);
+            break;
+        case OP_TOKEN:
+            switch (lex.metadata.op) {
+            case OPENING_PAREN_OP:
+                stack_push_lex(op_stack, lex);
+                break;
+            case CLOSING_PAREN_OP:
+                while (stack_peek_lex(op_stack).metadata.op != OPENING_PAREN_OP) {
+                    queue_enqueue_lex(inp_queue_postfix, stack_pop_lex(op_stack));
+                }
+                stack_pop_lex(op_stack);
+                break;
+            default:
+                while (!stack_isempty(op_stack) && stack_peek_lex(op_stack).metadata.op != OPENING_PAREN_OP &&
+                       op_precedence_cmp(stack_peek_lex(op_stack).metadata.op, lex.metadata.op) >= 0) {
+                    queue_enqueue_lex(inp_queue_postfix, stack_pop_lex(op_stack));
+                }
+                stack_push_lex(op_stack, lex);
+                break;
+            }
+        default:
+            break;
+        }
+    }
+    while (!stack_isempty(op_stack)) {
+        queue_enqueue_lex(inp_queue_postfix, stack_pop_lex(op_stack));
     }
 
+    // #ifdef DEBUG
+    printf("Input queue (postfix):");
+    QUEUE_FOREACH(inp_queue_postfix, lex) {
+        switch (lex.token) {
+        case NUMBER_TOKEN:
+            printf(" %g", lex.metadata.num);
+            break;
+        case OP_TOKEN:
+            printf(" %c", decode_op(lex.metadata.op));
+            break;
+        default:
+            break;
+        }
+    }
+    putchar('\n');
+    // #endif
+
+    num_stack = op_stack; // repurposing the stack
+    QUEUE_FOREACH(inp_queue_postfix, lex) {
+        switch (lex.token) {
+        case NUMBER_TOKEN:
+            stack_push_lex(num_stack, lex);
+            break;
+        case OP_TOKEN: {
+            double y = stack_pop_lex(num_stack).metadata.num;
+            double x = stack_pop_lex(num_stack).metadata.num;
+            switch (lex.metadata.op) {
+            case ADD_OP:
+                stack_push_lex(num_stack, (Lexeme){.metadata.num = x + y});
+                break;
+            case SUB_OP:
+                stack_push_lex(num_stack, (Lexeme){.metadata.num = x - y});
+                break;
+            case MUL_OP:
+                stack_push_lex(num_stack, (Lexeme){.metadata.num = x * y});
+                break;
+            case DIV_OP:
+                stack_push_lex(num_stack, (Lexeme){.metadata.num = x / y});
+                break;
+            case POW_OP:
+                stack_push_lex(num_stack, (Lexeme){.metadata.num = pow(x, y)});
+                break;
+            default:
+                break;
+            }
+            break;
+        }
+        default:
+            break;
+        }
+    }
+
+    rtr_value = stack_pop_lex(num_stack).metadata.num;
     RTR_VALUE_LAST = rtr_value;
 
-    stack_free(op_stack);
-on_oom_op_stack:
-    queue_free(inp_queue_postfix);
 on_inp_error:
     if (error_msg != NULL) {
         fprintf(stderr, "%*c %s\n", (int)(error_index + 1), '^', error_msg);
     }
-on_oom_inp_queue_postfix:
-    queue_free(inp_queue);
-on_oom_inp_queue:
-    if (inp_queue == NULL || inp_queue_postfix == NULL || op_stack == NULL) {
-        fprintf(stderr, "Out of memory.\n");
-    }
+    stack_free(&op_stack);
+    queue_free(&inp_queue_postfix);
+    queue_free(&inp_queue);
+
+    return rtr_value;
+
+on_oom_error:
+    fprintf(stderr, "Out of memory.\n");
+
+    stack_free(&op_stack);
+    queue_free(&inp_queue_postfix);
+    queue_free(&inp_queue);
+
     return rtr_value;
 }
 
@@ -250,7 +378,7 @@ int main() {
     ssize_t len = 0;
 
     while (0 < (len = getline(&line_p, &n, stdin))) {
-        eval(line_p, len);
+        printf("%g\n", eval(line_p, len));
     }
     free(line_p);
     return 0;
