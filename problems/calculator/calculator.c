@@ -199,22 +199,7 @@ double eval(char* str, ssize_t len) {
             printf(" %g", lex.metadata.num);
             break;
         case OP_TOKEN:
-            switch (lex.metadata.op) {
-            case ADD_OP:
-                printf(" +");
-                break;
-            case SUB_OP:
-                printf(" -");
-                break;
-            case MUL_OP:
-                printf(" *");
-                break;
-            case DIV_OP:
-                printf(" /");
-                break;
-            default:
-                break;
-            }
+            printf(" %c", decode_op(lex.metadata.op));
             break;
         case PAREN_TOKEN:
             printf(" %c", lex.metadata.paren == OPENING_PAREN ? '(' : ')');
