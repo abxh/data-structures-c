@@ -89,7 +89,6 @@ double eval(char* str, ssize_t len) {
     Queue* inp_queue_postfix = NULL;
     Stack* op_stack = NULL;
     Stack* num_stack = NULL;
-    Lexeme lex;
 
     inp_queue = queue_new_lex(len);
     if (inp_queue == NULL) {
@@ -248,6 +247,7 @@ double eval(char* str, ssize_t len) {
         goto on_inp_error;
     }
 
+    Lexeme lex;
 #ifdef DEBUG
     printf("Input queue (prefix): ");
     QUEUE_FOREACH(inp_queue, lex) {
