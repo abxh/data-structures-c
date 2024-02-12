@@ -85,7 +85,7 @@ double eval(char* str, ssize_t len) {
         case '/':
             incomplete_input = true;
             error_index = i;
-            if (last_token == DEFAULT_TOKEN || (last_token == OP_TOKEN && (last_op == MUL_OP || last_op == DIV_OP))) {
+            if (queue_isempty(inp_queue) || (last_token == OP_TOKEN && (last_op == MUL_OP || last_op == DIV_OP))) {
                 error_msg = "Incorrect use of '*' or '/'.";
                 error_index = i;
                 goto on_inp_error;
