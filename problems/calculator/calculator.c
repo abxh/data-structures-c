@@ -34,7 +34,7 @@ char decode_op(Operation op) {
     default:
         break;
     }
-    return DEFAULT_OP;
+    return '\0';
 }
 
 #define digit_to_num(v) ((v) - '0')
@@ -71,8 +71,9 @@ double eval(char* str, ssize_t len) {
         case '+':
         case '-':
             incomplete_input = true;
-            sign = str[i] == '+' ? ADD_OP : SUB_OP;
             error_index = i;
+
+            sign = str[i] == '+' ? ADD_OP : SUB_OP;
             while (i + 1 < len && (str[i + 1] == '-' || str[i + 1] == '+' || str[i + 1] == ' ')) {
                 if (str[i + 1] == '-') {
                     sign = sign == SUB_OP ? ADD_OP : SUB_OP;
@@ -87,7 +88,7 @@ double eval(char* str, ssize_t len) {
         case '/':
             incomplete_input = true;
             error_index = i;
-            if (last_token == DEFAULT_TOKEN || (last_token == OP_TOKEN && (last_op == MUL_OP || last_op == DIV_OP))) {
+            if (queue_isempty(inp_queue) || (last_token == OP_TOKEN && (last_op == MUL_OP || last_op == DIV_OP))) {
                 error_msg = "Incorrect use of '*' or '/'.";
                 error_index = i;
                 goto on_inp_error;
@@ -107,9 +108,9 @@ double eval(char* str, ssize_t len) {
         case '.':
         case '_':
             incomplete_input = false;
-            if (last_token == NUMBER_TOKEN && sign != DEFAULT_OP) {
+            if ((last_token == NUMBER_TOKEN || (last_token == PAREN_TOKEN && last_paren == CLOSING_PAREN)) && sign != DEFAULT_OP) {
                 queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
-                sign = ADD_OP;
+                sign = DEFAULT_OP;
             } else if (last_token == NUMBER_TOKEN) {
                 error_msg = "Two numbers in a row.";
                 error_index = i;
@@ -201,22 +202,7 @@ double eval(char* str, ssize_t len) {
             printf(" %g", lex.metadata.num);
             break;
         case OP_TOKEN:
-            switch (lex.metadata.op) {
-            case ADD_OP:
-                printf(" +");
-                break;
-            case SUB_OP:
-                printf(" -");
-                break;
-            case MUL_OP:
-                printf(" *");
-                break;
-            case DIV_OP:
-                printf(" /");
-                break;
-            default:
-                break;
-            }
+            printf(" %c", decode_op(lex.metadata.op));
             break;
         default:
             break;
