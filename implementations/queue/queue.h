@@ -40,8 +40,9 @@ unsigned char* queue_dequeue(Queue* queue_p);
    ensure new capacity is not zero. */
 bool queue_resize(Queue* queue_p, size_t new_capacity);
 
-/* Free the memory of a queue appropiately. */
-void queue_free(Queue* queue_p);
+/* Free the memory of a queue appropiately and set it's pointer to NULL.
+   This may be called this as many times as needed. */
+void queue_free(Queue** queue_pp);
 
 /* Create inline functions to directly work with queue values. */
 #define QUEUE_CREATE_INLINE_FUNCTIONS(name, type)                         \

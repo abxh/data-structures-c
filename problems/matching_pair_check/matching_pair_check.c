@@ -124,7 +124,7 @@ int main(void) {
         }
     }
 
-    stack_free(stack_p);
+    stack_free(&stack_p);
     free(str);
 
     return 0;

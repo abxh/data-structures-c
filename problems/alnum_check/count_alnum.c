@@ -52,6 +52,6 @@ int main(void) {
     }
     putchar('\n');
 
-    bitarray_free(bitarray_p);
+    bitarray_free(&bitarray_p);
     return 0;
 }

@@ -64,7 +64,11 @@ bool stack_resize(Stack* stack_p, size_t new_capacity) {
     return true;
 }
 
-void stack_free(Stack* stack_p) {
-    free(stack_p->arr_p);
-    free(stack_p);
+void stack_free(Stack** stack_pp) {
+    if (*stack_pp == NULL) {
+        return;
+    }
+    free((*stack_pp)->arr_p);
+    free(*stack_pp);
+    *stack_pp = NULL;
 }

@@ -32,8 +32,9 @@ bool bitarray_equal(const Bitarray* bitarray_p, const Bitarray* bitarray_other_p
 /* Print the bits in the bitarray. */
 void bitarray_print(const Bitarray* bitarray_p);
 
-/* Free the memory of the bitarray appropiately. */
-void bitarray_free(Bitarray* bitarray_p);
+/* Free the memory of the bitarray appropiately and set it's pointer to NULL.
+   This may be called even after the bitarray pointer is NULL. */
+void bitarray_free(Bitarray** bitarray_p);
 
 /* Return the value at an index. */
 bool bitarray_get(const Bitarray* bitarray_p, size_t index);

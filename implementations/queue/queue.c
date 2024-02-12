@@ -22,10 +22,10 @@ size_t rounduppow2(uint32_t v) {
 Queue* queue_new(size_t capacity, size_t data_size) {
     assert(capacity != 0);
     assert(data_size != 0);
+    capacity = rounduppow2(capacity);
     if (capacity > SIZE_MAX / data_size) {
         return NULL;
     }
-    capacity = rounduppow2(capacity);
     Queue* queue_p = malloc(sizeof(Queue));
     if (queue_p == NULL) {
         return NULL;
@@ -108,7 +108,11 @@ bool queue_resize(Queue* queue_p, size_t new_capacity) {
     return true;
 }
 
-void queue_free(Queue* queue_p) {
-    free(queue_p->arr_p);
-    free(queue_p);
+void queue_free(Queue** queue_pp) {
+    if (*queue_pp == NULL) {
+        return;
+    }
+    free((*queue_pp)->arr_p);
+    free((*queue_pp));
+    *queue_pp = NULL;
 }

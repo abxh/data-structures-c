@@ -80,9 +80,13 @@ void bitarray_print(const Bitarray* bitarray_p) {
     }
 }
 
-void bitarray_free(Bitarray* bitarray_p) {
-    free(bitarray_p->words);
-    free(bitarray_p);
+void bitarray_free(Bitarray** bitarray_pp) {
+    if (*bitarray_pp) {
+        return;
+    }
+    free((*bitarray_pp)->words);
+    free(*bitarray_pp);
+    *bitarray_pp = NULL;
 }
 
 bool bitarray_equal(const Bitarray* bitarray_p, const Bitarray* bitarray_other_p) {
