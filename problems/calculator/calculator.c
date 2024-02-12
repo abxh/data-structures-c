@@ -3,13 +3,15 @@
 #include <stdlib.h>
 
 #ifdef KATTIS
-double pow(double x, double y) {
-    return 0.;
-};
+
+double pow(double x, double y) { return 0.; };
 #define EVAL_STR "%.2f"
+
 #else
+
 #include <math.h> // pow
 #define EVAL_STR "%g"
+
 #endif
 
 // Note:
