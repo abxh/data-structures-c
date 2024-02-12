@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef KATTIS
+#ifndef _MATH_H_
 
-double pow(double x, double y) { return 0.; };
+double pow(double, double) { return 0.; }
 #define EVAL_STR "%.2f"
 
 #else
@@ -12,10 +12,10 @@ double pow(double x, double y) { return 0.; };
 #include <math.h> // pow
 #define EVAL_STR "%g"
 
-#endif
-
 // Note:
 // Must link math library using `gcc -lm` or the sorts.
+
+#endif
 
 #include "queue.h"
 #include "stack.h"
