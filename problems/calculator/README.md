@@ -1,6 +1,6 @@
 # Calculator
 
-The problem description can be found [here](https://open.kattis.com/problems/calculator).
+The problem is based on the kattis problem "Calculator" described [here](https://open.kattis.com/problems/calculator).
 
 ## Extra challenges:
 - Store and allow the last evaluated value to be used with `_`.
