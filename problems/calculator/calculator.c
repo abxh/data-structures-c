@@ -33,7 +33,7 @@ char decode_op(Operation op) {
     default:
         break;
     }
-    return DEFAULT_OP;
+    return '\0';
 }
 
 #define digit_to_num(v) ((v) - '0')
