@@ -68,8 +68,9 @@ double eval(char* str, ssize_t len) {
         case '+':
         case '-':
             incomplete_input = true;
-            sign = str[i] == '+' ? ADD_OP : SUB_OP;
             error_index = i;
+
+            sign = str[i] == '+' ? ADD_OP : SUB_OP;
             while (i + 1 < len && (str[i + 1] == '-' || str[i + 1] == '+' || str[i + 1] == ' ')) {
                 if (str[i + 1] == '-') {
                     sign = sign == SUB_OP ? ADD_OP : SUB_OP;
