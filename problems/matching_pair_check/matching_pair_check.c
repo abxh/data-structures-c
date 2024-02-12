@@ -29,8 +29,9 @@ SYMBOL_ENUM encode_symbol(char c) {
     case ')':
         return RPARAN;
     default:
-        return DEFAULT_SYMBOL_ENUM;
+        break;
     }
+    return DEFAULT_SYMBOL_ENUM;
 }
 
 SYMBOL_ENUM matching_symbol(SYMBOL_ENUM symb) {
