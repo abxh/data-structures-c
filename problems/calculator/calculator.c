@@ -105,7 +105,7 @@ double eval(char* str, ssize_t len) {
         case '.':
         case '_':
             incomplete_input = false;
-            if (last_token == NUMBER_TOKEN && sign != DEFAULT_OP) {
+            if ((last_token == NUMBER_TOKEN || (last_token == PAREN_TOKEN && last_paren == CLOSING_PAREN)) && sign != DEFAULT_OP) {
                 queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
                 sign = ADD_OP;
             } else if (last_token == NUMBER_TOKEN) {
