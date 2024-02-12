@@ -6,10 +6,10 @@
 double pow(double x, double y) {
     return 0.;
 };
-#    define EVAL_STR "%.2f"
+#define EVAL_STR "%.2f"
 #else
-#    include <math.h> // pow
-#    define EVAL_STR "%g"
+#include <math.h> // pow
+#define EVAL_STR "%g"
 #endif
 
 // Note:
