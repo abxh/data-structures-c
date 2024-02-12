@@ -2,7 +2,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <math.h> // pow
+#ifdef KATTIS
+double pow(double x, double y) {
+    return 0.;
+};
+#    define EVAL_STR "%.2f"
+#else
+#    include <math.h> // pow
+#    define EVAL_STR "%g"
+#endif
 
 // Note:
 // Must link math library using `gcc -lm` or the sorts.
@@ -44,7 +52,7 @@ char decode_op(Operation op) {
     default:
         break;
     }
-    return '\0';
+    return 'D';
 }
 
 int op_precedence(Operation op) {
@@ -81,6 +89,7 @@ double eval(char* str, ssize_t len) {
     Queue* inp_queue_postfix = NULL;
     Stack* op_stack = NULL;
     Stack* num_stack = NULL;
+    Lexeme lex;
 
     inp_queue = queue_new_lex(len);
     if (inp_queue == NULL) {
@@ -202,8 +211,10 @@ double eval(char* str, ssize_t len) {
             if (str[i] == '(') {
                 incomplete_input = true;
                 error_index = i;
-                queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
-                sign = DEFAULT_OP;
+                if (sign != DEFAULT_OP) {
+                    queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
+                    sign = DEFAULT_OP;
+                }
                 if (last_token(inp_queue) == NUMBER_TOKEN ||
                     (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) {
                     queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
@@ -237,9 +248,8 @@ double eval(char* str, ssize_t len) {
         goto on_inp_error;
     }
 
-    // #ifdef DEBUG
+#ifdef DEBUG
     printf("Input queue (prefix): ");
-    Lexeme lex;
     QUEUE_FOREACH(inp_queue, lex) {
         switch (lex.token) {
         case NUMBER_TOKEN:
@@ -253,7 +263,7 @@ double eval(char* str, ssize_t len) {
         }
     }
     putchar('\n');
-    // #endif
+#endif
 
     inp_queue_postfix = queue_new_lex(inp_queue->used);
     if (inp_queue_postfix == NULL) {
@@ -297,7 +307,7 @@ double eval(char* str, ssize_t len) {
         queue_enqueue_lex(inp_queue_postfix, stack_pop_lex(op_stack));
     }
 
-    // #ifdef DEBUG
+#ifdef DEBUG
     printf("Input queue (postfix):");
     QUEUE_FOREACH(inp_queue_postfix, lex) {
         switch (lex.token) {
@@ -312,7 +322,7 @@ double eval(char* str, ssize_t len) {
         }
     }
     putchar('\n');
-    // #endif
+#endif
 
     num_stack = op_stack; // repurposing the stack
     QUEUE_FOREACH(inp_queue_postfix, lex) {
@@ -325,19 +335,19 @@ double eval(char* str, ssize_t len) {
             double x = stack_pop_lex(num_stack).metadata.num;
             switch (lex.metadata.op) {
             case ADD_OP:
-                stack_push_lex(num_stack, (Lexeme){.metadata.num = x + y});
+                stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x + y}});
                 break;
             case SUB_OP:
-                stack_push_lex(num_stack, (Lexeme){.metadata.num = x - y});
+                stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x - y}});
                 break;
             case MUL_OP:
-                stack_push_lex(num_stack, (Lexeme){.metadata.num = x * y});
+                stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x * y}});
                 break;
             case DIV_OP:
-                stack_push_lex(num_stack, (Lexeme){.metadata.num = x / y});
+                stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x / y}});
                 break;
             case POW_OP:
-                stack_push_lex(num_stack, (Lexeme){.metadata.num = pow(x, y)});
+                stack_push_lex(num_stack, (Lexeme){.metadata = {.num = pow(x, y)}});
                 break;
             default:
                 break;
@@ -378,7 +388,7 @@ int main() {
     ssize_t len = 0;
 
     while (0 < (len = getline(&line_p, &n, stdin))) {
-        printf("%g\n", eval(line_p, len));
+        printf(EVAL_STR "\n", eval(line_p, len));
     }
     free(line_p);
     return 0;
