@@ -63,16 +63,16 @@ bool wraparound_test(void) {
 }
 
 bool grow_test(void) {
-    Queue* queue_p = queue_new(50, sizeof(int));
+    Queue* queue_p = queue_new(500000, sizeof(int));
     bool res = true;
-    for (int i = 1; i <= 50; i++) {
+    for (int i = 1; i <= 500000; i++) {
         queue_enqueue(queue_p, (unsigned char*)&i);
     }
-    queue_resize(queue_p, 100);
-    for (int i = 51; i <= 100; i++) {
+    queue_resize(queue_p, 1000000);
+    for (int i = 500001; i <= 1000000; i++) {
         queue_enqueue(queue_p, (unsigned char*)&i);
     }
-    for (int i = 1; i <= 100; i++) {
+    for (int i = 1; i <= 1000000; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
     queue_free(&queue_p);
@@ -80,13 +80,13 @@ bool grow_test(void) {
 }
 
 bool shrink_test(void) {
-    Queue* queue_p = queue_new(50, sizeof(int));
+    Queue* queue_p = queue_new(500000, sizeof(int));
     bool res = true;
-    for (int i = 1; i <= 25; i++) {
+    for (int i = 1; i <= 250000; i++) {
         queue_enqueue(queue_p, (unsigned char*)&i);
     }
-    queue_resize(queue_p, 25);
-    for (int i = 1; i <= 25; i++) {
+    queue_resize(queue_p, 250000);
+    for (int i = 1; i <= 250000; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
     queue_free(&queue_p);
@@ -94,22 +94,22 @@ bool shrink_test(void) {
 }
 
 bool grow_and_wraparound_test(void) {
-    Queue* queue_p = queue_new(50, sizeof(int));
+    Queue* queue_p = queue_new(500000, sizeof(int));
     bool res = true;
-    for (int i = 1; i <= 25; i++) {
+    for (int i = 1; i <= 250000; i++) {
         queue_enqueue(queue_p, (unsigned char*)&i);
     }
-    for (int i = 1; i <= 25; i++) {
+    for (int i = 1; i <= 250000; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
-    for (int i = 1; i <= 50; i++) {
+    for (int i = 1; i <= 500000; i++) {
         queue_enqueue(queue_p, (unsigned char*)&i);
     }
-    queue_resize(queue_p, 100);
-    for (int i = 51; i <= 100; i++) {
+    queue_resize(queue_p, 1000000);
+    for (int i = 500001; i <= 1000000; i++) {
         queue_enqueue(queue_p, (unsigned char*)&i);
     }
-    for (int i = 1; i <= 100; i++) {
+    for (int i = 1; i <= 1000000; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
     queue_free(&queue_p);
@@ -117,19 +117,19 @@ bool grow_and_wraparound_test(void) {
 }
 
 bool shrink_and_wraparound_test(void) {
-    Queue* queue_p = queue_new(100, sizeof(int));
+    Queue* queue_p = queue_new(1000000, sizeof(int));
     bool res = true;
-    for (int i = 1; i <= 50; i++) {
+    for (int i = 1; i <= 500000; i++) {
         queue_enqueue(queue_p, (unsigned char*)&i);
     }
-    for (int i = 1; i <= 50; i++) {
+    for (int i = 1; i <= 500000; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
-    for (int i = 1; i <= 25; i++) {
+    for (int i = 1; i <= 250000; i++) {
         queue_enqueue(queue_p, (unsigned char*)&i);
     }
-    queue_resize(queue_p, 25);
-    for (int i = 1; i <= 25; i++) {
+    queue_resize(queue_p, 250000);
+    for (int i = 1; i <= 250000; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
     queue_free(&queue_p);
