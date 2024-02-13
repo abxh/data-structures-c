@@ -3,7 +3,6 @@
 #include <stdint.h>  // uint32_t
 #include <stdlib.h>  // size_t, malloc, free, NULL
 #include <string.h>  // memcpy, memmove
-#include <stdio.h>
 
 #include "queue.h"
 
@@ -67,9 +66,7 @@ void queue_enqueue(Queue* queue_p, const unsigned char* bytes) {
     assert(queue_p->used != queue_p->capacity_sub_one + 1);
     memcpy(queue_p->arr_p + queue_p->data_size * queue_p->end_index, bytes, queue_p->data_size);
     queue_p->end_index++;
-    printf("queue_enqueued: %d & %d\n", queue_p->end_index, queue_p->capacity_sub_one);
     queue_p->end_index &= queue_p->capacity_sub_one;
-    printf("queue_enqueued: %d & %d\n", queue_p->end_index, queue_p->capacity_sub_one);
     queue_p->used++;
 }
 
