@@ -213,7 +213,14 @@ double eval(char* str, ssize_t len) {
                 incomplete_input = true;
                 error_index = i;
                 if (sign != DEFAULT_OP) {
-                    queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
+                    if (last_token(inp_queue) == NUMBER_TOKEN ||
+                        (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) {
+                        queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
+                    } else {
+                        queue_enqueue_lex(inp_queue,
+                                          (Lexeme){.token = NUMBER_TOKEN, .metadata = {.num = -(sign == SUB_OP) + (sign == ADD_OP)}});
+                        queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
+                    }
                     sign = DEFAULT_OP;
                 }
                 if (last_token(inp_queue) == NUMBER_TOKEN ||
