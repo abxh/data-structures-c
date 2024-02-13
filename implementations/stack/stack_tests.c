@@ -41,18 +41,18 @@ bool million_elements_test(void) {
 }
 
 bool grow_test(void) {
-    Stack* stack_p = stack_new(50, sizeof(int));
+    Stack* stack_p = stack_new(500000, sizeof(int));
     bool res = true;
-    for (int i = 1; i <= 50; i++) {
+    for (int i = 1; i <= 500000; i++) {
         stack_push(stack_p, (unsigned char*)&i);
     }
     res &= stack_isfull(stack_p);
     res &= stack_resize(stack_p, stack_p->used << 1);
     res &= !stack_isfull(stack_p);
-    for (int i = 51; i <= 100; i++) {
+    for (int i = 500001; i <= 1000000; i++) {
         stack_push(stack_p, (unsigned char*)&i);
     }
-    for (int i = 100; i >= 1; i--) {
+    for (int i = 1000000; i >= 1; i--) {
         res &= i == *(int*)stack_pop(stack_p);
     }
     stack_free(&stack_p);
@@ -60,15 +60,15 @@ bool grow_test(void) {
 }
 
 bool shrink_test(void) {
-    Stack* stack_p = stack_new(50, sizeof(int));
+    Stack* stack_p = stack_new(500000, sizeof(int));
     bool res = true;
-    for (int i = 1; i <= 25; i++) {
+    for (int i = 1; i <= 250000; i++) {
         stack_push(stack_p, (unsigned char*)&i);
     }
     res &= !stack_isfull(stack_p);
     res &= stack_resize(stack_p, stack_p->used);
     res &= stack_isfull(stack_p);
-    for (int i = 25; i >= 1; i--) {
+    for (int i = 250000; i >= 1; i--) {
         res &= i == *(int*)stack_pop(stack_p);
     }
     stack_free(&stack_p);
