@@ -1,19 +1,17 @@
 #include <assert.h>  // assert
 #include <stdbool.h> // bool, true, false
-#include <stdint.h>  // uint8_t, uint64_t
+#include <stdint.h>  // SIZE_MAX
 #include <stdlib.h>  // size_t, malloc, free, reallocarray, NULL
 #include <string.h>  // memcpy, memcmp
-#include <stdio.h>
 
 #include "dict.h"
 
-uint64_t fnv_hash64(uint8_t* data, size_t data_size) {
-    // Source:
-    // https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+#define FNV_OFFSET (0xcbf29ce484222325)
+#define FNV_PRIME (0x100000001b3)
 
-    static const uint64_t FNV_OFFSET = 0xcbf29ce484222325;
-    static const uint64_t FNV_PRIME = 0x100000001b3;
-
+uint64_t hash(uint8_t* data, size_t data_size) {
+    // FNV-1a hash
+    // https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function#FNV-1a_hash
     uint64_t hash = FNV_OFFSET;
     for (size_t i = 0; i < data_size; i++) {
         hash ^= data[i];
@@ -22,178 +20,72 @@ uint64_t fnv_hash64(uint8_t* data, size_t data_size) {
     return hash;
 }
 
-void dict_insert(DictEntry* darr, DictEntry entry, size_t key_size, size_t capacity) {
-    uint64_t m = (capacity - 1);
-    uint64_t idx = fnv_hash64((uint8_t*)entry.key_p, key_size) & m;
-    if (darr[idx].key_p == NULL) {
-        darr[idx] = entry;
-        return;
-    }
-    do {
-        DictEntry other = darr[idx];
-        darr[idx] = entry;
-
-        entry = other;
-        idx = (idx + 1) & m;
-    } while (darr[idx].key_p != NULL);
-    darr[idx] = entry;
+size_t rounduppow2(uint32_t v) {
+    // https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
+    assert(v != 0);
+    v--;
+    v |= v >> 1;
+    v |= v >> 2;
+    v |= v >> 4;
+    v |= v >> 8;
+    v |= v >> 16;
+    v++;
+    return v;
 }
 
-void dict_del_backtrace(DictEntry* darr, size_t idx, size_t key_size, size_t capacity) {
-    uint64_t m = capacity - 1;
-    uint64_t idx_next = (idx + 1) & m;
-    while (darr[idx_next].key_p != NULL && fnv_hash64(darr[idx_next].key_p, key_size) != idx_next) {
-        darr[idx].key_p = darr[idx_next].key_p;
-        darr[idx].value_p = darr[idx_next].value_p;
-        darr[idx_next].key_p = NULL;
-        idx = idx_next;
-        idx_next = (idx + 1) & m;
-    }
-}
-
-bool dict_rehash(Dict* dict_p, size_t capacity_new, DictEntry* darr_new) {
-    DictEntry* darr = dict_p->darr;
-    for (size_t i = 0; i < dict_p->capacity; i++) {
-        if (darr[i].key_p == NULL) {
-            continue;
-        }
-        DictEntry entry = {darr[i].key_p, darr[i].value_p};
-        dict_insert(darr_new, entry, dict_p->key_size, capacity_new);
-    }
-    return true;
-}
-
-bool dict_grow_if_neccessary(Dict* dict_p, size_t used_new) {
-    assert(dict_p->capacity <= (SIZE_MAX / sizeof(DictEntry)) >> 1);
-    if (used_new >= dict_p->capacity >> 1) {
-        size_t capacity_new = dict_p->capacity << 1;
-        DictEntry* darr_new = calloc(capacity_new, sizeof(DictEntry));
-        if (darr_new == NULL) {
-            return false;
-        }
-        dict_rehash(dict_p, capacity_new, darr_new);
-        free(dict_p->darr);
-        dict_p->darr = darr_new;
-        dict_p->capacity = capacity_new;
-        dict_p->used = used_new;
-    }
-    return true;
-}
-
-bool dict_shrink_if_sufficient(Dict* dict_p, size_t used_new) {
-    if (dict_p->capacity >= 4 && used_new <= dict_p->capacity >> 2) {
-        size_t capacity_new = dict_p->capacity >> 1;
-        DictEntry* darr_new = calloc(capacity_new, sizeof(DictEntry));
-        if (darr_new == NULL) {
-            return false;
-        }
-        dict_rehash(dict_p, capacity_new, darr_new);
-        free(dict_p->darr);
-        dict_p->darr = darr_new;
-        dict_p->capacity = capacity_new;
-        dict_p->used = used_new;
-    }
-    return true;
-}
-
-Dict* dict_new(size_t initial_capacity, size_t key_size, size_t value_size) {
-    assert(initial_capacity != 0);
+Dict* dict_new(size_t nelm, size_t key_size, size_t value_size) {
+    assert(nelm != 0);
     assert(key_size != 0);
     assert(value_size != 0);
-    assert((initial_capacity & (initial_capacity - 1)) == 0);
+    size_t capacity = rounduppow2(nelm * 1.25); // (*) 1.25 to keep load factor below 0.8
+    if (capacity < nelm || capacity > SIZE_MAX / sizeof(DictEntry) || capacity > SIZE_MAX / key_size ||
+        capacity > SIZE_MAX / value_size) {
+        return NULL;
+    }
     Dict* dict_p = malloc(sizeof(Dict));
     if (dict_p == NULL) {
         return NULL;
     }
-    dict_p->darr = calloc(initial_capacity, sizeof(DictEntry));
-    if (dict_p->darr == NULL) {
+    dict_p->arr_p = malloc(capacity * sizeof(DictEntry));
+    if (dict_p->arr_p == NULL) {
         free(dict_p);
         return NULL;
     }
-    dict_p->capacity = initial_capacity;
+    dict_p->key_pool = malloc(capacity * key_size);
+    if (dict_p->arr_p == NULL) {
+        free(dict_p->arr_p);
+        free(dict_p);
+        return NULL;
+    }
+    dict_p->value_pool = malloc(capacity * value_size);
+    if (dict_p->arr_p == NULL) {
+        free(dict_p->key_pool);
+        free(dict_p->arr_p);
+        free(dict_p);
+        return NULL;
+    }
+    unsigned char* key_p = &dict_p->key_pool[0];
+    unsigned char* value_p = &dict_p->value_pool[0];
+    for (size_t i = 0; i < capacity; i++) {
+        dict_p->arr_p[i] = (DictEntry){.offset = -1, .key_p = key_p, .value_p = value_p};
+        key_p += key_size;
+        value_p += value_size;
+    }
+    dict_p->capacity_sub_one = capacity - 1;
     dict_p->used = 0;
     dict_p->key_size = key_size;
     dict_p->value_size = value_size;
     return dict_p;
 }
 
-bool dict_exists(Dict* dict_p, void* key_p, size_t key_size) {
-    assert(dict_p->key_size == key_size);
-    uint64_t m = dict_p->capacity - 1;
-    uint64_t idx = fnv_hash64((uint8_t*)key_p, dict_p->key_size) & m;
-    DictEntry* darr = dict_p->darr;
-    while (darr[idx].key_p != NULL) {
-        if (memcmp(darr[idx].key_p, key_p, dict_p->key_size) == 0) {
-            return true;
-        } else if ((fnv_hash64(darr[idx].key_p, dict_p->key_size) & m) == idx) {
-            break;
-        }
-        idx = (idx + 1) & m;
-    }
-    return false;
-}
 
-void* dict_get(Dict* dict_p, void* key_p, size_t key_size) {
-    assert(dict_p->key_size == key_size);
-    uint64_t m = dict_p->capacity - 1;
-    uint64_t idx = fnv_hash64((uint8_t*)key_p, key_size) & m;
-    DictEntry* darr = dict_p->darr;
-    while (darr[idx].key_p != NULL) {
-        if (memcmp(darr[idx].key_p, key_p, dict_p->key_size) == 0) {
-            return darr[idx].value_p;
-        } else if ((fnv_hash64(darr[idx].key_p, dict_p->key_size) & m) == idx) {
-            break;
-        }
-        idx = (idx + 1) & m;
-    }
-    return NULL;
-}
 
-bool dict_set(Dict* dict_p, void* key_p, size_t key_size, void* value_p, size_t value_size) {
-    assert(dict_p->key_size == key_size);
-    assert(dict_p->value_size == value_size);
-    if (!dict_grow_if_neccessary(dict_p, dict_p->used + 1)) {
-        return false;
+void dict_free(Dict** dict_pp) {
+    if (*dict_pp == NULL) {
+        return;
     }
-    DictEntry entry;
-    entry.key_p = malloc(dict_p->key_size);
-    if (entry.key_p == NULL) {
-        return false;
-    }
-    entry.value_p = malloc(dict_p->value_size);
-    if (entry.key_p == NULL) {
-        free(entry.key_p);
-        return false;
-    }
-    memcpy(entry.key_p, key_p, dict_p->key_size);
-    memcpy(entry.value_p, value_p, dict_p->value_size);
-    dict_insert(dict_p->darr, entry, dict_p->key_size, dict_p->capacity);
-    return true;
-}
-
-bool dict_del(Dict* dict_p, void* key_p, size_t key_size) {
-    assert(dict_p->key_size == key_size);
-    DictEntry* darr = dict_p->darr;
-    uint64_t idx = fnv_hash64((uint8_t*)key_p, dict_p->key_size) & (dict_p->capacity - 1);
-    while (darr[idx].key_p == NULL) {
-        return false;
-    }
-    free(darr[idx].key_p);
-    free(darr[idx].value_p);
-    darr[idx].key_p = NULL;
-    darr[idx].value_p = NULL;
-    dict_del_backtrace(dict_p->darr, idx, dict_p->key_size, dict_p->capacity);
-    if (!dict_shrink_if_sufficient(dict_p, dict_p->used - 1)) {
-        return false;
-    }
-    return true;
-}
-
-void dict_free(Dict* dict_p) {
-    for (size_t i = 0; i < dict_p->capacity; i++) {
-        free(dict_p->darr[i].key_p);
-        free(dict_p->darr[i].value_p);
-    }
-    free(dict_p->darr);
-    free(dict_p);
+    free((*dict_pp)->key_pool);
+    free((*dict_pp)->value_pool);
+    free((*dict_pp)->arr_p);
+    free((*dict_pp));
 }
