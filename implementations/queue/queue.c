@@ -3,6 +3,7 @@
 #include <stdint.h>  // uint32_t
 #include <stdlib.h>  // size_t, malloc, free, NULL
 #include <string.h>  // memcpy, memmove
+#include <stdio.h>
 
 #include "queue.h"
 
@@ -23,6 +24,7 @@ Queue* queue_new(size_t capacity, size_t data_size) {
     assert(capacity != 0);
     assert(data_size != 0);
     capacity = rounduppow2(capacity);
+    capacity += (capacity == 1);
     if (capacity > SIZE_MAX / data_size) {
         return NULL;
     }
@@ -65,7 +67,9 @@ void queue_enqueue(Queue* queue_p, const unsigned char* bytes) {
     assert(queue_p->used != queue_p->capacity_sub_one + 1);
     memcpy(queue_p->arr_p + queue_p->data_size * queue_p->end_index, bytes, queue_p->data_size);
     queue_p->end_index++;
+    printf("queue_enqueued: %d & %d\n", queue_p->end_index, queue_p->capacity_sub_one);
     queue_p->end_index &= queue_p->capacity_sub_one;
+    printf("queue_enqueued: %d & %d\n", queue_p->end_index, queue_p->capacity_sub_one);
     queue_p->used++;
 }
 
@@ -91,6 +95,7 @@ void rotleft(unsigned char* bytes, size_t len, size_t data_size, size_t n) {
 bool queue_resize(Queue* queue_p, size_t new_capacity) {
     assert(new_capacity != 0);
     new_capacity = rounduppow2(new_capacity);
+    new_capacity += (new_capacity == 1);
     if (new_capacity == queue_p->capacity_sub_one + 1) {
         return true;
     }
