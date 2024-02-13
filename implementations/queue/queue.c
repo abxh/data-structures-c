@@ -22,16 +22,16 @@ size_t rounduppow2(uint32_t v) {
 Queue* queue_new(size_t capacity, size_t data_size) {
     assert(capacity != 0);
     assert(data_size != 0);
-    capacity = rounduppow2(capacity);
-    capacity += (capacity == 1);
-    if (capacity > SIZE_MAX / data_size) {
+    size_t capacity_rounded = rounduppow2(capacity_rounded);
+    capacity_rounded += (capacity_rounded == 1);
+    if (capacity_rounded < capacity || capacity_rounded > SIZE_MAX / data_size) {
         return NULL;
     }
     Queue* queue_p = malloc(sizeof(Queue));
     if (queue_p == NULL) {
         return NULL;
     }
-    queue_p->arr_p = malloc(capacity * data_size);
+    queue_p->arr_p = malloc(capacity_rounded * data_size);
     if (queue_p->arr_p == NULL) {
         free(queue_p);
         return NULL;
@@ -39,7 +39,7 @@ Queue* queue_new(size_t capacity, size_t data_size) {
     queue_p->start_index = 0;
     queue_p->end_index = 0;
     queue_p->used = 0;
-    queue_p->capacity_sub_one = capacity - 1;
+    queue_p->capacity_sub_one = capacity_rounded - 1;
     queue_p->data_size = data_size;
     return queue_p;
 }
@@ -91,9 +91,12 @@ void rotleft(unsigned char* bytes, size_t len, size_t data_size, size_t n) {
 
 bool queue_resize(Queue* queue_p, size_t new_capacity) {
     assert(new_capacity != 0);
-    new_capacity = rounduppow2(new_capacity);
-    new_capacity += (new_capacity == 1);
-    if (new_capacity == queue_p->capacity_sub_one + 1) {
+    size_t new_capacity_rounded = rounduppow2(new_capacity_rounded);
+    new_capacity_rounded += (new_capacity_rounded == 1);
+
+    if (new_capacity_rounded < new_capacity || queue_p->capacity_sub_one + 1 > SIZE_MAX / queue_p->data_size) {
+        return false;
+    } else if (new_capacity_rounded == queue_p->capacity_sub_one + 1) {
         return true;
     }
 
@@ -101,12 +104,12 @@ bool queue_resize(Queue* queue_p, size_t new_capacity) {
     queue_p->start_index = 0;
     queue_p->end_index = queue_p->used;
 
-    void* new_arr_p = reallocarray(queue_p->arr_p, new_capacity, queue_p->data_size);
+    void* new_arr_p = reallocarray(queue_p->arr_p, new_capacity_rounded, queue_p->data_size);
     if (new_arr_p == NULL) {
         return false;
     }
     queue_p->arr_p = new_arr_p;
-    queue_p->capacity_sub_one = new_capacity - 1;
+    queue_p->capacity_sub_one = new_capacity_rounded - 1;
     return true;
 }
 
