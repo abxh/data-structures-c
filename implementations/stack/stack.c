@@ -6,7 +6,7 @@
 
 #include "stack.h"
 
-Stack* stack_new(size_t capacity, size_t alignment, size_t data_size) {
+Stack* stack_new(size_t capacity, size_t data_size) {
     assert(capacity != 0);
     assert(data_size != 0);
     if (capacity > SIZE_MAX / data_size) {
@@ -16,7 +16,7 @@ Stack* stack_new(size_t capacity, size_t alignment, size_t data_size) {
     if (stack_p == NULL) {
         return NULL;
     }
-    stack_p->arr_p = aligned_alloc(alignment, capacity * data_size);
+    stack_p->arr_p = malloc(capacity * data_size);
     if (stack_p->arr_p == NULL) {
         free(stack_p);
         return NULL;
@@ -52,7 +52,10 @@ unsigned char* stack_pop(Stack* stack_p) {
 
 bool stack_resize(Stack* stack_p, size_t new_capacity) {
     assert(new_capacity != 0);
-    if (new_capacity == stack_p->capacity) {
+    if (new_capacity < stack_p->used) {
+        return false;
+    }
+    else if (new_capacity == stack_p->capacity) {
         return true;
     }
     void* new_arr_p = reallocarray(stack_p->arr_p, new_capacity, stack_p->data_size);

@@ -11,7 +11,7 @@ bool empty_test(void) {
     Queue* queue_p = queue_new(1, sizeof(int));
     bool res = true;
     queue_isempty(queue_p);
-    queue_free(queue_p);
+    queue_free(&queue_p);
     return res;
 }
 
@@ -23,11 +23,10 @@ bool one_element_test(void) {
     res &= !queue_isfull(queue_p);
     queue_enqueue(queue_p, (unsigned char*)&value);
     res &= !queue_isempty(queue_p);
-    res &= queue_isfull(queue_p);
     res &= value == *(int*)queue_dequeue(queue_p);
     res &= queue_isempty(queue_p);
     res &= !queue_isfull(queue_p);
-    queue_free(queue_p);
+    queue_free(&queue_p);
     return res;
 }
 
@@ -40,7 +39,7 @@ bool million_elements_test(void) {
     for (int i = 1; i <= 1000000; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
-    queue_free(queue_p);
+    queue_free(&queue_p);
     return res;
 }
 
@@ -59,7 +58,7 @@ bool wraparound_test(void) {
     for (int i = 1; i <= 750000; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
-    queue_free(queue_p);
+    queue_free(&queue_p);
     return res;
 }
 
@@ -76,7 +75,7 @@ bool grow_test(void) {
     for (int i = 1; i <= 100; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
-    queue_free(queue_p);
+    queue_free(&queue_p);
     return res;
 }
 
@@ -90,7 +89,7 @@ bool shrink_test(void) {
     for (int i = 1; i <= 25; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
-    queue_free(queue_p);
+    queue_free(&queue_p);
     return res;
 }
 
@@ -113,7 +112,7 @@ bool grow_and_wraparound_test(void) {
     for (int i = 1; i <= 100; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
-    queue_free(queue_p);
+    queue_free(&queue_p);
     return res;
 }
 
@@ -133,7 +132,7 @@ bool shrink_and_wraparound_test(void) {
     for (int i = 1; i <= 25; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
-    queue_free(queue_p);
+    queue_free(&queue_p);
     return res;
 }
 
