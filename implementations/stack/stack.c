@@ -1,6 +1,6 @@
 #include <assert.h>  // assert
 #include <stdbool.h> // bool
-#include <stdlib.h>  // malloc, size_t, NULL
+#include <stdlib.h>  // malloc, realloc, size_t, NULL
 #include <string.h>  // memcpy
 #include <stdint.h>  // SIZE_MAX
 
@@ -58,7 +58,7 @@ bool stack_resize(Stack* stack_p, size_t new_capacity) {
     else if (new_capacity == stack_p->capacity) {
         return true;
     }
-    void* new_arr_p = reallocarray(stack_p->arr_p, new_capacity, stack_p->data_size);
+    void* new_arr_p = realloc(stack_p->arr_p, new_capacity * stack_p->data_size);
     if (new_arr_p == NULL) {
         return false;
     }

@@ -1,7 +1,7 @@
 #include <assert.h>  // assert
 #include <stdbool.h> // bool
 #include <stdint.h>  // uint32_t
-#include <stdlib.h>  // size_t, malloc, free, NULL
+#include <stdlib.h>  // size_t, malloc, realloc, free, NULL
 #include <string.h>  // memcpy, memmove
 
 #include "queue.h"
@@ -96,7 +96,7 @@ bool queue_resize(Queue* queue_p, size_t new_capacity) {
         queue_p->start_index = 0;
         queue_p->end_index = queue_p->used;
     }
-    void* new_arr_p = reallocarray(queue_p->arr_p, new_capacity_rounded, queue_p->data_size);
+    void* new_arr_p = realloc(queue_p->arr_p, new_capacity_rounded * queue_p->data_size);
     if (new_arr_p == NULL) {
         return false;
     }
