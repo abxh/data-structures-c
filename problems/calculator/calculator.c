@@ -140,7 +140,7 @@ double eval(char* str, ssize_t len) {
             incomplete_input = true;
             error_index = i;
             if (queue_isempty(inp_queue) || (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == POW_OP)) {
-                error_msg = "Two '^' in a row.";
+                error_msg = "Incorrect use of '^'.";
                 error_index = i;
                 goto on_inp_error;
             }
