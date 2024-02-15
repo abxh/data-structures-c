@@ -81,29 +81,48 @@ unsigned char* queue_dequeue(Queue* queue_p) {
 
 bool queue_resize(Queue* queue_p, size_t new_capacity) {
     assert(new_capacity != 0);
-    if (new_capacity < queue_p->used) {
-        return false;
-    }
     size_t new_capacity_rounded = rounduppow2(new_capacity);
     new_capacity_rounded += (new_capacity_rounded == 1);
-    if (new_capacity_rounded < new_capacity || queue_p->capacity_sub_one + 1 > SIZE_MAX / queue_p->data_size) {
+    if (new_capacity < queue_p->used || new_capacity_rounded < new_capacity ||
+        queue_p->capacity_sub_one + 1 > SIZE_MAX / queue_p->data_size) {
         return false;
     } else if (new_capacity_rounded == queue_p->capacity_sub_one + 1) {
         return true;
     }
-    if (queue_p->used != 0 && 0 < queue_p->start_index && queue_p->capacity_sub_one + 1 > new_capacity_rounded) {
-        memcpy(queue_p->arr_p, queue_p->arr_p + queue_p->start_index * queue_p->data_size, queue_p->data_size * queue_p->used);
-        queue_p->start_index = 0;
-        queue_p->end_index = queue_p->used;
+    bool shrinking = new_capacity_rounded < queue_p->capacity_sub_one + 1;
+    if (queue_p->used != 0 && shrinking) {
+        if (queue_p->end_index <= queue_p->start_index) {
+            size_t nelm = queue_p->capacity_sub_one + 1 - queue_p->start_index;
+            void* dest = queue_p->arr_p + queue_p->data_size * (new_capacity_rounded - nelm);
+            void* src = queue_p->arr_p + queue_p->data_size * queue_p->start_index;
+
+            memcpy(dest, src, queue_p->data_size * nelm);
+
+            queue_p->start_index = new_capacity_rounded - nelm;
+        } else if (queue_p->start_index != 0) {
+            size_t nelm = queue_p->used;
+            void* dest = queue_p->arr_p;
+            void* src = queue_p->arr_p + queue_p->data_size * queue_p->start_index;
+
+            memcpy(dest, src, queue_p->data_size * nelm);
+
+            queue_p->start_index = 0;
+            queue_p->end_index = queue_p->used;
+        }
     }
     void* new_arr_p = realloc(queue_p->arr_p, new_capacity_rounded * queue_p->data_size);
     if (new_arr_p == NULL) {
         return false;
     }
     queue_p->arr_p = new_arr_p;
-    if (queue_p->used != 0 && queue_p->end_index <= queue_p->start_index) {
-        memcpy(queue_p->arr_p + queue_p->data_size * (queue_p->capacity_sub_one + 1), queue_p->arr_p,
-               queue_p->data_size * queue_p->end_index);
+    bool growing = new_capacity_rounded > queue_p->capacity_sub_one + 1;
+    if (queue_p->used != 0 && growing && queue_p->end_index <= queue_p->start_index) {
+        size_t nelm = queue_p->end_index;
+        void* dest = queue_p->arr_p + queue_p->data_size * (queue_p->capacity_sub_one + 1);
+        void* src = queue_p->arr_p;
+
+        memcpy(dest, src, queue_p->data_size * nelm);
+
         queue_p->end_index += queue_p->capacity_sub_one + 1;
     }
     queue_p->capacity_sub_one = new_capacity_rounded - 1;
