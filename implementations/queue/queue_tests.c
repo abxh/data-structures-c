@@ -137,19 +137,19 @@ bool shrink_with_nonzero_start_index(void) {
 }
 
 bool shrink_and_wraparound_test(void) {
-    Queue* queue_p = queue_new(50, sizeof(int));
+    Queue* queue_p = queue_new(500000, sizeof(int));
     bool res = true;
-    for (int i = 1; i <= 50; i++) {
+    for (int i = 1; i <= 500000; i++) {
         queue_enqueue(queue_p, (unsigned char*)&i);
     }
-    for (int i = 1; i <= 50; i++) {
+    for (int i = 1; i <= 500000; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
-    for (int i = 1; i <= 25; i++) {
+    for (int i = 1; i <= 250000; i++) {
         queue_enqueue(queue_p, (unsigned char*)&i);
     }
-    queue_resize(queue_p, 25);
-    for (int i = 1; i <= 25; i++) {
+    queue_resize(queue_p, 250000);
+    for (int i = 1; i <= 250000; i++) {
         res &= i == *(int*)queue_dequeue(queue_p);
     }
     queue_free(&queue_p);
