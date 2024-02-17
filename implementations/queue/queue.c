@@ -2,7 +2,7 @@
 #include <stdbool.h> // bool
 #include <stdint.h>  // uint32_t
 #include <stdlib.h>  // size_t, malloc, realloc, free, NULL
-#include <string.h>  // memcpy, memmove
+#include <string.h>  // memcpy
 
 #include "queue.h"
 
