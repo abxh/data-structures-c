@@ -92,7 +92,7 @@ double eval(char* str, ssize_t len) {
     Stack* op_stack = NULL;
     Stack* num_stack = NULL;
 
-    inp_queue = queue_new_lex(len);
+    inp_queue = queue_new_lex(2 * len);
     if (inp_queue == NULL) {
         goto on_oom_error;
     }
