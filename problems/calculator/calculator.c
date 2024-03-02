@@ -118,10 +118,10 @@ double eval(char* str, ssize_t len) {
                 if (str[i + 1] == '-') {
                     sign = sign == SUB_OP ? ADD_OP : SUB_OP;
                 }
-                i++;
-                if (str[i] == '+' || str[i] == '-') {
-                    error_index = i;
+                if (str[i + 1] == '+' || str[i + 1] == '-') {
+                    error_index = i + 1;
                 }
+                i++;
             }
             break;
         case '*':
@@ -247,6 +247,7 @@ double eval(char* str, ssize_t len) {
 
     if (incomplete_input) {
         error_msg = "Incomplete input.";
+        error_index = len - 2;
         goto on_inp_error;
     }
 
