@@ -90,6 +90,8 @@ bool queue_resize(Queue* queue_p, size_t new_capacity) {
         return true;
     }
     bool shrinking = new_capacity_rounded < queue_p->capacity_sub_one + 1;
+    size_t new_start_index;
+    size_t new_end_index;
     if (queue_p->used != 0 && shrinking) {
         if (queue_p->end_index <= queue_p->start_index) {
             size_t nelm = queue_p->capacity_sub_one + 1 - queue_p->start_index;
@@ -98,7 +100,7 @@ bool queue_resize(Queue* queue_p, size_t new_capacity) {
 
             memcpy(dest, src, queue_p->data_size * nelm);
 
-            queue_p->start_index = new_capacity_rounded - nelm;
+            new_start_index = new_capacity_rounded - nelm;
         } else if (queue_p->start_index != 0) {
             size_t nelm = queue_p->used;
             void* dest = queue_p->arr_p;
@@ -106,14 +108,16 @@ bool queue_resize(Queue* queue_p, size_t new_capacity) {
 
             memcpy(dest, src, queue_p->data_size * nelm);
 
-            queue_p->start_index = 0;
-            queue_p->end_index = queue_p->used;
+            new_start_index = 0;
+            new_end_index = queue_p->used;
         }
     }
     void* new_arr_p = realloc(queue_p->arr_p, new_capacity_rounded * queue_p->data_size);
     if (new_arr_p == NULL) {
         return false;
     }
+    queue_p->start_index = new_start_index;
+    queue_p->end_index = new_end_index;
     queue_p->arr_p = new_arr_p;
     bool growing = new_capacity_rounded > queue_p->capacity_sub_one + 1;
     if (queue_p->used != 0 && growing && queue_p->end_index <= queue_p->start_index) {
