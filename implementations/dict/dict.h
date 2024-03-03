@@ -23,7 +23,7 @@ typedef struct {
     unsigned char* values_arr_p;
 } Dict;
 
-uint64_t fnv_hash64(unsigned char* data, size_t data_size);
+uint64_t fnv_hash64(unsigned char* data_p, size_t data_size);
 
 Dict* dict_new(size_t capacity, size_t key_size, size_t value_size, uint64_t (*key_get_hash)(unsigned char*, size_t),
                bool (*key_isequal)(unsigned char*, unsigned char*));
