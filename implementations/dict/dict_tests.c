@@ -12,7 +12,7 @@ bool size_t_is_equal(unsigned char* x, unsigned char* y) {
     return (size_t) x == (size_t) y;
 }
 
-bool million_entry_test(void) {
+bool million_entry_test(void) { // a million entries is not tested yet.
     Dict* dict_p = dict_new(31, sizeof(size_t), sizeof(size_t), fnv_hash64, size_t_is_equal);
     if (dict_p == NULL) {
         return false;
