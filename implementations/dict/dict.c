@@ -7,8 +7,8 @@
 #include "dict.h"
 
 // note:
-// - Room for one extra slot is ensured. So the the methods do not run forever
-//   with an apparent 100% load factor.
+// - Room for one extra slot is ensured. So the the get- and exists-methods do not
+//   run forever with a 100% load factor when the key does not exist.
 // - Two additional slots (in addition to the above) are added to the end of the 
 //   key and value buffer to be used temporarily. These slots are not counted as
 //   a part of the dictionary.
