@@ -42,7 +42,7 @@ unsigned char* queue_dequeue(Queue* queue_p);
 bool queue_resize(Queue* queue_p, size_t new_capacity);
 
 /* Free the memory of a queue appropiately and set it's pointer to NULL.
-   This may be called this as many times as needed. */
+   This may be called even after the queue pointer is NULL. */
 void queue_free(Queue** queue_pp);
 
 /* Create inline functions to directly work with queue values. */
