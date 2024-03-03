@@ -21,11 +21,6 @@ typedef struct {
     size_t value_size;
     unsigned char* keys_arr_p;
     unsigned char* values_arr_p;
-
-    unsigned char* temp_key_buf1;
-    unsigned char* temp_key_buf2;
-    unsigned char* temp_value_buf1;
-    unsigned char* temp_value_buf2;
 } Dict;
 
 uint64_t fnv_hash64(unsigned char* data, size_t data_size);

@@ -82,11 +82,6 @@ Dict* dict_new(size_t capacity, size_t key_size, size_t value_size, uint64_t (*k
     dict_p->key_size = key_size;
     dict_p->value_size = value_size;
 
-    dict_p->temp_key_buf1 = dict_p->keys_arr_p + (dict_p->capacity_sub_one + 1) * dict_p->key_size;
-    dict_p->temp_key_buf2 = dict_p->keys_arr_p + (dict_p->capacity_sub_one + 2) * dict_p->key_size;
-    dict_p->temp_value_buf1 = dict_p->values_arr_p + (dict_p->capacity_sub_one + 1) * dict_p->value_size;
-    dict_p->temp_value_buf2 = dict_p->values_arr_p + (dict_p->capacity_sub_one + 2) * dict_p->value_size;
-
     return dict_p;
 }
 
@@ -135,10 +130,10 @@ void dict_set(Dict* dict_p, unsigned char* key_p, unsigned char* value_p) {
     size_t i = hash & dict_p->capacity_sub_one;
     ssize_t offset = 0;
 
-    unsigned char* KB1 = dict_p->temp_key_buf1;
-    unsigned char* KB2 = dict_p->temp_key_buf2;
-    unsigned char* VB1 = dict_p->temp_value_buf1;
-    unsigned char* VB2 = dict_p->temp_value_buf2;
+    unsigned char* KB1 = dict_p->keys_arr_p + (dict_p->capacity_sub_one + 1) * dict_p->key_size;
+    unsigned char* KB2 = dict_p->keys_arr_p + (dict_p->capacity_sub_one + 2) * dict_p->key_size;
+    unsigned char* VB1 = dict_p->values_arr_p + (dict_p->capacity_sub_one + 1) * dict_p->value_size;
+    unsigned char* VB2 = dict_p->values_arr_p + (dict_p->capacity_sub_one + 2) * dict_p->value_size;
 
     memcpy(KB1, key_p, dict_p->key_size);
     memcpy(VB1, value_p, dict_p->value_size);
