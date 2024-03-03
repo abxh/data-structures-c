@@ -35,8 +35,8 @@ unsigned char* stack_pop(Stack* stack_p);
 bool stack_resize(Stack* stack_p, size_t new_capacity);
 
 /* Free the memory of a stack appropiately and set it's pointer to NULL.
-   This may be called this as many times as needed. */
-void stack_free(Stack** stack_p);
+   This may be called even after the stack pointer is NULL. */
+void stack_free(Stack** stack_pp);
 
 /* Create inline functions to directly work with stack values. */
 #define STACK_CREATE_INLINE_FUNCTIONS(name, type)                      \
