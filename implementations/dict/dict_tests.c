@@ -12,18 +12,20 @@ bool size_t_is_equal(unsigned char* x, unsigned char* y) {
     return (size_t) x == (size_t) y;
 }
 
-bool million_entry_test(void) { // a million entries is not tested yet.
-    Dict* dict_p = dict_new(31, sizeof(size_t), sizeof(size_t), fnv_hash64, size_t_is_equal);
+bool million_entry_test(void) {
+    Dict* dict_p = dict_new(32, sizeof(size_t), sizeof(size_t), fnv_hash64, size_t_is_equal);
     if (dict_p == NULL) {
         return false;
     }
     bool res = true;
-    for (size_t i = 0; i < 31; i++) {
-        size_t value = i;
-        dict_set(dict_p, (unsigned char*) &i, (unsigned char*) &value);
+     for (size_t i = 0; i < 32; i++) {
+        size_t value = SIZE_MAX - i;
+        dict_set(dict_p, (unsigned char*)&i,(unsigned char*) &value);
     }
-    for (size_t i = 0; i < 31; i++) {
-        printf("%lu\n", *(size_t*)(dict_p->keys_arr_p + (i * dict_p->key_size)));
+    for (size_t i = 0; i < 32; i++) {
+        size_t expected_value = SIZE_MAX - i;
+        unsigned char* value_p = dict_get(dict_p,(unsigned char*) &i);
+        res &= value_p != NULL ? (expected_value == *(size_t*)value_p) : false;
     }
     dict_free(&dict_p);
     return res;
