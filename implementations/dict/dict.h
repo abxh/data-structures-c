@@ -13,14 +13,14 @@ typedef struct {
     size_t capacity_sub_one;
     size_t used;
     DictEntry* entries_arr_p;
+    unsigned char* data_buf;
 
     uint64_t (*key_get_hash)(unsigned char*, size_t);
     bool (*key_isequal)(unsigned char*, unsigned char*);
 
     size_t key_size;
     size_t value_size;
-    unsigned char* keys_arr_p;
-    unsigned char* values_arr_p;
+    size_t data_size;
 } Dict;
 
 uint64_t fnv_hash64(unsigned char* data_p, size_t data_size);
