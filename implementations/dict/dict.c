@@ -98,6 +98,9 @@ bool dict_exists(Dict* dict_p, unsigned char* key_p) {
                 return true;
             }
         }
+        if (dict_p->entries_arr_p[i].offset == 0) {
+            break;
+        }
         i++;
         i &= dict_p->capacity_sub_one;
     }
@@ -116,6 +119,9 @@ unsigned char* dict_get(Dict* dict_p, unsigned char* key_p) {
             if (memcmp(current_key, key_p, dict_p->key_size) == 0) {
                 return current_key;
             }
+        }
+        if (dict_p->entries_arr_p[i].offset == 0) {
+            break;
         }
         i++;
         i &= dict_p->capacity_sub_one;
@@ -148,9 +154,9 @@ void dict_set(Dict* dict_p, unsigned char* key_p, unsigned char* value_p) {
 
             unsigned char* current_value_p = dict_p->values_arr_p + i * dict_p->value_size;
 
-            memcpy(KB2, current_value_p, dict_p->value_size);
+            memcpy(VB2, current_value_p, dict_p->value_size);
             memcpy(current_value_p, KB1, dict_p->value_size);
-            memcpy(KB1, KB2, dict_p->value_size);
+            memcpy(VB1, VB2, dict_p->value_size);
 
             uint64_t current_hash = dict_p->entries_arr_p[i].hash;
             ssize_t current_offset = dict_p->entries_arr_p[i].offset;
