@@ -155,7 +155,7 @@ void dict_set(Dict* dict_p, unsigned char* key_p, unsigned char* value_p) {
             unsigned char* current_value_p = dict_p->values_arr_p + i * dict_p->value_size;
 
             memcpy(VB2, current_value_p, dict_p->value_size);
-            memcpy(current_value_p, KB1, dict_p->value_size);
+            memcpy(current_value_p, VB1, dict_p->value_size);
             memcpy(VB1, VB2, dict_p->value_size);
 
             uint64_t current_hash = dict_p->entries_arr_p[i].hash;
