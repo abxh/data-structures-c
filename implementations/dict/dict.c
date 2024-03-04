@@ -145,7 +145,7 @@ void dict_set(Dict* dict_p, unsigned char* key_p, unsigned char* value_p) {
     memcpy(VB1, value_p, dict_p->value_size);
 
     while (dict_p->entries_arr_p[i].offset != -1) {
-        if (offset < dict_p->entries_arr_p[i].offset) {
+        if (dict_p->entries_arr_p[i].offset < offset) {
             unsigned char* current_key_p = dict_p->keys_arr_p + i * dict_p->key_size;
 
             memcpy(KB2, current_key_p, dict_p->key_size);

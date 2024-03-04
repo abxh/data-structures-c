@@ -64,8 +64,8 @@ void queue_free(Queue** queue_pp);
     }
 
 /* iterate through the queue starting from the next dequeued value. */
-#define QUEUE_FOREACH(queue_p, index, value)                                                                                     \
-    for ((assert(sizeof(typeof(value)) == (queue_p)->data_size), (index) = (queue_p)->start_index);                              \
+#define QUEUE_FOREACH(queue_p, index, value)                                                                                        \
+    for ((assert(sizeof(typeof(value)) == (queue_p)->data_size), (index) = (queue_p)->start_index);                                 \
          (index) != (queue_p)->end_index && ((value) = *(typeof(value)*)((queue_p)->arr_p + (index) * (queue_p)->data_size), true); \
          (index) = ((index) + 1) & (queue_p)->capacity_sub_one)
 
@@ -73,5 +73,5 @@ void queue_free(Queue** queue_pp);
 #define QUEUE_FOREACH_REV(queue_p, index, value)                                                                                      \
     for ((assert(sizeof(typeof(value)) == (queue_p)->data_size), (index) = ((queue_p)->end_index - 1) & (queue_p)->capacity_sub_one); \
          (index) != (((queue_p)->start_index - 1) & (queue_p)->capacity_sub_one) &&                                                   \
-         ((value) = *(typeof(value)*)((queue_p)->arr_p + (index) * (queue_p)->data_size), true);                                         \
+         ((value) = *(typeof(value)*)((queue_p)->arr_p + (index) * (queue_p)->data_size), true);                                      \
          (index) = ((index)-1) & (queue_p)->capacity_sub_one)
