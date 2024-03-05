@@ -44,6 +44,10 @@ Queue* queue_new(size_t capacity, size_t data_size) {
     return queue_p;
 }
 
+size_t queue_used(const Queue* queue_p) {
+    return queue_p->used;
+}
+
 bool queue_isempty(const Queue* queue_p) {
     return queue_p->used == 0;
 }

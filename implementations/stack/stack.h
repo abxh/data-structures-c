@@ -1,8 +1,8 @@
 #pragma once
 
-#include <assert.h>   // static_assert
-#include <stdbool.h>  // bool
-#include <stdlib.h>   // size_t, typeof
+#include <assert.h>  // static_assert
+#include <stdbool.h> // bool
+#include <stdlib.h>  // size_t, typeof
 
 typedef struct {
     size_t used;
@@ -14,6 +14,9 @@ typedef struct {
 /* Create a new stack of some maximum capacity for some data size. Returns
    NULL if OOM or `capacity * data_size` exceeds SIZE_MAX. */
 Stack* stack_new(size_t capacity, size_t data_size);
+
+/* Return number of used items. */
+size_t stack_num_used(const Stack* stack_p);
 
 /* Return if the stack is empty. */
 bool stack_isempty(const Stack* stack_p);
@@ -38,6 +41,11 @@ bool stack_resize(Stack* stack_p, size_t new_capacity);
    This may be called even after the stack pointer is NULL. */
 void stack_free(Stack** stack_pp);
 
+/* Iterate through the stack starting from the next popped value. */
+#define stack_foreach(stack_p, index, value)                                          \
+    for ((static_assert(sizeof(typeof(value)) == (stack_p)->data_size), (index) = 0); \
+         (index) < stack_p->used && ((value) = *(typeof(value)*)((stack_p)->arr_p + (index) * (stack_p)->data_size), true); index++)
+
 /* Create inline functions to directly work with stack values. */
 #define STACK_CREATE_INLINE_FUNCTIONS(name, type)                      \
     static inline Stack* stack_new_##name(size_t capacity) {           \
@@ -52,8 +60,3 @@ void stack_free(Stack** stack_pp);
     static inline type stack_pop_##name(Stack* stack_p) {              \
         return *(type*)stack_pop(stack_p);                             \
     }
-
-/* Iterate through the stack starting from the next popped value. */
-#define STACK_FOREACH(stack_p, index, value)                                          \
-    for ((static_assert(sizeof(typeof(value)) == (stack_p)->data_size), (index) = 0); \
-         (index) < stack_p->used && ((value) = *(typeof(value)*)((stack_p)->arr_p + (index) * (stack_p)->data_size), true); index++)

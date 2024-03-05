@@ -261,7 +261,7 @@ double eval(char* str, ssize_t len) {
     unsigned long index;
 #ifdef DEBUG
     printf("Input queue (prefix): ");
-    QUEUE_FOREACH(inp_queue, index, lex) {
+    queue_foreach(inp_queue, index, lex) {
         switch (lex.token) {
         case NUMBER_TOKEN:
             printf(" %g", lex.metadata.num);
@@ -286,7 +286,7 @@ double eval(char* str, ssize_t len) {
     }
 
     // shunting yard algorithm (with simplified assumptions).
-    QUEUE_FOREACH(inp_queue, index, lex) {
+    queue_foreach(inp_queue, index, lex) {
         switch (lex.token) {
         case NUMBER_TOKEN:
             queue_enqueue_lex(inp_queue_postfix, lex);
@@ -320,7 +320,7 @@ double eval(char* str, ssize_t len) {
 
 #ifdef DEBUG
     printf("Input queue (postfix):");
-    QUEUE_FOREACH(inp_queue_postfix, index, lex) {
+    queue_foreach(inp_queue_postfix, index, lex) {
         switch (lex.token) {
         case NUMBER_TOKEN:
             printf(" %g", lex.metadata.num);
@@ -336,7 +336,7 @@ double eval(char* str, ssize_t len) {
 #endif
 
     num_stack = op_stack; // repurposing the stack
-    QUEUE_FOREACH(inp_queue_postfix, index, lex) {
+    queue_foreach(inp_queue_postfix, index, lex) {
         switch (lex.token) {
         case NUMBER_TOKEN:
             stack_push_lex(num_stack, lex);

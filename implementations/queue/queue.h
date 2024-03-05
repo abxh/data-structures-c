@@ -18,6 +18,9 @@ typedef struct {
    exceeds SIZE_MAX. */
 Queue* queue_new(size_t capacity, size_t data_size);
 
+/* Return number of used items. */
+size_t queue_used(const Queue* queue_p);
+
 /* Return if the queue is empty. */
 bool queue_isempty(const Queue* queue_p);
 
@@ -45,6 +48,19 @@ bool queue_resize(Queue* queue_p, size_t new_capacity);
    This may be called even after the queue pointer is NULL. */
 void queue_free(Queue** queue_pp);
 
+/* iterate through the queue starting from the next dequeued value. */
+#define queue_foreach(queue_p, index, value)                                                                                        \
+    for ((assert(sizeof(typeof(value)) == (queue_p)->data_size), (index) = (queue_p)->start_index);                                 \
+         (index) != (queue_p)->end_index && ((value) = *(typeof(value)*)((queue_p)->arr_p + (index) * (queue_p)->data_size), true); \
+         (index) = ((index) + 1) & (queue_p)->capacity_sub_one)
+
+/* iterate through the queue starting from the last enqueued value. */
+#define queue_foreach_rev(queue_p, index, value)                                                                                      \
+    for ((assert(sizeof(typeof(value)) == (queue_p)->data_size), (index) = ((queue_p)->end_index - 1) & (queue_p)->capacity_sub_one); \
+         (index) != (((queue_p)->start_index - 1) & (queue_p)->capacity_sub_one) &&                                                   \
+         ((value) = *(typeof(value)*)((queue_p)->arr_p + (index) * (queue_p)->data_size), true);                                      \
+         (index) = ((index)-1) & (queue_p)->capacity_sub_one)
+
 /* Create inline functions to directly work with queue values. */
 #define QUEUE_CREATE_INLINE_FUNCTIONS(name, type)                         \
     static inline Queue* queue_new_##name(size_t capacity) {              \
@@ -62,16 +78,3 @@ void queue_free(Queue** queue_pp);
     static inline type queue_dequeue_##name(Queue* queue_p) {             \
         return *(type*)queue_dequeue(queue_p);                            \
     }
-
-/* iterate through the queue starting from the next dequeued value. */
-#define QUEUE_FOREACH(queue_p, index, value)                                                                                        \
-    for ((assert(sizeof(typeof(value)) == (queue_p)->data_size), (index) = (queue_p)->start_index);                                 \
-         (index) != (queue_p)->end_index && ((value) = *(typeof(value)*)((queue_p)->arr_p + (index) * (queue_p)->data_size), true); \
-         (index) = ((index) + 1) & (queue_p)->capacity_sub_one)
-
-/* iterate through the queue starting from the last enqueued value. */
-#define QUEUE_FOREACH_REV(queue_p, index, value)                                                                                      \
-    for ((assert(sizeof(typeof(value)) == (queue_p)->data_size), (index) = ((queue_p)->end_index - 1) & (queue_p)->capacity_sub_one); \
-         (index) != (((queue_p)->start_index - 1) & (queue_p)->capacity_sub_one) &&                                                   \
-         ((value) = *(typeof(value)*)((queue_p)->arr_p + (index) * (queue_p)->data_size), true);                                      \
-         (index) = ((index)-1) & (queue_p)->capacity_sub_one)

@@ -27,6 +27,10 @@ Stack* stack_new(size_t capacity, size_t data_size) {
     return stack_p;
 }
 
+size_t stack_num_used(const Stack* stack_p) {
+    return stack_p->used;
+}
+
 bool stack_isempty(const Stack* stack_p) {
     return stack_p->used == 0;
 }
