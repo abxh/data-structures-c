@@ -6,8 +6,8 @@
 
 #include "dict.h"
 
-#define FNV_OFFSET (0xcbf29ce484222325)
-#define FNV_PRIME (0x100000001b3)
+#define FNV_OFFSET 14695981039346656037UL
+#define FNV_PRIME 1099511628211UL
 
 uint64_t fnv_hash64(unsigned char* data_p, size_t data_size) {
     // FNV-1a hash
