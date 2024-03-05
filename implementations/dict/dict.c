@@ -11,7 +11,7 @@
 
 uint64_t fnv_hash64(unsigned char* data_p, size_t data_size) {
     // FNV-1a hash
-    // https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function#FNV-1a_hash
+    // https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function
     uint64_t hash = FNV_OFFSET;
     for (size_t i = 0; i < data_size; i++) {
         hash ^= data_p[i];
