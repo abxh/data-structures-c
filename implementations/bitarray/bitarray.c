@@ -1,12 +1,16 @@
 #include <assert.h>  // assert.
 #include <limits.h>  // CHAR_BIT
 #include <stdbool.h> // bool
-#include <stdint.h>  // SIZE_MAX
+#include <stdint.h>  // SIZE_MAX, uint64_t
 #include <stdio.h>   // putchar, printf
 #include <stdlib.h>  // malloc, calloc, size_t, NULL
 #include <string.h>  // memcmp, memcpy
 
 #include "bitarray.h"
+
+uint64_t roundup_char_bit(uint64_t v) {
+    return (v + (CHAR_BIT - 1)) / CHAR_BIT;
+}
 
 Bitarray* bitarray_new(size_t num_of_bits) {
     assert(num_of_bits != 0);
@@ -18,7 +22,7 @@ Bitarray* bitarray_new(size_t num_of_bits) {
         return NULL;
     }
     bitarray_p->num_of_bits = num_of_bits;
-    bitarray_p->capacity = (num_of_bits + (CHAR_BIT - 1)) / CHAR_BIT; // round up to the next multiple of CHAR_BIT
+    bitarray_p->capacity = roundup_char_bit(num_of_bits);
     bitarray_p->words = calloc(bitarray_p->capacity, sizeof(unsigned char));
     if (bitarray_p->words == NULL) {
         free(bitarray_p);

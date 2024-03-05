@@ -16,8 +16,8 @@ typedef struct {
 #define BITARRAY_WORD_INDEX(index) ((index) >> 3)
 #define BITARRAY_BIT_INDEX(index) (~(index) & 7)
 
-/* Create a new bitarray of a given size with values initalized to 0 and return it's pointer. Returns NULL if OOM or `CHAR_BIT *
- * num_of_bits` exceeds SIZE_MAX. */
+/* Create a new bitarray of a given size with values initalized to 0 and return it's pointer. Returns NULL if OOM or `
+   roundup_char_bit(num_of_bits)` exceeds SIZE_MAX. */
 Bitarray* bitarray_new(size_t num_of_bits);
 
 /* Create a new bitarray from given bytes and number of bits to copy and return it's pointer. Returns NULL if OOM. */

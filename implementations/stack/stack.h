@@ -56,4 +56,4 @@ void stack_free(Stack** stack_pp);
 /* Iterate through the stack starting from the next popped value. */
 #define STACK_FOREACH(stack_p, index, value)                                          \
     for ((static_assert(sizeof(typeof(value)) == (stack_p)->data_size), (index) = 0); \
-         (index) < stack_p->used && ((value) = *(typeof(value)*)((stack_p)->arr_p + i_ * (stack_p)->data_size), true); index++)
+         (index) < stack_p->used && ((value) = *(typeof(value)*)((stack_p)->arr_p + (index) * (stack_p)->data_size), true); index++)
