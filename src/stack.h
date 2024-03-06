@@ -38,7 +38,7 @@ void stack_free(Stack** stack_pp);
     }
 
 #define stack_foreach(stack_p, var)                                            \
-    for (size_t i, keep = 1; keep;)                                            \
-        for (typeof(var)* arr_p = (typeof(var)*)stack_p->arr_p; keep;)         \
+    for (size_t i, keep = 1; keep == 1;)                                       \
+        for (typeof(var)* arr_p = (typeof(var)*)stack_p->arr_p; keep == 1;)    \
             for ((assert((stack_p)->data_size == sizeof(typeof(var))), i = 0); \
                  (i < (stack_p)->used && ((var) = arr_p[i], true)) || (keep ^= 1, false); i++)
