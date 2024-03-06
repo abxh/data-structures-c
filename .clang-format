@@ -2,7 +2,7 @@
 ---
 BasedOnStyle: LLVM
 Language: Cpp
-Standard: Cpp11
+Standard: "c++11"
 
 ColumnLimit: 135
 
@@ -13,7 +13,7 @@ UseTab: Never
 AlignEscapedNewlines: Left
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortLambdasOnASingleLine: Empty
-AlwaysBreakTemplateDeclarations: true
+AlwaysBreakTemplateDeclarations: "Yes"
 BreakConstructorInitializers: BeforeComma
-IndentPPDirectives: AfterHash
+# IndentPPDirectives: AfterHash
 PointerAlignment: Left
