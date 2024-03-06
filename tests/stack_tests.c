@@ -12,7 +12,7 @@ bool empty_test(void) {
     }
     bool res = true;
     res &= stack_isempty(s);
-    stack_free(&s);
+    res &= stack_free(&s);
     return res;
 }
 
@@ -29,7 +29,7 @@ bool one_element_test(void) {
     res &= value == stack_pop_int(s);
     res &= stack_isempty(s);
     res &= !stack_isfull(s);
-    stack_free(&s);
+    res &= stack_free(&s);
     return res;
 }
 
@@ -45,7 +45,7 @@ bool million_elements_test(void) {
     for (int i = 1000000; i >= 1; i--) {
         res &= i == stack_pop_int(s);
     }
-    stack_free(&s);
+    res &= stack_free(&s);
     return res;
 }
 
@@ -67,7 +67,7 @@ bool grow_test(void) {
     for (int i = 1000000; i >= 1; i--) {
         res &= i == stack_pop_int(s);
     }
-    stack_free(&s);
+    res &= stack_free(&s);
     return res;
 }
 
@@ -86,7 +86,7 @@ bool shrink_test(void) {
     for (int i = 250000; i >= 1; i--) {
         res &= i == stack_pop_int(s);
     }
-    stack_free(&s);
+    res &= stack_free(&s);
     return res;
 }
 

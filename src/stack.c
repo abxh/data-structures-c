@@ -2,7 +2,7 @@
 #include <stdbool.h> // bool
 #include <stdlib.h>  // malloc, calloc, reallocarray, NULL, size_t
 
-#define NSTACK_DEFINE_INLINE_FUNCTIONS
+#define NDEFINE_TEMPLATE_METHODS
 #include "stack.h"
 
 bool stack_init(Stack** stack_pp, size_t capacity, size_t data_size) {
@@ -43,11 +43,12 @@ bool stack_resize(Stack* stack_p, size_t new_capacity) {
     return true;
 }
 
-void stack_free(Stack** stack_pp) {
+bool stack_free(Stack** stack_pp) {
     if (*stack_pp == NULL) {
-        return;
+        return false;
     }
     free((*stack_pp)->arr_p);
     free(*stack_pp);
     *stack_pp = NULL;
+    return true;
 }

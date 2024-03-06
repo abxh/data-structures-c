@@ -20,17 +20,17 @@ bool stack_isfull(const Stack* stack_p);
 
 bool stack_resize(Stack* stack_p, size_t new_capacity);
 
-void stack_free(Stack** stack_pp);
+bool stack_free(Stack** stack_pp);
 
 #define stack_foreach(stack_p, var)                                             \
-    for (size_t i_, keep_ = 1; keep_ == 1;)                                     \
-        for (typeof(var)* arr_p = (typeof(var)*)stack_p->arr_p; keep_ == 1;)    \
+    for (size_t i_, keep_ = 1; keep_;)                                          \
+        for (typeof(var)* arr_p_ = (typeof(var)*)stack_p->arr_p; keep_;)        \
             for ((assert((stack_p)->data_size == sizeof(typeof(var))), i_ = 0); \
-                 (i_ < (stack_p)->used && ((var) = arr_p[i_], true)) || (keep_ ^= 1, false); i_++)
+                 (i_ < (stack_p)->used && ((var) = arr_p_[i_], true)) || (keep_ ^= 1); i_++)
 
 #endif
 
-#ifndef NSTACK_DEFINE_INLINE_FUNCTIONS
+#ifndef NDEFINE_TEMPLATE_METHODS
 
 #ifndef NAME
 #error "Must declare stack NAME. Defaulting to 'int'."
@@ -62,5 +62,9 @@ static inline TYPE JOIN(stack_pop, NAME)(Stack* stack_p) {
 
 #undef NAME
 #undef TYPE
+
+#else
+
+#undef NDEFINE_TEMPLATE_METHODS
 
 #endif
