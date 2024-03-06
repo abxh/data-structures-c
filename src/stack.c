@@ -2,6 +2,7 @@
 #include <stdbool.h> // bool
 #include <stdlib.h>  // malloc, calloc, reallocarray, NULL, size_t
 
+#define NSTACK_DEFINE_INLINE_FUNCTIONS
 #include "stack.h"
 
 bool stack_init(Stack** stack_pp, size_t capacity, size_t data_size) {

@@ -1,13 +1,15 @@
-#pragma once
+#ifndef STACK_H
+#define STACK_H
 
+#include "macros.h" // JOIN
 #include <assert.h> // assert
-#include <stdlib.h> // size_t, SIZE_MAX
+#include <stdlib.h> // size_t
 
 typedef struct {
     size_t used;
     size_t capacity;
     size_t data_size;
-    unsigned char* arr_p;
+    void* arr_p;
 } Stack;
 
 bool stack_init(Stack** stack_pp, size_t capacity, size_t data_size);
@@ -20,25 +22,45 @@ bool stack_resize(Stack* stack_p, size_t new_capacity);
 
 void stack_free(Stack** stack_pp);
 
-#define STACK_CREATE_INLINE_FUNCTIONS(name, type)                      \
-    static inline type stack_peek_##name(Stack* stack_p) {             \
-        assert(stack_p->data_size == sizeof(type));                    \
-        assert(stack_p->used > 0);                                     \
-        return ((type*)stack_p->arr_p)[stack_p->used - 1];             \
-    }                                                                  \
-    static inline void stack_push_##name(Stack* stack_p, type value) { \
-        assert(stack_p->data_size == sizeof(type));                    \
-        assert(stack_p->used < stack_p->capacity);                     \
-        ((type*)stack_p->arr_p)[stack_p->used++] = value;              \
-    }                                                                  \
-    static inline type stack_pop_##name(Stack* stack_p) {              \
-        assert(stack_p->data_size == sizeof(type));                    \
-        assert(stack_p->used > 0);                                     \
-        return ((type*)stack_p->arr_p)[--stack_p->used];               \
-    }
+#define stack_foreach(stack_p, var)                                             \
+    for (size_t i_, keep_ = 1; keep_ == 1;)                                     \
+        for (typeof(var)* arr_p = (typeof(var)*)stack_p->arr_p; keep_ == 1;)    \
+            for ((assert((stack_p)->data_size == sizeof(typeof(var))), i_ = 0); \
+                 (i_ < (stack_p)->used && ((var) = arr_p[i_], true)) || (keep_ ^= 1, false); i_++)
 
-#define stack_foreach(stack_p, var)                                            \
-    for (size_t i, keep = 1; keep == 1;)                                       \
-        for (typeof(var)* arr_p = (typeof(var)*)stack_p->arr_p; keep == 1;)    \
-            for ((assert((stack_p)->data_size == sizeof(typeof(var))), i = 0); \
-                 (i < (stack_p)->used && ((var) = arr_p[i], true)) || (keep ^= 1, false); i++)
+#endif
+
+#ifndef NSTACK_DEFINE_INLINE_FUNCTIONS
+
+#ifndef NAME
+#error "Must declare stack NAME. Defaulting to 'int'."
+#define NAME int
+#endif
+
+#ifndef TYPE
+#error "Must declare stack TYPE. Defaulting to int."
+#define TYPE int
+#endif
+
+static inline TYPE JOIN(stack_peek, NAME)(Stack* stack_p) {
+    assert(stack_p->data_size == sizeof(TYPE));
+    assert(stack_p->used > 0);
+    return ((TYPE*)stack_p->arr_p)[stack_p->used - 1];
+}
+
+static inline void JOIN(stack_push, NAME)(Stack* stack_p, TYPE value) {
+    assert(stack_p->data_size == sizeof(TYPE));
+    assert(stack_p->used < stack_p->capacity);
+    ((TYPE*)stack_p->arr_p)[stack_p->used++] = value;
+}
+
+static inline TYPE JOIN(stack_pop, NAME)(Stack* stack_p) {
+    assert(stack_p->data_size == sizeof(TYPE));
+    assert(stack_p->used > 0);
+    return ((TYPE*)stack_p->arr_p)[--stack_p->used];
+}
+
+#undef NAME
+#undef TYPE
+
+#endif

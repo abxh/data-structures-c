@@ -1,9 +1,9 @@
 #include <stdbool.h> // bool, true, false
 #include <stdio.h>   // printf
 
-#include "../src/stack.h" // stack_*
-
-STACK_CREATE_INLINE_FUNCTIONS(int, int)
+#define TYPE int
+#define NAME int
+#include "../src/stack.h"
 
 bool empty_test(void) {
     Stack* s;
@@ -118,7 +118,7 @@ typedef struct {
 int main(void) {
     func_plus bool_f_arr[] = {
         {empty_test, "empty test"}, {one_element_test, "one element test"}, {million_elements_test, "million elements test"},
-        {grow_test, "grow test"},   {shrink_test, "shrink test"}};
+        {grow_test, "grow test"},   {shrink_test, "shrink test"}, {foreach_test, "foreach test"}};
     for (size_t i = 0; i < sizeof(bool_f_arr) / sizeof(func_plus); i++) {
         printf("[%s] %s\n", bool_f_arr[i].func() ? "true" : "false", bool_f_arr[i].desc);
     }
