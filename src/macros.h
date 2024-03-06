@@ -1,3 +1,5 @@
+#pragma once
+
 #define CAT(a, b) a##b
 
 #define PASTE(a, b) CAT(a, b)

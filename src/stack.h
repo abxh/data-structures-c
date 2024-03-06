@@ -1,70 +1,102 @@
-#ifndef STACK_H
-#define STACK_H
+#ifndef __STACK_H__
+#define __STACK_H__
 
 #include "macros.h" // JOIN
 #include <assert.h> // assert
 #include <stdlib.h> // size_t
 
+#define stack_foreach(stack_p, value, index)                                        \
+    for ((assert(sizeof(*(stack_p)->arr_p) == sizeof(typeof(value))), (index) = 0); \
+         ((index) < (stack_p)->used && ((value) = (stack_p)->arr_p[(index)], true)); (index)++)
+
+#endif
+
+#ifndef VALUE_NAME
+#error "Must declare stack VALUE_NAME. Defaulting to 'default'."
+#define VALUE_NAME default
+#endif
+
+#ifndef VALUE_TYPE
+#error "Must declare stack VALUE_TYPE. Defaulting to int."
+#define VALUE_TYPE int
+#endif
+
+#ifndef PREFIX
+#define PREFIX stack
+#endif
+
+#define STACK_STRUCT JOIN(PREFIX, JOIN(VALUE_NAME, t))
+#define STACK_METHOD(name) JOIN(PREFIX, JOIN(VALUE_NAME, name))
+
 typedef struct {
     size_t used;
     size_t capacity;
-    size_t data_size;
-    void* arr_p;
-} Stack;
+    VALUE_TYPE* arr_p;
+} STACK_STRUCT;
 
-bool stack_init(Stack** stack_pp, size_t capacity, size_t data_size);
-
-bool stack_isempty(const Stack* stack_p);
-
-bool stack_isfull(const Stack* stack_p);
-
-bool stack_resize(Stack* stack_p, size_t new_capacity);
-
-bool stack_free(Stack** stack_pp);
-
-#define stack_foreach(stack_p, var)                                             \
-    for (size_t i_, keep_ = 1; keep_;)                                          \
-        for (typeof(var)* arr_p_ = (typeof(var)*)stack_p->arr_p; keep_;)        \
-            for ((assert((stack_p)->data_size == sizeof(typeof(var))), i_ = 0); \
-                 (i_ < (stack_p)->used && ((var) = arr_p_[i_], true)) || (keep_ ^= 1); i_++)
-
-#endif
-
-#ifndef NDEFINE_TEMPLATE_METHODS
-
-#ifndef NAME
-#error "Must declare stack NAME. Defaulting to 'int'."
-#define NAME int
-#endif
-
-#ifndef TYPE
-#error "Must declare stack TYPE. Defaulting to int."
-#define TYPE int
-#endif
-
-static inline TYPE JOIN(stack_peek, NAME)(Stack* stack_p) {
-    assert(stack_p->data_size == sizeof(TYPE));
-    assert(stack_p->used > 0);
-    return ((TYPE*)stack_p->arr_p)[stack_p->used - 1];
+static inline bool STACK_METHOD(init)(STACK_STRUCT** stack_pp, size_t capacity) {
+    assert(capacity != 0);
+    *stack_pp = (STACK_STRUCT*)malloc(sizeof(STACK_STRUCT));
+    if ((*stack_pp) == NULL) {
+        return false;
+    }
+    (*stack_pp)->arr_p = (VALUE_TYPE*)calloc(capacity, sizeof(VALUE_TYPE));
+    if ((*stack_pp)->arr_p == NULL) {
+        free(*stack_pp);
+        *stack_pp = NULL;
+        return false;
+    }
+    (*stack_pp)->used = 0;
+    (*stack_pp)->capacity = capacity;
+    return true;
 }
 
-static inline void JOIN(stack_push, NAME)(Stack* stack_p, TYPE value) {
-    assert(stack_p->data_size == sizeof(TYPE));
+static inline bool STACK_METHOD(isempty)(const STACK_STRUCT* stack_p) {
+    return stack_p->used == 0;
+}
+
+static inline bool STACK_METHOD(isfull)(const STACK_STRUCT* stack_p) {
+    return stack_p->used == stack_p->capacity;
+}
+
+static inline VALUE_TYPE STACK_METHOD(peek)(STACK_STRUCT* stack_p) {
+    assert(stack_p->used > 0);
+    return ((VALUE_TYPE*)stack_p->arr_p)[stack_p->used - 1];
+}
+
+static inline void STACK_METHOD(push)(STACK_STRUCT* stack_p, VALUE_TYPE value) {
     assert(stack_p->used < stack_p->capacity);
-    ((TYPE*)stack_p->arr_p)[stack_p->used++] = value;
+    ((VALUE_TYPE*)stack_p->arr_p)[stack_p->used++] = value;
 }
 
-static inline TYPE JOIN(stack_pop, NAME)(Stack* stack_p) {
-    assert(stack_p->data_size == sizeof(TYPE));
+static inline VALUE_TYPE STACK_METHOD(pop)(STACK_STRUCT* stack_p) {
     assert(stack_p->used > 0);
-    return ((TYPE*)stack_p->arr_p)[--stack_p->used];
+    return ((VALUE_TYPE*)stack_p->arr_p)[--stack_p->used];
 }
 
-#undef NAME
-#undef TYPE
+static inline bool STACK_METHOD(resize)(STACK_STRUCT* stack_p, size_t new_capacity) {
+    assert(new_capacity != 0);
+    VALUE_TYPE* new_arr_p = (VALUE_TYPE*)reallocarray(stack_p->arr_p, new_capacity, sizeof(VALUE_TYPE));
+    if (new_arr_p == NULL) {
+        return false;
+    }
+    stack_p->arr_p = new_arr_p;
+    stack_p->capacity = new_capacity;
+    return true;
+}
 
-#else
+static inline bool STACK_METHOD(deinit)(STACK_STRUCT** stack_pp) {
+    if (*stack_pp == NULL) {
+        return false;
+    }
+    free((*stack_pp)->arr_p);
+    free(*stack_pp);
+    *stack_pp = NULL;
+    return true;
+}
 
-#undef NDEFINE_TEMPLATE_METHODS
-
-#endif
+#undef SUFFIX
+#undef STACK_METHOD
+#undef STACK_STRUCT
+#undef VALUE_NAME
+#undef VALUE_TYPE
