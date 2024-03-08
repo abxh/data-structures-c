@@ -59,11 +59,13 @@ static inline VALUE_TYPE JOIN(astack_peek, VALUE_NAME)(AStack* stack_p) {
 }
 
 static inline void JOIN(astack_push, VALUE_NAME)(AStack* stack_p, VALUE_TYPE value) {
+    assert(stack_p->value_size == sizeof(VALUE_TYPE));
     assert(astack_isfull(stack_p) == false);
     ((VALUE_TYPE*)stack_p->arr_p)[stack_p->length++] = value;
 }
 
 static inline VALUE_TYPE JOIN(astack_pop, VALUE_NAME)(AStack* stack_p) {
+    assert(stack_p->value_size == sizeof(VALUE_TYPE));
     assert(astack_isempty(stack_p) == false);
     return ((VALUE_TYPE*)stack_p->arr_p)[--stack_p->length];
 }
