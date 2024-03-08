@@ -43,8 +43,8 @@ StackNode* stack_peek(Stack* stack_p) {
     return stack_p->head_p;
 }
 
-size_t stack_used_count(Stack* stack_p) {
-    return stack_p->used_count;
+size_t stack_length(Stack* stack_p) {
+    return stack_p->length;
 }
 
 bool stack_push(Stack* stack_p, void* value_p, size_t value_size) {
@@ -56,7 +56,7 @@ bool stack_push(Stack* stack_p, void* value_p, size_t value_size) {
     memcpy(node_p->value_p, value_p, value_size);
     node_p->next_p = stack_p->head_p;
     stack_p->head_p = node_p;
-    stack_p->used_count++;
+    stack_p->length++;
     return true;
 }
 
@@ -64,6 +64,6 @@ StackNode* stack_pop(Stack* stack_p) {
     assert(stack_isempty(stack_p) == false);
     StackNode* node_p = stack_p->head_p;
     stack_p->head_p = node_p->next_p;
-    stack_p->used_count--;
+    stack_p->length--;
     return node_p;
 }

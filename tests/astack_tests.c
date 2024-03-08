@@ -25,17 +25,23 @@ bool one_element_test(void) {
     }
     bool res = true;
     int value = 5;
-    astack_push_int(s, value);
 
+    res &= astack_capacity(s) == 1;
+
+    astack_push_int(s, value);
     res &= value == astack_peek_int(s);
     res &= !astack_isempty(s);
     res &= astack_isfull(s);
-    res &= astack_used_count(s) == 1;
+    res &= astack_length(s) == 1;
+
+    res &= astack_capacity(s) == 1;
 
     res &= value == astack_pop_int(s);
     res &= astack_isempty(s);
     res &= !astack_isfull(s);
-    res &= astack_used_count(s) == 0;
+    res &= astack_length(s) == 0;
+
+    res &= astack_capacity(s) == 1;
 
     res &= astack_deinit(&s);
 

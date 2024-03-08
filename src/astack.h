@@ -11,7 +11,7 @@
 
 typedef struct {
     size_t capacity;
-    size_t used_count;
+    size_t length;
     size_t value_size;
     void* arr_p;
 } AStack;
@@ -24,10 +24,12 @@ extern bool astack_isempty(AStack* stack_p);
 
 extern bool astack_isfull(AStack* stack_p);
 
-extern bool astack_used_count(AStack* stack_p);
+extern size_t astack_length(AStack* stack_p);
+
+extern size_t astack_capacity(AStack* stack_p);
 
 #define astack_foreach(stack_p, index, value)                                                       \
-    for ((assert((stack_p)->value_size == sizeof(typeof(value))), (index) = (stack_p)->used_count); \
+    for ((assert((stack_p)->value_size == sizeof(typeof(value))), (index) = (stack_p)->length); \
          ((index) != 0 && ((value) = ((typeof(value)*)(stack_p)->arr_p)[((index)-1)], true)); (index)--)
 
 #endif
@@ -53,17 +55,17 @@ static inline bool JOIN(astack_init, VALUE_NAME)(AStack** stack_pp, size_t capac
 
 static inline VALUE_TYPE JOIN(astack_peek, VALUE_NAME)(AStack* stack_p) {
     assert(astack_isempty(stack_p) == false);
-    return ((VALUE_TYPE*)stack_p->arr_p)[stack_p->used_count - 1];
+    return ((VALUE_TYPE*)stack_p->arr_p)[stack_p->length - 1];
 }
 
 static inline void JOIN(astack_push, VALUE_NAME)(AStack* stack_p, VALUE_TYPE value) {
     assert(astack_isfull(stack_p) == false);
-    ((VALUE_TYPE*)stack_p->arr_p)[stack_p->used_count++] = value;
+    ((VALUE_TYPE*)stack_p->arr_p)[stack_p->length++] = value;
 }
 
 static inline VALUE_TYPE JOIN(astack_pop, VALUE_NAME)(AStack* stack_p) {
     assert(astack_isempty(stack_p) == false);
-    return ((VALUE_TYPE*)stack_p->arr_p)[--stack_p->used_count];
+    return ((VALUE_TYPE*)stack_p->arr_p)[--stack_p->length];
 }
 
 #undef JOIN

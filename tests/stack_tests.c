@@ -12,7 +12,7 @@ bool empty_test(void) {
     }
     bool res = true;
 
-    res &= stack_used_count(s) == 0;
+    res &= stack_length(s) == 0;
     res &= stack_isempty(s);
     res &= stack_deinit(&s);
 
@@ -27,15 +27,14 @@ bool one_element_test(void) {
     bool res = true;
     int value = 5;
 
-    stack_push_int(s, value);
-
+    res &= stack_push_int(s, value);
     res &= value == stack_peek_int(s);
     res &= !stack_isempty(s);
-    res &= stack_used_count(s) == 1;
+    res &= stack_length(s) == 1;
 
     res &= value == stack_pop_int(s);
     res &= stack_isempty(s);
-    res &= stack_used_count(s) == 0;
+    res &= stack_length(s) == 0;
 
     res &= stack_deinit(&s);
 

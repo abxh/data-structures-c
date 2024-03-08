@@ -17,7 +17,7 @@ bool astack_init(AStack** stack_pp, size_t capacity, size_t value_size) {
         *stack_pp = NULL;
         return false;
     }
-    (*stack_pp)->used_count = 0;
+    (*stack_pp)->length = 0;
     (*stack_pp)->capacity = capacity;
     (*stack_pp)->value_size = value_size;
     return true;
@@ -34,13 +34,17 @@ bool astack_deinit(AStack** stack_pp) {
 }
 
 bool astack_isempty(AStack* stack_p) {
-    return stack_p->used_count == 0;
+    return stack_p->length == 0;
 }
 
 bool astack_isfull(AStack* stack_p) {
-    return stack_p->used_count == stack_p->capacity;
+    return stack_p->length == stack_p->capacity;
 }
 
-bool astack_used_count(AStack* stack_p) {
-    return stack_p->used_count;
+size_t astack_length(AStack* stack_p) {
+    return stack_p->length;
+}
+
+size_t astack_capacity(AStack* stack_p) {
+    return stack_p->capacity;
 }
