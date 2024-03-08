@@ -14,6 +14,7 @@ bool stack_init(Stack** stack_pp, size_t value_size) {
     }
     (*stack_pp)->head_p = NULL;
     (*stack_pp)->value_size = value_size;
+    (*stack_pp)->length = 0;
     return true;
 }
 
