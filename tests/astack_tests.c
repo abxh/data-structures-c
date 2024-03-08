@@ -3,71 +3,78 @@
 
 #define VALUE_TYPE int
 #define VALUE_NAME int
-#include "../src/stack.h"
+#include "../src/astack.h"
 
 bool empty_test(void) {
-    Stack* s;
-    if (!stack_init_int(&s)) {
+    AStack* s;
+    if (!astack_init_int(&s, 1)) {
         return false;
     }
     bool res = true;
 
-    res &= stack_used_count(s) == 0;
-    res &= stack_isempty(s);
-    res &= stack_deinit(&s);
+    res &= astack_isempty(s);
+    res &= astack_deinit(&s);
 
     return res;
 }
 
 bool one_element_test(void) {
-    Stack* s;
-    if (!stack_init_int(&s)) {
+    AStack* s;
+    if (!astack_init_int(&s, 1)) {
         return false;
     }
     bool res = true;
     int value = 5;
+    astack_push_int(s, value);
 
-    stack_push_int(s, value);
+    res &= value == astack_peek_int(s);
+    res &= !astack_isempty(s);
+    res &= astack_isfull(s);
+    res &= astack_used_count(s) == 1;
 
-    res &= value == stack_peek_int(s);
-    res &= !stack_isempty(s);
-    res &= stack_used_count(s) == 1;
+    res &= value == astack_pop_int(s);
+    res &= astack_isempty(s);
+    res &= !astack_isfull(s);
+    res &= astack_used_count(s) == 0;
 
-    res &= value == stack_pop_int(s);
-    res &= stack_isempty(s);
-    res &= stack_used_count(s) == 0;
-
-    res &= stack_deinit(&s);
+    res &= astack_deinit(&s);
 
     return res;
 }
 
 bool million_elements_test(void) {
-    Stack* s;
-    if (!stack_init_int(&s)) {
+    AStack* s;
+    if (!astack_init_int(&s, 1000000)) {
         return false;
     }
     bool res = true;
     for (int i = 1; i <= 1000000; i++) {
-        stack_push_int(s, i);
+        astack_push_int(s, i);
     }
     for (int i = 1000000; i >= 1; i--) {
-        res &= i == stack_pop_int(s);
+        res &= i == astack_pop_int(s);
     }
-    res &= stack_deinit(&s);
+    res &= astack_deinit(&s);
     return res;
 }
 
 bool foreach_test(void) {
-    Stack* s;
-    if (!stack_init_int(&s)) {
+    AStack* s;
+    if (!astack_init_int(&s, 50)) {
         return false;
     }
     bool res = true;
     for (int i = 51; i <= 100; i++) {
-        stack_push_int(s, i);
+        astack_push_int(s, i);
     }
-    res &= stack_deinit(&s);
+    int x = 100;
+    int value;
+    size_t i;
+    astack_foreach(s, i, value) {
+        res &= x == value;
+        x--;
+    }
+    res &= astack_deinit(&s);
     return res;
 }
 
@@ -87,7 +94,8 @@ int main(void) {
                               {one_element_test, "one element test"},
                               {million_elements_test, "million elements test"},
                               {foreach_test, "foreach test"}};
-    printf(__FILE_NAME__" tests:\n");
+
+    printf(__FILE_NAME__ " tests:\n");
     for (size_t i = 0; i < sizeof(bool_f_arr) / sizeof(func_plus); i++) {
         printf(" [%s] %s\n", bool_f_arr[i].func() ? GREEN "true" OFF : RED "false" OFF, bool_f_arr[i].desc);
     }

@@ -17,6 +17,7 @@ typedef struct StackNode {
 typedef struct {
     StackNode* head_p;
     size_t value_size;
+    size_t used_count;
 } Stack;
 
 extern bool stack_init(Stack** stack_pp, size_t value_size);
@@ -25,15 +26,17 @@ extern bool stack_deinit(Stack** stack_pp);
 
 extern bool stack_isempty(Stack* stack_p);
 
+extern size_t stack_used_count(Stack* stack_p);
+
 extern StackNode* stack_peek(Stack* stack_p);
 
 extern bool stack_push(Stack* stack_p, void* value, size_t value_size);
 
 extern StackNode* stack_pop(Stack* stack_p);
 
-#define stack_foreach(stack_p, node_p, value)                                      \
-    for ((assert(stack_p->value_size == sizeof(value)), node_p = stack_p->head_p); \
-         node_p != NULL && (value = *(typeof(value)*)node_p->value_p, true); node_p = node_p->next_p)
+#define stack_foreach(stack_p, node_p, value)                                            \
+    for ((assert((stack_p)->value_size == sizeof(value)), (node_p) = (stack_p)->head_p); \
+         (node_p) != NULL && ((value) = *(typeof(value)*)(node_p)->value_p, true); (node_p) = (node_p)->next_p)
 
 #endif
 

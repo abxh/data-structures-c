@@ -25,6 +25,7 @@ bool stack_deinit(Stack** stack_pp) {
     StackNode* next_p = NULL;
     while (head_p != NULL) {
         next_p = head_p->next_p;
+        free(head_p->value_p);
         free(head_p);
         head_p = next_p;
     }
@@ -42,20 +43,20 @@ StackNode* stack_peek(Stack* stack_p) {
     return stack_p->head_p;
 }
 
+size_t stack_used_count(Stack* stack_p) {
+    return stack_p->used_count;
+}
+
 bool stack_push(Stack* stack_p, void* value_p, size_t value_size) {
     assert(stack_p->value_size == value_size);
     StackNode* node_p = malloc(sizeof(StackNode));
     if (node_p == NULL) {
         return false;
     }
-    node_p->value_p = malloc(value_size);
-    if (node_p == NULL) {
-        free(node_p);
-        return false;
-    }
     memcpy(node_p->value_p, value_p, value_size);
     node_p->next_p = stack_p->head_p;
     stack_p->head_p = node_p;
+    stack_p->used_count++;
     return true;
 }
 
@@ -63,5 +64,6 @@ StackNode* stack_pop(Stack* stack_p) {
     assert(stack_isempty(stack_p) == false);
     StackNode* node_p = stack_p->head_p;
     stack_p->head_p = node_p->next_p;
+    stack_p->used_count--;
     return node_p;
 }
