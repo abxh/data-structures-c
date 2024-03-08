@@ -53,6 +53,11 @@ bool stack_push(Stack* stack_p, void* value_p, size_t value_size) {
     if (node_p == NULL) {
         return false;
     }
+    node_p->value_p = malloc(value_size);
+    if (node_p->value_p == NULL) {
+        free(node_p);
+        return false;
+    }
     memcpy(node_p->value_p, value_p, value_size);
     node_p->next_p = stack_p->head_p;
     stack_p->head_p = node_p;
