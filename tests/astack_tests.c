@@ -64,6 +64,57 @@ bool million_elements_test(void) {
     return res;
 }
 
+bool grow_test(void) {
+    AStack* s;
+    if (!astack_init_int(&s, 500000)) {
+        return false;
+    }
+    bool res = true;
+    for (int i = 1; i <= 500000; i++) {
+        astack_push_int(s, i);
+    }
+
+    res &= astack_isfull(s);
+    if (!astack_resize_int(s, astack_length(s) << 1)) {
+        astack_deinit(&s);
+        return false;
+    }
+    res &= !astack_isfull(s);
+
+    for (int i = 500001; i <= 1000000; i++) {
+        astack_push_int(s, i);
+    }
+    for (int i = 1000000; i >= 1; i--) {
+        res &= i == astack_pop_int(s);
+    }
+    res &= astack_deinit(&s);
+    return res;
+}
+
+bool shrink_test(void) {
+    AStack* s;
+    if (!astack_init_int(&s, 500000)) {
+        return false;
+    }
+    bool res = true;
+    for (int i = 1; i <= 250000; i++) {
+        astack_push_int(s, i);
+    }
+
+    res &= !astack_isfull(s);
+    if (!astack_resize_int(s, astack_length(s))) {
+        astack_deinit(&s);
+        return false;
+    }
+    res &= astack_isfull(s);
+
+    for (int i = 250000; i >= 1; i--) {
+        res &= i == astack_pop_int(s);
+    }
+    res &= astack_deinit(&s);
+    return res;
+}
+
 bool foreach_test(void) {
     AStack* s;
     if (!astack_init_int(&s, 50)) {
@@ -96,12 +147,11 @@ typedef struct {
 #define GREEN "\033[0;32m"
 
 int main(void) {
-    func_plus bool_f_arr[] = {{empty_test, "empty test"},
-                              {one_element_test, "one element test"},
-                              {million_elements_test, "million elements test"},
-                              {foreach_test, "foreach test"}};
+    func_plus bool_f_arr[] = {
+        {empty_test, "empty test"}, {one_element_test, "one element test"}, {million_elements_test, "million elements test"},
+        {grow_test, "grow test"},   {shrink_test, "shrink test"},           {foreach_test, "foreach test"}};
 
-    printf(__FILE_NAME__ " tests:\n");
+    printf(__FILE_NAME__ ":\n");
     for (size_t i = 0; i < sizeof(bool_f_arr) / sizeof(func_plus); i++) {
         printf(" [%s] %s\n", bool_f_arr[i].func() ? GREEN "true" OFF : RED "false" OFF, bool_f_arr[i].desc);
     }

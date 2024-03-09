@@ -66,6 +66,13 @@ bool foreach_test(void) {
     for (int i = 51; i <= 100; i++) {
         stack_push_int(s, i);
     }
+    int x = 100;
+    StackNode* node_p;
+    int value;
+    stack_foreach(s, node_p, value) {
+        res &= x == value;
+        x--;
+    }
     res &= stack_deinit(&s);
     return res;
 }
@@ -86,7 +93,7 @@ int main(void) {
                               {one_element_test, "one element test"},
                               {million_elements_test, "million elements test"},
                               {foreach_test, "foreach test"}};
-    printf(__FILE_NAME__" tests:\n");
+    printf(__FILE_NAME__ ":\n");
     for (size_t i = 0; i < sizeof(bool_f_arr) / sizeof(func_plus); i++) {
         printf(" [%s] %s\n", bool_f_arr[i].func() ? GREEN "true" OFF : RED "false" OFF, bool_f_arr[i].desc);
     }
