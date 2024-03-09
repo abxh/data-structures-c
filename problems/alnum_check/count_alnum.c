@@ -8,9 +8,9 @@
 #define TOTAL (NUM_OF_DIGITS + 2 * NUM_OF_LETTERS)
 
 int main(void) {
-    Bitarray* bitarray_p = bitarray_new(TOTAL);
+    Bitarray* bitarray_p;
 
-    if (bitarray_p == NULL) {
+    if (!bitarray_init(&bitarray_p, TOTAL)) {
         return 1;
     }
 
@@ -52,6 +52,6 @@ int main(void) {
     }
     putchar('\n');
 
-    bitarray_free(&bitarray_p);
+    bitarray_deinit(&bitarray_p);
     return 0;
 }

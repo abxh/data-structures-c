@@ -4,21 +4,20 @@
 
 #ifdef KATTIS
 
-double pow(double, double) { return 0.; }
+double pow(double, double) {
+    return 0.;
+}
 #define EVAL_STR "%.2f"
 
 #else
 
 #include <math.h> // pow
-#define EVAL_STR "%g"
+#define EVAL_STR "= %g"
 
 // Note:
 // Must link math library using `gcc -lm` or the sorts.
 
 #endif
-
-#include "queue.h"
-#include "stack.h"
 
 typedef enum { DEFAULT_TOKEN, NUMBER_TOKEN, OP_TOKEN } Token;
 
@@ -32,8 +31,13 @@ typedef struct {
     } metadata;
 } Lexeme;
 
-QUEUE_CREATE_INLINE_FUNCTIONS(lex, Lexeme)
-STACK_CREATE_INLINE_FUNCTIONS(lex, Lexeme)
+#define VALUE_NAME lex
+#define VALUE_TYPE Lexeme
+#include "../../src/queue.h"
+
+#define VALUE_NAME lex
+#define VALUE_TYPE Lexeme
+#include "../../src/stack.h"
 
 char decode_op(Operation op) {
     switch (op) {
@@ -92,8 +96,7 @@ double eval(char* str, ssize_t len) {
     Stack* op_stack = NULL;
     Stack* num_stack = NULL;
 
-    inp_queue = queue_new_lex(2 * len);
-    if (inp_queue == NULL) {
+    if (!queue_init_lex(&inp_queue)) {
         goto on_oom_error;
     }
 
@@ -257,61 +260,65 @@ double eval(char* str, ssize_t len) {
         goto on_inp_error;
     }
 
-    Lexeme lex;
-    unsigned long index;
 #ifdef DEBUG
-    printf("Input queue (prefix): ");
-    queue_foreach(inp_queue, index, lex) {
-        switch (lex.token) {
-        case NUMBER_TOKEN:
-            printf(" %g", lex.metadata.num);
-            break;
-        case OP_TOKEN:
-            printf(" %c", decode_op(lex.metadata.op));
-            break;
-        default:
-            break;
+    {
+        Lexeme lex;
+        QueueNode* node_p;
+        printf("Input queue (prefix): ");
+        queue_foreach(inp_queue, node_p, lex) {
+            switch (lex.token) {
+            case NUMBER_TOKEN:
+                printf(" %g", lex.metadata.num);
+                break;
+            case OP_TOKEN:
+                printf(" %c", decode_op(lex.metadata.op));
+                break;
+            default:
+                break;
+            }
         }
+        putchar('\n');
     }
-    putchar('\n');
 #endif
 
-    inp_queue_postfix = queue_new_lex(inp_queue->used);
-    if (inp_queue_postfix == NULL) {
+    if (!queue_init_lex(&inp_queue_postfix)) {
         goto on_oom_error;
     }
-    op_stack = stack_new_lex(inp_queue->used);
-    if (op_stack == NULL) {
+    if (!stack_init_lex(&op_stack)) {
         goto on_oom_error;
     }
 
     // shunting yard algorithm (with simplified assumptions).
-    queue_foreach(inp_queue, index, lex) {
-        switch (lex.token) {
-        case NUMBER_TOKEN:
-            queue_enqueue_lex(inp_queue_postfix, lex);
-            break;
-        case OP_TOKEN:
-            switch (lex.metadata.op) {
-            case OPENING_PAREN_OP:
-                stack_push_lex(op_stack, lex);
+    {
+        Lexeme lex;
+        QueueNode* node_p;
+        queue_foreach(inp_queue, node_p, lex) {
+            switch (lex.token) {
+            case NUMBER_TOKEN:
+                queue_enqueue_lex(inp_queue_postfix, lex);
                 break;
-            case CLOSING_PAREN_OP:
-                while (stack_peek_lex(op_stack).metadata.op != OPENING_PAREN_OP) {
-                    queue_enqueue_lex(inp_queue_postfix, stack_pop_lex(op_stack));
+            case OP_TOKEN:
+                switch (lex.metadata.op) {
+                case OPENING_PAREN_OP:
+                    stack_push_lex(op_stack, lex);
+                    break;
+                case CLOSING_PAREN_OP:
+                    while (stack_peek_lex(op_stack).metadata.op != OPENING_PAREN_OP) {
+                        queue_enqueue_lex(inp_queue_postfix, stack_pop_lex(op_stack));
+                    }
+                    stack_pop_lex(op_stack);
+                    break;
+                default:
+                    while (!stack_isempty(op_stack) && stack_peek_lex(op_stack).metadata.op != OPENING_PAREN_OP &&
+                           op_precedence_cmp(stack_peek_lex(op_stack).metadata.op, lex.metadata.op) >= 0) {
+                        queue_enqueue_lex(inp_queue_postfix, stack_pop_lex(op_stack));
+                    }
+                    stack_push_lex(op_stack, lex);
+                    break;
                 }
-                stack_pop_lex(op_stack);
-                break;
             default:
-                while (!stack_isempty(op_stack) && stack_peek_lex(op_stack).metadata.op != OPENING_PAREN_OP &&
-                       op_precedence_cmp(stack_peek_lex(op_stack).metadata.op, lex.metadata.op) >= 0) {
-                    queue_enqueue_lex(inp_queue_postfix, stack_pop_lex(op_stack));
-                }
-                stack_push_lex(op_stack, lex);
                 break;
             }
-        default:
-            break;
         }
     }
     while (!stack_isempty(op_stack)) {
@@ -319,54 +326,62 @@ double eval(char* str, ssize_t len) {
     }
 
 #ifdef DEBUG
-    printf("Input queue (postfix):");
-    queue_foreach(inp_queue_postfix, index, lex) {
-        switch (lex.token) {
-        case NUMBER_TOKEN:
-            printf(" %g", lex.metadata.num);
-            break;
-        case OP_TOKEN:
-            printf(" %c", decode_op(lex.metadata.op));
-            break;
-        default:
-            break;
-        }
-    }
-    putchar('\n');
-#endif
-
-    num_stack = op_stack; // repurposing the stack
-    queue_foreach(inp_queue_postfix, index, lex) {
-        switch (lex.token) {
-        case NUMBER_TOKEN:
-            stack_push_lex(num_stack, lex);
-            break;
-        case OP_TOKEN: {
-            double y = stack_pop_lex(num_stack).metadata.num;
-            double x = stack_pop_lex(num_stack).metadata.num;
-            switch (lex.metadata.op) {
-            case ADD_OP:
-                stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x + y}});
+    {
+        Lexeme lex;
+        QueueNode* node_p;
+        printf("Input queue (postfix):");
+        queue_foreach(inp_queue_postfix, node_p, lex) {
+            switch (lex.token) {
+            case NUMBER_TOKEN:
+                printf(" %g", lex.metadata.num);
                 break;
-            case SUB_OP:
-                stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x - y}});
-                break;
-            case MUL_OP:
-                stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x * y}});
-                break;
-            case DIV_OP:
-                stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x / y}});
-                break;
-            case POW_OP:
-                stack_push_lex(num_stack, (Lexeme){.metadata = {.num = pow(x, y)}});
+            case OP_TOKEN:
+                printf(" %c", decode_op(lex.metadata.op));
                 break;
             default:
                 break;
             }
-            break;
         }
-        default:
-            break;
+        putchar('\n');
+    }
+#endif
+
+    {
+        Lexeme lex;
+        QueueNode* node_p;
+        num_stack = op_stack; // repurposing the stack
+        queue_foreach(inp_queue_postfix, node_p, lex) {
+            switch (lex.token) {
+            case NUMBER_TOKEN:
+                stack_push_lex(num_stack, lex);
+                break;
+            case OP_TOKEN: {
+                double y = stack_pop_lex(num_stack).metadata.num;
+                double x = stack_pop_lex(num_stack).metadata.num;
+                switch (lex.metadata.op) {
+                case ADD_OP:
+                    stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x + y}});
+                    break;
+                case SUB_OP:
+                    stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x - y}});
+                    break;
+                case MUL_OP:
+                    stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x * y}});
+                    break;
+                case DIV_OP:
+                    stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x / y}});
+                    break;
+                case POW_OP:
+                    stack_push_lex(num_stack, (Lexeme){.metadata = {.num = pow(x, y)}});
+                    break;
+                default:
+                    break;
+                }
+                break;
+            }
+            default:
+                break;
+            }
         }
     }
 
@@ -377,18 +392,18 @@ on_inp_error:
     if (error_msg != NULL) {
         fprintf(stderr, "%*c %s\n", (int)(error_index + 1), '^', error_msg);
     }
-    stack_free(&op_stack);
-    queue_free(&inp_queue_postfix);
-    queue_free(&inp_queue);
+    stack_deinit(&op_stack);
+    queue_deinit(&inp_queue_postfix);
+    queue_deinit(&inp_queue);
 
     return rtr_value;
 
 on_oom_error:
     fprintf(stderr, "Out of memory.\n");
 
-    stack_free(&op_stack);
-    queue_free(&inp_queue_postfix);
-    queue_free(&inp_queue);
+    stack_deinit(&op_stack);
+    queue_deinit(&inp_queue_postfix);
+    queue_deinit(&inp_queue);
 
     return rtr_value;
 }

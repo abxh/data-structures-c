@@ -1,25 +1,13 @@
 #include <stdio.h>
 
-#include "stack.h"
-
-typedef enum {
-    DEFAULT_SYMBOL_ENUM,
-    LBRACKET,
-    LCURLY,
-    LPARAN,
-    RBRACKET,
-    RCURLY,
-    RPARAN
-} SYMBOL_ENUM;
-
-STACK_CREATE_INLINE_FUNCTIONS(symb, SYMBOL_ENUM)
+typedef enum { DEFAULT_SYMBOL_ENUM, LBRACKET, LCURLY, LPARAN, RBRACKET, RCURLY, RPARAN } SYMBOL_ENUM;
 
 SYMBOL_ENUM encode_symbol(char c) {
     switch (c) {
     case '[':
         return LBRACKET;
     case '{':
-        return LBRACKET;
+        return LCURLY;
     case '(':
         return LPARAN;
     case ']':
@@ -32,25 +20,6 @@ SYMBOL_ENUM encode_symbol(char c) {
         break;
     }
     return DEFAULT_SYMBOL_ENUM;
-}
-
-SYMBOL_ENUM matching_symbol(SYMBOL_ENUM symb) {
-    switch (symb) {
-    case LBRACKET:
-        return RBRACKET;
-    case LCURLY:
-        return RCURLY;
-    case LPARAN:
-        return RPARAN;
-    case RBRACKET:
-        return LBRACKET;
-    case RCURLY:
-        return RCURLY;
-    case RPARAN:
-        return RPARAN;
-    default:
-        return DEFAULT_SYMBOL_ENUM;
-    }
 }
 
 char decode_symbol(SYMBOL_ENUM symb) {
@@ -70,8 +39,31 @@ char decode_symbol(SYMBOL_ENUM symb) {
     default:
         break;
     }
-    return '\0';
+    return ' ';
 }
+
+SYMBOL_ENUM matching_symbol(SYMBOL_ENUM symb) {
+    switch (symb) {
+    case LBRACKET:
+        return RBRACKET;
+    case LCURLY:
+        return RCURLY;
+    case LPARAN:
+        return RPARAN;
+    case RBRACKET:
+        return LBRACKET;
+    case RCURLY:
+        return LCURLY;
+    case RPARAN:
+        return LPARAN;
+    default:
+        return DEFAULT_SYMBOL_ENUM;
+    }
+}
+
+#define VALUE_NAME symb
+#define VALUE_TYPE SYMBOL_ENUM
+#include "../../src/stack.h"
 
 int main(void) {
     puts("Input line:");
@@ -83,8 +75,8 @@ int main(void) {
         return 1;
     }
 
-    Stack* stack_p = stack_new_symb(n);
-    if (stack_p == NULL) {
+    Stack* stack_p;
+    if (!stack_init_symb(&stack_p)) {
         free(str);
         return 1;
     }
@@ -96,9 +88,10 @@ int main(void) {
         switch (str[i]) {
         case '(':
         case '{':
-        case '[':
-            stack_push_symb(stack_p, encode_symbol(str[i]));
-            break;
+        case '[': {
+            SYMBOL_ENUM a = encode_symbol(str[i]);
+            stack_push_symb(stack_p, encode_symbol(a));
+        } break;
         case ')':
         case '}':
         case ']':
@@ -106,7 +99,9 @@ int main(void) {
                 no_errors = false;
                 break;
             }
-            no_errors = encode_symbol(str[i]) == matching_symbol(stack_pop_symb(stack_p));
+            SYMBOL_ENUM a = encode_symbol(str[i]);
+            SYMBOL_ENUM b = matching_symbol(stack_pop_symb(stack_p));
+            no_errors = a == b;
         }
         if (!no_errors) {
             break;
@@ -123,9 +118,8 @@ int main(void) {
         }
     }
 
-    stack_free(&stack_p);
+    stack_deinit(&stack_p);
     free(str);
 
     return 0;
 }
-
