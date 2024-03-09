@@ -1,7 +1,3 @@
-/*
-   header file of a stack implemented as a linked-list.
-*/
-
 #pragma once
 
 #include <assert.h>  // assert
