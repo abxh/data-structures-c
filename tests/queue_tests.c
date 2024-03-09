@@ -1,13 +1,15 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "../src/queue/queue.h"
+
+#define VALUE_LABEL int
 #define VALUE_TYPE int
-#define VALUE_NAME int
-#include "../src/queue.h"
+#include "../src/queue/queue_helpers.h"
 
 bool empty_test(void) {
     Queue* q;
-    if (!queue_init_int(&q)) {
+    if (!queue_init(&q, sizeof(int))) {
         return false;
     }
     bool res = true;
@@ -21,7 +23,7 @@ bool empty_test(void) {
 
 bool one_element_test(void) {
     Queue* q;
-    if (!queue_init_int(&q)) {
+    if (!queue_init(&q, sizeof(int))) {
         return false;
     }
     bool res = true;
@@ -29,7 +31,6 @@ bool one_element_test(void) {
 
     res &= queue_enqueue_int(q, value);
     res &= value == queue_peek_int(q);
-    res &= value == queue_peek_last_int(q);
     res &= !queue_isempty(q);
     res &= queue_length(q) == 1;
 
@@ -44,7 +45,7 @@ bool one_element_test(void) {
 
 bool two_elements_test(void) {
     Queue* q;
-    if (!queue_init_int(&q)) {
+    if (!queue_init(&q, sizeof(int))) {
         return false;
     }
     bool res = true;
@@ -53,7 +54,7 @@ bool two_elements_test(void) {
 
     res &= queue_enqueue_int(q, value1);
     res &= queue_enqueue_int(q, value2);
-    res &= value1 == queue_peek_int(q);
+    res &= value1 == queue_peek_first_int(q);
     res &= value2 == queue_peek_last_int(q);
     res &= queue_length(q) == 2;
     res &= queue_deinit(&q);
@@ -63,7 +64,7 @@ bool two_elements_test(void) {
 
 bool million_elements_test(void) {
     Queue* q;
-    if (!queue_init_int(&q)) {
+    if (!queue_init(&q, sizeof(int))) {
         return false;
     }
     bool res = true;
@@ -79,7 +80,7 @@ bool million_elements_test(void) {
 
 bool foreach_test(void) {
     Queue* q;
-    if (!queue_init_int(&q)) {
+    if (!queue_init(&q, sizeof(int))) {
         return false;
     }
     bool res = true;

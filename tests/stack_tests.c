@@ -1,13 +1,15 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "../src/stack/stack.h"
+
+#define VALUE_LABEL int
 #define VALUE_TYPE int
-#define VALUE_NAME int
-#include "../src/stack.h"
+#include "../src/stack/stack_helpers.h"
 
 bool empty_test(void) {
     Stack* s;
-    if (!stack_init_int(&s)) {
+    if (!stack_init(&s, sizeof(int))) {
         return false;
     }
     bool res = true;
@@ -21,7 +23,7 @@ bool empty_test(void) {
 
 bool one_element_test(void) {
     Stack* s;
-    if (!stack_init_int(&s)) {
+    if (!stack_init(&s, sizeof(int))) {
         return false;
     }
     bool res = true;
@@ -43,7 +45,7 @@ bool one_element_test(void) {
 
 bool million_elements_test(void) {
     Stack* s;
-    if (!stack_init_int(&s)) {
+    if (!stack_init(&s, sizeof(int))) {
         return false;
     }
     bool res = true;
@@ -59,7 +61,7 @@ bool million_elements_test(void) {
 
 bool foreach_test(void) {
     Stack* s;
-    if (!stack_init_int(&s)) {
+    if (!stack_init(&s, sizeof(int))) {
         return false;
     }
     bool res = true;

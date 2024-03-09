@@ -1,20 +1,15 @@
+
+
 #pragma once
 
-#include <assert.h>  // static_assert
-#include <limits.h>  // CHAR_BIT
 #include <stdbool.h> // bool
 #include <stdlib.h>  // size_t
-
-static_assert(CHAR_BIT == 8);
 
 typedef struct {
     size_t num_of_bits;
     size_t capacity;
     unsigned char* words;
 } Bitarray;
-
-#define BITARRAY_WORD_INDEX(index) ((index) >> 3)
-#define BITARRAY_BIT_INDEX(index) (~(index) & 7)
 
 bool bitarray_init(Bitarray** bitarray_pp, size_t num_of_bits);
 

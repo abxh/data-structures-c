@@ -1,1 +1,1 @@
-../../src/bitarray.h
+../../src/bitarray/bitarray.h

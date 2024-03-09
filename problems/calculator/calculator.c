@@ -12,7 +12,7 @@ double pow(double, double) {
 #else
 
 #include <math.h> // pow
-#define EVAL_STR "= %g"
+#define EVAL_STR "%g"
 
 // Note:
 // Must link math library using `gcc -lm` or the sorts.
@@ -31,13 +31,16 @@ typedef struct {
     } metadata;
 } Lexeme;
 
-#define VALUE_NAME lex
-#define VALUE_TYPE Lexeme
-#include "../../src/queue.h"
+#include "queue.h"
+#include "stack.h"
 
-#define VALUE_NAME lex
+#define VALUE_LABEL lex
 #define VALUE_TYPE Lexeme
-#include "../../src/stack.h"
+#include "queue_helpers.h"
+
+#define VALUE_LABEL lex
+#define VALUE_TYPE Lexeme
+#include "stack_helpers.h"
 
 char decode_op(Operation op) {
     switch (op) {
@@ -96,7 +99,7 @@ double eval(char* str, ssize_t len) {
     Stack* op_stack = NULL;
     Stack* num_stack = NULL;
 
-    if (!queue_init_lex(&inp_queue)) {
+    if (!queue_init(&inp_queue, sizeof(Lexeme))) {
         goto on_oom_error;
     }
 
@@ -281,10 +284,10 @@ double eval(char* str, ssize_t len) {
     }
 #endif
 
-    if (!queue_init_lex(&inp_queue_postfix)) {
+    if (!queue_init(&inp_queue_postfix, sizeof(Lexeme))) {
         goto on_oom_error;
     }
-    if (!stack_init_lex(&op_stack)) {
+    if (!stack_init(&op_stack, sizeof(Lexeme))) {
         goto on_oom_error;
     }
 

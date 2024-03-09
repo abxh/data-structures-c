@@ -61,9 +61,11 @@ SYMBOL_ENUM matching_symbol(SYMBOL_ENUM symb) {
     }
 }
 
-#define VALUE_NAME symb
+#include "stack.h"
+
+#define VALUE_LABEL symb
 #define VALUE_TYPE SYMBOL_ENUM
-#include "../../src/stack.h"
+#include "stack_helpers.h"
 
 int main(void) {
     puts("Input line:");
@@ -76,7 +78,7 @@ int main(void) {
     }
 
     Stack* stack_p;
-    if (!stack_init_symb(&stack_p)) {
+    if (!stack_init(&stack_p, sizeof(SYMBOL_ENUM))) {
         free(str);
         return 1;
     }
@@ -89,8 +91,7 @@ int main(void) {
         case '(':
         case '{':
         case '[': {
-            SYMBOL_ENUM a = encode_symbol(str[i]);
-            stack_push_symb(stack_p, encode_symbol(a));
+            stack_push_symb(stack_p, encode_symbol(str[i]));
         } break;
         case ')':
         case '}':
@@ -99,9 +100,7 @@ int main(void) {
                 no_errors = false;
                 break;
             }
-            SYMBOL_ENUM a = encode_symbol(str[i]);
-            SYMBOL_ENUM b = matching_symbol(stack_pop_symb(stack_p));
-            no_errors = a == b;
+            no_errors = encode_symbol(str[i]) == matching_symbol(stack_pop_symb(stack_p));
         }
         if (!no_errors) {
             break;

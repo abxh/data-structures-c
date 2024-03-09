@@ -1,16 +1,16 @@
-#include <assert.h>  // assert.
+#include <assert.h>  // assert, static_assert
 #include <limits.h>  // CHAR_BIT
 #include <stdbool.h> // bool
-#include <stdint.h>  // SIZE_MAX, uint64_t
 #include <stdio.h>   // putchar, printf
 #include <stdlib.h>  // malloc, calloc, size_t, NULL
 #include <string.h>  // memcmp, memcpy
 
 #include "bitarray.h"
 
-uint64_t roundup_char_bit(uint64_t v) {
-    return (v + (CHAR_BIT - 1)) / CHAR_BIT;
-}
+static_assert(CHAR_BIT == 8, "CHAR_BIT is assumed to be 8 bits.");
+
+#define BITARRAY_WORD_INDEX(index) ((index) >> 3)
+#define BITARRAY_BIT_INDEX(index) (~(index) & 7)
 
 bool bitarray_init(Bitarray** bitarray_pp, size_t num_of_bits) {
     assert(num_of_bits != 0);
@@ -19,7 +19,7 @@ bool bitarray_init(Bitarray** bitarray_pp, size_t num_of_bits) {
         return false;
     }
     (*bitarray_pp)->num_of_bits = num_of_bits;
-    (*bitarray_pp)->capacity = roundup_char_bit(num_of_bits);
+    (*bitarray_pp)->capacity = (num_of_bits + (CHAR_BIT - 1)) / CHAR_BIT; // round up to the next multiple of CHAR_BIT 
     (*bitarray_pp)->words = calloc((*bitarray_pp)->capacity, sizeof(unsigned char));
     if ((*bitarray_pp)->words == NULL) {
         free(*bitarray_pp);
@@ -125,3 +125,6 @@ void bitarray_toggle(Bitarray* bitarray_p, size_t index) {
     size_t m = BITARRAY_BIT_INDEX(index);
     bitarray_p->words[n] ^= 1 << m;
 }
+
+#undef BITARRAY_BIT_INDEX
+#undef BITARRAY_WORD_INDEX
