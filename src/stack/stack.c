@@ -1,7 +1,3 @@
-/*
-   implementation file of a stack implemented as a linked-list.
-*/
-
 #include <assert.h>  // assert
 #include <stdbool.h> // bool, true, false
 #include <stdlib.h>  // NULL, size_t, malloc, free
