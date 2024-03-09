@@ -10,6 +10,7 @@
 #include "stack.h"
 
 bool stack_init(Stack** stack_pp, size_t value_size) {
+    assert(value_size != 0);
     *stack_pp = (Stack*)malloc(sizeof(Stack));
     if (*stack_pp == NULL) {
         return false;
