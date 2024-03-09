@@ -81,9 +81,9 @@ QueueNode* queue_dequeue(Queue* queue_p) {
 
     QueueNode* node_p = queue_p->head_p;
     queue_p->head_p = node_p->next_p;
-    queue_p->length--;
     if (queue_p->head_p == NULL) {
         queue_p->tail_p = NULL;
     }
+    queue_p->length--;
     return node_p;
 }
