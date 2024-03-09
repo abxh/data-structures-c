@@ -72,13 +72,11 @@ bool queue_enqueue(Queue* queue_p, QueueNode* node_p) {
         queue_p->tail_p = node_p;
     }
     queue_p->length++;
-
     return true;
 }
 
 QueueNode* queue_dequeue(Queue* queue_p) {
     assert(queue_isempty(queue_p) == false);
-
     QueueNode* node_p = queue_p->head_p;
     queue_p->head_p = node_p->next_p;
     if (queue_p->head_p == NULL) {
