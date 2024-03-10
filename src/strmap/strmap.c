@@ -12,8 +12,8 @@ static inline uint64_t fnv_hash64(const unsigned char* char_p) {
     // FNV-1a hash
     // https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function
 
-#define FNV_OFFSET (14695981039346656037)
-#define FNV_PRIME (1099511628211)
+#define FNV_OFFSET (14695981039346656037UL)
+#define FNV_PRIME (1099511628211UL)
 
     uint64_t hash = FNV_OFFSET;
     while (*char_p) {
