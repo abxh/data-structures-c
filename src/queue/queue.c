@@ -1,7 +1,3 @@
-/*
-   implementation file of a queue implemented as a linked-list.
-*/
-
 #include <assert.h>  // assert
 #include <stdbool.h> // bool, true, false
 #include <stdlib.h>  // NULL, size_t, malloc, free
@@ -72,18 +68,16 @@ bool queue_enqueue(Queue* queue_p, QueueNode* node_p) {
         queue_p->tail_p = node_p;
     }
     queue_p->length++;
-
     return true;
 }
 
 QueueNode* queue_dequeue(Queue* queue_p) {
     assert(queue_isempty(queue_p) == false);
-
     QueueNode* node_p = queue_p->head_p;
     queue_p->head_p = node_p->next_p;
-    queue_p->length--;
     if (queue_p->head_p == NULL) {
         queue_p->tail_p = NULL;
     }
+    queue_p->length--;
     return node_p;
 }

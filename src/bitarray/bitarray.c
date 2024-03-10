@@ -125,6 +125,3 @@ void bitarray_toggle(Bitarray* bitarray_p, size_t index) {
     size_t m = BITARRAY_BIT_INDEX(index);
     bitarray_p->words[n] ^= 1 << m;
 }
-
-#undef BITARRAY_BIT_INDEX
-#undef BITARRAY_WORD_INDEX

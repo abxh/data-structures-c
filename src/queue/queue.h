@@ -1,7 +1,3 @@
-/*
-   header file of a queue implemented as a linked-list.
-*/
-
 #pragma once
 
 #include <assert.h>  // assert
