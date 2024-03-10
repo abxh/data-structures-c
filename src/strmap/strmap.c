@@ -5,7 +5,7 @@
 
 #define DEFAULT_CAPACITY 2
 
-// static_assert(DEFAULT_CAPACITY >> 2 >= 1, "default capacity must be larger than 4");
+// static_assert(DEFAULT_CAPACITY >> 2 > 1, "default capacity must be larger than 4");
 // static_assert((DEFAULT_CAPACITY & (DEFAULT_CAPACITY - 1)) == 0, "default capacity must be a power of 2");
 
 static inline uint64_t fnv_hash64(const unsigned char* char_p) {
