@@ -4,7 +4,7 @@ This problem is based on K&R chapter 1 with an constraint not directly related t
 
 **Problem:**
 
-Tell which of the characters in $\\{'A', \\ldots, 'Z'\\} \cup \\{'a', \\ldots, 'z'\\} \cup \\{'0', \\ldots, '9'\\}$ is in the `stdin` file stream.
+Tell which of the characters in $\\{A, \\ldots, Z\\} \cup \\{a, \\ldots, z\\} \cup \\{0, \\ldots, 9\\}$ is in the `stdin` file stream.
 
 **Constraints:**
 
