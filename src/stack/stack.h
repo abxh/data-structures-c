@@ -12,7 +12,7 @@ typedef struct StackNode {
 typedef struct {
     StackNode* head_p;
     size_t value_size;
-    size_t length;
+    size_t count;
 } Stack;
 
 bool stack_init(Stack** stack_pp, size_t value_size);
@@ -21,7 +21,7 @@ bool stack_deinit(Stack** stack_pp);
 
 StackNode* stack_peek(const Stack* stack_p);
 
-size_t stack_length(const Stack* stack_p);
+size_t stack_count(const Stack* stack_p);
 
 bool stack_isempty(const Stack* stack_p);
 

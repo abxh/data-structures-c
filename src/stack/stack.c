@@ -12,7 +12,7 @@ bool stack_init(Stack** stack_pp, size_t value_size) {
         return false;
     }
     (*stack_pp)->head_p = NULL;
-    (*stack_pp)->length = 0;
+    (*stack_pp)->count = 0;
     (*stack_pp)->value_size = value_size;
     return true;
 }
@@ -34,8 +34,8 @@ bool stack_deinit(Stack** stack_pp) {
     return true;
 }
 
-size_t stack_length(const Stack* stack_p) {
-    return stack_p->length;
+size_t stack_count(const Stack* stack_p) {
+    return stack_p->count;
 }
 
 bool stack_isempty(const Stack* stack_p) {
@@ -50,13 +50,13 @@ StackNode* stack_peek(const Stack* stack_p) {
 void stack_push(Stack* stack_p, StackNode* node_p) {
     node_p->next_p = stack_p->head_p;
     stack_p->head_p = node_p;
-    stack_p->length++;
+    stack_p->count++;
 }
 
 StackNode* stack_pop(Stack* stack_p) {
     assert(stack_isempty(stack_p) == false);
     StackNode* node_p = stack_p->head_p;
     stack_p->head_p = node_p->next_p;
-    stack_p->length--;
+    stack_p->count--;
     return node_p;
 }

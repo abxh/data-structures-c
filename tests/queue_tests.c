@@ -14,7 +14,7 @@ bool empty_test(void) {
     }
     bool res = true;
 
-    res &= queue_length(q) == 0;
+    res &= queue_count(q) == 0;
     res &= queue_isempty(q);
     res &= queue_deinit(&q);
 
@@ -32,11 +32,11 @@ bool one_element_test(void) {
     res &= queue_enqueue_int(q, value);
     res &= value == queue_peek_int(q);
     res &= !queue_isempty(q);
-    res &= queue_length(q) == 1;
+    res &= queue_count(q) == 1;
 
     res &= value == queue_dequeue_int(q);
     res &= queue_isempty(q);
-    res &= queue_length(q) == 0;
+    res &= queue_count(q) == 0;
 
     res &= queue_deinit(&q);
 
@@ -56,7 +56,7 @@ bool two_elements_test(void) {
     res &= queue_enqueue_int(q, value2);
     res &= value1 == queue_peek_first_int(q);
     res &= value2 == queue_peek_last_int(q);
-    res &= queue_length(q) == 2;
+    res &= queue_count(q) == 2;
     res &= queue_deinit(&q);
 
     return res;

@@ -13,7 +13,7 @@ bool queue_init(Queue** queue_pp, size_t value_size) {
     }
     (*queue_pp)->head_p = NULL;
     (*queue_pp)->tail_p = NULL;
-    (*queue_pp)->length = 0;
+    (*queue_pp)->count = 0;
     (*queue_pp)->value_size = value_size;
     return true;
 }
@@ -39,8 +39,8 @@ bool queue_isempty(const Queue* queue_p) {
     return queue_p->head_p == NULL;
 }
 
-size_t queue_length(const Queue* queue_p) {
-    return queue_p->length;
+size_t queue_count(const Queue* queue_p) {
+    return queue_p->count;
 }
 
 QueueNode* queue_peek(const Queue* queue_p) {
@@ -67,7 +67,7 @@ bool queue_enqueue(Queue* queue_p, QueueNode* node_p) {
         queue_p->tail_p->next_p = node_p;
         queue_p->tail_p = node_p;
     }
-    queue_p->length++;
+    queue_p->count++;
     return true;
 }
 
@@ -78,6 +78,6 @@ QueueNode* queue_dequeue(Queue* queue_p) {
     if (queue_p->head_p == NULL) {
         queue_p->tail_p = NULL;
     }
-    queue_p->length--;
+    queue_p->count--;
     return node_p;
 }

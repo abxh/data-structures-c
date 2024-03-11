@@ -12,7 +12,7 @@ typedef struct QueueNode {
 typedef struct {
     QueueNode* head_p;
     QueueNode* tail_p;
-    size_t length;
+    size_t count;
     size_t value_size;
 } Queue;
 
@@ -22,7 +22,7 @@ bool queue_deinit(Queue** queue_pp);
 
 bool queue_isempty(const Queue* queue_p);
 
-size_t queue_length(const Queue* queue_p);
+size_t queue_count(const Queue* queue_p);
 
 QueueNode* queue_peek(const Queue* queue_p);
 
