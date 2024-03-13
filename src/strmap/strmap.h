@@ -17,9 +17,11 @@ typedef struct {
 } StrMapNodeList;
 
 typedef struct {
-    size_t list_count_sub_one;
+    size_t list_count;
     StrMapNodeList* lists_p;
 } StrMap;
+
+#define strmap_default_get_value ""
 
 bool strmap_init(StrMap** strmap_pp);
 
