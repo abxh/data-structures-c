@@ -18,7 +18,7 @@ bool stack_init(Stack** stack_pp, size_t value_size) {
 }
 
 bool stack_deinit(Stack** stack_pp) {
-    if (*stack_pp == NULL) {
+    if (stack_pp == NULL || *stack_pp == NULL) {
         return false;
     }
     StackNode* head_p = (*stack_pp)->head_p;
