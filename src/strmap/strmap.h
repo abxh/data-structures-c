@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdbool.h> // bool
+#include <stdint.h>  // uint64_t
 #include <stdlib.h>  // size_t
 
 typedef struct StrMapNode {
@@ -10,11 +11,17 @@ typedef struct StrMapNode {
 } StrMapNode;
 
 typedef struct {
-    size_t capacity_sub_one;
-    size_t used;
-    size_t value_size;
-    StrMapNode** arr_pp;
+    size_t node_count;
+    StrMapNode* head_p;
+    StrMapNode* tail_p;
+} StrMapNodeList;
+
+typedef struct {
+    size_t list_count;
+    StrMapNodeList* lists_p;
 } StrMap;
+
+#define strmap_default_get_value ""
 
 bool strmap_init(StrMap** strmap_pp);
 
