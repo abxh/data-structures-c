@@ -10,14 +10,13 @@
 static_assert(DEFAULT_CAPACITY > 1, "capacity is assumed to be larger than 1");
 static_assert((DEFAULT_CAPACITY & (DEFAULT_CAPACITY - 1)) == 0, "capacity is assummed to be a power of 2");
 
-#define FNV_OFFSET (14695981039346656037UL)
-#define FNV_PRIME (1099511628211UL)
-
-#define MAX(x, y) (((x) > (y)) ? (x) : (y))
-
 static uint64_t fnv_hash64(const unsigned char* char_p) {
     // FNV-1a hash
     // https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function
+
+    static const uint64_t FNV_OFFSET = 14695981039346656037UL;
+    static const uint64_t FNV_PRIME = 1099511628211UL;
+
     uint64_t hash = FNV_OFFSET;
     while (*char_p) {
         hash ^= *(char_p++);
@@ -93,7 +92,7 @@ char* strmap_get(StrMap* strmap_p, const char* key_p) {
         }
         node_p = node_p->next_p;
     }
-    return NULL;
+    return STRMAP_DEFAULT_GET_VALUE;
 }
 
 bool strmap_del(StrMap* strmap_p, const char* key_p) {
@@ -198,7 +197,7 @@ static int strmap_resize_if_necessary(StrMap* strmap_p, size_t chain_length) {
             lists_p[index].head_p = node_p;
             lists_p[index].node_count++;
         }
-        max_node_count = MAX(lists_p[index].node_count, max_node_count);
+        max_node_count = lists_p[index].node_count > max_node_count ? lists_p[index].node_count : max_node_count;
 
         node_p = next_temp_p;
     }

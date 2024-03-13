@@ -2,7 +2,7 @@
 
 #include <stdbool.h> // bool
 #include <stdint.h>  // uint64_t
-#include <stdlib.h>  // size_t
+#include <stdlib.h>  // size_t, NULL
 
 typedef struct StrMapNode {
     struct StrMapNode* next_p;
@@ -20,6 +20,8 @@ typedef struct {
     size_t list_count;
     StrMapNodeList* lists_p;
 } StrMap;
+
+#define STRMAP_DEFAULT_GET_VALUE NULL
 
 bool strmap_init(StrMap** strmap_pp);
 
