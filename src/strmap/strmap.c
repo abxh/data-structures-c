@@ -92,7 +92,7 @@ char* strmap_get(StrMap* strmap_p, const char* key_p) {
         }
         node_p = node_p->next_p;
     }
-    return strmap_default_get_value;
+    return NULL;
 }
 
 bool strmap_del(StrMap* strmap_p, const char* key_p) {

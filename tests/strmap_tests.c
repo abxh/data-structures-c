@@ -169,7 +169,7 @@ bool million_elements_test(void) {
         }
 
         void* value_p = strmap_get(strmap_p, str1);
-        if (strcmp(value_p, "") != 0) {
+        if (value_p != NULL) {
             res &= strcmp(value_p, str2) == 0;
             res &= strmap_del(strmap_p, str1);
         }
