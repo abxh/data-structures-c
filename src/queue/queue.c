@@ -19,7 +19,7 @@ bool queue_init(Queue** queue_pp, size_t value_size) {
 }
 
 bool queue_deinit(Queue** queue_pp) {
-    if (*queue_pp == NULL) {
+    if (queue_pp == NULL || *queue_pp == NULL) {
         return false;
     }
     QueueNode* head_p = (*queue_pp)->head_p;

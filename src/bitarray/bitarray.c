@@ -29,7 +29,7 @@ bool bitarray_init(Bitarray** bitarray_pp, size_t num_of_bits) {
 }
 
 bool bitarray_deinit(Bitarray** bitarray_pp) {
-    if (*bitarray_pp) {
+    if (bitarray_pp == NULL || *bitarray_pp == NULL) {
         return false;
     }
     free((*bitarray_pp)->words);
