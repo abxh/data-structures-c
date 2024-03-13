@@ -5,7 +5,7 @@
 #include <string.h> // strcmp, strdup, strcpy, memset
 
 #define DEFAULT_CAPACITY 16
-#define MAX_CHAIN_LENGTH 6
+#define MAX_CHAIN_LENGTH 5
 
 static_assert(DEFAULT_CAPACITY > 1, "capacity is assumed to be larger than 1");
 static_assert((DEFAULT_CAPACITY & (DEFAULT_CAPACITY - 1)) == 0, "capacity is assummed to be a power of 2");
