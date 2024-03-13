@@ -5,8 +5,10 @@
 
 #include "stack.h"
 
-bool stack_init(Stack** stack_pp, size_t value_size) {
+bool stack_init(Stack** stack_pp, const size_t value_size) {
+    assert(stack_pp != NULL);
     assert(value_size != 0);
+
     *stack_pp = (Stack*)malloc(sizeof(Stack));
     if (*stack_pp == NULL) {
         return false;
@@ -14,13 +16,18 @@ bool stack_init(Stack** stack_pp, size_t value_size) {
     (*stack_pp)->head_p = NULL;
     (*stack_pp)->count = 0;
     (*stack_pp)->value_size = value_size;
+
     return true;
 }
 
 bool stack_deinit(Stack** stack_pp) {
-    if (stack_pp == NULL || *stack_pp == NULL) {
+    assert(stack_pp != NULL);
+
+    if (*stack_pp == NULL) {
         return false;
     }
+
+    // traverse list and free nodes one by one
     StackNode* head_p = (*stack_pp)->head_p;
     StackNode* next_p = NULL;
     while (head_p != NULL) {
@@ -29,34 +36,47 @@ bool stack_deinit(Stack** stack_pp) {
         free(head_p);
         head_p = next_p;
     }
+
     free(*stack_pp);
     (*stack_pp) = NULL;
+
     return true;
 }
 
 size_t stack_count(const Stack* stack_p) {
+    assert(stack_p != NULL);
+
     return stack_p->count;
 }
 
 bool stack_isempty(const Stack* stack_p) {
+    assert(stack_p != NULL);
+
     return stack_p->head_p == NULL;
 }
 
-StackNode* stack_peek(const Stack* stack_p) {
+const StackNode* stack_peek(const Stack* stack_p) {
+    assert(stack_p != NULL);
     assert(stack_isempty(stack_p) == false);
+
     return stack_p->head_p;
 }
 
 void stack_push(Stack* stack_p, StackNode* node_p) {
+    assert(stack_p != NULL);
+
     node_p->next_p = stack_p->head_p;
     stack_p->head_p = node_p;
     stack_p->count++;
 }
 
 StackNode* stack_pop(Stack* stack_p) {
+    assert(stack_p != NULL);
     assert(stack_isempty(stack_p) == false);
+
     StackNode* node_p = stack_p->head_p;
     stack_p->head_p = node_p->next_p;
     stack_p->count--;
+
     return node_p;
 }

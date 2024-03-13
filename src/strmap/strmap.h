@@ -27,9 +27,9 @@ bool strmap_init(StrMap** strmap_pp);
 
 bool strmap_deinit(StrMap** strmap_pp);
 
-bool strmap_exists(StrMap* strmap_p, const char* key_p);
+bool strmap_exists(const StrMap* strmap_p, const char* key_p);
 
-char* strmap_get(StrMap* strmap_p, const char* key_p);
+char* strmap_get(const StrMap* strmap_p, const char* key_p);
 
 bool strmap_set(StrMap* strmap_p, const char* key_p, const char* value_p);
 

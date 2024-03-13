@@ -33,34 +33,47 @@
 
 #define QUEUENODE_GET_VALUE_T JOIN(queuenode_get_value, VALUE_TYPE)
 #define QUEUENODE_SET_VALUE_T JOIN(queuenode_set_value, VALUE_TYPE)
+#define QUEUE_PEEK_T JOIN(queue_peek, VALUE_LABEL)
+#define QUEUE_PEEK_FIRST_T JOIN(queue_peek_first, VALUE_LABEL)
+#define QUEUE_PEEK_LAST_T JOIN(queue_peek_last, VALUE_LABEL)
+#define QUEUE_ENQUEUE_T JOIN(queue_enqueue, VALUE_LABEL)
+#define QUEUE_DEQUEUE_T JOIN(queue_dequeue, VALUE_LABEL)
 
-static inline VALUE_TYPE QUEUENODE_GET_VALUE_T(QueueNode* node_p) {
+static inline VALUE_TYPE QUEUENODE_GET_VALUE_T(const QueueNode* node_p) {
+    assert(node_p != NULL);
+
     return *(VALUE_TYPE*)node_p->value_p;
 }
 
 static inline void QUEUENODE_SET_VALUE_T(QueueNode* node_p, VALUE_TYPE value) {
+    assert(node_p != NULL);
+
     *(VALUE_TYPE*)node_p->value_p = value;
 }
 
-static inline VALUE_TYPE JOIN(queue_peek, VALUE_LABEL)(Queue* queue_p) {
+static inline VALUE_TYPE QUEUE_PEEK_T(const Queue* queue_p) {
+    assert(queue_p != NULL);
     assert(queue_p->value_size == sizeof(VALUE_TYPE));
 
     return QUEUENODE_GET_VALUE_T(queue_peek(queue_p));
 }
 
-static inline VALUE_TYPE JOIN(queue_peek_first, VALUE_LABEL)(Queue* queue_p) {
+static inline VALUE_TYPE QUEUE_PEEK_FIRST_T(const Queue* queue_p) {
+    assert(queue_p != NULL);
     assert(queue_p->value_size == sizeof(VALUE_TYPE));
 
     return QUEUENODE_GET_VALUE_T(queue_peek_first(queue_p));
 }
 
-static inline VALUE_TYPE JOIN(queue_peek_last, VALUE_LABEL)(Queue* queue_p) {
+static inline VALUE_TYPE QUEUE_PEEK_LAST_T(const Queue* queue_p) {
+    assert(queue_p != NULL);
     assert(queue_p->value_size == sizeof(VALUE_TYPE));
 
     return QUEUENODE_GET_VALUE_T(queue_peek_last(queue_p));
 }
 
-static inline bool JOIN(queue_enqueue, VALUE_LABEL)(Queue* queue_p, VALUE_TYPE value) {
+static inline bool QUEUE_ENQUEUE_T(Queue* queue_p, VALUE_TYPE value) {
+    assert(queue_p != NULL);
     assert(queue_p->value_size == sizeof(VALUE_TYPE));
 
     QueueNode* node_p = (QueueNode*)malloc(sizeof(QueueNode));
@@ -79,7 +92,8 @@ static inline bool JOIN(queue_enqueue, VALUE_LABEL)(Queue* queue_p, VALUE_TYPE v
     return true;
 }
 
-static inline VALUE_TYPE JOIN(queue_dequeue, VALUE_LABEL)(Queue* queue_p) {
+static inline VALUE_TYPE QUEUE_DEQUEUE_T(Queue* queue_p) {
+    assert(queue_p != NULL);
     assert(queue_p->value_size == sizeof(VALUE_TYPE));
 
     QueueNode* node_p = queue_dequeue(queue_p);
@@ -95,6 +109,11 @@ static inline VALUE_TYPE JOIN(queue_dequeue, VALUE_LABEL)(Queue* queue_p) {
 
 #undef QUEUENODE_GET_VALUE_T
 #undef QUEUENODE_SET_VALUE_T
+#undef QUEUE_PEEK_T
+#undef QUEUE_PEEK_FIRST_T
+#undef QUEUE_PEEK_LAST_T
+#undef QUEUE_ENQUEUE_T
+#undef QUEUE_DEQUEUE_T
 
 #undef VALUE_TYPE
 #undef VALUE_LABEL

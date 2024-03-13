@@ -15,11 +15,11 @@ typedef struct {
     size_t count;
 } Stack;
 
-bool stack_init(Stack** stack_pp, size_t value_size);
+bool stack_init(Stack** stack_pp, const size_t value_size);
 
 bool stack_deinit(Stack** stack_pp);
 
-StackNode* stack_peek(const Stack* stack_p);
+const StackNode* stack_peek(const Stack* stack_p);
 
 size_t stack_count(const Stack* stack_p);
 

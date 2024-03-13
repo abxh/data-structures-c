@@ -24,11 +24,11 @@ bool queue_isempty(const Queue* queue_p);
 
 size_t queue_count(const Queue* queue_p);
 
-QueueNode* queue_peek(const Queue* queue_p);
+const QueueNode* queue_peek(const Queue* queue_p);
 
-QueueNode* queue_peek_first(const Queue* queue_p);
+const QueueNode* queue_peek_first(const Queue* queue_p);
 
-QueueNode* queue_peek_last(const Queue* queue_p);
+const QueueNode* queue_peek_last(const Queue* queue_p);
 
 bool queue_enqueue(Queue* queue_p, QueueNode* node_p);
 

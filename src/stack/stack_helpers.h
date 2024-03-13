@@ -33,22 +33,31 @@
 
 #define STACKNODE_GET_VALUE_T JOIN(stacknode_get_value, VALUE_TYPE)
 #define STACKNODE_SET_VALUE_T JOIN(stacknode_set_value, VALUE_TYPE)
+#define STACK_PEEK_T JOIN(stack_peek, VALUE_LABEL)
+#define STACK_PUSH_T JOIN(stack_push, VALUE_LABEL)
+#define STACK_POP_T JOIN(stack_pop, VALUE_LABEL)
 
-static inline VALUE_TYPE STACKNODE_GET_VALUE_T(StackNode* node_p) {
+static inline VALUE_TYPE STACKNODE_GET_VALUE_T(const StackNode* node_p) {
+    assert(node_p != NULL);
+
     return *(VALUE_TYPE*)node_p->value_p;
 }
 
 static inline void STACKNODE_SET_VALUE_T(StackNode* node_p, VALUE_TYPE value) {
+    assert(node_p != NULL);
+
     *(VALUE_TYPE*)node_p->value_p = value;
 }
 
-static inline VALUE_TYPE JOIN(stack_peek, VALUE_LABEL)(Stack* stack_p) {
+static inline VALUE_TYPE STACK_PEEK_T(const Stack* stack_p) {
+    assert(stack_p != NULL);
     assert(stack_p->value_size == sizeof(VALUE_TYPE));
 
     return STACKNODE_GET_VALUE_T(stack_peek(stack_p));
 }
 
-static inline bool JOIN(stack_push, VALUE_LABEL)(Stack* stack_p, VALUE_TYPE value) {
+static inline bool STACK_PUSH_T(Stack* stack_p, VALUE_TYPE value) {
+    assert(stack_p != NULL);
     assert(stack_p->value_size == sizeof(VALUE_TYPE));
 
     StackNode* node_p = (StackNode*)malloc(sizeof(StackNode));
@@ -67,7 +76,8 @@ static inline bool JOIN(stack_push, VALUE_LABEL)(Stack* stack_p, VALUE_TYPE valu
     return true;
 }
 
-static inline VALUE_TYPE JOIN(stack_pop, VALUE_LABEL)(Stack* stack_p) {
+static inline VALUE_TYPE STACK_POP_T(Stack* stack_p) {
+    assert(stack_p != NULL);
     assert(stack_p->value_size == sizeof(VALUE_TYPE));
 
     StackNode* node_p = stack_pop(stack_p);
@@ -83,6 +93,9 @@ static inline VALUE_TYPE JOIN(stack_pop, VALUE_LABEL)(Stack* stack_p) {
 
 #undef STACKNODE_GET_VALUE_T
 #undef STACKNODE_SET_VALUE_T
+#undef STACK_PEEK_T
+#undef STACK_PUSH_T
+#undef STACK_POP_T
 
 #undef VALUE_TYPE
 #undef VALUE_LABEL
