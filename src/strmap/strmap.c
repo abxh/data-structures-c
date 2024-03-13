@@ -176,7 +176,7 @@ static int strmap_grow_if_necessary(StrMap* strmap_p, size_t chain_length) {
         return -1;
     }
     strmap_p->lists_p = lists_p;
-    StrMapNode* node_p = strmap_get_flattened_lists(strmap_p, old_list_count);
+    StrMapNode* node_p = strmap_create_flattened_list(strmap_p, old_list_count);
     memset(lists_p, 0, sizeof(StrMapNodeList) * new_list_count);
 
     size_t max_node_count = 0;
