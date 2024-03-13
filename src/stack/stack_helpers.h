@@ -16,7 +16,6 @@
 #include "stack.h"
 #include <assert.h> // assert
 #include <stdlib.h> // NULL, size_t, malloc, free
-#include <string.h> // memcpy
 
 #ifndef VALUE_LABEL
 #error "Must declare VALUE_LABEL. Defaulting to 'int'."
@@ -40,7 +39,7 @@ static inline VALUE_TYPE STACKNODE_GET_VALUE_T(StackNode* node_p) {
 }
 
 static inline void STACKNODE_SET_VALUE_T(StackNode* node_p, VALUE_TYPE value) {
-    memcpy(node_p->value_p, &value, sizeof(VALUE_TYPE));
+    *(VALUE_TYPE*)node_p->value_p = value;
 }
 
 static inline VALUE_TYPE JOIN(stack_peek, VALUE_LABEL)(Stack* stack_p) {

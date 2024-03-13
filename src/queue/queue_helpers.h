@@ -16,7 +16,6 @@
 #include "queue.h"
 #include <assert.h> // assert
 #include <stdlib.h> // NULL, size_t, malloc, free
-#include <string.h> // memcpy
 
 #ifndef VALUE_LABEL
 #error "Must declare VALUE_LABEL. Defaulting to 'int'."
@@ -40,7 +39,7 @@ static inline VALUE_TYPE QUEUENODE_GET_VALUE_T(QueueNode* node_p) {
 }
 
 static inline void QUEUENODE_SET_VALUE_T(QueueNode* node_p, VALUE_TYPE value) {
-    memcpy(node_p->value_p, &value, sizeof(VALUE_TYPE));
+    *(VALUE_TYPE*)node_p->value_p = value;
 }
 
 static inline VALUE_TYPE JOIN(queue_peek, VALUE_LABEL)(Queue* queue_p) {

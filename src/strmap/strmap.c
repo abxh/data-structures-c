@@ -164,7 +164,7 @@ static StrMapNode* strmap_create_chain(StrMap* strmap_p, size_t list_count) {
     return head_p;
 }
 
-static int strmap_resize_if_necessary(StrMap* strmap_p, size_t chain_length) {
+static int strmap_grow_if_necessary(StrMap* strmap_p, size_t chain_length) {
     if (chain_length <= MAX_CHAIN_LENGTH) {
         return 0;
     }
@@ -204,7 +204,7 @@ static int strmap_resize_if_necessary(StrMap* strmap_p, size_t chain_length) {
     strmap_p->list_count = new_list_count;
 
     if (max_node_count > MAX_CHAIN_LENGTH) {
-        return strmap_resize_if_necessary(strmap_p, max_node_count);
+        return strmap_grow_if_necessary(strmap_p, max_node_count);
     }
 
     return 1;
@@ -234,7 +234,7 @@ bool strmap_set(StrMap* strmap_p, const char* key_p, const char* value_p) {
     uint64_t hash = fnv_hash64((unsigned char*)key_p);
     uint64_t index = hash & (strmap_p->list_count - 1);
 
-    int rtr_val = strmap_resize_if_necessary(strmap_p, strmap_p->lists_p[index].node_count + 1);
+    int rtr_val = strmap_grow_if_necessary(strmap_p, strmap_p->lists_p[index].node_count + 1);
     if (rtr_val == -1) {
         return false;
     } else if (rtr_val == 1) {
