@@ -138,7 +138,7 @@ bool strmap_del(StrMap* strmap_p, const char* key_p) {
     return false;
 }
 
-static StrMapNode* strmap_create_chain(StrMap* strmap_p, size_t list_count) {
+static StrMapNode* strmap_create_flattened_list(StrMap* strmap_p, size_t list_count) {
     StrMapNode* head_p = NULL;
     StrMapNode* tail_p = NULL;
     StrMapNodeList* lists_p = strmap_p->lists_p;
@@ -176,7 +176,7 @@ static int strmap_grow_if_necessary(StrMap* strmap_p, size_t chain_length) {
         return -1;
     }
     strmap_p->lists_p = lists_p;
-    StrMapNode* node_p = strmap_create_chain(strmap_p, old_list_count);
+    StrMapNode* node_p = strmap_get_flattened_lists(strmap_p, old_list_count);
     memset(lists_p, 0, sizeof(StrMapNodeList) * new_list_count);
 
     size_t max_node_count = 0;
