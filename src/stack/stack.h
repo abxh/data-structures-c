@@ -30,5 +30,5 @@ void stack_push(Stack* stack_p, StackNode* node_p);
 StackNode* stack_pop(Stack* stack_p);
 
 #define stack_foreach(stack_p, node_p, value)                                            \
-    for ((assert((stack_p)->value_size == sizeof(value)), (node_p) = (stack_p)->head_p); \
+    for ((assert(sizeof(value) == (stack_p)->value_size), (node_p) = (stack_p)->head_p); \
          (node_p) != NULL && ((value) = *(typeof(value)*)(node_p)->value_p, true); (node_p) = (node_p)->next_p)

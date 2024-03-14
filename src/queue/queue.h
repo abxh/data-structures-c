@@ -35,5 +35,5 @@ bool queue_enqueue(Queue* queue_p, QueueNode* node_p);
 QueueNode* queue_dequeue(Queue* queue_p);
 
 #define queue_foreach(queue_p, node_p, value)                                            \
-    for ((assert((queue_p)->value_size == sizeof(value)), (node_p) = (queue_p)->head_p); \
+    for ((assert(sizeof(value) == (queue_p)->value_size), (node_p) = (queue_p)->head_p); \
          (node_p) != NULL && ((value) = *(typeof(value)*)(node_p)->value_p, true); (node_p) = (node_p)->next_p)

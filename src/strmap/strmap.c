@@ -20,10 +20,11 @@ static uint64_t fnv_hash64(const unsigned char* char_p) {
     static const uint64_t FNV_PRIME = 1099511628211UL;
 
     uint64_t hash = FNV_OFFSET;
-    while (*char_p) {
+    while (*char_p != '\0') {
         hash ^= *(char_p++);
         hash *= FNV_PRIME;
     }
+
     return hash;
 }
 
@@ -95,7 +96,7 @@ bool strmap_exists(const StrMap* strmap_p, const char* key_p) {
     return false;
 }
 
-char* strmap_get(const StrMap* strmap_p, const char* key_p) {
+const char* strmap_get(const StrMap* strmap_p, const char* key_p) {
     assert(strmap_p != NULL);
     assert(key_p != NULL);
 

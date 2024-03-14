@@ -168,7 +168,7 @@ bool million_elements_test(void) {
             str2[i] = '!' + rand() % ('~' - '!');
         }
 
-        void* value_p = strmap_get(strmap_p, str1);
+        const char* value_p = strmap_get(strmap_p, str1);
         if (value_p != NULL) {
             res &= strcmp(value_p, str2) == 0;
             res &= strmap_del(strmap_p, str1);
