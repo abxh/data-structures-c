@@ -224,9 +224,6 @@ static int strmap_grow_if_necessary(StrMap* strmap_p, size_t chain_length) {
     // memset array values to 0 or NULL.
     memset(lists_p, 0, sizeof(StrMapNodeList) * new_list_count);
 
-    // maintain a max_node_count
-    size_t max_node_count = 0;
-
     // reinsert every node
     while (node_p != NULL) {
         uint64_t hash = fnv_hash64((unsigned char*)node_p->key_p);
@@ -246,16 +243,10 @@ static int strmap_grow_if_necessary(StrMap* strmap_p, size_t chain_length) {
             lists_p[index].head_p = node_p;
             lists_p[index].node_count++;
         }
-
-        max_node_count = lists_p[index].node_count > max_node_count ? lists_p[index].node_count : max_node_count;
-
+        
         node_p = next_temp_p;
     }
     strmap_p->list_count = new_list_count;
-
-    if (max_node_count > MAX_CHAIN_LENGTH) {
-        return strmap_grow_if_necessary(strmap_p, max_node_count);
-    }
 
     return 1;
 }
