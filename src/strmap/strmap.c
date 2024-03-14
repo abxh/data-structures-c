@@ -112,7 +112,7 @@ const char* strmap_get(const StrMap* strmap_p, const char* key_p) {
         node_p = node_p->next_p;
     }
 
-    return STRMAP_DEFAULT_GET_VALUE;
+    return STRMAP_GET_VALUE_DEFAULT;
 }
 
 bool strmap_del(StrMap* strmap_p, const char* key_p) {
