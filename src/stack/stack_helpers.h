@@ -31,8 +31,8 @@
 #define PASTE(a, b) CAT(a, b)
 #define JOIN(prefix, name) PASTE(prefix, PASTE(_, name))
 
-#define stacknode_get_value_T JOIN(stacknode_get_value, VALUE_TYPE)
-#define stacknode_set_value_T JOIN(stacknode_set_value, VALUE_TYPE)
+#define stacknode_get_value_T JOIN(stacknode_get_value, VALUE_LABEL)
+#define stacknode_set_value_T JOIN(stacknode_set_value, VALUE_LABEL)
 #define stack_peek_T JOIN(stack_peek, VALUE_LABEL)
 #define stack_push_T JOIN(stack_push, VALUE_LABEL)
 #define stack_pop_T JOIN(stack_pop, VALUE_LABEL)

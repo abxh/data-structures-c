@@ -31,8 +31,8 @@
 #define PASTE(a, b) CAT(a, b)
 #define JOIN(prefix, name) PASTE(prefix, PASTE(_, name))
 
-#define queuenode_get_value_T JOIN(queuenode_get_value, VALUE_TYPE)
-#define queuenode_set_value_T JOIN(queuenode_set_value, VALUE_TYPE)
+#define queuenode_get_value_T JOIN(queuenode_get_value, VALUE_LABEL)
+#define queuenode_set_value_T JOIN(queuenode_set_value, VALUE_LABEL)
 #define queue_peek_T JOIN(queue_peek, VALUE_LABEL)
 #define queue_peek_first_T JOIN(queue_peek_first, VALUE_LABEL)
 #define queue_peek_last_T JOIN(queue_peek_last, VALUE_LABEL)
