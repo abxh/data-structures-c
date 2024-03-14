@@ -190,7 +190,7 @@ static StrMapNode* strmap_create_flattened_list(StrMap* strmap_p, size_t list_co
         break;
     }
 
-    // flattern other lists by stringing them together
+    // flattern other nonempty lists by stringing them together
     for (size_t i = next_index; i < list_count; i++) {
         if (lists_p[i].head_p == NULL) {
             continue;
