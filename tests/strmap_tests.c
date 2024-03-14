@@ -127,8 +127,10 @@ bool million_elements_test(void) {
         return false;
     }
     bool res = true;
+
+    unsigned int seed = 42;
     
-    srand(0);
+    srand(seed);
     for (size_t i = 0; i < 1000000; i++) {
         size_t len1 = rand() & 15;
         char* str1 = malloc(len1 + 1);
@@ -152,7 +154,7 @@ bool million_elements_test(void) {
         free(str2);
     }
     
-    srand(0);
+    srand(seed);
     for (size_t i = 0; i < 1000000; i--) {
         size_t len1 = rand() & 15;
         char* str1 = malloc(len1 + 1);
