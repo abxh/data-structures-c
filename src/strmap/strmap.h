@@ -21,7 +21,7 @@ typedef struct {
     StrMapNodeList* lists_p;
 } StrMap;
 
-#define STRMAP_DEFAULT_GET_VALUE NULL
+#define STRMAP_GET_VALUE_DEFAULT NULL
 
 bool strmap_init(StrMap** strmap_pp);
 
