@@ -14,7 +14,7 @@ typedef struct {
     size_t value_size;
     size_t count;
 
-    StackNode* freed_nodes;
+    StackNode* freed_nodes_p;
 } Stack;
 
 bool stack_init(Stack** stack_pp, const size_t value_size);

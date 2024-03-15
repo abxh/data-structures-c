@@ -17,6 +17,7 @@ bool queue_init(Queue** queue_pp, size_t value_size) {
     (*queue_pp)->tail_p = NULL;
     (*queue_pp)->count = 0;
     (*queue_pp)->value_size = value_size;
+    (*queue_pp)->freed_nodes_p = NULL;
 
     return true;
 }
@@ -106,4 +107,27 @@ QueueNode* queue_dequeue_node(Queue* queue_p) {
     queue_p->count--;
 
     return node_p;
+}
+
+QueueNode* queuenode_create(Queue* queue_p) {
+    if (queue_p->freed_nodes_p != NULL) {
+        QueueNode* node_p = queue_p->freed_nodes_p;
+        queue_p->freed_nodes_p = queue_p->freed_nodes_p->next_p;
+        return node_p;
+    }
+    QueueNode* node_p = (QueueNode*)malloc(sizeof(QueueNode));
+    if (node_p == NULL) {
+        return NULL;
+    }
+    node_p->value_p = malloc(sizeof(queue_p->value_size));
+    if (node_p->value_p == NULL) {
+        free(node_p);
+        return NULL;
+    }
+    return node_p;
+}
+
+void queuenode_free(Queue* queue_p, QueueNode* node_p) {
+    node_p->next_p = queue_p->freed_nodes_p;
+    queue_p->freed_nodes_p = node_p;
 }

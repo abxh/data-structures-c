@@ -76,17 +76,11 @@ static inline bool queue_enqueue_T(Queue* queue_p, VALUE_TYPE value) {
     assert(queue_p != NULL);
     assert(queue_p->value_size == sizeof(VALUE_TYPE));
 
-    QueueNode* node_p = (QueueNode*)malloc(sizeof(QueueNode));
+    QueueNode* node_p = queuenode_create(queue_p);
     if (node_p == NULL) {
         return false;
     }
-    node_p->value_p = malloc(sizeof(VALUE_TYPE));
-    if (node_p->value_p == NULL) {
-        free(node_p);
-        return false;
-    }
     queuenode_set_value_to_T(node_p, value);
-
     queue_enqueue_node(queue_p, node_p);
 
     return true;
@@ -97,12 +91,8 @@ static inline VALUE_TYPE queue_dequeue_T(Queue* queue_p) {
     assert(queue_p->value_size == sizeof(VALUE_TYPE));
 
     QueueNode* node_p = queue_dequeue_node(queue_p);
-    void* value_p = node_p->value_p;
-
     VALUE_TYPE value = queuenode_get_value_as_T(node_p);
-
-    free(value_p);
-    free(node_p);
+    queuenode_free(queue_p, node_p);
 
     return value;
 }

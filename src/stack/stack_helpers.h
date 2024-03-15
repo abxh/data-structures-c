@@ -72,6 +72,9 @@ static inline VALUE_TYPE stack_pop_T(Stack* stack_p) {
     assert(stack_p->value_size == sizeof(VALUE_TYPE));
 
     StackNode* node_p = stack_pop_node(stack_p);
+    if (node_p == NULL) {
+        return false;
+    }
     VALUE_TYPE value = stacknode_get_value_as_T(node_p);
     stacknode_free(stack_p, node_p);
 

@@ -14,6 +14,8 @@ typedef struct {
     QueueNode* tail_p;
     size_t count;
     size_t value_size;
+
+    QueueNode* freed_nodes_p;
 } Queue;
 
 bool queue_init(Queue** queue_pp, size_t value_size);
@@ -33,6 +35,10 @@ const QueueNode* queue_peek_last_node(const Queue* queue_p);
 bool queue_enqueue_node(Queue* queue_p, QueueNode* node_p);
 
 QueueNode* queue_dequeue_node(Queue* queue_p);
+
+QueueNode* queuenode_create(Queue* queue_p);
+
+void queuenode_free(Queue* queue_p, QueueNode* node_p);
 
 #define queue_foreach(queue_p, node_p, value)                                            \
     for ((assert(sizeof(value) == (queue_p)->value_size), (node_p) = (queue_p)->head_p); \
