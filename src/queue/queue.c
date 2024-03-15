@@ -29,6 +29,13 @@ bool queue_deinit(Queue** queue_pp) {
         return false;
     }
 
+    // free "freed" nodes as well
+    if ((*queue_pp)->head_p == NULL) {
+        (*queue_pp)->head_p = (*queue_pp)->freed_nodes_p;
+    } else {
+        (*queue_pp)->tail_p->next_p = (*queue_pp)->freed_nodes_p;
+    }
+
     // traverse list and free nodes one by one
     QueueNode* head_p = (*queue_pp)->head_p;
     QueueNode* next_p = NULL;

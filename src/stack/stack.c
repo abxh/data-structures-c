@@ -38,6 +38,15 @@ bool stack_deinit(Stack** stack_pp) {
         head_p = next_p;
     }
 
+    head_p = (*stack_pp)->freed_nodes_p;
+    next_p = NULL;
+    while (head_p != NULL) {
+        next_p = head_p->next_p;
+        free(head_p->value_p);
+        free(head_p);
+        head_p = next_p;
+    }
+
     free(*stack_pp);
     (*stack_pp) = NULL;
 
