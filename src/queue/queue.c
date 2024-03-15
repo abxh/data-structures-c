@@ -56,28 +56,28 @@ size_t queue_count(const Queue* queue_p) {
     return queue_p->count;
 }
 
-const QueueNode* queue_peek(const Queue* queue_p) {
+const QueueNode* queue_peek_node(const Queue* queue_p) {
     assert(queue_p != NULL);
     assert(queue_isempty(queue_p) == false);
 
     return queue_p->head_p;
 }
 
-const QueueNode* queue_peek_first(const Queue* queue_p) {
+const QueueNode* queue_peek_first_node(const Queue* queue_p) {
     assert(queue_p != NULL);
     assert(queue_isempty(queue_p) == false);
 
     return queue_p->head_p;
 }
 
-const QueueNode* queue_peek_last(const Queue* queue_p) {
+const QueueNode* queue_peek_last_node(const Queue* queue_p) {
     assert(queue_p != NULL);
     assert(queue_isempty(queue_p) == false);
 
     return queue_p->tail_p;
 }
 
-bool queue_enqueue(Queue* queue_p, QueueNode* node_p) {
+bool queue_enqueue_node(Queue* queue_p, QueueNode* node_p) {
     assert(queue_p != NULL);
     assert(node_p != NULL);
 
@@ -94,7 +94,7 @@ bool queue_enqueue(Queue* queue_p, QueueNode* node_p) {
     return true;
 }
 
-QueueNode* queue_dequeue(Queue* queue_p) {
+QueueNode* queue_dequeue_node(Queue* queue_p) {
     assert(queue_p != NULL);
     assert(queue_isempty(queue_p) == false);
 
