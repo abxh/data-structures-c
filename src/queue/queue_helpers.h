@@ -55,21 +55,21 @@ static inline VALUE_TYPE queue_peek_T(const Queue* queue_p) {
     assert(queue_p != NULL);
     assert(queue_p->value_size == sizeof(VALUE_TYPE));
 
-    return queuenode_get_value_T(queue_peek(queue_p));
+    return queuenode_get_value_T(queue_peek_node(queue_p));
 }
 
 static inline VALUE_TYPE queue_peek_first_T(const Queue* queue_p) {
     assert(queue_p != NULL);
     assert(queue_p->value_size == sizeof(VALUE_TYPE));
 
-    return queuenode_get_value_T(queue_peek_first(queue_p));
+    return queuenode_get_value_T(queue_peek_first_node(queue_p));
 }
 
 static inline VALUE_TYPE queue_peek_last_T(const Queue* queue_p) {
     assert(queue_p != NULL);
     assert(queue_p->value_size == sizeof(VALUE_TYPE));
 
-    return queuenode_get_value_T(queue_peek_last(queue_p));
+    return queuenode_get_value_T(queue_peek_last_node(queue_p));
 }
 
 static inline bool queue_enqueue_T(Queue* queue_p, VALUE_TYPE value) {
@@ -87,7 +87,7 @@ static inline bool queue_enqueue_T(Queue* queue_p, VALUE_TYPE value) {
     }
     queuenode_set_value_T(node_p, value);
 
-    queue_enqueue(queue_p, node_p);
+    queue_enqueue_node(queue_p, node_p);
 
     return true;
 }
@@ -96,7 +96,7 @@ static inline VALUE_TYPE queue_dequeue_T(Queue* queue_p) {
     assert(queue_p != NULL);
     assert(queue_p->value_size == sizeof(VALUE_TYPE));
 
-    QueueNode* node_p = queue_dequeue(queue_p);
+    QueueNode* node_p = queue_dequeue_node(queue_p);
     void* value_p = node_p->value_p;
 
     VALUE_TYPE value = queuenode_get_value_T(node_p);

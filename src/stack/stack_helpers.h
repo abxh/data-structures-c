@@ -53,7 +53,7 @@ static inline VALUE_TYPE stack_peek_T(const Stack* stack_p) {
     assert(stack_p != NULL);
     assert(stack_p->value_size == sizeof(VALUE_TYPE));
 
-    return stacknode_get_value_T(stack_peek(stack_p));
+    return stacknode_get_value_T(stack_peek_node(stack_p));
 }
 
 static inline bool stack_push_T(Stack* stack_p, VALUE_TYPE value) {
@@ -71,7 +71,7 @@ static inline bool stack_push_T(Stack* stack_p, VALUE_TYPE value) {
     }
     stacknode_set_value_T(node_p, value);
 
-    stack_push(stack_p, node_p);
+    stack_push_node(stack_p, node_p);
 
     return true;
 }
@@ -80,7 +80,7 @@ static inline VALUE_TYPE stack_pop_T(Stack* stack_p) {
     assert(stack_p != NULL);
     assert(stack_p->value_size == sizeof(VALUE_TYPE));
 
-    StackNode* node_p = stack_pop(stack_p);
+    StackNode* node_p = stack_pop_node(stack_p);
     void* value_p = node_p->value_p;
 
     VALUE_TYPE value = stacknode_get_value_T(node_p);

@@ -55,14 +55,14 @@ bool stack_isempty(const Stack* stack_p) {
     return stack_p->head_p == NULL;
 }
 
-const StackNode* stack_peek(const Stack* stack_p) {
+const StackNode* stack_peek_node(const Stack* stack_p) {
     assert(stack_p != NULL);
     assert(stack_isempty(stack_p) == false);
 
     return stack_p->head_p;
 }
 
-void stack_push(Stack* stack_p, StackNode* node_p) {
+void stack_push_node(Stack* stack_p, StackNode* node_p) {
     assert(stack_p != NULL);
 
     node_p->next_p = stack_p->head_p;
@@ -70,7 +70,7 @@ void stack_push(Stack* stack_p, StackNode* node_p) {
     stack_p->count++;
 }
 
-StackNode* stack_pop(Stack* stack_p) {
+StackNode* stack_pop_node(Stack* stack_p) {
     assert(stack_p != NULL);
     assert(stack_isempty(stack_p) == false);
 

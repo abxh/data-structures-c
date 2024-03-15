@@ -24,15 +24,15 @@ bool queue_isempty(const Queue* queue_p);
 
 size_t queue_count(const Queue* queue_p);
 
-const QueueNode* queue_peek(const Queue* queue_p);
+const QueueNode* queue_peek_node(const Queue* queue_p);
 
-const QueueNode* queue_peek_first(const Queue* queue_p);
+const QueueNode* queue_peek_first_node(const Queue* queue_p);
 
-const QueueNode* queue_peek_last(const Queue* queue_p);
+const QueueNode* queue_peek_last_node(const Queue* queue_p);
 
-bool queue_enqueue(Queue* queue_p, QueueNode* node_p);
+bool queue_enqueue_node(Queue* queue_p, QueueNode* node_p);
 
-QueueNode* queue_dequeue(Queue* queue_p);
+QueueNode* queue_dequeue_node(Queue* queue_p);
 
 #define queue_foreach(queue_p, node_p, value)                                            \
     for ((assert(sizeof(value) == (queue_p)->value_size), (node_p) = (queue_p)->head_p); \

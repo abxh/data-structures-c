@@ -19,15 +19,15 @@ bool stack_init(Stack** stack_pp, const size_t value_size);
 
 bool stack_deinit(Stack** stack_pp);
 
-const StackNode* stack_peek(const Stack* stack_p);
+const StackNode* stack_peek_node(const Stack* stack_p);
 
 size_t stack_count(const Stack* stack_p);
 
 bool stack_isempty(const Stack* stack_p);
 
-void stack_push(Stack* stack_p, StackNode* node_p);
+void stack_push_node(Stack* stack_p, StackNode* node_p);
 
-StackNode* stack_pop(Stack* stack_p);
+StackNode* stack_pop_node(Stack* stack_p);
 
 #define stack_foreach(stack_p, node_p, value)                                            \
     for ((assert(sizeof(value) == (stack_p)->value_size), (node_p) = (stack_p)->head_p); \
