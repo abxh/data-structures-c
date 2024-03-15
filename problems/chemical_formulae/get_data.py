@@ -16,4 +16,4 @@ print(df_new)
 print();
 print("Writing to data.csv")
 
-df_new.to_csv("data.csv", index=False, header=False)
+df_new.to_csv("data.csv", index=False)
