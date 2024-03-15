@@ -117,6 +117,8 @@ QueueNode* queue_dequeue_node(Queue* queue_p) {
 }
 
 QueueNode* queuenode_create(Queue* queue_p) {
+    assert(queue_p != NULL);
+
     if (queue_p->freed_nodes_p != NULL) {
         QueueNode* node_p = queue_p->freed_nodes_p;
         queue_p->freed_nodes_p = queue_p->freed_nodes_p->next_p;
@@ -135,6 +137,9 @@ QueueNode* queuenode_create(Queue* queue_p) {
 }
 
 void queuenode_free(Queue* queue_p, QueueNode* node_p) {
+    assert(queue_p != NULL);
+    assert(node_p != NULL);
+
     node_p->next_p = queue_p->freed_nodes_p;
     queue_p->freed_nodes_p = node_p;
 }

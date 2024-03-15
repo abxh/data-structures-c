@@ -92,11 +92,14 @@ StackNode* stack_pop_node(Stack* stack_p) {
 }
 
 StackNode* stacknode_create(Stack* stack_p) {
+    assert(stack_p != NULL);
+
     if (stack_p->freed_nodes_p != NULL) {
         StackNode* node_p = stack_p->freed_nodes_p;
         stack_p->freed_nodes_p = stack_p->freed_nodes_p->next_p;
         return node_p;
     }
+
     StackNode* node_p = (StackNode*)malloc(sizeof(StackNode));
     if (node_p == NULL) {
         return NULL;
@@ -106,10 +109,14 @@ StackNode* stacknode_create(Stack* stack_p) {
         free(node_p);
         return NULL;
     }
+
     return node_p;
 }
 
 void stacknode_free(Stack* stack_p, StackNode* node_p) {
+    assert(stack_p != NULL);
+    assert(node_p != NULL);
+
     node_p->next_p = stack_p->freed_nodes_p;
     stack_p->freed_nodes_p = node_p;
 }
