@@ -60,17 +60,8 @@ static inline bool stack_push_T(Stack* stack_p, VALUE_TYPE value) {
     assert(stack_p != NULL);
     assert(stack_p->value_size == sizeof(VALUE_TYPE));
 
-    StackNode* node_p = (StackNode*)malloc(sizeof(StackNode));
-    if (node_p == NULL) {
-        return false;
-    }
-    node_p->value_p = malloc(sizeof(VALUE_TYPE));
-    if (node_p->value_p == NULL) {
-        free(node_p);
-        return false;
-    }
+    StackNode* node_p = stacknode_create(stack_p);
     stacknode_set_value_to_T(node_p, value);
-
     stack_push_node(stack_p, node_p);
 
     return true;
@@ -81,12 +72,8 @@ static inline VALUE_TYPE stack_pop_T(Stack* stack_p) {
     assert(stack_p->value_size == sizeof(VALUE_TYPE));
 
     StackNode* node_p = stack_pop_node(stack_p);
-    void* value_p = node_p->value_p;
-
     VALUE_TYPE value = stacknode_get_value_as_T(node_p);
-
-    free(value_p);
-    free(node_p);
+    stacknode_free(stack_p, node_p);
 
     return value;
 }

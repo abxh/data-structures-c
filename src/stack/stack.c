@@ -16,6 +16,7 @@ bool stack_init(Stack** stack_pp, const size_t value_size) {
     (*stack_pp)->head_p = NULL;
     (*stack_pp)->count = 0;
     (*stack_pp)->value_size = value_size;
+    (*stack_pp)->freed_nodes = NULL;
 
     return true;
 }
@@ -79,4 +80,27 @@ StackNode* stack_pop_node(Stack* stack_p) {
     stack_p->count--;
 
     return node_p;
+}
+
+StackNode* stacknode_create(Stack* stack_p) {
+    if (stack_p->freed_nodes != NULL) {
+        StackNode* node_p = stack_p->freed_nodes;
+        stack_p->freed_nodes = stack_p->freed_nodes->next_p;
+        return node_p;
+    }
+    StackNode* node_p = (StackNode*)malloc(sizeof(StackNode));
+    if (node_p == NULL) {
+        return false;
+    }
+    node_p->value_p = malloc(sizeof(stack_p->value_size));
+    if (node_p->value_p == NULL) {
+        free(node_p);
+        return false;
+    }
+    return node_p;
+}
+
+void stacknode_free(Stack* stack_p, StackNode* node_p) {
+    node_p->next_p = stack_p->freed_nodes;
+    stack_p->freed_nodes = node_p;
 }

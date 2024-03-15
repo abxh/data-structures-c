@@ -13,6 +13,8 @@ typedef struct {
     StackNode* head_p;
     size_t value_size;
     size_t count;
+
+    StackNode* freed_nodes;
 } Stack;
 
 bool stack_init(Stack** stack_pp, const size_t value_size);
@@ -28,6 +30,10 @@ bool stack_isempty(const Stack* stack_p);
 void stack_push_node(Stack* stack_p, StackNode* node_p);
 
 StackNode* stack_pop_node(Stack* stack_p);
+
+StackNode* stacknode_create(Stack* stack_p);
+
+void stacknode_free(Stack* stack_p, StackNode* node_p);
 
 #define stack_foreach(stack_p, node_p, value)                                            \
     for ((assert(sizeof(value) == (stack_p)->value_size), (node_p) = (stack_p)->head_p); \
