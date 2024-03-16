@@ -1,6 +1,5 @@
 #pragma once
 
-#include <assert.h>  // assert
 #include <stdbool.h> // bool
 #include <stdlib.h>  // size_t
 
@@ -40,6 +39,6 @@ QueueNode* queuenode_create(Queue* queue_p);
 
 void queuenode_free(Queue* queue_p, QueueNode* node_p);
 
-#define queue_foreach(queue_p, node_p, value)                                            \
-    for ((assert(sizeof(value) == (queue_p)->value_size), (node_p) = (queue_p)->head_p); \
-         (node_p) != NULL && ((value) = *(typeof(value)*)(node_p)->value_p, true); (node_p) = (node_p)->next_p)
+#define queue_foreach(queue_p, node_p, value)                                                                    \
+    for ((node_p) = (queue_p)->head_p; (node_p) != NULL && ((value) = *(typeof(value)*)(node_p)->value_p, true); \
+         (node_p) = (node_p)->next_p)

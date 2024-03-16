@@ -1,6 +1,5 @@
 #pragma once
 
-#include <assert.h>  // assert
 #include <stdbool.h> // bool
 #include <stdlib.h>  // size_t
 
@@ -35,6 +34,6 @@ StackNode* stacknode_create(Stack* stack_p);
 
 void stacknode_free(Stack* stack_p, StackNode* node_p);
 
-#define stack_foreach(stack_p, node_p, value)                                            \
-    for ((assert(sizeof(value) == (stack_p)->value_size), (node_p) = (stack_p)->head_p); \
-         (node_p) != NULL && ((value) = *(typeof(value)*)(node_p)->value_p, true); (node_p) = (node_p)->next_p)
+#define stack_foreach(stack_p, node_p, value)                                                                    \
+    for ((node_p) = (stack_p)->head_p; (node_p) != NULL && ((value) = *(typeof(value)*)(node_p)->value_p, true); \
+         (node_p) = (node_p)->next_p)

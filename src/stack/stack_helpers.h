@@ -41,7 +41,6 @@ static inline bool stack_push_T(Stack* stack_p, VALUE_TYPE value) {
     StackNode* node_p = stacknode_create(stack_p);
     *(VALUE_TYPE*)node_p->value_p = value;
     stack_push_node(stack_p, node_p);
-
     return true;
 }
 
@@ -52,7 +51,6 @@ static inline VALUE_TYPE stack_pop_T(Stack* stack_p) {
     }
     VALUE_TYPE value = *(VALUE_TYPE*)node_p->value_p;
     stacknode_free(stack_p, node_p);
-
     return value;
 }
 
