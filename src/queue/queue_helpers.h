@@ -15,6 +15,7 @@
 
 #include "queue.h"
 #include <stdlib.h> // NULL, size_t, malloc, free
+#include <stdio.h> // stderr, fprintf
 
 #ifndef VALUE_LABEL
 #error "Must declare VALUE_LABEL. Defaulting to 'int'."
@@ -37,15 +38,15 @@
 #define queue_dequeue_T JOIN(queue_dequeue, VALUE_LABEL)
 
 static inline VALUE_TYPE queue_peek_T(const Queue* queue_p) {
-    return *(VALUE_TYPE*)(queue_peek_node(queue_p));
+    return *(VALUE_TYPE*)(queue_peek_node(queue_p)->value_p);
 }
 
 static inline VALUE_TYPE queue_peek_first_T(const Queue* queue_p) {
-    return *(VALUE_TYPE*)(queue_peek_first_node(queue_p));
+    return *(VALUE_TYPE*)(queue_peek_first_node(queue_p)->value_p);
 }
 
 static inline VALUE_TYPE queue_peek_last_T(const Queue* queue_p) {
-    return *(VALUE_TYPE*)(queue_peek_last_node(queue_p));
+    return *(VALUE_TYPE*)(queue_peek_last_node(queue_p)->value_p);
 }
 
 static inline bool queue_enqueue_T(Queue* queue_p, VALUE_TYPE value) {

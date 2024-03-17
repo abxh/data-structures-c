@@ -15,7 +15,7 @@ bool empty_test(void) {
     bool res = true;
 
     res &= stack_count(s) == 0;
-    res &= stack_isempty(s);
+    res &= stack_is_empty(s);
     res &= stack_deinit(&s);
 
     return res;
@@ -31,11 +31,11 @@ bool one_element_test(void) {
 
     res &= stack_push_int(s, value);
     res &= value == stack_peek_int(s);
-    res &= !stack_isempty(s);
+    res &= !stack_is_empty(s);
     res &= stack_count(s) == 1;
 
     res &= value == stack_pop_int(s);
-    res &= stack_isempty(s);
+    res &= stack_is_empty(s);
     res &= stack_count(s) == 0;
 
     res &= stack_deinit(&s);
@@ -71,7 +71,7 @@ bool foreach_test(void) {
     int x = 100;
     StackNode* node_p;
     int value;
-    stack_foreach(s, node_p, value) {
+    stack_for_each(s, node_p, value) {
         res &= x == value;
         x--;
     }

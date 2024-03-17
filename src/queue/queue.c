@@ -17,7 +17,7 @@ bool queue_init(Queue** queue_pp, size_t value_size) {
     (*queue_pp)->tail_p = NULL;
     (*queue_pp)->count = 0;
     (*queue_pp)->value_size = value_size;
-    (*queue_pp)->freed_nodes_p = NULL;
+    (*queue_pp)->freelist_p = NULL;
 
     return true;
 }
@@ -29,11 +29,11 @@ bool queue_deinit(Queue** queue_pp) {
         return false;
     }
 
-    // free "freed" nodes as well
+    // free freelist nodes as well
     if ((*queue_pp)->head_p == NULL) {
-        (*queue_pp)->head_p = (*queue_pp)->freed_nodes_p;
+        (*queue_pp)->head_p = (*queue_pp)->freelist_p;
     } else {
-        (*queue_pp)->tail_p->next_p = (*queue_pp)->freed_nodes_p;
+        (*queue_pp)->tail_p->next_p = (*queue_pp)->freelist_p;
     }
 
     // traverse list and free nodes one by one
@@ -52,7 +52,7 @@ bool queue_deinit(Queue** queue_pp) {
     return true;
 }
 
-bool queue_isempty(const Queue* queue_p) {
+bool queue_is_empty(const Queue* queue_p) {
     assert(queue_p != NULL);
 
     return queue_p->head_p == NULL;
@@ -66,21 +66,21 @@ size_t queue_count(const Queue* queue_p) {
 
 const QueueNode* queue_peek_node(const Queue* queue_p) {
     assert(queue_p != NULL);
-    assert(queue_isempty(queue_p) == false);
+    assert(queue_is_empty(queue_p) == false);
 
     return queue_p->head_p;
 }
 
 const QueueNode* queue_peek_first_node(const Queue* queue_p) {
     assert(queue_p != NULL);
-    assert(queue_isempty(queue_p) == false);
+    assert(queue_is_empty(queue_p) == false);
 
     return queue_p->head_p;
 }
 
 const QueueNode* queue_peek_last_node(const Queue* queue_p) {
     assert(queue_p != NULL);
-    assert(queue_isempty(queue_p) == false);
+    assert(queue_is_empty(queue_p) == false);
 
     return queue_p->tail_p;
 }
@@ -104,7 +104,7 @@ bool queue_enqueue_node(Queue* queue_p, QueueNode* node_p) {
 
 QueueNode* queue_dequeue_node(Queue* queue_p) {
     assert(queue_p != NULL);
-    assert(queue_isempty(queue_p) == false);
+    assert(queue_is_empty(queue_p) == false);
 
     QueueNode* node_p = queue_p->head_p;
     queue_p->head_p = node_p->next_p;
@@ -119,9 +119,9 @@ QueueNode* queue_dequeue_node(Queue* queue_p) {
 QueueNode* queuenode_create(Queue* queue_p) {
     assert(queue_p != NULL);
 
-    if (queue_p->freed_nodes_p != NULL) {
-        QueueNode* node_p = queue_p->freed_nodes_p;
-        queue_p->freed_nodes_p = queue_p->freed_nodes_p->next_p;
+    if (queue_p->freelist_p != NULL) {
+        QueueNode* node_p = queue_p->freelist_p;
+        queue_p->freelist_p = queue_p->freelist_p->next_p;
         return node_p;
     }
     QueueNode* node_p = (QueueNode*)malloc(sizeof(QueueNode));
@@ -140,6 +140,6 @@ void queuenode_free(Queue* queue_p, QueueNode* node_p) {
     assert(queue_p != NULL);
     assert(node_p != NULL);
 
-    node_p->next_p = queue_p->freed_nodes_p;
-    queue_p->freed_nodes_p = node_p;
+    node_p->next_p = queue_p->freelist_p;
+    queue_p->freelist_p = node_p;
 }

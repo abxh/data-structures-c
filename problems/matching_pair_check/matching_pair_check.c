@@ -96,7 +96,7 @@ int main(void) {
         case ')':
         case '}':
         case ']':
-            if (stack_isempty(stack_p)) {
+            if (stack_is_empty(stack_p)) {
                 no_errors = false;
                 break;
             }

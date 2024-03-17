@@ -12,8 +12,8 @@
 */
 
 #include "stack.h"
-#include <assert.h> // assert
 #include <stdlib.h> // NULL, size_t, malloc, free
+#include <stdio.h> // stderr, fprintf
 
 #ifndef VALUE_LABEL
 #error "Must declare VALUE_LABEL. Defaulting to 'int'."
@@ -34,7 +34,7 @@
 #define stack_pop_T JOIN(stack_pop, VALUE_LABEL)
 
 static inline VALUE_TYPE stack_peek_T(const Stack* stack_p) {
-    return *(VALUE_TYPE*)(stack_peek_node(stack_p));
+    return *(VALUE_TYPE*)(stack_peek_node(stack_p)->value_p);
 }
 
 static inline bool stack_push_T(Stack* stack_p, VALUE_TYPE value) {
@@ -46,9 +46,6 @@ static inline bool stack_push_T(Stack* stack_p, VALUE_TYPE value) {
 
 static inline VALUE_TYPE stack_pop_T(Stack* stack_p) {
     StackNode* node_p = stack_pop_node(stack_p);
-    if (node_p == NULL) {
-        return false;
-    }
     VALUE_TYPE value = *(VALUE_TYPE*)node_p->value_p;
     stacknode_free(stack_p, node_p);
     return value;

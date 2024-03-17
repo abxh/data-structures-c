@@ -89,8 +89,8 @@ static const double RTR_VALUE_DEFAULT = 0.;
 static double RTR_VALUE_LAST = RTR_VALUE_DEFAULT;
 
 #define digit_to_num(v) ((v) - '0')
-#define last_token(inp_queue) (queue_isempty(inp_queue) ? DEFAULT_TOKEN : queue_peek_last_lex(inp_queue).token)
-#define last_op(inp_queue) (queue_isempty(inp_queue) ? DEFAULT_OP : queue_peek_last_lex(inp_queue).metadata.op)
+#define last_token(inp_queue) (queue_is_empty(inp_queue) ? DEFAULT_TOKEN : queue_peek_last_lex(inp_queue).token)
+#define last_op(inp_queue) (queue_is_empty(inp_queue) ? DEFAULT_OP : queue_peek_last_lex(inp_queue).metadata.op)
 
 double eval(char* str, ssize_t len) {
     double rtr_value = RTR_VALUE_DEFAULT;
@@ -134,7 +134,7 @@ double eval(char* str, ssize_t len) {
         case '/':
             incomplete_input = true;
             error_index = i;
-            if (queue_isempty(inp_queue) ||
+            if (queue_is_empty(inp_queue) ||
                 (last_token(inp_queue) == OP_TOKEN && (last_op(inp_queue) == MUL_OP || last_op(inp_queue) == DIV_OP))) {
                 error_msg = "Incorrect use of '*' or '/'.";
                 error_index = i;
@@ -145,7 +145,7 @@ double eval(char* str, ssize_t len) {
         case '^':
             incomplete_input = true;
             error_index = i;
-            if (queue_isempty(inp_queue) || (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == POW_OP)) {
+            if (queue_is_empty(inp_queue) || (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == POW_OP)) {
                 error_msg = "Incorrect use of '^'.";
                 error_index = i;
                 goto on_inp_error;
@@ -268,7 +268,7 @@ double eval(char* str, ssize_t len) {
         Lexeme lex;
         QueueNode* node_p;
         printf("Input queue (prefix): ");
-        queue_foreach(inp_queue, node_p, lex) {
+        queue_for_each(inp_queue, node_p, lex) {
             switch (lex.token) {
             case NUMBER_TOKEN:
                 printf(" %g", lex.metadata.num);
@@ -295,7 +295,7 @@ double eval(char* str, ssize_t len) {
     {
         Lexeme lex;
         QueueNode* node_p;
-        queue_foreach(inp_queue, node_p, lex) {
+        queue_for_each(inp_queue, node_p, lex) {
             switch (lex.token) {
             case NUMBER_TOKEN:
                 queue_enqueue_lex(inp_queue_postfix, lex);
@@ -312,7 +312,7 @@ double eval(char* str, ssize_t len) {
                     stack_pop_lex(op_stack);
                     break;
                 default:
-                    while (!stack_isempty(op_stack) && stack_peek_lex(op_stack).metadata.op != OPENING_PAREN_OP &&
+                    while (!stack_is_empty(op_stack) && stack_peek_lex(op_stack).metadata.op != OPENING_PAREN_OP &&
                            op_precedence_cmp(stack_peek_lex(op_stack).metadata.op, lex.metadata.op) >= 0) {
                         queue_enqueue_lex(inp_queue_postfix, stack_pop_lex(op_stack));
                     }
@@ -324,7 +324,7 @@ double eval(char* str, ssize_t len) {
             }
         }
     }
-    while (!stack_isempty(op_stack)) {
+    while (!stack_is_empty(op_stack)) {
         queue_enqueue_lex(inp_queue_postfix, stack_pop_lex(op_stack));
     }
 
@@ -333,7 +333,7 @@ double eval(char* str, ssize_t len) {
         Lexeme lex;
         QueueNode* node_p;
         printf("Input queue (postfix):");
-        queue_foreach(inp_queue_postfix, node_p, lex) {
+        queue_for_each(inp_queue_postfix, node_p, lex) {
             switch (lex.token) {
             case NUMBER_TOKEN:
                 printf(" %g", lex.metadata.num);
@@ -353,7 +353,7 @@ double eval(char* str, ssize_t len) {
         Lexeme lex;
         QueueNode* node_p;
         num_stack = op_stack; // repurposing the stack
-        queue_foreach(inp_queue_postfix, node_p, lex) {
+        queue_for_each(inp_queue_postfix, node_p, lex) {
             switch (lex.token) {
             case NUMBER_TOKEN:
                 stack_push_lex(num_stack, lex);

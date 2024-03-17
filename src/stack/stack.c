@@ -16,7 +16,7 @@ bool stack_init(Stack** stack_pp, const size_t value_size) {
     (*stack_pp)->head_p = NULL;
     (*stack_pp)->count = 0;
     (*stack_pp)->value_size = value_size;
-    (*stack_pp)->freed_nodes_p = NULL;
+    (*stack_pp)->freelist_p = NULL;
 
     return true;
 }
@@ -38,7 +38,7 @@ bool stack_deinit(Stack** stack_pp) {
         head_p = next_p;
     }
 
-    head_p = (*stack_pp)->freed_nodes_p;
+    head_p = (*stack_pp)->freelist_p;
     next_p = NULL;
     while (head_p != NULL) {
         next_p = head_p->next_p;
@@ -59,7 +59,7 @@ size_t stack_count(const Stack* stack_p) {
     return stack_p->count;
 }
 
-bool stack_isempty(const Stack* stack_p) {
+bool stack_is_empty(const Stack* stack_p) {
     assert(stack_p != NULL);
 
     return stack_p->head_p == NULL;
@@ -67,7 +67,7 @@ bool stack_isempty(const Stack* stack_p) {
 
 const StackNode* stack_peek_node(const Stack* stack_p) {
     assert(stack_p != NULL);
-    assert(stack_isempty(stack_p) == false);
+    assert(stack_is_empty(stack_p) == false);
 
     return stack_p->head_p;
 }
@@ -82,7 +82,7 @@ void stack_push_node(Stack* stack_p, StackNode* node_p) {
 
 StackNode* stack_pop_node(Stack* stack_p) {
     assert(stack_p != NULL);
-    assert(stack_isempty(stack_p) == false);
+    assert(stack_is_empty(stack_p) == false);
 
     StackNode* node_p = stack_p->head_p;
     stack_p->head_p = node_p->next_p;
@@ -94,9 +94,9 @@ StackNode* stack_pop_node(Stack* stack_p) {
 StackNode* stacknode_create(Stack* stack_p) {
     assert(stack_p != NULL);
 
-    if (stack_p->freed_nodes_p != NULL) {
-        StackNode* node_p = stack_p->freed_nodes_p;
-        stack_p->freed_nodes_p = stack_p->freed_nodes_p->next_p;
+    if (stack_p->freelist_p != NULL) {
+        StackNode* node_p = stack_p->freelist_p;
+        stack_p->freelist_p = stack_p->freelist_p->next_p;
         return node_p;
     }
 
@@ -117,6 +117,6 @@ void stacknode_free(Stack* stack_p, StackNode* node_p) {
     assert(stack_p != NULL);
     assert(node_p != NULL);
 
-    node_p->next_p = stack_p->freed_nodes_p;
-    stack_p->freed_nodes_p = node_p;
+    node_p->next_p = stack_p->freelist_p;
+    stack_p->freelist_p = node_p;
 }
