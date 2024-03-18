@@ -77,7 +77,7 @@ Bitarray* bitarray_from(const unsigned char* bytes, size_t num_of_bits) {
         free(bitarray_p);
         return NULL;
     }
-    memcpy(bitarray_p->words, bytes, num_of_bits);
+    memcpy(bitarray_p->words, bytes, bitarray_p->capacity);
 
     return bitarray_p;
 }
