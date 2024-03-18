@@ -1,81 +1,76 @@
-#include <stdbool.h>
-#include <stdio.h>
+#include <stdbool.h> // bool, true, false
+#include <stdio.h>   // printf
 
-#include "../src/stack/stack.h"
-
-#define VALUE_LABEL int
 #define VALUE_TYPE int
-#include "../src/stack/stack_helpers.h"
+#define VALUE_LABEL int
+#include "../src/stack/astack.h"
 
 bool empty_test(void) {
-    Stack* s;
-    if (!stack_init(&s, sizeof(int))) {
+    astack_int* s;
+    if (!astack_int_init(&s, 1)) {
         return false;
     }
     bool res = true;
 
-    res &= stack_count(s) == 0;
-    res &= stack_is_empty(s);
-    res &= stack_deinit(&s);
+    res &= astack_int_is_empty(s);
+    res &= astack_int_deinit(&s);
 
     return res;
 }
 
 bool one_element_test(void) {
-    Stack* s;
-    if (!stack_init(&s, sizeof(int))) {
+    astack_int* s;
+    if (!astack_int_init(&s, 1)) {
         return false;
     }
     bool res = true;
     int value = 5;
+    astack_int_push(s, value);
 
-    res &= stack_push_int(s, value);
-    res &= value == stack_peek_int(s);
-    res &= !stack_is_empty(s);
-    res &= stack_count(s) == 1;
+    res &= value == astack_int_peek(s);
+    res &= !astack_int_is_empty(s);
 
-    res &= value == stack_pop_int(s);
-    res &= stack_is_empty(s);
-    res &= stack_count(s) == 0;
+    res &= value == astack_int_pop(s);
+    res &= astack_int_is_empty(s);
+    res &= !astack_int_is_full(s);
 
-    res &= stack_deinit(&s);
+    res &= astack_int_deinit(&s);
 
     return res;
 }
 
 bool million_elements_test(void) {
-    Stack* s;
-    if (!stack_init(&s, sizeof(int))) {
+    astack_int* s;
+    if (!astack_int_init(&s, 1000000)) {
         return false;
     }
     bool res = true;
     for (int i = 1; i <= 1000000; i++) {
-        stack_push_int(s, i);
+        astack_int_push(s, i);
     }
     for (int i = 1000000; i >= 1; i--) {
-        res &= i == stack_pop_int(s);
+        res &= i == astack_int_pop(s);
     }
-    res &= stack_deinit(&s);
+    res &= astack_int_deinit(&s);
     return res;
 }
 
 bool for_each_test(void) {
-    Stack* s;
-    if (!stack_init(&s, sizeof(int))) {
+    astack_int* s;
+    if (!astack_int_init(&s, 50)) {
         return false;
     }
     bool res = true;
     for (int i = 51; i <= 100; i++) {
-        stack_push_int(s, i);
+        astack_int_push(s, i);
     }
-    int x = 100;
-    StackNode* node_p;
-    int value;
-    stack_for_each(s, node_p, value) {
-        res &= x == value;
-        x--;
+    int value = 51;
+    int var;
+    size_t i;
+    astack_for_each(s, var, i) {
+        res &= value == var;
+        value++;
     }
-    res &= stack_deinit(&s);
     return res;
 }
 

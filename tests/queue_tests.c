@@ -80,7 +80,7 @@ bool million_elements_test(void) {
     return res;
 }
 
-bool foreach_test(void) {
+bool for_each_test(void) {
     Queue* q;
     if (!queue_init(&q, sizeof(int))) {
         return false;
@@ -116,7 +116,7 @@ int main(void) {
                               {one_element_test, "one element test"},
                               {two_elements_test, "two elements test"},
                               {million_elements_test, "million elements test"},
-                              {foreach_test, "foreach test"}};
+                              {for_each_test, "for each test"}};
     printf(__FILE_NAME__ ":\n");
     for (size_t i = 0; i < sizeof(bool_f_arr) / sizeof(func_plus); i++) {
         printf(" [%s] %s\n", bool_f_arr[i].func() ? GREEN "true" OFF : RED "false" OFF, bool_f_arr[i].desc);

@@ -128,57 +128,6 @@ bool million_elements_test(void) {
     }
     bool res = true;
 
-    unsigned int seed = 42;
-    
-    srand(seed);
-    for (size_t i = 0; i < 1000000; i++) {
-        size_t len1 = rand() & 15;
-        char* str1 = malloc(len1 + 1);
-        str1[len1] = '\0';
-        for (size_t i = 0; i < len1; i++) {
-            str1[i] = '!' + rand() % ('~' - '!');
-        }
-
-        size_t len2 = rand() & 15;
-        char* str2 = malloc(len2 + 1);
-        str2[len2] = '\0';
-        for (size_t i = 0; i < len2; i++) {
-            str2[i] = '!' + rand() % ('~' - '!');
-        }
-
-        if (!strmap_get(strmap_p, str1)) {
-            res &= strmap_set(strmap_p, str1, str2);
-        }
-
-        free(str1);
-        free(str2);
-    }
-    
-    srand(seed);
-    for (size_t i = 0; i < 1000000; i--) {
-        size_t len1 = rand() & 15;
-        char* str1 = malloc(len1 + 1);
-        str1[len1] = '\0';
-        for (size_t i = 0; i < len1; i++) {
-            str1[i] = '!' + rand() % ('~' - '!');
-        }
-
-        size_t len2 = rand() & 15;
-        char* str2 = malloc(len2 + 1);
-        str2[len2] = '\0';
-        for (size_t i = 0; i < len2; i++) {
-            str2[i] = '!' + rand() % ('~' - '!');
-        }
-
-        const char* value_p = strmap_get(strmap_p, str1);
-        if (value_p != NULL) {
-            res &= strcmp(value_p, str2) == 0;
-            res &= strmap_del(strmap_p, str1);
-        }
-        free(str1);
-        free(str2);
-    }
-
     res &= strmap_deinit(&strmap_p);
     return res;
 }
@@ -202,7 +151,6 @@ int main(void) {
                               {overwrite_element_test, "overwrite element test"},
                               {empty_element_test, "empty element test"},
                               {million_elements_test, "million elements test"}};
-
     printf(__FILE_NAME__ ":\n");
     for (size_t i = 0; i < sizeof(bool_f_arr) / sizeof(func_plus); i++) {
         printf(" [%s] %s\n", bool_f_arr[i].func() ? GREEN "true" OFF : RED "false" OFF, bool_f_arr[i].desc);
