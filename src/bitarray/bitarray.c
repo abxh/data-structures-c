@@ -59,7 +59,8 @@ void bitarray_print(const Bitarray* bitarray_p) {
         }
     }
     if ((i - 1) % (CHAR_BIT * 4) != 0) {
-        putchar('\n'); }
+        putchar('\n');
+    }
 }
 
 Bitarray* bitarray_from(const unsigned char* bytes, size_t num_of_bits) {
