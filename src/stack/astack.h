@@ -74,6 +74,7 @@ static inline bool JOIN(astack_T, init)(astack_T** astack_pp, size_t capacity) {
 }
 
 static inline bool JOIN(astack_T, deinit)(astack_T** astack_pp) {
+    assert(astack_pp != NULL);
     if (*astack_pp == NULL) {
         return false;
     }
@@ -113,17 +114,18 @@ static inline void JOIN(astack_T, push)(astack_T* astack_p, const VALUE_TYPE val
 static inline VALUE_TYPE JOIN(astack_T, pop)(astack_T* astack_p) {
     assert(astack_p != NULL);
     assert(JOIN(astack_T, is_empty)(astack_p) == false);
-    return ((VALUE_TYPE*)astack_p->arr_p)[--astack_p->count];
+    return astack_p->arr_p[--astack_p->count];
 }
 
-static inline bool JOIN(astack_T, resize)(astack_T* stack_p, size_t new_capacity) {
+static inline bool JOIN(astack_T, resize)(astack_T* astack_p, size_t new_capacity) {
+    assert(astack_p != NULL);
     assert(new_capacity != 0);
-    VALUE_TYPE* new_arr_p = (VALUE_TYPE*)reallocarray(stack_p->arr_p, new_capacity, sizeof(VALUE_TYPE));
+    VALUE_TYPE* new_arr_p = (VALUE_TYPE*)reallocarray(astack_p->arr_p, new_capacity, sizeof(VALUE_TYPE));
     if (new_arr_p == NULL) {
         return false;
     }
-    stack_p->arr_p = new_arr_p;
-    stack_p->capacity = new_capacity;
+    astack_p->arr_p = new_arr_p;
+    astack_p->capacity = new_capacity;
     return true;
 }
 
