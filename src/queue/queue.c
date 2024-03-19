@@ -124,7 +124,7 @@ QueueNode* queuenode_create(Queue* queue_p) {
         queue_p->freelist_p = queue_p->freelist_p->next_p;
         return node_p;
     }
-    QueueNode* node_p = (QueueNode*)malloc(sizeof(QueueNode));
+    QueueNode* node_p = malloc(sizeof(QueueNode));
     if (node_p == NULL) {
         return NULL;
     }
