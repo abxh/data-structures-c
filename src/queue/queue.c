@@ -128,7 +128,7 @@ QueueNode* queuenode_create(Queue* queue_p) {
     if (node_p == NULL) {
         return NULL;
     }
-    node_p->value_p = malloc(sizeof(queue_p->value_size));
+    node_p->value_p = malloc(queue_p->value_size);
     if (node_p->value_p == NULL) {
         free(node_p);
         return NULL;
