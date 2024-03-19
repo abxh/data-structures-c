@@ -104,7 +104,7 @@ StackNode* stacknode_create(Stack* stack_p) {
     if (node_p == NULL) {
         return NULL;
     }
-    node_p->value_p = malloc(sizeof(stack_p->value_size));
+    node_p->value_p = malloc(stack_p->value_size);
     if (node_p->value_p == NULL) {
         free(node_p);
         return NULL;
