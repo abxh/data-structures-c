@@ -31,15 +31,15 @@
 #define PASTE(a, b) CAT(a, b)
 #define JOIN(prefix, name) PASTE(prefix, PASTE(_, name))
 
-static inline const VALUE_TYPE JOIN(queue_peek, VALUE_LABEL)(const Queue* queue_p) {
+static inline VALUE_TYPE JOIN(queue_peek, VALUE_LABEL)(const Queue* queue_p) {
     return *(VALUE_TYPE*)(queue_peek_node(queue_p)->value_p);
 }
 
-static inline const VALUE_TYPE JOIN(queue_peek_first, VALUE_LABEL)(const Queue* queue_p) {
+static inline VALUE_TYPE JOIN(queue_peek_first, VALUE_LABEL)(const Queue* queue_p) {
     return *(VALUE_TYPE*)(queue_peek_first_node(queue_p)->value_p);
 }
 
-static inline const VALUE_TYPE JOIN(queue_peek_last, VALUE_LABEL)(const Queue* queue_p) {
+static inline VALUE_TYPE JOIN(queue_peek_last, VALUE_LABEL)(const Queue* queue_p) {
     return *(VALUE_TYPE*)(queue_peek_last_node(queue_p)->value_p);
 }
 

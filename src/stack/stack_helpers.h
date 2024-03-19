@@ -29,7 +29,7 @@
 #define PASTE(a, b) CAT(a, b)
 #define JOIN(prefix, name) PASTE(prefix, PASTE(_, name))
 
-static inline const VALUE_TYPE JOIN(stack_peek, VALUE_LABEL)(const Stack* stack_p) {
+static inline VALUE_TYPE JOIN(stack_peek, VALUE_LABEL)(const Stack* stack_p) {
     return *(VALUE_TYPE*)(stack_peek_node(stack_p)->value_p);
 }
 

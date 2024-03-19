@@ -98,7 +98,7 @@ static inline bool JOIN(astack_T, is_full)(const astack_T* astack_p) {
     return astack_p->count == astack_p->capacity;
 }
 
-static inline const VALUE_TYPE JOIN(astack_T, peek)(astack_T* astack_p) {
+static inline VALUE_TYPE JOIN(astack_T, peek)(astack_T* astack_p) {
     assert(astack_p != NULL);
     assert(JOIN(astack_T, is_empty)(astack_p) == false);
     return astack_p->arr_p[astack_p->count - 1];
