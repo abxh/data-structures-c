@@ -100,7 +100,7 @@ StackNode* stacknode_create(Stack* stack_p) {
         return node_p;
     }
 
-    StackNode* node_p = (StackNode*)malloc(sizeof(StackNode));
+    StackNode* node_p = malloc(sizeof(StackNode));
     if (node_p == NULL) {
         return NULL;
     }
