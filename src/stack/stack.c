@@ -9,7 +9,7 @@ bool stack_init(Stack** stack_pp, const size_t value_size) {
     assert(stack_pp != NULL);
     assert(value_size != 0);
 
-    *stack_pp = (Stack*)malloc(sizeof(Stack));
+    *stack_pp = malloc(sizeof(Stack));
     if (*stack_pp == NULL) {
         return false;
     }
