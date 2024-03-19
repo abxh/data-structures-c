@@ -9,7 +9,7 @@ bool queue_init(Queue** queue_pp, size_t value_size) {
     assert(queue_pp != NULL);
     assert(value_size != 0);
 
-    *queue_pp = (Queue*)malloc(sizeof(Queue));
+    *queue_pp = malloc(sizeof(Queue));
     if (*queue_pp == NULL) {
         return false;
     }
