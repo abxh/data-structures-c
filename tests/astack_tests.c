@@ -74,6 +74,57 @@ bool for_each_test(void) {
     return res;
 }
 
+bool grow_test(void) {
+    astack_int* s;
+    if (!astack_int_init(&s, 500000)) {
+        return false;
+    }
+    bool res = true;
+    for (int i = 1; i <= 500000; i++) {
+        astack_int_push(s, i);
+    }
+
+    res &= astack_int_is_full(s);
+    if (!astack_int_resize(s, astack_int_count(s) << 1)) {
+        astack_int_deinit(&s);
+        return false;
+    }
+    res &= !astack_int_is_full(s);
+
+    for (int i = 500001; i <= 1000000; i++) {
+        astack_int_push(s, i);
+    }
+    for (int i = 1000000; i >= 1; i--) {
+        res &= i == astack_int_pop(s);
+    }
+    res &= astack_int_deinit(&s);
+    return res;
+}
+
+bool shrink_test(void) {
+    astack_int* s;
+    if (!astack_int_init(&s, 500000)) {
+        return false;
+    }
+    bool res = true;
+    for (int i = 1; i <= 250000; i++) {
+        astack_int_push(s, i);
+    }
+
+    res &= !astack_int_is_full(s);
+    if (!astack_int_resize(s, astack_int_count(s))) {
+        astack_int_deinit(&s);
+        return false;
+    }
+    res &= astack_int_is_full(s);
+
+    for (int i = 250000; i >= 1; i--) {
+        res &= i == astack_int_pop(s);
+    }
+    res &= astack_int_deinit(&s);
+    return res;
+}
+
 typedef bool (*bool_f)(void);
 
 typedef struct {

@@ -29,31 +29,23 @@
 #define PASTE(a, b) CAT(a, b)
 #define JOIN(prefix, name) PASTE(prefix, PASTE(_, name))
 
-#define stack_peek_T JOIN(stack_peek, VALUE_LABEL)
-#define stack_push_T JOIN(stack_push, VALUE_LABEL)
-#define stack_pop_T JOIN(stack_pop, VALUE_LABEL)
-
-static inline const VALUE_TYPE stack_peek_T(const Stack* stack_p) {
+static inline const VALUE_TYPE JOIN(stack_peek, VALUE_LABEL)(const Stack* stack_p) {
     return *(VALUE_TYPE*)(stack_peek_node(stack_p)->value_p);
 }
 
-static inline bool stack_push_T(Stack* stack_p, const VALUE_TYPE value) {
+static inline bool JOIN(stack_push, VALUE_LABEL)(Stack* stack_p, const VALUE_TYPE value) {
     StackNode* node_p = stacknode_create(stack_p);
     *(VALUE_TYPE*)node_p->value_p = value;
     stack_push_node(stack_p, node_p);
     return true;
 }
 
-static inline VALUE_TYPE stack_pop_T(Stack* stack_p) {
+static inline VALUE_TYPE JOIN(stack_pop, VALUE_LABEL)(Stack* stack_p) {
     StackNode* node_p = stack_pop_node(stack_p);
     VALUE_TYPE value = *(VALUE_TYPE*)node_p->value_p;
     stacknode_free(stack_p, node_p);
     return value;
 }
-
-#undef stack_peek_T
-#undef stack_push_T
-#undef stack_pop_T
 
 #undef VALUE_TYPE
 #undef VALUE_LABEL
