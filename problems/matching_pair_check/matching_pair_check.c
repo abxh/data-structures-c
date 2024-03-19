@@ -63,7 +63,7 @@ SYMBOL_ENUM matching_symbol(SYMBOL_ENUM symb) {
 
 #include "stack.h"
 
-#define VALUE_LABEL symb
+#define VALUE_NAME symb
 #define VALUE_TYPE SYMBOL_ENUM
 #include "stack_helpers.h"
 

@@ -7,7 +7,7 @@
     The following structs are defined:
     - astack_T
 
-    The following functions are generated for a given value type t with label T:
+    The following functions are generated for a given value type t with name T:
     - astack_T_init
     - astack_T_deinit
     - astack_T_count
@@ -18,7 +18,7 @@
     - astack_T_pop
     - astack_T_resize
 
-    A distinction between the value and label is made as the label
+    A distinction between the type and name is made as the name
     cannot include spaces.
 */
 
@@ -38,16 +38,16 @@
 #define VALUE_TYPE int
 #endif
 
-#ifndef VALUE_LABEL
-#error "Must declare VALUE_LABEL. Defaulting to 'int'."
-#define VALUE_LABEL int
+#ifndef VALUE_NAME
+#error "Must declare VALUE_NAME. Defaulting to 'int'."
+#define VALUE_NAME int
 #endif
 
 #define CAT(a, b) a##b
 #define PASTE(a, b) CAT(a, b)
 #define JOIN(prefix, name) PASTE(prefix, PASTE(_, name))
 
-#define astack_T JOIN(astack, VALUE_LABEL)
+#define astack_T JOIN(astack, VALUE_NAME)
 
 typedef struct {
     size_t count;
@@ -135,5 +135,5 @@ static inline bool JOIN(astack_T, resize)(astack_T* astack_p, size_t new_capacit
 #undef PASTE
 #undef JOIN
 
-#undef VALUE_LABEL
+#undef VALUE_NAME
 #undef VALUE_TYPE

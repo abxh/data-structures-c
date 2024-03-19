@@ -2,7 +2,7 @@
 #include <stdio.h>   // printf
 
 #define VALUE_TYPE int
-#define VALUE_LABEL int
+#define VALUE_NAME int
 #include "../src/stack/astack.h"
 
 bool empty_test(void) {

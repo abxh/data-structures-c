@@ -3,8 +3,8 @@
 
 #include "../src/stack/stack.h"
 
-#define VALUE_LABEL int
 #define VALUE_TYPE int
+#define VALUE_NAME int
 #include "../src/stack/stack_helpers.h"
 
 bool empty_test(void) {

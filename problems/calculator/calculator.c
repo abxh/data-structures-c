@@ -34,11 +34,11 @@ typedef struct {
 #include "queue.h"
 #include "stack.h"
 
-#define VALUE_LABEL lex
+#define VALUE_NAME lex
 #define VALUE_TYPE Lexeme
 #include "queue_helpers.h"
 
-#define VALUE_LABEL lex
+#define VALUE_NAME lex
 #define VALUE_TYPE Lexeme
 #include "stack_helpers.h"
 

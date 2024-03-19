@@ -3,8 +3,8 @@
 
 #include "../src/queue/queue.h"
 
-#define VALUE_LABEL int
 #define VALUE_TYPE int
+#define VALUE_NAME int
 #include "../src/queue/queue_helpers.h"
 
 bool empty_test(void) {
