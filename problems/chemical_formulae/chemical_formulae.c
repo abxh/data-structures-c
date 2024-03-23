@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -102,7 +103,7 @@ int main(void) {
 
         char* iter_str = synonym_str;
         while (*iter_str++ != '\0') {
-            *iter_str = towlower(*iter_str);
+            *iter_str = tolower(*iter_str);
         }
 
         char buf1[line_len_max * 2];
@@ -142,7 +143,7 @@ int main(void) {
         CMP_CUSTOM_USR_INP_P = &line_p[0];
         qsort(keys_arr_pp, lines, sizeof(char*), cmp_custom);
         for (size_t i = lines - 1; i >= lines - 5; i--) {
-            printf(" %s\n  -> %s\n", keys_arr_pp[i], strmap_get(strmap_p, keys_arr_pp[i]));
+            printf(" -> %s (%s)\n", keys_arr_pp[i], strmap_get(strmap_p, keys_arr_pp[i]));
         }
     }
     // clean up stuff:
