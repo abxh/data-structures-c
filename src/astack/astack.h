@@ -14,7 +14,6 @@
     - astack_T_peek
     - astack_T_push
     - astack_T_pop
-    - astack_T_resize
 
     A distinction between the type and name is made as the name
     cannot include spaces.
@@ -24,7 +23,9 @@
 #define __ASTACK__H
 
 #include <assert.h> // assert
-#include <stdlib.h> // size_t, NULL, malloc, calloc, free, reallocarray
+#include <cstdint>
+#include <stddef.h> // offsetof
+#include <stdlib.h> // size_t, NULL, malloc, free
 
 #define astack_for_each(astack_p, value, index) \
     for ((index) = 0; ((index) < (astack_p)->count && ((value) = (astack_p)->arr_p[(index)], true)); (index)++)
@@ -50,20 +51,15 @@
 typedef struct {
     size_t count;
     size_t capacity;
-    VALUE_TYPE* arr_p;
+    VALUE_TYPE arr[];
 } astack_T;
 
 static inline bool JOIN(astack_T, init)(astack_T** astack_pp, size_t capacity) {
     assert(astack_pp != NULL);
     assert(capacity != 0);
-    *astack_pp = (astack_T*)malloc(sizeof(astack_T));
+    assert(capacity <= SIZE_MAX / sizeof(VALUE_TYPE));
+    *astack_pp = (astack_T*)malloc(offsetof(astack_T, arr) + sizeof(VALUE_TYPE) * capacity);
     if ((*astack_pp) == NULL) {
-        return false;
-    }
-    (*astack_pp)->arr_p = (VALUE_TYPE*)calloc(capacity, sizeof(VALUE_TYPE));
-    if ((*astack_pp)->arr_p == NULL) {
-        free(*astack_pp);
-        *astack_pp = NULL;
         return false;
     }
     (*astack_pp)->count = 0;
@@ -76,7 +72,7 @@ static inline bool JOIN(astack_T, deinit)(astack_T** astack_pp) {
     if (*astack_pp == NULL) {
         return false;
     }
-    free((*astack_pp)->arr_p);
+    free((*astack_pp)->arr);
     free(*astack_pp);
     *astack_pp = NULL;
     return true;
@@ -100,31 +96,19 @@ static inline bool JOIN(astack_T, is_full)(const astack_T* astack_p) {
 static inline VALUE_TYPE JOIN(astack_T, peek)(astack_T* astack_p) {
     assert(astack_p != NULL);
     assert(JOIN(astack_T, is_empty)(astack_p) == false);
-    return astack_p->arr_p[astack_p->count - 1];
+    return astack_p->arr[astack_p->count - 1];
 }
 
 static inline void JOIN(astack_T, push)(astack_T* astack_p, const VALUE_TYPE value) {
     assert(astack_p != NULL);
     assert(JOIN(astack_T, is_full)(astack_p) == false);
-    astack_p->arr_p[astack_p->count++] = value;
+    astack_p->arr[astack_p->count++] = value;
 }
 
 static inline VALUE_TYPE JOIN(astack_T, pop)(astack_T* astack_p) {
     assert(astack_p != NULL);
     assert(JOIN(astack_T, is_empty)(astack_p) == false);
-    return astack_p->arr_p[--astack_p->count];
-}
-
-static inline bool JOIN(astack_T, resize)(astack_T* astack_p, size_t new_capacity) {
-    assert(astack_p != NULL);
-    assert(new_capacity != 0);
-    VALUE_TYPE* new_arr_p = (VALUE_TYPE*)reallocarray(astack_p->arr_p, new_capacity, sizeof(VALUE_TYPE));
-    if (new_arr_p == NULL) {
-        return false;
-    }
-    astack_p->arr_p = new_arr_p;
-    astack_p->capacity = new_capacity;
-    return true;
+    return astack_p->arr[--astack_p->count];
 }
 
 #undef astack_T
