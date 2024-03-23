@@ -9,7 +9,7 @@ bool queue_init(Queue** queue_pp, size_t value_size) {
     assert(queue_pp != NULL);
     assert(value_size != 0);
 
-    *queue_pp = (Queue*)malloc(sizeof(Queue));
+    *queue_pp = malloc(sizeof(Queue));
     if (*queue_pp == NULL) {
         return false;
     }
@@ -124,11 +124,11 @@ QueueNode* queuenode_create(Queue* queue_p) {
         queue_p->freelist_p = queue_p->freelist_p->next_p;
         return node_p;
     }
-    QueueNode* node_p = (QueueNode*)malloc(sizeof(QueueNode));
+    QueueNode* node_p = malloc(sizeof(QueueNode));
     if (node_p == NULL) {
         return NULL;
     }
-    node_p->value_p = malloc(sizeof(queue_p->value_size));
+    node_p->value_p = malloc(queue_p->value_size);
     if (node_p->value_p == NULL) {
         free(node_p);
         return NULL;

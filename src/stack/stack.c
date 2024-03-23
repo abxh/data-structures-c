@@ -9,7 +9,7 @@ bool stack_init(Stack** stack_pp, const size_t value_size) {
     assert(stack_pp != NULL);
     assert(value_size != 0);
 
-    *stack_pp = (Stack*)malloc(sizeof(Stack));
+    *stack_pp = malloc(sizeof(Stack));
     if (*stack_pp == NULL) {
         return false;
     }
@@ -100,11 +100,11 @@ StackNode* stacknode_create(Stack* stack_p) {
         return node_p;
     }
 
-    StackNode* node_p = (StackNode*)malloc(sizeof(StackNode));
+    StackNode* node_p = malloc(sizeof(StackNode));
     if (node_p == NULL) {
         return NULL;
     }
-    node_p->value_p = malloc(sizeof(stack_p->value_size));
+    node_p->value_p = malloc(stack_p->value_size);
     if (node_p->value_p == NULL) {
         free(node_p);
         return NULL;
