@@ -1,8 +1,11 @@
 /*
-    The following macros are defined:
+    Including this header file generates a struct and functions for a given
+    stack type.
+
+    The following macros gets defined once:
     - astack_for_each
 
-    The following structs are defined:
+    The following structs are generated for a given value type t with name T:
     - astack_T
 
     The following functions are generated for a given value type t with name T:
