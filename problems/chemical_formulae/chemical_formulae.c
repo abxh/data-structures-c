@@ -1,12 +1,10 @@
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "strmap.h"
-
-#include <stdio.h>
-#include <stdlib.h>
 
 #define max(x, y) ((x) > (y) ? (x) : (y))
 

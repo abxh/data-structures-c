@@ -1,6 +1,4 @@
 /*
-    array-based stack
-
     The following macros are defined:
     - astack_for_each
 

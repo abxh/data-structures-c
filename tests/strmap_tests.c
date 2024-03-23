@@ -105,9 +105,9 @@ bool overwrite_element_test(void) {
     res &= strmap_set(strmap_p, "A", "B");
     res &= strmap_count(strmap_p) == 1;
     res &= strmap_set(strmap_p, "A", "C");
-    res &= strmap_count(strmap_p) == 2;
+    res &= strmap_count(strmap_p) == 1;
     res &= strmap_set(strmap_p, "A", "C");
-    res &= strmap_count(strmap_p) == 2;
+    res &= strmap_count(strmap_p) == 1;
     res &= strcmp(strmap_get(strmap_p, "A"), "C") == 0;
 
     res &= strmap_deinit(&strmap_p);
@@ -149,9 +149,8 @@ bool million_elements_test(void) {
         char c2 = (i / m) % m + 'a';
         char c3 = (i / m / m) % m + 'a';
         char c4 = (i / m / m / m) % m + 'a';
-        char c5 = (i / m / m / m) % m + 'a';
-        char c6 = (i / m / m / m / m) % m + 'a';
-        res &= strmap_set(strmap_p, (char[]){c6, c5, c4, c3, c2, c1, '\0'}, (char[]){c1, c2, c3, c4, c5, c6, '\0'});
+        char c5 = (i / m / m / m / m) % m + 'a';
+        res &= strmap_set(strmap_p, (char[]){c5, c4, c3, c2, c1, '\0'}, (char[]){c1, c2, c3, c4, c5, '\0'});
     }
     res &= strmap_count(strmap_p) == lim;
     for (size_t i = 0; i < lim; i++) {
@@ -159,9 +158,8 @@ bool million_elements_test(void) {
         char c2 = (i / m) % m + 'a';
         char c3 = (i / m / m) % m + 'a';
         char c4 = (i / m / m / m) % m + 'a';
-        char c5 = (i / m / m / m) % m + 'a';
-        char c6 = (i / m / m / m / m) % m + 'a';
-        res &= strcmp(strmap_get(strmap_p, (char[]){c6, c5, c4, c3, c2, c1, '\0'}), (char[]){c1, c2, c3, c4, c5, c6, '\0'}) == 0;
+        char c5 = (i / m / m / m / m) % m + 'a';
+        res &= strcmp(strmap_get(strmap_p, (char[]){c5, c4, c3, c2, c1, '\0'}), (char[]){c1, c2, c3, c4, c5, '\0'}) == 0;
     }
     res &= strmap_deinit(&strmap_p);
     return res;

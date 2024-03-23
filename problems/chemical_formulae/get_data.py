@@ -6,6 +6,7 @@ df = pd.read_html("https://en.wikipedia.org/wiki/Glossary_of_chemical_formulae")
 
 l = []
 for i in range(len(df)):
+    # hacky try catch append. may not be necessary.
     try:
         l.append(df[i][["Chemical formula", "Synonyms", "CAS number"]])
     except:

@@ -3,7 +3,7 @@
 
 #define VALUE_TYPE int
 #define VALUE_NAME int
-#include "../src/stack/astack.h"
+#include "../src/astack/astack.h"
 
 bool empty_test(void) {
     astack_int* s;
