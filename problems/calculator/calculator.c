@@ -188,7 +188,9 @@ double eval(char* str, ssize_t len) {
                 value = 10. * value + digit_to_num(str[i + 1]);
                 i++;
             }
-            value = (sign != SUB_OP) * value - (sign == SUB_OP) * value;
+            if (sign == SUB_OP) {
+                value = -value;
+            }
             sign = DEFAULT_OP;
             if (str[i + 1] == '.') {
                 if (i + 2 < len && !isdigit(str[i + 2])) {
