@@ -37,6 +37,8 @@ bool strmap_init(StrMap** strmap_pp);
 
 bool strmap_deinit(StrMap** strmap_pp);
 
+size_t strmap_count(const StrMap* strmap_p);
+
 bool strmap_exists(const StrMap* strmap_p, const char* key_p);
 
 const char* strmap_get(const StrMap* strmap_p, const char* key_p);

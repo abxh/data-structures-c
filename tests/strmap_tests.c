@@ -1,4 +1,5 @@
 #include "../src/strmap/strmap.h"
+#include "assert.h"
 #include "stdbool.h"
 #include "stdio.h"
 #include "stdlib.h"
@@ -23,10 +24,15 @@ bool four_elements_test(void) {
         return false;
     }
     bool res = true;
+    res &= strmap_count(strmap_p) == 0;
     res &= strmap_set(strmap_p, "AAA", "1234");
+    res &= strmap_count(strmap_p) == 1;
     res &= strmap_set(strmap_p, "BBB", "5678");
+    res &= strmap_count(strmap_p) == 2;
     res &= strmap_set(strmap_p, "CCC", "9012");
+    res &= strmap_count(strmap_p) == 3;
     res &= strmap_set(strmap_p, "DDD", "3456");
+    res &= strmap_count(strmap_p) == 4;
     res &= strcmp(strmap_get(strmap_p, "AAA"), "1234") == 0;
     res &= strcmp(strmap_get(strmap_p, "BBB"), "5678") == 0;
     res &= strcmp(strmap_get(strmap_p, "CCC"), "9012") == 0;
@@ -47,8 +53,11 @@ bool del_and_exists_test(void) {
     res &= strmap_set(strmap_p, "aac", "9012");
     res &= strmap_set(strmap_p, "aad", "3456");
 
+    res &= strmap_count(strmap_p) == 4;
     res &= strmap_del(strmap_p, "aab");
+    res &= strmap_count(strmap_p) == 3;
     res &= strmap_del(strmap_p, "aac");
+    res &= strmap_count(strmap_p) == 2;
 
     res &= strmap_exists(strmap_p, "aaa") == true;
     res &= strmap_exists(strmap_p, "aab") == false;
@@ -92,9 +101,13 @@ bool overwrite_element_test(void) {
     }
     bool res = true;
 
+    res &= strmap_count(strmap_p) == 0;
     res &= strmap_set(strmap_p, "A", "B");
+    res &= strmap_count(strmap_p) == 1;
     res &= strmap_set(strmap_p, "A", "C");
+    res &= strmap_count(strmap_p) == 2;
     res &= strmap_set(strmap_p, "A", "C");
+    res &= strmap_count(strmap_p) == 2;
     res &= strcmp(strmap_get(strmap_p, "A"), "C") == 0;
 
     res &= strmap_deinit(&strmap_p);
@@ -121,13 +134,35 @@ bool empty_element_test(void) {
     return res;
 }
 
+#define lim 1000000
+#define m ('z' - 'a' + 1)
+
 bool million_elements_test(void) {
     StrMap* strmap_p;
     if (!strmap_init(&strmap_p)) {
         return false;
     }
     bool res = true;
-
+    res &= strmap_count(strmap_p) == 0;
+    for (size_t i = 0; i < lim; i++) {
+        char c1 = i % m + 'a';
+        char c2 = (i / m) % m + 'a';
+        char c3 = (i / m / m) % m + 'a';
+        char c4 = (i / m / m / m) % m + 'a';
+        char c5 = (i / m / m / m) % m + 'a';
+        char c6 = (i / m / m / m / m) % m + 'a';
+        res &= strmap_set(strmap_p, (char[]){c6, c5, c4, c3, c2, c1, '\0'}, (char[]){c1, c2, c3, c4, c5, c6, '\0'});
+    }
+    res &= strmap_count(strmap_p) == lim;
+    for (size_t i = 0; i < lim; i++) {
+        char c1 = i % m + 'a';
+        char c2 = (i / m) % m + 'a';
+        char c3 = (i / m / m) % m + 'a';
+        char c4 = (i / m / m / m) % m + 'a';
+        char c5 = (i / m / m / m) % m + 'a';
+        char c6 = (i / m / m / m / m) % m + 'a';
+        res &= strcmp(strmap_get(strmap_p, (char[]){c6, c5, c4, c3, c2, c1, '\0'}), (char[]){c1, c2, c3, c4, c5, c6, '\0'}) == 0;
+    }
     res &= strmap_deinit(&strmap_p);
     return res;
 }

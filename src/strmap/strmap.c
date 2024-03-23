@@ -4,6 +4,8 @@
 #include <stdlib.h> // reallocarray
 #include <string.h> // strcmp, strdup, strcpy, memset
 
+#include <stdio.h>
+
 static_assert(DEFAULT_CAPACITY > 1, "capacity is assumed to be larger than 1");
 static_assert((DEFAULT_CAPACITY & (DEFAULT_CAPACITY - 1)) == 0, "capacity is assummed to be a power of 2");
 
@@ -51,10 +53,8 @@ bool strmap_deinit(StrMap** strmap_pp) {
     }
 
     // iterate through lists
-    StrMapNodeList* arr_p = (*strmap_pp)->lists_p;
-    size_t list_count = (*strmap_pp)->list_count;
-    for (size_t i = 0; i < list_count; i++) {
-        StrMapNode* node_p = arr_p[i].head_p;
+    for (size_t i = 0; i < (*strmap_pp)->list_count; i++) {
+        StrMapNode* node_p = (*strmap_pp)->lists_p[i].head_p;
         StrMapNode* next_p = NULL;
 
         // traverse list and free nodes one by one
@@ -72,6 +72,14 @@ bool strmap_deinit(StrMap** strmap_pp) {
     *strmap_pp = NULL;
 
     return true;
+}
+
+size_t strmap_count(const StrMap* strmap_p) {
+    size_t count = 0;
+    for (size_t i = 0; i < strmap_p->list_count; i++) {
+        count += strmap_p->lists_p[i].node_count;
+    }
+    return count;
 }
 
 bool strmap_exists(const StrMap* strmap_p, const char* key_p) {
@@ -300,7 +308,6 @@ bool strmap_set(StrMap* strmap_p, const char* key_p, const char* value_p) {
             if (node_p->value_p == NULL) {
                 return false;
             }
-            strmap_p->lists_p[index].node_count++;
             return true;
         }
 
