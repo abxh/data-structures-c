@@ -1,6 +1,6 @@
 /*
-    Including this header file generates structs and
-    functions for a given stack type.
+    Including this header file generates a struct and functions for a given
+    stack type.
 
     The following macros gets defined once:
     - astack_for_each
