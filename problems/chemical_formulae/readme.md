@@ -8,7 +8,7 @@ For this problem, the entries are the `synonyms` listed [here](https://en.wikipe
 
 The `synonyms` are to be mapped to the `chemical formula`s and `CAS` numbers, if they exist.
 
-You can use the python script to download the wikipedia table in csv format (comma-seperated-values).
+You can use [this](./get_data.py] python script to download the wikipedia table in csv format (comma-seperated-values).
 
 Use some metric (levenshtein distance, longest common subsequence, string length), and sort
 the entries after the user input (with your own sorting algorithm or C standard's `qsort`). Display
