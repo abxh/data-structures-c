@@ -47,7 +47,7 @@ int cmp_custom(const void* s1, const void* s2) {
     size_t diff1 = abs_diff(m1, n);
     size_t diff2 = abs_diff(m2, n);
 
-    return (diff2 > diff1) - (diff2 < diff1);
+    return -(diff2 < diff1) + (diff2 > diff1);
 }
 
 int main(void) {
