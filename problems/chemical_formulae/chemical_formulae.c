@@ -1,5 +1,5 @@
-#include <stdbool.h>
 #include <ctype.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,7 +19,7 @@ uint64_t longest_common_subsequence(const char* str1, size_t n, const char* str2
     memset(result, 0, sizeof(result));
     for (size_t i = 1; i <= n; i++) {
         for (size_t j = 1; j <= m; j++) {
-            if (tolower(str1[i - 1]) == tolower(str2[j - 1])) {
+            if (str1[i - 1] == str2[j - 1]) {
                 result[i][j] = result[i - 1][j - 1] + 1;
             } else {
                 result[i][j] = max(result[i - 1][j], result[i][j - 1]);
@@ -54,11 +54,11 @@ int main(void) {
 
     // prepare stuff:
 
-    // printf("Please wait...\n");
-    // int status = system("python get_data.py");
-    // if (status != 0) {
-    //     return 1;
-    // }
+    printf("Please wait...\n");
+    int status = system("python get_data.py");
+    if (status != 0) {
+        return 1;
+    }
 
     FILE* fp = fopen("data.csv", "r");
     if (fp == NULL) {
@@ -70,13 +70,9 @@ int main(void) {
     }
 
     // read from file and store data as keys and values in strmap:
-    size_t lines = 0;
+    char buf[line_len_max];
+    fgets(buf, line_len_max, fp); // skip first line
     while (true) {
-        if (lines == 0) {
-            lines++;
-            continue;
-        }
-        char buf[line_len_max];
         if (fgets(buf, line_len_max, fp) == NULL) {
             break;
         }
@@ -96,15 +92,9 @@ int main(void) {
             buf[j] = '\0';
             i += 1;
         }
-
         char* formula_str = &buf[0];
         char* synonym_str = &buf[i + 1];
         char* cas_str = &buf[j + 1];
-
-        char* iter_str = synonym_str;
-        while (*iter_str++ != '\0') {
-            *iter_str = tolower(*iter_str);
-        }
 
         char buf1[line_len_max * 2];
         sprintf(buf1, "%s%s%s", formula_str, *cas_str != '\0' ? ", CAS: " : "", cas_str);
@@ -112,12 +102,11 @@ int main(void) {
                    synonym_str, // key
                    buf1         // value
         );
-
-        lines++;
     }
 
     // create an array of key references:
-    char** keys_arr_pp = malloc(sizeof(char*) * lines);
+    size_t count = strmap_count(strmap_p);
+    char** keys_arr_pp = malloc(sizeof(char*) * count);
     {
         size_t keys_arr_index = 0;
 
@@ -130,19 +119,24 @@ int main(void) {
         strmap_for_each(strmap_p, list_index, next_p, key_p, value_p) {
             keys_arr_pp[keys_arr_index++] = key_p; // store reference
         }
-
-        lines = keys_arr_index; // because there are some overlapping keys for some reason. TODO: fix
     }
-    // printf("Type your input:\n");
+    printf("Type your input:\n");
 
     // actual program:
     char* line_p = NULL;
     size_t n = 0;
     ssize_t len = 0;
     while (0 < (len = getline(&line_p, &n, stdin))) {
+        if (line_p[len - 1] == '\n') {
+            line_p[len - 1] = '\0';
+        }
+        if (strmap_exists(strmap_p, line_p)) {
+            printf(" -> %s (%s)\n", line_p, strmap_get(strmap_p, line_p));
+            continue;
+        }
         CMP_CUSTOM_USR_INP_P = &line_p[0];
-        qsort(keys_arr_pp, lines, sizeof(char*), cmp_custom);
-        for (size_t i = lines - 1; i >= lines - 5; i--) {
+        qsort(keys_arr_pp, count, sizeof(char*), cmp_custom);
+        for (size_t i = count - 1; i >= count - 5; i--) {
             printf(" -> %s (%s)\n", keys_arr_pp[i], strmap_get(strmap_p, keys_arr_pp[i]));
         }
     }
