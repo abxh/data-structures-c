@@ -5,7 +5,7 @@
     The following macros gets defined once:
     - astack_for_each
 
-    The following structs are generated:
+    The following structs are generated for a given value type t with name T:
     - astack_T
 
     The following functions are generated for a given value type t with name T:
