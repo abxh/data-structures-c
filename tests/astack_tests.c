@@ -1,8 +1,8 @@
 #include <stdbool.h> // bool, true, false
 #include <stdio.h>   // printf
 
-#include "eval_and_log.h"
-#define el(expr) eval_and_log(expr)
+#include "eval_bool_and_log.h"
+#define el(expr) eval_bool_and_log(expr)
 
 #define VALUE_TYPE int
 #define VALUE_NAME int

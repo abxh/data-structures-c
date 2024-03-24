@@ -3,8 +3,8 @@
 #include "stdio.h"
 #include "string.h"
 
-#include "eval_and_log.h"
-#define el(expr) eval_and_log(expr)
+#include "eval_bool_and_log.h"
+#define el(expr) eval_bool_and_log(expr)
 
 #include "../src/strmap/strmap.h"
 

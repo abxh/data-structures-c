@@ -1,8 +1,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "eval_and_log.h"
-#define el(expr) eval_and_log(expr)
+#include "eval_bool_and_log.h"
+#define el(expr) eval_bool_and_log(expr)
 
 #include "../src/stack/stack.h"
 #define VALUE_TYPE int
