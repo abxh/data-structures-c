@@ -3,13 +3,14 @@
     which can be used to directly interact with values.
 
     The functions generated for a given value type t with name T are:
+    - queue_init_T
     - queue_peek_T
     - queue_peek_first_T
     - queue_peek_last_T
     - queue_push_T
     - queue_pop_T
 
-    A distinction between the value and name is made as the name
+    A distinction between the type and name is made as the name
     cannot include spaces.
 */
 
@@ -30,6 +31,10 @@
 #define CAT(a, b) a##b
 #define PASTE(a, b) CAT(a, b)
 #define JOIN(prefix, name) PASTE(prefix, PASTE(_, name))
+
+static inline bool JOIN(queue_init, VALUE_NAME)(Queue** queue_pp) {
+    return queue_init(queue_pp, sizeof(VALUE_TYPE));
+}
 
 static inline VALUE_TYPE JOIN(queue_peek, VALUE_NAME)(const Queue* queue_p) {
     return *(VALUE_TYPE*)(queue_peek_node(queue_p)->value_p);

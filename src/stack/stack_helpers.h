@@ -3,6 +3,7 @@
     which can be used to directly interact with values.
 
     The functions generated for a given value type t with name T are:
+    - stack_init_T
     - stack_peek_T
     - stack_push_T
     - stack_pop_T
@@ -28,6 +29,10 @@
 #define CAT(a, b) a##b
 #define PASTE(a, b) CAT(a, b)
 #define JOIN(prefix, name) PASTE(prefix, PASTE(_, name))
+
+static inline bool JOIN(stack_init, VALUE_NAME)(Stack** stack_pp) {
+    return stack_init(stack_pp, sizeof(VALUE_TYPE));
+}
 
 static inline VALUE_TYPE JOIN(stack_peek, VALUE_NAME)(const Stack* stack_p) {
     return *(VALUE_TYPE*)(stack_peek_node(stack_p)->value_p);

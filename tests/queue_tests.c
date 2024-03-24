@@ -9,7 +9,7 @@
 
 bool empty_test(void) {
     Queue* q;
-    if (!queue_init(&q, sizeof(int))) {
+    if (!queue_init_int(&q)) {
         return false;
     }
     bool res = true;
@@ -23,7 +23,7 @@ bool empty_test(void) {
 
 bool one_element_test(void) {
     Queue* q;
-    if (!queue_init(&q, sizeof(int))) {
+    if (!queue_init_int(&q)) {
         return false;
     }
     bool res = true;
@@ -47,7 +47,7 @@ bool one_element_test(void) {
 
 bool two_elements_test(void) {
     Queue* q;
-    if (!queue_init(&q, sizeof(int))) {
+    if (!queue_init_int(&q)) {
         return false;
     }
     bool res = true;
@@ -66,7 +66,7 @@ bool two_elements_test(void) {
 
 bool million_elements_test(void) {
     Queue* q;
-    if (!queue_init(&q, sizeof(int))) {
+    if (!queue_init_int(&q)) {
         return false;
     }
     bool res = true;
@@ -82,7 +82,7 @@ bool million_elements_test(void) {
 
 bool for_each_test(void) {
     Queue* q;
-    if (!queue_init(&q, sizeof(int))) {
+    if (!queue_init_int(&q)) {
         return false;
     }
     bool res = true;

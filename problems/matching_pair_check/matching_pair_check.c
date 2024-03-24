@@ -78,7 +78,7 @@ int main(void) {
     }
 
     Stack* stack_p;
-    if (!stack_init(&stack_p, sizeof(SYMBOL_ENUM))) {
+    if (!stack_init_symb(&stack_p)) {
         free(str);
         return 1;
     }

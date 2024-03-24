@@ -9,7 +9,7 @@
 
 bool empty_test(void) {
     Stack* s;
-    if (!stack_init(&s, sizeof(int))) {
+    if (!stack_init_int(&s)) {
         return false;
     }
     bool res = true;
@@ -23,7 +23,7 @@ bool empty_test(void) {
 
 bool one_element_test(void) {
     Stack* s;
-    if (!stack_init(&s, sizeof(int))) {
+    if (!stack_init_int(&s)) {
         return false;
     }
     bool res = true;
@@ -45,7 +45,7 @@ bool one_element_test(void) {
 
 bool million_elements_test(void) {
     Stack* s;
-    if (!stack_init(&s, sizeof(int))) {
+    if (!stack_init_int(&s)) {
         return false;
     }
     bool res = true;
@@ -61,7 +61,7 @@ bool million_elements_test(void) {
 
 bool for_each_test(void) {
     Stack* s;
-    if (!stack_init(&s, sizeof(int))) {
+    if (!stack_init_int(&s)) {
         return false;
     }
     bool res = true;

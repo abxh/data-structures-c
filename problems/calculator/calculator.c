@@ -99,7 +99,7 @@ double eval(char* str, ssize_t len) {
     Stack* op_stack = NULL;
     Stack* num_stack = NULL;
 
-    if (!queue_init(&inp_queue, sizeof(Lexeme))) {
+    if (!queue_init_lex(&inp_queue)) {
         goto on_oom_error;
     }
 
@@ -286,10 +286,10 @@ double eval(char* str, ssize_t len) {
     }
 #endif
 
-    if (!queue_init(&inp_queue_postfix, sizeof(Lexeme))) {
+    if (!queue_init_lex(&inp_queue_postfix)) {
         goto on_oom_error;
     }
-    if (!stack_init(&op_stack, sizeof(Lexeme))) {
+    if (!stack_init_lex(&op_stack)) {
         goto on_oom_error;
     }
 
