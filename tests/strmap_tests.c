@@ -134,7 +134,6 @@ bool empty_element_test(void) {
     return res;
 }
 
-
 #define lim 1000000
 #define m ('z' - 'a' + 1)
 
