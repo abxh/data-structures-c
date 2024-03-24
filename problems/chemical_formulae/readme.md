@@ -15,4 +15,4 @@ You can use [this](get_data.py) python script to download the wikipedia tables i
 
 Use some metric (e.g. levenshtein distance, longest common subsequence, string length), and sort
 the keys after the user input (with your own sorting algorithm or C standard's `qsort`). Display
-the first five keys most similar to the user input.
+the first five keys most similar to the user input and the keys' corresponding values.
