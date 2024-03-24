@@ -2,7 +2,7 @@
 
 The goal of this problem is to become more familiar with how to read a C file,
 format and parse strings, use a string hashmap, and use some metric to sort
-data and fuzzy search string entries.
+and fuzzy search string entries.
 
 **Problem:**
 
