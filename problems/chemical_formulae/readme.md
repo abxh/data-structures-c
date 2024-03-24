@@ -6,7 +6,7 @@ data and fuzzy search string entries.
 
 **Problem:**
 
-The keys (to be used for mapping) are the `synonym`s listed in the following wikipedia tables:
+The keys (to be used for mapping) are the `synonym`s listed in the following wikipedia tables
 [here](https://en.wikipedia.org/wiki/Glossary_of_chemical_formulae).
 
 The `synonym` keys are to be mapped to the `formula` and `CAS` values.
