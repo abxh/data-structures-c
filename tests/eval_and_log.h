@@ -1,7 +1,7 @@
 #include <stdio.h> // fprintf
 
 // reference:
-// https://stackoverflow.com/a/168611
+// https://stackoverflow.com/questions/37473/how-can-i-assert-without-using-abort/168611#168611
 
 static inline bool eval_and_log_internal(bool expr_value, int linenr, const char* pretty_function, const char* expr_str) {
     if (!expr_value) {
