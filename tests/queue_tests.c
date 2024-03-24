@@ -1,8 +1,10 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "../src/queue/queue.h"
+#include "eval_and_log.h"
+#define el(expr) eval_and_log(expr)
 
+#include "../src/queue/queue.h"
 #define VALUE_TYPE int
 #define VALUE_NAME int
 #include "../src/queue/queue_helpers.h"
@@ -10,13 +12,14 @@
 bool empty_test(void) {
     Queue* q;
     if (!queue_init_int(&q)) {
+        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
     bool res = true;
 
-    res &= queue_count(q) == 0;
-    res &= queue_is_empty(q);
-    res &= queue_deinit(&q);
+    res &= el(queue_count(q) == 0);
+    res &= el(queue_is_empty(q));
+    res &= el(queue_deinit(&q));
 
     return res;
 }
@@ -24,23 +27,23 @@ bool empty_test(void) {
 bool one_element_test(void) {
     Queue* q;
     if (!queue_init_int(&q)) {
+        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
     bool res = true;
     int value = 5;
 
-    res &= queue_enqueue_int(q, value);
-    res &= value == queue_peek_int(q);
-    /*
-    res &= !queue_is_empty(q);
-    res &= queue_count(q) == 1;
+    res &= el(queue_enqueue_int(q, value));
+    res &= el(value == queue_peek_int(q));
 
-    res &= value == queue_dequeue_int(q);
-    res &= queue_is_empty(q);
-    res &= queue_count(q) == 0;
-    */
+    res &= el(!queue_is_empty(q));
+    res &= el(queue_count(q) == 1);
 
-    res &= queue_deinit(&q);
+    res &= el(value == queue_dequeue_int(q));
+    res &= el(queue_is_empty(q));
+    res &= el(queue_count(q) == 0);
+
+    res &= el(queue_deinit(&q));
 
     return res;
 }
@@ -48,18 +51,19 @@ bool one_element_test(void) {
 bool two_elements_test(void) {
     Queue* q;
     if (!queue_init_int(&q)) {
+        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
     bool res = true;
     int value1 = 1;
     int value2 = 2;
 
-    res &= queue_enqueue_int(q, value1);
-    res &= queue_enqueue_int(q, value2);
-    res &= value1 == queue_peek_first_int(q);
-    res &= value2 == queue_peek_last_int(q);
-    res &= queue_count(q) == 2;
-    res &= queue_deinit(&q);
+    res &= el(queue_enqueue_int(q, value1));
+    res &= el(queue_enqueue_int(q, value2));
+    res &= el(value1 == queue_peek_first_int(q));
+    res &= el(value2 == queue_peek_last_int(q));
+    res &= el(queue_count(q) == 2);
+    res &= el(queue_deinit(&q));
 
     return res;
 }
@@ -67,6 +71,7 @@ bool two_elements_test(void) {
 bool million_elements_test(void) {
     Queue* q;
     if (!queue_init_int(&q)) {
+        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
     bool res = true;
@@ -74,15 +79,16 @@ bool million_elements_test(void) {
         queue_enqueue_int(q, i);
     }
     for (int i = 1; i <= 1000000; i++) {
-        res &= i == queue_dequeue_int(q);
+        res &= el(i == queue_dequeue_int(q));
     }
-    res &= queue_deinit(&q);
+    res &= el(queue_deinit(&q));
     return res;
 }
 
 bool for_each_test(void) {
     Queue* q;
     if (!queue_init_int(&q)) {
+        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
     bool res = true;
@@ -93,10 +99,10 @@ bool for_each_test(void) {
     QueueNode* node_p;
     int value;
     queue_for_each(q, node_p, value) {
-        res &= x == value;
+        res &= el(x == value);
         x++;
     }
-    res &= queue_deinit(&q);
+    res &= el(queue_deinit(&q));
     return res;
 }
 

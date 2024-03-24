@@ -1,8 +1,10 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "../src/stack/stack.h"
+#include "eval_and_log.h"
+#define el(expr) eval_and_log(expr)
 
+#include "../src/stack/stack.h"
 #define VALUE_TYPE int
 #define VALUE_NAME int
 #include "../src/stack/stack_helpers.h"
@@ -14,9 +16,9 @@ bool empty_test(void) {
     }
     bool res = true;
 
-    res &= stack_count(s) == 0;
-    res &= stack_is_empty(s);
-    res &= stack_deinit(&s);
+    res &= el(stack_count(s) == 0);
+    res &= el(stack_is_empty(s));
+    res &= el(stack_deinit(&s));
 
     return res;
 }
@@ -24,21 +26,22 @@ bool empty_test(void) {
 bool one_element_test(void) {
     Stack* s;
     if (!stack_init_int(&s)) {
+        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
     bool res = true;
     int value = 5;
 
-    res &= stack_push_int(s, value);
-    res &= value == stack_peek_int(s);
-    res &= !stack_is_empty(s);
-    res &= stack_count(s) == 1;
+    res &= el(stack_push_int(s, value));
+    res &= el(value == stack_peek_int(s));
+    res &= el(!stack_is_empty(s));
+    res &= el(stack_count(s) == 1);
 
-    res &= value == stack_pop_int(s);
-    res &= stack_is_empty(s);
-    res &= stack_count(s) == 0;
+    res &= el(value == stack_pop_int(s));
+    res &= el(stack_is_empty(s));
+    res &= el(stack_count(s) == 0);
 
-    res &= stack_deinit(&s);
+    res &= el(stack_deinit(&s));
 
     return res;
 }
@@ -46,6 +49,7 @@ bool one_element_test(void) {
 bool million_elements_test(void) {
     Stack* s;
     if (!stack_init_int(&s)) {
+        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
     bool res = true;
@@ -53,15 +57,16 @@ bool million_elements_test(void) {
         stack_push_int(s, i);
     }
     for (int i = 1000000; i >= 1; i--) {
-        res &= i == stack_pop_int(s);
+        res &= el(i == stack_pop_int(s));
     }
-    res &= stack_deinit(&s);
+    res &= el(stack_deinit(&s));
     return res;
 }
 
 bool for_each_test(void) {
     Stack* s;
     if (!stack_init_int(&s)) {
+        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
     bool res = true;
@@ -72,10 +77,10 @@ bool for_each_test(void) {
     StackNode* node_p;
     int value;
     stack_for_each(s, node_p, value) {
-        res &= x == value;
+        res &= el(x == value);
         x--;
     }
-    res &= stack_deinit(&s);
+    res &= el(stack_deinit(&s));
     return res;
 }
 
