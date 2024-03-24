@@ -12,11 +12,13 @@
 static inline size_t next_pow2(size_t x) {
     assert(x != 0);
 
+#if defined(__GNUC__)
 #if __GNUC__ > 3 || (__GNUC__ == 3 && (__GNUC_MINOR__ > 4 || __GNUC_MINOR__ == 4)) // Test for GCC >= 3.4.0
 #if UINTPTR_MAX == UINT32_MAX
     return x == 1 ? 1 : 1 << (32 - __builtin_clz(x - 1));
 #elif UINTPTR_MAX == UINT64_MAX
     return x == 1 ? 1 : 1 << (64 - __builtin_clzl(x - 1));
+#endif
 #endif
 #endif
 
