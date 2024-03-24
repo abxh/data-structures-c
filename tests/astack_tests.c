@@ -7,7 +7,7 @@
 
 bool empty_test(void) {
     astack_int* s;
-    if (!astack_int_init(&s, 1)) {
+    if (!astack_int_init_with_capacity(&s, 1)) {
         return false;
     }
     bool res = true;
@@ -23,7 +23,7 @@ bool empty_test(void) {
 
 bool one_element_test(void) {
     astack_int* s;
-    if (!astack_int_init(&s, 1)) {
+    if (!astack_int_init_with_capacity(&s, 1)) {
         return false;
     }
     bool res = true;
@@ -52,7 +52,7 @@ bool one_element_test(void) {
 
 bool multiple_elements_test(void) {
     astack_int* s;
-    if (!astack_int_init(&s, 10)) {
+    if (!astack_int_init_with_capacity(&s, 10)) {
         return false;
     }
     bool res = true;
@@ -76,7 +76,7 @@ bool multiple_elements_test(void) {
 
 bool million_elements_test(void) {
     astack_int* s;
-    if (!astack_int_init(&s, 1000000)) {
+    if (!astack_int_init_with_capacity(&s, 1000000)) {
         return false;
     }
     bool res = true;
@@ -99,7 +99,7 @@ bool million_elements_test(void) {
 
 bool for_each_test(void) {
     astack_int* s;
-    if (!astack_int_init(&s, 50)) {
+    if (!astack_int_init_with_capacity(&s, 50)) {
         return false;
     }
     bool res = true;
