@@ -7,7 +7,7 @@
 
 #include "bitarray.h"
 
-static_assert(CHAR_BIT == 8, "CHAR_BIT is assumed to be 8 bits.");
+static_assert(CHAR_BIT == 8, "a char is 8 bits.");
 
 #define word_index(index) ((index) >> 3)
 #define bit_index(index) (~(index) & 7)
