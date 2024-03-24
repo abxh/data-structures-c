@@ -1,8 +1,14 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#ifdef linux
 #include <time.h>
-#include <unistd.h>
+#endif
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 #include "../../src/bithacks/rotate_bits.h"
 
@@ -24,7 +30,9 @@ size_t* generate_star_pattern() {
 
 int main(void) {
     size_t* star_pattern = generate_star_pattern();
+#ifdef linux
     const struct timespec duration = {0., 1. / 25. * 1e+9}; // 1 / 25 seconds
+#endif
     int8_t rotation_dir = 0;
 
     while (true) {
@@ -38,7 +46,14 @@ int main(void) {
             }
             putchar('\n');
         }
+
+#ifdef linux
         nanosleep(&duration, NULL);
+#endif
+#ifdef _WIN32
+        Sleep(1000 * 1 / 25);
+#endif
+
         for (int i = 0; i < 8; i++) {
             printf(VT_CLEARLINE);
             printf(VT_MOVUP);
