@@ -16,6 +16,7 @@
     - astack_T_is_full
     - astack_T_peek
     - astack_T_push
+    - astack_T_push_many
     - astack_T_pop
 
     A distinction between the type and name is made as the name
@@ -29,6 +30,7 @@
 #include <stddef.h> // offsetof
 #include <stdint.h> // SIZE_MAX
 #include <stdlib.h> // size_t, NULL, malloc, free
+#include <string.h> // memcpy
 
 #define astack_for_each(astack_p, value, index) \
     for ((index) = 0; ((index) < (astack_p)->count && ((value) = (astack_p)->arr_p[(index)], true)); (index)++)
@@ -50,6 +52,10 @@
 #define JOIN(prefix, name) PASTE(prefix, PASTE(_, name))
 
 #define astack_T JOIN(astack, VALUE_NAME)
+#define astack_T_is_empty JOIN(astack_T, is_empty)
+#define astack_T_is_full JOIN(astack_T, is_full)
+#define astack_T_count JOIN(astack_T, count)
+#define astack_T_capacity JOIN(astack_T, capacity)
 
 typedef struct {
     size_t count;
@@ -80,9 +86,14 @@ static inline bool JOIN(astack_T, deinit)(astack_T** astack_pp) {
     return true;
 }
 
-static inline bool JOIN(astack_T, count)(const astack_T* astack_p) {
+static inline size_t JOIN(astack_T, count)(const astack_T* astack_p) {
     assert(astack_p != NULL);
     return astack_p->count;
+}
+
+static inline size_t JOIN(astack_T, capacity)(const astack_T* astack_p) {
+    assert(astack_p != NULL);
+    return astack_p->capacity;
 }
 
 static inline bool JOIN(astack_T, is_empty)(const astack_T* astack_p) {
@@ -97,22 +108,34 @@ static inline bool JOIN(astack_T, is_full)(const astack_T* astack_p) {
 
 static inline VALUE_TYPE JOIN(astack_T, peek)(astack_T* astack_p) {
     assert(astack_p != NULL);
-    assert(JOIN(astack_T, is_empty)(astack_p) == false);
+    assert(astack_T_is_empty(astack_p) == false);
     return astack_p->arr_p[astack_p->count - 1];
 }
 
 static inline void JOIN(astack_T, push)(astack_T* astack_p, const VALUE_TYPE value) {
     assert(astack_p != NULL);
-    assert(JOIN(astack_T, is_full)(astack_p) == false);
+    assert(astack_T_is_full(astack_p) == false);
     astack_p->arr_p[astack_p->count++] = value;
+}
+
+static inline void JOIN(astack_T, push_many)(astack_T* astack_p, const VALUE_TYPE* values, size_t num_of_values) {
+    assert(astack_p != NULL);
+    assert(num_of_values <= SIZE_MAX / sizeof(VALUE_TYPE));
+    assert(astack_T_count(astack_p) + num_of_values <= astack_T_capacity(astack_p));
+    memcpy(&astack_p->arr_p[astack_p->count], values, num_of_values * sizeof(VALUE_TYPE));
+    astack_p->count += num_of_values;
 }
 
 static inline VALUE_TYPE JOIN(astack_T, pop)(astack_T* astack_p) {
     assert(astack_p != NULL);
-    assert(JOIN(astack_T, is_empty)(astack_p) == false);
+    assert(astack_T_is_empty(astack_p) == false);
     return astack_p->arr_p[--astack_p->count];
 }
 
+#undef astack_T_is_empty
+#undef astack_T_is_full
+#undef astack_T_count
+#undef astack_T_capacity
 #undef astack_T
 
 #undef CAT

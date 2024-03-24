@@ -1,13 +1,15 @@
-#include "strmap.h"
 #include <assert.h> // static_assert
 #include <stdint.h> // uint64_t
 #include <stdlib.h> // reallocarray
 #include <string.h> // strcmp, strdup, strcpy, memset
 
-#include <stdio.h>
+#include "strmap.h"
 
-static_assert(DEFAULT_CAPACITY > 1, "capacity is assumed to be larger than 1");
-static_assert((DEFAULT_CAPACITY & (DEFAULT_CAPACITY - 1)) == 0, "capacity is assummed to be a power of 2");
+#define INITIAL_CAPACITY 16
+#define MAX_CHAIN_LENGTH 5
+
+static_assert(INITIAL_CAPACITY > 1, "capacity is assumed to be larger than 1");
+static_assert((INITIAL_CAPACITY & (INITIAL_CAPACITY - 1)) == 0, "capacity is assummed to be a power of 2");
 
 static uint64_t fnv_hash64(const unsigned char* char_p) {
     assert(char_p != NULL);
@@ -34,13 +36,33 @@ bool strmap_init(StrMap** strmap_pp) {
     if (*strmap_pp == NULL) {
         return false;
     }
-    (*strmap_pp)->lists_p = calloc(DEFAULT_CAPACITY, sizeof(StrMapNodeList));
+    (*strmap_pp)->lists_p = calloc(INITIAL_CAPACITY, sizeof(StrMapNodeList));
     if ((*strmap_pp)->lists_p == NULL) {
         free(*strmap_pp);
         *strmap_pp = NULL;
         return false;
     }
-    (*strmap_pp)->list_count = DEFAULT_CAPACITY;
+    (*strmap_pp)->list_count = INITIAL_CAPACITY;
+
+    return true;
+}
+
+bool strmap_init_with_capacity(StrMap** strmap_pp, size_t initial_power_of_two_capacity) {
+    assert(strmap_pp != NULL);
+    assert(initial_power_of_two_capacity > 1);
+    assert((initial_power_of_two_capacity & (initial_power_of_two_capacity - 1)) == 0);
+
+    *strmap_pp = malloc(sizeof(StrMap));
+    if (*strmap_pp == NULL) {
+        return false;
+    }
+    (*strmap_pp)->lists_p = calloc(initial_power_of_two_capacity, sizeof(StrMapNodeList));
+    if ((*strmap_pp)->lists_p == NULL) {
+        free(*strmap_pp);
+        *strmap_pp = NULL;
+        return false;
+    }
+    (*strmap_pp)->list_count = initial_power_of_two_capacity;
 
     return true;
 }
@@ -248,7 +270,7 @@ static int strmap_grow_if_necessary(StrMap* strmap_p, size_t chain_length) {
             lists_p[index].head_p = node_p;
             lists_p[index].node_count++;
         }
-        
+
         node_p = next_temp_p;
     }
     strmap_p->list_count = new_list_count;

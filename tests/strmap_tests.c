@@ -1,9 +1,9 @@
-#include "../src/strmap/strmap.h"
 #include "assert.h"
 #include "stdbool.h"
 #include "stdio.h"
-#include "stdlib.h"
 #include "string.h"
+
+#include "../src/strmap/strmap.h"
 
 bool one_element_test(void) {
     StrMap* strmap_p;
@@ -133,6 +133,7 @@ bool empty_element_test(void) {
 
     return res;
 }
+
 
 #define lim 1000000
 #define m ('z' - 'a' + 1)

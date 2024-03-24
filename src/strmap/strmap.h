@@ -20,19 +20,11 @@ typedef struct {
     StrMapNodeList* lists_p;
 } StrMap;
 
-#ifndef STRMAP_GET_VALUE_DEFAULT
 #define STRMAP_GET_VALUE_DEFAULT NULL
-#endif
-
-#ifndef DEFAULT_CAPACITY
-#define DEFAULT_CAPACITY 16
-#endif
-
-#ifndef MAX_CHAIN_LENGTH
-#define MAX_CHAIN_LENGTH 5
-#endif
 
 bool strmap_init(StrMap** strmap_pp);
+
+bool strmap_init_with_capacity(StrMap** strmap_pp, size_t initial_capacity);
 
 bool strmap_deinit(StrMap** strmap_pp);
 

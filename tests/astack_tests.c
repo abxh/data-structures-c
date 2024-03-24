@@ -12,7 +12,10 @@ bool empty_test(void) {
     }
     bool res = true;
 
+    res &= astack_int_capacity(s) == 1;
+
     res &= astack_int_is_empty(s);
+    res &= astack_int_count(s) == 0;
     res &= astack_int_deinit(&s);
 
     return res;
@@ -24,18 +27,50 @@ bool one_element_test(void) {
         return false;
     }
     bool res = true;
+
+    res &= astack_int_capacity(s) == 1;
+
     int value = 5;
+
+    res &= astack_int_count(s) == 0;
     astack_int_push(s, value);
+    res &= astack_int_count(s) == 1;
 
     res &= value == astack_int_peek(s);
     res &= !astack_int_is_empty(s);
 
     res &= value == astack_int_pop(s);
+    res &= astack_int_count(s) == 0;
+
     res &= astack_int_is_empty(s);
     res &= !astack_int_is_full(s);
 
     res &= astack_int_deinit(&s);
 
+    return res;
+}
+
+bool multiple_elements_test(void) {
+    astack_int* s;
+    if (!astack_int_init(&s, 10)) {
+        return false;
+    }
+    bool res = true;
+
+    res &= astack_int_capacity(s) == 10;
+
+    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+    res &= astack_int_count(s) == 0;
+    astack_int_push_many(s, arr, 10);
+    res &= astack_int_count(s) == 10;
+
+    for (int i = 10; i >= 1; i--) {
+        res &= i == astack_int_pop(s);
+    }
+    res &= astack_int_count(s) == 0;
+
+    res &= astack_int_deinit(&s);
     return res;
 }
 
@@ -45,12 +80,19 @@ bool million_elements_test(void) {
         return false;
     }
     bool res = true;
+
+    res &= astack_int_capacity(s) == 1000000;
+
     for (int i = 1; i <= 1000000; i++) {
         astack_int_push(s, i);
+        res &= astack_int_count(s) == (size_t)i;
     }
+
     for (int i = 1000000; i >= 1; i--) {
+        res &= astack_int_count(s) == (size_t)i;
         res &= i == astack_int_pop(s);
     }
+
     res &= astack_int_deinit(&s);
     return res;
 }
@@ -88,6 +130,7 @@ typedef struct {
 int main(void) {
     func_plus bool_f_arr[] = {{empty_test, "empty test"},
                               {one_element_test, "one element test"},
+                              {multiple_elements_test, "multiple elements test"},
                               {million_elements_test, "million elements test"},
                               {for_each_test, "for each test"}};
     printf(__FILE_NAME__ ":\n");
