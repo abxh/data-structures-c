@@ -26,8 +26,8 @@
 #define __ASTACK__H
 
 #include <assert.h> // assert
-#include <cstdint>
 #include <stddef.h> // offsetof
+#include <stdint.h> // SIZE_MAX
 #include <stdlib.h> // size_t, NULL, malloc, free
 
 #define astack_for_each(astack_p, value, index) \
@@ -54,14 +54,14 @@
 typedef struct {
     size_t count;
     size_t capacity;
-    VALUE_TYPE arr[];
+    VALUE_TYPE arr_p[];
 } astack_T;
 
 static inline bool JOIN(astack_T, init)(astack_T** astack_pp, size_t capacity) {
     assert(astack_pp != NULL);
     assert(capacity != 0);
-    assert(capacity <= SIZE_MAX / sizeof(VALUE_TYPE));
-    *astack_pp = (astack_T*)malloc(offsetof(astack_T, arr) + sizeof(VALUE_TYPE) * capacity);
+    assert(capacity <= (SIZE_MAX - offsetof(astack_T, arr_p)) / sizeof(VALUE_TYPE));
+    *astack_pp = (astack_T*)malloc(offsetof(astack_T, arr_p) + sizeof(VALUE_TYPE) * capacity);
     if ((*astack_pp) == NULL) {
         return false;
     }
@@ -75,7 +75,6 @@ static inline bool JOIN(astack_T, deinit)(astack_T** astack_pp) {
     if (*astack_pp == NULL) {
         return false;
     }
-    free((*astack_pp)->arr);
     free(*astack_pp);
     *astack_pp = NULL;
     return true;
@@ -99,19 +98,19 @@ static inline bool JOIN(astack_T, is_full)(const astack_T* astack_p) {
 static inline VALUE_TYPE JOIN(astack_T, peek)(astack_T* astack_p) {
     assert(astack_p != NULL);
     assert(JOIN(astack_T, is_empty)(astack_p) == false);
-    return astack_p->arr[astack_p->count - 1];
+    return astack_p->arr_p[astack_p->count - 1];
 }
 
 static inline void JOIN(astack_T, push)(astack_T* astack_p, const VALUE_TYPE value) {
     assert(astack_p != NULL);
     assert(JOIN(astack_T, is_full)(astack_p) == false);
-    astack_p->arr[astack_p->count++] = value;
+    astack_p->arr_p[astack_p->count++] = value;
 }
 
 static inline VALUE_TYPE JOIN(astack_T, pop)(astack_T* astack_p) {
     assert(astack_p != NULL);
     assert(JOIN(astack_T, is_empty)(astack_p) == false);
-    return astack_p->arr[--astack_p->count];
+    return astack_p->arr_p[--astack_p->count];
 }
 
 #undef astack_T
