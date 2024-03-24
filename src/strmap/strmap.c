@@ -47,22 +47,22 @@ bool strmap_init(StrMap** strmap_pp) {
     return true;
 }
 
-bool strmap_init_with_capacity(StrMap** strmap_pp, size_t initial_power_of_two_capacity) {
+bool strmap_init_with_initial_capacity(StrMap** strmap_pp, size_t pow2_capacity) {
     assert(strmap_pp != NULL);
-    assert(initial_power_of_two_capacity > 1);
-    assert((initial_power_of_two_capacity & (initial_power_of_two_capacity - 1)) == 0);
+    assert(pow2_capacity > 1);
+    assert((pow2_capacity & (pow2_capacity - 1)) == 0);
 
     *strmap_pp = malloc(sizeof(StrMap));
     if (*strmap_pp == NULL) {
         return false;
     }
-    (*strmap_pp)->lists_p = calloc(initial_power_of_two_capacity, sizeof(StrMapNodeList));
+    (*strmap_pp)->lists_p = calloc(pow2_capacity, sizeof(StrMapNodeList));
     if ((*strmap_pp)->lists_p == NULL) {
         free(*strmap_pp);
         *strmap_pp = NULL;
         return false;
     }
-    (*strmap_pp)->list_count = initial_power_of_two_capacity;
+    (*strmap_pp)->list_count = pow2_capacity;
 
     return true;
 }

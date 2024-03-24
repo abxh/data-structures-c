@@ -24,7 +24,7 @@ typedef struct {
 
 bool strmap_init(StrMap** strmap_pp);
 
-bool strmap_init_with_capacity(StrMap** strmap_pp, size_t initial_capacity);
+bool strmap_init_with_initial_capacity(StrMap** strmap_pp, size_t pow2_capacity);
 
 bool strmap_deinit(StrMap** strmap_pp);
 
