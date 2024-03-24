@@ -9,7 +9,7 @@
     - astack_T
 
     The following functions are generated for a given value type t with name T:
-    - astack_T_init_with_capacity
+    - astack_T_init
     - astack_T_deinit
     - astack_T_count
     - astack_T_is_empty
@@ -63,7 +63,7 @@ typedef struct {
     VALUE_TYPE arr_p[];
 } astack_T;
 
-static inline bool JOIN(astack_T, init_with_capacity)(astack_T** astack_pp, size_t capacity) {
+static inline bool JOIN(astack_T, init)(astack_T** astack_pp, size_t capacity) {
     assert(astack_pp != NULL);
     assert(capacity != 0);
     assert(capacity <= (SIZE_MAX - offsetof(astack_T, arr_p)) / sizeof(VALUE_TYPE));

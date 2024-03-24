@@ -1,105 +1,113 @@
 #include <stdbool.h> // bool, true, false
 #include <stdio.h>   // printf
 
+#include "eval_and_log.h"
+#define el(expr) eval_and_log(expr)
+
 #define VALUE_TYPE int
 #define VALUE_NAME int
 #include "../src/astack/astack.h"
 
 bool empty_test(void) {
     astack_int* s;
-    if (!astack_int_init_with_capacity(&s, 1)) {
+    if (!astack_int_init(&s, 1)) {
+        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
     bool res = true;
 
-    res &= astack_int_capacity(s) == 1;
+    res &= el(astack_int_capacity(s) == 1);
 
-    res &= astack_int_is_empty(s);
-    res &= astack_int_count(s) == 0;
-    res &= astack_int_deinit(&s);
+    res &= el(astack_int_is_empty(s));
+    res &= el(astack_int_count(s) == 0);
+    res &= el(astack_int_deinit(&s));
 
     return res;
 }
 
 bool one_element_test(void) {
     astack_int* s;
-    if (!astack_int_init_with_capacity(&s, 1)) {
+    if (!astack_int_init(&s, 1)) {
+        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
     bool res = true;
 
-    res &= astack_int_capacity(s) == 1;
+    res &= el(astack_int_capacity(s) == 1);
 
     int value = 5;
 
-    res &= astack_int_count(s) == 0;
+    res &= el(astack_int_count(s) == 0);
     astack_int_push(s, value);
-    res &= astack_int_count(s) == 1;
+    res &= el(astack_int_count(s) == 1);
 
-    res &= value == astack_int_peek(s);
-    res &= !astack_int_is_empty(s);
+    res &= el(value == astack_int_peek(s));
+    res &= el(!astack_int_is_empty(s));
 
-    res &= value == astack_int_pop(s);
-    res &= astack_int_count(s) == 0;
+    res &= el(value == astack_int_pop(s));
+    res &= el(astack_int_count(s) == 0);
 
-    res &= astack_int_is_empty(s);
-    res &= !astack_int_is_full(s);
+    res &= el(astack_int_is_empty(s));
+    res &= el(!astack_int_is_full(s));
 
-    res &= astack_int_deinit(&s);
+    res &= el(astack_int_deinit(&s));
 
     return res;
 }
 
 bool multiple_elements_test(void) {
     astack_int* s;
-    if (!astack_int_init_with_capacity(&s, 10)) {
+    if (!astack_int_init(&s, 10)) {
+        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
     bool res = true;
 
-    res &= astack_int_capacity(s) == 10;
+    res &= el(astack_int_capacity(s) == 10);
 
     int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-    res &= astack_int_count(s) == 0;
+    res &= el(astack_int_count(s) == 0);
     astack_int_push_many(s, arr, 10);
-    res &= astack_int_count(s) == 10;
+    res &= el(astack_int_count(s) == 10);
 
     for (int i = 10; i >= 1; i--) {
-        res &= i == astack_int_pop(s);
+        res &= el(i == astack_int_pop(s));
     }
-    res &= astack_int_count(s) == 0;
+    res &= el(astack_int_count(s) == 0);
 
-    res &= astack_int_deinit(&s);
+    res &= el(astack_int_deinit(&s));
     return res;
 }
 
 bool million_elements_test(void) {
     astack_int* s;
-    if (!astack_int_init_with_capacity(&s, 1000000)) {
+    if (!astack_int_init(&s, 1000000)) {
+        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
     bool res = true;
 
-    res &= astack_int_capacity(s) == 1000000;
+    res &= el(astack_int_capacity(s) == 1000000);
 
     for (int i = 1; i <= 1000000; i++) {
         astack_int_push(s, i);
-        res &= astack_int_count(s) == (size_t)i;
+        res &= el(astack_int_count(s) == (size_t)i);
     }
 
     for (int i = 1000000; i >= 1; i--) {
-        res &= astack_int_count(s) == (size_t)i;
-        res &= i == astack_int_pop(s);
+        res &= el(astack_int_count(s) == (size_t)i);
+        res &= el(i == astack_int_pop(s));
     }
 
-    res &= astack_int_deinit(&s);
+    res &= el(astack_int_deinit(&s));
     return res;
 }
 
 bool for_each_test(void) {
     astack_int* s;
-    if (!astack_int_init_with_capacity(&s, 50)) {
+    if (!astack_int_init(&s, 50)) {
+        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
     bool res = true;
@@ -110,7 +118,7 @@ bool for_each_test(void) {
     int var;
     size_t i;
     astack_for_each(s, var, i) {
-        res &= value == var;
+        res &= el(value == var);
         value++;
     }
     return res;
