@@ -29,7 +29,7 @@ static inline size_t next_pow2(size_t x) {
     x |= x >> 4;
     x |= x >> 8;
     x |= x >> 16;
-#if UINTPTR_MAX == UINT64_MAX
+#if defined(UINT64_MAX) && UINTPTR_MAX == UINT64_MAX
     x |= x >> 32;
 #endif
     x++;

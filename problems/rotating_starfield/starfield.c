@@ -51,7 +51,7 @@ int main(void) {
         nanosleep(&duration, NULL);
 #endif
 #ifdef _WIN32
-        Sleep(1000 * 1 / 25);
+        Sleep(1000 / 25);
 #endif
 
         for (int i = 0; i < 8; i++) {
