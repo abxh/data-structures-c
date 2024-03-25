@@ -8,8 +8,9 @@
 #define INITIAL_CAPACITY 16
 #define MAX_CHAIN_LENGTH 5
 
-static_assert(INITIAL_CAPACITY > 1, "capacity is assumed to be larger than 1");
-static_assert((INITIAL_CAPACITY & (INITIAL_CAPACITY - 1)) == 0, "capacity is assummed to be a power of 2");
+static_assert(INITIAL_CAPACITY != 0, "initial capacity is not zero");
+static_assert(INITIAL_CAPACITY != 1, "subtracting initial capacity by one does not yield zero");
+static_assert((INITIAL_CAPACITY & (INITIAL_CAPACITY - 1)) == 0, "initial capacity is a power of 2");
 
 static uint64_t fnv_hash64(const unsigned char* char_p) {
     assert(char_p != NULL);
@@ -49,8 +50,9 @@ bool strmap_init(StrMap** strmap_pp) {
 
 bool strmap_init_with_initial_capacity(StrMap** strmap_pp, size_t pow2_capacity) {
     assert(strmap_pp != NULL);
-    assert(pow2_capacity > 1);
-    assert((pow2_capacity & (pow2_capacity - 1)) == 0);
+    assert(pow2_capacity != 0 && "initial capacity is not zero");
+    assert(pow2_capacity != 1 && "subtracting initial capacity by one does not yield zero");
+    assert((pow2_capacity & (pow2_capacity - 1)) == 0 && "initial capacity is a power of 2");
 
     *strmap_pp = malloc(sizeof(StrMap));
     if (*strmap_pp == NULL) {
