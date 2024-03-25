@@ -1,4 +1,5 @@
-#include <stdio.h> // fprintf
+#include <stdio.h>   // fprintf
+#include <stdbool.h> // bool
 
 // reference:
 // https://stackoverflow.com/a/168611
