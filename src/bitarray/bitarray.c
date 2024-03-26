@@ -104,7 +104,7 @@ Bitarray* bitarray_copy(const Bitarray* bitarray_p) {
 bool bitarray_equal(const Bitarray* bitarray_p, const Bitarray* bitarray_other_p) {
     assert(bitarray_p != NULL);
     assert(bitarray_other_p != NULL);
-    assert(bitarray_p->num_of_bits != bitarray_other_p->num_of_bits);
+    assert(bitarray_p->num_of_bits == bitarray_other_p->num_of_bits);
 
     return memcmp((unsigned char*)bitarray_p->words, (unsigned char*)bitarray_other_p->words, bitarray_p->capacity) == 0;
 }
