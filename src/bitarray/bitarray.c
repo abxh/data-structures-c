@@ -27,7 +27,7 @@ bool bitarray_init(Bitarray** bitarray_pp, size_t num_of_bits) {
         return false;
     }
     (*bitarray_pp)->num_of_bits = num_of_bits;
-    (*bitarray_pp)->capacity = (num_of_bits + (CHAR_BIT - 1)) / CHAR_BIT; // round up to the next multiple of CHAR_BIT 
+    (*bitarray_pp)->capacity = (num_of_bits + (8 - 1)) / 8; // round up to the next multiple of 8
     
     return true;
 }
@@ -72,7 +72,7 @@ Bitarray* bitarray_from(const unsigned char* bytes, size_t num_of_bits) {
         return NULL;
     }
     bitarray_p->num_of_bits = num_of_bits;
-    bitarray_p->capacity = (num_of_bits + (CHAR_BIT - 1)) / CHAR_BIT; // round up to the next multiple of CHAR_BIT
+    bitarray_p->capacity = (num_of_bits + (8 - 1)) / 8; // round up to the next multiple of 8
     bitarray_p->words = malloc(bitarray_p->capacity);
     if (bitarray_p->words == NULL) {
         free(bitarray_p);
