@@ -10,7 +10,7 @@
     - queue_push_T
     - queue_pop_T
 
-    A distinction between the type and name is made as the name
+    A distinction between the type and name is made as the type
     cannot include spaces.
 */
 
