@@ -9,8 +9,13 @@
 
 static_assert(CHAR_BIT == 8, "a char is 8 bits.");
 
-#define word_index(index) ((index) >> 3)
-#define bit_index(index) (~(index) & 7)
+static inline size_t word_index(size_t index) {
+    return index >> 3;
+}
+
+static inline size_t bit_index(size_t index) {
+    return ~index & 7;
+}
 
 bool bitarray_init(Bitarray** bitarray_pp, size_t num_of_bits) {
     assert(bitarray_pp != NULL);
