@@ -50,15 +50,15 @@ void bitarray_print(const Bitarray* bitarray_p) {
 
     size_t i;
     for (i = 0; i < bitarray_p->num_of_bits; i++) {
-        if (i % (CHAR_BIT * 4) != 0 && i % CHAR_BIT == 0) {
+        if (i % 32 == 0) {
             putchar(' ');
         }
         printf("%d", (bitarray_p->words[word_index(i)] >> bit_index(i)) & 1);
-        if ((i + 1) % (CHAR_BIT * 4) == 0) {
+        if ((i + 1) % 32 == 0) {
             putchar('\n');
         }
     }
-    if ((i - 1) % (CHAR_BIT * 4) != 0) {
+    if ((i - 1) % 32 != 0) {
         putchar('\n');
     }
 }
