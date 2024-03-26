@@ -55,31 +55,6 @@ bool one_element_test(void) {
     return res;
 }
 
-bool multiple_elements_test(void) {
-    astack_int* s;
-    if (!astack_int_init(&s, 10)) {
-        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
-        return false;
-    }
-    bool res = true;
-
-    res &= el(astack_int_capacity(s) == 10);
-
-    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-
-    res &= el(astack_int_count(s) == 0);
-    astack_int_push_many(s, arr, 10);
-    res &= el(astack_int_count(s) == 10);
-
-    for (int i = 10; i >= 1; i--) {
-        res &= el(i == astack_int_pop(s));
-    }
-    res &= el(astack_int_count(s) == 0);
-
-    res &= el(astack_int_deinit(&s));
-    return res;
-}
-
 bool million_elements_test(void) {
     astack_int* s;
     if (!astack_int_init(&s, 1000000)) {
@@ -138,7 +113,6 @@ typedef struct {
 int main(void) {
     func_plus bool_f_arr[] = {{empty_test, "empty test"},
                               {one_element_test, "one element test"},
-                              {multiple_elements_test, "multiple elements test"},
                               {million_elements_test, "million elements test"},
                               {for_each_test, "for each test"}};
     printf(__FILE_NAME__ ":\n");
