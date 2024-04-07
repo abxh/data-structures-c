@@ -265,7 +265,7 @@ static int strmap_grow_if_necessary(strmap_type* strmap_p, size_t chain_length) 
     for (size_t i = 0; i < new_list_count; i++) {
         lists_p[i] = (strmap_node_list_type){.head_p = NULL, .tail_p = NULL, .node_count = 0};
     }
-    strmap_p->total_nodes_count++;
+    strmap_p->total_nodes_count = 0;
 
     // reinsert every node
     while (node_p != NULL) {
