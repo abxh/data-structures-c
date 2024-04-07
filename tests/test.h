@@ -43,4 +43,4 @@ static size_t error_message_count = 0;
     _Generic((a),                                                                                      \
         int: (_Generic((b), int: is_equal_internal("%d", (a), (b)), default: type_mismatch())),        \
         size_t: (_Generic((b), size_t: is_equal_internal("%zu", (a), (b)), default: type_mismatch())), \
-        default: size_mismatch())
+        default: type_mismatch())
