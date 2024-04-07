@@ -32,7 +32,7 @@ static size_t error_message_count = 0;
         }                                                                                 \
         res;                                                                              \
     })
-#define size_mismatch()                                                                                \
+#define type_mismatch()                                                                                \
     ({                                                                                                 \
         if (error_message_count < error_message_count_lim) {                                           \
             fprintf(stderr, "line %d (%s): is_equal size mismatch.\n", __LINE__, __PRETTY_FUNCTION__); \
@@ -42,6 +42,6 @@ static size_t error_message_count = 0;
     })
 #define is_equal(a, b)                                                                                 \
     _Generic((a),                                                                                      \
-        int: (_Generic((b), int: is_equal_internal("%d", (a), (b)), default: size_mismatch())),        \
-        size_t: (_Generic((b), size_t: is_equal_internal("%zu", (a), (b)), default: size_mismatch())), \
+        int: (_Generic((b), int: is_equal_internal("%d", (a), (b)), default: type_mismatch())),        \
+        size_t: (_Generic((b), size_t: is_equal_internal("%zu", (a), (b)), default: type_mismatch())), \
         default: size_mismatch())
