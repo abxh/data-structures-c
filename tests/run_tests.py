@@ -11,7 +11,8 @@ if not os.path.exists(bin_dir):
 
 for name in glob.glob("./*_tests.c"):
     s = pathlib.Path(name).stem
-    os.system(f"gcc -Wall -Wextra -I{include_dir} -o {bin_dir}/{s}.bin ../src/*/*.c {s}.c")
+    if os.system(f"gcc -Wall -Wextra -I{include_dir} -o {bin_dir}/{s}.bin ../src/*/*.c {s}.c") != 0:
+        exit(1);
 
 for name in glob.glob("./*_tests.c"):
     s = pathlib.Path(name).stem

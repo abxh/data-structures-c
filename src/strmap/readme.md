@@ -1,6 +1,6 @@
 # strmap
 
-This is an implementation of strmap (where strings are mapped to strings) using a chaining hash table.
+`strmap` is an implementation of string-to-string hash table using chaining.
 
 The hash function is hard coded to `fnv_hash64`, and the hash table is resized when the chain length
 exceeds a fixed number of nodes.

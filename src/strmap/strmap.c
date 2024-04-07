@@ -1,9 +1,9 @@
 #include <assert.h> // static_assert
 #include <stdint.h> // uint64_t
-#include <stdlib.h> // reallocarray
-#include <string.h> // strcmp, strdup, strcpy, memset
+#include <stdlib.h> // reallocarray, SIZE_MAX
+#include <string.h> // strcmp, strdup, strcpy
 
-#include "strmap.h"
+#include "strmap.h" // strmap_*, STRMAP_GET_VALUE_DEFAULT
 
 #define INITIAL_CAPACITY 16
 #define MAX_CHAIN_LENGTH 5
@@ -30,46 +30,59 @@ static uint64_t fnv_hash64(const unsigned char* char_p) {
     return hash;
 }
 
-bool strmap_init(StrMap** strmap_pp) {
+bool strmap_init(strmap_type** strmap_pp) {
     assert(strmap_pp != NULL);
-
-    *strmap_pp = malloc(sizeof(StrMap));
+    if (INITIAL_CAPACITY > SIZE_MAX / sizeof(strmap_node_list_type)) {
+        return false;
+    }
+    *strmap_pp = malloc(sizeof(strmap_type));
     if (*strmap_pp == NULL) {
         return false;
     }
-    (*strmap_pp)->lists_p = calloc(INITIAL_CAPACITY, sizeof(StrMapNodeList));
-    if ((*strmap_pp)->lists_p == NULL) {
+    (*strmap_pp)->lists_arr_p = malloc(INITIAL_CAPACITY * sizeof(strmap_node_list_type));
+    if ((*strmap_pp)->lists_arr_p == NULL) {
         free(*strmap_pp);
         *strmap_pp = NULL;
         return false;
     }
     (*strmap_pp)->list_count = INITIAL_CAPACITY;
+    for (size_t i = 0; i < (*strmap_pp)->list_count; i++) {
+        (*strmap_pp)->lists_arr_p[i] = (strmap_node_list_type){.head_p = NULL, .tail_p = NULL, .node_count = 0};
+    }
+    (*strmap_pp)->total_nodes_count = 0;
 
     return true;
 }
 
-bool strmap_init_with_initial_capacity(StrMap** strmap_pp, size_t pow2_capacity) {
+bool strmap_init_with_initial_capacity(strmap_type** strmap_pp, size_t pow2_capacity) {
     assert(strmap_pp != NULL);
     assert(pow2_capacity != 0 && "initial capacity is not zero");
     assert(pow2_capacity != 1 && "subtracting initial capacity by one does not yield zero");
     assert((pow2_capacity & (pow2_capacity - 1)) == 0 && "initial capacity is a power of 2");
 
-    *strmap_pp = malloc(sizeof(StrMap));
+    if (INITIAL_CAPACITY > SIZE_MAX / sizeof(strmap_node_list_type)) {
+        return false;
+    }
+    *strmap_pp = malloc(sizeof(strmap_type));
     if (*strmap_pp == NULL) {
         return false;
     }
-    (*strmap_pp)->lists_p = calloc(pow2_capacity, sizeof(StrMapNodeList));
-    if ((*strmap_pp)->lists_p == NULL) {
+    (*strmap_pp)->lists_arr_p = malloc(pow2_capacity * sizeof(strmap_node_list_type));
+    if ((*strmap_pp)->lists_arr_p == NULL) {
         free(*strmap_pp);
         *strmap_pp = NULL;
         return false;
     }
     (*strmap_pp)->list_count = pow2_capacity;
+    for (size_t i = 0; i < (*strmap_pp)->list_count; i++) {
+        (*strmap_pp)->lists_arr_p[i] = (strmap_node_list_type){.head_p = NULL, .tail_p = NULL, .node_count = 0};
+    }
+    (*strmap_pp)->total_nodes_count = 0;
 
     return true;
 }
 
-bool strmap_deinit(StrMap** strmap_pp) {
+bool strmap_deinit(strmap_type** strmap_pp) {
     assert(strmap_pp != NULL);
 
     if (*strmap_pp == NULL) {
@@ -78,8 +91,8 @@ bool strmap_deinit(StrMap** strmap_pp) {
 
     // iterate through lists
     for (size_t i = 0; i < (*strmap_pp)->list_count; i++) {
-        StrMapNode* node_p = (*strmap_pp)->lists_p[i].head_p;
-        StrMapNode* next_p = NULL;
+        strmap_node_type* node_p = (*strmap_pp)->lists_arr_p[i].head_p;
+        strmap_node_type* next_p = NULL;
 
         // traverse list and free nodes one by one
         while (node_p != NULL) {
@@ -91,29 +104,25 @@ bool strmap_deinit(StrMap** strmap_pp) {
         }
     }
 
-    free((*strmap_pp)->lists_p);
+    free((*strmap_pp)->lists_arr_p);
     free(*strmap_pp);
     *strmap_pp = NULL;
 
     return true;
 }
 
-size_t strmap_count(const StrMap* strmap_p) {
-    size_t count = 0;
-    for (size_t i = 0; i < strmap_p->list_count; i++) {
-        count += strmap_p->lists_p[i].node_count;
-    }
-    return count;
+size_t strmap_count(const strmap_type* strmap_p) {
+    return strmap_p->total_nodes_count;
 }
 
-bool strmap_exists(const StrMap* strmap_p, const char* key_p) {
+bool strmap_exists(const strmap_type* strmap_p, const char* key_p) {
     assert(strmap_p != NULL);
     assert(key_p != NULL);
 
     uint64_t hash = fnv_hash64((unsigned char*)key_p);
     uint64_t index = hash & (strmap_p->list_count - 1);
 
-    StrMapNode* node_p = strmap_p->lists_p[index].head_p;
+    strmap_node_type* node_p = strmap_p->lists_arr_p[index].head_p;
 
     while (node_p != NULL) {
         if (strcmp(node_p->key_p, key_p) == 0) {
@@ -125,14 +134,14 @@ bool strmap_exists(const StrMap* strmap_p, const char* key_p) {
     return false;
 }
 
-const char* strmap_get(const StrMap* strmap_p, const char* key_p) {
+const char* strmap_get(const strmap_type* strmap_p, const char* key_p) {
     assert(strmap_p != NULL);
     assert(key_p != NULL);
 
     uint64_t hash = fnv_hash64((const unsigned char*)key_p);
     uint64_t index = hash & (strmap_p->list_count - 1);
 
-    StrMapNode* node_p = strmap_p->lists_p[index].head_p;
+    strmap_node_type* node_p = strmap_p->lists_arr_p[index].head_p;
 
     while (node_p != NULL) {
         if (strcmp(node_p->key_p, key_p) == 0) {
@@ -144,14 +153,14 @@ const char* strmap_get(const StrMap* strmap_p, const char* key_p) {
     return STRMAP_GET_VALUE_DEFAULT;
 }
 
-bool strmap_del(StrMap* strmap_p, const char* key_p) {
+bool strmap_del(strmap_type* strmap_p, const char* key_p) {
     assert(strmap_p != NULL);
     assert(key_p != NULL);
 
     uint64_t hash = fnv_hash64((unsigned char*)key_p);
     uint64_t index = hash & (strmap_p->list_count - 1);
 
-    StrMapNode* node_p = strmap_p->lists_p[index].head_p;
+    strmap_node_type* node_p = strmap_p->lists_arr_p[index].head_p;
 
     if (node_p == NULL) {
         return false;
@@ -159,19 +168,20 @@ bool strmap_del(StrMap* strmap_p, const char* key_p) {
 
     // check if key matches with the head of the list
     if (strcmp(node_p->key_p, key_p) == 0) {
-        strmap_p->lists_p[index].head_p = node_p->next_p;
-        if (strmap_p->lists_p[index].head_p == NULL) {
-            strmap_p->lists_p[index].tail_p = NULL;
+        strmap_p->lists_arr_p[index].head_p = node_p->next_p;
+        if (strmap_p->lists_arr_p[index].head_p == NULL) {
+            strmap_p->lists_arr_p[index].tail_p = NULL;
         }
         free(node_p->key_p);
         free(node_p->value_p);
         free(node_p);
-        strmap_p->lists_p[index].node_count--;
+        strmap_p->lists_arr_p[index].node_count--;
+        strmap_p->total_nodes_count--;
         return true;
     }
 
     // otherwise iterate through list and compare key one by one
-    StrMapNode* prev_p;
+    strmap_node_type* prev_p;
 
     prev_p = node_p;
     node_p = node_p->next_p;
@@ -180,14 +190,15 @@ bool strmap_del(StrMap* strmap_p, const char* key_p) {
         if (strcmp(node_p->key_p, key_p) == 0) {
             prev_p->next_p = node_p->next_p;
             if (prev_p->next_p == NULL) {
-                strmap_p->lists_p[index].tail_p = prev_p;
+                strmap_p->lists_arr_p[index].tail_p = prev_p;
             }
 
             free(node_p->key_p);
             free(node_p->value_p);
             free(node_p);
 
-            strmap_p->lists_p[index].node_count--;
+            strmap_p->lists_arr_p[index].node_count--;
+            strmap_p->total_nodes_count--;
 
             return true;
         }
@@ -199,13 +210,13 @@ bool strmap_del(StrMap* strmap_p, const char* key_p) {
     return false;
 }
 
-static StrMapNode* strmap_create_flattened_list(StrMap* strmap_p, size_t list_count) {
+static strmap_node_type* strmap_create_flattened_list(strmap_type* strmap_p, size_t list_count) {
     assert(strmap_p != NULL);
 
-    StrMapNode* head_p = NULL;
-    StrMapNode* tail_p = NULL;
+    strmap_node_type* head_p = NULL;
+    strmap_node_type* tail_p = NULL;
 
-    StrMapNodeList* lists_p = strmap_p->lists_p;
+    strmap_node_list_type* lists_p = strmap_p->lists_arr_p;
     size_t next_index = list_count;
 
     // find first nonempty list
@@ -231,7 +242,7 @@ static StrMapNode* strmap_create_flattened_list(StrMap* strmap_p, size_t list_co
     return head_p;
 }
 
-static int strmap_grow_if_necessary(StrMap* strmap_p, size_t chain_length) {
+static int strmap_grow_if_necessary(strmap_type* strmap_p, size_t chain_length) {
     assert(strmap_p != NULL);
 
     if (chain_length <= MAX_CHAIN_LENGTH) {
@@ -241,37 +252,41 @@ static int strmap_grow_if_necessary(StrMap* strmap_p, size_t chain_length) {
     size_t old_list_count = strmap_p->list_count;
     size_t new_list_count = strmap_p->list_count << 1;
 
-    StrMapNodeList* lists_p = reallocarray(strmap_p->lists_p, new_list_count, sizeof(StrMapNodeList));
+    strmap_node_list_type* lists_p = reallocarray(strmap_p->lists_arr_p, new_list_count, sizeof(strmap_node_list_type));
     if (lists_p == NULL) {
         return -1;
     }
-    strmap_p->lists_p = lists_p;
+    strmap_p->lists_arr_p = lists_p;
 
     // create seperate flattened list
-    StrMapNode* node_p = strmap_create_flattened_list(strmap_p, old_list_count);
+    strmap_node_type* node_p = strmap_create_flattened_list(strmap_p, old_list_count);
 
-    // memset array values to 0 or NULL.
-    memset(lists_p, 0, sizeof(StrMapNodeList) * new_list_count);
+    // set to default values
+    for (size_t i = 0; i < new_list_count; i++) {
+        lists_p[i] = (strmap_node_list_type){.head_p = NULL, .tail_p = NULL, .node_count = 0};
+    }
+    strmap_p->total_nodes_count++;
 
     // reinsert every node
     while (node_p != NULL) {
         uint64_t hash = fnv_hash64((unsigned char*)node_p->key_p);
         uint64_t index = hash & (new_list_count - 1);
 
-        StrMapNode* head_p = lists_p[index].head_p;
-        StrMapNode* next_temp_p = node_p->next_p;
+        strmap_node_type* head_p = lists_p[index].head_p;
+        strmap_node_type* next_temp_p = node_p->next_p;
 
         // insert node by the head
         if (head_p == NULL) {
             lists_p[index].head_p = node_p;
             lists_p[index].tail_p = node_p;
-            lists_p[index].node_count++;
             node_p->next_p = NULL;
         } else {
             node_p->next_p = lists_p[index].head_p;
             lists_p[index].head_p = node_p;
-            lists_p[index].node_count++;
         }
+
+        lists_p[index].node_count++;
+        strmap_p->total_nodes_count++;
 
         node_p = next_temp_p;
     }
@@ -280,11 +295,11 @@ static int strmap_grow_if_necessary(StrMap* strmap_p, size_t chain_length) {
     return 1;
 }
 
-static void* strmapnode_create(const char* key_p, const char* value_p) {
+static void* strmap_node_create(const char* key_p, const char* value_p) {
     assert(key_p != NULL);
     assert(value_p != NULL);
 
-    StrMapNode* node_p = malloc(sizeof(StrMapNode));
+    strmap_node_type* node_p = malloc(sizeof(strmap_node_type));
     if (node_p == NULL) {
         return NULL;
     }
@@ -304,7 +319,7 @@ static void* strmapnode_create(const char* key_p, const char* value_p) {
     return node_p;
 }
 
-bool strmap_set(StrMap* strmap_p, const char* key_p, const char* value_p) {
+bool strmap_set(strmap_type* strmap_p, const char* key_p, const char* value_p) {
     assert(strmap_p != NULL);
     assert(key_p != NULL);
     assert(value_p != NULL);
@@ -312,15 +327,15 @@ bool strmap_set(StrMap* strmap_p, const char* key_p, const char* value_p) {
     uint64_t hash = fnv_hash64((unsigned char*)key_p);
     uint64_t index = hash & (strmap_p->list_count - 1);
 
-    int rtr_val = strmap_grow_if_necessary(strmap_p, strmap_p->lists_p[index].node_count + 1);
+    int rtr_val = strmap_grow_if_necessary(strmap_p, strmap_p->lists_arr_p[index].node_count + 1);
     if (rtr_val == -1) {
         return false;
     } else if (rtr_val == 1) {
         index = hash & (strmap_p->list_count - 1);
     }
 
-    StrMapNode* node_p = strmap_p->lists_p[index].head_p;
-    StrMapNode* prev_p = NULL;
+    strmap_node_type* node_p = strmap_p->lists_arr_p[index].head_p;
+    strmap_node_type* prev_p = NULL;
 
     // iterate through list, compare keys, and replace value if key matches.
     while (node_p != NULL) {
@@ -339,21 +354,28 @@ bool strmap_set(StrMap* strmap_p, const char* key_p, const char* value_p) {
     }
 
     // otherwise create a new node
-    node_p = strmapnode_create(key_p, value_p);
+    node_p = strmap_node_create(key_p, value_p);
     if (node_p == NULL) {
         return false;
     }
 
     // and insert the node at by the head
     if (prev_p == NULL) {
-        strmap_p->lists_p[index].head_p = node_p;
-        strmap_p->lists_p[index].tail_p = node_p;
-        strmap_p->lists_p[index].node_count++;
+        strmap_p->lists_arr_p[index].head_p = node_p;
+        strmap_p->lists_arr_p[index].tail_p = node_p;
     } else {
-        node_p->next_p = strmap_p->lists_p[index].head_p;
-        strmap_p->lists_p[index].head_p = node_p;
-        strmap_p->lists_p[index].node_count++;
+        node_p->next_p = strmap_p->lists_arr_p[index].head_p;
+        strmap_p->lists_arr_p[index].head_p = node_p;
     }
+    strmap_p->lists_arr_p[index].node_count++;
+    strmap_p->total_nodes_count++;
+
+    return true;
+}
+
+bool strmap_copy(strmap_type** strmap_pp, const strmap_type* strmap_p) {
+    assert(strmap_p != NULL);
+    assert(strmap_pp != NULL);
 
     return true;
 }

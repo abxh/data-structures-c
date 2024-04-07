@@ -3,40 +3,43 @@
 #include <stdbool.h> // bool
 #include <stdlib.h>  // size_t, NULL
 
-typedef struct StrMapNode {
-    struct StrMapNode* next_p;
+typedef struct strmap_node_type {
+    struct strmap_node_type* next_p;
     char* key_p;
     char* value_p;
-} StrMapNode;
+} strmap_node_type;
 
 typedef struct {
     size_t node_count;
-    StrMapNode* head_p;
-    StrMapNode* tail_p;
-} StrMapNodeList;
+    strmap_node_type* head_p;
+    strmap_node_type* tail_p;
+} strmap_node_list_type;
 
 typedef struct {
+    size_t total_nodes_count;
     size_t list_count;
-    StrMapNodeList* lists_p;
-} StrMap;
+    strmap_node_list_type* lists_arr_p;
+} strmap_type;
 
 #define STRMAP_GET_VALUE_DEFAULT NULL
 
-bool strmap_init(StrMap** strmap_pp);
+bool strmap_init(strmap_type** strmap_pp);
 
-bool strmap_init_with_initial_capacity(StrMap** strmap_pp, size_t pow2_capacity);
+bool strmap_init_with_initial_capacity(strmap_type** strmap_pp, size_t pow2_capacity);
 
-bool strmap_deinit(StrMap** strmap_pp);
+bool strmap_deinit(strmap_type** strmap_pp);
 
-size_t strmap_count(const StrMap* strmap_p);
+bool strmap_copy(strmap_type** strmap_dest_pp, const strmap_type* strmap_p);
 
-bool strmap_exists(const StrMap* strmap_p, const char* key_p);
+size_t strmap_count(const strmap_type* strmap_p);
 
-const char* strmap_get(const StrMap* strmap_p, const char* key_p);
+bool strmap_exists(const strmap_type* strmap_p, const char* key_p);
 
-bool strmap_set(StrMap* strmap_p, const char* key_p, const char* value_p);
+const char* strmap_get(const strmap_type* strmap_p, const char* key_p);
 
-bool strmap_del(StrMap* strmap_p, const char* key_p);
+bool strmap_set(strmap_type* strmap_p, const char* key_p, const char* value_p);
+
+bool strmap_del(strmap_type* strmap_p, const char* key_p);
 
 #define strmap_for_each(strmap_p, list_index, next_p, key_p, value_p)                                                            \
     for ((list_index) = 0; (list_index) < (strmap_p)->list_count && ((next_p) = (strmap_p)->lists_p[(list_index)].head_p, true); \
