@@ -66,11 +66,11 @@ bool million_elements_test(void) {
 
     for (int i = 1; i <= 1000000; i++) {
         int_stack_push(stack_p, i);
-        res &= is_equal(int_stack_count(stack_p), (size_t)(size_t)i);
+        res &= is_equal(int_stack_count(stack_p), (size_t)i);
     }
 
     for (int i = 1000000; i >= 1; i--) {
-        res &= is_equal(int_stack_count(stack_p), (size_t)(size_t)i);
+        res &= is_equal(int_stack_count(stack_p), (size_t)i);
         res &= is_equal(i, int_stack_pop(stack_p));
     }
 
