@@ -28,7 +28,6 @@ static size_t error_message_count = 0;
             const char* str_p = "line %d (%s): " format " is not equal to " format ".\n"; \
             fprintf(stderr, str_p, __LINE__, __PRETTY_FUNCTION__, a_copy, b_copy);        \
             error_message_count++;                                                        \
-            false;                                                                        \
         }                                                                                 \
         res;                                                                              \
     })
