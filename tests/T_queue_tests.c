@@ -14,6 +14,7 @@ bool empty_test(void) {
     }
     bool res = true;
 
+    res &= is_equal(int_queue_get_count(queue_p), (size_t)0);
     res &= is_true(int_queue_is_empty(queue_p));
     res &= is_true(int_queue_deinit(&queue_p));
 
