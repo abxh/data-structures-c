@@ -9,6 +9,7 @@
     - ll_queue_peek_last_T
     - ll_queue_push_T
     - ll_queue_pop_T
+    and symbols defined in ll_queue.h
 
     Note that the given types cannot include spaces because C functions
     and variables cannot either.

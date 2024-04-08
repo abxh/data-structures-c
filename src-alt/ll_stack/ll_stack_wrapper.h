@@ -7,6 +7,7 @@
     - ll_stack_peek_T
     - ll_stack_push_T
     - ll_stack_pop_T
+    and symbols defined in ll_stack.h
 
     Note that the given types cannot include spaces because C functions
     and variables cannot either.
