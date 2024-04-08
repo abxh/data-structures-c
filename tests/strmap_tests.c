@@ -1,13 +1,14 @@
-#include "stdbool.h" // bool, true, false
-#include "string.h"  // strcmp
+#include <stdbool.h> // bool, true, false
 #include <stdio.h>   // fprintf, printf, stderr
+#include <stdlib.h>  // NULL
+#include <string.h>  // strcmp
 
 #include "test.h" // is_true, is_false, is_equal
 
 #include "../src-alt/strmap/strmap.h" // strmap_*, STRMAP_GET_VALUE_DEFAULT
 
 bool one_element_test(void) {
-    strmap_type* strmap_p;
+    strmap_type* strmap_p = NULL;
     if (!strmap_init(&strmap_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -26,7 +27,7 @@ bool one_element_test(void) {
 }
 
 bool four_elements_test(void) {
-    strmap_type* strmap_p;
+    strmap_type* strmap_p = NULL;
     if (!strmap_init(&strmap_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -49,7 +50,7 @@ bool four_elements_test(void) {
 }
 
 bool del_and_exists_test(void) {
-    strmap_type* strmap_p;
+    strmap_type* strmap_p = NULL;
     if (!strmap_init(&strmap_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -78,7 +79,7 @@ bool del_and_exists_test(void) {
 }
 
 bool missing_elements_test(void) {
-    strmap_type* strmap_p;
+    strmap_type* strmap_p = NULL;
     if (!strmap_init(&strmap_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -104,7 +105,7 @@ bool missing_elements_test(void) {
 }
 
 bool overwrite_element_test(void) {
-    strmap_type* strmap_p;
+    strmap_type* strmap_p = NULL;
     if (!strmap_init(&strmap_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -130,7 +131,7 @@ bool overwrite_element_test(void) {
 }
 
 bool empty_element_test(void) {
-    strmap_type* strmap_p;
+    strmap_type* strmap_p = NULL;
     if (!strmap_init(&strmap_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -153,7 +154,7 @@ bool empty_element_test(void) {
 #define m ('z' - 'a' + 1)
 
 bool million_elements_test(void) {
-    strmap_type* strmap_p;
+    strmap_type* strmap_p = NULL;
     if (!strmap_init(&strmap_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -182,7 +183,7 @@ bool million_elements_test(void) {
 }
 
 bool for_each_and_copy_test(void) {
-    strmap_type* strmap_p;
+    strmap_type* strmap_p = NULL;
     if (!strmap_init_with_initial_capacity(&strmap_p, 2048)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -198,11 +199,11 @@ bool for_each_and_copy_test(void) {
     }
     {
         size_t list_index;
-        strmap_node_type* next_p;
+        strmap_node_type* next_p = NULL;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
-        char* key_p;
-        char* value_p;
+        char* key_p = NULL;
+        char* value_p = NULL;
 #pragma GCC diagnostic pop
         size_t count = 0;
         strmap_for_each(strmap_p, list_index, next_p, key_p, value_p) {
@@ -210,18 +211,18 @@ bool for_each_and_copy_test(void) {
         }
         res &= is_true(strmap_get_count(strmap_p) == count);
     }
-    strmap_type* strmap_copy_p;
+    strmap_type* strmap_copy_p = NULL;
     if (!strmap_copy(&strmap_copy_p, strmap_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     {
         size_t list_index;
-        strmap_node_type* next_p;
+        strmap_node_type* next_p = NULL;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
-        char* key_p;
-        char* value_p;
+        char* key_p = NULL;
+        char* value_p = NULL;
 #pragma GCC diagnostic pop
         size_t i = 0;
         strmap_for_each(strmap_copy_p, list_index, next_p, key_p, value_p) {

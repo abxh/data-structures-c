@@ -72,7 +72,7 @@ bitarray_type* bitarray_create_from(const unsigned char* bytes, size_t num_of_bi
     assert(bytes != NULL);
     assert(num_of_bits != 0);
 
-    bitarray_type* bitarray_p;
+    bitarray_type* bitarray_p = NULL;
     if (!bitarray_init(&bitarray_p, num_of_bits)) {
         return false;
     }
@@ -85,7 +85,7 @@ bool bitarray_copy(bitarray_type** bitarray_dest_pp, const bitarray_type* bitarr
     assert(bitarray_src_p != NULL);
     assert(bitarray_dest_pp != NULL);
 
-    bitarray_type* bitarray_copy_p;
+    bitarray_type* bitarray_copy_p = NULL;
     if (!bitarray_init(&bitarray_copy_p, bitarray_src_p->num_of_bits)) {
         return false;
     }

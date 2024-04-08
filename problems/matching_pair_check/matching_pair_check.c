@@ -77,7 +77,7 @@ int main(void) {
         return 1;
     }
 
-    symb_stack_type* stack_p;
+    symb_stack_type* stack_p = NULL;
     if (!symb_stack_init(&stack_p, n)) {
         free(str);
         return 1;

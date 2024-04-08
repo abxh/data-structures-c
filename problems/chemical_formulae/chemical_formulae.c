@@ -61,7 +61,7 @@ int main(void) {
     if (fp == NULL) {
         return 1;
     }
-    strmap_type* strmap_p;
+    strmap_type* strmap_p = NULL;
     if (!strmap_init(&strmap_p)) {
         return 1;
     }
@@ -109,9 +109,9 @@ int main(void) {
 
         // required for iterating strmap:
         size_t list_index;
-        strmap_node_type* next_p;
-        char* key_p;
-        char* value_p;
+        strmap_node_type* next_p = NULL;
+        char* key_p = NULL;
+        char* value_p = NULL;
 
         strmap_for_each(strmap_p, list_index, next_p, key_p, value_p) {
             keys_arr_pp[keys_arr_index++] = key_p; // store reference

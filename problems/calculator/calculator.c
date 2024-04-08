@@ -267,7 +267,7 @@ double eval(char* str, ssize_t len) {
 #ifdef DEBUG
     {
         size_t index;
-        Lexeme lex;
+        lexeme_type lex;
         printf("Input queue (prefix): ");
         T_queue_for_each(inp_queue, index, lex) {
             switch (lex.token) {
@@ -332,7 +332,7 @@ double eval(char* str, ssize_t len) {
 #ifdef DEBUG
     {
         size_t i;
-        Lexeme lex;
+        lexeme_type lex;
         printf("Input queue (postfix):");
         T_queue_for_each(inp_queue_postfix, i, lex) {
             switch (lex.token) {

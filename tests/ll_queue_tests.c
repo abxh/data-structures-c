@@ -96,7 +96,7 @@ bool for_each_and_copy_test(void) {
     }
     {
         int x = 51;
-        ll_queue_node_type* node_p;
+        ll_queue_node_type* node_p = NULL;
         int value;
         ll_queue_for_each(queue_p, node_p, value) {
             res &= is_equal(x, value);
@@ -111,7 +111,7 @@ bool for_each_and_copy_test(void) {
     }
     {
         int x = 51;
-        ll_queue_node_type* node_p;
+        ll_queue_node_type* node_p = NULL;
         ll_queue_node_type* node_original_p = queue_p->head_p;
         int value;
         ll_queue_for_each(queue_copy_p, node_p, value) {

@@ -180,7 +180,7 @@ bool strmap_del(strmap_type* strmap_p, const char* key_p) {
     }
 
     // otherwise iterate through list and compare key one by one
-    strmap_node_type* prev_p;
+    strmap_node_type* prev_p = NULL;
 
     prev_p = node_p;
     node_p = node_p->next_p;
@@ -382,9 +382,9 @@ bool strmap_copy(strmap_type** strmap_dest_pp, const strmap_type* strmap_src_p) 
     {
         strmap_type* strmap_dest_p = *strmap_dest_pp;
         size_t list_index;
-        strmap_node_type* next_p;
-        char* key_p;
-        char* value_p;
+        strmap_node_type* next_p = NULL;
+        char* key_p = NULL;
+        char* value_p = NULL;
         strmap_for_each(strmap_dest_p, list_index, next_p, key_p, value_p) {
             strmap_set(strmap_dest_p, key_p, value_p);
         }

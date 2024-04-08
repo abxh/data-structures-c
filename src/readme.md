@@ -1,6 +1,6 @@
 # src
 
-DSA written here are meant to be performant. Using only headers.
+DSA written here are meant to be performant.
 
 ## T_stack
 

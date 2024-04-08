@@ -1,5 +1,6 @@
 #include <stdbool.h> // bool, true, false
 #include <stdio.h>   // fprintf, printf, stderr
+#include <stdlib.h>  // NULL
 
 #include "test.h" // is_true, is_false, is_equal
 
@@ -7,7 +8,7 @@
 #include "../src/T_stack.h" // int_stack_*, T_stack_for_each
 
 bool empty_test(void) {
-    int_stack_type* stack_p;
+    int_stack_type* stack_p = NULL;
     if (!int_stack_init(&stack_p, 1)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -23,7 +24,7 @@ bool empty_test(void) {
 }
 
 bool one_element_test(void) {
-    int_stack_type* stack_p;
+    int_stack_type* stack_p = NULL;
     if (!int_stack_init(&stack_p, 1)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -53,7 +54,7 @@ bool one_element_test(void) {
 }
 
 bool million_elements_test(void) {
-    int_stack_type* stack_p;
+    int_stack_type* stack_p = NULL;
     if (!int_stack_init(&stack_p, 1000000)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -75,7 +76,7 @@ bool million_elements_test(void) {
 }
 
 bool for_each_and_copy_test(void) {
-    int_stack_type* stack_p;
+    int_stack_type* stack_p = NULL;
     if (!int_stack_init(&stack_p, 50)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -93,7 +94,7 @@ bool for_each_and_copy_test(void) {
             x--;
         }
     }
-    int_stack_type* stack_copy_p;
+    int_stack_type* stack_copy_p = NULL;
     if (!int_stack_copy(&stack_copy_p, stack_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;

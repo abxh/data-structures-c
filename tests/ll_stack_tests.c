@@ -1,13 +1,14 @@
 #include <stdbool.h> // bool, true, false
 #include <stdio.h>   // fprintf, printf, stderr
+#include <stdlib.h>  // NULL
 
-#include "test.h" // log, is_true, is_equal
+#include "test.h" // is_true, is_false, is_equal
 
 #define VALUE_TYPE int
 #include "../src-alt/ll_stack/ll_stack_wrapper.h" // ll_stack_*
 
 bool empty_test(void) {
-    ll_stack_type* stack_p;
+    ll_stack_type* stack_p = NULL;
     if (!ll_stack_init_int(&stack_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -22,7 +23,7 @@ bool empty_test(void) {
 }
 
 bool one_element_test(void) {
-    ll_stack_type* stack_p;
+    ll_stack_type* stack_p = NULL;
     if (!ll_stack_init_int(&stack_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -45,7 +46,7 @@ bool one_element_test(void) {
 }
 
 bool million_elements_test(void) {
-    ll_stack_type* stack_p;
+    ll_stack_type* stack_p = NULL;
     if (!ll_stack_init_int(&stack_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -62,7 +63,7 @@ bool million_elements_test(void) {
 }
 
 bool for_each_and_copy_test(void) {
-    ll_stack_type* stack_p;
+    ll_stack_type* stack_p = NULL;
     if (!ll_stack_init_int(&stack_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
@@ -73,14 +74,14 @@ bool for_each_and_copy_test(void) {
     }
     {
         int x = 100;
-        ll_stack_node_type* node_p;
+        ll_stack_node_type* node_p = NULL;
         int value;
         ll_stack_for_each(stack_p, node_p, value) {
             res &= is_equal(x, value);
             x--;
         }
     }
-    ll_stack_type* stack_copy_p;
+    ll_stack_type* stack_copy_p = NULL;
     if (!ll_stack_copy(&stack_copy_p, stack_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         ll_stack_deinit(&stack_p);
@@ -88,7 +89,7 @@ bool for_each_and_copy_test(void) {
     }
     {
         int x = 100;
-        ll_stack_node_type* node_p;
+        ll_stack_node_type* node_p = NULL;
         ll_stack_node_type* node_original_p = stack_p->head_p;
         int value;
         ll_stack_for_each(stack_copy_p, node_p, value) {
