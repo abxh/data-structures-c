@@ -1,17 +1,16 @@
 #include <stdbool.h> // bool, true, false
-#include <stdio.h>   // fprintf
+#include <stdio.h>   // fprintf, printf, stderr
 
-#include "test.h" // log, is_true, int_is_equal, is_equal
+#include "test.h" // log, is_true, is_equal
 
-#include "../src/ll_stack/ll_stack.h" // ll_stack_*
-
+#include "../src-alt/ll_stack/ll_stack.h" // ll_stack_*
 #define VALUE_TYPE int
-#define VALUE_NAME int
-#include "../src/ll_stack/ll_stack_wrapper.h" // ll_stack_*
+#include "../src-alt/ll_stack/ll_stack_wrapper.h" // ll_stack_*
 
 bool empty_test(void) {
     ll_stack_type* stack_p;
     if (!ll_stack_init_int(&stack_p)) {
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
@@ -26,7 +25,7 @@ bool empty_test(void) {
 bool one_element_test(void) {
     ll_stack_type* stack_p;
     if (!ll_stack_init_int(&stack_p)) {
-        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
@@ -34,7 +33,7 @@ bool one_element_test(void) {
 
     res &= is_true(ll_stack_push_int(stack_p, value));
     res &= is_equal(value, ll_stack_peek_int(stack_p));
-    res &= is_true(!ll_stack_is_empty(stack_p));
+    res &= is_false(ll_stack_is_empty(stack_p));
     res &= is_equal(ll_stack_count(stack_p), (size_t)1);
 
     res &= is_equal(value, ll_stack_pop_int(stack_p));
@@ -49,7 +48,7 @@ bool one_element_test(void) {
 bool million_elements_test(void) {
     ll_stack_type* stack_p;
     if (!ll_stack_init_int(&stack_p)) {
-        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
@@ -63,10 +62,10 @@ bool million_elements_test(void) {
     return res;
 }
 
-bool for_each_test(void) {
+bool for_each_and_copy_test(void) {
     ll_stack_type* stack_p;
     if (!ll_stack_init_int(&stack_p)) {
-        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
@@ -84,7 +83,7 @@ bool for_each_test(void) {
     }
     ll_stack_type* stack_copy_p;
     if (!ll_stack_copy(&stack_copy_p, stack_p)) {
-        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         ll_stack_deinit(&stack_p);
         return false;
     }
@@ -104,6 +103,7 @@ bool for_each_test(void) {
     res &= is_equal(ll_stack_count(stack_p), ll_stack_count(stack_copy_p));
     res &= is_true(ll_stack_deinit(&stack_p));
     res &= is_true(ll_stack_deinit(&stack_copy_p));
+
     return res;
 }
 
@@ -122,7 +122,7 @@ int main(void) {
     bool_f_plus bool_f_arr[] = {{empty_test, "empty test"},
                                 {one_element_test, "one element test"},
                                 {million_elements_test, "million elements test"},
-                                {for_each_test, "for each test"}};
+                                {for_each_and_copy_test, "for each and copy test"}};
     printf(__FILE_NAME__ ":\n");
     for (size_t i = 0; i < sizeof(bool_f_arr) / sizeof(bool_f_plus); i++) {
         printf(" [%s] %s\n", bool_f_arr[i].func() ? GREEN "true" OFF : RED "false" OFF, bool_f_arr[i].desc);

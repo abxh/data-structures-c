@@ -21,7 +21,7 @@ bool ll_queue_init(ll_queue_type** ll_queue_pp, size_t value_size);
 
 bool ll_queue_deinit(ll_queue_type** ll_queue_pp);
 
-bool ll_queue_copy(ll_queue_type** ll_queue_dest_pp, const ll_queue_type* ll_queue_p);
+bool ll_queue_copy(ll_queue_type** ll_queue_dest_pp, const ll_queue_type* ll_queue_src_p);
 
 bool ll_queue_is_empty(const ll_queue_type* ll_queue_p);
 

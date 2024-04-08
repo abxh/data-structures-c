@@ -1,33 +1,34 @@
-#include "assert.h"
-#include "stdbool.h"
-#include "stdio.h"
-#include "string.h"
-#include <stdio.h> // fprintf
+#include "stdbool.h" // bool, true, false
+#include "string.h"  // strcmp
+#include <stdio.h>   // fprintf, printf, stderr
 
-#include "test.h"
+#include "test.h" // is_true, is_false, is_equal
 
-#include "../src/strmap/strmap.h"
+#include "../src-alt/strmap/strmap.h" // strmap_*, STRMAP_GET_VALUE_DEFAULT
 
 bool one_element_test(void) {
     strmap_type* strmap_p;
     if (!strmap_init(&strmap_p)) {
-        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
 
     res &= is_equal(strmap_count(strmap_p), (size_t)0);
     res &= is_true(strmap_set(strmap_p, "AA", "11"));
+
     res &= is_equal(strmap_count(strmap_p), (size_t)1);
     res &= is_equal(strcmp(strmap_get(strmap_p, "AA"), "11"), 0);
+
     res &= is_true(strmap_deinit(&strmap_p));
+
     return res;
 }
 
 bool four_elements_test(void) {
     strmap_type* strmap_p;
     if (!strmap_init(&strmap_p)) {
-        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
@@ -50,7 +51,7 @@ bool four_elements_test(void) {
 bool del_and_exists_test(void) {
     strmap_type* strmap_p;
     if (!strmap_init(&strmap_p)) {
-        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
@@ -64,7 +65,7 @@ bool del_and_exists_test(void) {
     res &= is_true(strmap_del(strmap_p, "aab"));
     res &= is_equal(strmap_count(strmap_p), (size_t)3);
 
-    res &= is_true(!strmap_del(strmap_p, "aae"));
+    res &= is_false(strmap_del(strmap_p, "aae"));
 
     res &= is_true(strmap_exists(strmap_p, "aaa"));
     res &= is_false(strmap_exists(strmap_p, "aab"));
@@ -79,7 +80,7 @@ bool del_and_exists_test(void) {
 bool missing_elements_test(void) {
     strmap_type* strmap_p;
     if (!strmap_init(&strmap_p)) {
-        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
@@ -105,7 +106,7 @@ bool missing_elements_test(void) {
 bool overwrite_element_test(void) {
     strmap_type* strmap_p;
     if (!strmap_init(&strmap_p)) {
-        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
@@ -131,7 +132,7 @@ bool overwrite_element_test(void) {
 bool empty_element_test(void) {
     strmap_type* strmap_p;
     if (!strmap_init(&strmap_p)) {
-        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
@@ -154,7 +155,7 @@ bool empty_element_test(void) {
 bool million_elements_test(void) {
     strmap_type* strmap_p;
     if (!strmap_init(&strmap_p)) {
-        fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
@@ -180,8 +181,64 @@ bool million_elements_test(void) {
     return res;
 }
 
-// bool for_each_test(void) {
-// }
+bool for_each_and_copy_test(void) {
+    strmap_type* strmap_p;
+    if (!strmap_init_with_initial_capacity(&strmap_p, 2048)) {
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
+        return false;
+    }
+    bool res = true;
+    for (size_t i = 0; i < 1000; i++) {
+        char c1 = i % m + 'a';
+        char c2 = (i / m) % m + 'a';
+        char c3 = (i / m / m) % m + 'a';
+        char c4 = (i / m / m / m) % m + 'a';
+        char c5 = (i / m / m / m / m) % m + 'a';
+        res &= is_true(strmap_set(strmap_p, (char[]){c5, c4, c3, c2, c1, '\0'}, (char[]){c1, c2, c3, c4, c5, '\0'}));
+    }
+    {
+        size_t list_index;
+        strmap_node_type* next_p;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+        char* key_p;
+        char* value_p;
+#pragma GCC diagnostic pop
+        size_t count = 0;
+        strmap_for_each(strmap_p, list_index, next_p, key_p, value_p) {
+            count++;
+        }
+        res &= is_true(strmap_count(strmap_p) == count);
+    }
+    strmap_type* strmap_copy_p;
+    if (!strmap_copy(&strmap_copy_p, strmap_p)) {
+        fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
+        return false;
+    }
+    {
+        size_t list_index;
+        strmap_node_type* next_p;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+        char* key_p;
+        char* value_p;
+#pragma GCC diagnostic pop
+        size_t i = 0;
+        strmap_for_each(strmap_copy_p, list_index, next_p, key_p, value_p) {
+            i++;
+            char c1 = i % m + 'a';
+            char c2 = (i / m) % m + 'a';
+            char c3 = (i / m / m) % m + 'a';
+            char c4 = (i / m / m / m) % m + 'a';
+            char c5 = (i / m / m / m / m) % m + 'a';
+            res &= is_true(strmap_set(strmap_copy_p, (char[]){c5, c4, c3, c2, c1, '\0'}, (char[]){c1, c2, c3, c4, c5, '\0'}));
+        }
+    }
+
+    res &= is_true(strmap_deinit(&strmap_p));
+
+    return res;
+}
 
 typedef bool (*bool_f)(void);
 
@@ -201,7 +258,8 @@ int main(void) {
                                 {missing_elements_test, "missing elements test"},
                                 {overwrite_element_test, "overwrite element test"},
                                 {empty_element_test, "empty element test"},
-                                {million_elements_test, "million elements test"}};
+                                {million_elements_test, "million elements test"},
+                                {for_each_and_copy_test, "for each and copy test"}};
     printf(__FILE_NAME__ ":\n");
     for (size_t i = 0; i < sizeof(bool_f_arr) / sizeof(bool_f_plus); i++) {
         printf(" [%s] %s\n", bool_f_arr[i].func() ? GREEN "true" OFF : RED "false" OFF, bool_f_arr[i].desc);

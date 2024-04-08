@@ -1,4 +1,6 @@
-#include <stdio.h>
+#include <stdio.h> // getline, stdin, puts, printf, stdin
+#include <stdbool.h> // true, false, bool
+#include <stdlib.h> // free, size_t, ssize_t, NULL
 
 typedef enum { DEFAULT_SYMBOL_ENUM, LBRACKET, LCURLY, LPARAN, RBRACKET, RCURLY, RPARAN } SYMBOL_ENUM;
 
@@ -61,11 +63,9 @@ SYMBOL_ENUM matching_symbol(SYMBOL_ENUM symb) {
     }
 }
 
-#include "stack.h"
-
-#define VALUE_NAME symb
-#define VALUE_TYPE SYMBOL_ENUM
-#include "stack_helpers.h"
+typedef SYMBOL_ENUM symb;
+#define VALUE_TYPE symb
+#include "../../src/T_stack.h" // int_stack_*, T_stack_for_each
 
 int main(void) {
     puts("Input line:");
@@ -77,8 +77,8 @@ int main(void) {
         return 1;
     }
 
-    Stack* stack_p;
-    if (!stack_init_symb(&stack_p)) {
+    symb_stack_type* stack_p;
+    if (!symb_stack_init(&stack_p, n)) {
         free(str);
         return 1;
     }
@@ -91,16 +91,16 @@ int main(void) {
         case '(':
         case '{':
         case '[': {
-            stack_push_symb(stack_p, encode_symbol(str[i]));
+            symb_stack_push(stack_p, encode_symbol(str[i]));
         } break;
         case ')':
         case '}':
         case ']':
-            if (stack_is_empty(stack_p)) {
+            if (symb_stack_is_empty(stack_p)) {
                 no_errors = false;
                 break;
             }
-            no_errors = encode_symbol(str[i]) == matching_symbol(stack_pop_symb(stack_p));
+            no_errors = encode_symbol(str[i]) == matching_symbol(symb_stack_pop(stack_p));
         }
         if (!no_errors) {
             break;
@@ -117,7 +117,7 @@ int main(void) {
         }
     }
 
-    stack_deinit(&stack_p);
+    symb_stack_deinit(&stack_p);
     free(str);
 
     return 0;

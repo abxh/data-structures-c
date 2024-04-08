@@ -49,8 +49,6 @@ bool ll_stack_deinit(ll_stack_type** ll_stack_pp) {
     return true;
 }
 
-
-
 size_t ll_stack_count(const ll_stack_type* ll_stack_p) {
     assert(ll_stack_p != NULL);
 
@@ -119,15 +117,15 @@ void ll_stack_node_free(ll_stack_type* ll_stack_p, ll_stack_node_type* ll_stack_
     ll_stack_p->freelist_p = ll_stack_node_p;
 }
 
-bool ll_stack_copy(ll_stack_type** ll_dest_stack_pp, const ll_stack_type* ll_stack_p) {
-    assert(ll_stack_p != NULL);
+bool ll_stack_copy(ll_stack_type** ll_dest_stack_pp, const ll_stack_type* ll_stack_src_p) {
+    assert(ll_stack_src_p != NULL);
     assert(ll_dest_stack_pp != NULL);
 
-    if (!ll_stack_init(ll_dest_stack_pp, ll_stack_p->value_size)) {
+    if (!ll_stack_init(ll_dest_stack_pp, ll_stack_src_p->value_size)) {
         return false;
     }
 
-    ll_stack_node_type* head_p = ll_stack_p->head_p;
+    ll_stack_node_type* head_p = ll_stack_src_p->head_p;
     ll_stack_node_type* tail_p = NULL;
     while (head_p != NULL) {
         ll_stack_node_type* head_copy_p = ll_stack_node_create(*ll_dest_stack_pp);
@@ -135,7 +133,7 @@ bool ll_stack_copy(ll_stack_type** ll_dest_stack_pp, const ll_stack_type* ll_sta
             ll_stack_deinit(ll_dest_stack_pp);
             return false;
         }
-        memcpy(head_copy_p->value_p, head_p->value_p, ll_stack_p->value_size);
+        memcpy(head_copy_p->value_p, head_p->value_p, ll_stack_src_p->value_size);
         head_copy_p->next_p = NULL;
         if ((*ll_dest_stack_pp)->head_p == NULL) {
             (*ll_dest_stack_pp)->head_p = head_copy_p;
@@ -146,8 +144,8 @@ bool ll_stack_copy(ll_stack_type** ll_dest_stack_pp, const ll_stack_type* ll_sta
         }
         head_p = head_p->next_p;
     }
-    (*ll_dest_stack_pp)->count = ll_stack_p->count;
-    (*ll_dest_stack_pp)->value_size = ll_stack_p->value_size;
+    (*ll_dest_stack_pp)->count = ll_stack_src_p->count;
+    (*ll_dest_stack_pp)->value_size = ll_stack_src_p->value_size;
 
     return true;
 }

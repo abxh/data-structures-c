@@ -1,18 +1,18 @@
-#include <assert.h> // static_assert
-#include <stdint.h> // uint64_t
-#include <stdlib.h> // reallocarray, SIZE_MAX
-#include <string.h> // strcmp, strdup, strcpy
+#include <assert.h>  // static_assert
+#include <stdbool.h> // bool, true, false
+#include <stdint.h>  // uint64_t
+#include <stdlib.h>  // malloc, reallocarray, free, SIZE_MAX
+#include <string.h>  // strcmp, strdup, strcpy
 
 #include "strmap.h" // strmap_*, STRMAP_GET_VALUE_DEFAULT
 
 #define INITIAL_CAPACITY 16
 #define MAX_CHAIN_LENGTH 5
 
-static_assert(INITIAL_CAPACITY != 0, "initial capacity is not zero");
 static_assert(INITIAL_CAPACITY != 1, "subtracting initial capacity by one does not yield zero");
-static_assert((INITIAL_CAPACITY & (INITIAL_CAPACITY - 1)) == 0, "initial capacity is a power of 2");
+static_assert(INITIAL_CAPACITY != 0 && (INITIAL_CAPACITY & (INITIAL_CAPACITY - 1)) == 0, "initial capacity is a power of 2");
 
-static uint64_t fnv_hash64(const unsigned char* char_p) {
+uint64_t fnv_hash64(const unsigned char* char_p) {
     assert(char_p != NULL);
 
     // FNV-1a hash
@@ -56,9 +56,8 @@ bool strmap_init(strmap_type** strmap_pp) {
 
 bool strmap_init_with_initial_capacity(strmap_type** strmap_pp, size_t pow2_capacity) {
     assert(strmap_pp != NULL);
-    assert(pow2_capacity != 0 && "initial capacity is not zero");
-    assert(pow2_capacity != 1 && "subtracting initial capacity by one does not yield zero");
-    assert((pow2_capacity & (pow2_capacity - 1)) == 0 && "initial capacity is a power of 2");
+    assert(pow2_capacity != 0 && (pow2_capacity & (pow2_capacity - 1)) == 0 && "initial capacity is a power of 2");
+    assert(pow2_capacity - 1 != 0 && "subtracting initial capacity by one does not yield zero");
 
     if (INITIAL_CAPACITY > SIZE_MAX / sizeof(strmap_node_list_type)) {
         return false;
@@ -210,7 +209,7 @@ bool strmap_del(strmap_type* strmap_p, const char* key_p) {
     return false;
 }
 
-static strmap_node_type* strmap_create_flattened_list(strmap_type* strmap_p, size_t list_count) {
+strmap_node_type* strmap_create_flattened_list(strmap_type* strmap_p, size_t list_count) {
     assert(strmap_p != NULL);
 
     strmap_node_type* head_p = NULL;
@@ -242,7 +241,7 @@ static strmap_node_type* strmap_create_flattened_list(strmap_type* strmap_p, siz
     return head_p;
 }
 
-static int strmap_grow_if_necessary(strmap_type* strmap_p, size_t chain_length) {
+int strmap_grow_if_necessary(strmap_type* strmap_p, size_t chain_length) {
     assert(strmap_p != NULL);
 
     if (chain_length <= MAX_CHAIN_LENGTH) {
@@ -295,7 +294,7 @@ static int strmap_grow_if_necessary(strmap_type* strmap_p, size_t chain_length) 
     return 1;
 }
 
-static void* strmap_node_create(const char* key_p, const char* value_p) {
+void* strmap_node_create(const char* key_p, const char* value_p) {
     assert(key_p != NULL);
     assert(value_p != NULL);
 
@@ -373,9 +372,23 @@ bool strmap_set(strmap_type* strmap_p, const char* key_p, const char* value_p) {
     return true;
 }
 
-bool strmap_copy(strmap_type** strmap_pp, const strmap_type* strmap_p) {
-    assert(strmap_p != NULL);
-    assert(strmap_pp != NULL);
+bool strmap_copy(strmap_type** strmap_dest_pp, const strmap_type* strmap_src_p) {
+    assert(strmap_src_p != NULL);
+    assert(strmap_dest_pp != NULL);
+
+    if (!strmap_init_with_initial_capacity(strmap_dest_pp, strmap_src_p->list_count)) {
+        return false;
+    }
+    {
+        strmap_type* strmap_dest_p = *strmap_dest_pp;
+        size_t list_index;
+        strmap_node_type* next_p;
+        char* key_p;
+        char* value_p;
+        strmap_for_each(strmap_dest_p, list_index, next_p, key_p, value_p) {
+            strmap_set(strmap_dest_p, key_p, value_p);
+        }
+    }
 
     return true;
 }

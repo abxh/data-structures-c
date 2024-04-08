@@ -1,1 +1,1 @@
-../../src/strmap/strmap.h
+../../src-alt/strmap/strmap.h

@@ -1,14 +1,14 @@
-#include <ctype.h>
-#include <stdio.h>
+#include <ctype.h> // islower, isupper, isdigit
+#include <stdio.h> // puts, fgetc, putchar, printf, stdin, EOF
 
-#include "bitarray.h"
+#include "bitarray.h" // bitarray_*
 
 #define NUM_OF_LETTERS ('z' - 'a' + 1)
 #define NUM_OF_DIGITS ('9' - '0' + 1)
 #define TOTAL (NUM_OF_DIGITS + 2 * NUM_OF_LETTERS)
 
 int main(void) {
-    Bitarray* bitarray_p;
+    bitarray_type* bitarray_p;
 
     if (!bitarray_init(&bitarray_p, TOTAL)) {
         return 1;
@@ -31,7 +31,7 @@ int main(void) {
     putchar('\n');
 
     size_t i;
-    for (i = 0; i < TOTAL ; i++) {
+    for (i = 0; i < TOTAL; i++) {
         if (i >= TOTAL) {
             putchar('.');
             break;

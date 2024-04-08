@@ -1,13 +1,11 @@
 #include <stdbool.h> // bool, true, false
-#include <stdio.h>   // fprintf
+#include <stdio.h>   // fprintf, printf, stderr
 
-#include "test.h"
+#include "test.h" // is_true, is_false, is_equal
 
-#include "../src/ll_queue/ll_queue.h" // ll_queue_*
-
+#include "../src-alt/ll_queue/ll_queue.h" // ll_queue_*
 #define VALUE_TYPE int
-#define VALUE_NAME int
-#include "../src/ll_queue/ll_queue_wrapper.h" // ll_queue_*
+#include "../src-alt/ll_queue/ll_queue_wrapper.h" // ll_queue_*
 
 bool empty_test(void) {
     ll_queue_type* queue_p;
@@ -36,7 +34,7 @@ bool one_element_test(void) {
     res &= is_true(ll_queue_enqueue_int(queue_p, value));
     res &= is_equal(value, ll_queue_peek_int(queue_p));
 
-    res &= is_true(!ll_queue_is_empty(queue_p));
+    res &= is_false(ll_queue_is_empty(queue_p));
     res &= is_equal(ll_queue_count(queue_p), (size_t)1);
 
     res &= is_equal(value, ll_queue_dequeue_int(queue_p));
@@ -85,7 +83,7 @@ bool million_elements_test(void) {
     return res;
 }
 
-bool for_each_test(void) {
+bool for_each_and_copy_test(void) {
     ll_queue_type* queue_p;
     if (!ll_queue_init_int(&queue_p)) {
         fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
@@ -145,7 +143,7 @@ int main(void) {
                                 {one_element_test, "one element test"},
                                 {two_elements_test, "two elements test"},
                                 {million_elements_test, "million elements test"},
-                                {for_each_test, "for each test"}};
+                                {for_each_and_copy_test, "for each and copy test"}};
     printf(__FILE_NAME__ ":\n");
     for (size_t i = 0; i < sizeof(bool_f_arr) / sizeof(bool_f_plus); i++) {
         printf(" [%s] %s\n", bool_f_arr[i].func() ? GREEN "true" OFF : RED "false" OFF, bool_f_arr[i].desc);

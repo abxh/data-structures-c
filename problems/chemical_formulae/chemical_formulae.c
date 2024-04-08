@@ -1,10 +1,10 @@
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <stdbool.h> // bool, true, false
+#include <stdint.h>  // uint64_t
+#include <stdio.h>   // getline, printf, sprintf, stdin, fopen, fclose, FILE, fgets
+#include <stdlib.h>  // NULL, free, qsort, size_t, ssize_t
+#include <string.h>  // memset, strlen, strnlen, strcspn
 
-#include "strmap.h"
+#include "strmap.h" // strmap_*
 
 #define max(x, y) ((x) > (y) ? (x) : (y))
 
@@ -28,14 +28,14 @@ uint64_t longest_common_subsequence(const char* str1, size_t n, const char* str2
 
 #define abs_diff(x, y) ((x) >= (y) ? (x) - (y) : (y) - (x))
 
-static char* CMP_CUSTOM_USR_INP_P = NULL;
+static char* cmp_custom_usr_inp_p = NULL;
 int cmp_custom(const void* s1, const void* s2) {
-    size_t n = strlen(CMP_CUSTOM_USR_INP_P);
+    size_t n = strlen(cmp_custom_usr_inp_p);
     size_t m1 = strlen(*(char**)s1);
     size_t m2 = strlen(*(char**)s2);
 
-    uint64_t lcs1 = longest_common_subsequence(CMP_CUSTOM_USR_INP_P, n, *(char**)s1, m1);
-    uint64_t lcs2 = longest_common_subsequence(CMP_CUSTOM_USR_INP_P, n, *(char**)s2, m2);
+    uint64_t lcs1 = longest_common_subsequence(cmp_custom_usr_inp_p, n, *(char**)s1, m1);
+    uint64_t lcs2 = longest_common_subsequence(cmp_custom_usr_inp_p, n, *(char**)s2, m2);
 
     if (lcs1 != lcs2) {
         return -(lcs1 < lcs2) + (lcs1 > lcs2);
@@ -61,7 +61,7 @@ int main(void) {
     if (fp == NULL) {
         return 1;
     }
-    StrMap* strmap_p;
+    strmap_type* strmap_p;
     if (!strmap_init(&strmap_p)) {
         return 1;
     }
@@ -109,7 +109,7 @@ int main(void) {
 
         // required for iterating strmap:
         size_t list_index;
-        StrMapNode* next_p;
+        strmap_node_type* next_p;
         char* key_p;
         char* value_p;
 
@@ -131,7 +131,7 @@ int main(void) {
             printf(" -> %s (%s)\n", line_p, strmap_get(strmap_p, line_p));
             continue;
         }
-        CMP_CUSTOM_USR_INP_P = &line_p[0];
+        cmp_custom_usr_inp_p = &line_p[0];
         qsort(keys_arr_pp, count, sizeof(char*), cmp_custom);
         for (size_t i = count - 1; i >= count - 5; i--) {
             printf(" -> %s (%s)\n", keys_arr_pp[i], strmap_get(strmap_p, keys_arr_pp[i]));

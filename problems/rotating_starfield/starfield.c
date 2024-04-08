@@ -1,16 +1,15 @@
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h> // true
+#include <stdint.h>  // int8_t
+#include <stdio.h>   // printf, putchar, size_t
+#include <stdlib.h>  // size_t, NULL, srand, rand, free
 
-#ifdef linux
-#include <time.h>
-#endif
+#include <time.h> // time, timespec (linux), nanosleep (linux)
 
 #ifdef _WIN32
-#include <windows.h>
+#include <windows.h> // Sleep
 #endif
 
-#include "../../src/bithacks/rotate_bits.h"
+#include "../../src/rotate_bits.h" // rotate_bits
 
 #define VT_MOVUP "\033[A"
 #define VT_CLEARLINE "\33[2K"

@@ -1,5 +1,6 @@
 #include <stdbool.h> // bool
-#include <stdio.h>   // fprintf
+#include <stdio.h>   // fprintf, stderr
+#include <stdlib.h>  // size_t
 
 // reference:
 // https://stackoverflow.com/a/168611

@@ -2,7 +2,7 @@
 #include <limits.h>  // CHAR_BIT
 #include <stdbool.h> // bool
 #include <stdio.h>   // putchar, printf
-#include <stdlib.h>  // malloc, calloc, size_t, NULL
+#include <stdlib.h>  // malloc, calloc, free, size_t, NULL
 #include <string.h>  // memcmp, memcpy
 
 #include "bitarray.h" // bitarray*
@@ -25,14 +25,14 @@ bool bitarray_init(bitarray_type** bitarray_pp, size_t num_of_bits) {
     if (*bitarray_pp == NULL) {
         return false;
     }
-    (*bitarray_pp)->words = calloc((*bitarray_pp)->capacity, sizeof(unsigned char));
+    (*bitarray_pp)->words = calloc((*bitarray_pp)->num_of_words, sizeof(unsigned char));
     if ((*bitarray_pp)->words == NULL) {
         free(*bitarray_pp);
         *bitarray_pp = NULL;
         return false;
     }
     (*bitarray_pp)->num_of_bits = num_of_bits;
-    (*bitarray_pp)->capacity = (num_of_bits + (8 - 1)) / 8; // round up to the next multiple of 8
+    (*bitarray_pp)->num_of_words = (num_of_bits + (8 - 1)) / 8; // round up to the next multiple of 8
 
     return true;
 }
@@ -55,7 +55,7 @@ void bitarray_print(const bitarray_type* bitarray_p) {
 
     size_t i;
     for (i = 0; i < bitarray_p->num_of_bits; i++) {
-        if (i % 32 == 0) {
+        if (i % 8 == 0 && i % 32 != 0) {
             putchar(' ');
         }
         printf("%d", (bitarray_p->words[word_index(i)] >> bit_index(i)) & 1);
@@ -72,40 +72,24 @@ bitarray_type* bitarray_from(const unsigned char* bytes, size_t num_of_bits) {
     assert(bytes != NULL);
     assert(num_of_bits != 0);
 
-    bitarray_type* bitarray_p = malloc(sizeof(bitarray_type));
-    if (bitarray_p == NULL) {
-        return NULL;
+    bitarray_type* bitarray_p;
+    if (!bitarray_init(&bitarray_p, num_of_bits)) {
+        return false;
     }
-    bitarray_p->num_of_bits = num_of_bits;
-    bitarray_p->capacity = (num_of_bits + (8 - 1)) / 8; // round up to the next multiple of 8
-    bitarray_p->words = malloc(bitarray_p->capacity);
-    if (bitarray_p->words == NULL) {
-        free(bitarray_p);
-        return NULL;
-    }
-    memcpy(bitarray_p->words, bytes, bitarray_p->capacity);
+    memcpy(bitarray_p->words, bytes, bitarray_p->num_of_words);
 
     return bitarray_p;
 }
 
-bool bitarray_copy(bitarray_type** bitarray_dest_pp, const bitarray_type* bitarray_p) {
-    assert(bitarray_p != NULL || bitarray_dest_pp != NULL);
-    if (bitarray_p == NULL || bitarray_dest_pp == NULL) {
-        return false;
-    }
+bool bitarray_copy(bitarray_type** bitarray_dest_pp, const bitarray_type* bitarray_src_p) {
+    assert(bitarray_src_p != NULL);
+    assert(bitarray_dest_pp != NULL);
 
-    *bitarray_dest_pp = malloc(sizeof(bitarray_type));
-    if (*bitarray_dest_pp == NULL) {
+    bitarray_type* bitarray_copy_p;
+    if (!bitarray_init(&bitarray_copy_p, bitarray_src_p->num_of_bits)) {
         return false;
     }
-    (*bitarray_dest_pp)->words = malloc(bitarray_p->capacity);
-    if ((*bitarray_dest_pp)->words == NULL) {
-        free(*bitarray_dest_pp);
-        *bitarray_dest_pp = NULL;
-        return false;
-    }
-    (*bitarray_dest_pp)->num_of_bits = bitarray_p->num_of_bits;
-    (*bitarray_dest_pp)->capacity = bitarray_p->capacity;
+    memcpy((*bitarray_dest_pp)->words, bitarray_src_p->words, bitarray_src_p->num_of_words);
 
     return true;
 }
@@ -115,7 +99,7 @@ bool bitarray_equal(const bitarray_type* bitarray_p, const bitarray_type* bitarr
     assert(bitarray_other_p != NULL);
     assert(bitarray_p->num_of_bits == bitarray_other_p->num_of_bits);
 
-    return memcmp((unsigned char*)bitarray_p->words, (unsigned char*)bitarray_other_p->words, bitarray_p->capacity) == 0;
+    return memcmp(bitarray_p->words, bitarray_other_p->words, bitarray_p->num_of_words) == 0;
 }
 
 bool bitarray_get(const bitarray_type* bitarray_p, size_t index) {

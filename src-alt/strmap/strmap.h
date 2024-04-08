@@ -29,7 +29,7 @@ bool strmap_init_with_initial_capacity(strmap_type** strmap_pp, size_t pow2_capa
 
 bool strmap_deinit(strmap_type** strmap_pp);
 
-bool strmap_copy(strmap_type** strmap_dest_pp, const strmap_type* strmap_p);
+bool strmap_copy(strmap_type** strmap_dest_pp, const strmap_type* strmap_src_p);
 
 size_t strmap_count(const strmap_type* strmap_p);
 
@@ -41,7 +41,9 @@ bool strmap_set(strmap_type* strmap_p, const char* key_p, const char* value_p);
 
 bool strmap_del(strmap_type* strmap_p, const char* key_p);
 
-#define strmap_for_each(strmap_p, list_index, next_p, key_p, value_p)                                                            \
-    for ((list_index) = 0; (list_index) < (strmap_p)->list_count && ((next_p) = (strmap_p)->lists_p[(list_index)].head_p, true); \
-         (list_index)++)                                                                                                         \
-        while ((next_p) != NULL && ((key_p) = (next_p)->key_p, (value_p) = (next_p)->value_p, (next_p) = (next_p)->next_p, true))
+#define strmap_for_each(strmap_p, list_index, strmap_node_next_p, key_p, value_p)                                                 \
+    for ((list_index) = 0;                                                                                                        \
+         (list_index) < (strmap_p)->list_count && ((strmap_node_next_p) = (strmap_p)->lists_arr_p[(list_index)].head_p, true);        \
+         (list_index)++)                                                                                                          \
+        while ((strmap_node_next_p) != NULL && ((key_p) = (strmap_node_next_p)->key_p, (value_p) = (strmap_node_next_p)->value_p, \
+                                                (strmap_node_next_p) = (strmap_node_next_p)->strmap_node_next_p, true))

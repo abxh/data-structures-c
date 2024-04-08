@@ -20,7 +20,7 @@ bool ll_stack_init(ll_stack_type** ll_stack_pp, const size_t value_size);
 
 bool ll_stack_deinit(ll_stack_type** ll_stack_pp);
 
-bool ll_stack_copy(ll_stack_type** ll_stack_dest_pp, const ll_stack_type* ll_stack_p);
+bool ll_stack_copy(ll_stack_type** ll_stack_dest_pp, const ll_stack_type* ll_stack_src_p);
 
 const ll_stack_node_type* ll_stack_peek_node(const ll_stack_type* ll_stack_p);
 

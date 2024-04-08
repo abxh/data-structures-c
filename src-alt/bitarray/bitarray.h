@@ -5,7 +5,7 @@
 
 typedef struct {
     size_t num_of_bits;
-    size_t capacity;
+    size_t num_of_words;
     unsigned char* words;
 } bitarray_type;
 
@@ -13,7 +13,7 @@ bool bitarray_init(bitarray_type** bitarray_pp, size_t num_of_bits);
 
 bool bitarray_deinit(bitarray_type** bitarray_pp);
 
-bool bitarray_copy(bitarray_type** bitarray_dest_pp, const bitarray_type* bitarray_p);
+bool bitarray_copy(bitarray_type** bitarray_dest_pp, const bitarray_type* bitarray_src_p);
 
 void bitarray_print(const bitarray_type* bitarray_p);
 

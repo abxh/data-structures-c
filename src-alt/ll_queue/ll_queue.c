@@ -141,26 +141,26 @@ void ll_queue_node_free(ll_queue_type* ll_queue_p, ll_queue_node_type* ll_queue_
     ll_queue_p->freelist_p = ll_queue_node_p;
 }
 
-bool ll_queue_copy(ll_queue_type** ll_queue_dest_pp, const ll_queue_type* ll_queue_p) {
-    assert(ll_queue_p != NULL);
+bool ll_queue_copy(ll_queue_type** ll_queue_dest_pp, const ll_queue_type* ll_queue_src_p) {
+    assert(ll_queue_src_p != NULL);
     assert(ll_queue_dest_pp != NULL);
 
-    if (!ll_queue_init(ll_queue_dest_pp, ll_queue_p->value_size)) {
+    if (!ll_queue_init(ll_queue_dest_pp, ll_queue_src_p->value_size)) {
         return false;
     }
 
-    ll_queue_node_type* head_p = ll_queue_p->head_p;
+    ll_queue_node_type* head_p = ll_queue_src_p->head_p;
     while (head_p != NULL) {
         ll_queue_node_type* head_copy_p = ll_queue_node_create(*ll_queue_dest_pp);
         if (head_copy_p == NULL) {
             ll_queue_deinit(ll_queue_dest_pp);
             return false;
         }
-        memcpy(head_copy_p->value_p, head_p->value_p, ll_queue_p->value_size);
+        memcpy(head_copy_p->value_p, head_p->value_p, ll_queue_src_p->value_size);
         ll_queue_enqueue_node(*ll_queue_dest_pp, head_copy_p);
         head_p = head_p->next_p;
     }
-    (*ll_queue_dest_pp)->count = ll_queue_p->count;
+    (*ll_queue_dest_pp)->count = ll_queue_src_p->count;
 
     return true;
 }

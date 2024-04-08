@@ -1,6 +1,6 @@
-#include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <ctype.h>  // isdigit
+#include <stdio.h>  // getline, stdin, printf, fprintf, stderr, putchar
+#include <stdlib.h> // size_t, free, ssize_t
 
 #ifdef KATTIS
 
@@ -31,16 +31,12 @@ typedef struct {
     } metadata;
 } Lexeme;
 
-#include "queue.h"
-#include "stack.h"
+typedef Lexeme lex;
+#define VALUE_TYPE lex
+#include "../../src/T_queue.h"
 
-#define VALUE_NAME lex
-#define VALUE_TYPE Lexeme
-#include "queue_helpers.h"
-
-#define VALUE_NAME lex
-#define VALUE_TYPE Lexeme
-#include "stack_helpers.h"
+#define VALUE_TYPE lex
+#include "../../src/T_stack.h"
 
 char decode_op(Operation op) {
     switch (op) {
@@ -89,17 +85,20 @@ static const double RTR_VALUE_DEFAULT = 0.;
 static double RTR_VALUE_LAST = RTR_VALUE_DEFAULT;
 
 #define digit_to_num(v) ((v) - '0')
-#define last_token(inp_queue) (queue_is_empty(inp_queue) ? DEFAULT_TOKEN : queue_peek_last_lex(inp_queue).token)
-#define last_op(inp_queue) (queue_is_empty(inp_queue) ? DEFAULT_OP : queue_peek_last_lex(inp_queue).metadata.op)
+#define last_token(inp_queue) (lex_queue_is_empty(inp_queue) ? DEFAULT_TOKEN : lex_queue_peek_last(inp_queue).token)
+#define last_op(inp_queue) (lex_queue_is_empty(inp_queue) ? DEFAULT_OP : lex_queue_peek_last(inp_queue).metadata.op)
 
 double eval(char* str, ssize_t len) {
+    if (len < 0) {
+        return RTR_VALUE_DEFAULT;
+    }
     double rtr_value = RTR_VALUE_DEFAULT;
-    Queue* inp_queue = NULL;
-    Queue* inp_queue_postfix = NULL;
-    Stack* op_stack = NULL;
-    Stack* num_stack = NULL;
+    lex_queue_type* inp_queue = NULL;
+    lex_queue_type* inp_queue_postfix = NULL;
+    lex_stack_type* op_stack = NULL;
+    lex_stack_type* num_stack = NULL;
 
-    if (!queue_init_lex(&inp_queue)) {
+    if (!lex_queue_init_with_capacity_rounded_up(&inp_queue, len)) {
         goto on_oom_error;
     }
 
@@ -134,23 +133,23 @@ double eval(char* str, ssize_t len) {
         case '/':
             incomplete_input = true;
             error_index = i;
-            if (queue_is_empty(inp_queue) ||
+            if (lex_queue_is_empty(inp_queue) ||
                 (last_token(inp_queue) == OP_TOKEN && (last_op(inp_queue) == MUL_OP || last_op(inp_queue) == DIV_OP))) {
                 error_msg = "Incorrect use of '*' or '/'.";
                 error_index = i;
                 goto on_inp_error;
             }
-            queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = str[i] == '*' ? MUL_OP : DIV_OP}});
+            lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = str[i] == '*' ? MUL_OP : DIV_OP}});
             break;
         case '^':
             incomplete_input = true;
             error_index = i;
-            if (queue_is_empty(inp_queue) || (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == POW_OP)) {
+            if (lex_queue_is_empty(inp_queue) || (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == POW_OP)) {
                 error_msg = "Incorrect use of '^'.";
                 error_index = i;
                 goto on_inp_error;
             }
-            queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = POW_OP}});
+            lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = POW_OP}});
             break;
         case '0':
         case '1':
@@ -168,7 +167,7 @@ double eval(char* str, ssize_t len) {
             if ((last_token(inp_queue) == NUMBER_TOKEN ||
                  (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) &&
                 sign != DEFAULT_OP) {
-                queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
+                lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
                 sign = DEFAULT_OP;
             } else if (last_token(inp_queue) == NUMBER_TOKEN) {
                 error_msg = "Two numbers in a row.";
@@ -176,10 +175,10 @@ double eval(char* str, ssize_t len) {
                 goto on_inp_error;
             }
             if (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP) {
-                queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
+                lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
             }
             if (str[i] == '_') {
-                queue_enqueue_lex(inp_queue, (Lexeme){.token = NUMBER_TOKEN, .metadata = {.num = RTR_VALUE_LAST}});
+                lex_queue_enqueue(inp_queue, (Lexeme){.token = NUMBER_TOKEN, .metadata = {.num = RTR_VALUE_LAST}});
                 continue;
             }
             i--;
@@ -206,7 +205,7 @@ double eval(char* str, ssize_t len) {
                     i++;
                 }
             }
-            queue_enqueue_lex(inp_queue, (Lexeme){.token = NUMBER_TOKEN, .metadata = {.num = value}});
+            lex_queue_enqueue(inp_queue, (Lexeme){.token = NUMBER_TOKEN, .metadata = {.num = value}});
             break;
         case '(':
         case ')':
@@ -223,23 +222,23 @@ double eval(char* str, ssize_t len) {
                 if (sign != DEFAULT_OP) {
                     if (last_token(inp_queue) == NUMBER_TOKEN ||
                         (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) {
-                        queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
+                        lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
                     } else {
-                        queue_enqueue_lex(inp_queue,
+                        lex_queue_enqueue(inp_queue,
                                           (Lexeme){.token = NUMBER_TOKEN, .metadata = {.num = -(sign == SUB_OP) + (sign == ADD_OP)}});
-                        queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
+                        lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
                     }
                     sign = DEFAULT_OP;
                 }
                 if (last_token(inp_queue) == NUMBER_TOKEN ||
                     (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) {
-                    queue_enqueue_lex(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
+                    lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
                 }
             } else if (incomplete_input) {
                 error_msg = "Incomplete input.";
                 goto on_inp_error;
             }
-            queue_enqueue_lex(inp_queue,
+            lex_queue_enqueue(inp_queue,
                               (Lexeme){.token = OP_TOKEN, .metadata = {.op = str[i] == '(' ? OPENING_PAREN_OP : CLOSING_PAREN_OP}});
             break;
         case ' ':
@@ -267,10 +266,10 @@ double eval(char* str, ssize_t len) {
 
 #ifdef DEBUG
     {
+        size_t index;
         Lexeme lex;
-        QueueNode* node_p;
         printf("Input queue (prefix): ");
-        queue_for_each(inp_queue, node_p, lex) {
+        T_queue_for_each(inp_queue, index, lex) {
             switch (lex.token) {
             case NUMBER_TOKEN:
                 printf(" %g", lex.metadata.num);
@@ -286,39 +285,39 @@ double eval(char* str, ssize_t len) {
     }
 #endif
 
-    if (!queue_init_lex(&inp_queue_postfix)) {
+    if (!lex_queue_init_with_capacity_rounded_up(&inp_queue_postfix, lex_queue_count(inp_queue))) {
         goto on_oom_error;
     }
-    if (!stack_init_lex(&op_stack)) {
+    if (!lex_stack_init(&op_stack, lex_queue_count(inp_queue))) {
         goto on_oom_error;
     }
 
     // shunting yard algorithm (with simplified assumptions).
     {
+        size_t index;
         Lexeme lex;
-        QueueNode* node_p;
-        queue_for_each(inp_queue, node_p, lex) {
+        T_queue_for_each(inp_queue, index, lex) {
             switch (lex.token) {
             case NUMBER_TOKEN:
-                queue_enqueue_lex(inp_queue_postfix, lex);
+                lex_queue_enqueue(inp_queue_postfix, lex);
                 break;
             case OP_TOKEN:
                 switch (lex.metadata.op) {
                 case OPENING_PAREN_OP:
-                    stack_push_lex(op_stack, lex);
+                    lex_stack_push(op_stack, lex);
                     break;
                 case CLOSING_PAREN_OP:
-                    while (stack_peek_lex(op_stack).metadata.op != OPENING_PAREN_OP) {
-                        queue_enqueue_lex(inp_queue_postfix, stack_pop_lex(op_stack));
+                    while (lex_stack_peek(op_stack).metadata.op != OPENING_PAREN_OP) {
+                        lex_queue_enqueue(inp_queue_postfix, lex_stack_pop(op_stack));
                     }
-                    stack_pop_lex(op_stack);
+                    lex_stack_pop(op_stack);
                     break;
                 default:
-                    while (!stack_is_empty(op_stack) && stack_peek_lex(op_stack).metadata.op != OPENING_PAREN_OP &&
-                           op_precedence_cmp(stack_peek_lex(op_stack).metadata.op, lex.metadata.op) >= 0) {
-                        queue_enqueue_lex(inp_queue_postfix, stack_pop_lex(op_stack));
+                    while (!lex_stack_is_empty(op_stack) && lex_stack_peek(op_stack).metadata.op != OPENING_PAREN_OP &&
+                           op_precedence_cmp(lex_stack_peek(op_stack).metadata.op, lex.metadata.op) >= 0) {
+                        lex_queue_enqueue(inp_queue_postfix, lex_stack_pop(op_stack));
                     }
-                    stack_push_lex(op_stack, lex);
+                    lex_stack_push(op_stack, lex);
                     break;
                 }
             default:
@@ -326,16 +325,16 @@ double eval(char* str, ssize_t len) {
             }
         }
     }
-    while (!stack_is_empty(op_stack)) {
-        queue_enqueue_lex(inp_queue_postfix, stack_pop_lex(op_stack));
+    while (!lex_stack_is_empty(op_stack)) {
+        lex_queue_enqueue(inp_queue_postfix, lex_stack_pop(op_stack));
     }
 
 #ifdef DEBUG
     {
+        size_t i;
         Lexeme lex;
-        QueueNode* node_p;
         printf("Input queue (postfix):");
-        queue_for_each(inp_queue_postfix, node_p, lex) {
+        T_queue_for_each(inp_queue_postfix, i, lex) {
             switch (lex.token) {
             case NUMBER_TOKEN:
                 printf(" %g", lex.metadata.num);
@@ -352,32 +351,32 @@ double eval(char* str, ssize_t len) {
 #endif
 
     {
+        size_t i;
         Lexeme lex;
-        QueueNode* node_p;
         num_stack = op_stack; // repurposing the stack
-        queue_for_each(inp_queue_postfix, node_p, lex) {
+        T_queue_for_each(inp_queue_postfix, i, lex) {
             switch (lex.token) {
             case NUMBER_TOKEN:
-                stack_push_lex(num_stack, lex);
+                lex_stack_push(num_stack, lex);
                 break;
             case OP_TOKEN: {
-                double y = stack_pop_lex(num_stack).metadata.num;
-                double x = stack_pop_lex(num_stack).metadata.num;
+                double y = lex_stack_pop(num_stack).metadata.num;
+                double x = lex_stack_pop(num_stack).metadata.num;
                 switch (lex.metadata.op) {
                 case ADD_OP:
-                    stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x + y}});
+                    lex_stack_push(num_stack, (Lexeme){.metadata = {.num = x + y}});
                     break;
                 case SUB_OP:
-                    stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x - y}});
+                    lex_stack_push(num_stack, (Lexeme){.metadata = {.num = x - y}});
                     break;
                 case MUL_OP:
-                    stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x * y}});
+                    lex_stack_push(num_stack, (Lexeme){.metadata = {.num = x * y}});
                     break;
                 case DIV_OP:
-                    stack_push_lex(num_stack, (Lexeme){.metadata = {.num = x / y}});
+                    lex_stack_push(num_stack, (Lexeme){.metadata = {.num = x / y}});
                     break;
                 case POW_OP:
-                    stack_push_lex(num_stack, (Lexeme){.metadata = {.num = pow(x, y)}});
+                    lex_stack_push(num_stack, (Lexeme){.metadata = {.num = pow(x, y)}});
                     break;
                 default:
                     break;
@@ -390,25 +389,25 @@ double eval(char* str, ssize_t len) {
         }
     }
 
-    rtr_value = stack_pop_lex(num_stack).metadata.num;
+    rtr_value = lex_stack_pop(num_stack).metadata.num;
     RTR_VALUE_LAST = rtr_value;
 
 on_inp_error:
     if (error_msg != NULL) {
         fprintf(stderr, "%*c %s\n", (int)(error_index + 1), '^', error_msg);
     }
-    stack_deinit(&op_stack);
-    queue_deinit(&inp_queue_postfix);
-    queue_deinit(&inp_queue);
+    lex_stack_deinit(&op_stack);
+    lex_queue_deinit(&inp_queue_postfix);
+    lex_queue_deinit(&inp_queue);
 
     return rtr_value;
 
 on_oom_error:
     fprintf(stderr, "Out of memory.\n");
 
-    stack_deinit(&op_stack);
-    queue_deinit(&inp_queue_postfix);
-    queue_deinit(&inp_queue);
+    lex_stack_deinit(&op_stack);
+    lex_queue_deinit(&inp_queue_postfix);
+    lex_queue_deinit(&inp_queue);
 
     return rtr_value;
 }
