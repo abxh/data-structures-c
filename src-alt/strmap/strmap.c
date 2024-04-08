@@ -110,7 +110,7 @@ bool strmap_deinit(strmap_type** strmap_pp) {
     return true;
 }
 
-size_t strmap_count(const strmap_type* strmap_p) {
+size_t strmap_get_count(const strmap_type* strmap_p) {
     return strmap_p->total_nodes_count;
 }
 
