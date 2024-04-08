@@ -17,4 +17,4 @@ Use some metric (e.g. levenshtein distance, longest common subsequence, string l
 the keys after the user input (with your own sorting algorithm or C standard's `qsort`). Display
 the first five keys most similar to the user input and the keys' corresponding values.
 
-If you are up for it, roll your own string hashmap, or use a preexisting one, and map the keys to a `chemical formulae`s as values.
+If you are up for it, roll your own string hashmap, otherwise use a preexisting one, and map the keys to a `chemical formulae`s as values.
