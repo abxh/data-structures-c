@@ -1,6 +1,5 @@
 /*
-    Including this header file generates a struct and functions for
-    a given stack type.
+    Including this header file generates a struct and functions for a given queue type.
 
     The following macros gets defined once:
     - T_queue_for_each
@@ -12,7 +11,7 @@
     - T_queue_init
     - T_queue_init_with_capacity_rounded_up
     - T_queue_deinit
-    - T_stack_copy
+    - T_queue_copy
     - T_queue_count
     - T_queue_is_empty
     - T_queue_is_full
