@@ -3,7 +3,6 @@
 
 #include "test.h" // log, is_true, is_equal
 
-#include "../src-alt/ll_stack/ll_stack.h" // ll_stack_*
 #define VALUE_TYPE int
 #include "../src-alt/ll_stack/ll_stack_wrapper.h" // ll_stack_*
 

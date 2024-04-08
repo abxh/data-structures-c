@@ -3,7 +3,6 @@
 
 #include "test.h" // is_true, is_false, is_equal
 
-#include "../src-alt/ll_queue/ll_queue.h" // ll_queue_*
 #define VALUE_TYPE int
 #include "../src-alt/ll_queue/ll_queue_wrapper.h" // ll_queue_*
 
