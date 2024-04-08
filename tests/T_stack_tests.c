@@ -31,7 +31,7 @@ bool one_element_test(void) {
     }
     bool res = true;
 
-    res &= is_equal(int_stack_capacity(stack_p), (size_t)1);
+    res &= is_equal(int_stack_get_capacity(stack_p), (size_t)1);
 
     int value = 5;
 

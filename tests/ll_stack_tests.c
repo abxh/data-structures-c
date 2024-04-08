@@ -14,7 +14,7 @@ bool empty_test(void) {
     }
     bool res = true;
 
-    res &= is_equal(ll_stack_count(stack_p), (size_t)0);
+    res &= is_equal(ll_stack_get_count(stack_p), (size_t)0);
     res &= is_true(ll_stack_is_empty(stack_p));
     res &= is_true(ll_stack_deinit(&stack_p));
 
@@ -33,11 +33,11 @@ bool one_element_test(void) {
     res &= is_true(ll_stack_push_int(stack_p, value));
     res &= is_equal(value, ll_stack_peek_int(stack_p));
     res &= is_false(ll_stack_is_empty(stack_p));
-    res &= is_equal(ll_stack_count(stack_p), (size_t)1);
+    res &= is_equal(ll_stack_get_count(stack_p), (size_t)1);
 
     res &= is_equal(value, ll_stack_pop_int(stack_p));
     res &= is_true(ll_stack_is_empty(stack_p));
-    res &= is_equal(ll_stack_count(stack_p), (size_t)0);
+    res &= is_equal(ll_stack_get_count(stack_p), (size_t)0);
 
     res &= is_true(ll_stack_deinit(&stack_p));
 
@@ -99,7 +99,7 @@ bool for_each_and_copy_test(void) {
             node_original_p = node_original_p->next_p;
         }
     }
-    res &= is_equal(ll_stack_count(stack_p), ll_stack_count(stack_copy_p));
+    res &= is_equal(ll_stack_get_count(stack_p), ll_stack_get_count(stack_copy_p));
     res &= is_true(ll_stack_deinit(&stack_p));
     res &= is_true(ll_stack_deinit(&stack_copy_p));
 
