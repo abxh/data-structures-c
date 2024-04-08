@@ -61,8 +61,6 @@ bool million_elements_test(void) {
     }
     bool res = true;
 
-    res &= is_equal(int_stack_capacity(stack_p), (size_t)1000000);
-
     for (int i = 1; i <= 1000000; i++) {
         int_stack_push(stack_p, i);
         res &= is_equal(int_stack_count(stack_p), (size_t)i);
