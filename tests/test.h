@@ -2,7 +2,7 @@
 #include <stdio.h>   // fprintf, stderr
 #include <stdlib.h>  // size_t
 
-// This file uses GNU extensions and may require the gcc compiler.
+// This file uses GNU C extensions and may perhaps not work in other compilers except gcc.
 
 // reference:
 // https://stackoverflow.com/a/168611
