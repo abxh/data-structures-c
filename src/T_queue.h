@@ -12,7 +12,8 @@
     - T_queue_init_with_capacity_rounded_up
     - T_queue_deinit
     - T_queue_copy
-    - T_queue_count
+    - T_queue_get_count
+    - T_queue_get_capacity
     - T_queue_is_empty
     - T_queue_is_full
     - T_queue_peek
@@ -127,13 +128,13 @@ static inline bool JOIN(T_queue, copy)(T_queue_type** queue_dest_pp, T_queue_typ
     return true;
 }
 
-static inline size_t JOIN(T_queue, count)(const T_queue_type* queue_p) {
+static inline size_t JOIN(T_queue, get_count)(const T_queue_type* queue_p) {
     assert(queue_p != NULL);
 
     return queue_p->count;
 }
 
-static inline size_t JOIN(T_queue, capacity)(const T_queue_type* queue_p) {
+static inline size_t JOIN(T_queue, get_capacity)(const T_queue_type* queue_p) {
     assert(queue_p != NULL);
 
     return queue_p->capacity;

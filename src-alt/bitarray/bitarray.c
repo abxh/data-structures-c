@@ -68,7 +68,7 @@ void bitarray_print(const bitarray_type* bitarray_p) {
     }
 }
 
-bitarray_type* bitarray_from(const unsigned char* bytes, size_t num_of_bits) {
+bitarray_type* bitarray_create_from(const unsigned char* bytes, size_t num_of_bits) {
     assert(bytes != NULL);
     assert(num_of_bits != 0);
 
@@ -94,12 +94,20 @@ bool bitarray_copy(bitarray_type** bitarray_dest_pp, const bitarray_type* bitarr
     return true;
 }
 
-bool bitarray_equal(const bitarray_type* bitarray_p, const bitarray_type* bitarray_other_p) {
+bool bitarray_is_equal(const bitarray_type* bitarray_p, const bitarray_type* bitarray_other_p) {
     assert(bitarray_p != NULL);
     assert(bitarray_other_p != NULL);
     assert(bitarray_p->num_of_bits == bitarray_other_p->num_of_bits);
 
     return memcmp(bitarray_p->words, bitarray_other_p->words, bitarray_p->num_of_words) == 0;
+}
+
+size_t bitarray_get_num_of_bits(const bitarray_type* bitarray_p) {
+    return bitarray_p->num_of_bits;
+}
+
+size_t bitarray_get_num_of_words(const bitarray_type* bitarray_p) {
+    return bitarray_p->num_of_words;
 }
 
 bool bitarray_get(const bitarray_type* bitarray_p, size_t index) {

@@ -11,7 +11,8 @@
     - T_stack_init
     - T_stack_deinit
     - T_stack_copy
-    - T_stack_count
+    - T_stack_get_count
+    - T_stack_get_capacity
     - T_stack_is_empty
     - T_stack_is_full
     - T_stack_peek
@@ -99,13 +100,13 @@ static inline bool JOIN(T_stack, copy)(T_stack_type** stack_dest_pp, T_stack_typ
     return true;
 }
 
-static inline size_t JOIN(T_stack, count)(const T_stack_type* stack_p) {
+static inline size_t JOIN(T_stack, get_count)(const T_stack_type* stack_p) {
     assert(stack_p != NULL);
 
     return stack_p->count;
 }
 
-static inline size_t JOIN(T_stack, capacity)(const T_stack_type* stack_p) {
+static inline size_t JOIN(T_stack, get_capacity)(const T_stack_type* stack_p) {
     assert(stack_p != NULL);
 
     return stack_p->capacity;

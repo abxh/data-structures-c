@@ -14,7 +14,7 @@ bool empty_test(void) {
     }
     bool res = true;
 
-    res &= is_equal(ll_queue_count(queue_p), (size_t)0);
+    res &= is_equal(ll_queue_get_count(queue_p), (size_t)0);
     res &= is_true(ll_queue_is_empty(queue_p));
     res &= is_true(ll_queue_deinit(&queue_p));
 
@@ -34,11 +34,11 @@ bool one_element_test(void) {
     res &= is_equal(value, ll_queue_peek_int(queue_p));
 
     res &= is_false(ll_queue_is_empty(queue_p));
-    res &= is_equal(ll_queue_count(queue_p), (size_t)1);
+    res &= is_equal(ll_queue_get_count(queue_p), (size_t)1);
 
     res &= is_equal(value, ll_queue_dequeue_int(queue_p));
     res &= is_true(ll_queue_is_empty(queue_p));
-    res &= is_equal(ll_queue_count(queue_p), (size_t)0);
+    res &= is_equal(ll_queue_get_count(queue_p), (size_t)0);
 
     res &= is_true(ll_queue_deinit(&queue_p));
 
@@ -59,7 +59,7 @@ bool two_elements_test(void) {
     res &= is_true(ll_queue_enqueue_int(queue_p, value2));
     res &= is_equal(value1, ll_queue_peek_first_int(queue_p));
     res &= is_equal(value2, ll_queue_peek_last_int(queue_p));
-    res &= is_equal(ll_queue_count(queue_p), (size_t)2);
+    res &= is_equal(ll_queue_get_count(queue_p), (size_t)2);
     res &= is_true(ll_queue_deinit(&queue_p));
 
     return res;
@@ -74,9 +74,11 @@ bool million_elements_test(void) {
     bool res = true;
     for (int i = 1; i <= 1000000; i++) {
         ll_queue_enqueue_int(queue_p, i);
+        res &= is_equal(ll_queue_get_count(queue_p), (size_t)i);
     }
     for (int i = 1; i <= 1000000; i++) {
         res &= is_equal(i, ll_queue_dequeue_int(queue_p));
+        res &= is_equal(ll_queue_get_count(queue_p), (size_t)(1000000 - i));
     }
     res &= is_true(ll_queue_deinit(&queue_p));
     return res;
@@ -120,7 +122,7 @@ bool for_each_and_copy_test(void) {
             node_original_p = node_original_p->next_p;
         }
     }
-    res &= is_equal(ll_queue_count(queue_p), ll_queue_count(queue_copy_p));
+    res &= is_equal(ll_queue_get_count(queue_p), ll_queue_get_count(queue_copy_p));
     res &= is_true(ll_queue_deinit(&queue_p));
     res &= is_true(ll_queue_deinit(&queue_copy_p));
     return res;

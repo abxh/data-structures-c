@@ -49,7 +49,7 @@ bool ll_stack_deinit(ll_stack_type** ll_stack_pp) {
     return true;
 }
 
-size_t ll_stack_count(const ll_stack_type* ll_stack_p) {
+size_t ll_stack_get_count(const ll_stack_type* ll_stack_p) {
     assert(ll_stack_p != NULL);
 
     return ll_stack_p->count;

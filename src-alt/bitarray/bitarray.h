@@ -17,9 +17,13 @@ bool bitarray_copy(bitarray_type** bitarray_dest_pp, const bitarray_type* bitarr
 
 void bitarray_print(const bitarray_type* bitarray_p);
 
-bitarray_type* bitarray_from(const unsigned char* bytes, size_t num_of_bits);
+bitarray_type* bitarray_create_from(const unsigned char* bytes, size_t num_of_bits);
 
-bool bitarray_equal(const bitarray_type* bitarray_p, const bitarray_type* bitarray_other_p);
+bool bitarray_is_equal(const bitarray_type* bitarray_p, const bitarray_type* bitarray_other_p);
+
+size_t bitarray_get_num_of_bits(const bitarray_type* bitarray_p);
+
+size_t bitarray_get_num_of_words(const bitarray_type* bitarray_p);
 
 bool bitarray_get(const bitarray_type* bitarray_p, size_t index);
 

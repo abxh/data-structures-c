@@ -24,7 +24,7 @@ bool ll_stack_copy(ll_stack_type** ll_stack_dest_pp, const ll_stack_type* ll_sta
 
 const ll_stack_node_type* ll_stack_peek_node(const ll_stack_type* ll_stack_p);
 
-size_t ll_stack_count(const ll_stack_type* ll_stack_p);
+size_t ll_stack_get_count(const ll_stack_type* ll_stack_p);
 
 bool ll_stack_is_empty(const ll_stack_type* ll_stack_p);
 

@@ -102,7 +102,7 @@ int main(void) {
     }
 
     // create an array of key references:
-    size_t count = strmap_count(strmap_p);
+    size_t count = strmap_get_count(strmap_p);
     char** keys_arr_pp = malloc(sizeof(char*) * count);
     {
         size_t keys_arr_index = 0;

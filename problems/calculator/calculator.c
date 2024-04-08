@@ -285,10 +285,10 @@ double eval(char* str, ssize_t len) {
     }
 #endif
 
-    if (!lex_queue_init_with_capacity_rounded_up(&inp_queue_postfix, lex_queue_count(inp_queue))) {
+    if (!lex_queue_init_with_capacity_rounded_up(&inp_queue_postfix, lex_queue_get_count(inp_queue))) {
         goto on_oom_error;
     }
-    if (!lex_stack_init(&op_stack, lex_queue_count(inp_queue))) {
+    if (!lex_stack_init(&op_stack, lex_queue_get_count(inp_queue))) {
         goto on_oom_error;
     }
 

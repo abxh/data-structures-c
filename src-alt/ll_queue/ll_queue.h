@@ -25,7 +25,7 @@ bool ll_queue_copy(ll_queue_type** ll_queue_dest_pp, const ll_queue_type* ll_que
 
 bool ll_queue_is_empty(const ll_queue_type* ll_queue_p);
 
-size_t ll_queue_count(const ll_queue_type* ll_queue_p);
+size_t ll_queue_get_count(const ll_queue_type* ll_queue_p);
 
 const ll_queue_node_type* ll_queue_peek_node(const ll_queue_type* ll_queue_p);
 

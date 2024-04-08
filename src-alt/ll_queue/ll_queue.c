@@ -54,7 +54,7 @@ bool ll_queue_is_empty(const ll_queue_type* ll_queue_p) {
     return ll_queue_p->head_p == NULL;
 }
 
-size_t ll_queue_count(const ll_queue_type* ll_queue_p) {
+size_t ll_queue_get_count(const ll_queue_type* ll_queue_p) {
     assert(ll_queue_p != NULL);
 
     return ll_queue_p->count;

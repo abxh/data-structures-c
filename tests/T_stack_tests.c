@@ -14,10 +14,10 @@ bool empty_test(void) {
     }
     bool res = true;
 
-    res &= is_equal(int_stack_capacity(stack_p), (size_t)1);
+    res &= is_equal(int_stack_get_capacity(stack_p), (size_t)1);
 
     res &= is_true(int_stack_is_empty(stack_p));
-    res &= is_equal(int_stack_count(stack_p), (size_t)0);
+    res &= is_equal(int_stack_get_count(stack_p), (size_t)0);
     res &= is_true(int_stack_deinit(&stack_p));
 
     return res;
@@ -35,15 +35,15 @@ bool one_element_test(void) {
 
     int value = 5;
 
-    res &= is_equal(int_stack_count(stack_p), (size_t)0);
+    res &= is_equal(int_stack_get_count(stack_p), (size_t)0);
     int_stack_push(stack_p, value);
-    res &= is_equal(int_stack_count(stack_p), (size_t)1);
+    res &= is_equal(int_stack_get_count(stack_p), (size_t)1);
 
     res &= is_equal(value, int_stack_peek(stack_p));
     res &= is_false(int_stack_is_empty(stack_p));
 
     res &= is_equal(value, int_stack_pop(stack_p));
-    res &= is_equal(int_stack_count(stack_p), (size_t)0);
+    res &= is_equal(int_stack_get_count(stack_p), (size_t)0);
 
     res &= is_true(int_stack_is_empty(stack_p));
     res &= is_false(int_stack_is_full(stack_p));
@@ -63,11 +63,11 @@ bool million_elements_test(void) {
 
     for (int i = 1; i <= 1000000; i++) {
         int_stack_push(stack_p, i);
-        res &= is_equal(int_stack_count(stack_p), (size_t)i);
+        res &= is_equal(int_stack_get_count(stack_p), (size_t)i);
     }
 
     for (int i = 1000000; i >= 1; i--) {
-        res &= is_equal(int_stack_count(stack_p), (size_t)i);
+        res &= is_equal(int_stack_get_count(stack_p), (size_t)i);
         res &= is_equal(i, int_stack_pop(stack_p));
     }
 
