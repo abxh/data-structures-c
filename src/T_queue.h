@@ -14,7 +14,6 @@
     - T_queue_deinit
     - T_stack_copy
     - T_queue_count
-    - T_queue_capacity
     - T_queue_is_empty
     - T_queue_is_full
     - T_queue_peek

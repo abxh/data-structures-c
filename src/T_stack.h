@@ -12,7 +12,6 @@
     - T_stack_deinit
     - T_stack_copy
     - T_stack_count
-    - T_stack_capacity
     - T_stack_is_empty
     - T_stack_is_full
     - T_stack_peek

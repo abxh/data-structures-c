@@ -92,9 +92,11 @@ bool million_elements_test(void) {
     bool res = true;
     for (int i = 1; i <= 1000000; i++) {
         int_queue_enqueue(queue_p, i);
+        res &= is_equal(int_queue_count(queue_p), (size_t)i);
     }
     for (int i = 1; i <= 1000000; i++) {
         res &= is_equal(i, int_queue_dequeue(queue_p));
+        res &= is_equal(int_queue_count(queue_p), (size_t)(1000000 - i));
     }
     res &= is_true(int_queue_deinit(&queue_p));
     return res;
