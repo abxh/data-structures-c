@@ -35,7 +35,7 @@ static size_t error_message_count = 0;
 #define type_mismatch()                                                                                \
     ({                                                                                                 \
         if (error_message_count < error_message_count_lim) {                                           \
-            fprintf(stderr, "line %d (%s): is_equal size mismatch.\n", __LINE__, __PRETTY_FUNCTION__); \
+            fprintf(stderr, "line %d (%s): is_equal type mismatch.\n", __LINE__, __PRETTY_FUNCTION__); \
             error_message_count++;                                                                     \
         }                                                                                              \
         false;                                                                                         \
