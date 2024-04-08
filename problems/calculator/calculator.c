@@ -19,26 +19,26 @@ double pow(double, double) {
 
 #endif
 
-typedef enum { DEFAULT_TOKEN, NUMBER_TOKEN, OP_TOKEN } Token;
+typedef enum { DEFAULT_TOKEN, NUMBER_TOKEN, OP_TOKEN } token_type;
 
-typedef enum { DEFAULT_OP, ADD_OP, SUB_OP, MUL_OP, DIV_OP, POW_OP, OPENING_PAREN_OP, CLOSING_PAREN_OP } Operation;
+typedef enum { DEFAULT_OP, ADD_OP, SUB_OP, MUL_OP, DIV_OP, POW_OP, OPENING_PAREN_OP, CLOSING_PAREN_OP } operation_type;
 
 typedef struct {
-    Token token;
+    token_type token;
     union {
         double num;
-        Operation op;
+        operation_type op;
     } metadata;
-} Lexeme;
+} lexeme_type;
 
-typedef Lexeme lex;
+typedef lexeme_type lex;
 #define VALUE_TYPE lex
 #include "../../src/T_queue.h"
 
 #define VALUE_TYPE lex
 #include "../../src/T_stack.h"
 
-char decode_op(Operation op) {
+char decode_op(operation_type op) {
     switch (op) {
     case ADD_OP:
         return '+';
@@ -60,7 +60,7 @@ char decode_op(Operation op) {
     return 'D';
 }
 
-int op_precedence(Operation op) {
+int op_precedence(operation_type op) {
     switch (op) {
     case POW_OP:
         return 3;
@@ -75,7 +75,7 @@ int op_precedence(Operation op) {
     }
 }
 
-int op_precedence_cmp(Operation o1, Operation o2) {
+int op_precedence_cmp(operation_type o1, operation_type o2) {
     int o1_prec = op_precedence(o1);
     int o2_prec = op_precedence(o2);
     return -(o1_prec < o2_prec) + (o1_prec > o2_prec);
@@ -109,7 +109,7 @@ double eval(char* str, ssize_t len) {
     size_t closing_paren_count = 0;
     bool incomplete_input = true;
 
-    Operation sign = DEFAULT_OP;
+    operation_type sign = DEFAULT_OP;
 
     for (ssize_t i = 0; i < len; i++) {
         switch (str[i]) {
@@ -139,7 +139,7 @@ double eval(char* str, ssize_t len) {
                 error_index = i;
                 goto on_inp_error;
             }
-            lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = str[i] == '*' ? MUL_OP : DIV_OP}});
+            lex_queue_enqueue(inp_queue, (lexeme_type){.token = OP_TOKEN, .metadata = {.op = str[i] == '*' ? MUL_OP : DIV_OP}});
             break;
         case '^':
             incomplete_input = true;
@@ -149,7 +149,7 @@ double eval(char* str, ssize_t len) {
                 error_index = i;
                 goto on_inp_error;
             }
-            lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = POW_OP}});
+            lex_queue_enqueue(inp_queue, (lexeme_type){.token = OP_TOKEN, .metadata = {.op = POW_OP}});
             break;
         case '0':
         case '1':
@@ -167,7 +167,7 @@ double eval(char* str, ssize_t len) {
             if ((last_token(inp_queue) == NUMBER_TOKEN ||
                  (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) &&
                 sign != DEFAULT_OP) {
-                lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
+                lex_queue_enqueue(inp_queue, (lexeme_type){.token = OP_TOKEN, .metadata = {.op = sign}});
                 sign = DEFAULT_OP;
             } else if (last_token(inp_queue) == NUMBER_TOKEN) {
                 error_msg = "Two numbers in a row.";
@@ -175,10 +175,10 @@ double eval(char* str, ssize_t len) {
                 goto on_inp_error;
             }
             if (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP) {
-                lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
+                lex_queue_enqueue(inp_queue, (lexeme_type){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
             }
             if (str[i] == '_') {
-                lex_queue_enqueue(inp_queue, (Lexeme){.token = NUMBER_TOKEN, .metadata = {.num = RTR_VALUE_LAST}});
+                lex_queue_enqueue(inp_queue, (lexeme_type){.token = NUMBER_TOKEN, .metadata = {.num = RTR_VALUE_LAST}});
                 continue;
             }
             i--;
@@ -205,7 +205,7 @@ double eval(char* str, ssize_t len) {
                     i++;
                 }
             }
-            lex_queue_enqueue(inp_queue, (Lexeme){.token = NUMBER_TOKEN, .metadata = {.num = value}});
+            lex_queue_enqueue(inp_queue, (lexeme_type){.token = NUMBER_TOKEN, .metadata = {.num = value}});
             break;
         case '(':
         case ')':
@@ -222,24 +222,24 @@ double eval(char* str, ssize_t len) {
                 if (sign != DEFAULT_OP) {
                     if (last_token(inp_queue) == NUMBER_TOKEN ||
                         (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) {
-                        lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = sign}});
+                        lex_queue_enqueue(inp_queue, (lexeme_type){.token = OP_TOKEN, .metadata = {.op = sign}});
                     } else {
                         lex_queue_enqueue(inp_queue,
-                                          (Lexeme){.token = NUMBER_TOKEN, .metadata = {.num = -(sign == SUB_OP) + (sign == ADD_OP)}});
-                        lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
+                                          (lexeme_type){.token = NUMBER_TOKEN, .metadata = {.num = -(sign == SUB_OP) + (sign == ADD_OP)}});
+                        lex_queue_enqueue(inp_queue, (lexeme_type){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
                     }
                     sign = DEFAULT_OP;
                 }
                 if (last_token(inp_queue) == NUMBER_TOKEN ||
                     (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) {
-                    lex_queue_enqueue(inp_queue, (Lexeme){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
+                    lex_queue_enqueue(inp_queue, (lexeme_type){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
                 }
             } else if (incomplete_input) {
                 error_msg = "Incomplete input.";
                 goto on_inp_error;
             }
             lex_queue_enqueue(inp_queue,
-                              (Lexeme){.token = OP_TOKEN, .metadata = {.op = str[i] == '(' ? OPENING_PAREN_OP : CLOSING_PAREN_OP}});
+                              (lexeme_type){.token = OP_TOKEN, .metadata = {.op = str[i] == '(' ? OPENING_PAREN_OP : CLOSING_PAREN_OP}});
             break;
         case ' ':
         case '\n':
@@ -295,7 +295,7 @@ double eval(char* str, ssize_t len) {
     // shunting yard algorithm (with simplified assumptions).
     {
         size_t index;
-        Lexeme lex;
+        lexeme_type lex;
         T_queue_for_each(inp_queue, index, lex) {
             switch (lex.token) {
             case NUMBER_TOKEN:
@@ -352,7 +352,7 @@ double eval(char* str, ssize_t len) {
 
     {
         size_t i;
-        Lexeme lex;
+        lexeme_type lex;
         num_stack = op_stack; // repurposing the stack
         T_queue_for_each(inp_queue_postfix, i, lex) {
             switch (lex.token) {
@@ -364,19 +364,19 @@ double eval(char* str, ssize_t len) {
                 double x = lex_stack_pop(num_stack).metadata.num;
                 switch (lex.metadata.op) {
                 case ADD_OP:
-                    lex_stack_push(num_stack, (Lexeme){.metadata = {.num = x + y}});
+                    lex_stack_push(num_stack, (lexeme_type){.metadata = {.num = x + y}});
                     break;
                 case SUB_OP:
-                    lex_stack_push(num_stack, (Lexeme){.metadata = {.num = x - y}});
+                    lex_stack_push(num_stack, (lexeme_type){.metadata = {.num = x - y}});
                     break;
                 case MUL_OP:
-                    lex_stack_push(num_stack, (Lexeme){.metadata = {.num = x * y}});
+                    lex_stack_push(num_stack, (lexeme_type){.metadata = {.num = x * y}});
                     break;
                 case DIV_OP:
-                    lex_stack_push(num_stack, (Lexeme){.metadata = {.num = x / y}});
+                    lex_stack_push(num_stack, (lexeme_type){.metadata = {.num = x / y}});
                     break;
                 case POW_OP:
-                    lex_stack_push(num_stack, (Lexeme){.metadata = {.num = pow(x, y)}});
+                    lex_stack_push(num_stack, (lexeme_type){.metadata = {.num = pow(x, y)}});
                     break;
                 default:
                     break;
