@@ -15,7 +15,6 @@ bool empty_test(void) {
     bool res = true;
 
     res &= is_equal(int_stack_get_capacity(stack_p), (size_t)1);
-
     res &= is_true(int_stack_is_empty(stack_p));
     res &= is_equal(int_stack_get_count(stack_p), (size_t)0);
     res &= is_true(int_stack_deinit(&stack_p));
