@@ -2,6 +2,8 @@
 #include <stdio.h>   // fprintf, stderr
 #include <stdlib.h>  // size_t
 
+// This file uses GNU extensions and may require the gcc compiler.
+
 // reference:
 // https://stackoverflow.com/a/168611
 // https://stackoverflow.com/questions/9804371/syntax-and-sample-usage-of-generic-in-c11
