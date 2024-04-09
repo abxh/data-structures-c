@@ -1,0 +1,27 @@
+# reference:
+# https://github.com/marketplace/actions/python-action
+
+name: tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: setup python3
+      run: |
+        sudo apt-get update
+        sudo apt-get install python3
+
+    - name: Run python test script
+      run: python3 ./tests/run_tests.py

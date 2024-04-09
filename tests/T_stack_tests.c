@@ -131,8 +131,11 @@ int main(void) {
                                 {million_elements_test, "million elements test"},
                                 {for_each_and_copy_test, "for each and copy test"}};
     printf(__FILE_NAME__ ":\n");
+    bool overall_res = true;
     for (size_t i = 0; i < sizeof(bool_f_arr) / sizeof(bool_f_plus); i++) {
-        printf(" [%s] %s\n", bool_f_arr[i].func() ? GREEN "true" OFF : RED "false" OFF, bool_f_arr[i].desc);
+        bool res = bool_f_arr[i].func();
+        overall_res &= res;
+        printf(" [%s] %s\n", res ? GREEN "true" OFF : RED "false" OFF, bool_f_arr[i].desc);
     }
-    return 0;
+    return overall_res ? 0 : 1;
 }

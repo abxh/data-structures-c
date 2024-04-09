@@ -2,7 +2,12 @@
 #include <stdio.h>   // fprintf, stderr
 #include <stdlib.h>  // size_t
 
-// This file uses GNU C extensions and may perhaps not work in other compilers except gcc.
+// add workaround for non-standard macro:
+#ifndef __FILE_NAME__
+#define __FILE_NAME__ __FILE__
+#endif
+
+// The following lines uses GNU C extensions and may perhaps not work in other compilers except gcc.
 
 // reference:
 // https://stackoverflow.com/a/168611
