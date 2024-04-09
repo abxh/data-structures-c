@@ -153,7 +153,7 @@ bool for_each_and_copy_test(void) {
         return false;
     }
     {
-        int x = 50;
+        int x = 51;
         int value;
         size_t i;
         T_queue_for_each(queue_copy_p, i, value) {
