@@ -14,7 +14,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
+    
+    - name: setup/update gcc
+      run: sudo apt install build-essential
+    
     - name: setup python3
       run: |
         sudo apt-get update
