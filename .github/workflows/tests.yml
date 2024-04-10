@@ -15,8 +15,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: setup/update gcc
-      run: sudo apt install build-essential
+    - name: Setup GCC
+      uses: Dup4/actions-setup-gcc@v1
+      with:
+        version: latest
     
     - name: setup python3
       run: |
