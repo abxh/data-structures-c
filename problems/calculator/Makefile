@@ -5,6 +5,9 @@ src_dir := ../../src
 
 all: ${name}
 
+kattis: nextpow2
+	cc -DKATTIS -DDEBUG -lm -I${include_dir} -o ${name}.bin nextpow2.o ${name}.c
+
 debug: nextpow2
 	cc -DDEBUG -lm -I${include_dir} -o ${name}.bin nextpow2.o ${name}.c
 
