@@ -47,6 +47,9 @@ static inline uint32_t murmurhash(const char* key, uint32_t len, uint32_t seed) 
 
     k = 0;
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
+
     // remainder
     switch (len & 3) { // `len % 4'
     case 3:
@@ -61,6 +64,8 @@ static inline uint32_t murmurhash(const char* key, uint32_t len, uint32_t seed) 
         k *= c2;
         h ^= k;
     }
+
+#pragma GCC diagnostic pop
 
     h ^= len;
 
