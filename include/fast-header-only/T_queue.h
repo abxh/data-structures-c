@@ -1,4 +1,6 @@
 /*
+    `T_queue` is a queue implementation based on a fixed size array.
+
     Including this header file generates a struct and functions for a given queue type.
 
     The following macros gets defined once:
@@ -24,7 +26,7 @@
 
     Note that the given types cannot include spaces because C functions
     and variables cannot either.
-    Use a typedef and replace spaces with _ if needed.
+    Use a typedef and replace spaces with _ or shorten the type name if needed.
 */
 
 #ifndef __T_QUEUE__H
@@ -39,10 +41,9 @@
 #include <string.h>   // memcpy
 
 #define T_queue_for_each(queue_p, index, value)                                                                            \
-    for ((index) = (queue_p)->begin_index; (index) != (queue_p)->end_index && ((value) = (queue_p)->arr_p[(index)], true); \
+    for ((index) = (queue_p)->begin_index; (index) != (queue_p)->end_index && ((value) = (queue_p)->arr[(index)], true); \
          (index) = ((index) + 1) & ((queue_p)->capacity - 1))
 
-#define __T_QUEUE__H
 #endif
 
 #ifndef VALUE_TYPE
@@ -62,7 +63,7 @@ typedef struct {
     size_t end_index;
     size_t count;
     size_t capacity;
-    VALUE_TYPE arr_p[];
+    VALUE_TYPE arr[];
 } T_queue_type;
 
 static inline bool JOIN(T_queue, init)(T_queue_type** queue_pp, size_t pow2_capacity) {
@@ -70,10 +71,10 @@ static inline bool JOIN(T_queue, init)(T_queue_type** queue_pp, size_t pow2_capa
     assert(pow2_capacity != 0 && (pow2_capacity & (pow2_capacity - 1)) == 0 && "initial capacity is a power of 2");
     assert(pow2_capacity - 1 != 0 && "subtracting initial capacity by one does not yield zero");
 
-    if (pow2_capacity > (SIZE_MAX - offsetof(T_queue_type, arr_p)) / sizeof(VALUE_TYPE)) {
+    if (pow2_capacity > (SIZE_MAX - offsetof(T_queue_type, arr)) / sizeof(VALUE_TYPE)) {
         return false;
     }
-    *queue_pp = malloc(offsetof(T_queue_type, arr_p) + sizeof(VALUE_TYPE) * pow2_capacity);
+    *queue_pp = malloc(offsetof(T_queue_type, arr) + sizeof(VALUE_TYPE) * pow2_capacity);
     if ((*queue_pp) == NULL) {
         return false;
     }
@@ -120,7 +121,7 @@ static inline bool JOIN(T_queue, copy)(T_queue_type** queue_dest_pp, T_queue_typ
     if (!JOIN(T_queue, init)(queue_dest_pp, queue_src_p->capacity)) {
         return false;
     }
-    memcpy((*queue_dest_pp)->arr_p, queue_src_p->arr_p, sizeof(VALUE_TYPE) * queue_src_p->capacity);
+    memcpy((*queue_dest_pp)->arr, queue_src_p->arr, sizeof(VALUE_TYPE) * queue_src_p->capacity);
     (*queue_dest_pp)->begin_index = queue_src_p->begin_index;
     (*queue_dest_pp)->end_index = queue_src_p->end_index;
     (*queue_dest_pp)->count = queue_src_p->count;
@@ -161,7 +162,7 @@ static inline const VALUE_TYPE JOIN(T_queue, peek)(T_queue_type* queue_p) {
     assert(T_queue_is_empty(queue_p) == false);
 #undef T_queue_is_empty
 
-    return queue_p->arr_p[queue_p->begin_index];
+    return queue_p->arr[queue_p->begin_index];
 }
 
 static inline const VALUE_TYPE JOIN(T_queue, peek_first)(T_queue_type* queue_p) {
@@ -174,7 +175,7 @@ static inline const VALUE_TYPE JOIN(T_queue, peek_last)(T_queue_type* queue_p) {
     assert(T_queue_is_empty(queue_p) == false);
 #undef T_queue_is_empty
 
-    return queue_p->arr_p[(queue_p->end_index - 1) & (queue_p->capacity - 1)];
+    return queue_p->arr[(queue_p->end_index - 1) & (queue_p->capacity - 1)];
 }
 
 #pragma GCC diagnostic pop
@@ -185,7 +186,7 @@ static inline void JOIN(T_queue, enqueue)(T_queue_type* queue_p, const VALUE_TYP
     assert(T_queue_is_full(queue_p) == false);
 #undef T_queue_is_full
 
-    queue_p->arr_p[queue_p->end_index] = value;
+    queue_p->arr[queue_p->end_index] = value;
     queue_p->end_index++;
     queue_p->end_index &= queue_p->capacity - 1;
     queue_p->count++;
@@ -197,7 +198,7 @@ static inline VALUE_TYPE JOIN(T_queue, dequeue)(T_queue_type* queue_p) {
     assert(T_queue_is_empty(queue_p) == false);
 #undef T_queue_is_empty
 
-    VALUE_TYPE value = queue_p->arr_p[queue_p->begin_index];
+    VALUE_TYPE value = queue_p->arr[queue_p->begin_index];
     queue_p->begin_index++;
     queue_p->begin_index &= queue_p->capacity - 1;
     queue_p->count--;
@@ -207,6 +208,7 @@ static inline VALUE_TYPE JOIN(T_queue, dequeue)(T_queue_type* queue_p) {
 
 #undef T_queue
 #undef T_queue_type
+
 #undef VALUE_TYPE
 #undef CAT
 #undef PASTE

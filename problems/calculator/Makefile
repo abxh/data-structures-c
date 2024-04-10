@@ -5,18 +5,14 @@ src_dir := ../../src
 
 default: ${name}
 
-kattis: nextpow2
-	cc -DKATTIS -lm -I${include_dir} -o ${name}.bin nextpow2.o ${name}.c
+kattis:
+	cc -DKATTIS -lm -I${include_dir} -o ${name}.bin ${name}.c
 
-debug: nextpow2
-	cc -DDEBUG -lm -I${include_dir} -o ${name}.bin nextpow2.o ${name}.c
+debug:
+	cc -DDEBUG -lm -I${include_dir} -o ${name}.bin ${name}.c
 
-${name}: nextpow2
-	cc -lm -I${include_dir} -o ${name}.bin nextpow2.o ${name}.c
-
-nextpow2:
-	cc -I${include_dir} -c -o $@.o ${src_dir}/$@.c 
+${name}:
+	cc -lm -I${include_dir} -o ${name}.bin ${name}.c
 
 clean:
-	rm -f nextpow2.o
 	rm -f ${name}.bin

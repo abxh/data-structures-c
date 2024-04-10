@@ -1,3 +1,5 @@
+#pragma once
+
 #include <assert.h> // assert
 #include <stdint.h> // INTPTR_MAX, INT32_MAX, INT64_MAX
 #include <stdlib.h> // abort

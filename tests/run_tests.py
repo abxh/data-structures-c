@@ -22,4 +22,6 @@ for name in glob.glob("./*_tests.c"):
     test_file = pathlib.Path(name).stem
     overall_res &= os.system(f"../bin/{test_file}.o") == 0
 
+os.system(f'rm -rf ${bin_dir}')
+
 exit(0 if overall_res else 1)
