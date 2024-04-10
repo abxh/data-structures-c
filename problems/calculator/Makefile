@@ -3,7 +3,7 @@ name := calculator
 include_dir := ../../include/
 src_dir := ../../src
 
-all: ${name}
+default: ${name}
 
 kattis: nextpow2
 	cc -DKATTIS -lm -I${include_dir} -o ${name}.bin nextpow2.o ${name}.c
