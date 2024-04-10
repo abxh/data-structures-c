@@ -9,7 +9,7 @@
 #include <windows.h> // Sleep
 #endif
 
-#include "../../src-alt/rotate_bits.h" // rotate_bits
+#include "rotate_bits.h" // rotate_bits
 
 #define VT_MOVUP "\033[A"
 #define VT_CLEARLINE "\33[2K"

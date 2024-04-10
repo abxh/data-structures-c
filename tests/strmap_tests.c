@@ -5,7 +5,7 @@
 
 #include "test.h" // is_true, is_false, is_equal
 
-#include "../src-alt/strmap/strmap.h" // strmap_*, STRMAP_GET_VALUE_DEFAULT
+#include "strmap.h" // strmap_*, STRMAP_GET_VALUE_DEFAULT
 
 bool one_element_test(void) {
     strmap_type* strmap_p = NULL;

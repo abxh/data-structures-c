@@ -14,9 +14,6 @@ double pow(double, double) {
 #include <math.h> // pow
 #define EVAL_STR "%g"
 
-// Note:
-// Must link math library using `gcc -lm` or the sorts.
-
 #endif
 
 typedef enum { DEFAULT_TOKEN, NUMBER_TOKEN, OP_TOKEN } token_type;
@@ -33,10 +30,10 @@ typedef struct {
 
 typedef lexeme_type lex;
 #define VALUE_TYPE lex
-#include "../../src/T_queue.h"
+#include "T_queue.h"
 
 #define VALUE_TYPE lex
-#include "../../src/T_stack.h"
+#include "T_stack.h"
 
 char decode_op(operation_type op) {
     switch (op) {
@@ -224,8 +221,8 @@ double eval(char* str, ssize_t len) {
                         (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) {
                         lex_queue_enqueue(inp_queue, (lexeme_type){.token = OP_TOKEN, .metadata = {.op = sign}});
                     } else {
-                        lex_queue_enqueue(inp_queue,
-                                          (lexeme_type){.token = NUMBER_TOKEN, .metadata = {.num = -(sign == SUB_OP) + (sign == ADD_OP)}});
+                        lex_queue_enqueue(inp_queue, (lexeme_type){.token = NUMBER_TOKEN,
+                                                                   .metadata = {.num = -(sign == SUB_OP) + (sign == ADD_OP)}});
                         lex_queue_enqueue(inp_queue, (lexeme_type){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
                     }
                     sign = DEFAULT_OP;
@@ -238,8 +235,8 @@ double eval(char* str, ssize_t len) {
                 error_msg = "Incomplete input.";
                 goto on_inp_error;
             }
-            lex_queue_enqueue(inp_queue,
-                              (lexeme_type){.token = OP_TOKEN, .metadata = {.op = str[i] == '(' ? OPENING_PAREN_OP : CLOSING_PAREN_OP}});
+            lex_queue_enqueue(
+                inp_queue, (lexeme_type){.token = OP_TOKEN, .metadata = {.op = str[i] == '(' ? OPENING_PAREN_OP : CLOSING_PAREN_OP}});
             break;
         case ' ':
         case '\n':

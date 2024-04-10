@@ -9,11 +9,11 @@
 
 static_assert(CHAR_BIT == 8, "a char is 8 bits.");
 
-static inline size_t word_index(size_t index) {
+size_t word_index(size_t index) {
     return index >> 3;
 }
 
-static inline size_t bit_index(size_t index) {
+size_t bit_index(size_t index) {
     return ~index & 7;
 }
 

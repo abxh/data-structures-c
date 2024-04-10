@@ -4,7 +4,7 @@
 #include "test.h" // is_true, is_false, is_equal
 
 #define VALUE_TYPE int
-#include "../src-alt/ll_queue/ll_queue_wrapper.h" // ll_queue_*
+#include "ll_queue_wrapper.h" // ll_queue_*
 
 bool empty_test(void) {
     ll_queue_type* queue_p;
