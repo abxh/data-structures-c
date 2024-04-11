@@ -3,7 +3,7 @@
 #include <stdlib.h>  // NULL, size_t, malloc, free
 #include <string.h>  // memcpy
 
-#include "ll_queue.h" // ll_queue*
+#include "containers/ll_queue.h" // ll_queue*
 
 bool ll_queue_init(ll_queue_type** ll_queue_pp, size_t value_size) {
     assert(ll_queue_pp != NULL);

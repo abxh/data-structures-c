@@ -3,7 +3,7 @@
 #include <stdlib.h>  // NULL, size_t, malloc, free
 #include <string.h>  // memcpy
 
-#include "ll_stack.h" // ll_stack_*
+#include "containers/ll_stack.h" // ll_stack_*
 
 bool ll_stack_init(ll_stack_type** ll_stack_pp, const size_t value_size) {
     assert(ll_stack_pp != NULL);

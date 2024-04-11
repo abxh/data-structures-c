@@ -30,10 +30,10 @@ typedef struct {
 
 typedef lexeme_type lex;
 #define VALUE_TYPE lex
-#include "fast-header-only/T_queue.h"
+#include "fixed-containers/T_queue.h"
 
 #define VALUE_TYPE lex
-#include "fast-header-only/T_stack.h"
+#include "fixed-containers/T_stack.h"
 
 char decode_op(operation_type op) {
     switch (op) {

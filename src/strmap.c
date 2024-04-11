@@ -4,31 +4,15 @@
 #include <stdlib.h>  // malloc, reallocarray, free, SIZE_MAX
 #include <string.h>  // strcmp, strdup, strcpy
 
-#include "strmap.h" // strmap_*, STRMAP_GET_VALUE_DEFAULT
+#include "is_pow2.h" // is_pow2
+#include "fnvhash.h" // fnvhash
+#include "containers/strmap.h" // strmap_*, STRMAP_GET_VALUE_DEFAULT
 
 #define INITIAL_CAPACITY 16
 #define MAX_CHAIN_LENGTH 5
 
 static_assert(INITIAL_CAPACITY != 1, "subtracting initial capacity by one does not yield zero");
 static_assert(INITIAL_CAPACITY != 0 && (INITIAL_CAPACITY & (INITIAL_CAPACITY - 1)) == 0, "initial capacity is a power of 2");
-
-uint64_t fnv_hash64(const unsigned char* char_p) {
-    assert(char_p != NULL);
-
-    // FNV-1a hash
-    // https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function
-
-    static const uint64_t FNV_OFFSET = 14695981039346656037UL;
-    static const uint64_t FNV_PRIME = 1099511628211UL;
-
-    uint64_t hash = FNV_OFFSET;
-    while (*char_p != '\0') {
-        hash ^= *(char_p++);
-        hash *= FNV_PRIME;
-    }
-
-    return hash;
-}
 
 bool strmap_init(strmap_type** strmap_pp) {
     assert(strmap_pp != NULL);
@@ -56,7 +40,7 @@ bool strmap_init(strmap_type** strmap_pp) {
 
 bool strmap_init_with_initial_capacity(strmap_type** strmap_pp, size_t pow2_capacity) {
     assert(strmap_pp != NULL);
-    assert(pow2_capacity != 0 && (pow2_capacity & (pow2_capacity - 1)) == 0 && "initial capacity is a power of 2");
+    assert(is_pow2(pow2_capacity) && "initial capacity is a power of 2");
     assert(pow2_capacity - 1 != 0 && "subtracting initial capacity by one does not yield zero");
 
     if (INITIAL_CAPACITY > SIZE_MAX / sizeof(strmap_node_list_type)) {
@@ -118,7 +102,7 @@ bool strmap_exists(const strmap_type* strmap_p, const char* key_p) {
     assert(strmap_p != NULL);
     assert(key_p != NULL);
 
-    uint64_t hash = fnv_hash64((unsigned char*)key_p);
+    uint64_t hash = fnvhash((unsigned char*)key_p);
     uint64_t index = hash & (strmap_p->list_count - 1);
 
     strmap_node_type* node_p = strmap_p->lists_arr_p[index].head_p;
@@ -137,7 +121,7 @@ const char* strmap_get(const strmap_type* strmap_p, const char* key_p) {
     assert(strmap_p != NULL);
     assert(key_p != NULL);
 
-    uint64_t hash = fnv_hash64((const unsigned char*)key_p);
+    uint64_t hash = fnvhash((const unsigned char*)key_p);
     uint64_t index = hash & (strmap_p->list_count - 1);
 
     strmap_node_type* node_p = strmap_p->lists_arr_p[index].head_p;
@@ -156,7 +140,7 @@ bool strmap_del(strmap_type* strmap_p, const char* key_p) {
     assert(strmap_p != NULL);
     assert(key_p != NULL);
 
-    uint64_t hash = fnv_hash64((unsigned char*)key_p);
+    uint64_t hash = fnvhash((unsigned char*)key_p);
     uint64_t index = hash & (strmap_p->list_count - 1);
 
     strmap_node_type* node_p = strmap_p->lists_arr_p[index].head_p;
@@ -268,7 +252,7 @@ int strmap_grow_if_necessary(strmap_type* strmap_p, size_t chain_length) {
 
     // reinsert every node
     while (node_p != NULL) {
-        uint64_t hash = fnv_hash64((unsigned char*)node_p->key_p);
+        uint64_t hash = fnvhash((unsigned char*)node_p->key_p);
         uint64_t index = hash & (new_list_count - 1);
 
         strmap_node_type* head_p = lists_p[index].head_p;
@@ -323,7 +307,7 @@ bool strmap_set(strmap_type* strmap_p, const char* key_p, const char* value_p) {
     assert(key_p != NULL);
     assert(value_p != NULL);
 
-    uint64_t hash = fnv_hash64((unsigned char*)key_p);
+    uint64_t hash = fnvhash((unsigned char*)key_p);
     uint64_t index = hash & (strmap_p->list_count - 1);
 
     int rtr_val = strmap_grow_if_necessary(strmap_p, strmap_p->lists_arr_p[index].node_count + 1);

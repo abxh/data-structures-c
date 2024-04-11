@@ -5,7 +5,7 @@
 #include "test.h" // is_true, is_false, is_equal
 
 #define VALUE_TYPE int
-#include "fast-header-only/T_queue.h" // int_queue_*, T_queue_for_each
+#include "fixed-containers/T_queue.h" // int_queue_*, T_queue_for_each
 
 bool empty_test(void) {
     int_queue_type* queue_p = NULL;

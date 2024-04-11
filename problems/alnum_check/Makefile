@@ -1,6 +1,6 @@
 
 name := count_alnum
-include_dir := ../../include/containers
+include_dir := ../../include/
 src_dir := ../../src
 
 all: ${name}

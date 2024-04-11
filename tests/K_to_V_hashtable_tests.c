@@ -10,7 +10,7 @@ typedef char* charptr;
 #define VALUE_TYPE int
 #define KEY_EQUAL(a,b) (strcmp((a), (b)) == 0)
 // #define HASH_FUNCTION(key) (*(key))
-#include "fast-header-only/K_to_V_hashtable.h" // charptr_to_int_hashtable_*
+#include "fixed-containers/K_to_V_hashtable.h" // charptr_to_int_hashtable_*
 
 bool four_elements_test(void) {
     charptr_to_int_hashtable_type* hashtable_p = NULL;

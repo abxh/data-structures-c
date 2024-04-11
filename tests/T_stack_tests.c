@@ -5,7 +5,7 @@
 #include "test.h" // is_true, is_false, is_equal
 
 #define VALUE_TYPE int
-#include "fast-header-only/T_stack.h" // int_stack_*, T_stack_for_each
+#include "fixed-containers/T_stack.h" // int_stack_*, T_stack_for_each
 
 bool empty_test(void) {
     int_stack_type* stack_p = NULL;

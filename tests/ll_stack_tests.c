@@ -5,7 +5,7 @@
 #include "test.h" // is_true, is_false, is_equal
 
 #define VALUE_TYPE int
-#include "ll_stack_wrapper.h" // ll_stack_*
+#include "containers/ll_stack_wrapper.h" // ll_stack_*
 
 bool empty_test(void) {
     ll_stack_type* stack_p = NULL;
