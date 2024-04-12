@@ -212,19 +212,20 @@ static inline void JOIN(K_to_V_hashtable, set)(K_to_V_hashtable_type* hashtable_
     size_t index = key_hash & hashtable_p->capacity_sub_one;
     K_to_V_hashtable_entry_type entry = {.offset = 0, .key = key, .value = value};
 
-    while (hashtable_p->arr[index].offset != EMPTY_ENTRY_OFFSET) {
-        // swap if current_dist is larger. will ensure the maximum
-        // offset is minimized.
-        if (entry.offset > hashtable_p->arr[index].offset) {
-            // swap entries:
-            K_to_V_hashtable_entry_type temp = hashtable_p->arr[index];
-            hashtable_p->arr[index] = entry;
-            entry = temp;
-        }
-        index = (index + 1) & hashtable_p->capacity_sub_one;
-        entry.offset++;
-    }
+    // while (hashtable_p->arr[index].offset != EMPTY_ENTRY_OFFSET) {
+    //     // swap if current_dist is larger. will ensure the maximum
+    //     // offset is minimized.
+    //     if (entry.offset > hashtable_p->arr[index].offset) {
+    //         // swap entries:
+    //         K_to_V_hashtable_entry_type temp = hashtable_p->arr[index];
+    //         hashtable_p->arr[index] = entry;
+    //         entry = temp;
+    //     }
+    //     index = (index + 1) & hashtable_p->capacity_sub_one;
+    //     entry.offset++;
+    // }
     hashtable_p->arr[index] = entry;
+    printf("%s, %d at %d\n", entry.key, entry.value, index);
 }
 
 static inline bool JOIN(K_to_V_hashtable, del)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key) {

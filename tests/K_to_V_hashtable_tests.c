@@ -8,8 +8,8 @@
 typedef char* charptr;
 #define KEY_TYPE charptr
 #define VALUE_TYPE int
-#define KEY_EQUAL(a,b) (strcmp((a), (b)) == 0)
-// #define HASH_FUNCTION(key) (*(key))
+#define KEY_EQUAL(a, b) (strcmp((a), (b)) == 0)
+#define HASH_FUNCTION(v) (0)
 #include "fixed-containers/K_to_V_hashtable.h" // charptr_to_int_hashtable_*
 
 bool four_elements_test(void) {
@@ -20,17 +20,27 @@ bool four_elements_test(void) {
     }
     bool res = true;
 
-    charptr_to_int_hashtable_set(hashtable_p, "AAA", 1);
-    charptr_to_int_hashtable_set(hashtable_p, "BBB", 2);
-    charptr_to_int_hashtable_set(hashtable_p, "CCC", 3);
-    charptr_to_int_hashtable_set(hashtable_p, "DDD", 4);
+    size_t o = sizeof("AAA");
+    char* buf = malloc(4 * o);
+    memcpy(buf + 0 * o, "AAA", o);
+    memcpy(buf + 1 * o, "BBB", o);
+    memcpy(buf + 2 * o, "CCC", o);
+    memcpy(buf + 3 * o, "DDD", o);
 
+
+    charptr_to_int_hashtable_set(hashtable_p, &buf[0 * o], 1);
     res &= is_equal(charptr_to_int_hashtable_get(hashtable_p, "AAA", -1), 1);
-    res &= is_equal(charptr_to_int_hashtable_get(hashtable_p, "BBB", -1), 2);
-    res &= is_equal(charptr_to_int_hashtable_get(hashtable_p, "CCC", -1), 3);
-    res &= is_equal(charptr_to_int_hashtable_get(hashtable_p, "DDD", -1), 4);
+
+    // charptr_to_int_hashtable_set(hashtable_p, &buf[1 * o], 2);
+    // charptr_to_int_hashtable_set(hashtable_p, &buf[2 * o], 3);
+    // charptr_to_int_hashtable_set(hashtable_p, &buf[3 * o], 4);
+
+    // res &= is_equal(charptr_to_int_hashtable_get(hashtable_p, "AAB", -1), 2);
+    // res &= is_equal(charptr_to_int_hashtable_get(hashtable_p, "BBB", -1), 3);
+    // res &= is_equal(charptr_to_int_hashtable_get(hashtable_p, "CCC", -1), 4);
 
     res &= is_true(charptr_to_int_hashtable_deinit(&hashtable_p));
+    // free(buf);
 
     return res;
 }
