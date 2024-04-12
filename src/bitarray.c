@@ -5,7 +5,7 @@
 #include <stdlib.h>  // malloc, calloc, free, size_t, NULL
 #include <string.h>  // memcmp, memcpy
 
-#include "containers/bitarray.h" // bitarray*
+#include "bitarray.h" // bitarray*
 
 static_assert(CHAR_BIT == 8, "a char is 8 bits.");
 
