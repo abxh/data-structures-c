@@ -11,7 +11,7 @@
 
     The following functions are generated for a given value type T:
     - T_queue_init
-    - T_queue_init_with_capacity_rounded_up
+    - T_queue_init_internal
     - T_queue_deinit
     - T_queue_copy
     - T_queue_get_count
@@ -66,7 +66,7 @@ typedef struct {
     VALUE_TYPE arr[];
 } T_queue_type;
 
-static inline bool JOIN(T_queue, init)(T_queue_type** queue_pp, size_t pow2_capacity) {
+static inline bool JOIN(T_queue, init_internal)(T_queue_type** queue_pp, size_t pow2_capacity) {
     assert(queue_pp != NULL);
     assert(pow2_capacity != 0 && (pow2_capacity & (pow2_capacity - 1)) == 0 && "initial capacity is a power of 2");
     assert(pow2_capacity - 1 != 0 && "subtracting initial capacity by one does not yield zero");
@@ -86,7 +86,7 @@ static inline bool JOIN(T_queue, init)(T_queue_type** queue_pp, size_t pow2_capa
     return true;
 }
 
-static inline bool JOIN(T_queue, init_with_capacity_rounded_up)(T_queue_type** queue_pp, size_t capacity) {
+static inline bool JOIN(T_queue, init)(T_queue_type** queue_pp, size_t capacity) {
     assert(queue_pp != NULL);
 
     if (capacity == 0) {
@@ -99,7 +99,7 @@ static inline bool JOIN(T_queue, init_with_capacity_rounded_up)(T_queue_type** q
         return false;
     }
 
-    return JOIN(T_queue, init)(queue_pp, rounded_capacity);
+    return JOIN(T_queue, init_internal)(queue_pp, rounded_capacity);
 }
 
 static inline bool JOIN(T_queue, deinit)(T_queue_type** queue_pp) {
@@ -118,7 +118,7 @@ static inline bool JOIN(T_queue, copy)(T_queue_type** queue_dest_pp, T_queue_typ
     assert(queue_src_p != NULL);
     assert(queue_dest_pp != NULL);
 
-    if (!JOIN(T_queue, init)(queue_dest_pp, queue_src_p->capacity)) {
+    if (!JOIN(T_queue, init_internal)(queue_dest_pp, queue_src_p->capacity)) {
         return false;
     }
     memcpy((*queue_dest_pp)->arr, queue_src_p->arr, sizeof(VALUE_TYPE) * queue_src_p->capacity);

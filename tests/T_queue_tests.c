@@ -9,13 +9,13 @@
 
 bool empty_test(void) {
     int_queue_type* queue_p = NULL;
-    if (!int_queue_init_with_capacity_rounded_up(&queue_p, 1)) {
+    if (!int_queue_init(&queue_p, 1)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
 
-    res &= is_equal(int_queue_get_count(queue_p), (size_t)0);
+    res &= is_equal(int_queue_get_count(queue_p), 0UL);
     res &= is_true(int_queue_is_empty(queue_p));
     res &= is_true(int_queue_deinit(&queue_p));
 
@@ -24,7 +24,7 @@ bool empty_test(void) {
 
 bool one_element_test(void) {
     int_queue_type* queue_p = NULL;
-    if (!int_queue_init_with_capacity_rounded_up(&queue_p, 1)) {
+    if (!int_queue_init(&queue_p, 1)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -51,7 +51,7 @@ bool one_element_test(void) {
 
 bool two_elements_test(void) {
     int_queue_type* queue_p = NULL;
-    if (!int_queue_init(&queue_p, 2)) {
+    if (!int_queue_init_internal(&queue_p, 2)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -59,7 +59,7 @@ bool two_elements_test(void) {
     int value1 = 5;
     int value2 = 10;
 
-    res &= is_equal(int_queue_get_capacity(queue_p), (size_t)2);
+    res &= is_equal(int_queue_get_capacity(queue_p), 2UL);
 
     res &= is_true(int_queue_is_empty(queue_p));
     res &= is_false(int_queue_is_full(queue_p));
@@ -90,7 +90,7 @@ bool two_elements_test(void) {
 
 bool million_elements_test(void) {
     int_queue_type* queue_p = NULL;
-    if (!int_queue_init_with_capacity_rounded_up(&queue_p, 1000000)) {
+    if (!int_queue_init(&queue_p, 1000000)) {
         return false;
     }
     bool res = true;
@@ -108,7 +108,7 @@ bool million_elements_test(void) {
 
 bool wraparound_test(void) {
     int_queue_type* queue_p = NULL;
-    if (!int_queue_init(&queue_p, 1024)) {
+    if (!int_queue_init_internal(&queue_p, 1024)) {
         return false;
     }
     bool res = true;
@@ -130,7 +130,7 @@ bool wraparound_test(void) {
 
 bool for_each_and_copy_test(void) {
     int_queue_type* queue_p = NULL;
-    if (!int_queue_init_with_capacity_rounded_up(&queue_p, 50)) {
+    if (!int_queue_init(&queue_p, 50)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }

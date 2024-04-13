@@ -15,9 +15,9 @@ bool empty_test(void) {
     }
     bool res = true;
 
-    res &= is_equal(int_stack_get_capacity(stack_p), (size_t)1);
+    res &= is_equal(int_stack_get_capacity(stack_p), 1UL);
     res &= is_true(int_stack_is_empty(stack_p));
-    res &= is_equal(int_stack_get_count(stack_p), (size_t)0);
+    res &= is_equal(int_stack_get_count(stack_p), 0UL);
     res &= is_true(int_stack_deinit(&stack_p));
 
     return res;
@@ -31,19 +31,19 @@ bool one_element_test(void) {
     }
     bool res = true;
 
-    res &= is_equal(int_stack_get_capacity(stack_p), (size_t)1);
+    res &= is_equal(int_stack_get_capacity(stack_p), 1UL);
 
     int value = 5;
 
-    res &= is_equal(int_stack_get_count(stack_p), (size_t)0);
+    res &= is_equal(int_stack_get_count(stack_p), 0UL);
     int_stack_push(stack_p, value);
-    res &= is_equal(int_stack_get_count(stack_p), (size_t)1);
+    res &= is_equal(int_stack_get_count(stack_p), 1UL);
 
     res &= is_equal(value, int_stack_peek(stack_p));
     res &= is_false(int_stack_is_empty(stack_p));
 
     res &= is_equal(value, int_stack_pop(stack_p));
-    res &= is_equal(int_stack_get_count(stack_p), (size_t)0);
+    res &= is_equal(int_stack_get_count(stack_p), 0UL);
 
     res &= is_true(int_stack_is_empty(stack_p));
     res &= is_false(int_stack_is_full(stack_p));

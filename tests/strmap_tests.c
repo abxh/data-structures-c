@@ -15,11 +15,10 @@ bool one_element_test(void) {
     }
     bool res = true;
 
-    res &= is_equal(strmap_get_count(strmap_p), (size_t)0);
+    res &= is_equal(strmap_get_count(strmap_p), 0UL);
     res &= is_true(strmap_set(strmap_p, "AA", "11"));
-
-    res &= is_equal(strmap_get_count(strmap_p), (size_t)1);
-    res &= is_equal(strcmp(strmap_get(strmap_p, "AA"), "11"), 0);
+    res &= is_equal(strmap_get_count(strmap_p), 1UL);
+    res &= is_true(strcmp(strmap_get(strmap_p, "AA"), "11") == 0);
 
     res &= is_true(strmap_deinit(&strmap_p));
 
@@ -39,10 +38,10 @@ bool four_elements_test(void) {
     res &= is_true(strmap_set(strmap_p, "CCC", "9012"));
     res &= is_true(strmap_set(strmap_p, "DDD", "3456"));
 
-    res &= is_equal(strcmp(strmap_get(strmap_p, "AAA"), "1234"), 0);
-    res &= is_equal(strcmp(strmap_get(strmap_p, "BBB"), "5678"), 0);
-    res &= is_equal(strcmp(strmap_get(strmap_p, "CCC"), "9012"), 0);
-    res &= is_equal(strcmp(strmap_get(strmap_p, "DDD"), "3456"), 0);
+    res &= is_true(strcmp(strmap_get(strmap_p, "AAA"), "1234") == 0);
+    res &= is_true(strcmp(strmap_get(strmap_p, "BBB"), "5678") == 0);
+    res &= is_true(strcmp(strmap_get(strmap_p, "CCC"), "9012") == 0);
+    res &= is_true(strcmp(strmap_get(strmap_p, "DDD"), "3456") == 0);
 
     res &= is_true(strmap_deinit(&strmap_p));
 
@@ -62,9 +61,9 @@ bool del_and_exists_test(void) {
     res &= is_true(strmap_set(strmap_p, "aac", "9012"));
     res &= is_true(strmap_set(strmap_p, "aad", "3456"));
 
-    res &= is_equal(strmap_get_count(strmap_p), (size_t)4);
+    res &= is_equal(strmap_get_count(strmap_p), 4UL);
     res &= is_true(strmap_del(strmap_p, "aab"));
-    res &= is_equal(strmap_get_count(strmap_p), (size_t)3);
+    res &= is_equal(strmap_get_count(strmap_p), 3UL);
 
     res &= is_false(strmap_del(strmap_p, "aae"));
 
@@ -112,18 +111,18 @@ bool overwrite_element_test(void) {
     }
     bool res = true;
 
-    res &= is_equal(strmap_get_count(strmap_p), (size_t)0);
+    res &= is_equal(strmap_get_count(strmap_p), 0UL);
 
     res &= is_true(strmap_set(strmap_p, "A", "B"));
-    res &= is_equal(strmap_get_count(strmap_p), (size_t)1);
+    res &= is_equal(strmap_get_count(strmap_p), 1UL);
 
     res &= is_true(strmap_set(strmap_p, "A", "C"));
-    res &= is_equal(strmap_get_count(strmap_p), (size_t)1);
+    res &= is_equal(strmap_get_count(strmap_p), 1UL);
 
     res &= is_true(strmap_set(strmap_p, "A", "C"));
-    res &= is_equal(strmap_get_count(strmap_p), (size_t)1);
+    res &= is_equal(strmap_get_count(strmap_p), 1UL);
 
-    res &= is_equal(strcmp(strmap_get(strmap_p, "A"), "C"), 0);
+    res &= is_true(strcmp(strmap_get(strmap_p, "A"), "C") == 0);
 
     res &= is_true(strmap_deinit(&strmap_p));
 
@@ -139,18 +138,18 @@ bool empty_element_test(void) {
     bool res = true;
 
     res &= is_true(strmap_set(strmap_p, "A", ""));
-    res &= is_equal(strcmp(strmap_get(strmap_p, "A"), ""), 0);
+    res &= is_true(strcmp(strmap_get(strmap_p, "A"), "") == 0);
     res &= is_true(strmap_set(strmap_p, "", "B"));
-    res &= is_equal(strcmp(strmap_get(strmap_p, ""), "B"), 0);
+    res &= is_true(strcmp(strmap_get(strmap_p, ""), "B") == 0);
     res &= is_true(strmap_set(strmap_p, "", ""));
-    res &= is_equal(strcmp(strmap_get(strmap_p, ""), ""), 0);
+    res &= is_true(strcmp(strmap_get(strmap_p, ""), "") == 0);
 
     res &= is_true(strmap_deinit(&strmap_p));
 
     return res;
 }
 
-#define lim 1000000
+#define lim 1000000UL
 #define m ('z' - 'a' + 1)
 
 bool million_elements_test(void) {
@@ -160,7 +159,7 @@ bool million_elements_test(void) {
         return false;
     }
     bool res = true;
-    res &= is_equal(strmap_get_count(strmap_p), (size_t)0);
+    res &= is_equal(strmap_get_count(strmap_p), 0UL);
     for (size_t i = 0; i < lim; i++) {
         char c1 = i % m + 'a';
         char c2 = (i / m) % m + 'a';
@@ -169,14 +168,14 @@ bool million_elements_test(void) {
         char c5 = (i / m / m / m / m) % m + 'a';
         res &= is_true(strmap_set(strmap_p, (char[]){c5, c4, c3, c2, c1, '\0'}, (char[]){c1, c2, c3, c4, c5, '\0'}));
     }
-    res &= is_equal(strmap_get_count(strmap_p), (size_t)lim);
+    res &= is_equal(strmap_get_count(strmap_p), lim);
     for (size_t i = 0; i < lim; i++) {
         char c1 = i % m + 'a';
         char c2 = (i / m) % m + 'a';
         char c3 = (i / m / m) % m + 'a';
         char c4 = (i / m / m / m) % m + 'a';
         char c5 = (i / m / m / m / m) % m + 'a';
-        res &= is_equal(strcmp(strmap_get(strmap_p, (char[]){c5, c4, c3, c2, c1, '\0'}), (char[]){c1, c2, c3, c4, c5, '\0'}), 0);
+        res &= is_true(strcmp(strmap_get(strmap_p, (char[]){c5, c4, c3, c2, c1, '\0'}), (char[]){c1, c2, c3, c4, c5, '\0'}) == 0);
     }
     res &= is_true(strmap_deinit(&strmap_p));
     return res;
