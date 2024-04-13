@@ -1,12 +1,13 @@
 /*
     `K_to_V_hashtable` is a hashmap implementation based on a fixed size array.
 
-    At least one entry in the hashmap is expected to be reserved - so searching
+    At least one slot in the hashmap is expected to be reserved - so searching
     for missing keys works. Load factor should not exactly be equal to 1.
+    Use `init_with_capacity_rounded_up` if unsure.
 
     Reference:
     https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/
-    https://thenumb.at/Hashtables/#robin-hood-linear-probing
+    https://thenumb.at/hashtables/#robin-hood-linear-probing
 */
 
 #ifndef __K_TO_V_HASHTABLE__H
@@ -49,53 +50,53 @@
 
 #define K_to_V_hashtable JOIN(KEY_TYPE, JOIN(JOIN(to, VALUE_TYPE), hashtable))
 #define K_to_V_hashtable_type JOIN(K_to_V_hashtable, type)
-#define K_to_V_hashtable_entry JOIN(K_to_V_hashtable, entry)
-#define K_to_V_hashtable_entry_type JOIN(K_to_V_hashtable_entry, type)
+#define K_to_V_hashtable_slot JOIN(K_to_V_hashtable, slot)
+#define K_to_V_hashtable_slot_type JOIN(K_to_V_hashtable_slot, type)
 
-#define EMPTY_ENTRY_OFFSET SIZE_MAX
+#define EMPTY_SLOT_OFFSET SIZE_MAX
 
 typedef struct {
     size_t offset;
     KEY_TYPE key;
     VALUE_TYPE value;
-} K_to_V_hashtable_entry_type;
+} K_to_V_hashtable_slot_type;
 
 typedef struct {
     size_t count;
-    size_t capacity_sub_one;
-    K_to_V_hashtable_entry_type arr[];
+    size_t index_mask;
+    K_to_V_hashtable_slot_type arr[];
 } K_to_V_hashtable_type;
 
-static inline bool JOIN(K_to_V_hashtable, init)(K_to_V_hashtable_type** hashtable_pp, size_t pow2_capacity) {
+static inline bool JOIN(K_to_V_hashtable, init_internal)(K_to_V_hashtable_type** hashtable_pp, size_t pow2_capacity) {
     assert(hashtable_pp != NULL);
     assert(is_pow2(pow2_capacity) && "initial capacity is a power of 2");
     assert(pow2_capacity - 1 != 0 && "subtracting initial capacity by one does not yield zero");
 
-    if (pow2_capacity > (SIZE_MAX - offsetof(K_to_V_hashtable_type, arr)) / sizeof(K_to_V_hashtable_entry_type)) {
+    if (pow2_capacity > (SIZE_MAX - offsetof(K_to_V_hashtable_type, arr)) / sizeof(K_to_V_hashtable_slot_type)) {
         return false;
     }
-    *hashtable_pp = malloc(offsetof(K_to_V_hashtable_type, arr) + sizeof(VALUE_TYPE) * pow2_capacity);
+    *hashtable_pp = malloc(offsetof(K_to_V_hashtable_type, arr) + sizeof(K_to_V_hashtable_slot_type) * pow2_capacity);
     if ((*hashtable_pp) == NULL) {
         return false;
     }
     (*hashtable_pp)->count = 0;
-    (*hashtable_pp)->capacity_sub_one = pow2_capacity - 1;
+    (*hashtable_pp)->index_mask = pow2_capacity - 1;
 
     K_to_V_hashtable_type* hashtable_p = *hashtable_pp;
     for (size_t i = 0; i < pow2_capacity; i++) {
-        hashtable_p->arr[i].offset = EMPTY_ENTRY_OFFSET;
+        hashtable_p->arr[i].offset = EMPTY_SLOT_OFFSET;
     }
 
     return true;
 }
 
-static inline bool JOIN(K_to_V_hashtable, init_with_capacity_rounded_up)(K_to_V_hashtable_type** queue_pp, size_t capacity) {
+static inline bool JOIN(K_to_V_hashtable, init)(K_to_V_hashtable_type** queue_pp, size_t capacity) {
     assert(queue_pp != NULL);
 
     if (capacity == 0) {
         return false;
     } else if (capacity == 1) {
-        capacity += 1;
+        capacity = 2;
     } else if (is_pow2(capacity)) {
         capacity += 1;
     }
@@ -104,7 +105,7 @@ static inline bool JOIN(K_to_V_hashtable, init_with_capacity_rounded_up)(K_to_V_
         return false;
     }
 
-    return JOIN(K_to_V_hashtable, init)(queue_pp, rounded_capacity);
+    return JOIN(K_to_V_hashtable, init_internal)(queue_pp, rounded_capacity);
 }
 
 static inline bool JOIN(K_to_V_hashtable, deinit)(K_to_V_hashtable_type** queue_pp) {
@@ -123,10 +124,10 @@ static inline bool JOIN(K_to_V_hashtable, copy)(K_to_V_hashtable_type** hashtabl
     assert(hashtable_src_p != NULL);
     assert(hashtable_dest_pp != NULL);
 
-    if (!JOIN(K_to_V_hashtable, init)(hashtable_dest_pp, hashtable_src_p->capacity_sub_one + 1)) {
+    if (!JOIN(K_to_V_hashtable, init_internal)(hashtable_dest_pp, hashtable_src_p->index_mask + 1)) {
         return false;
     }
-    memcpy((*hashtable_dest_pp)->arr, hashtable_src_p->arr, sizeof(K_to_V_hashtable_entry_type) * (hashtable_src_p->capacity_sub_one + 1));
+    memcpy((*hashtable_dest_pp)->arr, hashtable_src_p->arr, sizeof(K_to_V_hashtable_slot_type) * (hashtable_src_p->index_mask + 1));
     (*hashtable_dest_pp)->count = hashtable_src_p->count;
 
     return true;
@@ -141,7 +142,7 @@ static inline size_t JOIN(K_to_V_hashtable, get_count)(const K_to_V_hashtable_ty
 static inline size_t JOIN(K_to_V_hashtable, get_capacity)(const K_to_V_hashtable_type* hashtable_p) {
     assert(hashtable_p != NULL);
 
-    return hashtable_p->capacity_sub_one + 1;
+    return hashtable_p->index_mask + 1;
 }
 
 static inline bool JOIN(K_to_V_hashtable, is_empty)(const K_to_V_hashtable_type* hashtable_p) {
@@ -153,7 +154,7 @@ static inline bool JOIN(K_to_V_hashtable, is_empty)(const K_to_V_hashtable_type*
 static inline bool JOIN(K_to_V_hashtable, is_full)(const K_to_V_hashtable_type* hashtable_p) {
     assert(hashtable_p != NULL);
 
-    return hashtable_p->count == hashtable_p->capacity_sub_one + 1;
+    return hashtable_p->count == hashtable_p->index_mask + 1;
 }
 
 #pragma GCC diagnostic push
@@ -166,14 +167,14 @@ static inline const bool JOIN(K_to_V_hashtable, exists)(K_to_V_hashtable_type* h
 #undef K_to_V_hashtable_is_full
 
     size_t key_hash = HASH_FUNCTION(key);
-    size_t index = key_hash & hashtable_p->capacity_sub_one;
+    size_t index = key_hash & hashtable_p->index_mask;
     size_t dist = 0;
 
-    while (hashtable_p->arr[index].offset != EMPTY_ENTRY_OFFSET && dist <= hashtable_p->arr[index].offset) {
+    while (hashtable_p->arr[index].offset != EMPTY_SLOT_OFFSET && dist <= hashtable_p->arr[index].offset) {
         if (KEY_IS_EQUAL(hashtable_p->arr[index].key, key)) {
             return true;
         }
-        index = (index + 1) & hashtable_p->capacity_sub_one;
+        index = (index + 1) & hashtable_p->index_mask;
         dist++;
     }
     return false;
@@ -187,14 +188,14 @@ static inline const VALUE_TYPE JOIN(K_to_V_hashtable, get)(K_to_V_hashtable_type
 #undef K_to_V_hashtable_is_full
 
     size_t key_hash = HASH_FUNCTION(key);
-    size_t index = key_hash & hashtable_p->capacity_sub_one;
+    size_t index = key_hash & hashtable_p->index_mask;
     size_t dist = 0;
 
-    while (hashtable_p->arr[index].offset != EMPTY_ENTRY_OFFSET && dist <= hashtable_p->arr[index].offset) {
+    while (hashtable_p->arr[index].offset != EMPTY_SLOT_OFFSET && dist <= hashtable_p->arr[index].offset) {
         if (KEY_IS_EQUAL(hashtable_p->arr[index].key, key)) {
             return hashtable_p->arr[index].value;
         }
-        index = (index + 1) & hashtable_p->capacity_sub_one;
+        index = (index + 1) & hashtable_p->index_mask;
         dist++;
     }
     return default_return_value;
@@ -209,23 +210,23 @@ static inline void JOIN(K_to_V_hashtable, set)(K_to_V_hashtable_type* hashtable_
 #undef K_to_V_hashtable_is_full
 
     size_t key_hash = HASH_FUNCTION(key);
-    size_t index = key_hash & hashtable_p->capacity_sub_one;
-    K_to_V_hashtable_entry_type entry = {.offset = 0, .key = key, .value = value};
+    size_t index = key_hash & hashtable_p->index_mask;
+    K_to_V_hashtable_slot_type slot = {.offset = 0, .key = key, .value = value};
 
-    // while (hashtable_p->arr[index].offset != EMPTY_ENTRY_OFFSET) {
-    //     // swap if current_dist is larger. will ensure the maximum
-    //     // offset is minimized.
-    //     if (entry.offset > hashtable_p->arr[index].offset) {
-    //         // swap entries:
-    //         K_to_V_hashtable_entry_type temp = hashtable_p->arr[index];
-    //         hashtable_p->arr[index] = entry;
-    //         entry = temp;
-    //     }
-    //     index = (index + 1) & hashtable_p->capacity_sub_one;
-    //     entry.offset++;
-    // }
-    hashtable_p->arr[index] = entry;
-    printf("%s, %d at %d\n", entry.key, entry.value, index);
+    while (hashtable_p->arr[index].offset != EMPTY_SLOT_OFFSET) {
+        // swap if current_dist is larger. will ensure the maximum
+        // offset is minimized.
+        if (slot.offset > hashtable_p->arr[index].offset) {
+            // swap entries:
+            K_to_V_hashtable_slot_type temp = hashtable_p->arr[index];
+            hashtable_p->arr[index] = slot;
+            slot = temp;
+        }
+        index = (index + 1) & hashtable_p->index_mask;
+        slot.offset++;
+    }
+    hashtable_p->arr[index] = slot;
+    hashtable_p->count++;
 }
 
 static inline bool JOIN(K_to_V_hashtable, del)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key) {
@@ -235,35 +236,37 @@ static inline bool JOIN(K_to_V_hashtable, del)(K_to_V_hashtable_type* hashtable_
 #undef K_to_V_hashtable_is_empty
 
     size_t key_hash = HASH_FUNCTION(key);
-    size_t index = key_hash & hashtable_p->capacity_sub_one;
+    size_t index = key_hash & hashtable_p->index_mask;
     size_t dist = 0;
 
-    while (hashtable_p->arr[index].offset != EMPTY_ENTRY_OFFSET && dist <= hashtable_p->arr[index].offset) {
+    while (hashtable_p->arr[index].offset != EMPTY_SLOT_OFFSET && dist <= hashtable_p->arr[index].offset) {
         if (KEY_IS_EQUAL(hashtable_p->arr[index].key, key)) {
-            size_t next_index = (index + 1) & hashtable_p->capacity_sub_one;
-            while (hashtable_p->arr[next_index].offset != EMPTY_ENTRY_OFFSET && hashtable_p->arr[next_index].offset > 0) {
+            size_t next_index = (index + 1) & hashtable_p->index_mask;
+            while (hashtable_p->arr[next_index].offset != EMPTY_SLOT_OFFSET && hashtable_p->arr[next_index].offset > 0) {
                 hashtable_p->arr[index] = hashtable_p->arr[next_index];
                 hashtable_p->arr[index].offset--;
                 index = next_index;
-                next_index = (index + 1) & hashtable_p->capacity_sub_one;
+                next_index = (index + 1) & hashtable_p->index_mask;
             }
-            hashtable_p->arr[index].offset = EMPTY_ENTRY_OFFSET;
+            hashtable_p->arr[index].offset = EMPTY_SLOT_OFFSET;
+            hashtable_p->count--;
             return true;
         }
-        index = (index + 1) & hashtable_p->capacity_sub_one;
+        index = (index + 1) & hashtable_p->index_mask;
         dist++;
     }
     return false;
 }
 
-#undef EMPTY_ENTRY_OFFSET
+#undef EMPTY_SLOT_OFFSET
 
 #undef K_to_V_hashtable
 #undef K_to_V_hashtable_type
-#undef K_to_V_hashtable_entry
-#undef K_to_V_hashtable_entry_type
+#undef K_to_V_hashtable_slot
+#undef K_to_V_hashtable_slot_type
 
-#undef IS_EQUAL
+#undef HASH_FUNCTION
+#undef KEY_IS_EQUAL
 #undef KEY_TYPE
 #undef VALUE_TYPE
 #undef CAT
