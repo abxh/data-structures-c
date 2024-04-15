@@ -48,7 +48,7 @@ bool four_elements_test(void) {
     return res;
 }
 
-bool del_and_exists_test(void) {
+bool del_and_contains_test(void) {
     strmap_type* strmap_p = NULL;
     if (!strmap_init(&strmap_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
@@ -67,10 +67,10 @@ bool del_and_exists_test(void) {
 
     res &= is_false(strmap_del(strmap_p, "aae"));
 
-    res &= is_true(strmap_exists(strmap_p, "aaa"));
-    res &= is_false(strmap_exists(strmap_p, "aab"));
-    res &= is_true(strmap_exists(strmap_p, "aac"));
-    res &= is_true(strmap_exists(strmap_p, "aad"));
+    res &= is_true(strmap_contains(strmap_p, "aaa"));
+    res &= is_false(strmap_contains(strmap_p, "aab"));
+    res &= is_true(strmap_contains(strmap_p, "aac"));
+    res &= is_true(strmap_contains(strmap_p, "aad"));
 
     res &= is_true(strmap_deinit(&strmap_p));
 
@@ -85,18 +85,18 @@ bool missing_elements_test(void) {
     }
     bool res = true;
 
-    res &= is_false(strmap_exists(strmap_p, "a"));
-    res &= is_false(strmap_exists(strmap_p, "b"));
-    res &= is_false(strmap_exists(strmap_p, "c"));
-    res &= is_false(strmap_exists(strmap_p, "d"));
+    res &= is_false(strmap_contains(strmap_p, "a"));
+    res &= is_false(strmap_contains(strmap_p, "b"));
+    res &= is_false(strmap_contains(strmap_p, "c"));
+    res &= is_false(strmap_contains(strmap_p, "d"));
 
     res &= is_true(strmap_set(strmap_p, "a", "1234"));
     res &= is_true(strmap_set(strmap_p, "d", "3456"));
 
-    res &= is_true(strmap_exists(strmap_p, "a"));
-    res &= is_false(strmap_exists(strmap_p, "b"));
-    res &= is_false(strmap_exists(strmap_p, "c"));
-    res &= is_true(strmap_exists(strmap_p, "d"));
+    res &= is_true(strmap_contains(strmap_p, "a"));
+    res &= is_false(strmap_contains(strmap_p, "b"));
+    res &= is_false(strmap_contains(strmap_p, "c"));
+    res &= is_true(strmap_contains(strmap_p, "d"));
 
     res &= is_true(strmap_deinit(&strmap_p));
 
@@ -192,10 +192,9 @@ bool for_each_and_copy_test(void) {
         char c1 = i % m + 'a';
         char c2 = (i / m) % m + 'a';
         char c3 = (i / m / m) % m + 'a';
-        char c4 = (i / m / m / m) % m + 'a';
-        char c5 = (i / m / m / m / m) % m + 'a';
-        res &= is_true(strmap_set(strmap_p, (char[]){c5, c4, c3, c2, c1, '\0'}, (char[]){c1, c2, c3, c4, c5, '\0'}));
+        res &= is_true(strmap_set(strmap_p, (char[]){c3, c2, c1, '\0'}, (char[]){c1, c2, c3, '\0'}));
     }
+    res &= is_equal(strmap_get_count(strmap_p), 1000UL);
     {
         size_t list_index;
         strmap_node_type* next_p = NULL;
@@ -208,7 +207,7 @@ bool for_each_and_copy_test(void) {
         strmap_for_each(strmap_p, list_index, next_p, key_p, value_p) {
             count++;
         }
-        res &= is_true(strmap_get_count(strmap_p) == count);
+        res &= is_equal(count, 1000UL);
     }
     strmap_type* strmap_copy_p = NULL;
     if (!strmap_copy(&strmap_copy_p, strmap_p)) {
@@ -226,16 +225,14 @@ bool for_each_and_copy_test(void) {
         size_t i = 0;
         strmap_for_each(strmap_copy_p, list_index, next_p, key_p, value_p) {
             i++;
-            char c1 = i % m + 'a';
-            char c2 = (i / m) % m + 'a';
-            char c3 = (i / m / m) % m + 'a';
-            char c4 = (i / m / m / m) % m + 'a';
-            char c5 = (i / m / m / m / m) % m + 'a';
-            res &= is_true(strmap_set(strmap_copy_p, (char[]){c5, c4, c3, c2, c1, '\0'}, (char[]){c1, c2, c3, c4, c5, '\0'}));
+            res &= is_true(value_p != strmap_get(strmap_p, key_p));
+            res &= is_true(strcmp(value_p, strmap_get(strmap_p, key_p)) == 0);
         }
+        res &= is_equal(i, 1000UL);
     }
 
     res &= is_true(strmap_deinit(&strmap_p));
+    res &= is_true(strmap_deinit(&strmap_copy_p));
 
     return res;
 }
@@ -254,8 +251,8 @@ typedef struct {
 int main(void) {
     bool_f_plus bool_f_arr[] = {{one_element_test, "one element test"},
                                 {four_elements_test, "four elements test"},
-                                {del_and_exists_test, "delete and exists test"},
                                 {missing_elements_test, "missing elements test"},
+                                {del_and_contains_test, "delete and contains test"},
                                 {overwrite_element_test, "overwrite element test"},
                                 {empty_element_test, "empty element test"},
                                 {million_elements_test, "million elements test"},

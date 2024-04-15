@@ -46,7 +46,7 @@ bool strmap_copy(strmap_type** strmap_dest_pp, const strmap_type* strmap_src_p);
 
 size_t strmap_get_count(const strmap_type* strmap_p);
 
-bool strmap_exists(const strmap_type* strmap_p, const char* key_p);
+bool strmap_contains(const strmap_type* strmap_p, const char* key_p);
 
 const char* strmap_get(const strmap_type* strmap_p, const char* key_p);
 

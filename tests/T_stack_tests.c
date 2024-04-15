@@ -4,24 +4,28 @@
 
 #include "test.h" // is_true, is_false, is_equal
 
+#define PREFIX intstk
 #define VALUE_TYPE int
-#include "fixed-containers/T_stack.h" // int_stack_*, T_stack_for_each
+#include "fixed-containers/T_stack.h" // intstk_*
 
 bool empty_test(void) {
-    int_stack_type* stack_p = NULL;
-    if (!int_stack_init(&stack_p, 1)) {
+    intstk_type* stack_p = NULL;
+    if (!intstk_init(&stack_p, 1)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
 
-    res &= is_equal(int_stack_get_capacity(stack_p), 1UL);
-    res &= is_true(int_stack_is_empty(stack_p));
-    res &= is_equal(int_stack_get_count(stack_p), 0UL);
-    res &= is_true(int_stack_deinit(&stack_p));
+    res &= is_equal(intstk_get_capacity(stack_p), 1UL);
+    res &= is_true(intstk_is_empty(stack_p));
+    res &= is_equal(intstk_get_count(stack_p), 0UL);
+    res &= is_true(intstk_deinit(&stack_p));
 
     return res;
 }
+
+#define VALUE_TYPE int
+#include "fixed-containers/T_stack.h" // int_stack_*, T_stack_for_each
 
 bool one_element_test(void) {
     int_stack_type* stack_p = NULL;

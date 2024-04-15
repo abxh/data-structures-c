@@ -98,7 +98,7 @@ size_t strmap_get_count(const strmap_type* strmap_p) {
     return strmap_p->total_nodes_count;
 }
 
-bool strmap_exists(const strmap_type* strmap_p, const char* key_p) {
+bool strmap_contains(const strmap_type* strmap_p, const char* key_p) {
     assert(strmap_p != NULL);
     assert(key_p != NULL);
 
@@ -369,7 +369,7 @@ bool strmap_copy(strmap_type** strmap_dest_pp, const strmap_type* strmap_src_p) 
         strmap_node_type* next_p = NULL;
         char* key_p = NULL;
         char* value_p = NULL;
-        strmap_for_each(strmap_dest_p, list_index, next_p, key_p, value_p) {
+        strmap_for_each(strmap_src_p, list_index, next_p, key_p, value_p) {
             strmap_set(strmap_dest_p, key_p, value_p);
         }
     }

@@ -21,9 +21,12 @@
     - T_stack_push
     - T_stack_pop
 
-    Note that the given types cannot include spaces because C functions
-    and variables cannot either.
-    Use a typedef and replace spaces with _ or shorten the type name if needed.
+    Define PREFIX to use an other prefix than "T_stack". The macro(s) cannot
+    however be redefined to have other prefixes.
+
+    Note that (if PREFIX is not defined), then the given types cannot include
+    spaces because C functions and variables cannot either.
+    Use a typedef and replace spaces with _ or change the type name as needed.
 */
 
 #ifndef __T_STACK__H
@@ -51,7 +54,12 @@
 #define PASTE(a, b) CAT(a, b)
 #define JOIN(prefix, name) PASTE(prefix, PASTE(_, name))
 
+#ifndef PREFIX
 #define T_stack JOIN(VALUE_TYPE, stack)
+#else
+#define T_stack PREFIX
+#endif
+
 #define T_stack_type JOIN(T_stack, type)
 
 typedef struct {
@@ -160,6 +168,7 @@ static inline VALUE_TYPE JOIN(T_stack, pop)(T_stack_type* T_stack_p) {
 #undef T_stack
 #undef T_stack_type
 
+#undef PREFIX
 #undef VALUE_TYPE
 #undef CAT
 #undef PASTE
