@@ -133,10 +133,7 @@ static inline bool JOIN(T_stack, is_full)(const T_stack_type* stack_p) {
     return stack_p->count == stack_p->capacity;
 }
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-qualifiers"
-
-static inline const VALUE_TYPE JOIN(T_stack, peek)(T_stack_type* stack_p) {
+static inline VALUE_TYPE JOIN(T_stack, peek)(T_stack_type* stack_p) {
     assert(stack_p != NULL);
 #define T_stack_is_empty JOIN(T_stack, is_empty)
     assert(T_stack_is_empty(stack_p) == false);
@@ -144,8 +141,6 @@ static inline const VALUE_TYPE JOIN(T_stack, peek)(T_stack_type* stack_p) {
 
     return stack_p->arr[stack_p->count - 1];
 }
-
-#pragma GCC diagnostic pop
 
 static inline void JOIN(T_stack, push)(T_stack_type* stack_p, const VALUE_TYPE value) {
     assert(stack_p != NULL);

@@ -165,10 +165,7 @@ static inline bool JOIN(T_queue, is_full)(const T_queue_type* queue_p) {
     return queue_p->count == queue_p->capacity;
 }
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-qualifiers"
-
-static inline const VALUE_TYPE JOIN(T_queue, peek)(T_queue_type* queue_p) {
+static inline VALUE_TYPE JOIN(T_queue, peek)(T_queue_type* queue_p) {
     assert(queue_p != NULL);
 #define T_queue_is_empty JOIN(T_queue, is_empty)
     assert(T_queue_is_empty(queue_p) == false);
@@ -177,11 +174,11 @@ static inline const VALUE_TYPE JOIN(T_queue, peek)(T_queue_type* queue_p) {
     return queue_p->arr[queue_p->begin_index];
 }
 
-static inline const VALUE_TYPE JOIN(T_queue, peek_first)(T_queue_type* queue_p) {
+static inline VALUE_TYPE JOIN(T_queue, peek_first)(T_queue_type* queue_p) {
     return JOIN(T_queue, peek)(queue_p);
 }
 
-static inline const VALUE_TYPE JOIN(T_queue, peek_last)(T_queue_type* queue_p) {
+static inline VALUE_TYPE JOIN(T_queue, peek_last)(T_queue_type* queue_p) {
     assert(queue_p != NULL);
 #define T_queue_is_empty JOIN(T_queue, is_empty)
     assert(T_queue_is_empty(queue_p) == false);
@@ -189,8 +186,6 @@ static inline const VALUE_TYPE JOIN(T_queue, peek_last)(T_queue_type* queue_p) {
 
     return queue_p->arr[(queue_p->end_index - 1) & (queue_p->capacity - 1)];
 }
-
-#pragma GCC diagnostic pop
 
 static inline void JOIN(T_queue, enqueue)(T_queue_type* queue_p, const VALUE_TYPE value) {
     assert(queue_p != NULL);

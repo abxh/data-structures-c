@@ -205,10 +205,7 @@ static inline bool JOIN(K_to_V_hashtable, is_full)(const K_to_V_hashtable_type* 
     return hashtable_p->count == hashtable_p->index_mask + 1;
 }
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-qualifiers"
-
-static inline const bool JOIN(K_to_V_hashtable, contains)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key) {
+static inline bool JOIN(K_to_V_hashtable, contains)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key) {
     assert(hashtable_p != NULL);
 #define K_to_V_hashtable_is_full JOIN(K_to_V_hashtable, is_full)
     assert(K_to_V_hashtable_is_full(hashtable_p) == false &&
@@ -229,7 +226,7 @@ static inline const bool JOIN(K_to_V_hashtable, contains)(K_to_V_hashtable_type*
     return false;
 }
 
-static inline const VALUE_TYPE* JOIN(K_to_V_hashtable, get_mut)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key) {
+static inline VALUE_TYPE* JOIN(K_to_V_hashtable, get_mut)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key) {
     assert(hashtable_p != NULL);
 #define K_to_V_hashtable_is_full JOIN(K_to_V_hashtable, is_full)
     assert(K_to_V_hashtable_is_full(hashtable_p) == false &&
@@ -250,15 +247,14 @@ static inline const VALUE_TYPE* JOIN(K_to_V_hashtable, get_mut)(K_to_V_hashtable
     return NULL;
 }
 
-static inline const VALUE_TYPE JOIN(K_to_V_hashtable, get)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key,
+static inline VALUE_TYPE JOIN(K_to_V_hashtable, get)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key,
                                                            const VALUE_TYPE default_value) {
     assert(hashtable_p != NULL);
 
-    const VALUE_TYPE* value_p = JOIN(K_to_V_hashtable, get_mut)(hashtable_p, key);
+    VALUE_TYPE* value_p = JOIN(K_to_V_hashtable, get_mut)(hashtable_p, key);
     return value_p != NULL ? *value_p : default_value;
 }
 
-#pragma GCC diagnostic pop
 
 static inline void JOIN(K_to_V_hashtable, set)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key, const VALUE_TYPE value) {
     assert(hashtable_p != NULL);
