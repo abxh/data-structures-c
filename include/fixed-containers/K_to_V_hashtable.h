@@ -137,8 +137,8 @@ static inline bool JOIN(K_to_V_hashtable, init_internal)(K_to_V_hashtable_type**
     return true;
 }
 
-static inline bool JOIN(K_to_V_hashtable, init_with_capacity_rounded)(K_to_V_hashtable_type** queue_pp, size_t capacity) {
-    assert(queue_pp != NULL);
+static inline bool JOIN(K_to_V_hashtable, init_with_capacity_rounded)(K_to_V_hashtable_type** hashtable_pp, size_t capacity) {
+    assert(hashtable_pp != NULL);
 
     if (capacity == 0) {
         return false;
@@ -148,23 +148,23 @@ static inline bool JOIN(K_to_V_hashtable, init_with_capacity_rounded)(K_to_V_has
         return false;
     }
 
-    return JOIN(K_to_V_hashtable, init_internal)(queue_pp, rounded_capacity);
+    return JOIN(K_to_V_hashtable, init_internal)(hashtable_pp, rounded_capacity);
 }
 
-static inline bool JOIN(K_to_V_hashtable, init)(K_to_V_hashtable_type** queue_pp, size_t capacity) {
-    assert(queue_pp != NULL);
+static inline bool JOIN(K_to_V_hashtable, init)(K_to_V_hashtable_type** hashtable_pp, size_t capacity) {
+    assert(hashtable_pp != NULL);
 
-    return JOIN(K_to_V_hashtable, init_with_capacity_rounded)(queue_pp, (capacity == 1) + 1.5 * capacity);
+    return JOIN(K_to_V_hashtable, init_with_capacity_rounded)(hashtable_pp, (capacity == 1) + 1.5 * capacity);
 }
 
-static inline bool JOIN(K_to_V_hashtable, deinit)(K_to_V_hashtable_type** queue_pp) {
-    assert(queue_pp != NULL);
+static inline bool JOIN(K_to_V_hashtable, deinit)(K_to_V_hashtable_type** hashtable_pp) {
+    assert(hashtable_pp != NULL);
 
-    if (*queue_pp == NULL) {
+    if (*hashtable_pp == NULL) {
         return false;
     }
-    free(*queue_pp);
-    *queue_pp = NULL;
+    free(*hashtable_pp);
+    *hashtable_pp = NULL;
 
     return true;
 }
