@@ -5,25 +5,25 @@
 
 #include "test.h" // is_true, is_false, is_equal
 
-#define PREFIX num_ht
+#define PREFIX int_ht
 #define KEY_TYPE int
 #define VALUE_TYPE int
-#include "fixed-containers/K_to_V_hashtable.h" // num_ht_*, K_to_V_hashtable_for_each
+#include "fixed-containers/K_to_V_hashtable.h" // int_ht_*, K_to_V_hashtable_for_each
 
 bool one_element_test(void) {
-    num_ht_type* num_ht_p = NULL;
-    if (!num_ht_init(&num_ht_p, 1)) {
+    int_ht_type* int_ht_p = NULL;
+    if (!int_ht_init(&int_ht_p, 1)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
 
-    res &= is_equal(num_ht_get_count(num_ht_p), 0UL);
-    num_ht_set(num_ht_p, 1, 42);
-    res &= is_equal(num_ht_get_count(num_ht_p), 1UL);
-    res &= is_equal(num_ht_get(num_ht_p, 1, -1), 42);
+    res &= is_equal(int_ht_get_count(int_ht_p), 0UL);
+    int_ht_set(int_ht_p, 1, 42);
+    res &= is_equal(int_ht_get_count(int_ht_p), 1UL);
+    res &= is_equal(int_ht_get(int_ht_p, 1, -1), 42);
 
-    res &= is_true(num_ht_deinit(&num_ht_p));
+    res &= is_true(int_ht_deinit(&int_ht_p));
 
     return res;
 }
@@ -69,27 +69,27 @@ bool four_elements_test(void) {
 }
 
 bool missing_elements_test(void) {
-    num_ht_type* num_ht_p = NULL;
-    if (!num_ht_init(&num_ht_p, 2)) {
+    int_ht_type* int_ht_p = NULL;
+    if (!int_ht_init(&int_ht_p, 2)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
 
-    res &= is_false(num_ht_contains(num_ht_p, 1));
-    res &= is_false(num_ht_contains(num_ht_p, 2));
-    res &= is_false(num_ht_contains(num_ht_p, 3));
-    res &= is_false(num_ht_contains(num_ht_p, 4));
+    res &= is_false(int_ht_contains(int_ht_p, 1));
+    res &= is_false(int_ht_contains(int_ht_p, 2));
+    res &= is_false(int_ht_contains(int_ht_p, 3));
+    res &= is_false(int_ht_contains(int_ht_p, 4));
 
-    num_ht_set(num_ht_p, 1, 42);
-    num_ht_set(num_ht_p, 4, 69);
+    int_ht_set(int_ht_p, 1, 42);
+    int_ht_set(int_ht_p, 4, 69);
 
-    res &= is_true(num_ht_contains(num_ht_p, 1));
-    res &= is_false(num_ht_contains(num_ht_p, 2));
-    res &= is_false(num_ht_contains(num_ht_p, 3));
-    res &= is_true(num_ht_contains(num_ht_p, 4));
+    res &= is_true(int_ht_contains(int_ht_p, 1));
+    res &= is_false(int_ht_contains(int_ht_p, 2));
+    res &= is_false(int_ht_contains(int_ht_p, 3));
+    res &= is_true(int_ht_contains(int_ht_p, 4));
 
-    res &= is_true(num_ht_deinit(&num_ht_p));
+    res &= is_true(int_ht_deinit(&int_ht_p));
 
     return res;
 }
@@ -158,24 +158,24 @@ bool del_and_contains_test(void) {
 }
 
 bool overwrite_element_test(void) {
-    num_ht_type* ht_p = NULL;
-    if (!num_ht_init(&ht_p, 2)) {
+    int_ht_type* ht_p = NULL;
+    if (!int_ht_init(&ht_p, 2)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
 
-    res &= is_equal(num_ht_get_count(ht_p), 0UL);
-    num_ht_set(ht_p, 1, 1111);
-    res &= is_equal(num_ht_get_count(ht_p), 1UL);
-    num_ht_set(ht_p, 1, 2222);
-    res &= is_equal(num_ht_get_count(ht_p), 1UL);
-    num_ht_set(ht_p, 1, 2222);
-    res &= is_equal(num_ht_get_count(ht_p), 1UL);
+    res &= is_equal(int_ht_get_count(ht_p), 0UL);
+    int_ht_set(ht_p, 1, 1111);
+    res &= is_equal(int_ht_get_count(ht_p), 1UL);
+    int_ht_set(ht_p, 1, 2222);
+    res &= is_equal(int_ht_get_count(ht_p), 1UL);
+    int_ht_set(ht_p, 1, 2222);
+    res &= is_equal(int_ht_get_count(ht_p), 1UL);
 
-    res &= is_equal(num_ht_get(ht_p, 1, -1), 2222);
+    res &= is_equal(int_ht_get(ht_p, 1, -1), 2222);
 
-    res &= is_true(num_ht_deinit(&ht_p));
+    res &= is_true(int_ht_deinit(&ht_p));
 
     return res;
 }
@@ -183,33 +183,33 @@ bool overwrite_element_test(void) {
 #define lim 1000000
 
 bool million_elements_test(void) {
-    num_ht_type* ht_p = NULL;
-    if (!num_ht_init(&ht_p, lim)) {
+    int_ht_type* ht_p = NULL;
+    if (!int_ht_init(&ht_p, lim)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
-    res &= is_equal(num_ht_get_count(ht_p), 0UL);
+    res &= is_equal(int_ht_get_count(ht_p), 0UL);
     for (int i = 0; i < lim; i++) {
-        num_ht_set(ht_p, i, lim - i);
+        int_ht_set(ht_p, i, lim - i);
     }
-    res &= is_equal(num_ht_get_count(ht_p), (size_t)lim);
+    res &= is_equal(int_ht_get_count(ht_p), (size_t)lim);
     for (int i = 0; i < lim; i++) {
-        res &= is_equal(num_ht_get(ht_p, i, -1), lim - i);
+        res &= is_equal(int_ht_get(ht_p, i, -1), lim - i);
     }
-    res &= is_true(num_ht_deinit(&ht_p));
+    res &= is_true(int_ht_deinit(&ht_p));
     return res;
 }
 
 bool for_each_and_copy_test(void) {
-    num_ht_type* ht_p = NULL;
-    if (!num_ht_init(&ht_p, 1000)) {
+    int_ht_type* ht_p = NULL;
+    if (!int_ht_init(&ht_p, 1000)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
     for (int i = 0; i < 1000; i++) {
-        num_ht_set(ht_p, i, 1000 - i);
+        int_ht_set(ht_p, i, 1000 - i);
     }
     {
         size_t index;
@@ -225,8 +225,8 @@ bool for_each_and_copy_test(void) {
         res &= is_equal(1000UL, count);
     }
     return true;
-    num_ht_type* ht_copy_p = NULL;
-    if (!num_ht_copy(&ht_copy_p, ht_p)) {
+    int_ht_type* ht_copy_p = NULL;
+    if (!int_ht_copy(&ht_copy_p, ht_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -240,11 +240,11 @@ bool for_each_and_copy_test(void) {
         size_t count = 0;
         K_to_V_hashtable_for_each(ht_p, index, key, value) {
             count++;
-            res &= is_true(value == num_ht_get(ht_p, key, -1));
+            res &= is_true(value == int_ht_get(ht_p, key, -1));
         }
         res &= is_equal(1000UL, count);
     }
-    res &= is_true(num_ht_deinit(&ht_p));
+    res &= is_true(int_ht_deinit(&ht_p));
     return res;
 }
 
