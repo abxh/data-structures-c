@@ -82,7 +82,7 @@ static inline bool JOIN(T_queue, init_internal)(T_queue_type** queue_pp, size_t 
     if (pow2_capacity > (SIZE_MAX - offsetof(T_queue_type, arr)) / sizeof(VALUE_TYPE)) {
         return false;
     }
-    *queue_pp = malloc(offsetof(T_queue_type, arr) + sizeof(VALUE_TYPE) * pow2_capacity);
+    *queue_pp = (T_queue_type*)malloc(offsetof(T_queue_type, arr) + sizeof(VALUE_TYPE) * pow2_capacity);
     if ((*queue_pp) == NULL) {
         return false;
     }

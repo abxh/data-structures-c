@@ -121,7 +121,8 @@ static inline bool JOIN(K_to_V_hashtable, init_internal)(K_to_V_hashtable_type**
     if (pow2_capacity > (SIZE_MAX - offsetof(K_to_V_hashtable_type, arr)) / sizeof(K_to_V_hashtable_slot_type)) {
         return false;
     }
-    *hashtable_pp = malloc(offsetof(K_to_V_hashtable_type, arr) + sizeof(K_to_V_hashtable_slot_type) * pow2_capacity);
+    *hashtable_pp =
+        (K_to_V_hashtable_type*)malloc(offsetof(K_to_V_hashtable_type, arr) + sizeof(K_to_V_hashtable_slot_type) * pow2_capacity);
     if ((*hashtable_pp) == NULL) {
         return false;
     }
@@ -248,13 +249,12 @@ static inline VALUE_TYPE* JOIN(K_to_V_hashtable, get_mut)(K_to_V_hashtable_type*
 }
 
 static inline VALUE_TYPE JOIN(K_to_V_hashtable, get)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key,
-                                                           const VALUE_TYPE default_value) {
+                                                     const VALUE_TYPE default_value) {
     assert(hashtable_p != NULL);
 
     VALUE_TYPE* value_p = JOIN(K_to_V_hashtable, get_mut)(hashtable_p, key);
     return value_p != NULL ? *value_p : default_value;
 }
-
 
 static inline void JOIN(K_to_V_hashtable, set)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key, const VALUE_TYPE value) {
     assert(hashtable_p != NULL);

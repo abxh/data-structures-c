@@ -39,7 +39,7 @@
 #include <stdlib.h>  // size_t, NULL, aligned_alloc, free
 #include <string.h>  // memcpy
 
-#define T_stack_for_each(stack_p, index_plus_one, value)                                                                        \
+#define T_stack_for_each(stack_p, index_plus_one, value)                                                                      \
     for ((index_plus_one) = (stack_p)->count; ((index_plus_one) > 0 && ((value) = (stack_p)->arr[(index_plus_one)-1], true)); \
          (index_plus_one)--)
 
@@ -74,7 +74,7 @@ static inline bool JOIN(T_stack, init)(T_stack_type** stack_pp, size_t capacity)
     if (capacity == 0 || capacity > (SIZE_MAX - offsetof(T_stack_type, arr)) / sizeof(VALUE_TYPE)) {
         return false;
     }
-    *stack_pp = malloc(offsetof(T_stack_type, arr) + sizeof(VALUE_TYPE) * capacity);
+    *stack_pp = (T_stack_type*)malloc(offsetof(T_stack_type, arr) + sizeof(VALUE_TYPE) * capacity);
     if ((*stack_pp) == NULL) {
         return false;
     }
