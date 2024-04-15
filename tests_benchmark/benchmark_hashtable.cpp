@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
 #include <iostream>
 #include <unordered_map>
 
@@ -43,20 +44,25 @@ void benchmark_std_unordered_map(size_t n) {
 }
 
 int main(void) {
-    for (size_t N = 10; N < 100000000; N *= 10) {
+    using std::chrono::high_resolution_clock;
+    using std::chrono::duration_cast;
+    using std::chrono::duration;
+    using std::chrono::microseconds;
+
+    for (size_t N = 10; N < 10000000; N *= 10) {
         srand(N);
-        std::clock_t c_start1 = std::clock();
+        auto c_start1 = high_resolution_clock::now();
         benchmark_uint_ht(N);
-        std::clock_t c_end1 = std::clock();
+        auto c_end1 = high_resolution_clock::now();
 
         srand(N);
-        std::clock_t c_start2 = std::clock();
+        auto c_start2 = high_resolution_clock::now();
         benchmark_std_unordered_map(N);
-        std::clock_t c_end2 = std::clock();
+        auto c_end2 = high_resolution_clock::now();
 
         std::cout << "time elapsed for " << N << " elements:" << std::endl;
-        std::cout << " custom hashtable: " << (c_end1 - c_start1) / 1000.0 << "s" << std::endl;
-        std::cout << " c++ unordered map: " << (c_end2 - c_start2) / 1000.0 << "s" << std::endl;
+        std::cout << " custom hashtable: " << duration_cast<microseconds>(c_end1 - c_start1).count() << " μs" << std::endl;
+        std::cout << " c++ unordered map: " << duration_cast<microseconds>(c_end2 - c_start2).count() << " μs" << std::endl;
     }
 
     return 0;
