@@ -2,8 +2,8 @@
 // https://github.com/tsoding/rust-hash-table/blob/main/src/main.rs
 // https://cplusplus.com/reference/unordered_map/unordered_map/find/
 
-#include <cstdint> // uint64_t
-#include <cstdlib> // rand, srand
+#include <cstdint>
+#include <cstdlib>
 #include <ctime>
 #include <iostream>
 #include <unordered_map>
@@ -12,12 +12,11 @@ extern "C" {
 #define PREFIX uint_ht
 #define KEY_TYPE uint64_t
 #define VALUE_TYPE uint64_t
-#include "fixed-containers/K_to_V_hashtable.h" // uint_ht
+#include "fixed-containers/K_to_V_hashtable.h"
 
-void benchmark_uint_ht(size_t n, unsigned int seed) {
+void benchmark_uint_ht(size_t n) {
     uint_ht_type* ht_p;
     uint_ht_init(&ht_p, n);
-    srand(seed);
     for (size_t i = 0; i < n; i++) {
         uint64_t key = rand() & 1;
         uint64_t* value_p = uint_ht_get_mut(ht_p, key);
@@ -30,9 +29,8 @@ void benchmark_uint_ht(size_t n, unsigned int seed) {
 }
 }
 
-void benchmark_std_unordered_map(size_t n, unsigned int seed) {
+void benchmark_std_unordered_map(size_t n) {
     std::unordered_map<uint64_t, uint64_t> map;
-    srand(seed);
     for (size_t i = 0; i < n; i++) {
         uint64_t key = rand();
         std::unordered_map<uint64_t, uint64_t>::iterator res_iterator = map.find(key);
@@ -46,12 +44,14 @@ void benchmark_std_unordered_map(size_t n, unsigned int seed) {
 
 int main(void) {
     for (size_t N = 10; N < 100000000; N *= 10) {
+        srand(N);
         std::clock_t c_start1 = std::clock();
-        benchmark_uint_ht(N, N);
+        benchmark_uint_ht(N);
         std::clock_t c_end1 = std::clock();
 
+        srand(N);
         std::clock_t c_start2 = std::clock();
-        benchmark_std_unordered_map(N, N);
+        benchmark_std_unordered_map(N);
         std::clock_t c_end2 = std::clock();
 
         std::cout << "time elapsed for " << N << " elements:" << std::endl;
