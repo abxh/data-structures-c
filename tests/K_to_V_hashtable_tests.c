@@ -76,17 +76,17 @@ bool missing_elements_test(void) {
     }
     bool res = true;
 
-    res &= is_false(int_ht_contains(int_ht_p, 1));
-    res &= is_false(int_ht_contains(int_ht_p, 2));
-    res &= is_false(int_ht_contains(int_ht_p, 3));
-    res &= is_false(int_ht_contains(int_ht_p, 4));
+    res &= is_true(int_ht_get_mut(int_ht_p, 1) == NULL);
+    res &= is_true(int_ht_get_mut(int_ht_p, 2) == NULL);
+    res &= is_true(!int_ht_contains(int_ht_p, 3));
+    res &= is_true(!int_ht_contains(int_ht_p, 4));
 
     int_ht_set(int_ht_p, 1, 42);
     int_ht_set(int_ht_p, 4, 69);
 
-    res &= is_true(int_ht_contains(int_ht_p, 1));
-    res &= is_false(int_ht_contains(int_ht_p, 2));
-    res &= is_false(int_ht_contains(int_ht_p, 3));
+    res &= is_true(int_ht_get_mut(int_ht_p, 1) != NULL);
+    res &= is_true(int_ht_get_mut(int_ht_p, 2) == NULL);
+    res &= is_true(!int_ht_contains(int_ht_p, 3));
     res &= is_true(int_ht_contains(int_ht_p, 4));
 
     res &= is_true(int_ht_deinit(&int_ht_p));
