@@ -24,6 +24,7 @@
     - K_to_V_hashtable_is_full
     - K_to_V_hashtable_contains
     - K_to_V_hashtable_get
+    - K_to_V_hashtable_get_mut
     - K_to_V_hashtable_set
     - K_to_V_hashtable_del
 
@@ -228,8 +229,7 @@ static inline const bool JOIN(K_to_V_hashtable, contains)(K_to_V_hashtable_type*
     return false;
 }
 
-static inline const VALUE_TYPE JOIN(K_to_V_hashtable, get)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key,
-                                                           const VALUE_TYPE default_return_value) {
+static inline const VALUE_TYPE* JOIN(K_to_V_hashtable, get_mut)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key) {
     assert(hashtable_p != NULL);
 #define K_to_V_hashtable_is_full JOIN(K_to_V_hashtable, is_full)
     assert(K_to_V_hashtable_is_full(hashtable_p) == false &&
@@ -242,12 +242,20 @@ static inline const VALUE_TYPE JOIN(K_to_V_hashtable, get)(K_to_V_hashtable_type
 
     while (hashtable_p->arr[index].offset != EMPTY_SLOT_OFFSET && max_possible_offset <= hashtable_p->arr[index].offset) {
         if (KEY_IS_EQUAL(hashtable_p->arr[index].key, key)) {
-            return hashtable_p->arr[index].value;
+            return &hashtable_p->arr[index].value;
         }
         index = (index + 1) & hashtable_p->index_mask;
         max_possible_offset++;
     }
-    return default_return_value;
+    return NULL;
+}
+
+static inline const VALUE_TYPE JOIN(K_to_V_hashtable, get)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key,
+                                                           const VALUE_TYPE default_value) {
+    assert(hashtable_p != NULL);
+
+    const VALUE_TYPE* value_p = JOIN(K_to_V_hashtable, get_mut)(hashtable_p, key);
+    return value_p != NULL ? *value_p : default_value;
 }
 
 #pragma GCC diagnostic pop
