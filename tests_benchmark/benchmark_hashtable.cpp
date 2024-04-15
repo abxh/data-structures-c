@@ -45,9 +45,7 @@ void benchmark_std_unordered_map(size_t n, unsigned int seed) {
 }
 
 int main(void) {
-    const size_t N = 1000000;
-
-    for (size_t N = 10; N < 10000000; N *= 10) {
+    for (size_t N = 10; N < 100000000; N *= 10) {
         std::clock_t c_start1 = std::clock();
         benchmark_uint_ht(N, N);
         std::clock_t c_end1 = std::clock();
