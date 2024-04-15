@@ -1,13 +1,51 @@
 /*
-    `K_to_V_hashtable` is a hashmap implementation based on a fixed size array.
+    `K_to_V_hashtable` is a hashtable implementation based on a fixed size array
+    using robin hood hashing (open addressing).
 
-    At least one slot in the hashmap is expected to be reserved - so searching
-    for missing keys works. Load factor should not exactly be equal to 1.
-    Use `init_with_capacity_rounded_up` if unsure.
+    Including this header file generates a struct and functions for a given queue type.
 
-    Reference:
+    The following macros gets defined once:
+    - EMPTY_SLOT_OFFSET
+    - K_to_V_hashtable_for_each
+
+    The following structs are generated for a given key type K and value type V:
+    - K_to_V_hashtable_type
+    - K_to_V_hashtable_slot_type
+
+    The following structs are generated for a given key type K and value type V:
+    - K_to_V_hashtable_init
+    - K_to_V_hashtable_init_internal
+    - K_to_V_hashtable_init_with_capacity_rounded
+    - K_to_V_hashtable_deinit
+    - K_to_V_hashtable_copy
+    - K_to_V_hashtable_get_count
+    - K_to_V_hashtable_get_capacity
+    - K_to_V_hashtable_is_empty
+    - K_to_V_hashtable_is_full
+    - K_to_V_hashtable_contains
+    - K_to_V_hashtable_get
+    - K_to_V_hashtable_set
+    - K_to_V_hashtable_del
+
+    Define PREFIX to use an other prefix than "K_to_V_hashtable". The macro(s) cannot
+    however be redefined to have other prefixes.
+
+    Note that (if PREFIX is not defined), then the given types cannot include
+    spaces because C functions and variables cannot either.
+    Use a typedef and replace spaces with _ or change the type name as needed.
+
+    Some implementation details to consider, if `init_internal` is used:
+    - The size must be a power of 2.
+    - A larger hashtable than neccessary should be used to get the most performance
+    of the open-addressing hash table, because performance of open-addressing hash
+    tables worsens dramtically as the load factor (# of elements / size) approaches 1.
+    - At least one slot in the hashtable is expected to be reserved - for the case of
+    missing keys. Load factor should not exactly be equal to 1.
+
+    References:
     https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/
-    https://thenumb.at/hashtables/#robin-hood-linear-probing
+    https://thenumb.at/Hashtables/#robin-hood-linear-probing
+    https://github.com/rmind/rhashmap/blob/master/src/rhashmap.c
 */
 
 #ifndef __K_TO_V_HASHTABLE__H
@@ -19,10 +57,16 @@
 #include <assert.h>     // assert
 #include <stdbool.h>    // bool, true, false
 #include <stddef.h>     // offsetof
-#include <stdint.h>     // SIZE_MAX, uint64_t
-#include <stdio.h>      // fprintf, stderr
+#include <stdint.h>     // SIZE_MAX
 #include <stdlib.h>     // size_t, NULL, malloc, free
 #include <string.h>     // memcpy
+
+#define EMPTY_SLOT_OFFSET SIZE_MAX
+
+#define K_to_V_hashtable_for_each(hashtable_p, index, key, value)      \
+    for ((index) = 0; (index) <= (hashtable_p)->index_mask; (index)++) \
+        if ((hashtable_p)->arr[(index)].offset != EMPTY_SLOT_OFFSET && \
+            ((key) = (hashtable_p)->arr[(index)].key, (value) = (hashtable_p)->arr[(index)].value, true))
 
 #endif
 
@@ -48,12 +92,14 @@
 #define PASTE(a, b) CAT(a, b)
 #define JOIN(prefix, name) PASTE(prefix, PASTE(_, name))
 
+#ifndef PREFIX
 #define K_to_V_hashtable JOIN(KEY_TYPE, JOIN(JOIN(to, VALUE_TYPE), hashtable))
+#else
+#define K_to_V_hashtable PREFIX
+#endif
 #define K_to_V_hashtable_type JOIN(K_to_V_hashtable, type)
 #define K_to_V_hashtable_slot JOIN(K_to_V_hashtable, slot)
 #define K_to_V_hashtable_slot_type JOIN(K_to_V_hashtable_slot, type)
-
-#define EMPTY_SLOT_OFFSET SIZE_MAX
 
 typedef struct {
     size_t offset;
@@ -70,7 +116,6 @@ typedef struct {
 static inline bool JOIN(K_to_V_hashtable, init_internal)(K_to_V_hashtable_type** hashtable_pp, size_t pow2_capacity) {
     assert(hashtable_pp != NULL);
     assert(is_pow2(pow2_capacity) && "initial capacity is a power of 2");
-    assert(pow2_capacity - 1 != 0 && "subtracting initial capacity by one does not yield zero");
 
     if (pow2_capacity > (SIZE_MAX - offsetof(K_to_V_hashtable_type, arr)) / sizeof(K_to_V_hashtable_slot_type)) {
         return false;
@@ -90,15 +135,11 @@ static inline bool JOIN(K_to_V_hashtable, init_internal)(K_to_V_hashtable_type**
     return true;
 }
 
-static inline bool JOIN(K_to_V_hashtable, init)(K_to_V_hashtable_type** queue_pp, size_t capacity) {
+static inline bool JOIN(K_to_V_hashtable, init_with_capacity_rounded)(K_to_V_hashtable_type** queue_pp, size_t capacity) {
     assert(queue_pp != NULL);
 
     if (capacity == 0) {
         return false;
-    } else if (capacity == 1) {
-        capacity = 2;
-    } else if (is_pow2(capacity)) {
-        capacity += 1;
     }
     size_t rounded_capacity = nextpow2(capacity);
     if (rounded_capacity < capacity) {
@@ -106,6 +147,12 @@ static inline bool JOIN(K_to_V_hashtable, init)(K_to_V_hashtable_type** queue_pp
     }
 
     return JOIN(K_to_V_hashtable, init_internal)(queue_pp, rounded_capacity);
+}
+
+static inline bool JOIN(K_to_V_hashtable, init)(K_to_V_hashtable_type** queue_pp, size_t capacity) {
+    assert(queue_pp != NULL);
+
+    return JOIN(K_to_V_hashtable, init_with_capacity_rounded)(queue_pp, (capacity == 1) + 1.5 * capacity);
 }
 
 static inline bool JOIN(K_to_V_hashtable, deinit)(K_to_V_hashtable_type** queue_pp) {
@@ -160,22 +207,23 @@ static inline bool JOIN(K_to_V_hashtable, is_full)(const K_to_V_hashtable_type* 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-qualifiers"
 
-static inline const bool JOIN(K_to_V_hashtable, exists)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key) {
+static inline const bool JOIN(K_to_V_hashtable, contains)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key) {
     assert(hashtable_p != NULL);
 #define K_to_V_hashtable_is_full JOIN(K_to_V_hashtable, is_full)
-    assert(K_to_V_hashtable_is_full(hashtable_p) == false && "loops forever for missing keys. consider using a larger hashtable.");
+    assert(K_to_V_hashtable_is_full(hashtable_p) == false &&
+           "loops forever for missing keys. consider using a larger-sized hashtable.");
 #undef K_to_V_hashtable_is_full
 
     size_t key_hash = HASH_FUNCTION(key);
     size_t index = key_hash & hashtable_p->index_mask;
-    size_t dist = 0;
+    size_t max_possible_offset = 0;
 
-    while (hashtable_p->arr[index].offset != EMPTY_SLOT_OFFSET && dist <= hashtable_p->arr[index].offset) {
+    while (hashtable_p->arr[index].offset != EMPTY_SLOT_OFFSET && max_possible_offset <= hashtable_p->arr[index].offset) {
         if (KEY_IS_EQUAL(hashtable_p->arr[index].key, key)) {
             return true;
         }
         index = (index + 1) & hashtable_p->index_mask;
-        dist++;
+        max_possible_offset++;
     }
     return false;
 }
@@ -184,19 +232,20 @@ static inline const VALUE_TYPE JOIN(K_to_V_hashtable, get)(K_to_V_hashtable_type
                                                            const VALUE_TYPE default_return_value) {
     assert(hashtable_p != NULL);
 #define K_to_V_hashtable_is_full JOIN(K_to_V_hashtable, is_full)
-    assert(K_to_V_hashtable_is_full(hashtable_p) == false && "loops forever for missing keys. consider using a larger hashtable.");
+    assert(K_to_V_hashtable_is_full(hashtable_p) == false &&
+           "loops forever for missing keys. consider using a larger-sized hashtable.");
 #undef K_to_V_hashtable_is_full
 
     size_t key_hash = HASH_FUNCTION(key);
     size_t index = key_hash & hashtable_p->index_mask;
-    size_t dist = 0;
+    size_t max_possible_offset = 0;
 
-    while (hashtable_p->arr[index].offset != EMPTY_SLOT_OFFSET && dist <= hashtable_p->arr[index].offset) {
+    while (hashtable_p->arr[index].offset != EMPTY_SLOT_OFFSET && max_possible_offset <= hashtable_p->arr[index].offset) {
         if (KEY_IS_EQUAL(hashtable_p->arr[index].key, key)) {
             return hashtable_p->arr[index].value;
         }
         index = (index + 1) & hashtable_p->index_mask;
-        dist++;
+        max_possible_offset++;
     }
     return default_return_value;
 }
@@ -211,21 +260,24 @@ static inline void JOIN(K_to_V_hashtable, set)(K_to_V_hashtable_type* hashtable_
 
     size_t key_hash = HASH_FUNCTION(key);
     size_t index = key_hash & hashtable_p->index_mask;
-    K_to_V_hashtable_slot_type slot = {.offset = 0, .key = key, .value = value};
+    K_to_V_hashtable_slot_type current_slot = {.offset = 0, .key = key, .value = value};
 
     while (hashtable_p->arr[index].offset != EMPTY_SLOT_OFFSET) {
-        // swap if current_dist is larger. will ensure the maximum
-        // offset is minimized.
-        if (slot.offset > hashtable_p->arr[index].offset) {
-            // swap entries:
+        if (current_slot.offset == hashtable_p->arr[index].offset && KEY_IS_EQUAL(current_slot.key, hashtable_p->arr[index].key)) {
+            hashtable_p->arr[index].value = current_slot.value;
+            return;
+        }
+        // swap if current offset is larger. will ensure the maximum
+        // offset (from the ideal position) is minimized.
+        if (current_slot.offset > hashtable_p->arr[index].offset) {
             K_to_V_hashtable_slot_type temp = hashtable_p->arr[index];
-            hashtable_p->arr[index] = slot;
-            slot = temp;
+            hashtable_p->arr[index] = current_slot;
+            current_slot = temp;
         }
         index = (index + 1) & hashtable_p->index_mask;
-        slot.offset++;
+        current_slot.offset++;
     }
-    hashtable_p->arr[index] = slot;
+    hashtable_p->arr[index] = current_slot;
     hashtable_p->count++;
 }
 
@@ -237,34 +289,38 @@ static inline bool JOIN(K_to_V_hashtable, del)(K_to_V_hashtable_type* hashtable_
 
     size_t key_hash = HASH_FUNCTION(key);
     size_t index = key_hash & hashtable_p->index_mask;
-    size_t dist = 0;
+    size_t max_possible_offset = 0;
 
-    while (hashtable_p->arr[index].offset != EMPTY_SLOT_OFFSET && dist <= hashtable_p->arr[index].offset) {
+    while (hashtable_p->arr[index].offset != EMPTY_SLOT_OFFSET && max_possible_offset <= hashtable_p->arr[index].offset) {
         if (KEY_IS_EQUAL(hashtable_p->arr[index].key, key)) {
+            // mark as deleted:
+            hashtable_p->arr[index].offset = EMPTY_SLOT_OFFSET;
+            hashtable_p->count--;
+
+            // reduce offsets as much as possible by moving back offset elements:
             size_t next_index = (index + 1) & hashtable_p->index_mask;
             while (hashtable_p->arr[next_index].offset != EMPTY_SLOT_OFFSET && hashtable_p->arr[next_index].offset > 0) {
                 hashtable_p->arr[index] = hashtable_p->arr[next_index];
                 hashtable_p->arr[index].offset--;
+                hashtable_p->arr[next_index].offset = EMPTY_SLOT_OFFSET;
+
                 index = next_index;
                 next_index = (index + 1) & hashtable_p->index_mask;
             }
-            hashtable_p->arr[index].offset = EMPTY_SLOT_OFFSET;
-            hashtable_p->count--;
             return true;
         }
         index = (index + 1) & hashtable_p->index_mask;
-        dist++;
+        max_possible_offset++;
     }
     return false;
 }
-
-#undef EMPTY_SLOT_OFFSET
 
 #undef K_to_V_hashtable
 #undef K_to_V_hashtable_type
 #undef K_to_V_hashtable_slot
 #undef K_to_V_hashtable_slot_type
 
+#undef PREFIX
 #undef HASH_FUNCTION
 #undef KEY_IS_EQUAL
 #undef KEY_TYPE
