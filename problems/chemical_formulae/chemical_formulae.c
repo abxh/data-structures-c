@@ -95,7 +95,7 @@ int main(void) {
 
         char buf1[line_len_max * 2];
         sprintf(buf1, "%s%s%s", formula_str, *cas_str != '\0' ? ", CAS: " : "", cas_str);
-        strmap_set(strmap_p,
+        strmap_insert(strmap_p,
                    synonym_str, // key
                    buf1         // value
         );
@@ -127,14 +127,14 @@ int main(void) {
         if (line_p[len - 1] == '\n') {
             line_p[len - 1] = '\0';
         }
-        if (strmap_exists(strmap_p, line_p)) {
-            printf(" -> %s (%s)\n", line_p, strmap_get(strmap_p, line_p));
+        if (strmap_contains(strmap_p, line_p)) {
+            printf(" -> %s (%s)\n", line_p, strmap_search(strmap_p, line_p));
             continue;
         }
         cmp_custom_usr_inp_p = &line_p[0];
         qsort(keys_arr_pp, count, sizeof(char*), cmp_custom);
         for (size_t i = count - 1; i >= count - 5; i--) {
-            printf(" -> %s (%s)\n", keys_arr_pp[i], strmap_get(strmap_p, keys_arr_pp[i]));
+            printf(" -> %s (%s)\n", keys_arr_pp[i], strmap_search(strmap_p, keys_arr_pp[i]));
         }
     }
     // clean up stuff:
