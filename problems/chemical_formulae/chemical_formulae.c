@@ -4,7 +4,7 @@
 #include <stdlib.h>  // NULL, free, qsort, size_t, ssize_t
 #include <string.h>  // memset, strlen, strnlen, strcspn
 
-#include "strmap.h" // strmap_*
+#include "other/strmap.h" // strmap_*
 
 #define max(x, y) ((x) > (y) ? (x) : (y))
 
