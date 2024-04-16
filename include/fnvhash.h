@@ -6,7 +6,7 @@
 // FNV-1a hash
 // https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function
 
-uint64_t fnvhash_fixed(const unsigned char* char_p, size_t length) {
+static inline uint64_t fnvhash_fixed(const unsigned char* char_p, size_t length) {
     assert(char_p != NULL);
 
     static const uint64_t FNV_OFFSET = 14695981039346656037UL;
@@ -21,7 +21,7 @@ uint64_t fnvhash_fixed(const unsigned char* char_p, size_t length) {
     return hash;
 }
 
-uint64_t fnvhash(const unsigned char* char_p) {
+static inline uint64_t fnvhash(const unsigned char* char_p) {
     assert(char_p != NULL);
 
     static const uint64_t FNV_OFFSET = 14695981039346656037UL;

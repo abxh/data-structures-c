@@ -10,7 +10,7 @@
 // https://en.wikipedia.org/wiki/Find_first_set#Tool_and_library_support
 // https://stackoverflow.com/questions/5272825/detecting-64bit-compile-in-c
 
-size_t nextpow2(size_t x) {
+static inline size_t nextpow2(size_t x) {
     assert(x != 0);
 #if defined(UINT64_MAX) && UINTPTR_MAX == UINT32_MAX
     assert(x <= 1073741824);
