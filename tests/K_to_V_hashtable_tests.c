@@ -152,6 +152,7 @@ bool del_and_contains_test(void) {
 
     res &= is_equal(strint_ht_get(ht_p, "bbb", -1), 4);
 
+    free(buf);
     res &= is_true(strint_ht_deinit(&ht_p));
 
     return res;
