@@ -6,7 +6,7 @@
 
 #include "is_pow2.h" // is_pow2
 #include "fnvhash.h" // fnvhash
-#include "strmap.h" // strmap_*, STRMAP_GET_VALUE_DEFAULT
+#include "other/strmap.h" // strmap_*, STRMAP_GET_VALUE_DEFAULT
 
 #define INITIAL_CAPACITY 16
 #define MAX_CHAIN_LENGTH 5
