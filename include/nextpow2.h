@@ -42,6 +42,7 @@ static inline size_t nextpow2(size_t x) {
     x++;
     return x;
 #else
-    abort();
+    assert(false && "Not supported.");
+    return 0;
 #endif
 }
