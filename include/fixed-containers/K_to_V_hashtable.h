@@ -154,7 +154,7 @@ static inline bool JOIN(K_to_V_hashtable, init_with_capacity_rounded)(K_to_V_has
 static inline bool JOIN(K_to_V_hashtable, init)(K_to_V_hashtable_type** hashtable_pp, size_t capacity) {
     assert(hashtable_pp != NULL);
 
-    return JOIN(K_to_V_hashtable, init_with_capacity_rounded)(hashtable_pp, (capacity == 1) + 1.5 * capacity);
+    return JOIN(K_to_V_hashtable, init_with_capacity_rounded)(hashtable_pp, (size_t)(capacity == 1) + (size_t)(1.5 * capacity));
 }
 
 static inline bool JOIN(K_to_V_hashtable, deinit)(K_to_V_hashtable_type** hashtable_pp) {
