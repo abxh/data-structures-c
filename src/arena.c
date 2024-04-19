@@ -19,9 +19,14 @@ void arena_init(arena_type* arena_p, void* backing_buffer, size_t backing_buffer
     arena_p->previous_offset = 0;
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 void arena_free(arena_type* a, void* ptr) {
     // do nothing. exists for completion purposes
 }
+
+#pragma GCC diagnostic pop
 
 void arena_free_all(arena_type* arena_p) {
     arena_p->current_offset = 0;
