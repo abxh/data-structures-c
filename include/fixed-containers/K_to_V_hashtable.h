@@ -26,6 +26,7 @@
     - K_to_V_hashtable_get
     - K_to_V_hashtable_get_mut
     - K_to_V_hashtable_set
+    - K_to_V_hashtable_insert
     - K_to_V_hashtable_del
 
     Define PREFIX to use an other prefix than "K_to_V_hashtable". The macro(s) cannot
@@ -254,6 +255,34 @@ static inline VALUE_TYPE JOIN(K_to_V_hashtable, get)(K_to_V_hashtable_type* hash
 
     VALUE_TYPE* value_p = JOIN(K_to_V_hashtable, get_mut)(hashtable_p, key);
     return value_p != NULL ? *value_p : default_value;
+}
+
+static inline void JOIN(K_to_V_hashtable, insert)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key, const VALUE_TYPE value) {
+    assert(hashtable_p != NULL);
+#define K_to_V_hashtable_is_full JOIN(K_to_V_hashtable, is_full)
+    assert(K_to_V_hashtable_is_full(hashtable_p) == false);
+#undef K_to_V_hashtable_is_full
+#define K_to_V_hashtable_contains JOIN(K_to_V_hashtable, contains)
+    assert(K_to_V_hashtable_contains(hashtable_p, key) == false);
+#undef K_to_V_hashtable_contains
+
+    size_t key_hash = HASH_FUNCTION(key);
+    size_t index = key_hash & hashtable_p->index_mask;
+    K_to_V_hashtable_slot_type current_slot = {.offset = 0, .key = key, .value = value};
+
+    while (hashtable_p->arr[index].offset != EMPTY_SLOT_OFFSET) {
+        // swap if current offset is larger. will ensure the maximum
+        // offset (from the ideal position) is minimized.
+        if (current_slot.offset > hashtable_p->arr[index].offset) {
+            K_to_V_hashtable_slot_type temp = hashtable_p->arr[index];
+            hashtable_p->arr[index] = current_slot;
+            current_slot = temp;
+        }
+        index = (index + 1) & hashtable_p->index_mask;
+        current_slot.offset++;
+    }
+    hashtable_p->arr[index] = current_slot;
+    hashtable_p->count++;
 }
 
 static inline void JOIN(K_to_V_hashtable, set)(K_to_V_hashtable_type* hashtable_p, const KEY_TYPE key, const VALUE_TYPE value) {

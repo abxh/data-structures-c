@@ -19,7 +19,7 @@ bool one_element_test(void) {
     bool res = true;
 
     res &= is_equal(int_ht_get_count(int_ht_p), 0UL);
-    int_ht_set(int_ht_p, 1, 42);
+    int_ht_insert(int_ht_p, 1, 42);
     res &= is_equal(int_ht_get_count(int_ht_p), 1UL);
     res &= is_equal(int_ht_get(int_ht_p, 1, -1), 42);
 
@@ -50,10 +50,10 @@ bool four_elements_test(void) {
     memcpy(&buf[2 * o], "BB", o);
     memcpy(&buf[3 * o], "CC", o);
 
-    strint_ht_set(ht_p, &buf[0 * o], 1);
-    strint_ht_set(ht_p, &buf[1 * o], 2);
-    strint_ht_set(ht_p, &buf[2 * o], 3);
-    strint_ht_set(ht_p, &buf[3 * o], 4);
+    strint_ht_insert(ht_p, &buf[0 * o], 1);
+    strint_ht_insert(ht_p, &buf[1 * o], 2);
+    strint_ht_insert(ht_p, &buf[2 * o], 3);
+    strint_ht_insert(ht_p, &buf[3 * o], 4);
 
     res &= is_equal(strint_ht_get_count(ht_p), 4UL);
 
@@ -81,8 +81,8 @@ bool missing_elements_test(void) {
     res &= is_true(!int_ht_contains(int_ht_p, 3));
     res &= is_true(!int_ht_contains(int_ht_p, 4));
 
-    int_ht_set(int_ht_p, 1, 42);
-    int_ht_set(int_ht_p, 4, 69);
+    int_ht_insert(int_ht_p, 1, 42);
+    int_ht_insert(int_ht_p, 4, 69);
 
     res &= is_true(int_ht_get_mut(int_ht_p, 1) != NULL);
     res &= is_true(int_ht_get_mut(int_ht_p, 2) == NULL);
@@ -110,10 +110,10 @@ bool del_and_contains_test(void) {
     memcpy(&buf[2 * o], "aac", o);
     memcpy(&buf[3 * o], "bbb", o);
 
-    strint_ht_set(ht_p, &buf[0 * o], 1);
-    strint_ht_set(ht_p, &buf[1 * o], 2);
-    strint_ht_set(ht_p, &buf[2 * o], 3);
-    strint_ht_set(ht_p, &buf[3 * o], 4);
+    strint_ht_insert(ht_p, &buf[0 * o], 1);
+    strint_ht_insert(ht_p, &buf[1 * o], 2);
+    strint_ht_insert(ht_p, &buf[2 * o], 3);
+    strint_ht_insert(ht_p, &buf[3 * o], 4);
 
     res &= is_equal(strint_ht_get_count(ht_p), 4UL);
     res &= is_true(strint_ht_del(ht_p, "aab"));
@@ -166,7 +166,7 @@ bool overwrite_element_test(void) {
     bool res = true;
 
     res &= is_equal(int_ht_get_count(ht_p), 0UL);
-    int_ht_set(ht_p, 1, 1111);
+    int_ht_insert(ht_p, 1, 1111);
     res &= is_equal(int_ht_get_count(ht_p), 1UL);
     int_ht_set(ht_p, 1, 2222);
     res &= is_equal(int_ht_get_count(ht_p), 1UL);
@@ -191,7 +191,7 @@ bool million_elements_test(void) {
     bool res = true;
     res &= is_equal(int_ht_get_count(ht_p), 0UL);
     for (int i = 0; i < lim; i++) {
-        int_ht_set(ht_p, i, lim - i);
+        int_ht_insert(ht_p, i, lim - i);
     }
     res &= is_equal(int_ht_get_count(ht_p), (size_t)lim);
     for (int i = 0; i < lim; i++) {
@@ -209,7 +209,7 @@ bool for_each_and_copy_test(void) {
     }
     bool res = true;
     for (int i = 0; i < 1000; i++) {
-        int_ht_set(ht_p, i, 1000 - i);
+        int_ht_insert(ht_p, i, 1000 - i);
     }
     {
         size_t index;
