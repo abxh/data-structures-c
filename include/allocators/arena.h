@@ -1,12 +1,7 @@
 #include <stdlib.h> // size_t
 
-typedef struct {
-    size_t buffer_length;
-    unsigned char* buffer_p;
-
-    size_t previous_offset;
-    size_t current_offset;
-} arena_type;
+struct arena_type;
+typedef struct arena_type arena_type;
 
 void arena_init(arena_type* arena_p, void* backing_buffer, size_t backing_buffer_length);
 

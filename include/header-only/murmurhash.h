@@ -5,6 +5,8 @@
   copyright (c) 2014-2022 joseph werle <joseph.werle@gmail.com>
 */
 
+#pragma once
+
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>

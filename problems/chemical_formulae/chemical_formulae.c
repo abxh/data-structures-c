@@ -4,7 +4,7 @@
 #include <stdlib.h>  // NULL, free, qsort, size_t, ssize_t
 #include <string.h>  // memset, strlen, strnlen, strcspn
 
-#include "other/strmap.h" // strmap_*
+#include "strmap.h" // strmap_*
 
 #define max(x, y) ((x) > (y) ? (x) : (y))
 
@@ -95,7 +95,7 @@ int main(void) {
 
         char buf1[line_len_max * 2];
         sprintf(buf1, "%s%s%s", formula_str, *cas_str != '\0' ? ", CAS: " : "", cas_str);
-        strmap_insert(strmap_p,
+        strmap_set(strmap_p,
                    synonym_str, // key
                    buf1         // value
         );
@@ -128,13 +128,13 @@ int main(void) {
             line_p[len - 1] = '\0';
         }
         if (strmap_contains(strmap_p, line_p)) {
-            printf(" -> %s (%s)\n", line_p, strmap_search(strmap_p, line_p));
+            printf(" -> %s (%s)\n", line_p, strmap_get(strmap_p, line_p));
             continue;
         }
         cmp_custom_usr_inp_p = &line_p[0];
         qsort(keys_arr_pp, count, sizeof(char*), cmp_custom);
         for (size_t i = count - 1; i >= count - 5; i--) {
-            printf(" -> %s (%s)\n", keys_arr_pp[i], strmap_search(strmap_p, keys_arr_pp[i]));
+            printf(" -> %s (%s)\n", keys_arr_pp[i], strmap_get(strmap_p, keys_arr_pp[i]));
         }
     }
     // clean up stuff:

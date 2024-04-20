@@ -4,27 +4,24 @@
 
 #include "test.h" // is_true, is_false, is_equal
 
-#define PREFIX intque
 #define VALUE_TYPE int
-#include "fixed-containers/T_queue.h" // int_queue_*, T_queue_for_each
+#include "header-only/fixed-containers/T_queue.h" // int_queue_*, T_queue_for_each
+
 
 bool empty_test(void) {
-    intque_type* queue_p = NULL;
-    if (!intque_init_internal(&queue_p, 1)) {
+    int_queue_type* queue_p = NULL;
+    if (!int_queue_init_internal(&queue_p, 1)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
 
-    res &= is_equal(intque_get_count(queue_p), 0UL);
-    res &= is_true(intque_is_empty(queue_p));
-    res &= is_true(intque_deinit(&queue_p));
+    res &= is_equal(int_queue_get_count(queue_p), 0UL);
+    res &= is_true(int_queue_is_empty(queue_p));
+    res &= is_true(int_queue_deinit(&queue_p));
 
     return res;
 }
-
-#define VALUE_TYPE int
-#include "fixed-containers/T_queue.h" // int_queue_*, T_queue_for_each
 
 bool one_element_test(void) {
     int_queue_type* queue_p = NULL;
@@ -144,10 +141,10 @@ bool for_each_and_copy_test(void) {
     }
     {
         int x = 51;
-        int value;
-        size_t i;
-        T_queue_for_each(queue_p, i, value) {
-            res &= is_equal(x, value);
+        int out_value;
+        size_t out_index;
+        T_queue_for_each(queue_p, out_index, out_value) {
+            res &= is_equal(x, out_value);
             x++;
         }
     }
@@ -158,10 +155,10 @@ bool for_each_and_copy_test(void) {
     }
     {
         int x = 51;
-        int value;
-        size_t i;
-        T_queue_for_each(queue_copy_p, i, value) {
-            res &= is_equal(x, value);
+        int out_value;
+        size_t out_index;
+        T_queue_for_each(queue_copy_p, out_index, out_value) {
+            res &= is_equal(x, out_value);
             x++;
         }
     }

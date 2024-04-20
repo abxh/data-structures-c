@@ -1,5 +1,5 @@
 /*
-    `T_queue` is a queue implementation based on a fixed size array.
+    This is a queue implementation based on a fixed size array.
 
     Including this header file generates a struct and functions for a given queue type.
 
@@ -29,21 +29,22 @@
     however be redefined to have other prefixes.
 
     Note that (if PREFIX is not defined), then the given types cannot include
-    spaces because C functions and variables cannot either.
-    Use a typedef and replace spaces with _ or change the type name as needed.
+    spaces because C functions and variables cannot either. Use a typedef to work around
+    the type name as needed (if you don't define PREFIX).
 */
 
 #ifndef __T_QUEUE__H
 #define __T_QUEUE__H
 
-#include "is_pow2.h"  // is_pow2
-#include "nextpow2.h" // nextpow2
 #include <assert.h>   // assert
 #include <stdbool.h>  // bool, true, false
 #include <stddef.h>   // offsetoff
 #include <stdint.h>   // SIZE_MAX
 #include <stdlib.h>   // size_t, NULL, malloc, free
 #include <string.h>   // memcpy
+
+#include "header-only/is_pow2.h"  // is_pow2
+#include "header-only/nextpow2.h" // nextpow2
 
 #define T_queue_for_each(queue_p, index, value)                                                                          \
     for ((index) = (queue_p)->begin_index; (index) != (queue_p)->end_index && ((value) = (queue_p)->arr[(index)], true); \

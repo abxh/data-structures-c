@@ -65,7 +65,7 @@ SYMBOL_ENUM matching_symbol(SYMBOL_ENUM symb) {
 
 typedef SYMBOL_ENUM symb;
 #define VALUE_TYPE symb
-#include "fixed-containers/T_stack.h" // int_stack_*, T_stack_for_each
+#include "header-only/fixed-containers/T_stack.h" // int_stack_*, T_stack_for_each
 
 int main(void) {
     puts("Input line:");

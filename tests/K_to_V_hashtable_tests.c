@@ -1,4 +1,5 @@
 #include <stdbool.h> // bool, true, false
+#include <stdint.h>  //uint64_t
 #include <stdio.h>   // fprintf, printf, stderr
 #include <stdlib.h>  // NULL
 #include <string.h>  // strcmp
@@ -8,7 +9,7 @@
 #define PREFIX int_ht
 #define KEY_TYPE int
 #define VALUE_TYPE int
-#include "fixed-containers/K_to_V_hashtable.h" // int_ht_*, K_to_V_hashtable_for_each
+#include "header-only/fixed-containers/K_to_V_hashtable.h" // int_ht_*, K_to_V_hashtable_for_each
 
 bool one_element_test(void) {
     int_ht_type* int_ht_p = NULL;
@@ -28,12 +29,15 @@ bool one_element_test(void) {
     return res;
 }
 
+uint64_t first_char(const char* c) {
+    return *c;
+}
 #define PREFIX strint_ht
 #define KEY_TYPE const char*
 #define VALUE_TYPE int
 #define KEY_IS_EQUAL(a, b) (strcmp((a), (b)) == 0)
-#define HASH_FUNCTION(v) (*(v))
-#include "fixed-containers/K_to_V_hashtable.h" // strint_ht_*
+#define HASH_FUNCTION(v) (first_char(v))
+#include "header-only/fixed-containers/K_to_V_hashtable.h" // strint_ht_*, K_to_V_hashtable_for_each
 
 bool four_elements_test(void) {
     strint_ht_type* ht_p = NULL;
@@ -232,16 +236,16 @@ bool for_each_and_copy_test(void) {
         return false;
     }
     {
-        size_t index;
+        size_t out_index;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
-        int key;
-        int value;
+        int out_key;
+        int out_value;
 #pragma GCC diagnostic pop
         size_t count = 0;
-        K_to_V_hashtable_for_each(ht_p, index, key, value) {
+        K_to_V_hashtable_for_each(ht_p, out_index, out_key, out_value) {
             count++;
-            res &= is_true(value == int_ht_get(ht_p, key, -1));
+            res &= is_true(out_value == int_ht_get(ht_p, out_key, -1));
         }
         res &= is_equal(1000UL, count);
     }

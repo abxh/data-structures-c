@@ -1,5 +1,5 @@
 /*
-    `T_stack` is a stack implementation based on a fixed size array.
+    This is a stack implementation based on a fixed size array.
 
     Including this header file generates a struct and functions for a given stack type.
 
@@ -25,8 +25,8 @@
     however be redefined to have other prefixes.
 
     Note that (if PREFIX is not defined), then the given types cannot include
-    spaces because C functions and variables cannot either.
-    Use a typedef and replace spaces with _ or change the type name as needed.
+    spaces because C functions and variables cannot either. Use a typedef to work around
+    the type name as needed (if you don't define PREFIX).
 */
 
 #ifndef __T_STACK__H
@@ -39,7 +39,7 @@
 #include <stdlib.h>  // size_t, NULL, aligned_alloc, free
 #include <string.h>  // memcpy
 
-#define T_stack_for_each(stack_p, index_plus_one, value)                                                                      \
+#define T_stack_for_each(stack_p, index_plus_one, value)                                                                        \
     for ((index_plus_one) = (stack_p)->count; ((index_plus_one) > 0 && ((value) = (stack_p)->arr[(index_plus_one)-1], true)); \
          (index_plus_one)--)
 

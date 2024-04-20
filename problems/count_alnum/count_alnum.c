@@ -1,7 +1,7 @@
 #include <ctype.h> // islower, isupper, isdigit
 #include <stdio.h> // puts, fgetc, putchar, printf, stdin, EOF
 
-#include "other/bitarray.h" // bitarray_*
+#include "bitarray.h" // bitarray_*
 
 #define NUM_OF_LETTERS ('z' - 'a' + 1)
 #define NUM_OF_DIGITS ('9' - '0' + 1)

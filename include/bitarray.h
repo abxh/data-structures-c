@@ -15,11 +15,7 @@
 #include <stdbool.h> // bool
 #include <stdlib.h>  // size_t
 
-typedef struct {
-    size_t num_of_bits;
-    size_t num_of_words;
-    unsigned char* words;
-} bitarray_type;
+typedef struct bitarray_type bitarray_type;
 
 bool bitarray_init(bitarray_type** bitarray_pp, size_t num_of_bits);
 

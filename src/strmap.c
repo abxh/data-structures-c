@@ -1,18 +1,48 @@
+/*
+    `strmap` is an implementation of string-to-string hash table using chaining.
+
+    The hash function is hard coded to `fnv_hash64`, and the hash table is resized when the chain length
+    exceeds a fixed number of nodes.
+
+    Buckets are implemented as linked lists for simplicity, but may be replaced by fixed size arrays for additional
+    performance.
+
+    Strings are expected to have a null character (`\0` byte) at the end. Otherwise the functions may loop
+    forever. Be careful about user inputs if security is important.
+*/
+
 #include <assert.h>  // static_assert
 #include <stdbool.h> // bool, true, false
 #include <stdint.h>  // uint64_t
 #include <stdlib.h>  // malloc, reallocarray, free, SIZE_MAX
 #include <string.h>  // strcmp, strdup, strcpy
 
-#include "is_pow2.h" // is_pow2
-#include "fnvhash.h" // fnvhash
-#include "other/strmap.h" // strmap_*, STRMAP_GET_VALUE_DEFAULT
+#include "header-only/is_pow2.h" // is_pow2
+#include "strmap.h"              // strmap_*, STRMAP_GET_VALUE_DEFAULT
 
 #define INITIAL_CAPACITY 16
 #define MAX_CHAIN_LENGTH 5
 
 static_assert(INITIAL_CAPACITY != 1, "subtracting initial capacity by one does not yield zero");
 static_assert(INITIAL_CAPACITY != 0 && (INITIAL_CAPACITY & (INITIAL_CAPACITY - 1)) == 0, "initial capacity is a power of 2");
+
+uint64_t fnvhash(const unsigned char* char_p) {
+    // FNV-1a hash
+    // https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function
+
+    assert(char_p != NULL);
+
+    static const uint64_t FNV_OFFSET = 14695981039346656037UL;
+    static const uint64_t FNV_PRIME = 1099511628211UL;
+
+    uint64_t hash = FNV_OFFSET;
+    while (*char_p != '\0') {
+        hash ^= *(char_p++);
+        hash *= FNV_PRIME;
+    }
+
+    return hash;
+}
 
 bool strmap_init(strmap_type** strmap_pp) {
     assert(strmap_pp != NULL);

@@ -2,14 +2,12 @@
 #include <stdio.h>   // fprintf, printf, stderr
 #include <stdlib.h>  // NULL
 
-#include "test.h" // is_true, is_false, is_equal
-
-#define VALUE_TYPE int
-#include "containers/ll_stack_wrapper.h" // ll_stack_*
+#include "containers/ll_stack.h" // ll_stack_*
+#include "test.h"                // is_true, is_false, is_equal
 
 bool empty_test(void) {
     ll_stack_type* stack_p = NULL;
-    if (!ll_stack_init_int(&stack_p)) {
+    if (!ll_stack_init(&stack_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -24,19 +22,23 @@ bool empty_test(void) {
 
 bool one_element_test(void) {
     ll_stack_type* stack_p = NULL;
-    if (!ll_stack_init_int(&stack_p)) {
+    if (!ll_stack_init(&stack_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
     int value = 5;
 
-    res &= is_true(ll_stack_push_int(stack_p, value));
-    res &= is_equal(value, ll_stack_peek_int(stack_p));
+    bool out_rtr;
+    ll_stack_push(int, stack_p, value, out_rtr);
+    res &= is_true(out_rtr);
+    res &= is_equal(value, ll_stack_peek(int, stack_p));
     res &= is_false(ll_stack_is_empty(stack_p));
     res &= is_equal(ll_stack_get_count(stack_p), 1UL);
 
-    res &= is_equal(value, ll_stack_pop_int(stack_p));
+    int out_value;
+    ll_stack_pop(int, stack_p, out_value);
+    res &= is_equal(value, out_value);
     res &= is_true(ll_stack_is_empty(stack_p));
     res &= is_equal(ll_stack_get_count(stack_p), 0UL);
 
@@ -47,16 +49,20 @@ bool one_element_test(void) {
 
 bool million_elements_test(void) {
     ll_stack_type* stack_p = NULL;
-    if (!ll_stack_init_int(&stack_p)) {
+    if (!ll_stack_init(&stack_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
     for (int i = 1; i <= 1000000; i++) {
-        ll_stack_push_int(stack_p, i);
+        bool out_rtr;
+        ll_stack_push(int, stack_p, i, out_rtr);
+        res &= is_true(out_rtr);
     }
     for (int i = 1000000; i >= 1; i--) {
-        res &= is_equal(i, ll_stack_pop_int(stack_p));
+        int out_value;
+        ll_stack_pop(int, stack_p, out_value);
+        res &= is_equal(i, out_value);
     }
     res &= is_true(ll_stack_deinit(&stack_p));
     return res;
@@ -64,23 +70,27 @@ bool million_elements_test(void) {
 
 bool for_each_and_copy_test(void) {
     ll_stack_type* stack_p = NULL;
-    if (!ll_stack_init_int(&stack_p)) {
+    if (!ll_stack_init(&stack_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
     bool res = true;
     for (int i = 51; i <= 100; i++) {
-        ll_stack_push_int(stack_p, i);
+        bool out_rtr;
+        ll_stack_push(int, stack_p, i, out_rtr);
+        res &= is_true(out_rtr);
     }
     {
         int x = 100;
         ll_stack_node_type* node_p = NULL;
-        int value;
-        ll_stack_for_each(stack_p, node_p, value) {
+        int* value_p;
+        ll_stack_for_each(stack_p, node_p, value_p) {
+            int value = *value_p;
             res &= is_equal(x, value);
             x--;
         }
     }
+    // return true;
     ll_stack_type* stack_copy_p = NULL;
     if (!ll_stack_copy(&stack_copy_p, stack_p)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
@@ -89,13 +99,15 @@ bool for_each_and_copy_test(void) {
     }
     {
         int x = 100;
-        ll_stack_node_type* node_p = NULL;
         ll_stack_node_type* node_original_p = stack_p->head_p;
-        int value;
-        ll_stack_for_each(stack_copy_p, node_p, value) {
+
+        ll_stack_node_type* out_node_p = NULL;
+        int* out_value_p;
+        ll_stack_for_each(stack_copy_p, out_node_p, out_value_p) {
+            int value = *out_value_p;
             res &= is_equal(x, value);
-            res &= is_true(node_p != node_original_p);
-            res &= is_true(node_p->value_p != node_original_p->value_p);
+            res &= is_true(out_node_p != node_original_p);
+            res &= is_true(out_node_p->value_p != node_original_p->value_p);
             x--;
             node_original_p = node_original_p->next_p;
         }
@@ -103,7 +115,6 @@ bool for_each_and_copy_test(void) {
     res &= is_equal(ll_stack_get_count(stack_p), ll_stack_get_count(stack_copy_p));
     res &= is_true(ll_stack_deinit(&stack_p));
     res &= is_true(ll_stack_deinit(&stack_copy_p));
-
     return res;
 }
 

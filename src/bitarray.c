@@ -5,9 +5,15 @@
 #include <stdlib.h>  // malloc, calloc, free, size_t, NULL
 #include <string.h>  // memcmp, memcpy
 
-#include "other/bitarray.h" // bitarray*
+#include "bitarray.h" // bitarray*
 
 static_assert(CHAR_BIT == 8, "a char is 8 bits.");
+
+typedef struct bitarray_type {
+    size_t num_of_bits;
+    size_t num_of_words;
+    unsigned char* words;
+} bitarray_type;
 
 size_t word_index(size_t index) {
     return index >> 3;

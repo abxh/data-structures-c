@@ -1,16 +1,22 @@
-#include "allocators/arena.h" // arena_*
-#include "align_forward.h"    // arena_forward
-#include <stdbool.h>          // false
-#include <stdint.h>           // uintptr_t
-#include <stdlib.h>           // size_t
-#include <string.h>           // memset
+#include "allocators/arena.h"    // arena_*
+#include "align_forward.h"       // arena_forward
+#include "header-only/is_pow2.h" // is_pow2
+#include <assert.h>              // assert
+#include <stdbool.h>             // false
+#include <stdint.h>              // uintptr_t
+#include <stdlib.h>              // size_t
+#include <string.h>              // memset
 
 // Source:
 // https://www.gingerbill.org/article/2019/02/08/memory-allocation-strategies-002/
 
-#ifndef DEFAULT_ALIGNMENT
-#define DEFAULT_ALIGNMENT (2 * sizeof(void*))
-#endif
+typedef struct arena_type {
+    size_t buffer_length;
+    unsigned char* buffer_p;
+
+    size_t previous_offset;
+    size_t current_offset;
+} arena_type;
 
 void arena_init(arena_type* arena_p, void* backing_buffer, size_t backing_buffer_length) {
     arena_p->buffer_p = (unsigned char*)backing_buffer;
@@ -63,6 +69,10 @@ void* arena_alloc_aligned(arena_type* arena_p, size_t size, size_t alignment) {
     return NULL;
 }
 
+#ifndef DEFAULT_ALIGNMENT
+#define DEFAULT_ALIGNMENT (2 * sizeof(void*))
+#endif
+
 void* arena_alloc(arena_type* arena_p, size_t size) {
     return arena_alloc_aligned(arena_p, size, DEFAULT_ALIGNMENT);
 }
@@ -88,7 +98,7 @@ void* arena_resize_aligned(arena_type* arena_p, void* old_memory_p, size_t old_s
         return arena_p;
     }
 
-    void *new_memory = arena_alloc_aligned(arena_p, new_size, alignment);
+    void* new_memory = arena_alloc_aligned(arena_p, new_size, alignment);
     size_t copy_size = old_size < new_size ? old_size : new_size;
 
     // Copy across old memory to the new memory

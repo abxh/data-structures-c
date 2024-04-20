@@ -2,16 +2,16 @@
 name := rotating_starfield
 include_dir := ../../include/
 src_dir := ../../src
+single_dep := rotate_bits
 
 all: ${name}
 
-${name}: rotate_bits
-	cc -lm -I${include_dir} -o ${name}.bin rotate_bits.o ${name}.c
+${name}: ${single_dep}
+	cc -I${include_dir} -o ${name}.bin ${single_dep}.o ${name}.c
 
-rotate_bits:
+${single_dep}:
 	cc -I${include_dir} -c -o $@.o ${src_dir}/$@.c 
 
 clean:
-	rm -f rotate_bits.o
+	rm -f ${single_dep}.o
 	rm -f ${name}.bin
-	rm -f data.csv

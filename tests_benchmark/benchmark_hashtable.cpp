@@ -13,7 +13,7 @@ extern "C" {
 #define PREFIX uint_ht
 #define KEY_TYPE uint64_t
 #define VALUE_TYPE uint64_t
-#include "fixed-containers/K_to_V_hashtable.h"
+#include "header-only/hashtable.h"
 
 void benchmark_uint_ht(size_t n) {
     uint_ht_type* ht_p;

@@ -1,11 +1,10 @@
 /*
-    `K_to_V_hashtable` is a hashtable implementation based on a fixed size array
-    using robin hood hashing (open addressing).
+    This is a hashtable implementation based on a fixed size array using robin hood
+    hashing (open addressing).
 
     Including this header file generates a struct and functions for a given queue type.
 
     The following macros gets defined once:
-    - EMPTY_SLOT_OFFSET
     - K_to_V_hashtable_for_each
 
     The following structs are generated for a given key type K and value type V:
@@ -33,8 +32,8 @@
     however be redefined to have other prefixes.
 
     Note that (if PREFIX is not defined), then the given types cannot include
-    spaces because C functions and variables cannot either.
-    Use a typedef and replace spaces with _ or change the type name as needed.
+    spaces because C functions and variables cannot either. Use a typedef to work around
+    the type name as needed (if you don't define PREFIX).
 
     Some implementation details to consider, if `init_internal` is used:
     - The size must be a power of 2.
@@ -44,7 +43,7 @@
     - At least one slot in the hashtable is expected to be reserved - for the case of
     missing keys. Load factor should not exactly be equal to 1.
 
-    References:
+    Sources:
     https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/
     https://thenumb.at/Hashtables/#robin-hood-linear-probing
     https://github.com/rmind/rhashmap/blob/master/src/rhashmap.c
@@ -53,22 +52,21 @@
 #ifndef __K_TO_V_HASHTABLE__H
 #define __K_TO_V_HASHTABLE__H
 
-#include "is_pow2.h"    // is_pow2
-#include "murmurhash.h" // murmurhash
-#include "nextpow2.h"   // nextpow2
-#include <assert.h>     // assert
-#include <stdbool.h>    // bool, true, false
-#include <stddef.h>     // offsetof
-#include <stdint.h>     // SIZE_MAX
-#include <stdlib.h>     // size_t, NULL, malloc, free
-#include <string.h>     // memcpy
+#include <assert.h>  // assert
+#include <stdbool.h> // bool, true, false
+#include <stddef.h>  // offsetof
+#include <stdint.h>  // SIZE_MAX
+#include <stdlib.h>  // size_t, NULL, malloc, free
+#include <string.h>  // memcpy
 
-#define EMPTY_SLOT_OFFSET SIZE_MAX
+#include "header-only/is_pow2.h"    // is_pow2
+#include "header-only/murmurhash.h" // murmurhash
+#include "header-only/nextpow2.h"   // nextpow2
 
-#define K_to_V_hashtable_for_each(hashtable_p, index, key, value)      \
-    for ((index) = 0; (index) <= (hashtable_p)->index_mask; (index)++) \
-        if ((hashtable_p)->arr[(index)].offset != EMPTY_SLOT_OFFSET && \
-            ((key) = (hashtable_p)->arr[(index)].key, (value) = (hashtable_p)->arr[(index)].value, true))
+#define K_to_V_hashtable_for_each(hashtable_p, out_index, out_key, out_value)             \
+    for ((out_index) = 0; (out_index) <= (hashtable_p)->index_mask; (out_index)++) \
+        if ((hashtable_p)->arr[(out_index)].offset != SIZE_MAX &&                  \
+            ((out_key) = (hashtable_p)->arr[(out_index)].key, (out_value) = (hashtable_p)->arr[(out_index)].value, true))
 
 #endif
 
@@ -102,6 +100,8 @@
 #define K_to_V_hashtable_type JOIN(K_to_V_hashtable, type)
 #define K_to_V_hashtable_slot JOIN(K_to_V_hashtable, slot)
 #define K_to_V_hashtable_slot_type JOIN(K_to_V_hashtable_slot, type)
+
+#define EMPTY_SLOT_OFFSET SIZE_MAX
 
 typedef struct {
     size_t offset;
@@ -353,6 +353,7 @@ static inline bool JOIN(K_to_V_hashtable, del)(K_to_V_hashtable_type* hashtable_
 #undef K_to_V_hashtable_slot
 #undef K_to_V_hashtable_slot_type
 
+#undef EMPTY_SLOT_OFFSET
 #undef PREFIX
 #undef HASH_FUNCTION
 #undef KEY_IS_EQUAL
