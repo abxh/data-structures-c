@@ -1,7 +1,8 @@
 #pragma once
 
-#include <stdbool.h> // bool
-#include <stdlib.h>  // size_t, NULL
+#include "allocators/allocator_function_types.h" // allocate_f, reallocate_f, deallocate_f
+#include <stdbool.h>                             // bool
+#include <stdlib.h>                              // size_t, NULL
 
 typedef struct strmap_node_type {
     struct strmap_node_type* next_p;
@@ -19,17 +20,20 @@ typedef struct {
     size_t total_nodes_count;
     size_t list_count;
     strmap_node_list_type* lists_arr_p;
+
+    void* allocator_struct_p;
+    allocate_f allocate_f_p;
+    reallocate_f reallocate_f_p;
+    deallocate_f deallocate_f_p;
 } strmap_type;
 
 #define STRMAP_GET_VALUE_DEFAULT NULL
 
-bool strmap_init(strmap_type** strmap_pp);
+strmap_type* strmap_create();
 
-bool strmap_init_with_initial_capacity(strmap_type** strmap_pp, size_t pow2_capacity);
+void strmap_destroy(strmap_type* strmap_p);
 
-bool strmap_deinit(strmap_type** strmap_pp);
-
-bool strmap_copy(strmap_type** strmap_dest_pp, const strmap_type* strmap_src_p);
+strmap_type* strmap_copy(const strmap_type* strmap_src_p);
 
 size_t strmap_get_count(const strmap_type* strmap_p);
 
@@ -40,6 +44,11 @@ const char* strmap_get(const strmap_type* strmap_p, const char* key_p);
 bool strmap_set(strmap_type* strmap_p, const char* key_p, const char* value_p);
 
 bool strmap_del(strmap_type* strmap_p, const char* key_p);
+
+strmap_type* strmap_init(void* allocator_struct_p, allocate_f allocate_f_p, reallocate_f realloc_f_p, deallocate_f deallocate_f_p);
+
+strmap_type* strmap_init_with_initial_capacity(size_t pow2_capacity, void* allocator_struct_p, allocate_f allocate_f_p,
+                                               reallocate_f reallocate_f_p, deallocate_f deallocate_f_p);
 
 #define strmap_for_each(strmap_p, out_list_index, out_strmap_node_next_p, out_key_p, out_value_p)                   \
     for ((out_list_index) = 0; (out_list_index) < (strmap_p)->list_count &&                                         \
