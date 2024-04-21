@@ -61,8 +61,8 @@ int main(void) {
     if (fp == NULL) {
         return 1;
     }
-    strmap_type* strmap_p = NULL;
-    if (!strmap_init(&strmap_p)) {
+    strmap_type* strmap_p = strmap_create();
+    if (!strmap_p) {
         return 1;
     }
 
@@ -140,7 +140,7 @@ int main(void) {
     // clean up stuff:
     free(line_p);
     free(keys_arr_pp);
-    strmap_deinit(&strmap_p);
+    strmap_destroy(strmap_p);
     fclose(fp);
 
     return 0;

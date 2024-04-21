@@ -2,12 +2,13 @@
 #include <stdio.h>   // fprintf, printf, stderr
 #include <stdlib.h>  // NULL
 
+#include "allocators/arena.h"    // arena_*
 #include "containers/ll_stack.h" // ll_stack_*
 #include "test.h"                // is_true, is_false, is_equal
 
 bool empty_test(void) {
-    ll_stack_type* stack_p = NULL;
-    if (!ll_stack_init(&stack_p)) {
+    ll_stack_type* stack_p = ll_stack_create();
+    if (!stack_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -15,14 +16,15 @@ bool empty_test(void) {
 
     res &= is_equal(ll_stack_get_count(stack_p), 0UL);
     res &= is_true(ll_stack_is_empty(stack_p));
-    res &= is_true(ll_stack_deinit(&stack_p));
+
+    ll_stack_destroy(stack_p);
 
     return res;
 }
 
 bool one_element_test(void) {
-    ll_stack_type* stack_p = NULL;
-    if (!ll_stack_init(&stack_p)) {
+    ll_stack_type* stack_p = ll_stack_create();
+    if (!stack_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -42,14 +44,18 @@ bool one_element_test(void) {
     res &= is_true(ll_stack_is_empty(stack_p));
     res &= is_equal(ll_stack_get_count(stack_p), 0UL);
 
-    res &= is_true(ll_stack_deinit(&stack_p));
+    ll_stack_destroy(stack_p);
 
     return res;
 }
 
 bool million_elements_test(void) {
+    static unsigned char buf[40000 * 1024];
+    arena_type arena = {0};
+    arena_init(&arena, buf, sizeof(buf));
+
     ll_stack_type* stack_p = NULL;
-    if (!ll_stack_init(&stack_p)) {
+    if (!ll_stack_init(&stack_p, &arena, arena_allocate, arena_deallocate)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -64,13 +70,13 @@ bool million_elements_test(void) {
         ll_stack_pop(int, stack_p, out_value);
         res &= is_equal(i, out_value);
     }
-    res &= is_true(ll_stack_deinit(&stack_p));
+    ll_stack_destroy(stack_p);
     return res;
 }
 
 bool for_each_and_copy_test(void) {
-    ll_stack_type* stack_p = NULL;
-    if (!ll_stack_init(&stack_p)) {
+    ll_stack_type* stack_p = ll_stack_create();
+    if (!stack_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -91,10 +97,10 @@ bool for_each_and_copy_test(void) {
         }
     }
     // return true;
-    ll_stack_type* stack_copy_p = NULL;
-    if (!ll_stack_copy(&stack_copy_p, stack_p)) {
+    ll_stack_type* stack_copy_p = ll_stack_clone(stack_p);
+    if (!stack_copy_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
-        ll_stack_deinit(&stack_p);
+        ll_stack_destroy(stack_p);
         return false;
     }
     {
@@ -113,8 +119,10 @@ bool for_each_and_copy_test(void) {
         }
     }
     res &= is_equal(ll_stack_get_count(stack_p), ll_stack_get_count(stack_copy_p));
-    res &= is_true(ll_stack_deinit(&stack_p));
-    res &= is_true(ll_stack_deinit(&stack_copy_p));
+
+    ll_stack_destroy(stack_p);
+    ll_stack_destroy(stack_copy_p);
+
     return res;
 }
 

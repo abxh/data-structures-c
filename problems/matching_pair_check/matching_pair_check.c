@@ -77,8 +77,8 @@ int main(void) {
         return 1;
     }
 
-    symb_stack_type* stack_p = NULL;
-    if (!symb_stack_init(&stack_p, n)) {
+    symb_stack_type* stack_p = symb_stack_create(n);
+    if (!stack_p) {
         free(str);
         return 1;
     }
@@ -117,7 +117,7 @@ int main(void) {
         }
     }
 
-    symb_stack_deinit(&stack_p);
+    symb_stack_destroy(stack_p);
     free(str);
 
     return 0;

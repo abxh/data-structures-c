@@ -12,8 +12,8 @@
 #include "header-only/fixed-containers/K_to_V_hashtable.h" // int_ht_*, K_to_V_hashtable_for_each
 
 bool one_element_test(void) {
-    int_ht_type* int_ht_p = NULL;
-    if (!int_ht_init(&int_ht_p, 1)) {
+    int_ht_type* int_ht_p = int_ht_create(1);
+    if (!int_ht_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -24,7 +24,7 @@ bool one_element_test(void) {
     res &= is_equal(int_ht_get_count(int_ht_p), 1UL);
     res &= is_equal(int_ht_get(int_ht_p, 1, -1), 42);
 
-    res &= is_true(int_ht_deinit(&int_ht_p));
+    int_ht_destroy(int_ht_p);
 
     return res;
 }
@@ -40,8 +40,8 @@ uint64_t first_char(const char* c) {
 #include "header-only/fixed-containers/K_to_V_hashtable.h" // strint_ht_*, K_to_V_hashtable_for_each
 
 bool four_elements_test(void) {
-    strint_ht_type* ht_p = NULL;
-    if (!strint_ht_init(&ht_p, 4)) {
+    strint_ht_type* ht_p = strint_ht_create(4);
+    if (!ht_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -67,14 +67,14 @@ bool four_elements_test(void) {
     res &= is_equal(strint_ht_get(ht_p, "CC", -1), 4);
 
     free(buf);
-    res &= is_true(strint_ht_deinit(&ht_p));
+    strint_ht_destroy(ht_p);
 
     return res;
 }
 
 bool missing_elements_test(void) {
-    int_ht_type* int_ht_p = NULL;
-    if (!int_ht_init(&int_ht_p, 2)) {
+    int_ht_type* int_ht_p = int_ht_create(2);
+    if (!int_ht_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -93,14 +93,14 @@ bool missing_elements_test(void) {
     res &= is_true(!int_ht_contains(int_ht_p, 3));
     res &= is_true(int_ht_contains(int_ht_p, 4));
 
-    res &= is_true(int_ht_deinit(&int_ht_p));
+    int_ht_destroy(int_ht_p);
 
     return res;
 }
 
 bool del_and_contains_test(void) {
-    strint_ht_type* ht_p = NULL;
-    if (!strint_ht_init(&ht_p, 4)) {
+    strint_ht_type* ht_p = strint_ht_create(4);
+    if (!ht_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -157,14 +157,14 @@ bool del_and_contains_test(void) {
     res &= is_equal(strint_ht_get(ht_p, "bbb", -1), 4);
 
     free(buf);
-    res &= is_true(strint_ht_deinit(&ht_p));
+    strint_ht_destroy(ht_p);
 
     return res;
 }
 
 bool overwrite_element_test(void) {
-    int_ht_type* ht_p = NULL;
-    if (!int_ht_init(&ht_p, 2)) {
+    int_ht_type* ht_p = int_ht_create(2);
+    if (!ht_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -180,7 +180,7 @@ bool overwrite_element_test(void) {
 
     res &= is_equal(int_ht_get(ht_p, 1, -1), 2222);
 
-    res &= is_true(int_ht_deinit(&ht_p));
+    int_ht_destroy(ht_p);
 
     return res;
 }
@@ -188,8 +188,8 @@ bool overwrite_element_test(void) {
 #define lim 1000000
 
 bool million_elements_test(void) {
-    int_ht_type* ht_p = NULL;
-    if (!int_ht_init(&ht_p, lim)) {
+    int_ht_type* ht_p = int_ht_create(lim);
+    if (!ht_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -202,13 +202,13 @@ bool million_elements_test(void) {
     for (int i = 0; i < lim; i++) {
         res &= is_equal(int_ht_get(ht_p, i, -1), lim - i);
     }
-    res &= is_true(int_ht_deinit(&ht_p));
+    int_ht_destroy(ht_p);
     return res;
 }
 
 bool for_each_and_copy_test(void) {
-    int_ht_type* ht_p = NULL;
-    if (!int_ht_init(&ht_p, 1000)) {
+    int_ht_type* ht_p = int_ht_create(1000);
+    if (!ht_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -230,8 +230,8 @@ bool for_each_and_copy_test(void) {
         res &= is_equal(1000UL, count);
     }
     return true;
-    int_ht_type* ht_copy_p = NULL;
-    if (!int_ht_copy(&ht_copy_p, ht_p)) {
+    int_ht_type* ht_copy_p = int_ht_clone(ht_p);
+    if (!ht_copy_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -249,7 +249,8 @@ bool for_each_and_copy_test(void) {
         }
         res &= is_equal(1000UL, count);
     }
-    res &= is_true(int_ht_deinit(&ht_p));
+    int_ht_destroy(ht_p);
+    int_ht_destroy(ht_copy_p);
     return res;
 }
 

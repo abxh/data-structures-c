@@ -95,7 +95,8 @@ double eval(char* str, ssize_t len) {
     lex_stack_type* op_stack = NULL;
     lex_stack_type* num_stack = NULL;
 
-    if (!lex_queue_init(&inp_queue, len)) {
+    inp_queue = lex_queue_create(len);
+    if (!inp_queue) {
         goto on_oom_error;
     }
 
@@ -282,10 +283,12 @@ double eval(char* str, ssize_t len) {
     }
 #endif
 
-    if (!lex_queue_init(&inp_queue_postfix, lex_queue_get_count(inp_queue))) {
+    inp_queue_postfix = lex_queue_create(lex_queue_get_count(inp_queue));
+    if (!inp_queue_postfix) {
         goto on_oom_error;
     }
-    if (!lex_stack_init(&op_stack, lex_queue_get_count(inp_queue))) {
+    op_stack = lex_stack_create(lex_queue_get_count(inp_queue));
+    if (!op_stack) {
         goto on_oom_error;
     }
 
@@ -393,18 +396,29 @@ on_inp_error:
     if (error_msg != NULL) {
         fprintf(stderr, "%*c %s\n", (int)(error_index + 1), '^', error_msg);
     }
-    lex_stack_deinit(&op_stack);
-    lex_queue_deinit(&inp_queue_postfix);
-    lex_queue_deinit(&inp_queue);
-
+    if (op_stack != NULL) {
+        lex_stack_destroy(op_stack);
+    }
+    if (inp_queue_postfix != NULL) {
+        lex_queue_destroy(inp_queue_postfix);
+    }
+    if (inp_queue != NULL) {
+        lex_queue_destroy(inp_queue);
+    }
     return rtr_value;
 
 on_oom_error:
     fprintf(stderr, "Out of memory.\n");
 
-    lex_stack_deinit(&op_stack);
-    lex_queue_deinit(&inp_queue_postfix);
-    lex_queue_deinit(&inp_queue);
+    if (op_stack != NULL) {
+        lex_stack_destroy(op_stack);
+    }
+    if (inp_queue_postfix != NULL) {
+        lex_queue_destroy(inp_queue_postfix);
+    }
+    if (inp_queue != NULL) {
+        lex_queue_destroy(inp_queue);
+    }
 
     return rtr_value;
 }

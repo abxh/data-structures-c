@@ -12,15 +12,18 @@
     - K_to_V_hashtable_slot_type
 
     The following structs are generated for a given key type K and value type V:
+    - K_to_V_hashtable_create
+    - K_to_V_hashtable_destroy
     - K_to_V_hashtable_init
     - K_to_V_hashtable_init_internal
     - K_to_V_hashtable_init_with_capacity_rounded
-    - K_to_V_hashtable_deinit
-    - K_to_V_hashtable_copy
+    - K_to_V_hashtable_clone
+
     - K_to_V_hashtable_get_count
     - K_to_V_hashtable_get_capacity
     - K_to_V_hashtable_is_empty
     - K_to_V_hashtable_is_full
+
     - K_to_V_hashtable_contains
     - K_to_V_hashtable_get
     - K_to_V_hashtable_get_mut
@@ -52,18 +55,21 @@
 #ifndef __K_TO_V_HASHTABLE__H
 #define __K_TO_V_HASHTABLE__H
 
-#include <assert.h>  // assert
+#include <assert.h> // assert
+#include <stdalign.h>
 #include <stdbool.h> // bool, true, false
 #include <stddef.h>  // offsetof
 #include <stdint.h>  // SIZE_MAX
 #include <stdlib.h>  // size_t, NULL, malloc, free
 #include <string.h>  // memcpy
 
-#include "header-only/is_pow2.h"    // is_pow2
-#include "header-only/murmurhash.h" // murmurhash
-#include "header-only/nextpow2.h"   // nextpow2
+#include "allocators/allocator_function_types.h" // allocate_f, deallocate_f
+#include "allocators/std_allocator.h"            // std_allocate, std_deallocate
+#include "header-only/is_pow2.h"                 // is_pow2
+#include "header-only/murmurhash.h"              // murmurhash
+#include "header-only/nextpow2.h"                // nextpow2
 
-#define K_to_V_hashtable_for_each(hashtable_p, out_index, out_key, out_value)             \
+#define K_to_V_hashtable_for_each(hashtable_p, out_index, out_key, out_value)      \
     for ((out_index) = 0; (out_index) <= (hashtable_p)->index_mask; (out_index)++) \
         if ((hashtable_p)->arr[(out_index)].offset != SIZE_MAX &&                  \
             ((out_key) = (hashtable_p)->arr[(out_index)].key, (out_value) = (hashtable_p)->arr[(out_index)].value, true))
@@ -112,19 +118,28 @@ typedef struct {
 typedef struct {
     size_t count;
     size_t index_mask;
+
+    void* allocator_struct_p;
+    allocate_f allocate_f_p;
+    deallocate_f deallocate_f_p;
+
     K_to_V_hashtable_slot_type arr[];
 } K_to_V_hashtable_type;
 
-static inline bool JOIN(K_to_V_hashtable, init_internal)(K_to_V_hashtable_type** hashtable_pp, size_t pow2_capacity) {
+static inline bool JOIN(K_to_V_hashtable, init_internal)(K_to_V_hashtable_type** hashtable_pp, size_t pow2_capacity,
+                                                         void* allocator_struct_p, allocate_f allocate_f_p,
+                                                         deallocate_f deallocate_f_p) {
     assert(hashtable_pp != NULL);
     assert(is_pow2(pow2_capacity) && "initial capacity is a power of 2");
 
+    *hashtable_pp = NULL;
     if (pow2_capacity > (SIZE_MAX - offsetof(K_to_V_hashtable_type, arr)) / sizeof(K_to_V_hashtable_slot_type)) {
         return false;
     }
-    *hashtable_pp =
-        (K_to_V_hashtable_type*)malloc(offsetof(K_to_V_hashtable_type, arr) + sizeof(K_to_V_hashtable_slot_type) * pow2_capacity);
-    if ((*hashtable_pp) == NULL) {
+    *hashtable_pp = (K_to_V_hashtable_type*)allocate_f_p(allocator_struct_p, alignof(K_to_V_hashtable_type),
+                                                         offsetof(K_to_V_hashtable_type, arr) +
+                                                             sizeof(K_to_V_hashtable_slot_type) * pow2_capacity);
+    if (*hashtable_pp == NULL) {
         return false;
     }
     (*hashtable_pp)->count = 0;
@@ -135,10 +150,16 @@ static inline bool JOIN(K_to_V_hashtable, init_internal)(K_to_V_hashtable_type**
         hashtable_p->arr[i].offset = EMPTY_SLOT_OFFSET;
     }
 
+    (*hashtable_pp)->allocator_struct_p = allocator_struct_p;
+    (*hashtable_pp)->allocate_f_p = allocate_f_p;
+    (*hashtable_pp)->deallocate_f_p = deallocate_f_p;
+
     return true;
 }
 
-static inline bool JOIN(K_to_V_hashtable, init_with_capacity_rounded)(K_to_V_hashtable_type** hashtable_pp, size_t capacity) {
+static inline bool JOIN(K_to_V_hashtable, init_with_capacity_rounded)(K_to_V_hashtable_type** hashtable_pp, size_t capacity,
+                                                                      void* allocator_struct_p, allocate_f allocate_f_p,
+                                                                      deallocate_f deallocate_f_p) {
     assert(hashtable_pp != NULL);
 
     if (capacity == 0) {
@@ -149,38 +170,42 @@ static inline bool JOIN(K_to_V_hashtable, init_with_capacity_rounded)(K_to_V_has
         return false;
     }
 
-    return JOIN(K_to_V_hashtable, init_internal)(hashtable_pp, rounded_capacity);
+    return JOIN(K_to_V_hashtable, init_internal)(hashtable_pp, rounded_capacity, allocator_struct_p, allocate_f_p, deallocate_f_p);
 }
 
-static inline bool JOIN(K_to_V_hashtable, init)(K_to_V_hashtable_type** hashtable_pp, size_t capacity) {
-    assert(hashtable_pp != NULL);
-
-    return JOIN(K_to_V_hashtable, init_with_capacity_rounded)(hashtable_pp, (size_t)(capacity == 1) + (size_t)(1.5 * capacity));
+static inline bool JOIN(K_to_V_hashtable, init)(K_to_V_hashtable_type** hashtable_pp, size_t capacity, void* allocator_struct_p,
+                                                allocate_f allocate_f_p, deallocate_f deallocate_f_p) {
+    return JOIN(K_to_V_hashtable, init_with_capacity_rounded)(hashtable_pp, (size_t)(capacity == 1) + (size_t)(1.5 * capacity),
+                                                              allocator_struct_p, allocate_f_p, deallocate_f_p);
 }
 
-static inline bool JOIN(K_to_V_hashtable, deinit)(K_to_V_hashtable_type** hashtable_pp) {
-    assert(hashtable_pp != NULL);
-
-    if (*hashtable_pp == NULL) {
-        return false;
-    }
-    free(*hashtable_pp);
-    *hashtable_pp = NULL;
-
-    return true;
+static inline K_to_V_hashtable_type* JOIN(K_to_V_hashtable, create)(size_t capacity) {
+    K_to_V_hashtable_type* hashtable_p = NULL;
+    JOIN(K_to_V_hashtable, init)(&hashtable_p, capacity, NULL, std_allocate, std_deallocate);
+    return hashtable_p;
 }
 
-static inline bool JOIN(K_to_V_hashtable, copy)(K_to_V_hashtable_type** hashtable_dest_pp, K_to_V_hashtable_type* hashtable_src_p) {
+static inline void JOIN(K_to_V_hashtable, destroy)(K_to_V_hashtable_type* hashtable_p) {
+    assert(hashtable_p != NULL);
+
+    void* allocator_struct_p = hashtable_p->allocator_struct_p;
+    deallocate_f deallocate_f_p = hashtable_p->deallocate_f_p;
+
+    deallocate_f_p(allocator_struct_p, hashtable_p);
+}
+
+static inline K_to_V_hashtable_type* JOIN(K_to_V_hashtable, clone)(K_to_V_hashtable_type* hashtable_src_p) {
     assert(hashtable_src_p != NULL);
-    assert(hashtable_dest_pp != NULL);
 
-    if (!JOIN(K_to_V_hashtable, init_internal)(hashtable_dest_pp, hashtable_src_p->index_mask + 1)) {
-        return false;
+    K_to_V_hashtable_type* hashtable_dest_p = NULL;
+    if (!JOIN(K_to_V_hashtable, init_internal)(&hashtable_dest_p, hashtable_src_p->index_mask + 1, hashtable_src_p->allocator_struct_p,
+                                               hashtable_src_p->allocate_f_p, hashtable_src_p->deallocate_f_p)) {
+        return NULL;
     }
-    memcpy((*hashtable_dest_pp)->arr, hashtable_src_p->arr, sizeof(K_to_V_hashtable_slot_type) * (hashtable_src_p->index_mask + 1));
-    (*hashtable_dest_pp)->count = hashtable_src_p->count;
+    memcpy(hashtable_dest_p->arr, hashtable_src_p->arr, sizeof(K_to_V_hashtable_slot_type) * (hashtable_src_p->index_mask + 1));
+    hashtable_dest_p->count = hashtable_src_p->count;
 
-    return true;
+    return hashtable_dest_p;
 }
 
 static inline size_t JOIN(K_to_V_hashtable, get_count)(const K_to_V_hashtable_type* hashtable_p) {

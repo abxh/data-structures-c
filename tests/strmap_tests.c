@@ -3,13 +3,13 @@
 #include <stdlib.h>  // NULL
 #include <string.h>  // strcmp
 
-#include "test.h" // is_true, is_false, is_equal
-
-#include "strmap.h" // strmap_*, STRMAP_GET_VALUE_DEFAULT
+#include "allocators/arena.h" // arena_*
+#include "strmap.h"           // strmap_*, STRMAP_GET_VALUE_DEFAULT
+#include "test.h"             // is_true, is_false, is_equal
 
 bool one_element_test(void) {
-    strmap_type* strmap_p = NULL;
-    if (!strmap_init(&strmap_p)) {
+    strmap_type* strmap_p = strmap_create();
+    if (!strmap_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -20,14 +20,14 @@ bool one_element_test(void) {
     res &= is_equal(strmap_get_count(strmap_p), 1UL);
     res &= is_true(strcmp(strmap_get(strmap_p, "AA"), "11") == 0);
 
-    res &= is_true(strmap_deinit(&strmap_p));
+    strmap_destroy(strmap_p);
 
     return res;
 }
 
 bool four_elements_test(void) {
-    strmap_type* strmap_p = NULL;
-    if (!strmap_init(&strmap_p)) {
+    strmap_type* strmap_p = strmap_create();
+    if (!strmap_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -43,14 +43,14 @@ bool four_elements_test(void) {
     res &= is_true(strcmp(strmap_get(strmap_p, "CCC"), "9012") == 0);
     res &= is_true(strcmp(strmap_get(strmap_p, "DDD"), "3456") == 0);
 
-    res &= is_true(strmap_deinit(&strmap_p));
+    strmap_destroy(strmap_p);
 
     return res;
 }
 
 bool del_and_contains_test(void) {
-    strmap_type* strmap_p = NULL;
-    if (!strmap_init(&strmap_p)) {
+    strmap_type* strmap_p = strmap_create();
+    if (!strmap_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -72,14 +72,14 @@ bool del_and_contains_test(void) {
     res &= is_true(strmap_contains(strmap_p, "aac"));
     res &= is_true(strmap_contains(strmap_p, "aad"));
 
-    res &= is_true(strmap_deinit(&strmap_p));
+    strmap_destroy(strmap_p);
 
     return res;
 }
 
 bool missing_elements_test(void) {
-    strmap_type* strmap_p = NULL;
-    if (!strmap_init(&strmap_p)) {
+    strmap_type* strmap_p = strmap_create();
+    if (!strmap_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -98,14 +98,14 @@ bool missing_elements_test(void) {
     res &= is_false(strmap_contains(strmap_p, "c"));
     res &= is_true(strmap_contains(strmap_p, "d"));
 
-    res &= is_true(strmap_deinit(&strmap_p));
+    strmap_destroy(strmap_p);
 
     return res;
 }
 
 bool overwrite_element_test(void) {
-    strmap_type* strmap_p = NULL;
-    if (!strmap_init(&strmap_p)) {
+    strmap_type* strmap_p = strmap_create();
+    if (!strmap_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -124,14 +124,14 @@ bool overwrite_element_test(void) {
 
     res &= is_true(strcmp(strmap_get(strmap_p, "A"), "C") == 0);
 
-    res &= is_true(strmap_deinit(&strmap_p));
+    strmap_destroy(strmap_p);
 
     return res;
 }
 
 bool empty_element_test(void) {
-    strmap_type* strmap_p = NULL;
-    if (!strmap_init(&strmap_p)) {
+    strmap_type* strmap_p = strmap_create();
+    if (!strmap_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -144,7 +144,7 @@ bool empty_element_test(void) {
     res &= is_true(strmap_set(strmap_p, "", ""));
     res &= is_true(strcmp(strmap_get(strmap_p, ""), "") == 0);
 
-    res &= is_true(strmap_deinit(&strmap_p));
+    strmap_destroy(strmap_p);
 
     return res;
 }
@@ -153,8 +153,13 @@ bool empty_element_test(void) {
 #define m ('z' - 'a' + 1)
 
 bool million_elements_test(void) {
+
+    static unsigned char buf[300000 * 1024];
+    arena_type arena = {0};
+    arena_init(&arena, buf, sizeof(buf));
+
     strmap_type* strmap_p = NULL;
-    if (!strmap_init(&strmap_p)) {
+    if (!strmap_init(&strmap_p, &arena, arena_allocate, arena_reallocate, arena_deallocate)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -177,13 +182,13 @@ bool million_elements_test(void) {
         char c5 = (i / m / m / m / m) % m + 'a';
         res &= is_true(strcmp(strmap_get(strmap_p, (char[]){c5, c4, c3, c2, c1, '\0'}), (char[]){c1, c2, c3, c4, c5, '\0'}) == 0);
     }
-    res &= is_true(strmap_deinit(&strmap_p));
+    strmap_destroy(strmap_p);
     return res;
 }
 
 bool for_each_and_copy_test(void) {
-    strmap_type* strmap_p = NULL;
-    if (!strmap_init_with_initial_capacity(&strmap_p, 2048)) {
+    strmap_type* strmap_p = strmap_create();
+    if (!strmap_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -209,8 +214,8 @@ bool for_each_and_copy_test(void) {
         }
         res &= is_equal(count, 1000UL);
     }
-    strmap_type* strmap_copy_p = NULL;
-    if (!strmap_copy(&strmap_copy_p, strmap_p)) {
+    strmap_type* strmap_copy_p = strmap_clone(strmap_p);
+    if (!strmap_copy_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -231,8 +236,8 @@ bool for_each_and_copy_test(void) {
         res &= is_equal(i, 1000UL);
     }
 
-    res &= is_true(strmap_deinit(&strmap_p));
-    res &= is_true(strmap_deinit(&strmap_copy_p));
+    strmap_destroy(strmap_p);
+    strmap_destroy(strmap_copy_p);
 
     return res;
 }

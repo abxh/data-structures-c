@@ -1,6 +1,5 @@
 #include <stdbool.h> // bool, true, false
 #include <stdio.h>   // fprintf, printf, stderr
-#include <stdlib.h>  // NULL
 
 #include "test.h" // is_true, is_false, is_equal
 
@@ -8,8 +7,8 @@
 #include "header-only/fixed-containers/T_stack.h" // int_stack_*, T_stack_for_each
 
 bool empty_test(void) {
-    int_stack_type* stack_p = NULL;
-    if (!int_stack_init(&stack_p, 1)) {
+    int_stack_type* stack_p = int_stack_create(1);
+    if (!stack_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -18,14 +17,15 @@ bool empty_test(void) {
     res &= is_equal(int_stack_get_capacity(stack_p), 1UL);
     res &= is_true(int_stack_is_empty(stack_p));
     res &= is_equal(int_stack_get_count(stack_p), 0UL);
-    res &= is_true(int_stack_deinit(&stack_p));
+
+    int_stack_destroy(stack_p);
 
     return res;
 }
 
 bool one_element_test(void) {
-    int_stack_type* stack_p = NULL;
-    if (!int_stack_init(&stack_p, 1)) {
+    int_stack_type* stack_p = int_stack_create(1);
+    if (!stack_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -48,14 +48,14 @@ bool one_element_test(void) {
     res &= is_true(int_stack_is_empty(stack_p));
     res &= is_false(int_stack_is_full(stack_p));
 
-    res &= is_true(int_stack_deinit(&stack_p));
+    int_stack_destroy(stack_p);
 
     return res;
 }
 
 bool million_elements_test(void) {
-    int_stack_type* stack_p = NULL;
-    if (!int_stack_init(&stack_p, 1000000)) {
+    int_stack_type* stack_p = int_stack_create(1000000);
+    if (!stack_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -71,13 +71,13 @@ bool million_elements_test(void) {
         res &= is_equal(i, int_stack_pop(stack_p));
     }
 
-    res &= is_true(int_stack_deinit(&stack_p));
+    int_stack_destroy(stack_p);
     return res;
 }
 
 bool for_each_and_copy_test(void) {
-    int_stack_type* stack_p = NULL;
-    if (!int_stack_init(&stack_p, 50)) {
+    int_stack_type* stack_p = int_stack_create(50);
+    if (!stack_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -94,8 +94,8 @@ bool for_each_and_copy_test(void) {
             x--;
         }
     }
-    int_stack_type* stack_copy_p = NULL;
-    if (!int_stack_copy(&stack_copy_p, stack_p)) {
+    int_stack_type* stack_copy_p = int_stack_clone(stack_p);
+    if (!stack_copy_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -108,8 +108,8 @@ bool for_each_and_copy_test(void) {
             x--;
         }
     }
-    res &= is_true(int_stack_deinit(&stack_p));
-    res &= is_true(int_stack_deinit(&stack_copy_p));
+    int_stack_destroy(stack_p);
+    int_stack_destroy(stack_copy_p);
 
     return res;
 }
