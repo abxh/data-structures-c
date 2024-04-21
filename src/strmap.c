@@ -47,43 +47,51 @@ uint64_t fnvhash(const unsigned char* char_p) {
     return hash;
 }
 
-strmap_type* strmap_init_with_initial_capacity(size_t pow2_capacity, void* allocator_struct_p, allocate_f allocate_f_p,
-                                               reallocate_f reallocate_f_p, deallocate_f deallocate_f_p) {
+bool strmap_init_with_initial_capacity(strmap_type** strmap_pp, size_t pow2_capacity, void* allocator_struct_p,
+                                       allocate_f allocate_f_p, reallocate_f reallocate_f_p, deallocate_f deallocate_f_p) {
+    assert(strmap_pp != NULL);
     assert(is_pow2(pow2_capacity) && "initial capacity is a power of 2");
     assert(pow2_capacity - 1 != 0 && "subtracting initial capacity by one does not yield zero");
 
+    *strmap_pp = NULL;
     if (pow2_capacity > SIZE_MAX / sizeof(strmap_node_list_type)) {
         return NULL;
     }
-    strmap_type* strmap_p = allocate_f_p(allocator_struct_p, alignof(strmap_type), sizeof(strmap_type));
-    if (strmap_p == NULL) {
-        return NULL;
+    *strmap_pp = allocate_f_p(allocator_struct_p, alignof(strmap_type), sizeof(strmap_type));
+    if (*strmap_pp == NULL) {
+        return false;
     }
-    strmap_p->lists_arr_p =
+    (*strmap_pp)->lists_arr_p =
         allocate_f_p(allocator_struct_p, alignof(strmap_node_list_type), pow2_capacity * sizeof(strmap_node_list_type));
-    if (strmap_p->lists_arr_p == NULL) {
-        free(strmap_p);
-        return NULL;
+    if ((*strmap_pp)->lists_arr_p == NULL) {
+        deallocate_f_p(allocator_struct_p, *strmap_pp);
+        *strmap_pp = NULL;
+        return false;
     }
-    strmap_p->list_count = pow2_capacity;
-    for (size_t i = 0; i < strmap_p->list_count; i++) {
-        strmap_p->lists_arr_p[i] = (strmap_node_list_type){.head_p = NULL, .tail_p = NULL, .node_count = 0};
+    (*strmap_pp)->list_count = pow2_capacity;
+    for (size_t i = 0; i < (*strmap_pp)->list_count; i++) {
+        (*strmap_pp)->lists_arr_p[i] = (strmap_node_list_type){.head_p = NULL, .tail_p = NULL, .node_count = 0};
     }
-    strmap_p->total_nodes_count = 0;
-    strmap_p->allocator_struct_p = allocator_struct_p;
-    strmap_p->allocate_f_p = allocate_f_p;
-    strmap_p->reallocate_f_p = reallocate_f_p;
-    strmap_p->deallocate_f_p = deallocate_f_p;
+    (*strmap_pp)->total_nodes_count = 0;
 
-    return strmap_p;
+    (*strmap_pp)->allocator_struct_p = allocator_struct_p;
+    (*strmap_pp)->allocate_f_p = allocate_f_p;
+    (*strmap_pp)->reallocate_f_p = reallocate_f_p;
+    (*strmap_pp)->deallocate_f_p = deallocate_f_p;
+
+    return true;
 }
 
-strmap_type* strmap_init(void* allocator_struct_p, allocate_f allocate_f_p, reallocate_f realloc_f_p, deallocate_f deallocate_f_p) {
-    return strmap_init_with_initial_capacity(INITIAL_CAPACITY, allocator_struct_p, allocate_f_p, realloc_f_p, deallocate_f_p);
+bool strmap_init(strmap_type** strmap_pp, void* allocator_struct_p, allocate_f allocate_f_p, reallocate_f realloc_f_p,
+                 deallocate_f deallocate_f_p) {
+    return strmap_init_with_initial_capacity(strmap_pp, INITIAL_CAPACITY, allocator_struct_p, allocate_f_p, realloc_f_p,
+                                             deallocate_f_p);
 }
 
 strmap_type* strmap_create(void) {
-    return strmap_init(NULL, std_allocate, std_reallocate, std_deallocate);
+    strmap_type* strmap_p = NULL;
+    strmap_init(&strmap_p, NULL, std_allocate, std_reallocate, std_deallocate);
+    return strmap_p;
 }
 
 void strmap_destroy(strmap_type* strmap_p) {
@@ -100,9 +108,11 @@ void strmap_destroy(strmap_type* strmap_p) {
         // traverse list and free nodes one by one
         while (node_p != NULL) {
             next_p = node_p->next_p;
+
             deallocate_f_p(allocator_struct_p, node_p->key_p);
             deallocate_f_p(allocator_struct_p, node_p->value_p);
             deallocate_f_p(allocator_struct_p, node_p);
+
             node_p = next_p;
         }
     }
@@ -258,9 +268,10 @@ int strmap_grow_if_necessary(strmap_type* strmap_p, size_t chain_length) {
     if (new_list_count > SIZE_MAX / sizeof(strmap_node_list_type)) {
         return -1;
     }
-    strmap_node_list_type* lists_p = strmap_p->reallocate_f_p(strmap_p->allocator_struct_p, strmap_p->lists_arr_p,
-                                                              alignof(strmap_node_list_type), old_list_count, new_list_count);
 
+    strmap_node_list_type* lists_p =
+        strmap_p->reallocate_f_p(strmap_p->allocator_struct_p, strmap_p->lists_arr_p, alignof(strmap_node_list_type),
+                                 old_list_count * sizeof(strmap_node_list_type), new_list_count * sizeof(strmap_node_list_type));
     if (lists_p == NULL) {
         return -1;
     }
@@ -338,7 +349,7 @@ bool strmap_set(strmap_type* strmap_p, const char* key_p, const char* value_p) {
     assert(key_p != NULL);
     assert(value_p != NULL);
 
-    uint64_t hash = fnvhash((unsigned char*)key_p);
+    uint64_t hash = fnvhash((const unsigned char*)key_p);
     uint64_t index = hash & (strmap_p->list_count - 1);
 
     int rtr_val = strmap_grow_if_necessary(strmap_p, strmap_p->lists_arr_p[index].node_count + 1);
@@ -393,13 +404,12 @@ bool strmap_set(strmap_type* strmap_p, const char* key_p, const char* value_p) {
     return true;
 }
 
-strmap_type* strmap_copy(const strmap_type* strmap_src_p) {
+strmap_type* strmap_clone(const strmap_type* strmap_src_p) {
     assert(strmap_src_p != NULL);
 
-    strmap_type* strmap_dest_p =
-        strmap_init_with_initial_capacity(strmap_src_p->list_count, strmap_src_p->allocator_struct_p, strmap_src_p->allocate_f_p,
-                                          strmap_src_p->reallocate_f_p, strmap_src_p->deallocate_f_p);
-    if (strmap_dest_p != NULL) {
+    strmap_type* strmap_dest_p = NULL;
+    if (!strmap_init_with_initial_capacity(&strmap_dest_p, strmap_src_p->list_count, strmap_src_p->allocator_struct_p,
+                                           strmap_src_p->allocate_f_p, strmap_src_p->reallocate_f_p, strmap_src_p->deallocate_f_p)) {
         return NULL;
     }
     size_t list_index;

@@ -10,7 +10,7 @@
 int main(void) {
     bitarray_type* bitarray_p = bitarray_create(TOTAL);
 
-    if (bitarray_p == NULL) {
+    if (!bitarray_p) {
         return 1;
     }
 

@@ -3,9 +3,9 @@
 #include <stdlib.h>  // NULL
 #include <string.h>  // strcmp
 
-#include "test.h" // is_true, is_false, is_equal
-
-#include "strmap.h" // strmap_*, STRMAP_GET_VALUE_DEFAULT
+#include "allocators/arena.h" // arena_*
+#include "strmap.h"           // strmap_*, STRMAP_GET_VALUE_DEFAULT
+#include "test.h"             // is_true, is_false, is_equal
 
 bool one_element_test(void) {
     strmap_type* strmap_p = strmap_create();
@@ -153,8 +153,13 @@ bool empty_element_test(void) {
 #define m ('z' - 'a' + 1)
 
 bool million_elements_test(void) {
-    strmap_type* strmap_p = strmap_create();
-    if (!strmap_p) {
+
+    static unsigned char buf[300000 * 1024];
+    arena_type arena = {0};
+    arena_init(&arena, buf, sizeof(buf));
+
+    strmap_type* strmap_p = NULL;
+    if (!strmap_init(&strmap_p, &arena, arena_allocate, arena_reallocate, arena_deallocate)) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -209,7 +214,7 @@ bool for_each_and_copy_test(void) {
         }
         res &= is_equal(count, 1000UL);
     }
-    strmap_type* strmap_copy_p = strmap_copy(strmap_p);
+    strmap_type* strmap_copy_p = strmap_clone(strmap_p);
     if (!strmap_copy_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;

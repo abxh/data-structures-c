@@ -1,16 +1,14 @@
 #include <stdbool.h> // bool, true, false
 #include <stdio.h>   // fprintf, printf, stderr
-#include <stdlib.h>  // NULL
 
 #include "test.h" // is_true, is_false, is_equal
 
 #define VALUE_TYPE int
 #include "header-only/fixed-containers/T_queue.h" // int_queue_*, T_queue_for_each
 
-
 bool empty_test(void) {
-    int_queue_type* queue_p = NULL;
-    if (!int_queue_init_internal(&queue_p, 1)) {
+    int_queue_type* queue_p = int_queue_create(1);
+    if (!queue_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -18,14 +16,15 @@ bool empty_test(void) {
 
     res &= is_equal(int_queue_get_count(queue_p), 0UL);
     res &= is_true(int_queue_is_empty(queue_p));
-    res &= is_true(int_queue_deinit(&queue_p));
+
+    int_queue_destroy(queue_p);
 
     return res;
 }
 
 bool one_element_test(void) {
-    int_queue_type* queue_p = NULL;
-    if (!int_queue_init_internal(&queue_p, 1)) {
+    int_queue_type* queue_p = int_queue_create(1);
+    if (!queue_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -45,14 +44,14 @@ bool one_element_test(void) {
     res &= is_true(int_queue_is_empty(queue_p));
     res &= is_false(int_queue_is_full(queue_p));
 
-    res &= is_true(int_queue_deinit(&queue_p));
+    int_queue_destroy(queue_p);
 
     return res;
 }
 
 bool two_elements_test(void) {
-    int_queue_type* queue_p = NULL;
-    if (!int_queue_init_internal(&queue_p, 2)) {
+    int_queue_type* queue_p = int_queue_create(2);
+    if (!queue_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -84,14 +83,14 @@ bool two_elements_test(void) {
     res &= is_equal(value2, int_queue_peek_first(queue_p));
     res &= is_equal(value1, int_queue_peek_last(queue_p));
 
-    res &= is_true(int_queue_deinit(&queue_p));
+    int_queue_destroy(queue_p);
 
     return res;
 }
 
 bool million_elements_test(void) {
-    int_queue_type* queue_p = NULL;
-    if (!int_queue_init(&queue_p, 1000000)) {
+    int_queue_type* queue_p = int_queue_create(1000000);
+    if (!queue_p) {
         return false;
     }
     bool res = true;
@@ -103,13 +102,13 @@ bool million_elements_test(void) {
         res &= is_equal(i, int_queue_dequeue(queue_p));
         res &= is_equal(int_queue_get_count(queue_p), (size_t)(1000000 - i));
     }
-    res &= is_true(int_queue_deinit(&queue_p));
+    int_queue_destroy(queue_p);
     return res;
 }
 
 bool wraparound_test(void) {
-    int_queue_type* queue_p = NULL;
-    if (!int_queue_init_internal(&queue_p, 1024)) {
+    int_queue_type* queue_p = int_queue_create(1024);
+    if (!queue_p) {
         return false;
     }
     bool res = true;
@@ -125,13 +124,13 @@ bool wraparound_test(void) {
     for (int i = 1; i <= 750; i++) {
         res &= is_equal(i, int_queue_dequeue(queue_p));
     }
-    res &= is_true(int_queue_deinit(&queue_p));
+    int_queue_destroy(queue_p);
     return res;
 }
 
 bool for_each_and_copy_test(void) {
-    int_queue_type* queue_p = NULL;
-    if (!int_queue_init(&queue_p, 50)) {
+    int_queue_type* queue_p = int_queue_create(50);
+    if (!queue_p) {
         fprintf(stderr, "could not initialize object in %s at line %d.\n", __PRETTY_FUNCTION__, __LINE__);
         return false;
     }
@@ -162,8 +161,10 @@ bool for_each_and_copy_test(void) {
             x++;
         }
     }
-    res &= is_true(int_queue_deinit(&queue_p));
-    res &= is_true(int_queue_deinit(&queue_copy_p));
+
+    int_queue_destroy(queue_p);
+    int_queue_destroy(queue_copy_p);
+
     return res;
 }
 

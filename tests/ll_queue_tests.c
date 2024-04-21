@@ -1,12 +1,13 @@
 #include <stdbool.h> // bool, true, false
 #include <stdio.h>   // fprintf, printf, stderr
 
-#include "test.h" // is_true, is_false, is_equal
+#include "allocators/arena.h"    // arena_*
 #include "containers/ll_queue.h" // ll_queue_*
+#include "test.h"                // is_true, is_false, is_equal
 
 bool empty_test(void) {
-    ll_queue_type* queue_p;
-    if (!ll_queue_init(&queue_p)) {
+    ll_queue_type* queue_p = ll_queue_create();
+    if (!queue_p) {
         fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
@@ -14,14 +15,15 @@ bool empty_test(void) {
 
     res &= is_equal(ll_queue_get_count(queue_p), 0UL);
     res &= is_true(ll_queue_is_empty(queue_p));
-    res &= is_true(ll_queue_deinit(&queue_p));
+
+    ll_queue_destroy(queue_p);
 
     return res;
 }
 
 bool one_element_test(void) {
-    ll_queue_type* queue_p;
-    if (!ll_queue_init(&queue_p)) {
+    ll_queue_type* queue_p = ll_queue_create();
+    if (!queue_p) {
         fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
@@ -42,14 +44,14 @@ bool one_element_test(void) {
     res &= is_true(ll_queue_is_empty(queue_p));
     res &= is_equal(ll_queue_get_count(queue_p), 0UL);
 
-    res &= is_true(ll_queue_deinit(&queue_p));
+    ll_queue_destroy(queue_p);
 
     return res;
 }
 
 bool two_elements_test(void) {
-    ll_queue_type* queue_p;
-    if (!ll_queue_init(&queue_p)) {
+    ll_queue_type* queue_p = ll_queue_create();
+    if (!queue_p) {
         fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
@@ -65,14 +67,19 @@ bool two_elements_test(void) {
     res &= is_equal(value1, ll_queue_peek_first(int, queue_p));
     res &= is_equal(value2, ll_queue_peek_last(int, queue_p));
     res &= is_equal(ll_queue_get_count(queue_p), 2UL);
-    res &= is_true(ll_queue_deinit(&queue_p));
+
+    ll_queue_destroy(queue_p);
 
     return res;
 }
 
 bool million_elements_test(void) {
-    ll_queue_type* queue_p;
-    if (!ll_queue_init(&queue_p)) {
+    static unsigned char buf[40000 * 1024];
+    arena_type arena = {0};
+    arena_init(&arena, buf, sizeof(buf));
+
+    ll_queue_type* queue_p = NULL;
+    if (!ll_queue_init(&queue_p, &arena, arena_allocate, arena_deallocate)) {
         fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
@@ -89,13 +96,13 @@ bool million_elements_test(void) {
         res &= is_equal(i, out_value);
         res &= is_equal(ll_queue_get_count(queue_p), (size_t)(1000000 - i));
     }
-    res &= is_true(ll_queue_deinit(&queue_p));
+    ll_queue_destroy(queue_p);
     return res;
 }
 
 bool for_each_and_copy_test(void) {
-    ll_queue_type* queue_p;
-    if (!ll_queue_init(&queue_p)) {
+    ll_queue_type* queue_p = ll_queue_create();
+    if (!queue_p) {
         fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
         return false;
     }
@@ -115,10 +122,10 @@ bool for_each_and_copy_test(void) {
             x++;
         }
     }
-    ll_queue_type* queue_copy_p;
-    if (!ll_queue_copy(&queue_copy_p, queue_p)) {
+    ll_queue_type* queue_copy_p = ll_queue_clone(queue_p);
+    if (!queue_copy_p) {
         fprintf(stderr, "could not initialize object in %s.\n", __PRETTY_FUNCTION__);
-        ll_queue_deinit(&queue_p);
+        ll_queue_destroy(queue_p);
         return false;
     }
     {
@@ -136,8 +143,10 @@ bool for_each_and_copy_test(void) {
         }
     }
     res &= is_equal(ll_queue_get_count(queue_p), ll_queue_get_count(queue_copy_p));
-    res &= is_true(ll_queue_deinit(&queue_p));
-    res &= is_true(ll_queue_deinit(&queue_copy_p));
+
+    ll_queue_destroy(queue_p);
+    ll_queue_destroy(queue_copy_p);
+
     return res;
 }
 

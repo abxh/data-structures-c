@@ -13,11 +13,10 @@ extern "C" {
 #define PREFIX uint_ht
 #define KEY_TYPE uint64_t
 #define VALUE_TYPE uint64_t
-#include "header-only/hashtable.h"
+#include "header-only/fixed-containers/K_to_V_hashtable.h"
 
 void benchmark_uint_ht(size_t n) {
-    uint_ht_type* ht_p;
-    uint_ht_init(&ht_p, n);
+    uint_ht_type* ht_p = uint_ht_create(n);
     for (size_t i = 0; i < n; i++) {
         uint64_t key = rand() & 1;
         uint64_t* value_p = uint_ht_get_mut(ht_p, key);

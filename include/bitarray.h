@@ -21,7 +21,10 @@ bitarray_type* bitarray_create(size_t num_of_bits);
 
 void bitarray_destroy(bitarray_type* bitarray_p);
 
-bitarray_type* bitarray_copy(const bitarray_type* bitarray_src_p);
+bitarray_type* bitarray_clone(const bitarray_type* bitarray_src_p);
+
+bool bitarray_init(bitarray_type** bitarray_pp, size_t num_of_bits, void* allocator_struct_p, allocate_f allocate_f_p,
+                   deallocate_f deallocate_f_p);
 
 void bitarray_print(const bitarray_type* bitarray_p);
 
@@ -42,5 +45,3 @@ void bitarray_set_false(bitarray_type* bitarray_p, size_t index);
 void bitarray_set(bitarray_type* bitarray_p, size_t index, bool bit);
 
 void bitarray_toggle(bitarray_type* bitarray_p, size_t index);
-
-bitarray_type* bitarray_init(size_t num_of_bits, void* allocator_struct_p, allocate_f allocate_f_p, deallocate_f deallocate_f_p);

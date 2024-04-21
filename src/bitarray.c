@@ -1,11 +1,11 @@
-#include <assert.h> // assert, static_assert
-#include <limits.h> // CHAR_BIT
-#include <stdalign.h>
-#include <stdbool.h> // bool
-#include <stdint.h>
-#include <stdio.h>  // putchar, printf
-#include <stdlib.h> // size_t, NULL
-#include <string.h> // memcmp, memcpy
+#include <assert.h>   // assert, static_assert
+#include <limits.h>   // CHAR_BIT
+#include <stdalign.h> // alignof
+#include <stdbool.h>  // bool, true, false
+#include <stdint.h>   // SIZE_MAX
+#include <stdio.h>    // putchar, printf
+#include <stdlib.h>   // size_t, NULL
+#include <string.h>   // memcmp, memcpy
 
 #include "allocators/allocator_function_types.h" // allocate_f, deallocate_f
 #include "allocators/std_allocator.h"            // std_allocate, std_deallocate
@@ -31,35 +31,42 @@ size_t bit_index(size_t index) {
     return ~index & 7;
 }
 
-bitarray_type* bitarray_init(size_t num_of_bits, void* allocator_struct_p, allocate_f allocate_f_p, deallocate_f deallocate_f_p) {
+bool bitarray_init(bitarray_type** bitarray_pp, size_t num_of_bits, void* allocator_struct_p, allocate_f allocate_f_p,
+                   deallocate_f deallocate_f_p) {
     assert(num_of_bits != 0);
+    assert(bitarray_pp != NULL);
+
+    *bitarray_pp = NULL;
 
     size_t num_of_words = (num_of_bits + (8 - 1)) / 8; // round up to the next multiple of 8
     if (num_of_words > SIZE_MAX / sizeof(unsigned char)) {
-        return NULL;
+        return false;
     }
 
-    bitarray_type* bitarray_p = allocate_f_p(allocator_struct_p, alignof(bitarray_type), sizeof(bitarray_type));
-    if (bitarray_p == NULL) {
-        return NULL;
+    *bitarray_pp = allocate_f_p(allocator_struct_p, alignof(bitarray_type), sizeof(bitarray_type));
+    if (bitarray_pp == NULL) {
+        return false;
     }
-    bitarray_p->words = allocate_f_p(allocator_struct_p, alignof(unsigned char), num_of_words * sizeof(unsigned char));
-    if (bitarray_p->words == NULL) {
-        free(bitarray_p);
-        return NULL;
+    (*bitarray_pp)->words = allocate_f_p(allocator_struct_p, alignof(unsigned char), num_of_words * sizeof(unsigned char));
+    if ((*bitarray_pp)->words == NULL) {
+        free(*bitarray_pp);
+        *bitarray_pp = NULL;
+        return false;
     }
-    memset(bitarray_p->words, 0, num_of_words);
-    bitarray_p->num_of_bits = num_of_bits;
-    bitarray_p->num_of_words = num_of_words;
-    bitarray_p->allocator_struct_p = allocator_struct_p;
-    bitarray_p->allocate_f_p = allocate_f_p;
-    bitarray_p->deallocate_f_p = deallocate_f_p;
+    memset((*bitarray_pp)->words, 0, num_of_words);
+    (*bitarray_pp)->num_of_bits = num_of_bits;
+    (*bitarray_pp)->num_of_words = num_of_words;
+    (*bitarray_pp)->allocator_struct_p = allocator_struct_p;
+    (*bitarray_pp)->allocate_f_p = allocate_f_p;
+    (*bitarray_pp)->deallocate_f_p = deallocate_f_p;
 
-    return bitarray_p;
+    return true;
 }
 
 bitarray_type* bitarray_create(size_t num_of_bits) {
-    return bitarray_init(num_of_bits, NULL, std_allocate, std_deallocate);
+    bitarray_type* bitarray_p = NULL;
+    bitarray_init(&bitarray_p, num_of_bits, NULL, std_allocate, std_deallocate);
+    return bitarray_p;
 }
 
 void bitarray_destroy(bitarray_type* bitarray_p) {
@@ -103,11 +110,12 @@ bitarray_type* bitarray_create_from(const unsigned char* bytes, size_t num_of_bi
     return bitarray_p;
 }
 
-bitarray_type* bitarray_copy(const bitarray_type* bitarray_src_p) {
+bitarray_type* bitarray_clone(const bitarray_type* bitarray_src_p) {
     assert(bitarray_src_p != NULL);
 
-    bitarray_type* bitarray_copy_p = bitarray_create(bitarray_src_p->num_of_bits);
-    if (bitarray_copy_p == NULL) {
+    bitarray_type* bitarray_copy_p = NULL;
+    if (!bitarray_init(&bitarray_copy_p, bitarray_src_p->num_of_bits, bitarray_src_p->allocator_struct_p, bitarray_src_p->allocate_f_p,
+                       bitarray_src_p->deallocate_f_p)) {
         return NULL;
     }
     memcpy(bitarray_copy_p->words, bitarray_src_p->words, bitarray_src_p->num_of_words);

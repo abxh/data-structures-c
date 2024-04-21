@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdlib.h> // size_t
 
 typedef void* (*allocate_f)(void*, size_t, size_t); // allocator_struct_p, alignment, size

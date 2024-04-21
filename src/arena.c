@@ -1,22 +1,15 @@
-#include "allocators/arena.h"    // arena_*
+#include <assert.h>  // assert
+#include <stdbool.h> // false
+#include <stdint.h>  // uintptr_t
+#include <stdlib.h>  // size_t
+#include <string.h>  // memset
+
 #include "align_forward.h"       // arena_forward
+#include "allocators/arena.h"    // arena_*
 #include "header-only/is_pow2.h" // is_pow2
-#include <assert.h>              // assert
-#include <stdbool.h>             // false
-#include <stdint.h>              // uintptr_t
-#include <stdlib.h>              // size_t
-#include <string.h>              // memset
 
 // Source:
 // https://www.gingerbill.org/article/2019/02/08/memory-allocation-strategies-002/
-
-typedef struct arena_type {
-    size_t buffer_length;
-    unsigned char* buffer_p;
-
-    size_t previous_offset;
-    size_t current_offset;
-} arena_type;
 
 void arena_init(void* arena_p, void* backing_buffer, size_t backing_buffer_length) {
     arena_type* t_arena_p = (arena_type*)arena_p;
@@ -29,20 +22,20 @@ void arena_init(void* arena_p, void* backing_buffer, size_t backing_buffer_lengt
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
-void arena_free(void* a, void* ptr) {
+void arena_deallocate(void* a, void* ptr) {
     // do nothing. exists for completion purposes
 }
 
 #pragma GCC diagnostic pop
 
-void arena_free_all(void* arena_p) {
+void arena_deallocate_all(void* arena_p) {
     arena_type* t_arena_p = (arena_type*)arena_p;
 
     t_arena_p->current_offset = 0;
     t_arena_p->previous_offset = 0;
 }
 
-void* arena_alloc_aligned(void* arena_p, size_t alignment, size_t size) {
+void* arena_allocate(void* arena_p, size_t alignment, size_t size) {
     arena_type* t_arena_p = (arena_type*)arena_p;
 
     // clang-format off
@@ -73,22 +66,14 @@ void* arena_alloc_aligned(void* arena_p, size_t alignment, size_t size) {
     return NULL;
 }
 
-#ifndef DEFAULT_ALIGNMENT
-#define DEFAULT_ALIGNMENT (2 * sizeof(void*))
-#endif
-
-void* arena_alloc(void* arena_p, size_t size) {
-    return arena_alloc_aligned(arena_p, DEFAULT_ALIGNMENT, size);
-}
-
-void* arena_resize_aligned(void* arena_p, void* old_memory_p, size_t alignment, size_t old_size, size_t new_size) {
+void* arena_reallocate(void* arena_p, void* old_memory_p, size_t alignment, size_t old_size, size_t new_size) {
     assert(is_pow2(alignment));
 
     arena_type* t_arena_p = (arena_type*)arena_p;
     unsigned char* t_old_memory_p = (unsigned char*)old_memory_p;
 
     if (old_memory_p == NULL || old_size == 0) {
-        return arena_alloc_aligned(arena_p, alignment, new_size);
+        return arena_allocate(arena_p, alignment, new_size);
     } else if (!(t_arena_p->buffer_p <= t_old_memory_p && t_old_memory_p < t_arena_p->buffer_p + t_arena_p->buffer_length)) {
         assert(false && "Memory is out of bounds of the buffer in this arena");
         return NULL;
@@ -103,15 +88,11 @@ void* arena_resize_aligned(void* arena_p, void* old_memory_p, size_t alignment, 
         return arena_p;
     }
 
-    void* new_memory = arena_alloc_aligned(arena_p, alignment, new_size);
+    void* new_memory = arena_allocate(arena_p, alignment, new_size);
     size_t copy_size = old_size < new_size ? old_size : new_size;
 
     // Copy across old memory to the new memory
     memmove(new_memory, t_old_memory_p, copy_size);
 
     return new_memory;
-}
-
-void* arena_resize(void* arena_p, void* old_memory, size_t old_size, size_t new_size) {
-    return arena_resize_aligned(arena_p, old_memory, DEFAULT_ALIGNMENT, old_size, new_size);
 }
