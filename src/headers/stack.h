@@ -11,16 +11,11 @@
     See examples/stack.c to see how this header file is used in practice.
 */
 
-#ifndef __STACK__H
-#define __STACK__H
-
 #include <assert.h>  // assert
 #include <stdbool.h> // bool
 #include <stdint.h>  // SIZE_MAX
 #include <stdlib.h>  // size_t, NULL, malloc, calloc, reallocarray, free
 #include <string.h>  // memcpy
-
-#endif
 
 /* ----------------------------- DEFINES PROLOUGE BEGIN ----------------------------- */
 // {{{
@@ -52,15 +47,19 @@
 #define T_stack_pop CONCAT(T_stack, _pop)
 // }}}
 
-/* in:
+/* T_stack_for_each is to be used as a substitute to an iterator. 
+ *
+ * in:
  * - T_stack ptr
  * out:
  * - size_t index_plus_one
  * - T value
  */
+#ifndef T_stack_for_each
 #define T_stack_for_each(in_T_stack_ptr, out_size_t_count, out_T_value) \
     for ((out_size_t_count) = (in_T_stack_ptr)->count;                  \
          ((out_size_t_count) > 0 && ((out_T_value) = (in_T_stack_ptr)->arr_ptr[(out_size_t_count)-1], true)); (out_size_t_count)--)
+#endif
 /* ------------------------------ DEFINES PROLOUGE END ------------------------------ */
 
 /* managed stack struct. */
