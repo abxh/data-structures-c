@@ -17,7 +17,7 @@
 #include <assert.h>  // assert
 #include <stdbool.h> // bool
 #include <stdint.h>  // SIZE_MAX
-#include <stdlib.h>  // size_t, NULL, malloc, reallocarray, free
+#include <stdlib.h>  // size_t, NULL, malloc, calloc, reallocarray, free
 #include <string.h>  // memcpy
 
 #endif
@@ -71,7 +71,7 @@ typedef struct {
 } T_stack_type;
 
 /* create a new dynamic stack with an initial capacity and return it's pointer,
- * which is set to NULL if malloc fails. */
+ * returns NULL if memory could not be allocated. */
 static inline T_stack_type* T_stack_create_with_initial_capacity(size_t initial_capacity) {
     assert(0 != initial_capacity);
 
@@ -90,8 +90,8 @@ static inline T_stack_type* T_stack_create_with_initial_capacity(size_t initial_
     return stack_ptr;
 }
 
-/* create a new dynamic stack with a default capacity and return it's pointer,
-   which is set to NULL if malloc fails. */
+/* create a new dynamic stack with a default capacity and return it's pointer.
+   returns NULL if memory could not be allocated. */
 static inline T_stack_type* T_stack_create() {
     return T_stack_create_with_initial_capacity(1024);
 }
