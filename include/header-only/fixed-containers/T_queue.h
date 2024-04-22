@@ -13,7 +13,9 @@
     - T_queue_create
     - T_queue_destroy
     - T_queue_clone
+
     - T_queue_init
+    - T_queue_init_internal
     - T_queue_init_with_capacity_rounded
 
     - T_queue_get_count
@@ -86,8 +88,8 @@ typedef struct {
     VALUE_TYPE arr[];
 } T_queue_type;
 
-static inline bool JOIN(T_queue, init)(T_queue_type** queue_pp, size_t pow2_capacity, void* allocator_struct_p,
-                                       allocate_f allocate_f_p, deallocate_f deallocate_f_p) {
+static inline bool JOIN(T_queue, init_internal)(T_queue_type** queue_pp, size_t pow2_capacity, void* allocator_struct_p,
+                                                allocate_f allocate_f_p, deallocate_f deallocate_f_p) {
     assert(queue_pp != NULL);
     assert(is_pow2(pow2_capacity) && "initial capacity is a power of 2");
 
@@ -124,7 +126,12 @@ static inline bool JOIN(T_queue, init_with_capacity_rounded)(T_queue_type** queu
         return false;
     }
 
-    return JOIN(T_queue, init)(queue_pp, rounded_capacity, allocator_struct_p, allocate_f_p, deallocate_f_p);
+    return JOIN(T_queue, init_internal)(queue_pp, rounded_capacity, allocator_struct_p, allocate_f_p, deallocate_f_p);
+}
+
+static inline bool JOIN(T_queue, init)(T_queue_type** queue_pp, size_t capacity, void* allocator_struct_p, allocate_f allocate_f_p,
+                                       deallocate_f deallocate_f_p) {
+    return JOIN(T_queue, init_with_capacity_rounded)(queue_pp, capacity, allocator_struct_p, allocate_f_p, deallocate_f_p);
 }
 
 static inline T_queue_type* JOIN(T_queue, create)(size_t capacity) {
@@ -146,8 +153,8 @@ static inline bool JOIN(T_queue, copy)(T_queue_type** queue_dest_pp, T_queue_typ
     assert(queue_src_p != NULL);
     assert(queue_dest_pp != NULL);
 
-    if (!JOIN(T_queue, init)(queue_dest_pp, queue_src_p->capacity, queue_src_p->allocator_struct_p, queue_src_p->allocate_f_p,
-                             queue_src_p->deallocate_f_p)) {
+    if (!JOIN(T_queue, init_internal)(queue_dest_pp, queue_src_p->capacity, queue_src_p->allocator_struct_p, queue_src_p->allocate_f_p,
+                                      queue_src_p->deallocate_f_p)) {
         return false;
     }
     memcpy((*queue_dest_pp)->arr, queue_src_p->arr, sizeof(VALUE_TYPE) * queue_src_p->capacity);

@@ -14,10 +14,11 @@
     The following structs are generated for a given key type K and value type V:
     - K_to_V_hashtable_create
     - K_to_V_hashtable_destroy
+    - K_to_V_hashtable_clone
+
     - K_to_V_hashtable_init
     - K_to_V_hashtable_init_internal
     - K_to_V_hashtable_init_with_capacity_rounded
-    - K_to_V_hashtable_clone
 
     - K_to_V_hashtable_get_count
     - K_to_V_hashtable_get_capacity
