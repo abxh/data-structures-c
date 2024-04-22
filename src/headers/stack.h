@@ -104,7 +104,7 @@ static inline void T_stack_destroy(T_stack_type* stack_ptr) {
     free(stack_ptr);
 }
 
-/* clone an existing stack. */
+/* clone an existing stack. NULL is returned if memory could not be allocated. */
 static inline T_stack_type* T_stack_clone(const T_stack_type* stack_ptr) {
     assert(NULL != stack_ptr);
 
@@ -156,7 +156,8 @@ static inline T T_stack_peek(const T_stack_type* stack_ptr) {
     return stack_ptr->arr_ptr[stack_ptr->count - 1];
 }
 
-/* push a value onto the stack. */
+/* push a value onto the stack. returns false if the stack cannot be resized
+   to allocate memory for the given value. */
 static inline bool T_stack_push(T_stack_type* stack_ptr, const T value) {
     assert(NULL != stack_ptr);
 
