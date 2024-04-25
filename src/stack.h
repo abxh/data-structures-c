@@ -55,6 +55,9 @@
 #define __STACK_PREFIX PREFIX
 #elif !defined(__STACK_PREFIX)
 #define __STACK_PREFIX JOIN(VALUE_TYPE, stack)
+#endif
+
+#ifndef PREFIX
 #define PREFIX VALUE_TYPE##_##stack
 #undef PREFIX // above is for doxygen documentation.
 #endif
