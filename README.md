@@ -1,3 +1,3 @@
 # dsa-c
 
-![tests](https://github.com/abxh/dsa-c/actions/workflows/tests.yml/badge.svg?event=push)
+[Documentation](https://abxh.github.io/dsa-c/index.html)
