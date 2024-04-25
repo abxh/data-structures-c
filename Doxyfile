@@ -1,0 +1,24 @@
+PROJECT_NAME = "dsa-c"
+
+RECURSIVE    = YES
+INPUT        = "./src"
+
+EXAMPLE_PATH = "./examples"
+EXAMPLE_RECURSIVE = YES
+
+EXTRACT_STATIC = YES
+
+ENABLE_PREPROCESSING = YES
+MACRO_EXPANSION      = YES
+EXPAND_ONLY_PREDEF   = YES
+
+PREDEFINED = \
+             "__STACK_PREFIX=T_stack" \
+             "STACK_TYPE=T_stack_type" \
+             "__stack_for_each(stack_ptr, count, value)="
+
+EXPAND_AS_DEFINED = \
+                    PASTE \
+                    CONCAT \
+                    JOIN
+

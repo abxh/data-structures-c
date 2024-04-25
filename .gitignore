@@ -1,4 +1,6 @@
 *.out
 *.bin
 *.o
+html/
+latex/
 bin/
