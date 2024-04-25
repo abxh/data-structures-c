@@ -265,7 +265,7 @@ static inline VALUE_TYPE JOIN(__STACK_PREFIX, pop)(STACK_TYPE* stack_ptr) {
 }
 
 /**
- * @brief Push a value from the stack and return the value.
+ * @brief Push a value onto the stack.
  *
  * Asserts stack\_ptr is not NULL.
  *
