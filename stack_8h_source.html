@@ -104,192 +104,192 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="stack_8h.html#a20cc87a5340b078c162c0554f74f9f54">   35</a></span><span class="preprocessor">#define stack_for_each(stack_ptr, count, value) __stack_for_each(stack_ptr, count, value)</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#ifndef VALUE_TYPE</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">   45</a></span><span class="preprocessor">#define VALUE_TYPE int</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#error &quot;must define VALUE_TYPE. defaulting to int.&quot;</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#ifdef PREFIX</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#define __STACK_PREFIX PREFIX</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#elif !defined(__STACK_PREFIX)</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#define __STACK_PREFIX JOIN(VALUE_TYPE, stack)</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#define PREFIX VALUE_TYPE##_##stack</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#undef PREFIX </span><span class="comment">// above is for doxygen documentation.</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="comment">/* The stack type name. Set to PREFIX##_##type. */</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#ifndef STACK_TYPE</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#define STACK_TYPE JOIN(__STACK_PREFIX, type)</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="foldopen" id="foldopen00069" data-start="{" data-end="};">
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="structT__stack__type.html">   69</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="structT__stack__type.html#af93d5fcb669e087c29c81499747c04c9">   70</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structT__stack__type.html#af93d5fcb669e087c29c81499747c04c9">count</a>;       </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="structT__stack__type.html#a1fcee91b9b94caf00ae17c2efa33f149">   71</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structT__stack__type.html#a1fcee91b9b94caf00ae17c2efa33f149">capacity</a>;    </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="structT__stack__type.html#aef668e9542c310036d8cfb26e1244f0b">   72</a></span>    <a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>* <a class="code hl_variable" href="structT__stack__type.html#aef668e9542c310036d8cfb26e1244f0b">values</a>; </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="structT__stack__type.html#a9cd3db03bbe6d0933cce6ae39526d1da">   74</a></span>    <span class="keywordtype">void</span>* <a class="code hl_variable" href="structT__stack__type.html#a9cd3db03bbe6d0933cce6ae39526d1da">allocator_context_ptr</a>;      </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="structT__stack__type.html#aa6adecf4ce2227c2769992b837fb4822">   75</a></span>    <a class="code hl_struct" href="structallocator__ops__type.html">allocator_ops_type</a> <a class="code hl_variable" href="structT__stack__type.html#aa6adecf4ce2227c2769992b837fb4822">allocator_ops</a>; </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>} STACK_TYPE;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#ifndef VALUE_TYPE</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">   46</a></span><span class="preprocessor">#define VALUE_TYPE int</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#error &quot;must define VALUE_TYPE. defaulting to int.&quot;</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#ifdef PREFIX</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#define __STACK_PREFIX PREFIX</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#elif !defined(__STACK_PREFIX)</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#define __STACK_PREFIX JOIN(VALUE_TYPE, stack)</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#define PREFIX VALUE_TYPE##_##stack</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#undef PREFIX </span><span class="comment">// above is for doxygen documentation.</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="comment">/* The stack type name. Set to PREFIX##_##type. */</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#ifndef STACK_TYPE</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#define STACK_TYPE JOIN(__STACK_PREFIX, type)</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="foldopen" id="foldopen00070" data-start="{" data-end="};">
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="structT__stack__type.html">   70</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="structT__stack__type.html#af93d5fcb669e087c29c81499747c04c9">   71</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structT__stack__type.html#af93d5fcb669e087c29c81499747c04c9">count</a>;       </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="structT__stack__type.html#a1fcee91b9b94caf00ae17c2efa33f149">   72</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structT__stack__type.html#a1fcee91b9b94caf00ae17c2efa33f149">capacity</a>;    </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="structT__stack__type.html#aef668e9542c310036d8cfb26e1244f0b">   73</a></span>    <a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>* <a class="code hl_variable" href="structT__stack__type.html#aef668e9542c310036d8cfb26e1244f0b">values</a>; </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="structT__stack__type.html#a9cd3db03bbe6d0933cce6ae39526d1da">   75</a></span>    <span class="keywordtype">void</span>* <a class="code hl_variable" href="structT__stack__type.html#a9cd3db03bbe6d0933cce6ae39526d1da">allocator_context_ptr</a>;      </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="structT__stack__type.html#aa6adecf4ce2227c2769992b837fb4822">   76</a></span>    <a class="code hl_struct" href="structallocator__ops__type.html">allocator_ops_type</a> <a class="code hl_variable" href="structT__stack__type.html#aa6adecf4ce2227c2769992b837fb4822">allocator_ops</a>; </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>} STACK_TYPE;</div>
 </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="foldopen" id="foldopen00090" data-start="{" data-end="}">
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="stack_8h.html#aa4e21da530693f1a210c214a8b2d3d31">   90</a></span><span class="keyword">static</span> <span class="keyword">inline</span> STACK_TYPE* <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, create_with_specified)(<span class="keywordtype">size_t</span> initial_capacity, <span class="keywordtype">void</span>* allocator_context_ptr,</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                                                                      <a class="code hl_struct" href="structallocator__ops__type.html">allocator_ops_type</a> allocator_ops) {</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordflow">if</span> (initial_capacity == 0 || initial_capacity &gt; SIZE_MAX / <span class="keyword">sizeof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>)) {</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    }</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    STACK_TYPE* stack_ptr = (STACK_TYPE*)allocator_ops.<a class="code hl_variable" href="structallocator__ops__type.html#a9b431260eda9924821dab446832c3e75">allocate_f_p</a>(allocator_context_ptr, <span class="keyword">alignof</span>(STACK_TYPE), <span class="keyword">sizeof</span>(STACK_TYPE));</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keywordflow">if</span> (!stack_ptr) {</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    }</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    stack_ptr-&gt;values =</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        (<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>*)allocator_ops.allocate_f_p(allocator_context_ptr, <span class="keyword">alignof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>), <span class="keyword">sizeof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>) * initial_capacity);</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keywordflow">if</span> (!stack_ptr-&gt;values) {</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        free(stack_ptr);</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    }</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    stack_ptr-&gt;count = 0;</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    stack_ptr-&gt;capacity = initial_capacity;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    stack_ptr-&gt;allocator_context_ptr = allocator_context_ptr;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    stack_ptr-&gt;allocator_ops = allocator_ops;</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordflow">return</span> stack_ptr;</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>}</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="foldopen" id="foldopen00091" data-start="{" data-end="}">
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="stack_8h.html#aa4e21da530693f1a210c214a8b2d3d31">   91</a></span><span class="keyword">static</span> <span class="keyword">inline</span> STACK_TYPE* <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, create_with_specified)(<span class="keywordtype">size_t</span> initial_capacity, <span class="keywordtype">void</span>* allocator_context_ptr,</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                                                                      <a class="code hl_struct" href="structallocator__ops__type.html">allocator_ops_type</a> allocator_ops) {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keywordflow">if</span> (initial_capacity == 0 || initial_capacity &gt; SIZE_MAX / <span class="keyword">sizeof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>)) {</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    }</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    STACK_TYPE* stack_ptr = (STACK_TYPE*)allocator_ops.<a class="code hl_variable" href="structallocator__ops__type.html#a9b431260eda9924821dab446832c3e75">allocate_f_p</a>(allocator_context_ptr, <span class="keyword">alignof</span>(STACK_TYPE), <span class="keyword">sizeof</span>(STACK_TYPE));</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordflow">if</span> (!stack_ptr) {</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    }</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    stack_ptr-&gt;values =</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        (<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>*)allocator_ops.allocate_f_p(allocator_context_ptr, <span class="keyword">alignof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>), <span class="keyword">sizeof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>) * initial_capacity);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keywordflow">if</span> (!stack_ptr-&gt;values) {</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        free(stack_ptr);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    }</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    stack_ptr-&gt;count = 0;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    stack_ptr-&gt;capacity = initial_capacity;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    stack_ptr-&gt;allocator_context_ptr = allocator_context_ptr;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    stack_ptr-&gt;allocator_ops = allocator_ops;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordflow">return</span> stack_ptr;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>}</div>
 </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="foldopen" id="foldopen00119" data-start="{" data-end="}">
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="stack_8h.html#ab5a6f0ed79fd128ee52807ff148633a5">  119</a></span><span class="keyword">static</span> <span class="keyword">inline</span> STACK_TYPE* <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, create)(void) {</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordflow">return</span> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, create_with_specified)(512, NULL, std_allocator_ops);</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>}</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="foldopen" id="foldopen00120" data-start="{" data-end="}">
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="stack_8h.html#ab5a6f0ed79fd128ee52807ff148633a5">  120</a></span><span class="keyword">static</span> <span class="keyword">inline</span> STACK_TYPE* <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, create)(void) {</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="keywordflow">return</span> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, create_with_specified)(512, NULL, std_allocator_ops);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>}</div>
 </div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="foldopen" id="foldopen00128" data-start="{" data-end="}">
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="stack_8h.html#a702ffbcf87a985fef0a5f61fe42c9c3d">  128</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, destroy)(STACK_TYPE* stack_ptr) {</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <span class="keywordflow">if</span> (!stack_ptr) {</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    }</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    <span class="keywordtype">void</span>* allocator_context_ptr_copy = stack_ptr-&gt;allocator_context_ptr;</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <a class="code hl_struct" href="structallocator__ops__type.html">allocator_ops_type</a> allocator_ops_copy = stack_ptr-&gt;allocator_ops;</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    allocator_ops_copy.<a class="code hl_variable" href="structallocator__ops__type.html#ae9b142660ec20b9e297e287d963653d4">deallocate_f_p</a>(allocator_context_ptr_copy, stack_ptr-&gt;values);</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    allocator_ops_copy.<a class="code hl_variable" href="structallocator__ops__type.html#ae9b142660ec20b9e297e287d963653d4">deallocate_f_p</a>(allocator_context_ptr_copy, stack_ptr);</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>}</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="foldopen" id="foldopen00129" data-start="{" data-end="}">
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="stack_8h.html#a702ffbcf87a985fef0a5f61fe42c9c3d">  129</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, destroy)(STACK_TYPE* stack_ptr) {</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="keywordflow">if</span> (!stack_ptr) {</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    }</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keywordtype">void</span>* allocator_context_ptr_copy = stack_ptr-&gt;allocator_context_ptr;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <a class="code hl_struct" href="structallocator__ops__type.html">allocator_ops_type</a> allocator_ops_copy = stack_ptr-&gt;allocator_ops;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    allocator_ops_copy.<a class="code hl_variable" href="structallocator__ops__type.html#ae9b142660ec20b9e297e287d963653d4">deallocate_f_p</a>(allocator_context_ptr_copy, stack_ptr-&gt;values);</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    allocator_ops_copy.<a class="code hl_variable" href="structallocator__ops__type.html#ae9b142660ec20b9e297e287d963653d4">deallocate_f_p</a>(allocator_context_ptr_copy, stack_ptr);</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>}</div>
 </div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
-<div class="foldopen" id="foldopen00148" data-start="{" data-end="}">
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno"><a class="line" href="stack_8h.html#aa215ad48086a0daab5aec1ef5a72dcf7">  148</a></span><span class="keyword">static</span> <span class="keyword">inline</span> STACK_TYPE* <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, clone)(<span class="keyword">const</span> STACK_TYPE* stack_ptr) {</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    <span class="keywordflow">if</span> (!stack_ptr) {</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    }</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    STACK_TYPE* other_stack_ptr = <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, create_with_specified)(stack_ptr-&gt;capacity, NULL, std_allocator_ops);</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keywordflow">if</span> (!other_stack_ptr) {</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    }</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    memcpy(other_stack_ptr-&gt;values, stack_ptr-&gt;values, <span class="keyword">sizeof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>) * stack_ptr-&gt;count);</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    other_stack_ptr-&gt;count = other_stack_ptr-&gt;count;</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    other_stack_ptr-&gt;capacity = other_stack_ptr-&gt;capacity;</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    <span class="keywordflow">return</span> other_stack_ptr;</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>}</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="foldopen" id="foldopen00149" data-start="{" data-end="}">
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno"><a class="line" href="stack_8h.html#aa215ad48086a0daab5aec1ef5a72dcf7">  149</a></span><span class="keyword">static</span> <span class="keyword">inline</span> STACK_TYPE* <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, clone)(<span class="keyword">const</span> STACK_TYPE* stack_ptr) {</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keywordflow">if</span> (!stack_ptr) {</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    }</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    STACK_TYPE* other_stack_ptr = <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, create_with_specified)(stack_ptr-&gt;capacity, NULL, std_allocator_ops);</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keywordflow">if</span> (!other_stack_ptr) {</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    }</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    memcpy(other_stack_ptr-&gt;values, stack_ptr-&gt;values, <span class="keyword">sizeof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>) * stack_ptr-&gt;count);</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    other_stack_ptr-&gt;count = other_stack_ptr-&gt;count;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    other_stack_ptr-&gt;capacity = other_stack_ptr-&gt;capacity;</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keywordflow">return</span> other_stack_ptr;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>}</div>
 </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
-<div class="foldopen" id="foldopen00170" data-start="{" data-end="}">
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno"><a class="line" href="stack_8h.html#a855161c858e01a26187faf034ca6d752">  170</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, at)(<span class="keyword">const</span> STACK_TYPE* stack_ptr, <span class="keywordtype">size_t</span> index) {</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    assert(NULL != stack_ptr);</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    assert(index &lt; stack_ptr-&gt;count);</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    <span class="keywordflow">return</span> stack_ptr-&gt;values[index];</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>}</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
+<div class="foldopen" id="foldopen00171" data-start="{" data-end="}">
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno"><a class="line" href="stack_8h.html#a855161c858e01a26187faf034ca6d752">  171</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, at)(<span class="keyword">const</span> STACK_TYPE* stack_ptr, <span class="keywordtype">size_t</span> index) {</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    assert(NULL != stack_ptr);</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    assert(index &lt; stack_ptr-&gt;count);</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    <span class="keywordflow">return</span> stack_ptr-&gt;values[index];</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>}</div>
 </div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
-<div class="foldopen" id="foldopen00183" data-start="{" data-end="}">
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno"><a class="line" href="stack_8h.html#aeef1b94df3a6c8d6a8c3cd2ff28524fc">  183</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, top)(<span class="keyword">const</span> STACK_TYPE* stack_ptr) {</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    assert(NULL != stack_ptr);</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <span class="keywordflow">return</span> stack_ptr-&gt;values[stack_ptr-&gt;count - 1];</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>}</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
+<div class="foldopen" id="foldopen00184" data-start="{" data-end="}">
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno"><a class="line" href="stack_8h.html#aeef1b94df3a6c8d6a8c3cd2ff28524fc">  184</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, top)(<span class="keyword">const</span> STACK_TYPE* stack_ptr) {</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    assert(NULL != stack_ptr);</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="keywordflow">return</span> stack_ptr-&gt;values[stack_ptr-&gt;count - 1];</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>}</div>
 </div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
-<div class="foldopen" id="foldopen00195" data-start="{" data-end="}">
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno"><a class="line" href="stack_8h.html#a81377e0e5a09a1858a4649de0db4ade9">  195</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, count)(<span class="keyword">const</span> STACK_TYPE* stack_ptr) {</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    assert(NULL != stack_ptr);</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="keywordflow">return</span> stack_ptr-&gt;count;</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>}</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
+<div class="foldopen" id="foldopen00196" data-start="{" data-end="}">
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno"><a class="line" href="stack_8h.html#a81377e0e5a09a1858a4649de0db4ade9">  196</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, count)(<span class="keyword">const</span> STACK_TYPE* stack_ptr) {</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    assert(NULL != stack_ptr);</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <span class="keywordflow">return</span> stack_ptr-&gt;count;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>}</div>
 </div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
-<div class="foldopen" id="foldopen00208" data-start="{" data-end="}">
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno"><a class="line" href="stack_8h.html#a22710bfedfe296be77bb72b85b796666">  208</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, capacity)(<span class="keyword">const</span> STACK_TYPE* stack_ptr) {</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    assert(NULL != stack_ptr);</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    <span class="keywordflow">return</span> stack_ptr-&gt;capacity;</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>}</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
+<div class="foldopen" id="foldopen00209" data-start="{" data-end="}">
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno"><a class="line" href="stack_8h.html#a22710bfedfe296be77bb72b85b796666">  209</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, capacity)(<span class="keyword">const</span> STACK_TYPE* stack_ptr) {</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    assert(NULL != stack_ptr);</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    <span class="keywordflow">return</span> stack_ptr-&gt;capacity;</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>}</div>
 </div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
-<div class="foldopen" id="foldopen00220" data-start="{" data-end="}">
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno"><a class="line" href="stack_8h.html#a189148bf03892b5bc1eea0df8a9fea45">  220</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, is_empty)(<span class="keyword">const</span> STACK_TYPE* stack_ptr) {</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    assert(NULL != stack_ptr);</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    <span class="keywordflow">return</span> 0 == stack_ptr-&gt;count;</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>}</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
+<div class="foldopen" id="foldopen00221" data-start="{" data-end="}">
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno"><a class="line" href="stack_8h.html#a189148bf03892b5bc1eea0df8a9fea45">  221</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, is_empty)(<span class="keyword">const</span> STACK_TYPE* stack_ptr) {</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    assert(NULL != stack_ptr);</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    <span class="keywordflow">return</span> 0 == stack_ptr-&gt;count;</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>}</div>
 </div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> </div>
-<div class="foldopen" id="foldopen00232" data-start="{" data-end="}">
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno"><a class="line" href="stack_8h.html#abf3634d9e03331cfaea06c74b6ae6011">  232</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, peek)(<span class="keyword">const</span> STACK_TYPE* stack_ptr) {</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    assert(NULL != stack_ptr);</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    <span class="keywordflow">return</span> stack_ptr-&gt;values[stack_ptr-&gt;count - 1];</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>}</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
+<div class="foldopen" id="foldopen00233" data-start="{" data-end="}">
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno"><a class="line" href="stack_8h.html#abf3634d9e03331cfaea06c74b6ae6011">  233</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, peek)(<span class="keyword">const</span> STACK_TYPE* stack_ptr) {</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    assert(NULL != stack_ptr);</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <span class="keywordflow">return</span> stack_ptr-&gt;values[stack_ptr-&gt;count - 1];</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>}</div>
 </div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
-<div class="foldopen" id="foldopen00244" data-start="{" data-end="}">
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno"><a class="line" href="stack_8h.html#a0fda4b1917104e332029ec9550340e21">  244</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, pop)(STACK_TYPE* stack_ptr) {</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    assert(NULL != stack_ptr);</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    <span class="keywordflow">return</span> stack_ptr-&gt;values[--stack_ptr-&gt;count];</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>}</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
+<div class="foldopen" id="foldopen00245" data-start="{" data-end="}">
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno"><a class="line" href="stack_8h.html#a0fda4b1917104e332029ec9550340e21">  245</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, pop)(STACK_TYPE* stack_ptr) {</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    assert(NULL != stack_ptr);</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    <span class="keywordflow">return</span> stack_ptr-&gt;values[--stack_ptr-&gt;count];</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>}</div>
 </div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> </div>
-<div class="foldopen" id="foldopen00261" data-start="{" data-end="}">
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno"><a class="line" href="stack_8h.html#ac72ce71ae3f232f4370f545ac31d16f5">  261</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, push)(STACK_TYPE* stack_ptr, <a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value) {</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    assert(NULL != stack_ptr);</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <span class="keywordflow">if</span> (stack_ptr-&gt;count == stack_ptr-&gt;capacity) {</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        <span class="keywordflow">if</span> (stack_ptr-&gt;capacity &gt; SIZE_MAX / <span class="keyword">sizeof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>) / 2) {</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        }</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        <span class="keywordtype">void</span>* temp_ptr = stack_ptr-&gt;allocator_ops.reallocate_f_p(stack_ptr-&gt;allocator_context_ptr, stack_ptr-&gt;values,</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>                                                                 <span class="keyword">alignof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>), <span class="keyword">sizeof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>) * stack_ptr-&gt;capacity,</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                                                                 2 * <span class="keyword">sizeof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>) * stack_ptr-&gt;capacity);</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        <span class="keywordflow">if</span> (temp_ptr == NULL) {</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        }</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        stack_ptr-&gt;values = (<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>*)temp_ptr;</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        stack_ptr-&gt;capacity *= 2;</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    }</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    stack_ptr-&gt;values[stack_ptr-&gt;count++] = value;</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> </div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>}</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
+<div class="foldopen" id="foldopen00262" data-start="{" data-end="}">
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno"><a class="line" href="stack_8h.html#ac72ce71ae3f232f4370f545ac31d16f5">  262</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, push)(STACK_TYPE* stack_ptr, <a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value) {</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    assert(NULL != stack_ptr);</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <span class="keywordflow">if</span> (stack_ptr-&gt;count == stack_ptr-&gt;capacity) {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        <span class="keywordflow">if</span> (stack_ptr-&gt;capacity &gt; SIZE_MAX / <span class="keyword">sizeof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>) / 2) {</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        }</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        <span class="keywordtype">void</span>* temp_ptr = stack_ptr-&gt;allocator_ops.reallocate_f_p(stack_ptr-&gt;allocator_context_ptr, stack_ptr-&gt;values,</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                                                                 <span class="keyword">alignof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>), <span class="keyword">sizeof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>) * stack_ptr-&gt;capacity,</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>                                                                 2 * <span class="keyword">sizeof</span>(<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>) * stack_ptr-&gt;capacity);</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        <span class="keywordflow">if</span> (temp_ptr == NULL) {</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        }</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        stack_ptr-&gt;values = (<a class="code hl_define" href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>*)temp_ptr;</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>        stack_ptr-&gt;capacity *= 2;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    }</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    stack_ptr-&gt;values[stack_ptr-&gt;count++] = value;</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> </div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>}</div>
 </div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span><span class="preprocessor">#undef __STACK_PREFIX</span></div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span><span class="preprocessor">#undef PREFIX</span></div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span><span class="preprocessor">#undef VALUE_TYPE</span></div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span><span class="preprocessor">#undef STACK_TYPE</span></div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span> </div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span><span class="comment">// vim: ft=c</span></div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> </div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span><span class="preprocessor">#undef __STACK_PREFIX</span></div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span><span class="preprocessor">#undef PREFIX</span></div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span><span class="preprocessor">#undef VALUE_TYPE</span></div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span><span class="preprocessor">#undef STACK_TYPE</span></div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span><span class="comment">// vim: ft=c</span></div>
 <div class="ttc" id="aallocator__ops_8h_html"><div class="ttname"><a href="allocator__ops_8h.html">allocator_ops.h</a></div><div class="ttdoc">struct interface for allocator operations.</div></div>
 <div class="ttc" id="ajoin_8h_html"><div class="ttname"><a href="join_8h.html">join.h</a></div><div class="ttdoc">C preprocessor macros to paste tokens together.</div></div>
 <div class="ttc" id="ajoin_8h_html_a1665af4d61d120cdba4d77101d179703"><div class="ttname"><a href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a></div><div class="ttdeci">#define JOIN(a, b)</div><div class="ttdoc">First expands it's two parameters, then pastes them together with a underscore _ in between.</div><div class="ttdef"><b>Definition</b> join.h:34</div></div>
-<div class="ttc" id="astack_8h_html_ae17cb099b4c9aee7835032339b5a9e0d"><div class="ttname"><a href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></div><div class="ttdeci">#define VALUE_TYPE</div><div class="ttdoc">The value type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> stack.h:45</div></div>
+<div class="ttc" id="astack_8h_html_ae17cb099b4c9aee7835032339b5a9e0d"><div class="ttname"><a href="stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></div><div class="ttdeci">#define VALUE_TYPE</div><div class="ttdoc">The value type.</div><div class="ttdef"><b>Definition</b> stack.h:46</div></div>
 <div class="ttc" id="astd__allocator_8h_html"><div class="ttname"><a href="std__allocator_8h.html">std_allocator.h</a></div><div class="ttdoc">wrapper of std functions for conforming to interface of allocator operations.</div></div>
-<div class="ttc" id="astructT__stack__type_html_a1fcee91b9b94caf00ae17c2efa33f149"><div class="ttname"><a href="structT__stack__type.html#a1fcee91b9b94caf00ae17c2efa33f149">T_stack_type::capacity</a></div><div class="ttdeci">size_t capacity</div><div class="ttdoc">total number of values the stack can store.</div><div class="ttdef"><b>Definition</b> stack.h:71</div></div>
-<div class="ttc" id="astructT__stack__type_html_a9cd3db03bbe6d0933cce6ae39526d1da"><div class="ttname"><a href="structT__stack__type.html#a9cd3db03bbe6d0933cce6ae39526d1da">T_stack_type::allocator_context_ptr</a></div><div class="ttdeci">void * allocator_context_ptr</div><div class="ttdoc">internal data in allocator.</div><div class="ttdef"><b>Definition</b> stack.h:74</div></div>
-<div class="ttc" id="astructT__stack__type_html_aa6adecf4ce2227c2769992b837fb4822"><div class="ttname"><a href="structT__stack__type.html#aa6adecf4ce2227c2769992b837fb4822">T_stack_type::allocator_ops</a></div><div class="ttdeci">allocator_ops_type allocator_ops</div><div class="ttdoc">allocator operations.</div><div class="ttdef"><b>Definition</b> stack.h:75</div></div>
-<div class="ttc" id="astructT__stack__type_html_aef668e9542c310036d8cfb26e1244f0b"><div class="ttname"><a href="structT__stack__type.html#aef668e9542c310036d8cfb26e1244f0b">T_stack_type::values</a></div><div class="ttdeci">VALUE_TYPE * values</div><div class="ttdoc">array containing the values in the stack.</div><div class="ttdef"><b>Definition</b> stack.h:72</div></div>
-<div class="ttc" id="astructT__stack__type_html_af93d5fcb669e087c29c81499747c04c9"><div class="ttname"><a href="structT__stack__type.html#af93d5fcb669e087c29c81499747c04c9">T_stack_type::count</a></div><div class="ttdeci">size_t count</div><div class="ttdoc">number of values in the stack.</div><div class="ttdef"><b>Definition</b> stack.h:70</div></div>
+<div class="ttc" id="astructT__stack__type_html_a1fcee91b9b94caf00ae17c2efa33f149"><div class="ttname"><a href="structT__stack__type.html#a1fcee91b9b94caf00ae17c2efa33f149">T_stack_type::capacity</a></div><div class="ttdeci">size_t capacity</div><div class="ttdoc">total number of values the stack can store.</div><div class="ttdef"><b>Definition</b> stack.h:72</div></div>
+<div class="ttc" id="astructT__stack__type_html_a9cd3db03bbe6d0933cce6ae39526d1da"><div class="ttname"><a href="structT__stack__type.html#a9cd3db03bbe6d0933cce6ae39526d1da">T_stack_type::allocator_context_ptr</a></div><div class="ttdeci">void * allocator_context_ptr</div><div class="ttdoc">internal data in allocator.</div><div class="ttdef"><b>Definition</b> stack.h:75</div></div>
+<div class="ttc" id="astructT__stack__type_html_aa6adecf4ce2227c2769992b837fb4822"><div class="ttname"><a href="structT__stack__type.html#aa6adecf4ce2227c2769992b837fb4822">T_stack_type::allocator_ops</a></div><div class="ttdeci">allocator_ops_type allocator_ops</div><div class="ttdoc">allocator operations.</div><div class="ttdef"><b>Definition</b> stack.h:76</div></div>
+<div class="ttc" id="astructT__stack__type_html_aef668e9542c310036d8cfb26e1244f0b"><div class="ttname"><a href="structT__stack__type.html#aef668e9542c310036d8cfb26e1244f0b">T_stack_type::values</a></div><div class="ttdeci">VALUE_TYPE * values</div><div class="ttdoc">array containing the values in the stack.</div><div class="ttdef"><b>Definition</b> stack.h:73</div></div>
+<div class="ttc" id="astructT__stack__type_html_af93d5fcb669e087c29c81499747c04c9"><div class="ttname"><a href="structT__stack__type.html#af93d5fcb669e087c29c81499747c04c9">T_stack_type::count</a></div><div class="ttdeci">size_t count</div><div class="ttdoc">number of values in the stack.</div><div class="ttdef"><b>Definition</b> stack.h:71</div></div>
 <div class="ttc" id="astructallocator__ops__type_html"><div class="ttname"><a href="structallocator__ops__type.html">allocator_ops_type</a></div><div class="ttdoc">struct interface for allocator operations.</div><div class="ttdef"><b>Definition</b> allocator_ops.h:13</div></div>
 <div class="ttc" id="astructallocator__ops__type_html_a9b431260eda9924821dab446832c3e75"><div class="ttname"><a href="structallocator__ops__type.html#a9b431260eda9924821dab446832c3e75">allocator_ops_type::allocate_f_p</a></div><div class="ttdeci">void *(* allocate_f_p)(void *context_ptr, size_t alignment, size_t size)</div><div class="ttdoc">allocate memory.</div><div class="ttdef"><b>Definition</b> allocator_ops.h:14</div></div>
 <div class="ttc" id="astructallocator__ops__type_html_ae9b142660ec20b9e297e287d963653d4"><div class="ttname"><a href="structallocator__ops__type.html#ae9b142660ec20b9e297e287d963653d4">allocator_ops_type::deallocate_f_p</a></div><div class="ttdeci">void(* deallocate_f_p)(void *context_ptr, void *mem_ptr)</div><div class="ttdoc">deallocate memory.</div><div class="ttdef"><b>Definition</b> allocator_ops.h:17</div></div>
