@@ -140,7 +140,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a81377e0e5a09a1858a4649de0db4ade9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of elements in the stack.  <br /></td></tr>
 <tr class="separator:a81377e0e5a09a1858a4649de0db4ade9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22710bfedfe296be77bb72b85b796666" id="r_a22710bfedfe296be77bb72b85b796666"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22710bfedfe296be77bb72b85b796666">T_stack_capacity</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr)</td></tr>
-<tr class="memdesc:a22710bfedfe296be77bb72b85b796666"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the stack's capacity, which is the number of values memory is preallocated for in the stack currently.  <br /></td></tr>
+<tr class="memdesc:a22710bfedfe296be77bb72b85b796666"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of elements preallocated for of the stack.  <br /></td></tr>
 <tr class="separator:a22710bfedfe296be77bb72b85b796666"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a189148bf03892b5bc1eea0df8a9fea45" id="r_a189148bf03892b5bc1eea0df8a9fea45"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a189148bf03892b5bc1eea0df8a9fea45">T_stack_is_empty</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr)</td></tr>
 <tr class="memdesc:a189148bf03892b5bc1eea0df8a9fea45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if stack is empty.  <br /></td></tr>
@@ -243,10 +243,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get value at index. </p>
+<p>Asserts stack_ptr is not NULL and index is strictly less than stack count.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. Assumed to not be NULL. </td></tr>
-    <tr><td class="paramname">index</td><td>Index at which the value lies. Assumed to be less than stack count. </td></tr>
+    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
+    <tr><td class="paramname">index</td><td>Index at which the value lies. </td></tr>
   </table>
   </dd>
 </dl>
@@ -277,10 +278,11 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get the stack's capacity, which is the number of values memory is preallocated for in the stack currently. </p>
+<p>Get the number of elements preallocated for of the stack. </p>
+<p>Asserts stack_ptr is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. Assumed to not be NULL. </td></tr>
+    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -356,9 +358,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the number of elements in the stack. </p>
+<p>Asserts stack_ptr is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. Assumed to not be NULL. </td></tr>
+    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -508,9 +511,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check if stack is empty. </p>
+<p>Asserts stack_ptr is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. Assumed to not be NULL. </td></tr>
+    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -542,9 +546,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Peek at the stack and get it's top value. </p>
+<p>Asserts stack_ptr is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. Assumed to not be NULL. </td></tr>
+    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -576,9 +581,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Pop a value from the stack and return the value. </p>
+<p>Asserts stack_ptr is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. Assumed to not be NULL. </td></tr>
+    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -614,9 +620,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Push a value from the stack and return the value. </p>
+<p>Asserts stack_ptr is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. Assumed to not be NULL. </td></tr>
+    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
     <tr><td class="paramname">value</td><td>The value to work with. </td></tr>
   </table>
   </dd>
@@ -659,9 +666,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the value from the top of the stack. </p>
+<p>Asserts stack_ptr is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. Assumed to not be NULL. </td></tr>
+    <tr><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
