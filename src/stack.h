@@ -40,7 +40,7 @@
  * @brief The value type.
  * @attention This must be manually defined before including this header file.
  *
- * Defaults to int so LSP's in editors can pick up the symbols better.
+ * Defaults to int, so LSPs in editors can pick up the symbols better.
  */
 #ifndef VALUE_TYPE
 #define VALUE_TYPE int
