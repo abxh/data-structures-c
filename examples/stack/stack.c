@@ -1,84 +1,83 @@
-
 #include <assert.h>
 
-#define T float
+#define VALUE_TYPE float
 #include "stack.h"
 
 void float_stack_demo(void) {
-    float_stack_type* s_ptr = float_stack_create();
-    if (!s_ptr) {
+    float_stack_type* s = float_stack_create();
+    if (!s) {
         assert(false);
     }
+    float_stack_is_empty(s);
 
-    assert(float_stack_is_empty(s_ptr));
+    assert(float_stack_is_empty(s));
 
-    float_stack_push(s_ptr, 1.F);
+    float_stack_push(s, 1.F);
+    float_stack_push(s, 2.F);
+    float_stack_push(s, 3.F);
 
-    assert(!float_stack_is_empty(s_ptr));
-    assert(1 == float_stack_get_count(s_ptr));
+    assert(!float_stack_is_empty(s));
 
-    assert(1.F == float_stack_get_top(s_ptr));
-    assert(1.F == float_stack_peek(s_ptr));
+    assert(3 == float_stack_count(s));
 
-    float res = float_stack_pop(s_ptr);
-    assert(1.F == res);
+    assert(3.F == float_stack_top(s));
 
-    float_stack_destroy(s_ptr);
+    assert(3.F == float_stack_peek(s));
+
+    assert(1.F == float_stack_at(s, 0));
+    assert(2.F == float_stack_at(s, 1));
+    assert(3.F == float_stack_at(s, 2));
+
+    float res = float_stack_pop(s);
+
+    assert(3.F == res);
+
+    float_stack_destroy(s);
 }
 
-#define PREFIX uint_stk
-#define T unsigned long int
+typedef unsigned int uint;
+#define VALUE_TYPE uint
 #include "stack.h"
 
-// alt:
-// typedef unsigned long int uint;
-// #define T uint
+void uint_stack_demo(void) {
+    uint_stack_type* s = uint_stack_create();
 
-void uint_stk_demo(void) {
-    uint_stk_type* s_ptr = uint_stk_create();
-
-    // alt:
-    // uint_stk_type* s_ptr = uint_stk_create_with_initial_capacity(1e+6);
-
-    if (!s_ptr) {
+    if (!s) {
         assert(false);
     }
 
     for (unsigned long int i = 1; i <= 1e+6; i++) {
-        assert(true == uint_stk_push(s_ptr, i));
+        assert(true == uint_stack_push(s, i));
     }
 
-    assert(1e+6 <= uint_stk_get_capacity(s_ptr));
+    assert(1e+6 <= uint_stack_capacity(s));
 
-    uint_stk_type* s_clone_ptr = uint_stk_clone(s_ptr);
-    if (!s_clone_ptr) {
+    uint_stack_type* s_copy = uint_stack_clone(s);
+    if (!s_copy) {
         assert(false);
     }
 
     for (unsigned long int i = 1e+6; i >= 1; i--) {
-        assert(i == uint_stk_pop(s_ptr));
+        assert(i == uint_stack_pop(s));
     }
 
     size_t x = 1e+6;
 
     // {...} for scoped variables
-    { 
-        // macro is defined as:
-        // T_stack_for_each(in_T_stack_ptr, out_size_t_count, out_T_value)
-
+    {
         size_t count;
         unsigned long int value;
-        T_stack_for_each(s_clone_ptr, count, value) {
+        stack_for_each(s_copy, count, value) {
             assert(value == x--);
         }
     }
 
-    uint_stk_destroy(s_ptr);
-    uint_stk_destroy(s_clone_ptr);
+    uint_stack_destroy(s);
+    uint_stack_destroy(s_copy);
 }
 
 int main(void) {
     float_stack_demo();
-    uint_stk_demo();
+    uint_stack_demo();
     return 0;
 }

@@ -1,5 +1,5 @@
 CC         := cc
-CFLAGS     := -c -Wall -DDEBUG -I../../src/headers
+CFLAGS     := -c -Wall -DDEBUG -I../../src
 LDFLAGS    :=
 SOURCES    := stack.c
 OBJECTS    := ${SOURCES:.c=.o}
