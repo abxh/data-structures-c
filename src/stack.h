@@ -167,8 +167,10 @@ static inline STACK_TYPE* JOIN(__STACK_PREFIX, clone)(const STACK_TYPE* stack_pt
 /**
  * @brief Get value at index.
  *
- * @param stack\_ptr The stack pointer. Assumed to not be NULL.
- * @param index Index at which the value lies. Assumed to be less than stack count.
+ * Asserts stack\_ptr is not NULL and index is strictly less than stack count.
+ *
+ * @param stack\_ptr The stack pointer.
+ * @param index Index at which the value lies.
  * @return The value as VALUE_TYPE.
  */
 static inline VALUE_TYPE JOIN(__STACK_PREFIX, at)(const STACK_TYPE* stack_ptr, size_t index) {
@@ -181,7 +183,9 @@ static inline VALUE_TYPE JOIN(__STACK_PREFIX, at)(const STACK_TYPE* stack_ptr, s
 /**
  * @brief Get the value from the top of the stack.
  *
- * @param stack\_ptr The stack pointer. Assumed to not be NULL.
+ * Asserts stack\_ptr is not NULL.
+ *
+ * @param stack\_ptr The stack pointer.
  * @return The value as VALUE_TYPE.
  */
 static inline VALUE_TYPE JOIN(__STACK_PREFIX, top)(const STACK_TYPE* stack_ptr) {
@@ -193,7 +197,9 @@ static inline VALUE_TYPE JOIN(__STACK_PREFIX, top)(const STACK_TYPE* stack_ptr) 
 /**
  * @brief Get the number of elements in the stack.
  *
- * @param stack\_ptr The stack pointer. Assumed to not be NULL.
+ * Asserts stack\_ptr is not NULL.
+ *
+ * @param stack\_ptr The stack pointer.
  * @return The number of elements as size_t.
  */
 static inline size_t JOIN(__STACK_PREFIX, count)(const STACK_TYPE* stack_ptr) {
@@ -203,10 +209,11 @@ static inline size_t JOIN(__STACK_PREFIX, count)(const STACK_TYPE* stack_ptr) {
 }
 
 /**
- * @brief Get the stack's capacity, which is the number of values memory is
- * preallocated for in the stack currently.
+ * @brief Get the number of elements preallocated for of the stack.
  *
- * @param stack\_ptr The stack pointer. Assumed to not be NULL.
+ * Asserts stack\_ptr is not NULL.
+ *
+ * @param stack\_ptr The stack pointer.
  * @return The current capacity as size_t.
  */
 static inline size_t JOIN(__STACK_PREFIX, capacity)(const STACK_TYPE* stack_ptr) {
@@ -218,7 +225,9 @@ static inline size_t JOIN(__STACK_PREFIX, capacity)(const STACK_TYPE* stack_ptr)
 /**
  * @brief Check if stack is empty.
  *
- * @param stack\_ptr The stack pointer. Assumed to not be NULL.
+ * Asserts stack\_ptr is not NULL.
+ *
+ * @param stack\_ptr The stack pointer.
  * @return A boolean indicating whether the stack is empty.
  */
 static inline bool JOIN(__STACK_PREFIX, is_empty)(const STACK_TYPE* stack_ptr) {
@@ -230,7 +239,9 @@ static inline bool JOIN(__STACK_PREFIX, is_empty)(const STACK_TYPE* stack_ptr) {
 /**
  * @brief Peek at the stack and get it's top value.
  *
- * @param stack\_ptr The stack pointer. Assumed to not be NULL.
+ * Asserts stack\_ptr is not NULL.
+ *
+ * @param stack\_ptr The stack pointer.
  * @return The value as VALUE_TYPE.
  */
 static inline VALUE_TYPE JOIN(__STACK_PREFIX, peek)(const STACK_TYPE* stack_ptr) {
@@ -242,7 +253,9 @@ static inline VALUE_TYPE JOIN(__STACK_PREFIX, peek)(const STACK_TYPE* stack_ptr)
 /**
  * @brief Pop a value from the stack and return the value.
  *
- * @param stack\_ptr The stack pointer. Assumed to not be NULL.
+ * Asserts stack\_ptr is not NULL.
+ *
+ * @param stack\_ptr The stack pointer.
  * @return The value as VALUE_TYPE.
  */
 static inline VALUE_TYPE JOIN(__STACK_PREFIX, pop)(STACK_TYPE* stack_ptr) {
@@ -254,7 +267,9 @@ static inline VALUE_TYPE JOIN(__STACK_PREFIX, pop)(STACK_TYPE* stack_ptr) {
 /**
  * @brief Push a value from the stack and return the value.
  *
- * @param stack\_ptr The stack pointer. Assumed to not be NULL.
+ * Asserts stack\_ptr is not NULL.
+ *
+ * @param stack\_ptr The stack pointer.
  * @param value The value to work with.
  * @return A boolean indicating whether the value was stored, depending on whether
  *         the stack could be resized when full.
