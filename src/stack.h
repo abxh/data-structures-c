@@ -209,7 +209,7 @@ static inline size_t JOIN(__STACK_PREFIX, count)(const STACK_TYPE* stack_ptr) {
 }
 
 /**
- * @brief Get the number of elements preallocated for of the stack.
+ * @brief Get the number of elements preallocated for in the stack (currently).
  *
  * Asserts stack\_ptr is not NULL.
  *
