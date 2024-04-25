@@ -37,7 +37,8 @@
 
 /**
  * @def VALUE_TYPE
- * @brief The value type. This must be manually defined before including this header file.
+ * @brief The value type.
+ * @attention This must be manually defined before including this header file.
  *
  * Is defaulted to int, so the editor's LSP works better.
  */
