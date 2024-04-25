@@ -40,7 +40,7 @@
  * @brief The value type.
  * @attention This must be manually defined before including this header file.
  *
- * Is defaulted to int, so the editor's LSP works better.
+ * Defaults to int so LSP's in editors can pick up the symbols better.
  */
 #ifndef VALUE_TYPE
 #define VALUE_TYPE int
@@ -49,7 +49,7 @@
 
 /**
  * @def PREFIX
- * @brief The stack prefix. Set to VALUE\_TYPE\#\#\_\#\#stack, unless specified otherwise.
+ * @brief The stack prefix. Set to VALUE\_TYPE\#\#\_\#\#stack, unless manually defined otherwise.
  */
 #ifdef PREFIX
 #define __STACK_PREFIX PREFIX
@@ -68,14 +68,14 @@
 #endif
 
 /**
- * @brief Generated stack struct type for a value type managed by functions.
+ * @brief Generated stack struct type for a given value type.
  */
 typedef struct {
     size_t count;       ///< number of values in the stack.
     size_t capacity;    ///< total number of values the stack can store.
     VALUE_TYPE* values; ///< array containing the values in the stack.
 
-    void* allocator_context_ptr;      ///< internal data in allocator.
+    void* allocator_context_ptr;      ///< internal data of allocator instance.
     allocator_ops_type allocator_ops; ///< allocator operations.
 } STACK_TYPE;
 
