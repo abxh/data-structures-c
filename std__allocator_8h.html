@@ -108,6 +108,10 @@ Variables</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>wrapper of std functions for conforming to the defined interface of allocator operations. </p>
+<p>Refer to following pages for more extensive documentation:</p><ul>
+<li><a href="https://man7.org/linux/man-pages/man3/malloc.3.html">https://man7.org/linux/man-pages/man3/malloc.3.html</a></li>
+<li><a href="https://man7.org/linux/man-pages/man3/realloc.3p.html">https://man7.org/linux/man-pages/man3/realloc.3p.html</a> </li>
+</ul>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a51d4c17b5238dec3db8e52948f574fa2" name="a51d4c17b5238dec3db8e52948f574fa2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a51d4c17b5238dec3db8e52948f574fa2">&#9670;&#160;</a></span>std_allocate()</h2>
@@ -296,9 +300,9 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div>
 <div class="line">    (<a class="code hl_struct" href="structallocator__ops__type.html">allocator_ops_type</a>){.allocate_f_p = <a class="code hl_function" href="#a51d4c17b5238dec3db8e52948f574fa2">std_allocate</a>, .reallocate_f_p = <a class="code hl_function" href="#ae9e0c9c4fdca4c400af08d8f86b3444d">std_reallocate</a>, .deallocate_f_p = <a class="code hl_function" href="#a6059379efaf2e9b84f8aa87889257b0b">std_deallocate</a>}</div>
-<div class="ttc" id="astd__allocator_8h_html_a51d4c17b5238dec3db8e52948f574fa2"><div class="ttname"><a href="#a51d4c17b5238dec3db8e52948f574fa2">std_allocate</a></div><div class="ttdeci">static void * std_allocate(void *context_ptr, size_t alignment, size_t size)</div><div class="ttdoc">malloc wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:26</div></div>
-<div class="ttc" id="astd__allocator_8h_html_a6059379efaf2e9b84f8aa87889257b0b"><div class="ttname"><a href="#a6059379efaf2e9b84f8aa87889257b0b">std_deallocate</a></div><div class="ttdeci">static void std_deallocate(void *context_ptr, void *mem_ptr)</div><div class="ttdoc">free wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:59</div></div>
-<div class="ttc" id="astd__allocator_8h_html_ae9e0c9c4fdca4c400af08d8f86b3444d"><div class="ttname"><a href="#ae9e0c9c4fdca4c400af08d8f86b3444d">std_reallocate</a></div><div class="ttdeci">static void * std_reallocate(void *context_ptr, void *mem_ptr, size_t alignment, size_t old_size, size_t new_size)</div><div class="ttdoc">realloc wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:46</div></div>
+<div class="ttc" id="astd__allocator_8h_html_a51d4c17b5238dec3db8e52948f574fa2"><div class="ttname"><a href="#a51d4c17b5238dec3db8e52948f574fa2">std_allocate</a></div><div class="ttdeci">static void * std_allocate(void *context_ptr, size_t alignment, size_t size)</div><div class="ttdoc">malloc wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:30</div></div>
+<div class="ttc" id="astd__allocator_8h_html_a6059379efaf2e9b84f8aa87889257b0b"><div class="ttname"><a href="#a6059379efaf2e9b84f8aa87889257b0b">std_deallocate</a></div><div class="ttdeci">static void std_deallocate(void *context_ptr, void *mem_ptr)</div><div class="ttdoc">free wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:63</div></div>
+<div class="ttc" id="astd__allocator_8h_html_ae9e0c9c4fdca4c400af08d8f86b3444d"><div class="ttname"><a href="#ae9e0c9c4fdca4c400af08d8f86b3444d">std_reallocate</a></div><div class="ttdeci">static void * std_reallocate(void *context_ptr, void *mem_ptr, size_t alignment, size_t old_size, size_t new_size)</div><div class="ttdoc">realloc wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:50</div></div>
 <div class="ttc" id="astructallocator__ops__type_html"><div class="ttname"><a href="structallocator__ops__type.html">allocator_ops_type</a></div><div class="ttdoc">struct interface for allocator operations.</div><div class="ttdef"><b>Definition</b> allocator_ops.h:13</div></div>
 </div><!-- fragment -->
 </div>
