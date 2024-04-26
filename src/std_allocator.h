@@ -20,7 +20,7 @@
  * @param[in] size Amount of memory to allocate in bytes.
  * @return The stack pointer.
  * @retval NULL
- * - Implementation-defined, but may do so if initial\_capacity is 0.
+ * - Implementation-defined, but may do so if size is 0.
  * - If no memory space is available.
  */
 static inline void* std_allocate(void* context_ptr, size_t alignment, size_t size) {
@@ -40,7 +40,7 @@ static inline void* std_allocate(void* context_ptr, size_t alignment, size_t siz
  * @param[in] new_size Amount of memory to allocate in bytes.
  * @return A new pointer, pointing to a new\_size-sized buffer with old contents from the buffer at mem\_ptr.
  * @retval NULL
- * - Implementation-defined, but may do so if initial\_capacity is 0.
+ * - Implementation-defined, but may do so if new\_size is 0.
  * - If no memory space is available.
  */
 static inline void* std_reallocate(void* context_ptr, void* mem_ptr, size_t alignment, size_t old_size, size_t new_size) {
