@@ -29,7 +29,7 @@
  * @brief Iterate over the values in the stack from the top value.
  * @param[in] stack_ptr Stack pointer.
  * @param[out] count Number of elements iterated as `size_t`.
- * @param[out] value Value at `count - 1` as `size_t`.
+ * @param[out] value Value at `count - 1` as `VALUE_TYPE`.
  */
 #ifndef stack_for_each
 #define stack_for_each(stack_ptr, count, value) __stack_for_each(stack_ptr, count, value)
