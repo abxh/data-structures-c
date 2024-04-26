@@ -3,7 +3,7 @@ var indexSectionsWithContent =
   0: "acdjprstv",
   1: "at",
   2: "ajs",
-  3: "t",
+  3: "st",
   4: "acdrv",
   5: "cjpsv"
 };
