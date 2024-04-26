@@ -1,6 +1,10 @@
 /**
  * @file stack.h
  * @brief Stack data structure based on a dynamic array.
+ *
+ * Refer to following pages for more extensive documentation:
+ * - https://man7.org/linux/man-pages/man3/malloc.3.html
+ * - https://man7.org/linux/man-pages/man3/realloc.3p.html
  */
 
 /**
