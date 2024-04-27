@@ -81,6 +81,11 @@
 #define QUEUE_TYPE JOIN(__QUEUE_PREFIX, type)
 #endif
 
+/* Aliases. Used by other functions. Will be cleaned up by the end. */
+#ifndef __T_queue_is_empty
+#define __T_queue_is_empty JOIN(__QUEUE_PREFIX, is_empty)
+#endif
+
 /**
  * @brief Generated queue struct type for a value type.
  */
@@ -216,7 +221,7 @@ static inline size_t JOIN(__QUEUE_PREFIX, count)(const QUEUE_TYPE* queue_ptr) {
 /**
  * @brief Get the number of values allocated for in the queue. Capacity is grown as needed.
  *
- * Assumes queue_ptr is not `NULL`.
+ * Asserts queue_ptr is not `NULL`.
  *
  * @param[in] queue_ptr The queue pointer.
  * @return The current capacity as `size_t`.
@@ -244,7 +249,7 @@ static inline bool JOIN(__QUEUE_PREFIX, is_empty)(const QUEUE_TYPE* queue_ptr) {
 /**
  * @brief Get value at index relative to queue front index.
  *
- * Assumes queue_ptr is not `NULL` and index is strictly less than queue count.
+ * Asserts queue_ptr is not `NULL` and index is strictly less than queue count.
  *
  * @param[in] queue_ptr The queue pointer.
  * @param[in] index Index at which the value lies.
@@ -268,9 +273,7 @@ static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, at)(const QUEUE_TYPE* queue_ptr, s
  */
 static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, front)(const QUEUE_TYPE* queue_ptr) {
     assert(NULL != queue_ptr);
-#define T_queue_is_empty JOIN(__QUEUE_PREFIX, is_empty)
-    assert(!T_queue_is_empty(queue_ptr));
-#undef T_queue_is_empty
+    assert(!__T_queue_is_empty(queue_ptr));
 
     return queue_ptr->values[queue_ptr->start_index];
 }
@@ -285,9 +288,7 @@ static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, front)(const QUEUE_TYPE* queue_ptr
  */
 static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, back)(const QUEUE_TYPE* queue_ptr) {
     assert(NULL != queue_ptr);
-#define T_queue_is_empty JOIN(__QUEUE_PREFIX, is_empty)
-    assert(!T_queue_is_empty(queue_ptr));
-#undef T_queue_is_empty
+    assert(!__T_queue_is_empty(queue_ptr));
 
     return queue_ptr->values[(queue_ptr->end_index - 1) & queue_ptr->index_mask];
 }
@@ -390,9 +391,7 @@ static inline bool JOIN(__QUEUE_PREFIX, enqueue)(QUEUE_TYPE* queue_ptr, VALUE_TY
  */
 static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, dequeue)(QUEUE_TYPE* queue_ptr) {
     assert(NULL != queue_ptr);
-#define T_queue_is_empty JOIN(__QUEUE_PREFIX, is_empty)
-    assert(!T_queue_is_empty(queue_ptr));
-#undef T_queue_is_empty
+    assert(!__T_queue_is_empty(queue_ptr));
 
     VALUE_TYPE value = queue_ptr->values[queue_ptr->start_index];
     queue_ptr->start_index = (queue_ptr->start_index + 1) & queue_ptr->index_mask;
@@ -400,6 +399,7 @@ static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, dequeue)(QUEUE_TYPE* queue_ptr) {
     return value;
 }
 
+#undef __T_queue_is_empty
 #undef __QUEUE_PREFIX
 #undef VALUE_TYPE
 #undef QUEUE_TYPE

@@ -72,6 +72,11 @@
 #define STACK_TYPE JOIN(__STACK_PREFIX, type)
 #endif
 
+/* Aliases. Used by other functions. Will be cleaned up by the end. */
+#ifndef __T_stack_is_empty
+#define __T_stack_is_empty JOIN(__STACK_PREFIX, is_empty)
+#endif
+
 /**
  * @brief Generated stack struct type for a given value type.
  */
@@ -187,7 +192,7 @@ static inline size_t JOIN(__STACK_PREFIX, count)(const STACK_TYPE* stack_ptr) {
 /**
  * @brief Get the number of values allocated for in the stack. Capacity is grown as needed.
  *
- * Assumes stack_ptr is not `NULL`.
+ * Asserts stack_ptr is not `NULL`.
  *
  * @param[in] stack_ptr The stack pointer.
  * @return The current capacity as `size_t`.
@@ -238,9 +243,7 @@ static inline VALUE_TYPE JOIN(__STACK_PREFIX, at)(const STACK_TYPE* stack_ptr, s
  */
 static inline VALUE_TYPE JOIN(__STACK_PREFIX, top)(const STACK_TYPE* stack_ptr) {
     assert(NULL != stack_ptr);
-#define T_stack_is_empty JOIN(__STACK_PREFIX, is_empty)
-    assert(!T_stack_is_empty(stack_ptr));
-#undef T_stack_is_empty
+    assert(!__T_stack_is_empty(stack_ptr));
 
     return stack_ptr->values[stack_ptr->count - 1];
 }
@@ -301,13 +304,12 @@ static inline bool JOIN(__STACK_PREFIX, push)(STACK_TYPE* stack_ptr, VALUE_TYPE 
  */
 static inline VALUE_TYPE JOIN(__STACK_PREFIX, pop)(STACK_TYPE* stack_ptr) {
     assert(NULL != stack_ptr);
-#define T_stack_is_empty JOIN(__STACK_PREFIX, is_empty)
-    assert(!T_stack_is_empty(stack_ptr));
-#undef T_stack_is_empty
+    assert(!__T_stack_is_empty(stack_ptr));
 
     return stack_ptr->values[--stack_ptr->count];
 }
 
+#undef __T_stack_is_empty
 #undef __STACK_PREFIX
 #undef VALUE_TYPE
 #undef STACK_TYPE
