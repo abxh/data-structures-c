@@ -105,6 +105,10 @@ $(function() {
 <div class="line">    assert(<span class="charliteral">&#39;a&#39;</span> == char_queue_peek_first(q));</div>
 <div class="line">    assert(<span class="charliteral">&#39;c&#39;</span> == char_queue_peek_last(q));</div>
 <div class="line"> </div>
+<div class="line">    assert(<span class="charliteral">&#39;a&#39;</span> == char_queue_at(q, 0));</div>
+<div class="line">    assert(<span class="charliteral">&#39;b&#39;</span> == char_queue_at(q, 1));</div>
+<div class="line">    assert(<span class="charliteral">&#39;c&#39;</span> == char_queue_at(q, 2));</div>
+<div class="line"> </div>
 <div class="line">    <span class="keywordtype">char</span> res = char_queue_dequeue(q);</div>
 <div class="line"> </div>
 <div class="line">    assert(<span class="charliteral">&#39;a&#39;</span> == res);</div>

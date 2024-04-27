@@ -92,7 +92,7 @@ $(function() {
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="allocator__ops_8h_source.html">allocator_ops.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="join_8h_source.html">join.h</a>&quot;</code><br />
+<code>#include &quot;macros.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="std__allocator_8h_source.html">std_allocator.h</a>&quot;</code><br />
 </div>
 <p><a href="stack_8h_source.html">Go to the source code of this file.</a></p>
@@ -140,7 +140,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a189148bf03892b5bc1eea0df8a9fea45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if stack is empty.  <br /></td></tr>
 <tr class="separator:a189148bf03892b5bc1eea0df8a9fea45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a855161c858e01a26187faf034ca6d752" id="r_a855161c858e01a26187faf034ca6d752"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a855161c858e01a26187faf034ca6d752">T_stack_at</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr, size_t index)</td></tr>
-<tr class="memdesc:a855161c858e01a26187faf034ca6d752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value at index.  <br /></td></tr>
+<tr class="memdesc:a855161c858e01a26187faf034ca6d752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value at index starting from the bottom of the stack as 0.  <br /></td></tr>
 <tr class="separator:a855161c858e01a26187faf034ca6d752"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeef1b94df3a6c8d6a8c3cd2ff28524fc" id="r_aeef1b94df3a6c8d6a8c3cd2ff28524fc"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeef1b94df3a6c8d6a8c3cd2ff28524fc">T_stack_top</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr)</td></tr>
 <tr class="memdesc:aeef1b94df3a6c8d6a8c3cd2ff28524fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the top of the stack.  <br /></td></tr>
@@ -246,7 +246,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get value at index. </p>
+<p>Get value at index starting from the bottom of the stack as 0. </p>
 <p>Asserts stack_ptr is not <code>NULL</code> and index is strictly less than stack count.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

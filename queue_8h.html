@@ -93,7 +93,7 @@ $(function() {
 <code>#include &lt;string.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="allocator__ops_8h_source.html">allocator_ops.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="is__power__of__two_8h_source.html">is_power_of_two.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="join_8h_source.html">join.h</a>&quot;</code><br />
+<code>#include &quot;macros.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="std__allocator_8h_source.html">std_allocator.h</a>&quot;</code><br />
 </div>
 <p><a href="queue_8h_source.html">Go to the source code of this file.</a></p>
@@ -259,7 +259,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get value at index relative to queue front or start index as 0. </p>
-<p>Asserts queue_ptr is not <code>NULL</code> and index is strictly less than queue count.</p>
+<p>Asserts queue_ptr is not <code>NULL</code> and index is inside the range of the indicies of non-empty slots.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>

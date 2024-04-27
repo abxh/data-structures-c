@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['paste_0',['PASTE',['../join_8h.html#a188ea780417dce4eb720d161d85f9f44',1,'join.h']]],
-  ['prefix_1',['PREFIX',['../queue_8h.html#add51b53e8b628f95078327028dccb20c',1,'PREFIX:&#160;queue.h'],['../stack_8h.html#add51b53e8b628f95078327028dccb20c',1,'PREFIX:&#160;stack.h']]]
+  ['queue_2eh_0',['queue.h',['../queue_8h.html',1,'']]],
+  ['queue_5ffor_5feach_1',['queue_for_each',['../queue_8h.html#a9bb65a1cb5c0e10a952f27717a55283d',1,'queue.h']]]
 ];
