@@ -62,6 +62,7 @@ void uint_stack_demo(void) {
     }
 
     size_t x = 1e+6;
+    size_t stack_val_count = 0;
 
     // {...} for scoped variables
     {
@@ -69,8 +70,11 @@ void uint_stack_demo(void) {
         unsigned long int value;
         stack_for_each(s_copy, count, value) {
             assert(value == x--);
+            stack_val_count++;
         }
     }
+
+    assert(stack_val_count == 1e+6);
 
     uint_stack_destroy(s);
     uint_stack_destroy(s_copy);

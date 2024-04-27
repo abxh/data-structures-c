@@ -29,6 +29,6 @@
 
 /**
  * @def JOIN(a,b)
- * @brief First expands it's two parameters, then pastes them together with a underscore \_ in between.
+ * @brief First expands it's two parameters, then pastes them together with a underscore _ in between.
  */
 #define JOIN(a, b) CONCAT(a, CONCAT(_, b))
