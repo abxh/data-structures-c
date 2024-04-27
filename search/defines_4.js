@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['value_5ftype_0',['VALUE_TYPE',['../stack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d',1,'stack.h']]]
+  ['stack_5ffor_5feach_0',['stack_for_each',['../stack_8h.html#a20cc87a5340b078c162c0554f74f9f54',1,'stack.h']]]
 ];

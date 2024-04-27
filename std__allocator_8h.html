@@ -82,7 +82,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>wrapper of std functions for conforming to the defined interface of allocator operations.  
+<p>wrapper of <em>thead-safe</em> standard allocation functions for conforming to the defined struct interface of allocator operations.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="allocator__ops_8h_source.html">allocator_ops.h</a>&quot;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
@@ -104,10 +104,11 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:ad13262f409f9b304d1b8b086be03d03f" id="r_ad13262f409f9b304d1b8b086be03d03f"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structallocator__ops__type.html">allocator_ops_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad13262f409f9b304d1b8b086be03d03f">std_allocator_ops</a></td></tr>
+<tr class="memdesc:ad13262f409f9b304d1b8b086be03d03f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static <code><a class="el" href="structallocator__ops__type.html" title="struct interface for allocator operations.">allocator_ops_type</a></code>-typed struct with preset standard allocation operations for convienience.  <br /></td></tr>
 <tr class="separator:ad13262f409f9b304d1b8b086be03d03f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>wrapper of std functions for conforming to the defined interface of allocator operations. </p>
+<div class="textblock"><p>wrapper of <em>thead-safe</em> standard allocation functions for conforming to the defined struct interface of allocator operations. </p>
 <p>Refer to following pages for more extensive documentation:</p><ul>
 <li><a href="https://man7.org/linux/man-pages/man3/malloc.3.html">https://man7.org/linux/man-pages/man3/malloc.3.html</a></li>
 <li><a href="https://man7.org/linux/man-pages/man3/realloc.3p.html">https://man7.org/linux/man-pages/man3/realloc.3p.html</a> </li>
@@ -202,7 +203,7 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">context_ptr</td><td>(unused) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">mem_ptr</td><td>Pointer to the memory buffer. If NULL, then no operation is done. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">mem_ptr</td><td>Pointer to the memory buffer to be flagged as free. If NULL, then no operation is done. </td></tr>
   </table>
   </dd>
 </dl>
@@ -253,18 +254,18 @@ Variables</h2></td></tr>
 
 <p><code>realloc</code> wrapper to allocate memory. </p>
 <dl class="section note"><dt>Note</dt><dd>Can pass NULL as context_ptr.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Passing memory_ptr not allocated by malloc, calloc or free is UB.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Passing memory_ptr not allocated by malloc, calloc or free is undefined behaviour.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">context_ptr</td><td>(unused) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">mem_ptr</td><td>Pointer to the memory buffer. If NULL, then malloc(size) is called. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">mem_ptr</td><td>Pointer to the memory buffer. If NULL, then malloc(size) is called. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>(unused) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">old_size</td><td>(unused) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">new_size</td><td>Amount of memory to allocate in bytes. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A new pointer, pointing to a new_size-sized buffer with old contents from the buffer at mem_ptr. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A new pointer, pointing to a new_size-sized buffer with old contents from the buffer at mem_ptr. If the new pointer is not NULL, then the new pointer shall be used in place of mem_ptr. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">NULL</td><td><ul>
@@ -300,11 +301,13 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div>
 <div class="line">    (<a class="code hl_struct" href="structallocator__ops__type.html">allocator_ops_type</a>){.allocate_f_p = <a class="code hl_function" href="#a51d4c17b5238dec3db8e52948f574fa2">std_allocate</a>, .reallocate_f_p = <a class="code hl_function" href="#ae9e0c9c4fdca4c400af08d8f86b3444d">std_reallocate</a>, .deallocate_f_p = <a class="code hl_function" href="#a6059379efaf2e9b84f8aa87889257b0b">std_deallocate</a>}</div>
-<div class="ttc" id="astd__allocator_8h_html_a51d4c17b5238dec3db8e52948f574fa2"><div class="ttname"><a href="#a51d4c17b5238dec3db8e52948f574fa2">std_allocate</a></div><div class="ttdeci">static void * std_allocate(void *context_ptr, size_t alignment, size_t size)</div><div class="ttdoc">malloc wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:30</div></div>
-<div class="ttc" id="astd__allocator_8h_html_a6059379efaf2e9b84f8aa87889257b0b"><div class="ttname"><a href="#a6059379efaf2e9b84f8aa87889257b0b">std_deallocate</a></div><div class="ttdeci">static void std_deallocate(void *context_ptr, void *mem_ptr)</div><div class="ttdoc">free wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:63</div></div>
-<div class="ttc" id="astd__allocator_8h_html_ae9e0c9c4fdca4c400af08d8f86b3444d"><div class="ttname"><a href="#ae9e0c9c4fdca4c400af08d8f86b3444d">std_reallocate</a></div><div class="ttdeci">static void * std_reallocate(void *context_ptr, void *mem_ptr, size_t alignment, size_t old_size, size_t new_size)</div><div class="ttdoc">realloc wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:50</div></div>
+<div class="ttc" id="astd__allocator_8h_html_a51d4c17b5238dec3db8e52948f574fa2"><div class="ttname"><a href="#a51d4c17b5238dec3db8e52948f574fa2">std_allocate</a></div><div class="ttdeci">static void * std_allocate(void *context_ptr, size_t alignment, size_t size)</div><div class="ttdoc">malloc wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:31</div></div>
+<div class="ttc" id="astd__allocator_8h_html_a6059379efaf2e9b84f8aa87889257b0b"><div class="ttname"><a href="#a6059379efaf2e9b84f8aa87889257b0b">std_deallocate</a></div><div class="ttdeci">static void std_deallocate(void *context_ptr, void *mem_ptr)</div><div class="ttdoc">free wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:65</div></div>
+<div class="ttc" id="astd__allocator_8h_html_ae9e0c9c4fdca4c400af08d8f86b3444d"><div class="ttname"><a href="#ae9e0c9c4fdca4c400af08d8f86b3444d">std_reallocate</a></div><div class="ttdeci">static void * std_reallocate(void *context_ptr, void *mem_ptr, size_t alignment, size_t old_size, size_t new_size)</div><div class="ttdoc">realloc wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:52</div></div>
 <div class="ttc" id="astructallocator__ops__type_html"><div class="ttname"><a href="structallocator__ops__type.html">allocator_ops_type</a></div><div class="ttdoc">struct interface for allocator operations.</div><div class="ttdef"><b>Definition</b> allocator_ops.h:13</div></div>
 </div><!-- fragment -->
+<p>Static <code><a class="el" href="structallocator__ops__type.html" title="struct interface for allocator operations.">allocator_ops_type</a></code>-typed struct with preset standard allocation operations for convienience. </p>
+
 </div>
 </div>
 </div><!-- contents -->

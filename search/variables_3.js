@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['reallocate_5ff_5fp_0',['reallocate_f_p',['../structallocator__ops__type.html#aaeaa1e5fc4618ee9a8da1841e31a3871',1,'allocator_ops_type']]]
+  ['end_5findex_0',['end_index',['../structT__queue__type.html#a50ee89dd49b25d6f11a79a45a746ab6e',1,'T_queue_type']]]
 ];

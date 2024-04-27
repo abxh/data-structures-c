@@ -106,15 +106,21 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a20cc87a5340b078c162c0554f74f9f54" id="r_a20cc87a5340b078c162c0554f74f9f54"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20cc87a5340b078c162c0554f74f9f54">stack_for_each</a>(stack_ptr,  count,  value)&#160;&#160;&#160;__stack_for_each(stack_ptr, count, value)</td></tr>
-<tr class="memdesc:a20cc87a5340b078c162c0554f74f9f54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the stack from the top value.  <br /></td></tr>
+<tr class="memdesc:a20cc87a5340b078c162c0554f74f9f54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the stack from the top value or the first-to-be-popped value.  <br /></td></tr>
 <tr class="separator:a20cc87a5340b078c162c0554f74f9f54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae17cb099b4c9aee7835032339b5a9e0d" id="r_ae17cb099b4c9aee7835032339b5a9e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;&#160;&#160;int</td></tr>
 <tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value type.  <br /></td></tr>
 <tr class="separator:ae17cb099b4c9aee7835032339b5a9e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add51b53e8b628f95078327028dccb20c" id="r_add51b53e8b628f95078327028dccb20c"><td class="memItemLeft" align="right" valign="top"><a id="add51b53e8b628f95078327028dccb20c" name="add51b53e8b628f95078327028dccb20c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PREFIX</b>&#160;&#160;&#160;<a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>##_##stack</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PREFIX</b>&#160;&#160;&#160;<a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>##_##stack</td></tr>
 <tr class="memdesc:add51b53e8b628f95078327028dccb20c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The stack prefix. Set to VALUE_TYPE##_##stack, unless manually defined otherwise. <br /></td></tr>
 <tr class="separator:add51b53e8b628f95078327028dccb20c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade31780e5e5dd2b34530dc52bc359a01" id="r_ade31780e5e5dd2b34530dc52bc359a01"><td class="memItemLeft" align="right" valign="top"><a id="ade31780e5e5dd2b34530dc52bc359a01" name="ade31780e5e5dd2b34530dc52bc359a01"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>T_stack_is_empty</b>&#160;&#160;&#160;<a class="el" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, is_empty)</td></tr>
+<tr class="separator:ade31780e5e5dd2b34530dc52bc359a01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade31780e5e5dd2b34530dc52bc359a01" id="r_ade31780e5e5dd2b34530dc52bc359a01"><td class="memItemLeft" align="right" valign="top"><a id="ade31780e5e5dd2b34530dc52bc359a01" name="ade31780e5e5dd2b34530dc52bc359a01"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>T_stack_is_empty</b>&#160;&#160;&#160;<a class="el" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, is_empty)</td></tr>
+<tr class="separator:ade31780e5e5dd2b34530dc52bc359a01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -130,33 +136,37 @@ Functions</h2></td></tr>
 <tr class="memitem:aa215ad48086a0daab5aec1ef5a72dcf7" id="r_aa215ad48086a0daab5aec1ef5a72dcf7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structT__stack__type.html">T_stack_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa215ad48086a0daab5aec1ef5a72dcf7">T_stack_clone</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr)</td></tr>
 <tr class="memdesc:aa215ad48086a0daab5aec1ef5a72dcf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clone an existing stack.  <br /></td></tr>
 <tr class="separator:aa215ad48086a0daab5aec1ef5a72dcf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a855161c858e01a26187faf034ca6d752" id="r_a855161c858e01a26187faf034ca6d752"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a855161c858e01a26187faf034ca6d752">T_stack_at</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr, size_t index)</td></tr>
-<tr class="memdesc:a855161c858e01a26187faf034ca6d752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value at index.  <br /></td></tr>
-<tr class="separator:a855161c858e01a26187faf034ca6d752"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeef1b94df3a6c8d6a8c3cd2ff28524fc" id="r_aeef1b94df3a6c8d6a8c3cd2ff28524fc"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeef1b94df3a6c8d6a8c3cd2ff28524fc">T_stack_top</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr)</td></tr>
-<tr class="memdesc:aeef1b94df3a6c8d6a8c3cd2ff28524fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the top of the stack.  <br /></td></tr>
-<tr class="separator:aeef1b94df3a6c8d6a8c3cd2ff28524fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81377e0e5a09a1858a4649de0db4ade9" id="r_a81377e0e5a09a1858a4649de0db4ade9"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a81377e0e5a09a1858a4649de0db4ade9">T_stack_count</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr)</td></tr>
-<tr class="memdesc:a81377e0e5a09a1858a4649de0db4ade9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of elements in the stack.  <br /></td></tr>
+<tr class="memdesc:a81377e0e5a09a1858a4649de0db4ade9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of values in the stack.  <br /></td></tr>
 <tr class="separator:a81377e0e5a09a1858a4649de0db4ade9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22710bfedfe296be77bb72b85b796666" id="r_a22710bfedfe296be77bb72b85b796666"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22710bfedfe296be77bb72b85b796666">T_stack_capacity</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr)</td></tr>
-<tr class="memdesc:a22710bfedfe296be77bb72b85b796666"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of elements preallocated for in the stack (currently).  <br /></td></tr>
+<tr class="memdesc:a22710bfedfe296be77bb72b85b796666"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of values allocated for in the stack. Capacity is grown as needed.  <br /></td></tr>
 <tr class="separator:a22710bfedfe296be77bb72b85b796666"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a189148bf03892b5bc1eea0df8a9fea45" id="r_a189148bf03892b5bc1eea0df8a9fea45"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a189148bf03892b5bc1eea0df8a9fea45">T_stack_is_empty</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr)</td></tr>
 <tr class="memdesc:a189148bf03892b5bc1eea0df8a9fea45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if stack is empty.  <br /></td></tr>
 <tr class="separator:a189148bf03892b5bc1eea0df8a9fea45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf3634d9e03331cfaea06c74b6ae6011" id="r_abf3634d9e03331cfaea06c74b6ae6011"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abf3634d9e03331cfaea06c74b6ae6011">T_stack_peek</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr)</td></tr>
-<tr class="memdesc:abf3634d9e03331cfaea06c74b6ae6011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek at the stack and get it's top value.  <br /></td></tr>
+<tr class="memitem:a855161c858e01a26187faf034ca6d752" id="r_a855161c858e01a26187faf034ca6d752"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a855161c858e01a26187faf034ca6d752">T_stack_at</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr, size_t index)</td></tr>
+<tr class="memdesc:a855161c858e01a26187faf034ca6d752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value at index.  <br /></td></tr>
+<tr class="separator:a855161c858e01a26187faf034ca6d752"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeef1b94df3a6c8d6a8c3cd2ff28524fc" id="r_aeef1b94df3a6c8d6a8c3cd2ff28524fc"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeef1b94df3a6c8d6a8c3cd2ff28524fc">T_stack_top</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr)</td></tr>
+<tr class="memdesc:aeef1b94df3a6c8d6a8c3cd2ff28524fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the top of the stack.  <br /></td></tr>
+<tr class="separator:aeef1b94df3a6c8d6a8c3cd2ff28524fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf3634d9e03331cfaea06c74b6ae6011" id="r_abf3634d9e03331cfaea06c74b6ae6011"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abf3634d9e03331cfaea06c74b6ae6011">T_stack_peek</a> (const <a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr)</td></tr>
+<tr class="memdesc:abf3634d9e03331cfaea06c74b6ae6011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek at the stack and get it's first-to-be-popped top value.  <br /></td></tr>
 <tr class="separator:abf3634d9e03331cfaea06c74b6ae6011"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fda4b1917104e332029ec9550340e21" id="r_a0fda4b1917104e332029ec9550340e21"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0fda4b1917104e332029ec9550340e21">T_stack_pop</a> (<a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr)</td></tr>
-<tr class="memdesc:a0fda4b1917104e332029ec9550340e21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop a value from the stack and return the value.  <br /></td></tr>
-<tr class="separator:a0fda4b1917104e332029ec9550340e21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac72ce71ae3f232f4370f545ac31d16f5" id="r_ac72ce71ae3f232f4370f545ac31d16f5"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac72ce71ae3f232f4370f545ac31d16f5">T_stack_push</a> (<a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr, <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
+<tr class="memitem:ac72ce71ae3f232f4370f545ac31d16f5" id="r_ac72ce71ae3f232f4370f545ac31d16f5"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac72ce71ae3f232f4370f545ac31d16f5">T_stack_push</a> (<a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr, <a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
 <tr class="memdesc:ac72ce71ae3f232f4370f545ac31d16f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value onto the stack.  <br /></td></tr>
 <tr class="separator:ac72ce71ae3f232f4370f545ac31d16f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fda4b1917104e332029ec9550340e21" id="r_a0fda4b1917104e332029ec9550340e21"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0fda4b1917104e332029ec9550340e21">T_stack_pop</a> (<a class="el" href="structT__stack__type.html">T_stack_type</a> *stack_ptr)</td></tr>
+<tr class="memdesc:a0fda4b1917104e332029ec9550340e21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop a value from the stack and return the value.  <br /></td></tr>
+<tr class="separator:a0fda4b1917104e332029ec9550340e21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Stack data structure based on a dynamic array. </p>
+<p>The array is only grown - not shrunk - for performance reasons.</p>
+<p>Source(s):</p><ul>
+<li>for naming: <a href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)">https://en.wikipedia.org/wiki/Stack_(abstract_data_type)</a> </li>
+</ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a20cc87a5340b078c162c0554f74f9f54" name="a20cc87a5340b078c162c0554f74f9f54"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a20cc87a5340b078c162c0554f74f9f54">&#9670;&#160;</a></span>stack_for_each</h2>
@@ -182,7 +192,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Iterate over the values in the stack from the top value. </p>
+<p>Iterate over the values in the stack from the top value or the first-to-be-popped value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>Stack pointer. </td></tr>
@@ -225,7 +235,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_stack_at </td>
+          <td class="memname">static <a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_stack_at </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structT__stack__type.html">T_stack_type</a> *</td>          <td class="paramname"><span class="paramname"><em>stack_ptr</em>, </span></td>
         </tr>
@@ -243,7 +253,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get value at index. </p>
-<p>Asserts stack_ptr is not NULL and index is strictly less than stack count.</p>
+<p>Asserts stack_ptr is not <code>NULL</code> and index is strictly less than stack count.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
@@ -278,15 +288,15 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get the number of elements preallocated for in the stack (currently). </p>
-<p>Asserts stack_ptr is not NULL.</p>
+<p>Get the number of values allocated for in the stack. Capacity is grown as needed. </p>
+<p>Assumes stack_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The current capacity as size_t. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The current capacity as <code>size_t</code>. </dd></dl>
 
 </div>
 </div>
@@ -316,16 +326,16 @@ Functions</h2></td></tr>
 <p>Clone an existing stack. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The pointer of the stack to clone. </td></tr>
+    <tr><td class="paramname">stack_ptr</td><td>The pointer of the stack to clone. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the clone of the original stack. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NULL</td><td><ul>
+    <tr><td class="paramname">`NULL`</td><td><ul>
 <li>If no memory space is available.</li>
-<li>If stack_ptr is NULL. </li>
+<li>If stack_ptr is <code>NULL</code>. </li>
 </ul>
 </td></tr>
   </table>
@@ -357,15 +367,15 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get the number of elements in the stack. </p>
-<p>Asserts stack_ptr is not NULL.</p>
+<p>Get the number of values in the stack. </p>
+<p>Asserts stack_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The number of elements as size_t. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of elements as <code>size_t</code>. </dd></dl>
 
 </div>
 </div>
@@ -396,7 +406,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The stack pointer. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NULL</td><td>If no memory space is available. </td></tr>
+    <tr><td class="paramname">`NULL`</td><td>If no memory space is available. </td></tr>
   </table>
   </dd>
 </dl>
@@ -447,9 +457,9 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The stack pointer. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NULL</td><td><ul>
-<li>If initial_capacity is 0.</li>
-<li>If <code>initial_capacity * sizeof(VALUE_TYPE)</code> cannot be expressed with size_t.</li>
+    <tr><td class="paramname">`NULL`</td><td><ul>
+<li>If <code>initial_capacity</code> is 0.</li>
+<li>If <code>initial_capacity * sizeof(VALUE_TYPE)</code> cannot be expressed with <code>size_t</code>.</li>
 <li>If no memory space is available. </li>
 </ul>
 </td></tr>
@@ -483,7 +493,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Destroy a stack and free the used memory. </p>
-<dl class="section note"><dt>Note</dt><dd>May not be called twice. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>May not be called twice. </dd></dl>
 
 </div>
 </div>
@@ -511,7 +521,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check if stack is empty. </p>
-<p>Asserts stack_ptr is not NULL.</p>
+<p>Asserts stack_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
@@ -532,7 +542,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_stack_peek </td>
+          <td class="memname">static <a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_stack_peek </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structT__stack__type.html">T_stack_type</a> *</td>          <td class="paramname"><span class="paramname"><em>stack_ptr</em></span></td><td>)</td>
           <td></td>
@@ -545,8 +555,8 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Peek at the stack and get it's top value. </p>
-<p>Asserts stack_ptr is not NULL.</p>
+<p>Peek at the stack and get it's first-to-be-popped top value. </p>
+<p>Asserts stack_ptr is not <code>NULL</code> and stack is not empty.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
@@ -567,7 +577,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_stack_pop </td>
+          <td class="memname">static <a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_stack_pop </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structT__stack__type.html">T_stack_type</a> *</td>          <td class="paramname"><span class="paramname"><em>stack_ptr</em></span></td><td>)</td>
           <td></td>
@@ -581,14 +591,14 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Pop a value from the stack and return the value. </p>
-<p>Asserts stack_ptr is not NULL.</p>
+<p>Asserts stack_ptr is not <code>NULL</code> and stack is not empty.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The value as VALUE_TYPE. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The value as <code>VALUE_TYPE</code>. </dd></dl>
 
 </div>
 </div>
@@ -609,7 +619,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -620,7 +630,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Push a value onto the stack. </p>
-<p>Asserts stack_ptr is not NULL.</p>
+<p>Asserts stack_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
@@ -632,7 +642,7 @@ Functions</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">false</td><td><ul>
-<li>If <code>current capacaity * sizeof(VALUE_TYPE) * 2</code> cannot be expressed with size_t.</li>
+<li>If <code>current capacity * sizeof(VALUE_TYPE) * 2</code> cannot be expressed with <code>size_t</code>.</li>
 <li>If no memory space is available. </li>
 </ul>
 </td></tr>
@@ -652,7 +662,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_stack_top </td>
+          <td class="memname">static <a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_stack_top </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structT__stack__type.html">T_stack_type</a> *</td>          <td class="paramname"><span class="paramname"><em>stack_ptr</em></span></td><td>)</td>
           <td></td>
@@ -666,7 +676,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the value from the top of the stack. </p>
-<p>Asserts stack_ptr is not NULL.</p>
+<p>Asserts stack_ptr is not <code>NULL</code> and stack is not empty.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
