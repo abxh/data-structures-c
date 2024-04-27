@@ -247,7 +247,7 @@ static inline bool JOIN(__QUEUE_PREFIX, is_empty)(const QUEUE_TYPE* queue_ptr) {
 }
 
 /**
- * @brief Get value at index relative to queue front index.
+ * @brief Get value at index relative to queue front or start index as 0.
  *
  * Asserts queue_ptr is not `NULL` and index is strictly less than queue count.
  *
