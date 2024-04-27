@@ -28,6 +28,10 @@ void char_queue_demo(void) {
     assert('a' == char_queue_peek_first(q));
     assert('c' == char_queue_peek_last(q));
 
+    assert('a' == char_queue_at(q, 0));
+    assert('b' == char_queue_at(q, 1));
+    assert('c' == char_queue_at(q, 2));
+
     char res = char_queue_dequeue(q);
 
     assert('a' == res);

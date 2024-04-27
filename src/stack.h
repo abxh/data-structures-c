@@ -21,7 +21,7 @@
 #include <string.h>   // memcpy
 
 #include "allocator_ops.h" // allocate_ops_type
-#include "join.h"          // JOIN
+#include "macros.h"          // JOIN
 #include "std_allocator.h" // std_allocator_ops
 
 #ifndef __stack_for_each
@@ -218,7 +218,7 @@ static inline bool JOIN(__STACK_PREFIX, is_empty)(const STACK_TYPE* stack_ptr) {
 }
 
 /**
- * @brief Get value at index.
+ * @brief Get value at index starting from the bottom of the stack as 0.
  *
  * Asserts stack_ptr is not `NULL` and index is strictly less than stack count.
  *

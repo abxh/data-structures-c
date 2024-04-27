@@ -1,8 +1,8 @@
 /**
- * @file join.h
+ * @file macros.h
  * @brief C preprocessor macros to paste tokens together.
  *
- * Why these macros are defined?
+ * Why these PASTE/CONCAT/JOIN are defined?
  *
  * These are used to create the symbols (struct names / function names) for different data
  * structure types.
@@ -32,3 +32,9 @@
  * @brief First expands it's two parameters, then pastes them together with a underscore _ in between.
  */
 #define JOIN(a, b) CONCAT(a, CONCAT(_, b))
+
+/**
+ * @def IMPLIES(a,b)
+ * @brief Returns false if and only if the first parameter is true and the second parameter is false.
+ */
+#define IMPLIES(a, b) (!(a) || (b))
