@@ -1,6 +1,11 @@
 /**
  * @file stack.h
  * @brief Stack data structure based on a dynamic array.
+ *
+ * The array is only grown - not shrunk - for performance reasons.
+ *
+ * Source(s):
+ * - for naming: https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
  */
 
 /**
@@ -28,7 +33,7 @@
  * @def stack_for_each
  * @brief Iterate over the values in the stack from the top value.
  * @param[in] stack_ptr Stack pointer.
- * @param[out] count Number of elements iterated as `size_t`.
+ * @param[out] count Number of values iterated as `size_t`.
  * @param[out] value Value at `count - 1` as `size_t`.
  */
 #ifndef stack_for_each
@@ -62,20 +67,20 @@
 #undef PREFIX // above is for doxygen documentation.
 #endif
 
-/* The stack type name. Set to PREFIX##_##type. */
+/* The stack type name. Set to VALUE_TYPE##_##type. */
 #ifndef STACK_TYPE
 #define STACK_TYPE JOIN(__STACK_PREFIX, type)
 #endif
 
 /**
- * @brief Generated stack struct type for a value type managed by functions.
+ * @brief Generated stack struct type for a value type.
  */
 typedef struct {
     size_t count;       ///< number of values in the stack.
     size_t capacity;    ///< total number of values the stack can store.
     VALUE_TYPE* values; ///< array containing the values in the stack.
 
-    void* allocator_context_ptr;      ///< internal data in allocator.
+    void* allocator_context_ptr;      ///< internal data in an allocator.
     allocator_ops_type allocator_ops; ///< allocator operations.
 } STACK_TYPE;
 
@@ -127,7 +132,7 @@ static inline STACK_TYPE* JOIN(__STACK_PREFIX, create)(void) {
 /**
  * @brief Destroy a stack and free the used memory.
  *
- * @note May not be called twice.
+ * @warning May not be called twice.
  */
 static inline void JOIN(__STACK_PREFIX, destroy)(STACK_TYPE* stack_ptr) {
     if (!stack_ptr) {
@@ -141,33 +146,9 @@ static inline void JOIN(__STACK_PREFIX, destroy)(STACK_TYPE* stack_ptr) {
 }
 
 /**
- * @brief Clone an existing stack.
- *
- * @param stack\_ptr The pointer of the stack to clone.
- * @return A pointer to the clone of the original stack.
- * @retval NULL
- * - If no memory space is available.
- * - If stack_ptr is NULL.
- */
-static inline STACK_TYPE* JOIN(__STACK_PREFIX, clone)(const STACK_TYPE* stack_ptr) {
-    if (!stack_ptr) {
-        return NULL;
-    }
-    STACK_TYPE* other_stack_ptr = JOIN(__STACK_PREFIX, create_with_specified)(stack_ptr->capacity, NULL, std_allocator_ops);
-    if (!other_stack_ptr) {
-        return NULL;
-    }
-    memcpy(other_stack_ptr->values, stack_ptr->values, sizeof(VALUE_TYPE) * stack_ptr->count);
-    other_stack_ptr->count = other_stack_ptr->count;
-    other_stack_ptr->capacity = other_stack_ptr->capacity;
-
-    return other_stack_ptr;
-}
-
-/**
  * @brief Get value at index.
  *
- * Asserts stack\_ptr is not NULL and index is strictly less than stack count.
+ * Assumes stack\_ptr is not NULL and index is strictly less than stack count.
  *
  * @param stack\_ptr The stack pointer.
  * @param index Index at which the value lies.
@@ -183,7 +164,7 @@ static inline VALUE_TYPE JOIN(__STACK_PREFIX, at)(const STACK_TYPE* stack_ptr, s
 /**
  * @brief Get the value from the top of the stack.
  *
- * Asserts stack\_ptr is not NULL.
+ * Assumes stack\_ptr is not NULL.
  *
  * @param stack\_ptr The stack pointer.
  * @return The value as VALUE_TYPE.
@@ -195,12 +176,12 @@ static inline VALUE_TYPE JOIN(__STACK_PREFIX, top)(const STACK_TYPE* stack_ptr) 
 }
 
 /**
- * @brief Get the number of elements in the stack.
+ * @brief Get the number of values in the stack.
  *
- * Asserts stack\_ptr is not NULL.
+ * Assumes stack\_ptr is not NULL.
  *
  * @param stack\_ptr The stack pointer.
- * @return The number of elements as size_t.
+ * @return The number of values as size_t.
  */
 static inline size_t JOIN(__STACK_PREFIX, count)(const STACK_TYPE* stack_ptr) {
     assert(NULL != stack_ptr);
@@ -209,9 +190,9 @@ static inline size_t JOIN(__STACK_PREFIX, count)(const STACK_TYPE* stack_ptr) {
 }
 
 /**
- * @brief Get the number of elements preallocated for of the stack.
+ * @brief Get the number of values allocated for in the stack. Capacity is grown as needed.
  *
- * Asserts stack\_ptr is not NULL.
+ * Assumes stack\_ptr is not NULL.
  *
  * @param stack\_ptr The stack pointer.
  * @return The current capacity as size_t.
@@ -225,7 +206,7 @@ static inline size_t JOIN(__STACK_PREFIX, capacity)(const STACK_TYPE* stack_ptr)
 /**
  * @brief Check if stack is empty.
  *
- * Asserts stack\_ptr is not NULL.
+ * Assumes stack\_ptr is not NULL.
  *
  * @param stack\_ptr The stack pointer.
  * @return A boolean indicating whether the stack is empty.
@@ -236,10 +217,12 @@ static inline bool JOIN(__STACK_PREFIX, is_empty)(const STACK_TYPE* stack_ptr) {
     return 0 == stack_ptr->count;
 }
 
+
+
 /**
  * @brief Peek at the stack and get it's top value.
  *
- * Asserts stack\_ptr is not NULL.
+ * Assumes stack\_ptr is not NULL.
  *
  * @param stack\_ptr The stack pointer.
  * @return The value as VALUE_TYPE.
@@ -253,7 +236,7 @@ static inline VALUE_TYPE JOIN(__STACK_PREFIX, peek)(const STACK_TYPE* stack_ptr)
 /**
  * @brief Pop a value from the stack and return the value.
  *
- * Asserts stack\_ptr is not NULL.
+ * Assumes stack\_ptr is not NULL.
  *
  * @param stack\_ptr The stack pointer.
  * @return The value as VALUE_TYPE.
@@ -267,7 +250,7 @@ static inline VALUE_TYPE JOIN(__STACK_PREFIX, pop)(STACK_TYPE* stack_ptr) {
 /**
  * @brief Push a value from the stack and return the value.
  *
- * Asserts stack\_ptr is not NULL.
+ * Assumes stack\_ptr is not NULL.
  *
  * @param stack\_ptr The stack pointer.
  * @param value The value to work with.
@@ -296,6 +279,30 @@ static inline bool JOIN(__STACK_PREFIX, push)(STACK_TYPE* stack_ptr, VALUE_TYPE 
     stack_ptr->values[stack_ptr->count++] = value;
 
     return true;
+}
+
+/**
+ * @brief Clone an existing stack.
+ *
+ * @param stack\_ptr The pointer of the stack to clone.
+ * @return A pointer to the clone of the original stack.
+ * @retval NULL
+ * - If no memory space is available.
+ * - If stack_ptr is NULL.
+ */
+static inline STACK_TYPE* JOIN(__STACK_PREFIX, clone)(const STACK_TYPE* stack_ptr) {
+    if (!stack_ptr) {
+        return NULL;
+    }
+    STACK_TYPE* other_stack_ptr = JOIN(__STACK_PREFIX, create_with_specified)(stack_ptr->capacity, NULL, std_allocator_ops);
+    if (!other_stack_ptr) {
+        return NULL;
+    }
+    memcpy(other_stack_ptr->values, stack_ptr->values, sizeof(VALUE_TYPE) * stack_ptr->count);
+    other_stack_ptr->count = stack_ptr->count;
+    other_stack_ptr->capacity = stack_ptr->capacity;
+
+    return other_stack_ptr;
 }
 
 #undef __STACK_PREFIX
