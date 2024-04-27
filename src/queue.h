@@ -15,6 +15,11 @@
  * - for resizing: https://queueoverflow.com/questions/55343683/resizing-of-the-circular-queue-using-dynamic-array
  */
 
+/**
+ * @example queue/queue.c
+ * Examples of how `queue.h` header file is used in practice.
+ */
+
 #include <assert.h>   // assert
 #include <stdalign.h> // alignof
 #include <stdbool.h>  // bool
@@ -131,6 +136,7 @@ static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, create_with_specified)(size_t ini
 
 /**
  * @brief Create a queue with a default capacity and standard allocator (aka `malloc`).
+ * @todo set capacity to 512
  *
  * @return The queue pointer.
  * @retval `NULL` If no memory space is available.
@@ -168,12 +174,24 @@ static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, clone)(const QUEUE_TYPE* queue_pt
     if (!queue_ptr) {
         return NULL;
     }
-    QUEUE_TYPE* other_queue_ptr = JOIN(__QUEUE_PREFIX, create_with_specified)(
-        queue_ptr->index_mask + 1, queue_ptr->allocator_context_ptr, queue_ptr->allocator_ops);
+    size_t capacity = queue_ptr->index_mask + 1;
+    QUEUE_TYPE* other_queue_ptr =
+        JOIN(__QUEUE_PREFIX, create_with_specified)(capacity, queue_ptr->allocator_context_ptr, queue_ptr->allocator_ops);
     if (!other_queue_ptr) {
         return NULL;
     }
-    memcpy(other_queue_ptr->values, queue_ptr->values, sizeof(VALUE_TYPE) * queue_ptr->count);
+    if (queue_ptr->start_index <= queue_ptr->end_index) {
+        memcpy(&other_queue_ptr->values[queue_ptr->start_index], &queue_ptr->values[queue_ptr->start_index],
+               sizeof(VALUE_TYPE) * queue_ptr->count);
+    } else {
+        size_t n = queue_ptr->end_index;
+        size_t m = (capacity - queue_ptr->start_index);
+
+        assert(n + m == queue_ptr->count);
+
+        memcpy(&other_queue_ptr->values[0], &queue_ptr->values[0], sizeof(VALUE_TYPE) * n);
+        memcpy(&other_queue_ptr->values[queue_ptr->start_index], &queue_ptr->values[queue_ptr->start_index], sizeof(VALUE_TYPE) * m);
+    }
     other_queue_ptr->count = queue_ptr->count;
     other_queue_ptr->start_index = queue_ptr->start_index;
     other_queue_ptr->end_index = queue_ptr->end_index;
@@ -234,9 +252,10 @@ static inline bool JOIN(__QUEUE_PREFIX, is_empty)(const QUEUE_TYPE* queue_ptr) {
  */
 static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, at)(const QUEUE_TYPE* queue_ptr, size_t index) {
     assert(NULL != queue_ptr);
-    assert(((queue_ptr->start_index + index) & queue_ptr->index_mask) < queue_ptr->count);
 
-    return queue_ptr->values[((queue_ptr->start_index + index) & queue_ptr->index_mask)];
+    size_t rel_index = ((queue_ptr->start_index + index) & queue_ptr->index_mask);
+    assert(rel_index < queue_ptr->count);
+    return queue_ptr->values[rel_index];
 }
 
 /**
@@ -317,7 +336,7 @@ static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, peek_last)(const QUEUE_TYPE* queue
  * @param[in] queue_ptr The queue pointer.
  * @param[in] value The value to work with.
  * @return A boolean indicating whether the value was stored, depending on whether
- *         the queue could be resized when full.
+ *         the queue could be resized when about to full.
  * @retval false
  * - If `current capacity * sizeof(VALUE_TYPE) * 2` cannot be expressed with `size_t`.
  * - If no memory space is available.
@@ -326,7 +345,7 @@ static inline bool JOIN(__QUEUE_PREFIX, enqueue)(QUEUE_TYPE* queue_ptr, VALUE_TY
     assert(NULL != queue_ptr);
 
     size_t old_capacity = queue_ptr->index_mask + 1;
-    if (queue_ptr->count == old_capacity) {
+    if (queue_ptr->count + 1 == old_capacity) {
         if (old_capacity > SIZE_MAX / sizeof(VALUE_TYPE) / 2) {
             return false;
         }
@@ -339,10 +358,19 @@ static inline bool JOIN(__QUEUE_PREFIX, enqueue)(QUEUE_TYPE* queue_ptr, VALUE_TY
         }
         queue_ptr->values = (VALUE_TYPE*)temp_ptr;
         queue_ptr->index_mask = new_capacity - 1;
-        if (queue_ptr->end_index <= queue_ptr->start_index) {
+        if (queue_ptr->end_index < queue_ptr->start_index) {
             size_t n = queue_ptr->end_index;
-            memcpy(&queue_ptr->values[old_capacity], &queue_ptr->values[0], sizeof(VALUE_TYPE) * n);
-            queue_ptr->end_index += old_capacity;
+            size_t m = (old_capacity - queue_ptr->start_index);
+
+            assert(n + m == queue_ptr->count);
+
+            if (n <= m) {
+                memcpy(&queue_ptr->values[old_capacity], &queue_ptr->values[0], n);
+                queue_ptr->end_index += old_capacity;
+            } else {
+                memcpy(&queue_ptr->values[new_capacity - m], &queue_ptr->values[queue_ptr->start_index], m);
+                queue_ptr->start_index += old_capacity;
+            }
         }
     }
     queue_ptr->values[queue_ptr->end_index] = value;

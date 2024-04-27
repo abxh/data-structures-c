@@ -265,7 +265,7 @@ static inline VALUE_TYPE JOIN(__STACK_PREFIX, peek)(const STACK_TYPE* stack_ptr)
  * @param[in] stack_ptr The stack pointer.
  * @param[in] value The value to work with.
  * @return A boolean indicating whether the value was stored, depending on whether
- *         the stack could be resized when full.
+ *         the stack could be resized when about to be full.
  * @retval false
  * - If `current capacity * sizeof(VALUE_TYPE) * 2` cannot be expressed with `size_t`.
  * - If no memory space is available.
@@ -273,7 +273,7 @@ static inline VALUE_TYPE JOIN(__STACK_PREFIX, peek)(const STACK_TYPE* stack_ptr)
 static inline bool JOIN(__STACK_PREFIX, push)(STACK_TYPE* stack_ptr, VALUE_TYPE value) {
     assert(NULL != stack_ptr);
 
-    if (stack_ptr->count == stack_ptr->capacity) {
+    if (stack_ptr->count + 1 == stack_ptr->capacity) {
         if (stack_ptr->capacity > SIZE_MAX / sizeof(VALUE_TYPE) / 2) {
             return false;
         }
