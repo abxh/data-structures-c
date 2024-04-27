@@ -141,7 +141,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a4b61afa13c2125dff1fe272777ae6f17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if queue is empty.  <br /></td></tr>
 <tr class="separator:a4b61afa13c2125dff1fe272777ae6f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5bd1a9d1785cc5f33c08e8322686046" id="r_ab5bd1a9d1785cc5f33c08e8322686046"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab5bd1a9d1785cc5f33c08e8322686046">T_queue_at</a> (const <a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr, size_t index)</td></tr>
-<tr class="memdesc:ab5bd1a9d1785cc5f33c08e8322686046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value at index relative to queue front index.  <br /></td></tr>
+<tr class="memdesc:ab5bd1a9d1785cc5f33c08e8322686046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value at index relative to queue front or start index as 0.  <br /></td></tr>
 <tr class="separator:ab5bd1a9d1785cc5f33c08e8322686046"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01442a3e5423468dfd981305212bf282" id="r_a01442a3e5423468dfd981305212bf282"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a01442a3e5423468dfd981305212bf282">T_queue_front</a> (const <a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr)</td></tr>
 <tr class="memdesc:a01442a3e5423468dfd981305212bf282"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the front of the queue.  <br /></td></tr>
@@ -258,7 +258,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get value at index relative to queue front index. </p>
+<p>Get value at index relative to queue front or start index as 0. </p>
 <p>Asserts queue_ptr is not <code>NULL</code> and index is strictly less than queue count.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
