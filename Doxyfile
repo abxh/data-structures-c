@@ -15,7 +15,9 @@ EXPAND_ONLY_PREDEF   = YES
 PREDEFINED = \
              "__STACK_PREFIX=T_stack" \
              "STACK_TYPE=T_stack_type" \
-             "__stack_for_each(stack_ptr, count, value)="
+             "__stack_for_each(stack_ptr, count, value)=" \
+             "__QUEUE_PREFIX=T_queue" \
+             "QUEUE_TYPE=T_queue_type" \
 
 EXPAND_AS_DEFINED = \
                     PASTE \
