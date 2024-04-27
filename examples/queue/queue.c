@@ -38,39 +38,38 @@ void char_queue_demo(void) {
 #define VALUE_TYPE int
 #include "queue.h"
 
-#include <stdio.h>
 void int_queue_demo(void) {
     int_queue_type* q = int_queue_create();
+    size_t lim = 1e+6;
 
     if (!q) {
         assert(false);
     }
 
-    for (unsigned long int i = 1; i <= 1e+3 * 2 / 3; i++) {
+    for (int i = 1; i <= lim * 2 / 3; i++) {
         assert(true == int_queue_enqueue(q, i));
-        printf("start: %zu, end: %zu, count: %zu\n", q->start_index, q->end_index, q->count);
-    }
-    putchar('\n');
-    for (unsigned long int i = 1; i <= 1e+3 * 2 / 3; i++) {
-        int value = int_queue_dequeue(q);
-        assert(value == i);
-        printf("start: %zu, end: %zu, count: %zu\n", q->start_index, q->end_index, q->count);
-    }
-    putchar('\n');
-
-    for (unsigned long int i = 1; i <= 1e+3; i++) {
-        assert(true == int_queue_enqueue(q, i));
-        printf("start: %zu, end: %zu, count: %zu\n", q->start_index, q->end_index, q->count);
     }
 
-    assert(16 <= int_queue_capacity(q));
+    for (int i = 1; i <= lim; i++) {
+        assert(true == int_queue_enqueue(q, i));
+    }
+
+    for (int i = 1; i <= lim * 2 / 3; i++) {
+        assert(i == int_queue_dequeue(q));
+    }
+
+    assert(lim <= int_queue_capacity(q));
 
     int_queue_type* q_copy = int_queue_clone(q);
     if (!q_copy) {
         assert(false);
     }
 
-    size_t x = 1;
+    for (int i = 1; i <= lim; i++) {
+        assert(i == int_queue_dequeue(q));
+    }
+
+    int x = 1;
     size_t queue_val_count = 0;
 
     // {...} for scoped variables
@@ -78,13 +77,12 @@ void int_queue_demo(void) {
         size_t index;
         int value;
         queue_for_each(q_copy, index, value) {
-            printf("%zu, %d\n", index, q->values[index]);
             assert(value == x);
             x++;
             queue_val_count++;
         }
     }
-    // assert(16 == queue_val_count);
+    assert(lim == queue_val_count);
 
     int_queue_destroy(q);
     int_queue_destroy(q_copy);

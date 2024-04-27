@@ -1,5 +1,5 @@
 CC         := cc
-CFLAGS     := -c -Wall -DDEBUG -I../../src
+CFLAGS     := -c -I../../src
 LDFLAGS    :=
 SOURCES    := queue.c
 OBJECTS    := ${SOURCES:.c=.o}

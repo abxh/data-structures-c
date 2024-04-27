@@ -41,27 +41,28 @@ typedef unsigned int uint;
 
 void uint_stack_demo(void) {
     uint_stack_type* s = uint_stack_create();
+    size_t lim = 1e+6;
 
     if (!s) {
         assert(false);
     }
 
-    for (unsigned long int i = 1; i <= 1e+6; i++) {
+    for (unsigned long int i = 1; i <= lim; i++) {
         assert(true == uint_stack_push(s, i));
     }
 
-    assert(1e+6 <= uint_stack_capacity(s));
+    assert(lim <= uint_stack_capacity(s));
 
     uint_stack_type* s_copy = uint_stack_clone(s);
     if (!s_copy) {
         assert(false);
     }
 
-    for (unsigned long int i = 1e+6; i >= 1; i--) {
+    for (unsigned long int i = lim; i >= 1; i--) {
         assert(i == uint_stack_pop(s));
     }
 
-    size_t x = 1e+6;
+    size_t x = lim;
     size_t stack_val_count = 0;
 
     // {...} for scoped variables
@@ -74,7 +75,7 @@ void uint_stack_demo(void) {
         }
     }
 
-    assert(stack_val_count == 1e+6);
+    assert(stack_val_count == lim);
 
     uint_stack_destroy(s);
     uint_stack_destroy(s_copy);
