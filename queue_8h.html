@@ -246,6 +246,8 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="queue_2queue_8c-example.html#a0">queue/queue.c</a>.</dd>
+</dl>
 
 </div>
 </div>
@@ -481,6 +483,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create a queue with a default capacity and standard allocator (aka <code>malloc</code>). </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo</a></b></dt><dd>set capacity to 512</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>The queue pointer. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -646,7 +649,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether the value was stored, depending on whether the queue could be resized when full. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether the value was stored, depending on whether the queue could be resized when about to full. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">false</td><td><ul>
