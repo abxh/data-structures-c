@@ -115,12 +115,6 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PREFIX</b>&#160;&#160;&#160;<a class="el" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>##_##stack</td></tr>
 <tr class="memdesc:add51b53e8b628f95078327028dccb20c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The stack prefix. Set to VALUE_TYPE##_##stack, unless manually defined otherwise. <br /></td></tr>
 <tr class="separator:add51b53e8b628f95078327028dccb20c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade31780e5e5dd2b34530dc52bc359a01" id="r_ade31780e5e5dd2b34530dc52bc359a01"><td class="memItemLeft" align="right" valign="top"><a id="ade31780e5e5dd2b34530dc52bc359a01" name="ade31780e5e5dd2b34530dc52bc359a01"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>T_stack_is_empty</b>&#160;&#160;&#160;<a class="el" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, is_empty)</td></tr>
-<tr class="separator:ade31780e5e5dd2b34530dc52bc359a01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade31780e5e5dd2b34530dc52bc359a01" id="r_ade31780e5e5dd2b34530dc52bc359a01"><td class="memItemLeft" align="right" valign="top"><a id="ade31780e5e5dd2b34530dc52bc359a01" name="ade31780e5e5dd2b34530dc52bc359a01"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>T_stack_is_empty</b>&#160;&#160;&#160;<a class="el" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__STACK_PREFIX, is_empty)</td></tr>
-<tr class="separator:ade31780e5e5dd2b34530dc52bc359a01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -289,7 +283,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the number of values allocated for in the stack. Capacity is grown as needed. </p>
-<p>Assumes stack_ptr is not <code>NULL</code>.</p>
+<p>Asserts stack_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>

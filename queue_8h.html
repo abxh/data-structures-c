@@ -106,8 +106,6 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a32b4aecc596da370ca81d327feb7c897" id="r_a32b4aecc596da370ca81d327feb7c897"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32b4aecc596da370ca81d327feb7c897">__queue_for_each</a>(queue_ptr,  index,  value)</td></tr>
-<tr class="separator:a32b4aecc596da370ca81d327feb7c897"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bb65a1cb5c0e10a952f27717a55283d" id="r_a9bb65a1cb5c0e10a952f27717a55283d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9bb65a1cb5c0e10a952f27717a55283d">queue_for_each</a>(queue_ptr,  count,  value)&#160;&#160;&#160;__queue_for_each(queue_ptr, count, value)</td></tr>
 <tr class="memdesc:a9bb65a1cb5c0e10a952f27717a55283d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the queue from the front value or first-to-be-dequeued value.  <br /></td></tr>
 <tr class="separator:a9bb65a1cb5c0e10a952f27717a55283d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,15 +116,6 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PREFIX</b>&#160;&#160;&#160;<a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>##_##queue</td></tr>
 <tr class="memdesc:add51b53e8b628f95078327028dccb20c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The queue prefix. Set to VALUE_TYPE##_##queue, unless specified otherwise. <br /></td></tr>
 <tr class="separator:add51b53e8b628f95078327028dccb20c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a711d43325ff837b45fd57d92077c73f4" id="r_a711d43325ff837b45fd57d92077c73f4"><td class="memItemLeft" align="right" valign="top"><a id="a711d43325ff837b45fd57d92077c73f4" name="a711d43325ff837b45fd57d92077c73f4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>T_queue_is_empty</b>&#160;&#160;&#160;<a class="el" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__QUEUE_PREFIX, is_empty)</td></tr>
-<tr class="separator:a711d43325ff837b45fd57d92077c73f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a711d43325ff837b45fd57d92077c73f4" id="r_a711d43325ff837b45fd57d92077c73f4"><td class="memItemLeft" align="right" valign="top"><a id="a711d43325ff837b45fd57d92077c73f4" name="a711d43325ff837b45fd57d92077c73f4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>T_queue_is_empty</b>&#160;&#160;&#160;<a class="el" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__QUEUE_PREFIX, is_empty)</td></tr>
-<tr class="separator:a711d43325ff837b45fd57d92077c73f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a711d43325ff837b45fd57d92077c73f4" id="r_a711d43325ff837b45fd57d92077c73f4"><td class="memItemLeft" align="right" valign="top"><a id="a711d43325ff837b45fd57d92077c73f4" name="a711d43325ff837b45fd57d92077c73f4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>T_queue_is_empty</b>&#160;&#160;&#160;<a class="el" href="join_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(__QUEUE_PREFIX, is_empty)</td></tr>
-<tr class="separator:a711d43325ff837b45fd57d92077c73f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -185,34 +174,6 @@ Functions</h2></td></tr>
 <li>for resizing: <a href="https://queueoverflow.com/questions/55343683/resizing-of-the-circular-queue-using-dynamic-array">https://queueoverflow.com/questions/55343683/resizing-of-the-circular-queue-using-dynamic-array</a> </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a32b4aecc596da370ca81d327feb7c897" name="a32b4aecc596da370ca81d327feb7c897"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a32b4aecc596da370ca81d327feb7c897">&#9670;&#160;</a></span>__queue_for_each</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define __queue_for_each</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">queue_ptr, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">index, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">value</span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((index) = (queue_ptr)-&gt;start_index; (index) != (queue_ptr)-&gt;end_index &amp;&amp; ((value) = (queue_ptr)-&gt;values[(index)], <span class="keyword">true</span>); \</div>
-<div class="line">         (index) = ((index) + 1) &amp; (queue_ptr)-&gt;index_mask)</div>
-</div><!-- fragment -->
-</div>
-</div>
 <a id="a9bb65a1cb5c0e10a952f27717a55283d" name="a9bb65a1cb5c0e10a952f27717a55283d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9bb65a1cb5c0e10a952f27717a55283d">&#9670;&#160;</a></span>queue_for_each</h2>
 
@@ -298,7 +259,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get value at index relative to queue front index. </p>
-<p>Assumes queue_ptr is not <code>NULL</code> and index is strictly less than queue count.</p>
+<p>Asserts queue_ptr is not <code>NULL</code> and index is strictly less than queue count.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
@@ -369,7 +330,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the number of values allocated for in the queue. Capacity is grown as needed. </p>
-<p>Assumes queue_ptr is not <code>NULL</code>.</p>
+<p>Asserts queue_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
