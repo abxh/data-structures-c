@@ -152,7 +152,7 @@ static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, create)(void) {
 /**
  * @brief Destroy a queue and free the used memory.
  *
- * @warning May not be called twice.
+ * @warning May not be called twice in a row on the same queue.
  */
 static inline void JOIN(__QUEUE_PREFIX, destroy)(QUEUE_TYPE* queue_ptr) {
     if (!queue_ptr) {
