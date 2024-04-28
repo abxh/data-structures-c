@@ -199,7 +199,7 @@ Variables</h2></td></tr>
 
 <p><code>free</code> wrapper to allocate memory. </p>
 <dl class="section note"><dt>Note</dt><dd>Can pass NULL as context_ptr.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>May not free the same allocated buffer twice, as this may lead to memory leaks.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>May not free the same allocated buffer twice in a row, as this may lead to memory leaks.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">context_ptr</td><td>(unused) </td></tr>
