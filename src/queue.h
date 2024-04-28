@@ -29,7 +29,7 @@
 
 #include "allocator_ops.h" // allocate_ops_type
 #include "is_pow2.h"       // is_pow2
-#include "macros.h"        // JOIN, IMPLIES
+#include "macros.h"        // JOIN
 #include "std_allocator.h" // std_allocator_ops
 
 #ifndef __queue_for_each
@@ -141,19 +141,18 @@ static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, create_with_specified)(size_t ini
 
 /**
  * @brief Create a queue with a default capacity and standard allocator (aka `malloc`).
- * @todo set capacity to 512
  *
  * @return The queue pointer.
  * @retval `NULL` If no memory space is available.
  */
 static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, create)(void) {
-    return JOIN(__QUEUE_PREFIX, create_with_specified)(8, NULL, std_allocator_ops);
+    return JOIN(__QUEUE_PREFIX, create_with_specified)(512, NULL, std_allocator_ops);
 }
 
 /**
  * @brief Destroy a queue and free the used memory.
  *
- * @warning May not be called twice.
+ * @warning May not be called twice in a row on the same queue.
  */
 static inline void JOIN(__QUEUE_PREFIX, destroy)(QUEUE_TYPE* queue_ptr) {
     if (!queue_ptr) {
@@ -249,7 +248,7 @@ static inline bool JOIN(__QUEUE_PREFIX, is_empty)(const QUEUE_TYPE* queue_ptr) {
 /**
  * @brief Get value at index relative to queue front or start index as 0.
  *
- * Asserts queue_ptr is not `NULL` and index is inside the range of the indicies of non-empty slots.
+ * Asserts queue_ptr is not `NULL` and index is strictly less than queue count.
  *
  * @param[in] queue_ptr The queue pointer.
  * @param[in] index Index at which the value lies.
@@ -257,13 +256,9 @@ static inline bool JOIN(__QUEUE_PREFIX, is_empty)(const QUEUE_TYPE* queue_ptr) {
  */
 static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, at)(const QUEUE_TYPE* queue_ptr, size_t index) {
     assert(NULL != queue_ptr);
+    assert(index < queue_ptr->count);
 
     size_t rel_index = ((queue_ptr->start_index + index) & queue_ptr->index_mask);
-
-    assert(IMPLIES(queue_ptr->start_index <= queue_ptr->end_index,
-                   queue_ptr->start_index <= rel_index && rel_index < queue_ptr->end_index));
-    assert(IMPLIES(queue_ptr->end_index < queue_ptr->start_index,
-                   (rel_index < queue_ptr->end_index || queue_ptr->start_index <= rel_index)));
 
     return queue_ptr->values[rel_index];
 }

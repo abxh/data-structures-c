@@ -137,7 +137,7 @@ static inline STACK_TYPE* JOIN(__STACK_PREFIX, create)(void) {
 /**
  * @brief Destroy a stack and free the used memory.
  *
- * @warning May not be called twice.
+ * @warning May not be called twice in a row on the same stack.
  */
 static inline void JOIN(__STACK_PREFIX, destroy)(STACK_TYPE* stack_ptr) {
     if (!stack_ptr) {

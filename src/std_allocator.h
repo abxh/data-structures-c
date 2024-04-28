@@ -57,7 +57,7 @@ static inline void* std_reallocate(void* context_ptr, void* mem_ptr, size_t alig
  * @brief `free` wrapper to allocate memory.
  * @note Can pass NULL as context_ptr.
  *
- * @warning May not free the same allocated buffer twice, as this may lead to memory leaks.
+ * @warning May not free the same allocated buffer twice in a row, as this may lead to memory leaks.
  *
  * @param[in] context_ptr (unused)
  * @param[in, out] mem_ptr Pointer to the memory buffer to be flagged as free. If NULL, then no operation is done.
