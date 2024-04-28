@@ -141,13 +141,12 @@ static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, create_with_specified)(size_t ini
 
 /**
  * @brief Create a queue with a default capacity and standard allocator (aka `malloc`).
- * @todo set capacity to 512
  *
  * @return The queue pointer.
  * @retval `NULL` If no memory space is available.
  */
 static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, create)(void) {
-    return JOIN(__QUEUE_PREFIX, create_with_specified)(8, NULL, std_allocator_ops);
+    return JOIN(__QUEUE_PREFIX, create_with_specified)(512, NULL, std_allocator_ops);
 }
 
 /**
