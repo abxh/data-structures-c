@@ -27,10 +27,10 @@
 #include <stdlib.h>   // size_t, NULL
 #include <string.h>   // memcpy
 
-#include "allocator_ops.h"   // allocate_ops_type
-#include "is_power_of_two.h" // is_power_of_two
-#include "macros.h"          // JOIN, IMPLIES
-#include "std_allocator.h"   // std_allocator_ops
+#include "allocator_ops.h" // allocate_ops_type
+#include "is_pow2.h"       // is_pow2
+#include "macros.h"        // JOIN, IMPLIES
+#include "std_allocator.h" // std_allocator_ops
 
 #ifndef __queue_for_each
 #define __queue_for_each(queue_ptr, index, value)                                                                                 \
@@ -114,7 +114,7 @@ typedef struct {
  */
 static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, create_with_specified)(size_t initial_pow2_capacity, void* allocator_context_ptr,
                                                                       allocator_ops_type allocator_ops) {
-    if (!is_power_of_two(initial_pow2_capacity) || initial_pow2_capacity == 0 || initial_pow2_capacity - 1 == 0 ||
+    if (!is_pow2(initial_pow2_capacity) || initial_pow2_capacity == 0 || initial_pow2_capacity - 1 == 0 ||
         initial_pow2_capacity > SIZE_MAX / sizeof(VALUE_TYPE)) {
         return NULL;
     }
