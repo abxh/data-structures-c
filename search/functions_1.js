@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['round_5fup_5fto_5fnext_5fpower_5fof_5ftwo_0',['round_up_to_next_power_of_two',['../round__up__to__next__power__of__two_8h.html#a59244e89a6f84d8aa94716ef3a1ebb9e',1,'round_up_to_next_power_of_two.h']]]
+  ['round_5fup_5fpow2_0',['round_up_pow2',['../round__up__pow2_8h.html#a54178a1c6830ee22624d568cff571fa7',1,'round_up_pow2.h']]]
 ];

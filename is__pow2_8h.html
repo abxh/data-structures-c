@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>dsa-c: src/round_up_to_next_power_of_two.h File Reference</title>
+<title>dsa-c: src/is_pow2.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -77,32 +77,27 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">round_up_to_next_power_of_two.h File Reference</div></div>
+  <div class="headertitle"><div class="title">is_pow2.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Round up to the next power of two.  
+<p>Check if a number is a power of two.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;assert.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 </div>
-<p><a href="round__up__to__next__power__of__two_8h_source.html">Go to the source code of this file.</a></p>
+<p><a href="is__pow2_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a59244e89a6f84d8aa94716ef3a1ebb9e" id="r_a59244e89a6f84d8aa94716ef3a1ebb9e"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59244e89a6f84d8aa94716ef3a1ebb9e">round_up_to_next_power_of_two</a> (size_t x)</td></tr>
-<tr class="separator:a59244e89a6f84d8aa94716ef3a1ebb9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad344e9ce19b97411cc1c4a48c0030d18" id="r_ad344e9ce19b97411cc1c4a48c0030d18"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad344e9ce19b97411cc1c4a48c0030d18">is_pow2</a> (size_t x)</td></tr>
+<tr class="separator:ad344e9ce19b97411cc1c4a48c0030d18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Round up to the next power of two. </p>
-<p>Sources:</p><ul>
-<li><a href="https://stackoverflow.com/questions/466204/rounding-up-to-next-power-of-2">https://stackoverflow.com/questions/466204/rounding-up-to-next-power-of-2</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Find_first_set#Tool_and_library_support">https://en.wikipedia.org/wiki/Find_first_set#Tool_and_library_support</a> </li>
-</ul>
+<div class="textblock"><p>Check if a number is a power of two. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a59244e89a6f84d8aa94716ef3a1ebb9e" name="a59244e89a6f84d8aa94716ef3a1ebb9e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59244e89a6f84d8aa94716ef3a1ebb9e">&#9670;&#160;</a></span>round_up_to_next_power_of_two()</h2>
+<a id="ad344e9ce19b97411cc1c4a48c0030d18" name="ad344e9ce19b97411cc1c4a48c0030d18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad344e9ce19b97411cc1c4a48c0030d18">&#9670;&#160;</a></span>is_pow2()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -111,7 +106,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static size_t round_up_to_next_power_of_two </td>
+          <td class="memname">static bool is_pow2 </td>
           <td>(</td>
           <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
           <td></td>
@@ -123,15 +118,14 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Round up to the next power of two.</p>
-<p>Assumes x is not 0.</p>
+<p>Check if a number is a power of two.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>The number at hand. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A power of two that is larger than or equal to the given number. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value indicating whether the number is a power of two. </dd></dl>
 
 </div>
 </div>
