@@ -259,7 +259,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get value at index relative to queue front or start index as 0. </p>
-<p>Asserts queue_ptr is not <code>NULL</code> and index is inside the range of the indicies of non-empty slots.</p>
+<p>Asserts queue_ptr is not <code>NULL</code> and index is strictly less than queue count.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
