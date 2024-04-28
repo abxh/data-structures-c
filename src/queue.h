@@ -29,7 +29,7 @@
 
 #include "allocator_ops.h"   // allocate_ops_type
 #include "is_power_of_two.h" // is_power_of_two
-#include "macros.h"          // JOIN, IMPLIES
+#include "macros.h"          // JOIN
 #include "std_allocator.h"   // std_allocator_ops
 
 #ifndef __queue_for_each
@@ -248,7 +248,7 @@ static inline bool JOIN(__QUEUE_PREFIX, is_empty)(const QUEUE_TYPE* queue_ptr) {
 /**
  * @brief Get value at index relative to queue front or start index as 0.
  *
- * Asserts queue_ptr is not `NULL` and index is inside the range of the indicies of non-empty slots.
+ * Asserts queue_ptr is not `NULL` and index is strictly less than queue count.
  *
  * @param[in] queue_ptr The queue pointer.
  * @param[in] index Index at which the value lies.
@@ -256,13 +256,9 @@ static inline bool JOIN(__QUEUE_PREFIX, is_empty)(const QUEUE_TYPE* queue_ptr) {
  */
 static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, at)(const QUEUE_TYPE* queue_ptr, size_t index) {
     assert(NULL != queue_ptr);
+    assert(index < queue_ptr->count);
 
     size_t rel_index = ((queue_ptr->start_index + index) & queue_ptr->index_mask);
-
-    assert(IMPLIES(queue_ptr->start_index <= queue_ptr->end_index,
-                   queue_ptr->start_index <= rel_index && rel_index < queue_ptr->end_index));
-    assert(IMPLIES(queue_ptr->end_index < queue_ptr->start_index,
-                   (rel_index < queue_ptr->end_index || queue_ptr->start_index <= rel_index)));
 
     return queue_ptr->values[rel_index];
 }
