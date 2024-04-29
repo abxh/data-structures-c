@@ -1,8 +1,14 @@
+/**
+ * @file rotate_bits.h
+ * @brief rotate bits of 8-, 16-, 32-, and 64-bit numbers.
+ */
 
-#include <stdlib.h> // size_t
+#include <stdint.h> // uint8_t, uint16_t, uint32_t, uint64_t
 
-size_t rotl(size_t value, size_t count);
+uint8_t rotate_bits_8(uint8_t value, int shift);
 
-size_t rotr(size_t value, size_t count);
+uint16_t rotate_bits_16(uint16_t value, int shift);
 
-size_t rotate_bits(size_t value, int shift);
+uint32_t rotate_bits_32(uint32_t value, int shift);
+
+uint64_t rotate_bits_64(uint64_t value, int shift);

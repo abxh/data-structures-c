@@ -39,6 +39,15 @@ static inline void* arena_allocate(void* arena_ptr, size_t size) {
     return arena_allocate_aligned(arena_ptr, DEFAULT_ALIGNMENT, size);
 }
 
+static inline void* arena_clone(void* arena_ptr, const void* ptr, size_t size, size_t alignment) {
+    void* dup_ptr = (char*)arena_allocate_aligned(arena_ptr, alignment, size);
+    if (dup_ptr == NULL) {
+        return NULL;
+    }
+    memcpy(dup_ptr, ptr, size);
+    return dup_ptr;
+}
+
 static inline char* arena_clone_string(void* arena_ptr, const char* char_ptr) {
     size_t n = strlen(char_ptr) + 1;
     char* char_dup_ptr = (char*)arena_allocate_aligned(arena_ptr, 1, n);

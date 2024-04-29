@@ -13,8 +13,6 @@
  * Examples of how `stack.h` header file is used in practice.
  */
 
-
-
 #include <assert.h>   // assert
 #include <stdalign.h> // alignof
 #include <stdbool.h>  // bool
@@ -43,8 +41,8 @@
  * @brief internal macro for stack iteration
  */
 #ifndef stack_for_each_
-#define stack_for_each_(stack_ptr, count, value) \
-    for ((count) = (stack_ptr)->count; (count) > 0 && ((value) = (stack_ptr)->values[(count) - 1], true); (count)--)
+#define stack_for_each_(stack_ptr, count_, value) \
+    for ((count_) = (stack_ptr)->count; (count_) > 0 && ((value) = (stack_ptr)->values[(count_) - 1], true); (count_)--)
 #endif
 
 /**

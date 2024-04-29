@@ -13,6 +13,6 @@
 typedef struct {
     void* (*allocate_f_ptr)(void* context_ptr, size_t alignment, size_t size); ///< allocate memory.
     void* (*reallocate_f_ptr)(void* context_ptr, void* mem_ptr, size_t alignment, size_t old_size,
-                            size_t new_size);                 ///< reallocate memory.
+                              size_t new_size);                 ///< reallocate memory.
     void (*deallocate_f_ptr)(void* context_ptr, void* mem_ptr); ///< deallocate memory.
 } allocator_ops_type;

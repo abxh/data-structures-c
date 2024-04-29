@@ -10,9 +10,11 @@
  * structure types.
  *
  * Alternatives:
- *   @li `void*` types, which are converted at runtime; Or byte arrays with a data_size worked with at runtime.
  *   @li Seperate data structure type code for each type used.
+ *   @li `void*` types, which are converted at runtime; 
+ *   @li Buffers with a data_size worked with at runtime.
  *   @li Macros expanded with type parameters.
+ *   @li Use `container_of` tricks.
  */
 
 /**

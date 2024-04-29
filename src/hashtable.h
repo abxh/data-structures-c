@@ -1,6 +1,6 @@
 /**
  * @file hashtable.h
- * @brief Hashtable data structure based on robin hood hashing that is dynamically grown.
+ * @brief Hashtable data structure based on robin hood hashing and dynamic array.
  *
  * The array is only grown - not shrunk - for performance reasons.
  *
@@ -79,10 +79,10 @@
  * @brief internal macro for hashtable iteration
  */
 #ifndef hashtable_for_each_
-#define hashtable_for_each_(hashtable_ptr, index, key, value)                        \
+#define hashtable_for_each_(hashtable_ptr, index, key_, value_)                      \
     for ((index) = 0; (index) <= (hashtable_ptr)->index_mask; (index)++)             \
         if ((hashtable_ptr)->slots[(index)].offset != EMPTY_HASHTABLE_SLOT_OFFSET && \
-            ((key) = (hashtable_ptr)->slots[(index)].key, (value) = (hashtable_ptr)->slots[(index)].value, true))
+            ((key_) = (hashtable_ptr)->slots[(index)].key, (value_) = (hashtable_ptr)->slots[(index)].value, true))
 #endif
 
 /**
@@ -183,7 +183,7 @@ typedef struct {
  *
  * If `hashtable_ptr` is `NULL` then nothing is done.
  */
-static inline void JOIN(HASHTABLE_PREFIX, clean)(const HASHTABLE_TYPE* hashtable_ptr) {
+static inline void JOIN(HASHTABLE_PREFIX, clean)(HASHTABLE_TYPE* hashtable_ptr) {
     if (!hashtable_ptr) {
         return;
     }
@@ -334,7 +334,7 @@ static inline bool JOIN(HASHTABLE_PREFIX, is_empty)(const HASHTABLE_TYPE* hashta
  * @param[in] key The key.
  * @return A boolean indicating whether the hashtable contains the given key.
  */
-static inline bool JOIN(HASHTABLE_PREFIX, contains_key)(const HASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
+static inline bool JOIN(HASHTABLE_PREFIX, contains_key)(HASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key) {
     assert(NULL != hashtable_ptr);
 
     size_t key_hash = HASH_FUNCTION(key);
@@ -362,7 +362,7 @@ static inline bool JOIN(HASHTABLE_PREFIX, contains_key)(const HASHTABLE_TYPE* ha
  * @return A pointer to the slot containing the matched key and the corresponding value.
  * @retval NULL If the hashtable did not contain the key.
  */
-static inline HASHTABLE_SLOT_TYPE* JOIN(HASHTABLE_PREFIX, get_key_value_mut)(const HASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
+static inline HASHTABLE_SLOT_TYPE* JOIN(HASHTABLE_PREFIX, get_key_value_mut)(HASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key) {
     assert(NULL != hashtable_ptr);
 
     size_t key_hash = HASH_FUNCTION(key);
@@ -390,7 +390,7 @@ static inline HASHTABLE_SLOT_TYPE* JOIN(HASHTABLE_PREFIX, get_key_value_mut)(con
  * @return A pointer to the corresponding key.
  * @retval NULL If the hashtable did not contain the key.
  */
-static inline VALUE_TYPE* JOIN(HASHTABLE_PREFIX, get_mut)(const HASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
+static inline VALUE_TYPE* JOIN(HASHTABLE_PREFIX, get_mut)(HASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key) {
     HASHTABLE_SLOT_TYPE* slot_p = JOIN(HASHTABLE_PREFIX, get_key_value_mut)(hashtable_ptr, key);
     return slot_p != NULL ? &slot_p->value : NULL;
 }
@@ -406,8 +406,8 @@ static inline VALUE_TYPE* JOIN(HASHTABLE_PREFIX, get_mut)(const HASHTABLE_TYPE* 
  * @return The corresponding key.
  * @retval default_value If the hashtable did not contain the key.
  */
-static inline VALUE_TYPE JOIN(HASHTABLE_PREFIX, get)(const HASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key,
-                                                     const VALUE_TYPE default_value) {
+static inline VALUE_TYPE JOIN(HASHTABLE_PREFIX, get)(HASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key,
+                                                     VALUE_TYPE default_value) {
     HASHTABLE_SLOT_TYPE* slot_p = JOIN(HASHTABLE_PREFIX, get_key_value_mut)(hashtable_ptr, key);
     return slot_p != NULL ? slot_p->value : default_value;
 }
@@ -422,7 +422,7 @@ static inline VALUE_TYPE JOIN(HASHTABLE_PREFIX, get)(const HASHTABLE_TYPE* hasht
  * @return A pointer to the corresponding key.
  * @retval NULL If the hashtable did not contain the key.
  */
-static inline VALUE_TYPE* JOIN(HASHTABLE_PREFIX, search)(const HASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
+static inline VALUE_TYPE* JOIN(HASHTABLE_PREFIX, search)(HASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key) {
     return JOIN(HASHTABLE_PREFIX, get_mut)(hashtable_ptr, key);
 }
 
@@ -503,7 +503,7 @@ static inline bool JOIN(HASHTABLE_PREFIX, grow)(HASHTABLE_TYPE* hashtable_ptr, s
  *   @li If `2 * current capacity * sizeof(VALUE_TYPE)` cannot be expressed with `size_t`.
  *   @li If no memory space is available.
  */
-static inline bool JOIN(HASHTABLE_PREFIX, insert)(HASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key, const VALUE_TYPE value) {
+static inline bool JOIN(HASHTABLE_PREFIX, insert)(HASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
     assert(NULL != hashtable_ptr);
     assert(false == JOIN(HASHTABLE_PREFIX, contains_key)(hashtable_ptr, key));
 
@@ -549,7 +549,7 @@ static inline bool JOIN(HASHTABLE_PREFIX, insert)(HASHTABLE_TYPE* hashtable_ptr,
  *   @li If `2 * current capacity * sizeof(VALUE_TYPE)` cannot be expressed with `size_t`.
  *   @li If no memory space is available.
  */
-static inline bool JOIN(HASHTABLE_PREFIX, update)(HASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key, const VALUE_TYPE value) {
+static inline bool JOIN(HASHTABLE_PREFIX, update)(HASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
     assert(NULL != hashtable_ptr);
 
     size_t old_capacity = hashtable_ptr->index_mask + 1;
@@ -593,7 +593,7 @@ static inline bool JOIN(HASHTABLE_PREFIX, update)(HASHTABLE_TYPE* hashtable_ptr,
  * @param[in] key The key.
  * @return A boolean indicating whether the key was previously contained in the hashtable.
  */
-static inline bool JOIN(HASHTABLE_PREFIX, delete)(HASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
+static inline bool JOIN(HASHTABLE_PREFIX, delete)(HASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key) {
     assert(hashtable_ptr != NULL);
 
     size_t key_hash = HASH_FUNCTION(key);
@@ -609,7 +609,8 @@ static inline bool JOIN(HASHTABLE_PREFIX, delete)(HASHTABLE_TYPE* hashtable_ptr,
 
             // reduce offsets as much as possible by moving back offset elements:
             size_t next_index = (index + 1) & hashtable_ptr->index_mask;
-            while (hashtable_ptr->slots[next_index].offset != EMPTY_HASHTABLE_SLOT_OFFSET && hashtable_ptr->slots[next_index].offset > 0) {
+            while (hashtable_ptr->slots[next_index].offset != EMPTY_HASHTABLE_SLOT_OFFSET &&
+                   hashtable_ptr->slots[next_index].offset > 0) {
                 hashtable_ptr->slots[index] = hashtable_ptr->slots[next_index];
                 hashtable_ptr->slots[index].offset--;
                 hashtable_ptr->slots[next_index].offset = EMPTY_HASHTABLE_SLOT_OFFSET;

@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "arena.h"
 
@@ -16,8 +17,8 @@ size_t first_byte(const char* c) {
 
 static inline void* abort_if_null(void* ptr) {
     if (ptr == NULL) {
-        // abort();
-        assert("aborts here" && false);
+        fprintf(stderr, "aborted.\n");
+        abort();
     }
     return ptr;
 }
@@ -29,7 +30,7 @@ void str_int_ht_test(void) {
 
     strint_ht_type* ht = strint_ht_create();
 
-    // insert over update for garanteed non-duplicate keys. more performant on optimized builds:
+    // insert over update for garanteed non-duplicate keys. more performant on performance builds:
     assert(strint_ht_insert(ht, abort_if_null(arena_clone_string(&arena, "egg")), 1));
 
     assert(strint_ht_update(ht, abort_if_null(arena_clone_string(&arena, "egg")), 2));
@@ -78,11 +79,7 @@ void int_to_int_hashtable_test(void) {
         assert(int_to_int_hashtable_get(ht, i, -1) == lim - i);
     }
 
-    static bool table[lim];
-    for (size_t i = 0; i < lim; i++) {
-        table[i] = false;
-    }
-
+    static bool table[lim] = {false};
     {
         size_t index;
         int key;
