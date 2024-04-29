@@ -107,9 +107,11 @@ Macros</h2></td></tr>
 <p>Why these PASTE/CONCAT/JOIN are defined?</p>
 <p>These are used to create the symbols (struct names / function names) for different data structure types.</p>
 <p>Alternatives: </p><ul>
-<li><code>void*</code> types, which are converted at runtime; Or byte arrays with a data_size worked with at runtime. </li>
 <li>Seperate data structure type code for each type used. </li>
+<li><code>void*</code> types, which are converted at runtime; </li>
+<li>Buffers with a data_size worked with at runtime. </li>
 <li>Macros expanded with type parameters. </li>
+<li>Use <code>container_of</code> tricks. </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a88fa737059e67b4b17ec980e5877361e" name="a88fa737059e67b4b17ec980e5877361e"></a>

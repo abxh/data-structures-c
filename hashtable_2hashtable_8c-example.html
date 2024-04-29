@@ -74,10 +74,11 @@ $(function() {
   <div class="headertitle"><div class="title">hashtable/hashtable.c</div></div>
 </div><!--header-->
 <div class="contents">
-<p>Examples of how <code><a class="el" href="hashtable_8h.html" title="Hashtable data structure based on robin hood hashing that is dynamically grown.">hashtable.h</a></code> header file is used in practice.</p>
+<p>Examples of how <code><a class="el" href="hashtable_8h.html" title="Hashtable data structure based on robin hood hashing and dynamic array.">hashtable.h</a></code> header file is used in practice.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;assert.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="arena_8h.html">arena.h</a>&quot;</span></div>
 <div class="line"> </div>
@@ -93,8 +94,8 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span>* abort_if_null(<span class="keywordtype">void</span>* ptr) {</div>
 <div class="line">    <span class="keywordflow">if</span> (ptr == NULL) {</div>
-<div class="line">        <span class="comment">// abort();</span></div>
-<div class="line">        assert(<span class="stringliteral">&quot;aborts here&quot;</span> &amp;&amp; <span class="keyword">false</span>);</div>
+<div class="line">        fprintf(stderr, <span class="stringliteral">&quot;aborted.\n&quot;</span>);</div>
+<div class="line">        abort();</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> ptr;</div>
 <div class="line">}</div>
@@ -106,7 +107,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line">    strint_ht_type* ht = strint_ht_create();</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">// insert over update for garanteed non-duplicate keys. more performant on optimized builds:</span></div>
+<div class="line">    <span class="comment">// insert over update for garanteed non-duplicate keys. more performant on performance builds:</span></div>
 <div class="line">    assert(strint_ht_insert(ht, abort_if_null(arena_clone_string(&amp;arena, <span class="stringliteral">&quot;egg&quot;</span>)), 1));</div>
 <div class="line"> </div>
 <div class="line">    assert(strint_ht_update(ht, abort_if_null(arena_clone_string(&amp;arena, <span class="stringliteral">&quot;egg&quot;</span>)), 2));</div>
@@ -155,11 +156,7 @@ $(function() {
 <div class="line">        assert(int_to_int_hashtable_get(ht, i, -1) == lim - i);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">static</span> <span class="keywordtype">bool</span> table[lim];</div>
-<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; lim; i++) {</div>
-<div class="line">        table[i] = <span class="keyword">false</span>;</div>
-<div class="line">    }</div>
-<div class="line"> </div>
+<div class="line">    <span class="keyword">static</span> <span class="keywordtype">bool</span> table[lim] = {<span class="keyword">false</span>};</div>
 <div class="line">    {</div>
 <div class="line">        <span class="keywordtype">size_t</span> index;</div>
 <div class="line">        <span class="keywordtype">int</span> key;</div>
@@ -185,7 +182,7 @@ $(function() {
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="aarena_8h_html"><div class="ttname"><a href="arena_8h.html">arena.h</a></div><div class="ttdoc">arena allocator.</div></div>
-<div class="ttc" id="ahashtable_8h_html"><div class="ttname"><a href="hashtable_8h.html">hashtable.h</a></div><div class="ttdoc">Hashtable data structure based on robin hood hashing that is dynamically grown.</div></div>
+<div class="ttc" id="ahashtable_8h_html"><div class="ttname"><a href="hashtable_8h.html">hashtable.h</a></div><div class="ttdoc">Hashtable data structure based on robin hood hashing and dynamic array.</div></div>
 <div class="ttc" id="ahashtable_8h_html_acd37713baee33bbd2ccb913392d8373e"><div class="ttname"><a href="hashtable_8h.html#acd37713baee33bbd2ccb913392d8373e">hashtable_for_each</a></div><div class="ttdeci">#define hashtable_for_each(hashtable_ptr, index, key, value)</div><div class="ttdoc">Iterate over the non-empty slots in the hashtable in arbitary order.</div><div class="ttdef"><b>Definition</b> hashtable.h:97</div></div>
 <div class="ttc" id="astructarena__type_html"><div class="ttname"><a href="structarena__type.html">arena_type</a></div><div class="ttdef"><b>Definition</b> arena.h:16</div></div>
 </div><!-- fragment --> </div><!-- contents -->

@@ -114,10 +114,10 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="preprocessor">#ifndef hashtable_for_each_</span></div>
 <div class="foldopen" id="foldopen00082" data-start="" data-end="">
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="hashtable_8h.html#ac6003731b7f4121aa21168c524e5cc13">   82</a></span><span class="preprocessor">#define hashtable_for_each_(hashtable_ptr, index, key, value)                        \</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="hashtable_8h.html#a39ef4959c5edb4f735ad748d7b0178bc">   82</a></span><span class="preprocessor">#define hashtable_for_each_(hashtable_ptr, index, key_, value_)                      \</span></div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="preprocessor">    for ((index) = 0; (index) &lt;= (hashtable_ptr)-&gt;index_mask; (index)++)             \</span></div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="preprocessor">        if ((hashtable_ptr)-&gt;slots[(index)].offset != EMPTY_HASHTABLE_SLOT_OFFSET &amp;&amp; \</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="preprocessor">            ((key) = (hashtable_ptr)-&gt;slots[(index)].key, (value) = (hashtable_ptr)-&gt;slots[(index)].value, true))</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="preprocessor">            ((key_) = (hashtable_ptr)-&gt;slots[(index)].key, (value_) = (hashtable_ptr)-&gt;slots[(index)].value, true))</span></div>
 </div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
@@ -177,7 +177,7 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>} HASHTABLE_TYPE;</div>
 <div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
 <div class="foldopen" id="foldopen00186" data-start="{" data-end="}">
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno"><a class="line" href="hashtable_8h.html#ac4e9ba9d7a358357556c96c13715ce76">  186</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, clean)(<span class="keyword">const</span> HASHTABLE_TYPE* hashtable_ptr) {</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno"><a class="line" href="hashtable_8h.html#aa511c4fbc99e585cfde9ed0ec7d89331">  186</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, clean)(HASHTABLE_TYPE* hashtable_ptr) {</div>
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="keywordflow">if</span> (!hashtable_ptr) {</div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    }</div>
@@ -279,7 +279,7 @@ $(function() { codefold.init(0); });
 </div>
 <div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> </div>
 <div class="foldopen" id="foldopen00337" data-start="{" data-end="}">
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno"><a class="line" href="hashtable_8h.html#abba7477540c85a2df5fcd6d699141f97">  337</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, contains_key)(<span class="keyword">const</span> HASHTABLE_TYPE* hashtable_ptr, <span class="keyword">const</span> <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key) {</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno"><a class="line" href="hashtable_8h.html#aa002ce0115b162cc5849cf27265a78bd">  337</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, contains_key)(HASHTABLE_TYPE* hashtable_ptr, <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key) {</div>
 <div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>    assert(NULL != hashtable_ptr);</div>
 <div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span> </div>
 <div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>    <span class="keywordtype">size_t</span> key_hash = <a class="code hl_define" href="hashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
@@ -299,7 +299,7 @@ $(function() { codefold.init(0); });
 </div>
 <div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span> </div>
 <div class="foldopen" id="foldopen00365" data-start="{" data-end="}">
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno"><a class="line" href="hashtable_8h.html#aca26bd7853ce7b84f7f62bc79cc431e9">  365</a></span><span class="keyword">static</span> <span class="keyword">inline</span> HASHTABLE_SLOT_TYPE* <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, get_key_value_mut)(<span class="keyword">const</span> HASHTABLE_TYPE* hashtable_ptr, <span class="keyword">const</span> <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key) {</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno"><a class="line" href="hashtable_8h.html#a77d9cb12a1dfc84faf9af359508e455f">  365</a></span><span class="keyword">static</span> <span class="keyword">inline</span> HASHTABLE_SLOT_TYPE* <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, get_key_value_mut)(HASHTABLE_TYPE* hashtable_ptr, <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key) {</div>
 <div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>    assert(NULL != hashtable_ptr);</div>
 <div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span> </div>
 <div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    <span class="keywordtype">size_t</span> key_hash = <a class="code hl_define" href="hashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
@@ -319,22 +319,22 @@ $(function() { codefold.init(0); });
 </div>
 <div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span> </div>
 <div class="foldopen" id="foldopen00393" data-start="{" data-end="}">
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno"><a class="line" href="hashtable_8h.html#abd26f9b49fa09af304cf1d8043c15651">  393</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>* <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, get_mut)(<span class="keyword">const</span> HASHTABLE_TYPE* hashtable_ptr, <span class="keyword">const</span> <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key) {</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno"><a class="line" href="hashtable_8h.html#a6503cd01ff811ff8debe795d8f2d80d5">  393</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>* <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, get_mut)(HASHTABLE_TYPE* hashtable_ptr, <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key) {</div>
 <div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>    HASHTABLE_SLOT_TYPE* slot_p = <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, get_key_value_mut)(hashtable_ptr, key);</div>
 <div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>    <span class="keywordflow">return</span> slot_p != NULL ? &amp;slot_p-&gt;value : NULL;</div>
 <div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>}</div>
 </div>
 <div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span> </div>
 <div class="foldopen" id="foldopen00409" data-start="{" data-end="}">
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno"><a class="line" href="hashtable_8h.html#a2621acf371d91a3d072831743f94fb6d">  409</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, get)(<span class="keyword">const</span> HASHTABLE_TYPE* hashtable_ptr, <span class="keyword">const</span> <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key,</div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>                                                     <span class="keyword">const</span> <a class="code hl_define" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> default_value) {</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno"><a class="line" href="hashtable_8h.html#aec4a2cd79f7f45cec6812c069df8b2a2">  409</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, get)(HASHTABLE_TYPE* hashtable_ptr, <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key,</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>                                                     <a class="code hl_define" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> default_value) {</div>
 <div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>    HASHTABLE_SLOT_TYPE* slot_p = <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, get_key_value_mut)(hashtable_ptr, key);</div>
 <div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>    <span class="keywordflow">return</span> slot_p != NULL ? slot_p-&gt;value : default_value;</div>
 <div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>}</div>
 </div>
 <div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span> </div>
 <div class="foldopen" id="foldopen00425" data-start="{" data-end="}">
-<div class="line"><a id="l00425" name="l00425"></a><span class="lineno"><a class="line" href="hashtable_8h.html#aab356163d6424b6362aa247b0aa10a35">  425</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>* <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, search)(<span class="keyword">const</span> HASHTABLE_TYPE* hashtable_ptr, <span class="keyword">const</span> <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key) {</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno"><a class="line" href="hashtable_8h.html#afc5b3f0cb875e0c985831218b09b98b3">  425</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>* <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, search)(HASHTABLE_TYPE* hashtable_ptr, <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key) {</div>
 <div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>    <span class="keywordflow">return</span> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, get_mut)(hashtable_ptr, key);</div>
 <div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>}</div>
 </div>
@@ -391,7 +391,7 @@ $(function() { codefold.init(0); });
 </div>
 <div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span> </div>
 <div class="foldopen" id="foldopen00506" data-start="{" data-end="}">
-<div class="line"><a id="l00506" name="l00506"></a><span class="lineno"><a class="line" href="hashtable_8h.html#a319a99062dfca4880eafc704d167ae6a">  506</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, insert)(HASHTABLE_TYPE* hashtable_ptr, <span class="keyword">const</span> <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <span class="keyword">const</span> <a class="code hl_define" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value) {</div>
+<div class="line"><a id="l00506" name="l00506"></a><span class="lineno"><a class="line" href="hashtable_8h.html#a56bafa45c9e39f10ae8506b650661f0c">  506</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, insert)(HASHTABLE_TYPE* hashtable_ptr, <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <a class="code hl_define" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value) {</div>
 <div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>    assert(NULL != hashtable_ptr);</div>
 <div class="line"><a id="l00508" name="l00508"></a><span class="lineno">  508</span>    assert(<span class="keyword">false</span> == <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, contains_key)(hashtable_ptr, key));</div>
 <div class="line"><a id="l00509" name="l00509"></a><span class="lineno">  509</span> </div>
@@ -423,7 +423,7 @@ $(function() { codefold.init(0); });
 </div>
 <div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span> </div>
 <div class="foldopen" id="foldopen00552" data-start="{" data-end="}">
-<div class="line"><a id="l00552" name="l00552"></a><span class="lineno"><a class="line" href="hashtable_8h.html#a2ab0d5450fbd68537cd30ed5030bef67">  552</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, update)(HASHTABLE_TYPE* hashtable_ptr, <span class="keyword">const</span> <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <span class="keyword">const</span> <a class="code hl_define" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value) {</div>
+<div class="line"><a id="l00552" name="l00552"></a><span class="lineno"><a class="line" href="hashtable_8h.html#a3091e91cff8e825500f5b3769b5518f6">  552</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, update)(HASHTABLE_TYPE* hashtable_ptr, <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <a class="code hl_define" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value) {</div>
 <div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>    assert(NULL != hashtable_ptr);</div>
 <div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span> </div>
 <div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>    <span class="keywordtype">size_t</span> old_capacity = hashtable_ptr-&gt;index_mask + 1;</div>
@@ -460,7 +460,7 @@ $(function() { codefold.init(0); });
 </div>
 <div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span> </div>
 <div class="foldopen" id="foldopen00596" data-start="{" data-end="}">
-<div class="line"><a id="l00596" name="l00596"></a><span class="lineno"><a class="line" href="hashtable_8h.html#a118181af6d37531bc5bc4b8bc76381f9">  596</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, <span class="keyword">delete</span>)(HASHTABLE_TYPE* hashtable_ptr, <span class="keyword">const</span> <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key) {</div>
+<div class="line"><a id="l00596" name="l00596"></a><span class="lineno"><a class="line" href="hashtable_8h.html#af0ef7de093b16047f17e2bf5da64a5e6">  596</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(HASHTABLE_PREFIX, <span class="keyword">delete</span>)(HASHTABLE_TYPE* hashtable_ptr, <a class="code hl_define" href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key) {</div>
 <div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span>    assert(hashtable_ptr != NULL);</div>
 <div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span> </div>
 <div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span>    <span class="keywordtype">size_t</span> key_hash = <a class="code hl_define" href="hashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
@@ -476,33 +476,34 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span> </div>
 <div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>            <span class="comment">// reduce offsets as much as possible by moving back offset elements:</span></div>
 <div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>            <span class="keywordtype">size_t</span> next_index = (index + 1) &amp; hashtable_ptr-&gt;index_mask;</div>
-<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>            <span class="keywordflow">while</span> (hashtable_ptr-&gt;slots[next_index].offset != <a class="code hl_define" href="hashtable_8h.html#a5f74712d6f362d854f50f17520bb95d0">EMPTY_HASHTABLE_SLOT_OFFSET</a> &amp;&amp; hashtable_ptr-&gt;slots[next_index].offset &gt; 0) {</div>
-<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>                hashtable_ptr-&gt;slots[index] = hashtable_ptr-&gt;slots[next_index];</div>
-<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>                hashtable_ptr-&gt;slots[index].offset--;</div>
-<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span>                hashtable_ptr-&gt;slots[next_index].offset = <a class="code hl_define" href="hashtable_8h.html#a5f74712d6f362d854f50f17520bb95d0">EMPTY_HASHTABLE_SLOT_OFFSET</a>;</div>
-<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span> </div>
-<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span>                index = next_index;</div>
-<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>                next_index = (index + 1) &amp; hashtable_ptr-&gt;index_mask;</div>
-<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>            }</div>
-<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>        }</div>
-<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>        index = (index + 1) &amp; hashtable_ptr-&gt;index_mask;</div>
-<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>        max_possible_offset++;</div>
-<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>    }</div>
-<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>}</div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>            <span class="keywordflow">while</span> (hashtable_ptr-&gt;slots[next_index].offset != <a class="code hl_define" href="hashtable_8h.html#a5f74712d6f362d854f50f17520bb95d0">EMPTY_HASHTABLE_SLOT_OFFSET</a> &amp;&amp;</div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>                   hashtable_ptr-&gt;slots[next_index].offset &gt; 0) {</div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>                hashtable_ptr-&gt;slots[index] = hashtable_ptr-&gt;slots[next_index];</div>
+<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span>                hashtable_ptr-&gt;slots[index].offset--;</div>
+<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span>                hashtable_ptr-&gt;slots[next_index].offset = <a class="code hl_define" href="hashtable_8h.html#a5f74712d6f362d854f50f17520bb95d0">EMPTY_HASHTABLE_SLOT_OFFSET</a>;</div>
+<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span> </div>
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>                index = next_index;</div>
+<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>                next_index = (index + 1) &amp; hashtable_ptr-&gt;index_mask;</div>
+<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>            }</div>
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>        }</div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>        index = (index + 1) &amp; hashtable_ptr-&gt;index_mask;</div>
+<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>        max_possible_offset++;</div>
+<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span>    }</div>
+<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span>}</div>
 </div>
-<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span> </div>
-<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span><span class="preprocessor">#undef PREFIX</span></div>
-<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span><span class="preprocessor">#undef K_to_V_hashtable_is_empty_</span></div>
-<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span><span class="preprocessor">#undef KEY_TYPE</span></div>
-<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span><span class="preprocessor">#undef VALUE_TYPE</span></div>
-<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span><span class="preprocessor">#undef KEY_IS_EQUAL</span></div>
-<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span><span class="preprocessor">#undef HASH_FUNCTION</span></div>
-<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span><span class="preprocessor">#undef HASHTABLE_TYPE</span></div>
-<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span><span class="preprocessor">#undef HASHTABLE_PREFIX</span></div>
-<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span><span class="preprocessor">#undef HASHTABLE_SLOT_TYPE</span></div>
-<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span><span class="preprocessor">#include &quot;<a class="code" href="macros__undef_8h.html">macros_undef.h</a>&quot;</span> <span class="comment">// undef all macros in `macros.h`</span></div>
+<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span> </div>
+<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span><span class="preprocessor">#undef PREFIX</span></div>
+<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span><span class="preprocessor">#undef K_to_V_hashtable_is_empty_</span></div>
+<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span><span class="preprocessor">#undef KEY_TYPE</span></div>
+<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span><span class="preprocessor">#undef VALUE_TYPE</span></div>
+<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span><span class="preprocessor">#undef KEY_IS_EQUAL</span></div>
+<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span><span class="preprocessor">#undef HASH_FUNCTION</span></div>
+<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span><span class="preprocessor">#undef HASHTABLE_TYPE</span></div>
+<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span><span class="preprocessor">#undef HASHTABLE_PREFIX</span></div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span><span class="preprocessor">#undef HASHTABLE_SLOT_TYPE</span></div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span><span class="preprocessor">#include &quot;<a class="code" href="macros__undef_8h.html">macros_undef.h</a>&quot;</span> <span class="comment">// undef all macros in `macros.h`</span></div>
 <div class="ttc" id="aallocator__ops_8h_html"><div class="ttname"><a href="allocator__ops_8h.html">allocator_ops.h</a></div><div class="ttdoc">struct interface for allocator operations.</div></div>
 <div class="ttc" id="ahashtable_8h_html_a261e2befaaf40b08c99064bb53bf0b44"><div class="ttname"><a href="hashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a></div><div class="ttdeci">#define HASH_FUNCTION(key)</div><div class="ttdoc">Used to compute the hash of a key and locate it's index in the hashtable. Is undefined once header is...</div><div class="ttdef"><b>Definition</b> hashtable.h:123</div></div>
 <div class="ttc" id="ahashtable_8h_html_a58a9b9662f87dfedd00cc6fd5dde7852"><div class="ttname"><a href="hashtable_8h.html#a58a9b9662f87dfedd00cc6fd5dde7852">KEY_IS_EQUAL</a></div><div class="ttdeci">#define KEY_IS_EQUAL(a, b)</div><div class="ttdoc">Used to compare two keys. Is undefined once header is included.</div><div class="ttdef"><b>Definition</b> hashtable.h:112</div></div>
@@ -511,7 +512,7 @@ $(function() { codefold.init(0); });
 <div class="ttc" id="ahashtable_8h_html_ae35c40bc2f912c11f0e36ac66cba4489"><div class="ttname"><a href="hashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></div><div class="ttdeci">#define KEY_TYPE</div><div class="ttdoc">The key type. Is undefined once header is included.</div><div class="ttdef"><b>Definition</b> hashtable.h:62</div></div>
 <div class="ttc" id="ais__pow2_8h_html"><div class="ttname"><a href="is__pow2_8h.html">is_pow2.h</a></div><div class="ttdoc">Check if a number is a power of two.</div></div>
 <div class="ttc" id="amacros_8h_html"><div class="ttname"><a href="macros_8h.html">macros.h</a></div><div class="ttdoc">Useful C preprocessor macros.</div></div>
-<div class="ttc" id="amacros_8h_html_a1665af4d61d120cdba4d77101d179703"><div class="ttname"><a href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a></div><div class="ttdeci">#define JOIN(a, b)</div><div class="ttdoc">First expands it's two parameters, then pastes them together with a underscore _ in between.</div><div class="ttdef"><b>Definition</b> macros.h:37</div></div>
+<div class="ttc" id="amacros_8h_html_a1665af4d61d120cdba4d77101d179703"><div class="ttname"><a href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a></div><div class="ttdeci">#define JOIN(a, b)</div><div class="ttdoc">First expands it's two parameters, then pastes them together with a underscore _ in between.</div><div class="ttdef"><b>Definition</b> macros.h:39</div></div>
 <div class="ttc" id="amacros__undef_8h_html"><div class="ttname"><a href="macros__undef_8h.html">macros_undef.h</a></div><div class="ttdoc">Including this header file undefines all macros defined in macros.h.</div></div>
 <div class="ttc" id="amurmurhash_8h_html"><div class="ttname"><a href="murmurhash_8h.html">murmurhash.h</a></div><div class="ttdoc">Murmur3 hash hashing function.</div></div>
 <div class="ttc" id="astd__allocator_8h_html"><div class="ttname"><a href="std__allocator_8h.html">std_allocator.h</a></div><div class="ttdoc">wrapper of thead-safe standard allocation functions for conforming to the defined struct interface of...</div></div>

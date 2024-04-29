@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['empty_5fhashtable_5fslot_5foffset_0',['EMPTY_HASHTABLE_SLOT_OFFSET',['../hashtable_8h.html#a5f74712d6f362d854f50f17520bb95d0',1,'hashtable.h']]],
-  ['end_5findex_1',['end_index',['../structV__queue__type.html#a4034beea89e5812d448e0fddd0c6b64d',1,'V_queue_type']]]
+  ['deallocate_5ff_5fptr_0',['deallocate_f_ptr',['../structallocator__ops__type.html#a63d73130e7fa28bd190498477768f878',1,'allocator_ops_type']]],
+  ['default_5falignment_1',['DEFAULT_ALIGNMENT',['../arena_8h.html#a03d83b460541e5ff9cae283d9f55afb2',1,'arena.h']]]
 ];

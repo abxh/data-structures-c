@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>dsa-c: Class List</title>
+<title>dsa-c: src/rotate_bits.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -48,7 +48,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -70,22 +69,42 @@ $(function() {
 </div>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
-  <div class="headertitle"><div class="title">Class List</div></div>
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">rotate_bits.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here are the classes, structs, unions and interfaces with brief descriptions:</div><div class="directory">
-<table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structallocator__ops__type.html" target="_self">allocator_ops_type</a></td><td class="desc">Struct interface for allocator operations </td></tr>
-<tr id="row_1_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structarena__type.html" target="_self">arena_type</a></td><td class="desc"></td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structbitarray__type.html" target="_self">bitarray_type</a></td><td class="desc"></td></tr>
-<tr id="row_3_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structK__to__V__hashtable__type.html" target="_self">K_to_V_hashtable_type</a></td><td class="desc">Generated hashtable slot struct type for a given key and value type </td></tr>
-<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structll__node.html" target="_self">ll_node</a></td><td class="desc"></td></tr>
-<tr id="row_5_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structV__queue__type.html" target="_self">V_queue_type</a></td><td class="desc">Generated queue struct type for a value type </td></tr>
-<tr id="row_6_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structV__stack__type.html" target="_self">V_stack_type</a></td><td class="desc">Generated stack struct type for a given value type </td></tr>
+
+<p>rotate bits of 8-, 16-, 32-, and 64-bit numbers.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+</div>
+<p><a href="rotate__bits_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a58bd33a8be7f8234d382803cdbd1e688" id="r_a58bd33a8be7f8234d382803cdbd1e688"><td class="memItemLeft" align="right" valign="top"><a id="a58bd33a8be7f8234d382803cdbd1e688" name="a58bd33a8be7f8234d382803cdbd1e688"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>rotate_bits_8</b> (uint8_t value, int shift)</td></tr>
+<tr class="separator:a58bd33a8be7f8234d382803cdbd1e688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c4782e789c1a46b20118f8fb05202a4" id="r_a9c4782e789c1a46b20118f8fb05202a4"><td class="memItemLeft" align="right" valign="top"><a id="a9c4782e789c1a46b20118f8fb05202a4" name="a9c4782e789c1a46b20118f8fb05202a4"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>rotate_bits_16</b> (uint16_t value, int shift)</td></tr>
+<tr class="separator:a9c4782e789c1a46b20118f8fb05202a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6caf44529f70ecd2f8245e14efeb2e88" id="r_a6caf44529f70ecd2f8245e14efeb2e88"><td class="memItemLeft" align="right" valign="top"><a id="a6caf44529f70ecd2f8245e14efeb2e88" name="a6caf44529f70ecd2f8245e14efeb2e88"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>rotate_bits_32</b> (uint32_t value, int shift)</td></tr>
+<tr class="separator:a6caf44529f70ecd2f8245e14efeb2e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa991e448170cf6888040253f0be171e9" id="r_aa991e448170cf6888040253f0be171e9"><td class="memItemLeft" align="right" valign="top"><a id="aa991e448170cf6888040253f0be171e9" name="aa991e448170cf6888040253f0be171e9"></a>
+uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>rotate_bits_64</b> (uint64_t value, int shift)</td></tr>
+<tr class="separator:aa991e448170cf6888040253f0be171e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- directory -->
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>rotate bits of 8-, 16-, 32-, and 64-bit numbers. </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0

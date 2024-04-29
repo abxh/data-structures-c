@@ -83,7 +83,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Hashtable data structure based on robin hood hashing that is dynamically grown.  
+<p>Hashtable data structure based on robin hood hashing and dynamic array.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;assert.h&gt;</code><br />
 <code>#include &lt;stdalign.h&gt;</code><br />
@@ -119,10 +119,10 @@ Macros</h2></td></tr>
 <tr class="memitem:ae17cb099b4c9aee7835032339b5a9e0d" id="r_ae17cb099b4c9aee7835032339b5a9e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;&#160;&#160;int</td></tr>
 <tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value type. Is undefined once header is included.  <br /></td></tr>
 <tr class="separator:ae17cb099b4c9aee7835032339b5a9e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6003731b7f4121aa21168c524e5cc13" id="r_ac6003731b7f4121aa21168c524e5cc13"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6003731b7f4121aa21168c524e5cc13">hashtable_for_each_</a>(hashtable_ptr,  index,  key,  value)</td></tr>
-<tr class="memdesc:ac6003731b7f4121aa21168c524e5cc13"><td class="mdescLeft">&#160;</td><td class="mdescRight">internal macro for hashtable iteration  <br /></td></tr>
-<tr class="separator:ac6003731b7f4121aa21168c524e5cc13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd37713baee33bbd2ccb913392d8373e" id="r_acd37713baee33bbd2ccb913392d8373e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd37713baee33bbd2ccb913392d8373e">hashtable_for_each</a>(hashtable_ptr,  index,  key,  value)&#160;&#160;&#160;<a class="el" href="#ac6003731b7f4121aa21168c524e5cc13">hashtable_for_each_</a>(hashtable_ptr, index, key, value)</td></tr>
+<tr class="memitem:a39ef4959c5edb4f735ad748d7b0178bc" id="r_a39ef4959c5edb4f735ad748d7b0178bc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a39ef4959c5edb4f735ad748d7b0178bc">hashtable_for_each_</a>(hashtable_ptr,  index,  key_,  value_)</td></tr>
+<tr class="memdesc:a39ef4959c5edb4f735ad748d7b0178bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">internal macro for hashtable iteration  <br /></td></tr>
+<tr class="separator:a39ef4959c5edb4f735ad748d7b0178bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd37713baee33bbd2ccb913392d8373e" id="r_acd37713baee33bbd2ccb913392d8373e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd37713baee33bbd2ccb913392d8373e">hashtable_for_each</a>(hashtable_ptr,  index,  key,  value)&#160;&#160;&#160;<a class="el" href="#a39ef4959c5edb4f735ad748d7b0178bc">hashtable_for_each_</a>(hashtable_ptr, index, key, value)</td></tr>
 <tr class="memdesc:acd37713baee33bbd2ccb913392d8373e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the non-empty slots in the hashtable in arbitary order.  <br /></td></tr>
 <tr class="separator:acd37713baee33bbd2ccb913392d8373e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58a9b9662f87dfedd00cc6fd5dde7852" id="r_a58a9b9662f87dfedd00cc6fd5dde7852"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a58a9b9662f87dfedd00cc6fd5dde7852">KEY_IS_EQUAL</a>(a,  b)&#160;&#160;&#160;((a) == (b))</td></tr>
@@ -138,9 +138,9 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac4e9ba9d7a358357556c96c13715ce76" id="r_ac4e9ba9d7a358357556c96c13715ce76"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac4e9ba9d7a358357556c96c13715ce76">K_to_V_hashtable_clean</a> (const <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr)</td></tr>
-<tr class="memdesc:ac4e9ba9d7a358357556c96c13715ce76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean an existing hashtable and flag all slots as empty.  <br /></td></tr>
-<tr class="separator:ac4e9ba9d7a358357556c96c13715ce76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa511c4fbc99e585cfde9ed0ec7d89331" id="r_aa511c4fbc99e585cfde9ed0ec7d89331"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa511c4fbc99e585cfde9ed0ec7d89331">K_to_V_hashtable_clean</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr)</td></tr>
+<tr class="memdesc:aa511c4fbc99e585cfde9ed0ec7d89331"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean an existing hashtable and flag all slots as empty.  <br /></td></tr>
+<tr class="separator:aa511c4fbc99e585cfde9ed0ec7d89331"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5076fad34570f2e90d9dc69bfe6b784b" id="r_a5076fad34570f2e90d9dc69bfe6b784b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5076fad34570f2e90d9dc69bfe6b784b">K_to_V_hashtable_create_with_specified</a> (size_t initial_pow2_capacity, void *allocator_context_ptr, <a class="el" href="structallocator__ops__type.html">allocator_ops_type</a> allocator_ops)</td></tr>
 <tr class="memdesc:a5076fad34570f2e90d9dc69bfe6b784b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a hashtable with specified initial power of two capacity and custom allocator.  <br /></td></tr>
 <tr class="separator:a5076fad34570f2e90d9dc69bfe6b784b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,36 +162,36 @@ Functions</h2></td></tr>
 <tr class="memitem:a53dc1345731d8a22363a92fc5203a087" id="r_a53dc1345731d8a22363a92fc5203a087"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53dc1345731d8a22363a92fc5203a087">K_to_V_hashtable_is_empty</a> (const <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr)</td></tr>
 <tr class="memdesc:a53dc1345731d8a22363a92fc5203a087"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if hashtable contains at least one non-empty slot.  <br /></td></tr>
 <tr class="separator:a53dc1345731d8a22363a92fc5203a087"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abba7477540c85a2df5fcd6d699141f97" id="r_abba7477540c85a2df5fcd6d699141f97"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abba7477540c85a2df5fcd6d699141f97">K_to_V_hashtable_contains_key</a> (const <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
-<tr class="memdesc:abba7477540c85a2df5fcd6d699141f97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if hashtable contains a key.  <br /></td></tr>
-<tr class="separator:abba7477540c85a2df5fcd6d699141f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca26bd7853ce7b84f7f62bc79cc431e9" id="r_aca26bd7853ce7b84f7f62bc79cc431e9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca26bd7853ce7b84f7f62bc79cc431e9">K_to_V_hashtable_get_key_value_mut</a> (const <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
-<tr class="memdesc:aca26bd7853ce7b84f7f62bc79cc431e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the pointer to a slot in the hashtable.  <br /></td></tr>
-<tr class="separator:aca26bd7853ce7b84f7f62bc79cc431e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd26f9b49fa09af304cf1d8043c15651" id="r_abd26f9b49fa09af304cf1d8043c15651"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abd26f9b49fa09af304cf1d8043c15651">K_to_V_hashtable_get_mut</a> (const <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
-<tr class="memdesc:abd26f9b49fa09af304cf1d8043c15651"><td class="mdescLeft">&#160;</td><td class="mdescRight">From a given key, get the pointer to the corresponding value in the hashtable.  <br /></td></tr>
-<tr class="separator:abd26f9b49fa09af304cf1d8043c15651"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2621acf371d91a3d072831743f94fb6d" id="r_a2621acf371d91a3d072831743f94fb6d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2621acf371d91a3d072831743f94fb6d">K_to_V_hashtable_get</a> (const <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, const <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> default_value)</td></tr>
-<tr class="memdesc:a2621acf371d91a3d072831743f94fb6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">From a given key, get the corresponding value in the hashtable.  <br /></td></tr>
-<tr class="separator:a2621acf371d91a3d072831743f94fb6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab356163d6424b6362aa247b0aa10a35" id="r_aab356163d6424b6362aa247b0aa10a35"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab356163d6424b6362aa247b0aa10a35">K_to_V_hashtable_search</a> (const <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
-<tr class="memdesc:aab356163d6424b6362aa247b0aa10a35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search a given key in the hashtable and get the pointer to the corresponding value.  <br /></td></tr>
-<tr class="separator:aab356163d6424b6362aa247b0aa10a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa002ce0115b162cc5849cf27265a78bd" id="r_aa002ce0115b162cc5849cf27265a78bd"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa002ce0115b162cc5849cf27265a78bd">K_to_V_hashtable_contains_key</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
+<tr class="memdesc:aa002ce0115b162cc5849cf27265a78bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if hashtable contains a key.  <br /></td></tr>
+<tr class="separator:aa002ce0115b162cc5849cf27265a78bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77d9cb12a1dfc84faf9af359508e455f" id="r_a77d9cb12a1dfc84faf9af359508e455f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a77d9cb12a1dfc84faf9af359508e455f">K_to_V_hashtable_get_key_value_mut</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
+<tr class="memdesc:a77d9cb12a1dfc84faf9af359508e455f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the pointer to a slot in the hashtable.  <br /></td></tr>
+<tr class="separator:a77d9cb12a1dfc84faf9af359508e455f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6503cd01ff811ff8debe795d8f2d80d5" id="r_a6503cd01ff811ff8debe795d8f2d80d5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6503cd01ff811ff8debe795d8f2d80d5">K_to_V_hashtable_get_mut</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
+<tr class="memdesc:a6503cd01ff811ff8debe795d8f2d80d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">From a given key, get the pointer to the corresponding value in the hashtable.  <br /></td></tr>
+<tr class="separator:a6503cd01ff811ff8debe795d8f2d80d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec4a2cd79f7f45cec6812c069df8b2a2" id="r_aec4a2cd79f7f45cec6812c069df8b2a2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec4a2cd79f7f45cec6812c069df8b2a2">K_to_V_hashtable_get</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> default_value)</td></tr>
+<tr class="memdesc:aec4a2cd79f7f45cec6812c069df8b2a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">From a given key, get the corresponding value in the hashtable.  <br /></td></tr>
+<tr class="separator:aec4a2cd79f7f45cec6812c069df8b2a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc5b3f0cb875e0c985831218b09b98b3" id="r_afc5b3f0cb875e0c985831218b09b98b3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc5b3f0cb875e0c985831218b09b98b3">K_to_V_hashtable_search</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
+<tr class="memdesc:afc5b3f0cb875e0c985831218b09b98b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search a given key in the hashtable and get the pointer to the corresponding value.  <br /></td></tr>
+<tr class="separator:afc5b3f0cb875e0c985831218b09b98b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c2379725e02b2ec8c28ccc741730aa1" id="r_a8c2379725e02b2ec8c28ccc741730aa1"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c2379725e02b2ec8c28ccc741730aa1">K_to_V_hashtable_grow</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, size_t new_capacity)</td></tr>
 <tr class="memdesc:a8c2379725e02b2ec8c28ccc741730aa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize and grow the hashtable slots array manually.  <br /></td></tr>
 <tr class="separator:a8c2379725e02b2ec8c28ccc741730aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a319a99062dfca4880eafc704d167ae6a" id="r_a319a99062dfca4880eafc704d167ae6a"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a319a99062dfca4880eafc704d167ae6a">K_to_V_hashtable_insert</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, const <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
-<tr class="memdesc:a319a99062dfca4880eafc704d167ae6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a non-duplicate key and it's corresponding value inside the hashtable.  <br /></td></tr>
-<tr class="separator:a319a99062dfca4880eafc704d167ae6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ab0d5450fbd68537cd30ed5030bef67" id="r_a2ab0d5450fbd68537cd30ed5030bef67"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ab0d5450fbd68537cd30ed5030bef67">K_to_V_hashtable_update</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, const <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
-<tr class="memdesc:a2ab0d5450fbd68537cd30ed5030bef67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update a key's corresponding value inside the hashtable.  <br /></td></tr>
-<tr class="separator:a2ab0d5450fbd68537cd30ed5030bef67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a118181af6d37531bc5bc4b8bc76381f9" id="r_a118181af6d37531bc5bc4b8bc76381f9"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a118181af6d37531bc5bc4b8bc76381f9">K_to_V_hashtable_delete</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
-<tr class="memdesc:a118181af6d37531bc5bc4b8bc76381f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a key and it's corresponding value from the hashtable.  <br /></td></tr>
-<tr class="separator:a118181af6d37531bc5bc4b8bc76381f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56bafa45c9e39f10ae8506b650661f0c" id="r_a56bafa45c9e39f10ae8506b650661f0c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a56bafa45c9e39f10ae8506b650661f0c">K_to_V_hashtable_insert</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
+<tr class="memdesc:a56bafa45c9e39f10ae8506b650661f0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a non-duplicate key and it's corresponding value inside the hashtable.  <br /></td></tr>
+<tr class="separator:a56bafa45c9e39f10ae8506b650661f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3091e91cff8e825500f5b3769b5518f6" id="r_a3091e91cff8e825500f5b3769b5518f6"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3091e91cff8e825500f5b3769b5518f6">K_to_V_hashtable_update</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
+<tr class="memdesc:a3091e91cff8e825500f5b3769b5518f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update a key's corresponding value inside the hashtable.  <br /></td></tr>
+<tr class="separator:a3091e91cff8e825500f5b3769b5518f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0ef7de093b16047f17e2bf5da64a5e6" id="r_af0ef7de093b16047f17e2bf5da64a5e6"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0ef7de093b16047f17e2bf5da64a5e6">K_to_V_hashtable_delete</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
+<tr class="memdesc:af0ef7de093b16047f17e2bf5da64a5e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a key and it's corresponding value from the hashtable.  <br /></td></tr>
+<tr class="separator:af0ef7de093b16047f17e2bf5da64a5e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Hashtable data structure based on robin hood hashing that is dynamically grown. </p>
+<div class="textblock"><p>Hashtable data structure based on robin hood hashing and dynamic array. </p>
 <p>The array is only grown - not shrunk - for performance reasons.</p>
 <p>Some implementation details:</p><ul>
 <li>The size must be a power of 2.</li>
@@ -265,7 +265,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">value</span>&#160;)&#160;&#160;&#160;<a class="el" href="#ac6003731b7f4121aa21168c524e5cc13">hashtable_for_each_</a>(hashtable_ptr, index, key, value)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">value</span>&#160;)&#160;&#160;&#160;<a class="el" href="#a39ef4959c5edb4f735ad748d7b0178bc">hashtable_for_each_</a>(hashtable_ptr, index, key, value)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -285,8 +285,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac6003731b7f4121aa21168c524e5cc13" name="ac6003731b7f4121aa21168c524e5cc13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6003731b7f4121aa21168c524e5cc13">&#9670;&#160;</a></span>hashtable_for_each_</h2>
+<a id="a39ef4959c5edb4f735ad748d7b0178bc" name="a39ef4959c5edb4f735ad748d7b0178bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39ef4959c5edb4f735ad748d7b0178bc">&#9670;&#160;</a></span>hashtable_for_each_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -304,18 +304,18 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">key, </span></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">key_, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">value</span>&#160;)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">value_</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((index) = 0; (index) &lt;= (hashtable_ptr)-&gt;index_mask; (index)++)             \</div>
 <div class="line">        if ((hashtable_ptr)-&gt;slots[(index)].offset != <a class="code hl_define" href="#a5f74712d6f362d854f50f17520bb95d0">EMPTY_HASHTABLE_SLOT_OFFSET</a> &amp;&amp; \</div>
-<div class="line">            ((key) = (hashtable_ptr)-&gt;slots[(index)].key, (value) = (hashtable_ptr)-&gt;slots[(index)].value, <span class="keyword">true</span>))</div>
+<div class="line">            ((key_) = (hashtable_ptr)-&gt;slots[(index)].key, (value_) = (hashtable_ptr)-&gt;slots[(index)].value, <span class="keyword">true</span>))</div>
 <div class="ttc" id="ahashtable_8h_html_a5f74712d6f362d854f50f17520bb95d0"><div class="ttname"><a href="#a5f74712d6f362d854f50f17520bb95d0">EMPTY_HASHTABLE_SLOT_OFFSET</a></div><div class="ttdeci">#define EMPTY_HASHTABLE_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> hashtable.h:50</div></div>
 </div><!-- fragment -->
 <p>internal macro for hashtable iteration </p>
@@ -430,8 +430,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac4e9ba9d7a358357556c96c13715ce76" name="ac4e9ba9d7a358357556c96c13715ce76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4e9ba9d7a358357556c96c13715ce76">&#9670;&#160;</a></span>K_to_V_hashtable_clean()</h2>
+<a id="aa511c4fbc99e585cfde9ed0ec7d89331" name="aa511c4fbc99e585cfde9ed0ec7d89331"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa511c4fbc99e585cfde9ed0ec7d89331">&#9670;&#160;</a></span>K_to_V_hashtable_clean()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -442,7 +442,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void K_to_V_hashtable_clean </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -508,8 +508,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abba7477540c85a2df5fcd6d699141f97" name="abba7477540c85a2df5fcd6d699141f97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abba7477540c85a2df5fcd6d699141f97">&#9670;&#160;</a></span>K_to_V_hashtable_contains_key()</h2>
+<a id="aa002ce0115b162cc5849cf27265a78bd" name="aa002ce0115b162cc5849cf27265a78bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa002ce0115b162cc5849cf27265a78bd">&#9670;&#160;</a></span>K_to_V_hashtable_contains_key()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -520,12 +520,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static bool K_to_V_hashtable_contains_key </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em>, </span></td>
+          <td class="paramtype"><a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -673,8 +673,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a118181af6d37531bc5bc4b8bc76381f9" name="a118181af6d37531bc5bc4b8bc76381f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a118181af6d37531bc5bc4b8bc76381f9">&#9670;&#160;</a></span>K_to_V_hashtable_delete()</h2>
+<a id="af0ef7de093b16047f17e2bf5da64a5e6" name="af0ef7de093b16047f17e2bf5da64a5e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0ef7de093b16047f17e2bf5da64a5e6">&#9670;&#160;</a></span>K_to_V_hashtable_delete()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -690,7 +690,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -741,8 +741,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2621acf371d91a3d072831743f94fb6d" name="a2621acf371d91a3d072831743f94fb6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2621acf371d91a3d072831743f94fb6d">&#9670;&#160;</a></span>K_to_V_hashtable_get()</h2>
+<a id="aec4a2cd79f7f45cec6812c069df8b2a2" name="aec4a2cd79f7f45cec6812c069df8b2a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec4a2cd79f7f45cec6812c069df8b2a2">&#9670;&#160;</a></span>K_to_V_hashtable_get()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -753,17 +753,17 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> K_to_V_hashtable_get </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em>, </span></td>
+          <td class="paramtype"><a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em>, </span></td>
+          <td class="paramtype"><a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>default_value</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>default_value</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -793,8 +793,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aca26bd7853ce7b84f7f62bc79cc431e9" name="aca26bd7853ce7b84f7f62bc79cc431e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca26bd7853ce7b84f7f62bc79cc431e9">&#9670;&#160;</a></span>K_to_V_hashtable_get_key_value_mut()</h2>
+<a id="a77d9cb12a1dfc84faf9af359508e455f" name="a77d9cb12a1dfc84faf9af359508e455f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77d9cb12a1dfc84faf9af359508e455f">&#9670;&#160;</a></span>K_to_V_hashtable_get_key_value_mut()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -805,12 +805,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> * K_to_V_hashtable_get_key_value_mut </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em>, </span></td>
+          <td class="paramtype"><a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -839,8 +839,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abd26f9b49fa09af304cf1d8043c15651" name="abd26f9b49fa09af304cf1d8043c15651"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd26f9b49fa09af304cf1d8043c15651">&#9670;&#160;</a></span>K_to_V_hashtable_get_mut()</h2>
+<a id="a6503cd01ff811ff8debe795d8f2d80d5" name="a6503cd01ff811ff8debe795d8f2d80d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6503cd01ff811ff8debe795d8f2d80d5">&#9670;&#160;</a></span>K_to_V_hashtable_get_mut()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -851,12 +851,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> * K_to_V_hashtable_get_mut </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em>, </span></td>
+          <td class="paramtype"><a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -937,8 +937,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a319a99062dfca4880eafc704d167ae6a" name="a319a99062dfca4880eafc704d167ae6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a319a99062dfca4880eafc704d167ae6a">&#9670;&#160;</a></span>K_to_V_hashtable_insert()</h2>
+<a id="a56bafa45c9e39f10ae8506b650661f0c" name="a56bafa45c9e39f10ae8506b650661f0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56bafa45c9e39f10ae8506b650661f0c">&#9670;&#160;</a></span>K_to_V_hashtable_insert()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -954,12 +954,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em>, </span></td>
+          <td class="paramtype"><a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -1028,8 +1028,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aab356163d6424b6362aa247b0aa10a35" name="aab356163d6424b6362aa247b0aa10a35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab356163d6424b6362aa247b0aa10a35">&#9670;&#160;</a></span>K_to_V_hashtable_search()</h2>
+<a id="afc5b3f0cb875e0c985831218b09b98b3" name="afc5b3f0cb875e0c985831218b09b98b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc5b3f0cb875e0c985831218b09b98b3">&#9670;&#160;</a></span>K_to_V_hashtable_search()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1040,12 +1040,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> * K_to_V_hashtable_search </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em>, </span></td>
+          <td class="paramtype"><a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -1074,8 +1074,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2ab0d5450fbd68537cd30ed5030bef67" name="a2ab0d5450fbd68537cd30ed5030bef67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ab0d5450fbd68537cd30ed5030bef67">&#9670;&#160;</a></span>K_to_V_hashtable_update()</h2>
+<a id="a3091e91cff8e825500f5b3769b5518f6" name="a3091e91cff8e825500f5b3769b5518f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3091e91cff8e825500f5b3769b5518f6">&#9670;&#160;</a></span>K_to_V_hashtable_update()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1091,12 +1091,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em>, </span></td>
+          <td class="paramtype"><a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>key</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
