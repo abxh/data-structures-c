@@ -74,14 +74,16 @@
 #define VALUE_TYPE int
 #endif
 
-/// @cond DO_NOT_DOCUMENT
+/**
+ * @def hashtable_for_each_
+ * @brief internal macro for hashtable iteration
+ */
 #ifndef hashtable_for_each_
 #define hashtable_for_each_(hashtable_ptr, index, key, value)                        \
     for ((index) = 0; (index) <= (hashtable_ptr)->index_mask; (index)++)             \
         if ((hashtable_ptr)->slots[(index)].offset != EMPTY_HASHTABLE_SLOT_OFFSET && \
             ((key) = (hashtable_ptr)->slots[(index)].key, (value) = (hashtable_ptr)->slots[(index)].value, true))
 #endif
-/// @endcond
 
 /**
  * @def hashtable_for_each

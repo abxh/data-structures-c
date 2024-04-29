@@ -38,12 +38,14 @@
 #define VALUE_TYPE int
 #endif
 
-/// @cond DO_NOT_DOCUMENT
+/**
+ * @def stack_for_each_
+ * @brief internal macro for stack iteration
+ */
 #ifndef stack_for_each_
 #define stack_for_each_(stack_ptr, count, value) \
     for ((count) = (stack_ptr)->count; (count) > 0 && ((value) = (stack_ptr)->values[(count) - 1], true); (count)--)
 #endif
-/// @endcond
 
 /**
  * @def stack_for_each

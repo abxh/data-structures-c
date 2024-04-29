@@ -45,11 +45,13 @@
 #define VALUE_TYPE int
 #endif
 
-/// @cond DO_NOT_DOCUMENT
+/**
+ * @def queue_for_each_
+ * @brief internal macro for queue iteration
+ */
 #define queue_for_each_(queue_ptr, index, value)                                                                                  \
     for ((index) = (queue_ptr)->start_index; (index) != (queue_ptr)->end_index && ((value) = (queue_ptr)->values[(index)], true); \
          (index) = ((index) + 1) & (queue_ptr)->index_mask)
-/// @endcond
 
 /**
  * @def queue_for_each
