@@ -315,10 +315,10 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>        assert(n + m == queue_ptr-&gt;count);</div>
 <div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span> </div>
 <div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>        <span class="keywordflow">if</span> (n &lt;= m) {</div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>            memcpy(&amp;queue_ptr-&gt;values[old_capacity], &amp;queue_ptr-&gt;values[0], n);</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>            memcpy(&amp;queue_ptr-&gt;values[old_capacity], &amp;queue_ptr-&gt;values[0], <span class="keyword">sizeof</span>(<a class="code hl_define" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>) * n);</div>
 <div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>            queue_ptr-&gt;end_index += old_capacity;</div>
 <div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>            memcpy(&amp;queue_ptr-&gt;values[new_capacity - m], &amp;queue_ptr-&gt;values[queue_ptr-&gt;start_index], m);</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>            memcpy(&amp;queue_ptr-&gt;values[new_capacity - m], &amp;queue_ptr-&gt;values[queue_ptr-&gt;start_index], <span class="keyword">sizeof</span>(<a class="code hl_define" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>) * m);</div>
 <div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>            queue_ptr-&gt;start_index = new_capacity - m;</div>
 <div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>        }</div>
 <div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>    }</div>

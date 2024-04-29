@@ -84,11 +84,12 @@ $(function() { codefold.init(0); });
 </div><!--header-->
 <div class="contents">
 <a href="arena_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="allocator__ops_8h.html">allocator_ops.h</a>&quot;</span> <span class="comment">// allocator_ops</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span>        <span class="comment">// size_t</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;string.h&gt;</span>        <span class="comment">// strlen, memcpy</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span> <span class="comment">// size_t</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;string.h&gt;</span> <span class="comment">// strlen, memcpy</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="allocator__ops_8h.html">allocator_ops.h</a>&quot;</span> <span class="comment">// allocator_ops</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
 <div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="structarena__type.html">   15</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structarena__type.html">arena_type</a> {</div>
@@ -133,8 +134,6 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keywordtype">void</span> arena_deallocate(<span class="keywordtype">void</span>* arena_ptr, <span class="keywordtype">void</span>* ptr);</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keywordtype">void</span> arena_deallocate_all(<span class="keywordtype">void</span>* arena_ptr);</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#undef DEFAULT_ALIGNMENT</span></div>
 <div class="ttc" id="aallocator__ops_8h_html"><div class="ttname"><a href="allocator__ops_8h.html">allocator_ops.h</a></div><div class="ttdoc">struct interface for allocator operations.</div></div>
 <div class="ttc" id="aarena_8h_html_a03d83b460541e5ff9cae283d9f55afb2"><div class="ttname"><a href="arena_8h.html#a03d83b460541e5ff9cae283d9f55afb2">DEFAULT_ALIGNMENT</a></div><div class="ttdeci">#define DEFAULT_ALIGNMENT</div><div class="ttdoc">Set to the shown default value. Can be defined before including the header. Is undefined once header ...</div><div class="ttdef"><b>Definition</b> arena.h:30</div></div>
 <div class="ttc" id="astructallocator__ops__type_html"><div class="ttname"><a href="structallocator__ops__type.html">allocator_ops_type</a></div><div class="ttdoc">struct interface for allocator operations.</div><div class="ttdef"><b>Definition</b> allocator_ops.h:13</div></div>
