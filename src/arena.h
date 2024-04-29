@@ -1,6 +1,7 @@
 /**
  * @file arena.h
  * @brief arena allocator.
+ * @todo Fill the rest of the documentation
  *
  * Example of how `arena.h` header file is used in practice can be found in `hashtable/hashtable.c`.
  */
