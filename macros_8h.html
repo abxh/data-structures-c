@@ -81,40 +81,140 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>C preprocessor macros to paste tokens together.  
+<p>Useful C preprocessor macros.  
 <a href="#details">More...</a></p>
 
 <p><a href="macros_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a188ea780417dce4eb720d161d85f9f44" id="r_a188ea780417dce4eb720d161d85f9f44"><td class="memItemLeft" align="right" valign="top"><a id="a188ea780417dce4eb720d161d85f9f44" name="a188ea780417dce4eb720d161d85f9f44"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PASTE</b>(a,  b)&#160;&#160;&#160;a##b</td></tr>
-<tr class="memdesc:a188ea780417dce4eb720d161d85f9f44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pastes it's two parameters together. <br /></td></tr>
+<tr class="memitem:a188ea780417dce4eb720d161d85f9f44" id="r_a188ea780417dce4eb720d161d85f9f44"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a188ea780417dce4eb720d161d85f9f44">PASTE</a>(a,  b)&#160;&#160;&#160;a##b</td></tr>
+<tr class="memdesc:a188ea780417dce4eb720d161d85f9f44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pastes it's two parameters together.  <br /></td></tr>
 <tr class="separator:a188ea780417dce4eb720d161d85f9f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88fa737059e67b4b17ec980e5877361e" id="r_a88fa737059e67b4b17ec980e5877361e"><td class="memItemLeft" align="right" valign="top"><a id="a88fa737059e67b4b17ec980e5877361e" name="a88fa737059e67b4b17ec980e5877361e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CONCAT</b>(a,  b)&#160;&#160;&#160;<a class="el" href="#a188ea780417dce4eb720d161d85f9f44">PASTE</a>(a, b)</td></tr>
-<tr class="memdesc:a88fa737059e67b4b17ec980e5877361e"><td class="mdescLeft">&#160;</td><td class="mdescRight">First expands it's two parameters, then pastes them together. <br /></td></tr>
+<tr class="memitem:a88fa737059e67b4b17ec980e5877361e" id="r_a88fa737059e67b4b17ec980e5877361e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a88fa737059e67b4b17ec980e5877361e">CONCAT</a>(a,  b)&#160;&#160;&#160;<a class="el" href="#a188ea780417dce4eb720d161d85f9f44">PASTE</a>(a, b)</td></tr>
+<tr class="memdesc:a88fa737059e67b4b17ec980e5877361e"><td class="mdescLeft">&#160;</td><td class="mdescRight">First expands it's two parameters, then pastes them together.  <br /></td></tr>
 <tr class="separator:a88fa737059e67b4b17ec980e5877361e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1665af4d61d120cdba4d77101d179703" id="r_a1665af4d61d120cdba4d77101d179703"><td class="memItemLeft" align="right" valign="top"><a id="a1665af4d61d120cdba4d77101d179703" name="a1665af4d61d120cdba4d77101d179703"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>JOIN</b>(a,  b)&#160;&#160;&#160;<a class="el" href="#a88fa737059e67b4b17ec980e5877361e">CONCAT</a>(a, <a class="el" href="#a88fa737059e67b4b17ec980e5877361e">CONCAT</a>(_, b))</td></tr>
-<tr class="memdesc:a1665af4d61d120cdba4d77101d179703"><td class="mdescLeft">&#160;</td><td class="mdescRight">First expands it's two parameters, then pastes them together with a underscore _ in between. <br /></td></tr>
+<tr class="memitem:a1665af4d61d120cdba4d77101d179703" id="r_a1665af4d61d120cdba4d77101d179703"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1665af4d61d120cdba4d77101d179703">JOIN</a>(a,  b)&#160;&#160;&#160;<a class="el" href="#a88fa737059e67b4b17ec980e5877361e">CONCAT</a>(a, <a class="el" href="#a88fa737059e67b4b17ec980e5877361e">CONCAT</a>(_, b))</td></tr>
+<tr class="memdesc:a1665af4d61d120cdba4d77101d179703"><td class="mdescLeft">&#160;</td><td class="mdescRight">First expands it's two parameters, then pastes them together with a underscore _ in between.  <br /></td></tr>
 <tr class="separator:a1665af4d61d120cdba4d77101d179703"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5422b77592e5832ea3323a15d85f9ae3" id="r_a5422b77592e5832ea3323a15d85f9ae3"><td class="memItemLeft" align="right" valign="top"><a id="a5422b77592e5832ea3323a15d85f9ae3" name="a5422b77592e5832ea3323a15d85f9ae3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IMPLIES</b>(a,  b)&#160;&#160;&#160;(!(a) || (b))</td></tr>
-<tr class="memdesc:a5422b77592e5832ea3323a15d85f9ae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns false if and only if the first parameter is true and the second parameter is false. <br /></td></tr>
+<tr class="memitem:a5422b77592e5832ea3323a15d85f9ae3" id="r_a5422b77592e5832ea3323a15d85f9ae3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5422b77592e5832ea3323a15d85f9ae3">IMPLIES</a>(a,  b)&#160;&#160;&#160;(!(a) || (b))</td></tr>
+<tr class="memdesc:a5422b77592e5832ea3323a15d85f9ae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro corresponding to the logical implication operator.  <br /></td></tr>
 <tr class="separator:a5422b77592e5832ea3323a15d85f9ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>C preprocessor macros to paste tokens together. </p>
+<div class="textblock"><p>Useful C preprocessor macros. </p>
+<p><b>FAQ</b>:</p>
 <p>Why these PASTE/CONCAT/JOIN are defined?</p>
 <p>These are used to create the symbols (struct names / function names) for different data structure types.</p>
-<p>Alternatives:</p><ul>
-<li><code>void*</code> types, which are converted at runtime; Or byte arrays with a data_size worked with at runtime.</li>
-<li>Seperate data structure type code for each type used.</li>
+<p>Alternatives: </p><ul>
+<li><code>void*</code> types, which are converted at runtime; Or byte arrays with a data_size worked with at runtime. </li>
+<li>Seperate data structure type code for each type used. </li>
 <li>Macros expanded with type parameters. </li>
 </ul>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a88fa737059e67b4b17ec980e5877361e" name="a88fa737059e67b4b17ec980e5877361e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88fa737059e67b4b17ec980e5877361e">&#9670;&#160;</a></span>CONCAT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONCAT</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">a, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">b</span>&#160;)&#160;&#160;&#160;<a class="el" href="#a188ea780417dce4eb720d161d85f9f44">PASTE</a>(a, b)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>First expands it's two parameters, then pastes them together. </p>
+<dl class="section return"><dt>Returns</dt><dd>The two parameters pasted together after they are expanded. </dd></dl>
+
+</div>
+</div>
+<a id="a5422b77592e5832ea3323a15d85f9ae3" name="a5422b77592e5832ea3323a15d85f9ae3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5422b77592e5832ea3323a15d85f9ae3">&#9670;&#160;</a></span>IMPLIES</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IMPLIES</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">a, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">b</span>&#160;)&#160;&#160;&#160;(!(a) || (b))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Macro corresponding to the logical implication operator. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>If a is true and b is not false. </td></tr>
+    <tr><td class="paramname">false</td><td>If a is true and b is false. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1665af4d61d120cdba4d77101d179703" name="a1665af4d61d120cdba4d77101d179703"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1665af4d61d120cdba4d77101d179703">&#9670;&#160;</a></span>JOIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define JOIN</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">a, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">b</span>&#160;)&#160;&#160;&#160;<a class="el" href="#a88fa737059e67b4b17ec980e5877361e">CONCAT</a>(a, <a class="el" href="#a88fa737059e67b4b17ec980e5877361e">CONCAT</a>(_, b))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>First expands it's two parameters, then pastes them together with a underscore _ in between. </p>
+<dl class="section return"><dt>Returns</dt><dd>The two parameters pasted together with a _ in between after they are expanded. </dd></dl>
+
+</div>
+</div>
+<a id="a188ea780417dce4eb720d161d85f9f44" name="a188ea780417dce4eb720d161d85f9f44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a188ea780417dce4eb720d161d85f9f44">&#9670;&#160;</a></span>PASTE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PASTE</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">a, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">b</span>&#160;)&#160;&#160;&#160;a##b</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pastes it's two parameters together. </p>
+<dl class="section return"><dt>Returns</dt><dd>The two parameters pasted together. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0

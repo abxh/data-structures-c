@@ -83,7 +83,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Queue data structure based on a dynamic circular buffer.  
+<p>Queue data structure based on a dynamic circular array.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;assert.h&gt;</code><br />
 <code>#include &lt;stdalign.h&gt;</code><br />
@@ -95,87 +95,93 @@ $(function() {
 <code>#include &quot;<a class="el" href="is__pow2_8h_source.html">is_pow2.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="macros_8h_source.html">macros.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="std__allocator_8h_source.html">std_allocator.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="macros__undef_8h_source.html">macros_undef.h</a>&quot;</code><br />
 </div>
 <p><a href="queue_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structT__queue__type.html">T_queue_type</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generated queue struct type for a value type.  <a href="structT__queue__type.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structV__queue__type.html">V_queue_type</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generated queue struct type for a value type.  <a href="structV__queue__type.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a9bb65a1cb5c0e10a952f27717a55283d" id="r_a9bb65a1cb5c0e10a952f27717a55283d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9bb65a1cb5c0e10a952f27717a55283d">queue_for_each</a>(queue_ptr,  count,  value)&#160;&#160;&#160;__queue_for_each(queue_ptr, count, value)</td></tr>
-<tr class="memdesc:a9bb65a1cb5c0e10a952f27717a55283d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the queue from the front value or first-to-be-dequeued value.  <br /></td></tr>
-<tr class="separator:a9bb65a1cb5c0e10a952f27717a55283d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae17cb099b4c9aee7835032339b5a9e0d" id="r_ae17cb099b4c9aee7835032339b5a9e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;&#160;&#160;int</td></tr>
-<tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value type.  <br /></td></tr>
+<tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value type. Is undefined once header is included.  <br /></td></tr>
 <tr class="separator:ae17cb099b4c9aee7835032339b5a9e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38c9b82c3554781e3b2911bdc8750f31" id="r_a38c9b82c3554781e3b2911bdc8750f31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a38c9b82c3554781e3b2911bdc8750f31">queue_for_each</a>(queue_ptr,  index,  value)&#160;&#160;&#160;queue_for_each_(queue_ptr, index, value)</td></tr>
+<tr class="memdesc:a38c9b82c3554781e3b2911bdc8750f31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the queue from the front value or first-to-be-dequeued value.  <br /></td></tr>
+<tr class="separator:a38c9b82c3554781e3b2911bdc8750f31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add51b53e8b628f95078327028dccb20c" id="r_add51b53e8b628f95078327028dccb20c"><td class="memItemLeft" align="right" valign="top"><a id="add51b53e8b628f95078327028dccb20c" name="add51b53e8b628f95078327028dccb20c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PREFIX</b>&#160;&#160;&#160;<a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>##_##queue</td></tr>
-<tr class="memdesc:add51b53e8b628f95078327028dccb20c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The queue prefix. Set to VALUE_TYPE##_##queue, unless specified otherwise. <br /></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PREFIX</b>&#160;&#160;&#160;<a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>##_##queue</td></tr>
+<tr class="memdesc:add51b53e8b628f95078327028dccb20c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The queue prefix. Set to VALUE_TYPE##_##queue, unless specified otherwise. Is undefined once header is included. <br /></td></tr>
 <tr class="separator:add51b53e8b628f95078327028dccb20c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2df34a549d5903385d26671184b0fd7e" id="r_a2df34a549d5903385d26671184b0fd7e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structT__queue__type.html">T_queue_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2df34a549d5903385d26671184b0fd7e">T_queue_create_with_specified</a> (size_t initial_pow2_capacity, void *allocator_context_ptr, <a class="el" href="structallocator__ops__type.html">allocator_ops_type</a> allocator_ops)</td></tr>
-<tr class="memdesc:a2df34a549d5903385d26671184b0fd7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a queue with specified initial power of two capacity and custom allocator.  <br /></td></tr>
-<tr class="separator:a2df34a549d5903385d26671184b0fd7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5366b4eb4f28f7111f4bcdb34e8a045b" id="r_a5366b4eb4f28f7111f4bcdb34e8a045b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structT__queue__type.html">T_queue_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5366b4eb4f28f7111f4bcdb34e8a045b">T_queue_create</a> (void)</td></tr>
-<tr class="memdesc:a5366b4eb4f28f7111f4bcdb34e8a045b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a queue with a default capacity and standard allocator (aka <code>malloc</code>).  <br /></td></tr>
-<tr class="separator:a5366b4eb4f28f7111f4bcdb34e8a045b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab118eb68ca19764f5e52ee5a3cd78679" id="r_ab118eb68ca19764f5e52ee5a3cd78679"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab118eb68ca19764f5e52ee5a3cd78679">T_queue_destroy</a> (<a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:ab118eb68ca19764f5e52ee5a3cd78679"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy a queue and free the used memory.  <br /></td></tr>
-<tr class="separator:ab118eb68ca19764f5e52ee5a3cd78679"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a445f28a9c9b81e1bff979ac85572da0b" id="r_a445f28a9c9b81e1bff979ac85572da0b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structT__queue__type.html">T_queue_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a445f28a9c9b81e1bff979ac85572da0b">T_queue_clone</a> (const <a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:a445f28a9c9b81e1bff979ac85572da0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clone an existing queue.  <br /></td></tr>
-<tr class="separator:a445f28a9c9b81e1bff979ac85572da0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a658b6cf3c76f6fa759839a88e7284170" id="r_a658b6cf3c76f6fa759839a88e7284170"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a658b6cf3c76f6fa759839a88e7284170">T_queue_count</a> (const <a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:a658b6cf3c76f6fa759839a88e7284170"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of values in the queue.  <br /></td></tr>
-<tr class="separator:a658b6cf3c76f6fa759839a88e7284170"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1730e3c515a7291000af33013e59229d" id="r_a1730e3c515a7291000af33013e59229d"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1730e3c515a7291000af33013e59229d">T_queue_capacity</a> (const <a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:a1730e3c515a7291000af33013e59229d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of values allocated for in the queue. Capacity is grown as needed.  <br /></td></tr>
-<tr class="separator:a1730e3c515a7291000af33013e59229d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b61afa13c2125dff1fe272777ae6f17" id="r_a4b61afa13c2125dff1fe272777ae6f17"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b61afa13c2125dff1fe272777ae6f17">T_queue_is_empty</a> (const <a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:a4b61afa13c2125dff1fe272777ae6f17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if queue is empty.  <br /></td></tr>
-<tr class="separator:a4b61afa13c2125dff1fe272777ae6f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5bd1a9d1785cc5f33c08e8322686046" id="r_ab5bd1a9d1785cc5f33c08e8322686046"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab5bd1a9d1785cc5f33c08e8322686046">T_queue_at</a> (const <a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr, size_t index)</td></tr>
-<tr class="memdesc:ab5bd1a9d1785cc5f33c08e8322686046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value at index relative to queue front or start index as 0.  <br /></td></tr>
-<tr class="separator:ab5bd1a9d1785cc5f33c08e8322686046"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01442a3e5423468dfd981305212bf282" id="r_a01442a3e5423468dfd981305212bf282"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a01442a3e5423468dfd981305212bf282">T_queue_front</a> (const <a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:a01442a3e5423468dfd981305212bf282"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the front of the queue.  <br /></td></tr>
-<tr class="separator:a01442a3e5423468dfd981305212bf282"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6593341fc475c11ae3dfcbf11860b768" id="r_a6593341fc475c11ae3dfcbf11860b768"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6593341fc475c11ae3dfcbf11860b768">T_queue_back</a> (const <a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:a6593341fc475c11ae3dfcbf11860b768"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the back of the queue.  <br /></td></tr>
-<tr class="separator:a6593341fc475c11ae3dfcbf11860b768"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3057cc80c5ca8fd11ac7c2ae7e62cd75" id="r_a3057cc80c5ca8fd11ac7c2ae7e62cd75"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3057cc80c5ca8fd11ac7c2ae7e62cd75">T_queue_peek</a> (const <a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:a3057cc80c5ca8fd11ac7c2ae7e62cd75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek at the queue and get it's front value.  <br /></td></tr>
-<tr class="separator:a3057cc80c5ca8fd11ac7c2ae7e62cd75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa94a4e90701f3efe89763429c792e2d6" id="r_aa94a4e90701f3efe89763429c792e2d6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa94a4e90701f3efe89763429c792e2d6">T_queue_peek_first</a> (const <a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:aa94a4e90701f3efe89763429c792e2d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek at the queue and get it's first-to-be-dequeued value.  <br /></td></tr>
-<tr class="separator:aa94a4e90701f3efe89763429c792e2d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5e872c4670f6187ea9983b92b72236a" id="r_ab5e872c4670f6187ea9983b92b72236a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab5e872c4670f6187ea9983b92b72236a">T_queue_peek_last</a> (const <a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:ab5e872c4670f6187ea9983b92b72236a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek at the queue and get it's last-to-be-dequeued value.  <br /></td></tr>
-<tr class="separator:ab5e872c4670f6187ea9983b92b72236a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fc0f679969be9d1d53a1bc5ed8d265f" id="r_a9fc0f679969be9d1d53a1bc5ed8d265f"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9fc0f679969be9d1d53a1bc5ed8d265f">T_queue_enqueue</a> (<a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr, <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
-<tr class="memdesc:a9fc0f679969be9d1d53a1bc5ed8d265f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueue a value onto the queue.  <br /></td></tr>
-<tr class="separator:a9fc0f679969be9d1d53a1bc5ed8d265f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a295c66b255dbae8a9f9ee1b88e5d926e" id="r_a295c66b255dbae8a9f9ee1b88e5d926e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a295c66b255dbae8a9f9ee1b88e5d926e">T_queue_dequeue</a> (<a class="el" href="structT__queue__type.html">T_queue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:a295c66b255dbae8a9f9ee1b88e5d926e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeue a value from the queue and return the value.  <br /></td></tr>
-<tr class="separator:a295c66b255dbae8a9f9ee1b88e5d926e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e6cbda4bad6a9b226594432c8a81230" id="r_a3e6cbda4bad6a9b226594432c8a81230"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structV__queue__type.html">V_queue_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e6cbda4bad6a9b226594432c8a81230">V_queue_create_with_specified</a> (size_t initial_pow2_capacity, void *allocator_context_ptr, <a class="el" href="structallocator__ops__type.html">allocator_ops_type</a> allocator_ops)</td></tr>
+<tr class="memdesc:a3e6cbda4bad6a9b226594432c8a81230"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a queue with specified initial power of two capacity and custom allocator.  <br /></td></tr>
+<tr class="separator:a3e6cbda4bad6a9b226594432c8a81230"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5d2078dcd9de0f4542f03b9657f036b" id="r_aa5d2078dcd9de0f4542f03b9657f036b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structV__queue__type.html">V_queue_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5d2078dcd9de0f4542f03b9657f036b">V_queue_create</a> (void)</td></tr>
+<tr class="memdesc:aa5d2078dcd9de0f4542f03b9657f036b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a queue with a default capacity (512) and standard allocator (aka <code>malloc</code>).  <br /></td></tr>
+<tr class="separator:aa5d2078dcd9de0f4542f03b9657f036b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1efbfb5d07fc29bfe273712cf3241b61" id="r_a1efbfb5d07fc29bfe273712cf3241b61"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1efbfb5d07fc29bfe273712cf3241b61">V_queue_destroy</a> (<a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr)</td></tr>
+<tr class="memdesc:a1efbfb5d07fc29bfe273712cf3241b61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy a queue and free the used memory.  <br /></td></tr>
+<tr class="separator:a1efbfb5d07fc29bfe273712cf3241b61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a165bd5d12e6fe8dafb152a7dc78dc13a" id="r_a165bd5d12e6fe8dafb152a7dc78dc13a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structV__queue__type.html">V_queue_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a165bd5d12e6fe8dafb152a7dc78dc13a">V_queue_clone</a> (const <a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr)</td></tr>
+<tr class="memdesc:a165bd5d12e6fe8dafb152a7dc78dc13a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clone an existing queue.  <br /></td></tr>
+<tr class="separator:a165bd5d12e6fe8dafb152a7dc78dc13a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fa0baaf9555c100e36c8c92e1b1c73d" id="r_a9fa0baaf9555c100e36c8c92e1b1c73d"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9fa0baaf9555c100e36c8c92e1b1c73d">V_queue_count</a> (const <a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr)</td></tr>
+<tr class="memdesc:a9fa0baaf9555c100e36c8c92e1b1c73d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of values in the queue.  <br /></td></tr>
+<tr class="separator:a9fa0baaf9555c100e36c8c92e1b1c73d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63c9fbb6c7e3f2917e1f4a9e0b6cac03" id="r_a63c9fbb6c7e3f2917e1f4a9e0b6cac03"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63c9fbb6c7e3f2917e1f4a9e0b6cac03">V_queue_capacity</a> (const <a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr)</td></tr>
+<tr class="memdesc:a63c9fbb6c7e3f2917e1f4a9e0b6cac03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of values allocated for in the queue. Capacity is grown as needed.  <br /></td></tr>
+<tr class="separator:a63c9fbb6c7e3f2917e1f4a9e0b6cac03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5f12fd4c9f2d2243fc637075083f2b0" id="r_af5f12fd4c9f2d2243fc637075083f2b0"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af5f12fd4c9f2d2243fc637075083f2b0">V_queue_is_empty</a> (const <a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr)</td></tr>
+<tr class="memdesc:af5f12fd4c9f2d2243fc637075083f2b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if queue is empty.  <br /></td></tr>
+<tr class="separator:af5f12fd4c9f2d2243fc637075083f2b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fa8f808c812c6939346e10632402f5c" id="r_a2fa8f808c812c6939346e10632402f5c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2fa8f808c812c6939346e10632402f5c">V_queue_at</a> (const <a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr, size_t index)</td></tr>
+<tr class="memdesc:a2fa8f808c812c6939346e10632402f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value at index relative to queue front or start index as 0.  <br /></td></tr>
+<tr class="separator:a2fa8f808c812c6939346e10632402f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef1c0a5e062d73e9507a12ed6baae492" id="r_aef1c0a5e062d73e9507a12ed6baae492"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef1c0a5e062d73e9507a12ed6baae492">V_queue_front</a> (const <a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr)</td></tr>
+<tr class="memdesc:aef1c0a5e062d73e9507a12ed6baae492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the front of the queue.  <br /></td></tr>
+<tr class="separator:aef1c0a5e062d73e9507a12ed6baae492"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23889624a08d14088747f2f10b13fcb1" id="r_a23889624a08d14088747f2f10b13fcb1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a23889624a08d14088747f2f10b13fcb1">V_queue_back</a> (const <a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr)</td></tr>
+<tr class="memdesc:a23889624a08d14088747f2f10b13fcb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the back of the queue.  <br /></td></tr>
+<tr class="separator:a23889624a08d14088747f2f10b13fcb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb199f2de72ecf271c8f3abbfa87f373" id="r_afb199f2de72ecf271c8f3abbfa87f373"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb199f2de72ecf271c8f3abbfa87f373">V_queue_peek</a> (const <a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr)</td></tr>
+<tr class="memdesc:afb199f2de72ecf271c8f3abbfa87f373"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek at the queue and get it's front value.  <br /></td></tr>
+<tr class="separator:afb199f2de72ecf271c8f3abbfa87f373"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b3ed69e53836d91be532eb19f9f6c67" id="r_a4b3ed69e53836d91be532eb19f9f6c67"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b3ed69e53836d91be532eb19f9f6c67">V_queue_peek_first</a> (const <a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr)</td></tr>
+<tr class="memdesc:a4b3ed69e53836d91be532eb19f9f6c67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek at the queue and get it's first-to-be-dequeued value.  <br /></td></tr>
+<tr class="separator:a4b3ed69e53836d91be532eb19f9f6c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79d7cc2f91a7aa6166b00115cdbd794e" id="r_a79d7cc2f91a7aa6166b00115cdbd794e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a79d7cc2f91a7aa6166b00115cdbd794e">V_queue_peek_last</a> (const <a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr)</td></tr>
+<tr class="memdesc:a79d7cc2f91a7aa6166b00115cdbd794e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek at the queue and get it's last-to-be-dequeued value.  <br /></td></tr>
+<tr class="separator:a79d7cc2f91a7aa6166b00115cdbd794e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0250d031f30195d6a4a19b7ef37dca0" id="r_ab0250d031f30195d6a4a19b7ef37dca0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab0250d031f30195d6a4a19b7ef37dca0">V_queue_grow</a> (<a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr, size_t new_capacity)</td></tr>
+<tr class="memdesc:ab0250d031f30195d6a4a19b7ef37dca0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize and grow the queue array manually.  <br /></td></tr>
+<tr class="separator:ab0250d031f30195d6a4a19b7ef37dca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d358f28df1ce4db590f6a720a274f35" id="r_a2d358f28df1ce4db590f6a720a274f35"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d358f28df1ce4db590f6a720a274f35">V_queue_enqueue</a> (<a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr, <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
+<tr class="memdesc:a2d358f28df1ce4db590f6a720a274f35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueue a value onto the queue.  <br /></td></tr>
+<tr class="separator:a2d358f28df1ce4db590f6a720a274f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d54383e01edf249fc049b280d8377aa" id="r_a7d54383e01edf249fc049b280d8377aa"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d54383e01edf249fc049b280d8377aa">V_queue_dequeue</a> (<a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr)</td></tr>
+<tr class="memdesc:a7d54383e01edf249fc049b280d8377aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeue a value from the queue and return the value.  <br /></td></tr>
+<tr class="separator:a7d54383e01edf249fc049b280d8377aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Queue data structure based on a dynamic circular buffer. </p>
+<div class="textblock"><p>Queue data structure based on a dynamic circular array. </p>
 <p>The array is only grown - not shrunk - for performance reasons.</p>
-<p>Note to distinguish between empty and full circular buffer with a fixed capacity, extra information must be stored in the form of a variable (count, nullables), or queue must reserve a empty slot at all times ("waisting" some memory in the array). See: <a href="https://en.wikipedia.org/wiki/Circular_buffer#Circular_buffer_mechanics">https://en.wikipedia.org/wiki/Circular_buffer#Circular_buffer_mechanics</a></p>
-<p>Other Source(s):</p><ul>
-<li>for naming: <a href="https://en.wikipedia.org/wiki/Queue_(abstract_data_type)">https://en.wikipedia.org/wiki/Queue_(abstract_data_type)</a></li>
+<p>Implementation details:</p><ul>
+<li>To distinguish between empty and full circular array with a fixed capacity, extra information must be stored in the form of a variable (count, nullables), or queue must reserve a empty slot at all times ("waisting" some memory in the array). See: <a href="https://en.wikipedia.org/wiki/Circular_buffer#Circular_buffer_mechanics">https://en.wikipedia.org/wiki/Circular_buffer#Circular_buffer_mechanics</a></li>
+</ul>
+<p>Other Source(s): </p><ul>
+<li>for naming: <a href="https://en.wikipedia.org/wiki/Queue_(abstract_data_type)">https://en.wikipedia.org/wiki/Queue_(abstract_data_type)</a> </li>
 <li>for resizing: <a href="https://queueoverflow.com/questions/55343683/resizing-of-the-circular-queue-using-dynamic-array">https://queueoverflow.com/questions/55343683/resizing-of-the-circular-queue-using-dynamic-array</a> </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a9bb65a1cb5c0e10a952f27717a55283d" name="a9bb65a1cb5c0e10a952f27717a55283d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9bb65a1cb5c0e10a952f27717a55283d">&#9670;&#160;</a></span>queue_for_each</h2>
+<a id="a38c9b82c3554781e3b2911bdc8750f31" name="a38c9b82c3554781e3b2911bdc8750f31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38c9b82c3554781e3b2911bdc8750f31">&#9670;&#160;</a></span>queue_for_each</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -188,12 +194,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">count, </span></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">index, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">value</span>&#160;)&#160;&#160;&#160;__queue_for_each(queue_ptr, count, value)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">value</span>&#160;)&#160;&#160;&#160;queue_for_each_(queue_ptr, index, value)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -224,15 +230,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The value type. </p>
+<p>The value type. Is undefined once header is included. </p>
 <dl class="section attention"><dt>Attention</dt><dd>This must be manually defined before including this header file.</dd></dl>
 <p>Is defaulted to int, so the editor's LSP works better. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ab5bd1a9d1785cc5f33c08e8322686046" name="ab5bd1a9d1785cc5f33c08e8322686046"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5bd1a9d1785cc5f33c08e8322686046">&#9670;&#160;</a></span>T_queue_at()</h2>
+<a id="a2fa8f808c812c6939346e10632402f5c" name="a2fa8f808c812c6939346e10632402f5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fa8f808c812c6939346e10632402f5c">&#9670;&#160;</a></span>V_queue_at()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -241,9 +247,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_queue_at </td>
+          <td class="memname">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> V_queue_at </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structT__queue__type.html">T_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em>, </span></td>
+          <td class="paramtype">const <a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -271,8 +277,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6593341fc475c11ae3dfcbf11860b768" name="a6593341fc475c11ae3dfcbf11860b768"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6593341fc475c11ae3dfcbf11860b768">&#9670;&#160;</a></span>T_queue_back()</h2>
+<a id="a23889624a08d14088747f2f10b13fcb1" name="a23889624a08d14088747f2f10b13fcb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23889624a08d14088747f2f10b13fcb1">&#9670;&#160;</a></span>V_queue_back()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -281,9 +287,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_queue_back </td>
+          <td class="memname">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> V_queue_back </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structT__queue__type.html">T_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -306,8 +312,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1730e3c515a7291000af33013e59229d" name="a1730e3c515a7291000af33013e59229d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1730e3c515a7291000af33013e59229d">&#9670;&#160;</a></span>T_queue_capacity()</h2>
+<a id="a63c9fbb6c7e3f2917e1f4a9e0b6cac03" name="a63c9fbb6c7e3f2917e1f4a9e0b6cac03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63c9fbb6c7e3f2917e1f4a9e0b6cac03">&#9670;&#160;</a></span>V_queue_capacity()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -316,9 +322,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static size_t T_queue_capacity </td>
+          <td class="memname">static size_t V_queue_capacity </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structT__queue__type.html">T_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -341,8 +347,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a445f28a9c9b81e1bff979ac85572da0b" name="a445f28a9c9b81e1bff979ac85572da0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a445f28a9c9b81e1bff979ac85572da0b">&#9670;&#160;</a></span>T_queue_clone()</h2>
+<a id="a165bd5d12e6fe8dafb152a7dc78dc13a" name="a165bd5d12e6fe8dafb152a7dc78dc13a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a165bd5d12e6fe8dafb152a7dc78dc13a">&#9670;&#160;</a></span>V_queue_clone()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -351,9 +357,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="structT__queue__type.html">T_queue_type</a> * T_queue_clone </td>
+          <td class="memname">static <a class="el" href="structV__queue__type.html">V_queue_type</a> * V_queue_clone </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structT__queue__type.html">T_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -375,7 +381,7 @@ Functions</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">`NULL`</td><td><ul>
-<li>If no memory space is available.</li>
+<li>If no memory space is available. </li>
 <li>If queue_ptr is <code>NULL</code>. </li>
 </ul>
 </td></tr>
@@ -385,8 +391,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a658b6cf3c76f6fa759839a88e7284170" name="a658b6cf3c76f6fa759839a88e7284170"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a658b6cf3c76f6fa759839a88e7284170">&#9670;&#160;</a></span>T_queue_count()</h2>
+<a id="a9fa0baaf9555c100e36c8c92e1b1c73d" name="a9fa0baaf9555c100e36c8c92e1b1c73d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fa0baaf9555c100e36c8c92e1b1c73d">&#9670;&#160;</a></span>V_queue_count()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -395,9 +401,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static size_t T_queue_count </td>
+          <td class="memname">static size_t V_queue_count </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structT__queue__type.html">T_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -416,12 +422,12 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The number of elements as <code>size_t</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of values as <code>size_t</code>. </dd></dl>
 
 </div>
 </div>
-<a id="a5366b4eb4f28f7111f4bcdb34e8a045b" name="a5366b4eb4f28f7111f4bcdb34e8a045b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5366b4eb4f28f7111f4bcdb34e8a045b">&#9670;&#160;</a></span>T_queue_create()</h2>
+<a id="aa5d2078dcd9de0f4542f03b9657f036b" name="aa5d2078dcd9de0f4542f03b9657f036b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5d2078dcd9de0f4542f03b9657f036b">&#9670;&#160;</a></span>V_queue_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -430,7 +436,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="structT__queue__type.html">T_queue_type</a> * T_queue_create </td>
+          <td class="memname">static <a class="el" href="structV__queue__type.html">V_queue_type</a> * V_queue_create </td>
           <td>(</td>
           <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td></td>
@@ -443,7 +449,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Create a queue with a default capacity and standard allocator (aka <code>malloc</code>). </p>
+<p>Create a queue with a default capacity (512) and standard allocator (aka <code>malloc</code>). </p>
 <dl class="section return"><dt>Returns</dt><dd>The queue pointer. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -454,8 +460,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2df34a549d5903385d26671184b0fd7e" name="a2df34a549d5903385d26671184b0fd7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2df34a549d5903385d26671184b0fd7e">&#9670;&#160;</a></span>T_queue_create_with_specified()</h2>
+<a id="a3e6cbda4bad6a9b226594432c8a81230" name="a3e6cbda4bad6a9b226594432c8a81230"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e6cbda4bad6a9b226594432c8a81230">&#9670;&#160;</a></span>V_queue_create_with_specified()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -464,7 +470,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="structT__queue__type.html">T_queue_type</a> * T_queue_create_with_specified </td>
+          <td class="memname">static <a class="el" href="structV__queue__type.html">V_queue_type</a> * V_queue_create_with_specified </td>
           <td>(</td>
           <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>initial_pow2_capacity</em>, </span></td>
         </tr>
@@ -495,12 +501,12 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The queue pointer. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the created queue. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">`NULL`</td><td><ul>
-<li>If <code>initial_pow2_capacity</code> is 0 or 1.</li>
-<li>If <code>initial_pow2_capacity * sizeof(VALUE_TYPE)</code> cannot be expressed with <code>size_t</code>.</li>
+<li>If <code>initial_pow2_capacity</code> is not a power of 2 or is equal to 1. </li>
+<li>If <code>initial_pow2_capacity * sizeof(VALUE_TYPE)</code> cannot be expressed with <code>size_t</code>. </li>
 <li>If no memory space is available. </li>
 </ul>
 </td></tr>
@@ -510,8 +516,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a295c66b255dbae8a9f9ee1b88e5d926e" name="a295c66b255dbae8a9f9ee1b88e5d926e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a295c66b255dbae8a9f9ee1b88e5d926e">&#9670;&#160;</a></span>T_queue_dequeue()</h2>
+<a id="a7d54383e01edf249fc049b280d8377aa" name="a7d54383e01edf249fc049b280d8377aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d54383e01edf249fc049b280d8377aa">&#9670;&#160;</a></span>V_queue_dequeue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -520,9 +526,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_queue_dequeue </td>
+          <td class="memname">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> V_queue_dequeue </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structT__queue__type.html">T_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -545,8 +551,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab118eb68ca19764f5e52ee5a3cd78679" name="ab118eb68ca19764f5e52ee5a3cd78679"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab118eb68ca19764f5e52ee5a3cd78679">&#9670;&#160;</a></span>T_queue_destroy()</h2>
+<a id="a1efbfb5d07fc29bfe273712cf3241b61" name="a1efbfb5d07fc29bfe273712cf3241b61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1efbfb5d07fc29bfe273712cf3241b61">&#9670;&#160;</a></span>V_queue_destroy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -555,9 +561,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void T_queue_destroy </td>
+          <td class="memname">static void V_queue_destroy </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structT__queue__type.html">T_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -573,8 +579,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9fc0f679969be9d1d53a1bc5ed8d265f" name="a9fc0f679969be9d1d53a1bc5ed8d265f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9fc0f679969be9d1d53a1bc5ed8d265f">&#9670;&#160;</a></span>T_queue_enqueue()</h2>
+<a id="a2d358f28df1ce4db590f6a720a274f35" name="a2d358f28df1ce4db590f6a720a274f35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d358f28df1ce4db590f6a720a274f35">&#9670;&#160;</a></span>V_queue_enqueue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -583,14 +589,14 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static bool T_queue_enqueue </td>
+          <td class="memname">static bool V_queue_enqueue </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structT__queue__type.html">T_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em>, </span></td>
+          <td class="paramtype"><a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -605,16 +611,16 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value to work with. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether the value was stored, depending on whether the queue could be resized when about to full. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether the value was stored, depending on whether the queue could be resized if it becomes full once the value is stored. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">false</td><td><ul>
-<li>If <code>current capacity * sizeof(VALUE_TYPE) * 2</code> cannot be expressed with <code>size_t</code>.</li>
-<li>If no memory space is available. </li>
+<li>If queue is resized and <code>2 * current capacity * sizeof(VALUE_TYPE)</code> cannot be expressed with <code>size_t</code>. </li>
+<li>If queue is resized and no memory space is available. </li>
 </ul>
 </td></tr>
   </table>
@@ -623,8 +629,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a01442a3e5423468dfd981305212bf282" name="a01442a3e5423468dfd981305212bf282"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01442a3e5423468dfd981305212bf282">&#9670;&#160;</a></span>T_queue_front()</h2>
+<a id="aef1c0a5e062d73e9507a12ed6baae492" name="aef1c0a5e062d73e9507a12ed6baae492"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef1c0a5e062d73e9507a12ed6baae492">&#9670;&#160;</a></span>V_queue_front()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -633,9 +639,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_queue_front </td>
+          <td class="memname">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> V_queue_front </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structT__queue__type.html">T_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -658,8 +664,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4b61afa13c2125dff1fe272777ae6f17" name="a4b61afa13c2125dff1fe272777ae6f17"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b61afa13c2125dff1fe272777ae6f17">&#9670;&#160;</a></span>T_queue_is_empty()</h2>
+<a id="ab0250d031f30195d6a4a19b7ef37dca0" name="ab0250d031f30195d6a4a19b7ef37dca0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0250d031f30195d6a4a19b7ef37dca0">&#9670;&#160;</a></span>V_queue_grow()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -668,9 +674,61 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static bool T_queue_is_empty </td>
+          <td class="memname">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> V_queue_grow </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structT__queue__type.html">T_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>new_capacity</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Resize and grow the queue array manually. </p>
+<p>Asserts queue_ptr is not <code>NULL</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_capacity</td><td>The new capacity. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether the queue was able to be resized to grow. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">false</td><td><ul>
+<li>If <code>new_capacity</code> is not a power of two. </li>
+<li>If <code>new_capacity</code> is smaller than or equal to the current capacity. </li>
+<li>If <code>new_capacity * sizeof(VALUE_TYPE)</code> cannot be expressed with <code>size_t</code>. </li>
+<li>If no memory space is available. </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af5f12fd4c9f2d2243fc637075083f2b0" name="af5f12fd4c9f2d2243fc637075083f2b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5f12fd4c9f2d2243fc637075083f2b0">&#9670;&#160;</a></span>V_queue_is_empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool V_queue_is_empty </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -693,8 +751,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3057cc80c5ca8fd11ac7c2ae7e62cd75" name="a3057cc80c5ca8fd11ac7c2ae7e62cd75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3057cc80c5ca8fd11ac7c2ae7e62cd75">&#9670;&#160;</a></span>T_queue_peek()</h2>
+<a id="afb199f2de72ecf271c8f3abbfa87f373" name="afb199f2de72ecf271c8f3abbfa87f373"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb199f2de72ecf271c8f3abbfa87f373">&#9670;&#160;</a></span>V_queue_peek()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -703,9 +761,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_queue_peek </td>
+          <td class="memname">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> V_queue_peek </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structT__queue__type.html">T_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -728,8 +786,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa94a4e90701f3efe89763429c792e2d6" name="aa94a4e90701f3efe89763429c792e2d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa94a4e90701f3efe89763429c792e2d6">&#9670;&#160;</a></span>T_queue_peek_first()</h2>
+<a id="a4b3ed69e53836d91be532eb19f9f6c67" name="a4b3ed69e53836d91be532eb19f9f6c67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b3ed69e53836d91be532eb19f9f6c67">&#9670;&#160;</a></span>V_queue_peek_first()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -738,9 +796,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_queue_peek_first </td>
+          <td class="memname">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> V_queue_peek_first </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structT__queue__type.html">T_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -763,8 +821,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab5e872c4670f6187ea9983b92b72236a" name="ab5e872c4670f6187ea9983b92b72236a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5e872c4670f6187ea9983b92b72236a">&#9670;&#160;</a></span>T_queue_peek_last()</h2>
+<a id="a79d7cc2f91a7aa6166b00115cdbd794e" name="a79d7cc2f91a7aa6166b00115cdbd794e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79d7cc2f91a7aa6166b00115cdbd794e">&#9670;&#160;</a></span>V_queue_peek_last()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -773,9 +831,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> T_queue_peek_last </td>
+          <td class="memname">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> V_queue_peek_last </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structT__queue__type.html">T_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>

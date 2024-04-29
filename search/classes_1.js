@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['t_5fqueue_5ftype_0',['T_queue_type',['../structT__queue__type.html',1,'']]],
-  ['t_5fstack_5ftype_1',['T_stack_type',['../structT__stack__type.html',1,'']]]
+  ['k_5fto_5fv_5fhashtable_5ftype_0',['K_to_V_hashtable_type',['../structK__to__V__hashtable__type.html',1,'']]]
 ];

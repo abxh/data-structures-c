@@ -83,48 +83,34 @@ $(function() {
 
 <p>Round up to the next power of two.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;assert.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
 </div>
 <p><a href="round__up__pow2_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a54178a1c6830ee22624d568cff571fa7" id="r_a54178a1c6830ee22624d568cff571fa7"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54178a1c6830ee22624d568cff571fa7">round_up_pow2</a> (size_t x)</td></tr>
-<tr class="separator:a54178a1c6830ee22624d568cff571fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9395bb56cc0916c1c35f3756cc96a57b" id="r_a9395bb56cc0916c1c35f3756cc96a57b"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9395bb56cc0916c1c35f3756cc96a57b">round_up_pow2</a> (size_t x)</td></tr>
+<tr class="separator:a9395bb56cc0916c1c35f3756cc96a57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Round up to the next power of two. </p>
-<p>Sources:</p><ul>
-<li><a href="https://stackoverflow.com/questions/466204/rounding-up-to-next-power-of-2">https://stackoverflow.com/questions/466204/rounding-up-to-next-power-of-2</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Find_first_set#Tool_and_library_support">https://en.wikipedia.org/wiki/Find_first_set#Tool_and_library_support</a> </li>
-</ul>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a54178a1c6830ee22624d568cff571fa7" name="a54178a1c6830ee22624d568cff571fa7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54178a1c6830ee22624d568cff571fa7">&#9670;&#160;</a></span>round_up_pow2()</h2>
+<a id="a9395bb56cc0916c1c35f3756cc96a57b" name="a9395bb56cc0916c1c35f3756cc96a57b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9395bb56cc0916c1c35f3756cc96a57b">&#9670;&#160;</a></span>round_up_pow2()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static size_t round_up_pow2 </td>
+          <td class="memname">size_t round_up_pow2 </td>
           <td>(</td>
           <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Round up to the next power of two.</p>
-<p>Assumes x is not 0.</p>
+<p>Asserts x is not 0.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>The number at hand. </td></tr>

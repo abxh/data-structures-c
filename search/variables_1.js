@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['capacity_0',['capacity',['../structT__stack__type.html#a1fcee91b9b94caf00ae17c2efa33f149',1,'T_stack_type']]],
-  ['count_1',['count',['../structT__queue__type.html#a60b8e20d982bc297787549dc301c4b85',1,'T_queue_type::count'],['../structT__stack__type.html#af93d5fcb669e087c29c81499747c04c9',1,'T_stack_type::count']]]
+  ['capacity_0',['capacity',['../structV__stack__type.html#ac731206880a4b50b41564de8378bfc6d',1,'V_stack_type']]],
+  ['count_1',['count',['../structK__to__V__hashtable__type.html#ac73dc6e456814e8cd6eac8727dc9f445',1,'K_to_V_hashtable_type::count'],['../structV__queue__type.html#ad14fdcd7f2e1a58482ff3cca02a3a12f',1,'V_queue_type::count'],['../structV__stack__type.html#a94073e2475e8609f45c5fa736e164ed0',1,'V_stack_type::count']]]
 ];

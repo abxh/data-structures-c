@@ -84,22 +84,22 @@ $(function() {
 
 <p>wrapper of <em>thead-safe</em> standard allocation functions for conforming to the defined struct interface of allocator operations.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="allocator__ops_8h_source.html">allocator_ops.h</a>&quot;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="allocator__ops_8h_source.html">allocator_ops.h</a>&quot;</code><br />
 </div>
 <p><a href="std__allocator_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a51d4c17b5238dec3db8e52948f574fa2" id="r_a51d4c17b5238dec3db8e52948f574fa2"><td class="memItemLeft" align="right" valign="top">static void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a51d4c17b5238dec3db8e52948f574fa2">std_allocate</a> (void *context_ptr, size_t alignment, size_t size)</td></tr>
-<tr class="memdesc:a51d4c17b5238dec3db8e52948f574fa2"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>malloc</code> wrapper to allocate memory.  <br /></td></tr>
-<tr class="separator:a51d4c17b5238dec3db8e52948f574fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9e0c9c4fdca4c400af08d8f86b3444d" id="r_ae9e0c9c4fdca4c400af08d8f86b3444d"><td class="memItemLeft" align="right" valign="top">static void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae9e0c9c4fdca4c400af08d8f86b3444d">std_reallocate</a> (void *context_ptr, void *mem_ptr, size_t alignment, size_t old_size, size_t new_size)</td></tr>
-<tr class="memdesc:ae9e0c9c4fdca4c400af08d8f86b3444d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>realloc</code> wrapper to allocate memory.  <br /></td></tr>
-<tr class="separator:ae9e0c9c4fdca4c400af08d8f86b3444d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6059379efaf2e9b84f8aa87889257b0b" id="r_a6059379efaf2e9b84f8aa87889257b0b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6059379efaf2e9b84f8aa87889257b0b">std_deallocate</a> (void *context_ptr, void *mem_ptr)</td></tr>
-<tr class="memdesc:a6059379efaf2e9b84f8aa87889257b0b"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>free</code> wrapper to allocate memory.  <br /></td></tr>
-<tr class="separator:a6059379efaf2e9b84f8aa87889257b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fa83e50b4fd85cbb9a5ea6ff70fd84c" id="r_a0fa83e50b4fd85cbb9a5ea6ff70fd84c"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0fa83e50b4fd85cbb9a5ea6ff70fd84c">std_allocate</a> (void *context_ptr, size_t alignment, size_t size)</td></tr>
+<tr class="memdesc:a0fa83e50b4fd85cbb9a5ea6ff70fd84c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>malloc</code> wrapper to allocate memory.  <br /></td></tr>
+<tr class="separator:a0fa83e50b4fd85cbb9a5ea6ff70fd84c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a417d2c45647b13b4572863e94fa07512" id="r_a417d2c45647b13b4572863e94fa07512"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a417d2c45647b13b4572863e94fa07512">std_reallocate</a> (void *context_ptr, void *mem_ptr, size_t alignment, size_t old_size, size_t new_size)</td></tr>
+<tr class="memdesc:a417d2c45647b13b4572863e94fa07512"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>realloc</code> wrapper to allocate memory.  <br /></td></tr>
+<tr class="separator:a417d2c45647b13b4572863e94fa07512"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac15e32b15c25c8ead9e05675fdf62776" id="r_ac15e32b15c25c8ead9e05675fdf62776"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac15e32b15c25c8ead9e05675fdf62776">std_deallocate</a> (void *context_ptr, void *mem_ptr)</td></tr>
+<tr class="memdesc:ac15e32b15c25c8ead9e05675fdf62776"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>free</code> wrapper to allocate memory.  <br /></td></tr>
+<tr class="separator:ac15e32b15c25c8ead9e05675fdf62776"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -109,22 +109,19 @@ Variables</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>wrapper of <em>thead-safe</em> standard allocation functions for conforming to the defined struct interface of allocator operations. </p>
-<p>Refer to following pages for more extensive documentation:</p><ul>
-<li><a href="https://man7.org/linux/man-pages/man3/malloc.3.html">https://man7.org/linux/man-pages/man3/malloc.3.html</a></li>
+<p>Refer to following pages for more extensive documentation: </p><ul>
+<li><a href="https://man7.org/linux/man-pages/man3/malloc.3.html">https://man7.org/linux/man-pages/man3/malloc.3.html</a> </li>
 <li><a href="https://man7.org/linux/man-pages/man3/realloc.3p.html">https://man7.org/linux/man-pages/man3/realloc.3p.html</a> </li>
 </ul>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a51d4c17b5238dec3db8e52948f574fa2" name="a51d4c17b5238dec3db8e52948f574fa2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51d4c17b5238dec3db8e52948f574fa2">&#9670;&#160;</a></span>std_allocate()</h2>
+<a id="a0fa83e50b4fd85cbb9a5ea6ff70fd84c" name="a0fa83e50b4fd85cbb9a5ea6ff70fd84c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fa83e50b4fd85cbb9a5ea6ff70fd84c">&#9670;&#160;</a></span>std_allocate()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void * std_allocate </td>
+          <td class="memname">void * std_allocate </td>
           <td>(</td>
           <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>context_ptr</em>, </span></td>
         </tr>
@@ -139,11 +136,6 @@ Variables</h2></td></tr>
           <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p><code>malloc</code> wrapper to allocate memory. </p>
@@ -160,7 +152,7 @@ Variables</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">NULL</td><td><ul>
-<li>Implementation-defined, but may do so if size is 0.</li>
+<li>Implementation-defined, but may do so if size is 0. </li>
 <li>If no memory space is available. </li>
 </ul>
 </td></tr>
@@ -170,17 +162,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a6059379efaf2e9b84f8aa87889257b0b" name="a6059379efaf2e9b84f8aa87889257b0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6059379efaf2e9b84f8aa87889257b0b">&#9670;&#160;</a></span>std_deallocate()</h2>
+<a id="ac15e32b15c25c8ead9e05675fdf62776" name="ac15e32b15c25c8ead9e05675fdf62776"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac15e32b15c25c8ead9e05675fdf62776">&#9670;&#160;</a></span>std_deallocate()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void std_deallocate </td>
+          <td class="memname">void std_deallocate </td>
           <td>(</td>
           <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>context_ptr</em>, </span></td>
         </tr>
@@ -190,11 +179,6 @@ Variables</h2></td></tr>
           <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>mem_ptr</em></span>&#160;)</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p><code>free</code> wrapper to allocate memory. </p>
@@ -210,17 +194,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ae9e0c9c4fdca4c400af08d8f86b3444d" name="ae9e0c9c4fdca4c400af08d8f86b3444d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9e0c9c4fdca4c400af08d8f86b3444d">&#9670;&#160;</a></span>std_reallocate()</h2>
+<a id="a417d2c45647b13b4572863e94fa07512" name="a417d2c45647b13b4572863e94fa07512"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a417d2c45647b13b4572863e94fa07512">&#9670;&#160;</a></span>std_reallocate()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void * std_reallocate </td>
+          <td class="memname">void * std_reallocate </td>
           <td>(</td>
           <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>context_ptr</em>, </span></td>
         </tr>
@@ -245,11 +226,6 @@ Variables</h2></td></tr>
           <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>new_size</em></span>&#160;)</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p><code>realloc</code> wrapper to allocate memory. </p>
@@ -269,7 +245,7 @@ Variables</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">NULL</td><td><ul>
-<li>Implementation-defined, but may do so if new_size is 0.</li>
+<li>Implementation-defined, but may do so if new_size is 0. </li>
 <li>If no memory space is available. </li>
 </ul>
 </td></tr>
@@ -300,10 +276,10 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">    (<a class="code hl_struct" href="structallocator__ops__type.html">allocator_ops_type</a>){.allocate_f_p = <a class="code hl_function" href="#a51d4c17b5238dec3db8e52948f574fa2">std_allocate</a>, .reallocate_f_p = <a class="code hl_function" href="#ae9e0c9c4fdca4c400af08d8f86b3444d">std_reallocate</a>, .deallocate_f_p = <a class="code hl_function" href="#a6059379efaf2e9b84f8aa87889257b0b">std_deallocate</a>}</div>
-<div class="ttc" id="astd__allocator_8h_html_a51d4c17b5238dec3db8e52948f574fa2"><div class="ttname"><a href="#a51d4c17b5238dec3db8e52948f574fa2">std_allocate</a></div><div class="ttdeci">static void * std_allocate(void *context_ptr, size_t alignment, size_t size)</div><div class="ttdoc">malloc wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:31</div></div>
-<div class="ttc" id="astd__allocator_8h_html_a6059379efaf2e9b84f8aa87889257b0b"><div class="ttname"><a href="#a6059379efaf2e9b84f8aa87889257b0b">std_deallocate</a></div><div class="ttdeci">static void std_deallocate(void *context_ptr, void *mem_ptr)</div><div class="ttdoc">free wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:65</div></div>
-<div class="ttc" id="astd__allocator_8h_html_ae9e0c9c4fdca4c400af08d8f86b3444d"><div class="ttname"><a href="#ae9e0c9c4fdca4c400af08d8f86b3444d">std_reallocate</a></div><div class="ttdeci">static void * std_reallocate(void *context_ptr, void *mem_ptr, size_t alignment, size_t old_size, size_t new_size)</div><div class="ttdoc">realloc wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.h:52</div></div>
+<div class="line">    (<a class="code hl_struct" href="structallocator__ops__type.html">allocator_ops_type</a>){.allocate_f_ptr = <a class="code hl_function" href="#a0fa83e50b4fd85cbb9a5ea6ff70fd84c">std_allocate</a>, .reallocate_f_ptr = <a class="code hl_function" href="#a417d2c45647b13b4572863e94fa07512">std_reallocate</a>, .deallocate_f_ptr = <a class="code hl_function" href="#ac15e32b15c25c8ead9e05675fdf62776">std_deallocate</a>}</div>
+<div class="ttc" id="astd__allocator_8h_html_a0fa83e50b4fd85cbb9a5ea6ff70fd84c"><div class="ttname"><a href="#a0fa83e50b4fd85cbb9a5ea6ff70fd84c">std_allocate</a></div><div class="ttdeci">void * std_allocate(void *context_ptr, size_t alignment, size_t size)</div><div class="ttdoc">malloc wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.c:7</div></div>
+<div class="ttc" id="astd__allocator_8h_html_a417d2c45647b13b4572863e94fa07512"><div class="ttname"><a href="#a417d2c45647b13b4572863e94fa07512">std_reallocate</a></div><div class="ttdeci">void * std_reallocate(void *context_ptr, void *mem_ptr, size_t alignment, size_t old_size, size_t new_size)</div><div class="ttdoc">realloc wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.c:11</div></div>
+<div class="ttc" id="astd__allocator_8h_html_ac15e32b15c25c8ead9e05675fdf62776"><div class="ttname"><a href="#ac15e32b15c25c8ead9e05675fdf62776">std_deallocate</a></div><div class="ttdeci">void std_deallocate(void *context_ptr, void *mem_ptr)</div><div class="ttdoc">free wrapper to allocate memory.</div><div class="ttdef"><b>Definition</b> std_allocator.c:15</div></div>
 <div class="ttc" id="astructallocator__ops__type_html"><div class="ttname"><a href="structallocator__ops__type.html">allocator_ops_type</a></div><div class="ttdoc">struct interface for allocator operations.</div><div class="ttdef"><b>Definition</b> allocator_ops.h:13</div></div>
 </div><!-- fragment -->
 <p>Static <code><a class="el" href="structallocator__ops__type.html" title="struct interface for allocator operations.">allocator_ops_type</a></code>-typed struct with preset standard allocation operations for convienience. </p>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['values_0',['values',['../structT__queue__type.html#a2a4faefcf087147a406f19e7357c94e9',1,'T_queue_type::values'],['../structT__stack__type.html#aef668e9542c310036d8cfb26e1244f0b',1,'T_stack_type::values']]]
+  ['reallocate_5ff_5fptr_0',['reallocate_f_ptr',['../structallocator__ops__type.html#ab0e4e198228e9284b6941b02e698a5e8',1,'allocator_ops_type']]]
 ];
