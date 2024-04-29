@@ -119,7 +119,10 @@ Macros</h2></td></tr>
 <tr class="memitem:ae17cb099b4c9aee7835032339b5a9e0d" id="r_ae17cb099b4c9aee7835032339b5a9e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;&#160;&#160;int</td></tr>
 <tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value type. Is undefined once header is included.  <br /></td></tr>
 <tr class="separator:ae17cb099b4c9aee7835032339b5a9e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd37713baee33bbd2ccb913392d8373e" id="r_acd37713baee33bbd2ccb913392d8373e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd37713baee33bbd2ccb913392d8373e">hashtable_for_each</a>(hashtable_ptr,  index,  key,  value)&#160;&#160;&#160;hashtable_for_each_(hashtable_ptr, index, key, value)</td></tr>
+<tr class="memitem:ac6003731b7f4121aa21168c524e5cc13" id="r_ac6003731b7f4121aa21168c524e5cc13"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6003731b7f4121aa21168c524e5cc13">hashtable_for_each_</a>(hashtable_ptr,  index,  key,  value)</td></tr>
+<tr class="memdesc:ac6003731b7f4121aa21168c524e5cc13"><td class="mdescLeft">&#160;</td><td class="mdescRight">internal macro for hashtable iteration  <br /></td></tr>
+<tr class="separator:ac6003731b7f4121aa21168c524e5cc13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd37713baee33bbd2ccb913392d8373e" id="r_acd37713baee33bbd2ccb913392d8373e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd37713baee33bbd2ccb913392d8373e">hashtable_for_each</a>(hashtable_ptr,  index,  key,  value)&#160;&#160;&#160;<a class="el" href="#ac6003731b7f4121aa21168c524e5cc13">hashtable_for_each_</a>(hashtable_ptr, index, key, value)</td></tr>
 <tr class="memdesc:acd37713baee33bbd2ccb913392d8373e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the non-empty slots in the hashtable in arbitary order.  <br /></td></tr>
 <tr class="separator:acd37713baee33bbd2ccb913392d8373e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58a9b9662f87dfedd00cc6fd5dde7852" id="r_a58a9b9662f87dfedd00cc6fd5dde7852"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a58a9b9662f87dfedd00cc6fd5dde7852">KEY_IS_EQUAL</a>(a,  b)&#160;&#160;&#160;((a) == (b))</td></tr>
@@ -262,7 +265,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">value</span>&#160;)&#160;&#160;&#160;hashtable_for_each_(hashtable_ptr, index, key, value)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">value</span>&#160;)&#160;&#160;&#160;<a class="el" href="#ac6003731b7f4121aa21168c524e5cc13">hashtable_for_each_</a>(hashtable_ptr, index, key, value)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -279,6 +282,43 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="hashtable_2hashtable_8c-example.html#a1">hashtable/hashtable.c</a>.</dd>
 </dl>
+
+</div>
+</div>
+<a id="ac6003731b7f4121aa21168c524e5cc13" name="ac6003731b7f4121aa21168c524e5cc13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6003731b7f4121aa21168c524e5cc13">&#9670;&#160;</a></span>hashtable_for_each_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define hashtable_for_each_</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">hashtable_ptr, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">index, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">key, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">value</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((index) = 0; (index) &lt;= (hashtable_ptr)-&gt;index_mask; (index)++)             \</div>
+<div class="line">        if ((hashtable_ptr)-&gt;slots[(index)].offset != <a class="code hl_define" href="#a5f74712d6f362d854f50f17520bb95d0">EMPTY_HASHTABLE_SLOT_OFFSET</a> &amp;&amp; \</div>
+<div class="line">            ((key) = (hashtable_ptr)-&gt;slots[(index)].key, (value) = (hashtable_ptr)-&gt;slots[(index)].value, <span class="keyword">true</span>))</div>
+<div class="ttc" id="ahashtable_8h_html_a5f74712d6f362d854f50f17520bb95d0"><div class="ttname"><a href="#a5f74712d6f362d854f50f17520bb95d0">EMPTY_HASHTABLE_SLOT_OFFSET</a></div><div class="ttdeci">#define EMPTY_HASHTABLE_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> hashtable.h:50</div></div>
+</div><!-- fragment -->
+<p>internal macro for hashtable iteration </p>
 
 </div>
 </div>

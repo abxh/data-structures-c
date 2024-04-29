@@ -109,7 +109,11 @@ Macros</h2></td></tr>
 <tr class="memitem:ae17cb099b4c9aee7835032339b5a9e0d" id="r_ae17cb099b4c9aee7835032339b5a9e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;&#160;&#160;int</td></tr>
 <tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value type. Is undefined after header is included.  <br /></td></tr>
 <tr class="separator:ae17cb099b4c9aee7835032339b5a9e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20cc87a5340b078c162c0554f74f9f54" id="r_a20cc87a5340b078c162c0554f74f9f54"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20cc87a5340b078c162c0554f74f9f54">stack_for_each</a>(stack_ptr,  count,  value)&#160;&#160;&#160;stack_for_each_(stack_ptr, count, value)</td></tr>
+<tr class="memitem:aa918f9196f917aaf462eccb683f079e8" id="r_aa918f9196f917aaf462eccb683f079e8"><td class="memItemLeft" align="right" valign="top"><a id="aa918f9196f917aaf462eccb683f079e8" name="aa918f9196f917aaf462eccb683f079e8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>stack_for_each_</b>(stack_ptr,  count,  value)&#160;&#160;&#160;    for ((count) = (stack_ptr)-&gt;count; (count) &gt; 0 &amp;&amp; ((value) = (stack_ptr)-&gt;values[(count) - 1], true); (count)--)</td></tr>
+<tr class="memdesc:aa918f9196f917aaf462eccb683f079e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">internal macro for stack iteration <br /></td></tr>
+<tr class="separator:aa918f9196f917aaf462eccb683f079e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20cc87a5340b078c162c0554f74f9f54" id="r_a20cc87a5340b078c162c0554f74f9f54"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20cc87a5340b078c162c0554f74f9f54">stack_for_each</a>(stack_ptr,  count,  value)&#160;&#160;&#160;<a class="el" href="#aa918f9196f917aaf462eccb683f079e8">stack_for_each_</a>(stack_ptr, count, value)</td></tr>
 <tr class="memdesc:a20cc87a5340b078c162c0554f74f9f54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the stack from the top value or the first-to-be-popped value.  <br /></td></tr>
 <tr class="separator:a20cc87a5340b078c162c0554f74f9f54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add51b53e8b628f95078327028dccb20c" id="r_add51b53e8b628f95078327028dccb20c"><td class="memItemLeft" align="right" valign="top"><a id="add51b53e8b628f95078327028dccb20c" name="add51b53e8b628f95078327028dccb20c"></a>
@@ -185,7 +189,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">value</span>&#160;)&#160;&#160;&#160;stack_for_each_(stack_ptr, count, value)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname">value</span>&#160;)&#160;&#160;&#160;<a class="el" href="#aa918f9196f917aaf462eccb683f079e8">stack_for_each_</a>(stack_ptr, count, value)</td>
         </tr>
       </table>
 </div><div class="memdoc">
