@@ -11,7 +11,7 @@ var searchData=
   ['v_5fqueue_5fdestroy_8',['V_queue_destroy',['../queue_8h.html#a1efbfb5d07fc29bfe273712cf3241b61',1,'queue.h']]],
   ['v_5fqueue_5fenqueue_9',['V_queue_enqueue',['../queue_8h.html#a2d358f28df1ce4db590f6a720a274f35',1,'queue.h']]],
   ['v_5fqueue_5ffront_10',['V_queue_front',['../queue_8h.html#aef1c0a5e062d73e9507a12ed6baae492',1,'queue.h']]],
-  ['v_5fqueue_5fgrow_11',['V_queue_grow',['../queue_8h.html#ab0250d031f30195d6a4a19b7ef37dca0',1,'queue.h']]],
+  ['v_5fqueue_5fgrow_11',['V_queue_grow',['../queue_8h.html#a03254269acacbe7fcb607a5012c2d992',1,'queue.h']]],
   ['v_5fqueue_5fis_5fempty_12',['V_queue_is_empty',['../queue_8h.html#af5f12fd4c9f2d2243fc637075083f2b0',1,'queue.h']]],
   ['v_5fqueue_5fpeek_13',['V_queue_peek',['../queue_8h.html#afb199f2de72ecf271c8f3abbfa87f373',1,'queue.h']]],
   ['v_5fqueue_5fpeek_5ffirst_14',['V_queue_peek_first',['../queue_8h.html#a4b3ed69e53836d91be532eb19f9f6c67',1,'queue.h']]],

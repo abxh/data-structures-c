@@ -162,9 +162,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a79d7cc2f91a7aa6166b00115cdbd794e" id="r_a79d7cc2f91a7aa6166b00115cdbd794e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a79d7cc2f91a7aa6166b00115cdbd794e">V_queue_peek_last</a> (const <a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr)</td></tr>
 <tr class="memdesc:a79d7cc2f91a7aa6166b00115cdbd794e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek at the queue and get it's last-to-be-dequeued value.  <br /></td></tr>
 <tr class="separator:a79d7cc2f91a7aa6166b00115cdbd794e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0250d031f30195d6a4a19b7ef37dca0" id="r_ab0250d031f30195d6a4a19b7ef37dca0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab0250d031f30195d6a4a19b7ef37dca0">V_queue_grow</a> (<a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr, size_t new_capacity)</td></tr>
-<tr class="memdesc:ab0250d031f30195d6a4a19b7ef37dca0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize and grow the queue array manually.  <br /></td></tr>
-<tr class="separator:ab0250d031f30195d6a4a19b7ef37dca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03254269acacbe7fcb607a5012c2d992" id="r_a03254269acacbe7fcb607a5012c2d992"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03254269acacbe7fcb607a5012c2d992">V_queue_grow</a> (<a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr, size_t new_capacity)</td></tr>
+<tr class="memdesc:a03254269acacbe7fcb607a5012c2d992"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize and grow the queue array manually.  <br /></td></tr>
+<tr class="separator:a03254269acacbe7fcb607a5012c2d992"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d358f28df1ce4db590f6a720a274f35" id="r_a2d358f28df1ce4db590f6a720a274f35"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d358f28df1ce4db590f6a720a274f35">V_queue_enqueue</a> (<a class="el" href="structV__queue__type.html">V_queue_type</a> *queue_ptr, <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
 <tr class="memdesc:a2d358f28df1ce4db590f6a720a274f35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueue a value onto the queue.  <br /></td></tr>
 <tr class="separator:a2d358f28df1ce4db590f6a720a274f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -697,8 +697,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab0250d031f30195d6a4a19b7ef37dca0" name="ab0250d031f30195d6a4a19b7ef37dca0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0250d031f30195d6a4a19b7ef37dca0">&#9670;&#160;</a></span>V_queue_grow()</h2>
+<a id="a03254269acacbe7fcb607a5012c2d992" name="a03254269acacbe7fcb607a5012c2d992"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03254269acacbe7fcb607a5012c2d992">&#9670;&#160;</a></span>V_queue_grow()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -707,7 +707,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="hashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> V_queue_grow </td>
+          <td class="memname">static bool V_queue_grow </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structV__queue__type.html">V_queue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em>, </span></td>
         </tr>

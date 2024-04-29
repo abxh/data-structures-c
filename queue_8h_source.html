@@ -295,7 +295,7 @@ $(function() { codefold.init(0); });
 </div>
 <div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span> </div>
 <div class="foldopen" id="foldopen00350" data-start="{" data-end="}">
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno"><a class="line" href="queue_8h.html#ab0250d031f30195d6a4a19b7ef37dca0">  350</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="queue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(QUEUE_PREFIX, grow)(QUEUE_TYPE* queue_ptr, <span class="keywordtype">size_t</span> new_capacity) {</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno"><a class="line" href="queue_8h.html#a03254269acacbe7fcb607a5012c2d992">  350</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="macros_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(QUEUE_PREFIX, grow)(QUEUE_TYPE* queue_ptr, <span class="keywordtype">size_t</span> new_capacity) {</div>
 <div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>    assert(NULL != queue_ptr);</div>
 <div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span> </div>
 <div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>    <span class="keywordtype">size_t</span> old_capacity = queue_ptr-&gt;index_mask + 1;</div>
