@@ -20,6 +20,10 @@ uintptr_t align_forward(uintptr_t ptr, size_t align) {
     //     p = q * a + r
     // <=> r = p - q * a
 
+    // assuming r != 0:
+    //
+    //           q*(a+1)
+    //         ----------->
     //           r    a-r
     //         ----> ----->
     //       q*a   p     p+a-r

@@ -3,11 +3,7 @@
  * @brief Murmur3 hash hashing function. 
  * @note Murmur3 hash is **not** a cryptographic hashing function.
  *
- * Original Source:
- *   @li http://code.google.com/p/smhasher/source/browse/trunk/MurmurHash3.cpp
- *
- * MurmurHash3 was written by Austin Appleby, and is placed in the public
- * domain. The author hereby disclaims copyright to this source code.
+ * MurmurHash3 was written by Austin Appleby, and is placed in the public domain. 
  */
 
 #pragma once

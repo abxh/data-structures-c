@@ -367,10 +367,10 @@ static inline VALUE_TYPE JOIN(QUEUE_PREFIX, grow)(QUEUE_TYPE* queue_ptr, size_t 
         assert(n + m == queue_ptr->count);
 
         if (n <= m) {
-            memcpy(&queue_ptr->values[old_capacity], &queue_ptr->values[0], n);
+            memcpy(&queue_ptr->values[old_capacity], &queue_ptr->values[0], sizeof(VALUE_TYPE) * n);
             queue_ptr->end_index += old_capacity;
         } else {
-            memcpy(&queue_ptr->values[new_capacity - m], &queue_ptr->values[queue_ptr->start_index], m);
+            memcpy(&queue_ptr->values[new_capacity - m], &queue_ptr->values[queue_ptr->start_index], sizeof(VALUE_TYPE) * m);
             queue_ptr->start_index = new_capacity - m;
         }
     }

@@ -1,16 +1,16 @@
 /**
  * @file arena.h
  * @brief arena allocator.
- * @todo document this completely.
  *
  * Example of how `arena.h` header file is used in practice can be found in `hashtable/hashtable.c`.
  */
 
 #pragma once
 
+#include <stdlib.h> // size_t
+#include <string.h> // strlen, memcpy
+
 #include "allocator_ops.h" // allocator_ops
-#include <stdlib.h>        // size_t
-#include <string.h>        // strlen, memcpy
 
 typedef struct arena_type {
     size_t buffer_length;
@@ -57,5 +57,3 @@ static inline void* arena_reallocate(void* arena_ptr, void* old_memory, size_t o
 void arena_deallocate(void* arena_ptr, void* ptr);
 
 void arena_deallocate_all(void* arena_ptr);
-
-#undef DEFAULT_ALIGNMENT
