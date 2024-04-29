@@ -13,17 +13,17 @@ MACRO_EXPANSION      = YES
 EXPAND_ONLY_PREDEF   = YES
 
 PREDEFINED = \
-             "__STACK_PREFIX=T_stack" \
-             "STACK_TYPE=T_stack_type" \
-             "__stack_for_each(stack_ptr, count, value)=" \
-             "__T_stack_is_empty=" \
-             "__QUEUE_PREFIX=T_queue" \
-             "QUEUE_TYPE=T_queue_type" \
-             "__queue_for_each(stack_ptr, count, value)=" \
-             "__T_queue_is_empty=" \
+             "STACK_PREFIX=V_stack" \
+             "STACK_TYPE=V_stack_type" \
+             \
+             "QUEUE_PREFIX=V_queue" \
+             "QUEUE_TYPE=V_queue_type" \
+             \
+             "HASHTABLE_PREFIX=K_to_V_hashtable" \
+             "HASHTABLE_TYPE=K_to_V_hashtable_type" \
+             "HASHTABLE_SLOT_TYPE=K_to_V_hashtable_type"
 
 EXPAND_AS_DEFINED = \
                     PASTE \
                     CONCAT \
                     JOIN
-

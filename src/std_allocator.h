@@ -4,17 +4,15 @@
  *        to the defined struct interface of allocator operations.
  *
  * Refer to following pages for more extensive documentation:
- * - https://man7.org/linux/man-pages/man3/malloc.3.html
- * - https://man7.org/linux/man-pages/man3/realloc.3p.html
+ *   @li https://man7.org/linux/man-pages/man3/malloc.3.html
+ *   @li https://man7.org/linux/man-pages/man3/realloc.3p.html
  */
 
 #pragma once
 
-#include "allocator_ops.h" // allocator_ops_type
-#include <stdlib.h>        // size_t, malloc, realloc, free, size_t
+#include <stdlib.h> // size_t, malloc, realloc, free
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
+#include "allocator_ops.h" // allocator_ops_type
 
 /**
  * @brief `malloc` wrapper to allocate memory.
@@ -25,12 +23,10 @@
  * @param[in] size Amount of memory to allocate in bytes.
  * @return The stack pointer.
  * @retval NULL
- * - Implementation-defined, but may do so if size is 0.
- * - If no memory space is available.
+ *   @li Implementation-defined, but may do so if size is 0.
+ *   @li If no memory space is available.
  */
-static inline void* std_allocate(void* context_ptr, size_t alignment, size_t size) {
-    return malloc(size);
-}
+void* std_allocate(void* context_ptr, size_t alignment, size_t size);
 
 /**
  * @brief `realloc` wrapper to allocate memory.
@@ -46,12 +42,10 @@ static inline void* std_allocate(void* context_ptr, size_t alignment, size_t siz
  * @return A new pointer, pointing to a new_size-sized buffer with old contents from the buffer at mem_ptr.
            If the new pointer is not NULL, then the new pointer shall be used in place of mem_ptr.
  * @retval NULL
- * - Implementation-defined, but may do so if new_size is 0.
- * - If no memory space is available.
+ *   @li Implementation-defined, but may do so if new_size is 0.
+ *   @li If no memory space is available.
  */
-static inline void* std_reallocate(void* context_ptr, void* mem_ptr, size_t alignment, size_t old_size, size_t new_size) {
-    return realloc(mem_ptr, new_size);
-}
+void* std_reallocate(void* context_ptr, void* mem_ptr, size_t alignment, size_t old_size, size_t new_size);
 
 /**
  * @brief `free` wrapper to allocate memory.
@@ -62,15 +56,10 @@ static inline void* std_reallocate(void* context_ptr, void* mem_ptr, size_t alig
  * @param[in] context_ptr (unused)
  * @param[in, out] mem_ptr Pointer to the memory buffer to be flagged as free. If NULL, then no operation is done.
  */
-static inline void std_deallocate(void* context_ptr, void* mem_ptr) {
-    return free(mem_ptr);
-}
-
-#pragma GCC diagnostic pop
+void std_deallocate(void* context_ptr, void* mem_ptr);
 
 /**
  * @brief Static `allocator_ops_type`-typed struct with preset standard allocation operations for convienience.
  */
-
 static const allocator_ops_type std_allocator_ops =
-    (allocator_ops_type){.allocate_f_p = std_allocate, .reallocate_f_p = std_reallocate, .deallocate_f_p = std_deallocate};
+    (allocator_ops_type){.allocate_f_ptr = std_allocate, .reallocate_f_ptr = std_reallocate, .deallocate_f_ptr = std_deallocate};

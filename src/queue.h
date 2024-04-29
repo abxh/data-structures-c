@@ -1,18 +1,19 @@
 /**
  * @file queue.h
- * @brief Queue data structure based on a dynamic circular buffer.
+ * @brief Queue data structure based on a dynamic circular array.
  *
  * The array is only grown - not shrunk - for performance reasons.
  *
- * Note to distinguish between empty and full circular buffer with a fixed
- * capacity, extra information must be stored in the form of a variable
- * (count, nullables), or queue must reserve a empty slot at all times
- * ("waisting" some memory in the array). See:
- * https://en.wikipedia.org/wiki/Circular_buffer#Circular_buffer_mechanics
+ * Implementation details:
+ * - To distinguish between empty and full circular array with a fixed
+ *   capacity, extra information must be stored in the form of a variable
+ *   (count, nullables), or queue must reserve a empty slot at all times
+ *   ("waisting" some memory in the array). See:
+ *   https://en.wikipedia.org/wiki/Circular_buffer#Circular_buffer_mechanics
  *
  * Other Source(s):
- * - for naming: https://en.wikipedia.org/wiki/Queue_(abstract_data_type)
- * - for resizing: https://queueoverflow.com/questions/55343683/resizing-of-the-circular-queue-using-dynamic-array
+ *   @li for naming: https://en.wikipedia.org/wiki/Queue_(abstract_data_type)
+ *   @li for resizing: https://queueoverflow.com/questions/55343683/resizing-of-the-circular-queue-using-dynamic-array
  */
 
 /**
@@ -32,26 +33,9 @@
 #include "macros.h"        // JOIN
 #include "std_allocator.h" // std_allocator_ops
 
-#ifndef __queue_for_each
-#define __queue_for_each(queue_ptr, index, value)                                                                                 \
-    for ((index) = (queue_ptr)->start_index; (index) != (queue_ptr)->end_index && ((value) = (queue_ptr)->values[(index)], true); \
-         (index) = ((index) + 1) & (queue_ptr)->index_mask)
-#endif
-
-/**
- * @def queue_for_each
- * @brief Iterate over the values in the queue from the front value or first-to-be-dequeued value.
- * @param[in] queue_ptr queue pointer.
- * @param[out] index The index of the value.
- * @param[out] value Value at `index` as `VALUE_TYPE`.
- */
-#ifndef queue_for_each
-#define queue_for_each(queue_ptr, count, value) __queue_for_each(queue_ptr, count, value)
-#endif
-
 /**
  * @def VALUE_TYPE
- * @brief The value type.
+ * @brief The value type. Is undefined once header is included.
  * @attention This must be manually defined before including this header file.
  *
  * Is defaulted to int, so the editor's LSP works better.
@@ -61,14 +45,33 @@
 #define VALUE_TYPE int
 #endif
 
+/// @cond DO_NOT_DOCUMENT
+#define queue_for_each_(queue_ptr, index, value)                                                                                  \
+    for ((index) = (queue_ptr)->start_index; (index) != (queue_ptr)->end_index && ((value) = (queue_ptr)->values[(index)], true); \
+         (index) = ((index) + 1) & (queue_ptr)->index_mask)
+/// @endcond
+
+/**
+ * @def queue_for_each
+ * @brief Iterate over the values in the queue from the front value or first-to-be-dequeued value.
+ * @param[in] queue_ptr queue pointer.
+ * @param[out] index The index of the value.
+ * @param[out] value Value at `index` as `VALUE_TYPE`.
+ */
+#ifndef queue_for_each
+#define queue_for_each(queue_ptr, index, value) queue_for_each_(queue_ptr, index, value)
+#endif
+
 /**
  * @def PREFIX
- * @brief The queue prefix. Set to VALUE_TYPE\#\#_\#\#queue, unless specified otherwise.
+ * @brief The queue prefix. Set to VALUE_TYPE\#\#_\#\#queue, unless specified otherwise. Is undefined once header is included.
  */
 #ifdef PREFIX
-#define __QUEUE_PREFIX PREFIX
-#elif !defined(__QUEUE_PREFIX)
-#define __QUEUE_PREFIX JOIN(VALUE_TYPE, queue)
+#define QUEUE_PREFIX PREFIX
+#endif
+
+#ifndef QUEUE_PREFIX
+#define QUEUE_PREFIX JOIN(VALUE_TYPE, queue)
 #endif
 
 #ifndef PREFIX
@@ -76,25 +79,25 @@
 #undef PREFIX // above is for doxygen documentation.
 #endif
 
-/* The queue type name. Set to VALUE_TYPE##_##type. */
+/* The queue type name. Set to PREFIX##_##type. */
 #ifndef QUEUE_TYPE
-#define QUEUE_TYPE JOIN(__QUEUE_PREFIX, type)
+#define QUEUE_TYPE JOIN(QUEUE_PREFIX, type)
 #endif
 
-/* Aliases. Used by other functions. Will be cleaned up by the end. */
-#ifndef __T_queue_is_empty
-#define __T_queue_is_empty JOIN(__QUEUE_PREFIX, is_empty)
-#endif
+/* Aliases, which will be cleaned up by the end. */
+/// @cond DO_NOT_DOCUMENT
+#define V_queue_is_empty_ JOIN(QUEUE_PREFIX, is_empty)
+/// @endcond
 
 /**
  * @brief Generated queue struct type for a value type.
  */
 typedef struct {
-    size_t count;       ///< number of values in the circular buffer
-    size_t index_mask;  ///< the mask used to wrap indicies around the circular buffer.
+    size_t count;       ///< number of values in the circular array
+    size_t index_mask;  ///< the mask used to wrap indicies around the circular array.
     size_t start_index; ///< index used to track the front of the queue.
     size_t end_index;   ///< index used to track the back of the queue.
-    VALUE_TYPE* values; ///< buffer containing the values in the queue.
+    VALUE_TYPE* values; ///< pointer to array containing the values in the queue.
 
     void* allocator_context_ptr;      ///< pointer to internal data in an allocator.
     allocator_ops_type allocator_ops; ///< allocator operation functions grouped together as a struct.
@@ -106,26 +109,25 @@ typedef struct {
  * @param[in] initial_pow2_capacity The initial capacity of the queue, which must be a power of 2 and not 1.
  * @param[in] allocator_context_ptr Pointer to allocator context.
  * @param[in] allocator_ops Struct pointing to allocator operations.
- * @return The queue pointer.
+ * @return Pointer to the created queue.
  * @retval `NULL`
- * - If `initial_pow2_capacity` is 0 or 1.
- * - If `initial_pow2_capacity * sizeof(VALUE_TYPE)` cannot be expressed with `size_t`.
- * - If no memory space is available.
+ *   @li If `initial_pow2_capacity` is not a power of 2 or is equal to 1.
+ *   @li If `initial_pow2_capacity * sizeof(VALUE_TYPE)` cannot be expressed with `size_t`.
+ *   @li If no memory space is available.
  */
-static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, create_with_specified)(size_t initial_pow2_capacity, void* allocator_context_ptr,
-                                                                      allocator_ops_type allocator_ops) {
-    if (!is_pow2(initial_pow2_capacity) || initial_pow2_capacity == 0 || initial_pow2_capacity - 1 == 0 ||
-        initial_pow2_capacity > SIZE_MAX / sizeof(VALUE_TYPE)) {
+static inline QUEUE_TYPE* JOIN(QUEUE_PREFIX, create_with_specified)(size_t initial_pow2_capacity, void* allocator_context_ptr,
+                                                                    allocator_ops_type allocator_ops) {
+    if (!is_pow2(initial_pow2_capacity) || initial_pow2_capacity - 1 == 0 || initial_pow2_capacity > SIZE_MAX / sizeof(VALUE_TYPE)) {
         return NULL;
     }
-    QUEUE_TYPE* queue_ptr = (QUEUE_TYPE*)allocator_ops.allocate_f_p(allocator_context_ptr, alignof(QUEUE_TYPE), sizeof(QUEUE_TYPE));
+    QUEUE_TYPE* queue_ptr = (QUEUE_TYPE*)allocator_ops.allocate_f_ptr(allocator_context_ptr, alignof(QUEUE_TYPE), sizeof(QUEUE_TYPE));
     if (!queue_ptr) {
         return NULL;
     }
-    queue_ptr->values = (VALUE_TYPE*)allocator_ops.allocate_f_p(allocator_context_ptr, alignof(VALUE_TYPE),
-                                                                sizeof(VALUE_TYPE) * initial_pow2_capacity);
+    queue_ptr->values = (VALUE_TYPE*)allocator_ops.allocate_f_ptr(allocator_context_ptr, alignof(VALUE_TYPE),
+                                                                  sizeof(VALUE_TYPE) * initial_pow2_capacity);
     if (!queue_ptr->values) {
-        free(queue_ptr);
+        allocator_ops.deallocate_f_ptr(allocator_context_ptr, queue_ptr);
         return NULL;
     }
     queue_ptr->count = 0;
@@ -140,13 +142,13 @@ static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, create_with_specified)(size_t ini
 }
 
 /**
- * @brief Create a queue with a default capacity and standard allocator (aka `malloc`).
+ * @brief Create a queue with a default capacity (512) and standard allocator (aka `malloc`).
  *
  * @return The queue pointer.
  * @retval `NULL` If no memory space is available.
  */
-static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, create)(void) {
-    return JOIN(__QUEUE_PREFIX, create_with_specified)(512, NULL, std_allocator_ops);
+static inline QUEUE_TYPE* JOIN(QUEUE_PREFIX, create)(void) {
+    return JOIN(QUEUE_PREFIX, create_with_specified)(512, NULL, std_allocator_ops);
 }
 
 /**
@@ -154,15 +156,15 @@ static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, create)(void) {
  *
  * @warning May not be called twice in a row on the same queue.
  */
-static inline void JOIN(__QUEUE_PREFIX, destroy)(QUEUE_TYPE* queue_ptr) {
+static inline void JOIN(QUEUE_PREFIX, destroy)(QUEUE_TYPE* queue_ptr) {
     if (!queue_ptr) {
         return;
     }
     void* allocator_context_ptr_copy = queue_ptr->allocator_context_ptr;
     allocator_ops_type allocator_ops_copy = queue_ptr->allocator_ops;
 
-    allocator_ops_copy.deallocate_f_p(allocator_context_ptr_copy, queue_ptr->values);
-    allocator_ops_copy.deallocate_f_p(allocator_context_ptr_copy, queue_ptr);
+    allocator_ops_copy.deallocate_f_ptr(allocator_context_ptr_copy, queue_ptr->values);
+    allocator_ops_copy.deallocate_f_ptr(allocator_context_ptr_copy, queue_ptr);
 }
 
 /**
@@ -171,16 +173,16 @@ static inline void JOIN(__QUEUE_PREFIX, destroy)(QUEUE_TYPE* queue_ptr) {
  * @param[in] queue_ptr The pointer of the queue to clone.
  * @return A pointer to the clone of the original queue.
  * @retval `NULL`
- * - If no memory space is available.
- * - If queue_ptr is `NULL`.
+ *   @li If no memory space is available.
+ *   @li If queue_ptr is `NULL`.
  */
-static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, clone)(const QUEUE_TYPE* queue_ptr) {
+static inline QUEUE_TYPE* JOIN(QUEUE_PREFIX, clone)(const QUEUE_TYPE* queue_ptr) {
     if (!queue_ptr) {
         return NULL;
     }
     size_t capacity = queue_ptr->index_mask + 1;
     QUEUE_TYPE* other_queue_ptr =
-        JOIN(__QUEUE_PREFIX, create_with_specified)(capacity, queue_ptr->allocator_context_ptr, queue_ptr->allocator_ops);
+        JOIN(QUEUE_PREFIX, create_with_specified)(capacity, queue_ptr->allocator_context_ptr, queue_ptr->allocator_ops);
     if (!other_queue_ptr) {
         return NULL;
     }
@@ -209,9 +211,9 @@ static inline QUEUE_TYPE* JOIN(__QUEUE_PREFIX, clone)(const QUEUE_TYPE* queue_pt
  * Asserts queue_ptr is not `NULL`.
  *
  * @param[in] queue_ptr The queue pointer.
- * @return The number of elements as `size_t`.
+ * @return The number of values as `size_t`.
  */
-static inline size_t JOIN(__QUEUE_PREFIX, count)(const QUEUE_TYPE* queue_ptr) {
+static inline size_t JOIN(QUEUE_PREFIX, count)(const QUEUE_TYPE* queue_ptr) {
     assert(NULL != queue_ptr);
 
     return queue_ptr->count;
@@ -225,7 +227,7 @@ static inline size_t JOIN(__QUEUE_PREFIX, count)(const QUEUE_TYPE* queue_ptr) {
  * @param[in] queue_ptr The queue pointer.
  * @return The current capacity as `size_t`.
  */
-static inline size_t JOIN(__QUEUE_PREFIX, capacity)(const QUEUE_TYPE* queue_ptr) {
+static inline size_t JOIN(QUEUE_PREFIX, capacity)(const QUEUE_TYPE* queue_ptr) {
     assert(NULL != queue_ptr);
 
     return queue_ptr->index_mask + 1;
@@ -239,7 +241,7 @@ static inline size_t JOIN(__QUEUE_PREFIX, capacity)(const QUEUE_TYPE* queue_ptr)
  * @param[in] queue_ptr The queue pointer.
  * @return A boolean indicating whether the queue is empty.
  */
-static inline bool JOIN(__QUEUE_PREFIX, is_empty)(const QUEUE_TYPE* queue_ptr) {
+static inline bool JOIN(QUEUE_PREFIX, is_empty)(const QUEUE_TYPE* queue_ptr) {
     assert(NULL != queue_ptr);
 
     return 0 == queue_ptr->count;
@@ -254,7 +256,7 @@ static inline bool JOIN(__QUEUE_PREFIX, is_empty)(const QUEUE_TYPE* queue_ptr) {
  * @param[in] index Index at which the value lies.
  * @return The value as `VALUE_TYPE`.
  */
-static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, at)(const QUEUE_TYPE* queue_ptr, size_t index) {
+static inline VALUE_TYPE JOIN(QUEUE_PREFIX, at)(const QUEUE_TYPE* queue_ptr, size_t index) {
     assert(NULL != queue_ptr);
     assert(index < queue_ptr->count);
 
@@ -271,9 +273,9 @@ static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, at)(const QUEUE_TYPE* queue_ptr, s
  * @param[in] queue_ptr The queue pointer.
  * @return The value as `VALUE_TYPE`.
  */
-static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, front)(const QUEUE_TYPE* queue_ptr) {
+static inline VALUE_TYPE JOIN(QUEUE_PREFIX, front)(const QUEUE_TYPE* queue_ptr) {
     assert(NULL != queue_ptr);
-    assert(!__T_queue_is_empty(queue_ptr));
+    assert(!V_queue_is_empty_(queue_ptr));
 
     return queue_ptr->values[queue_ptr->start_index];
 }
@@ -286,9 +288,9 @@ static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, front)(const QUEUE_TYPE* queue_ptr
  * @param[in] queue_ptr The queue pointer.
  * @return The value as `VALUE_TYPE`.
  */
-static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, back)(const QUEUE_TYPE* queue_ptr) {
+static inline VALUE_TYPE JOIN(QUEUE_PREFIX, back)(const QUEUE_TYPE* queue_ptr) {
     assert(NULL != queue_ptr);
-    assert(!__T_queue_is_empty(queue_ptr));
+    assert(!V_queue_is_empty_(queue_ptr));
 
     return queue_ptr->values[(queue_ptr->end_index - 1) & queue_ptr->index_mask];
 }
@@ -301,8 +303,8 @@ static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, back)(const QUEUE_TYPE* queue_ptr)
  * @param[in] queue_ptr The queue pointer.
  * @return The value as `VALUE_TYPE`.
  */
-static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, peek)(const QUEUE_TYPE* queue_ptr) {
-    return JOIN(__QUEUE_PREFIX, front)(queue_ptr);
+static inline VALUE_TYPE JOIN(QUEUE_PREFIX, peek)(const QUEUE_TYPE* queue_ptr) {
+    return JOIN(QUEUE_PREFIX, front)(queue_ptr);
 }
 
 /**
@@ -313,8 +315,8 @@ static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, peek)(const QUEUE_TYPE* queue_ptr)
  * @param[in] queue_ptr The queue pointer.
  * @return The value as `VALUE_TYPE`.
  */
-static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, peek_first)(const QUEUE_TYPE* queue_ptr) {
-    return JOIN(__QUEUE_PREFIX, front)(queue_ptr);
+static inline VALUE_TYPE JOIN(QUEUE_PREFIX, peek_first)(const QUEUE_TYPE* queue_ptr) {
+    return JOIN(QUEUE_PREFIX, front)(queue_ptr);
 }
 
 /**
@@ -325,8 +327,54 @@ static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, peek_first)(const QUEUE_TYPE* queu
  * @param[in] queue_ptr The queue pointer.
  * @return The value as `VALUE_TYPE`.
  */
-static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, peek_last)(const QUEUE_TYPE* queue_ptr) {
-    return JOIN(__QUEUE_PREFIX, back)(queue_ptr);
+static inline VALUE_TYPE JOIN(QUEUE_PREFIX, peek_last)(const QUEUE_TYPE* queue_ptr) {
+    return JOIN(QUEUE_PREFIX, back)(queue_ptr);
+}
+
+/**
+ * @brief Resize and grow the queue array manually.
+ *
+ * Asserts queue_ptr is not `NULL`.
+ *
+ * @param[in] queue_ptr The queue pointer.
+ * @param[in] new_capacity The new capacity.
+ * @return A boolean indicating whether the queue was able to be resized to grow.
+ * @retval false
+ *   @li If `new_capacity` is not a power of two.
+ *   @li If `new_capacity` is smaller than or equal to the current capacity.
+ *   @li If `new_capacity * sizeof(VALUE_TYPE)` cannot be expressed with `size_t`.
+ *   @li If no memory space is available.
+ */
+static inline VALUE_TYPE JOIN(QUEUE_PREFIX, grow)(QUEUE_TYPE* queue_ptr, size_t new_capacity) {
+    assert(NULL != queue_ptr);
+
+    size_t old_capacity = queue_ptr->index_mask + 1;
+    if (!is_pow2(new_capacity) || new_capacity <= old_capacity || new_capacity > SIZE_MAX / sizeof(VALUE_TYPE)) {
+        return false;
+    }
+    void* temp_ptr =
+        queue_ptr->allocator_ops.reallocate_f_ptr(queue_ptr->allocator_context_ptr, queue_ptr->values, alignof(VALUE_TYPE),
+                                                  sizeof(VALUE_TYPE) * old_capacity, sizeof(VALUE_TYPE) * new_capacity);
+    if (temp_ptr == NULL) {
+        return false;
+    }
+    queue_ptr->values = (VALUE_TYPE*)temp_ptr;
+    queue_ptr->index_mask = new_capacity - 1;
+    if (queue_ptr->end_index < queue_ptr->start_index) {
+        size_t n = queue_ptr->end_index;
+        size_t m = (old_capacity - queue_ptr->start_index);
+
+        assert(n + m == queue_ptr->count);
+
+        if (n <= m) {
+            memcpy(&queue_ptr->values[old_capacity], &queue_ptr->values[0], n);
+            queue_ptr->end_index += old_capacity;
+        } else {
+            memcpy(&queue_ptr->values[new_capacity - m], &queue_ptr->values[queue_ptr->start_index], m);
+            queue_ptr->start_index = new_capacity - m;
+        }
+    }
+    return true;
 }
 
 /**
@@ -335,44 +383,19 @@ static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, peek_last)(const QUEUE_TYPE* queue
  * Asserts queue_ptr is not `NULL`.
  *
  * @param[in] queue_ptr The queue pointer.
- * @param[in] value The value to work with.
+ * @param[in] value The value.
  * @return A boolean indicating whether the value was stored, depending on whether
- *         the queue could be resized when about to full.
+ *         the queue could be resized if it becomes full once the value is stored.
  * @retval false
- * - If `current capacity * sizeof(VALUE_TYPE) * 2` cannot be expressed with `size_t`.
- * - If no memory space is available.
+ *   @li If queue is resized and `2 * current capacity * sizeof(VALUE_TYPE)` cannot be expressed with `size_t`.
+ *   @li If queue is resized and no memory space is available.
  */
-static inline bool JOIN(__QUEUE_PREFIX, enqueue)(QUEUE_TYPE* queue_ptr, VALUE_TYPE value) {
+static inline bool JOIN(QUEUE_PREFIX, enqueue)(QUEUE_TYPE* queue_ptr, VALUE_TYPE value) {
     assert(NULL != queue_ptr);
 
     size_t old_capacity = queue_ptr->index_mask + 1;
-    if (queue_ptr->count + 1 == old_capacity) {
-        if (old_capacity > SIZE_MAX / sizeof(VALUE_TYPE) / 2) {
-            return false;
-        }
-        size_t new_capacity = 2 * old_capacity;
-        void* temp_ptr =
-            queue_ptr->allocator_ops.reallocate_f_p(queue_ptr->allocator_context_ptr, queue_ptr->values, alignof(VALUE_TYPE),
-                                                    sizeof(VALUE_TYPE) * old_capacity, sizeof(VALUE_TYPE) * new_capacity);
-        if (temp_ptr == NULL) {
-            return false;
-        }
-        queue_ptr->values = (VALUE_TYPE*)temp_ptr;
-        queue_ptr->index_mask = new_capacity - 1;
-        if (queue_ptr->end_index < queue_ptr->start_index) {
-            size_t n = queue_ptr->end_index;
-            size_t m = (old_capacity - queue_ptr->start_index);
-
-            assert(n + m == queue_ptr->count);
-
-            if (n <= m) {
-                memcpy(&queue_ptr->values[old_capacity], &queue_ptr->values[0], n);
-                queue_ptr->end_index += old_capacity;
-            } else {
-                memcpy(&queue_ptr->values[new_capacity - m], &queue_ptr->values[queue_ptr->start_index], m);
-                queue_ptr->start_index += old_capacity; // because new_capacity = 2 * old_capacity
-            }
-        }
+    if (queue_ptr->count + 1 == old_capacity && !JOIN(QUEUE_PREFIX, grow)(queue_ptr, 2 * old_capacity)) {
+        return false;
     }
     queue_ptr->values[queue_ptr->end_index] = value;
     queue_ptr->end_index = (queue_ptr->end_index + 1) & queue_ptr->index_mask;
@@ -389,9 +412,9 @@ static inline bool JOIN(__QUEUE_PREFIX, enqueue)(QUEUE_TYPE* queue_ptr, VALUE_TY
  * @param[in] queue_ptr The queue pointer.
  * @return The value as `VALUE_TYPE`.
  */
-static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, dequeue)(QUEUE_TYPE* queue_ptr) {
+static inline VALUE_TYPE JOIN(QUEUE_PREFIX, dequeue)(QUEUE_TYPE* queue_ptr) {
     assert(NULL != queue_ptr);
-    assert(!__T_queue_is_empty(queue_ptr));
+    assert(!V_queue_is_empty_(queue_ptr));
 
     VALUE_TYPE value = queue_ptr->values[queue_ptr->start_index];
     queue_ptr->start_index = (queue_ptr->start_index + 1) & queue_ptr->index_mask;
@@ -399,7 +422,9 @@ static inline VALUE_TYPE JOIN(__QUEUE_PREFIX, dequeue)(QUEUE_TYPE* queue_ptr) {
     return value;
 }
 
-#undef __T_queue_is_empty
-#undef __QUEUE_PREFIX
+#undef V_queue_is_empty_
+#undef PREFIX
+#undef QUEUE_PREFIX
 #undef VALUE_TYPE
 #undef QUEUE_TYPE
+#include "macros_undef.h" // undef all defined macros in `macros.h`

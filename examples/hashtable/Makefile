@@ -1,4 +1,4 @@
-name := queue
+name := hashtable
 
 .PHONY: all
 all:

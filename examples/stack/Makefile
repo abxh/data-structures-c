@@ -1,17 +1,9 @@
-CC         := cc
-CFLAGS     := -c -Wall -DDEBUG -I../../src
-LDFLAGS    :=
-SOURCES    := stack.c
-OBJECTS    := ${SOURCES:.c=.o}
-EXECUTABLE := stack.out
+name := stack
 
-all: ${SOURCES} ${EXECUTABLE}
+.PHONY: all
+all:
+	cc -I../../src/ $(wildcard ../../src/*.c) $(name).c -o $(name).out
 
-$(EXECUTABLE): ${OBJECTS}
-		${CC} ${LDFLAGS} ${OBJECTS} -o $@
-
-.c.o:
-		${CC} ${CFLAGS} $< -o $@
-
-clean: ${OBJECTS} ${EXECUTABLE}
-		rm -rf ${OBJECTS} ${EXECUTABLE}
+.PHONY: clean
+clean:
+	rm $(name).out
