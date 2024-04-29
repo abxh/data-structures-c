@@ -347,7 +347,7 @@ static inline VALUE_TYPE JOIN(QUEUE_PREFIX, peek_last)(const QUEUE_TYPE* queue_p
  *   @li If `new_capacity * sizeof(VALUE_TYPE)` cannot be expressed with `size_t`.
  *   @li If no memory space is available.
  */
-static inline VALUE_TYPE JOIN(QUEUE_PREFIX, grow)(QUEUE_TYPE* queue_ptr, size_t new_capacity) {
+static inline bool JOIN(QUEUE_PREFIX, grow)(QUEUE_TYPE* queue_ptr, size_t new_capacity) {
     assert(NULL != queue_ptr);
 
     size_t old_capacity = queue_ptr->index_mask + 1;

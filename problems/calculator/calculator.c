@@ -16,9 +16,9 @@ double pow(double, double) {
 
 #endif
 
-typedef enum { DEFAULT_TOKEN, NUMBER_TOKEN, OP_TOKEN } token_type;
+typedef enum { DEFAULTOKEN, NUMBER_TOKEN, OP_TOKEN } token_type;
 
-typedef enum { DEFAULT_OP, ADD_OP, SUB_OP, MUL_OP, DIV_OP, POW_OP, OPENING_PAREN_OP, CLOSING_PAREN_OP } operation_type;
+typedef enum { DEFAULOP, ADD_OP, SUB_OP, MUL_OP, DIV_OP, POW_OP, OPENING_PAREN_OP, CLOSING_PAREN_OP } operation_type;
 
 typedef struct {
     token_type token;
@@ -30,10 +30,10 @@ typedef struct {
 
 typedef lexeme_type lex;
 #define VALUE_TYPE lex
-#include "header-only/fixed-containers/T_queue.h"
+#include "queue.h"
 
 #define VALUE_TYPE lex
-#include "header-only/fixed-containers/T_stack.h"
+#include "stack.h"
 
 char decode_op(operation_type op) {
     switch (op) {
@@ -82,8 +82,8 @@ static const double RTR_VALUE_DEFAULT = 0.;
 static double RTR_VALUE_LAST = RTR_VALUE_DEFAULT;
 
 #define digit_to_num(v) ((v) - '0')
-#define last_token(inp_queue) (lex_queue_is_empty(inp_queue) ? DEFAULT_TOKEN : lex_queue_peek_last(inp_queue).token)
-#define last_op(inp_queue) (lex_queue_is_empty(inp_queue) ? DEFAULT_OP : lex_queue_peek_last(inp_queue).metadata.op)
+#define last_token(inp_queue) (lex_queue_is_empty(inp_queue) ? DEFAULTOKEN : lex_queue_peek_last(inp_queue).token)
+#define last_op(inp_queue) (lex_queue_is_empty(inp_queue) ? DEFAULOP : lex_queue_peek_last(inp_queue).metadata.op)
 
 double eval(char* str, ssize_t len) {
     if (len < 0) {
@@ -95,7 +95,7 @@ double eval(char* str, ssize_t len) {
     lex_stack_type* op_stack = NULL;
     lex_stack_type* num_stack = NULL;
 
-    inp_queue = lex_queue_create(len);
+    inp_queue = lex_queue_create();
     if (!inp_queue) {
         goto on_oom_error;
     }
@@ -107,7 +107,7 @@ double eval(char* str, ssize_t len) {
     size_t closing_paren_count = 0;
     bool incomplete_input = true;
 
-    operation_type sign = DEFAULT_OP;
+    operation_type sign = DEFAULOP;
 
     for (ssize_t i = 0; i < len; i++) {
         switch (str[i]) {
@@ -164,9 +164,9 @@ double eval(char* str, ssize_t len) {
             incomplete_input = false;
             if ((last_token(inp_queue) == NUMBER_TOKEN ||
                  (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) &&
-                sign != DEFAULT_OP) {
+                sign != DEFAULOP) {
                 lex_queue_enqueue(inp_queue, (lexeme_type){.token = OP_TOKEN, .metadata = {.op = sign}});
-                sign = DEFAULT_OP;
+                sign = DEFAULOP;
             } else if (last_token(inp_queue) == NUMBER_TOKEN) {
                 error_msg = "Two numbers in a row.";
                 error_index = i;
@@ -188,7 +188,7 @@ double eval(char* str, ssize_t len) {
             if (sign == SUB_OP) {
                 value = -value;
             }
-            sign = DEFAULT_OP;
+            sign = DEFAULOP;
             if (str[i + 1] == '.') {
                 if (i + 2 < len && !isdigit(str[i + 2])) {
                     error_msg = "No digits after '.'.";
@@ -217,7 +217,7 @@ double eval(char* str, ssize_t len) {
             if (str[i] == '(') {
                 incomplete_input = true;
                 error_index = i;
-                if (sign != DEFAULT_OP) {
+                if (sign != DEFAULOP) {
                     if (last_token(inp_queue) == NUMBER_TOKEN ||
                         (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) {
                         lex_queue_enqueue(inp_queue, (lexeme_type){.token = OP_TOKEN, .metadata = {.op = sign}});
@@ -226,7 +226,7 @@ double eval(char* str, ssize_t len) {
                                                                    .metadata = {.num = -(sign == SUB_OP) + (sign == ADD_OP)}});
                         lex_queue_enqueue(inp_queue, (lexeme_type){.token = OP_TOKEN, .metadata = {.op = MUL_OP}});
                     }
-                    sign = DEFAULT_OP;
+                    sign = DEFAULOP;
                 }
                 if (last_token(inp_queue) == NUMBER_TOKEN ||
                     (last_token(inp_queue) == OP_TOKEN && last_op(inp_queue) == CLOSING_PAREN_OP)) {
@@ -267,7 +267,7 @@ double eval(char* str, ssize_t len) {
         size_t index;
         lexeme_type lex;
         printf("Input queue (prefix): ");
-        T_queue_for_each(inp_queue, index, lex) {
+        queue_for_each(inp_queue, index, lex) {
             switch (lex.token) {
             case NUMBER_TOKEN:
                 printf(" %g", lex.metadata.num);
@@ -283,11 +283,11 @@ double eval(char* str, ssize_t len) {
     }
 #endif
 
-    inp_queue_postfix = lex_queue_create(lex_queue_get_count(inp_queue));
+    inp_queue_postfix = lex_queue_create();
     if (!inp_queue_postfix) {
         goto on_oom_error;
     }
-    op_stack = lex_stack_create(lex_queue_get_count(inp_queue));
+    op_stack = lex_stack_create();
     if (!op_stack) {
         goto on_oom_error;
     }
@@ -296,7 +296,7 @@ double eval(char* str, ssize_t len) {
     {
         size_t index;
         lexeme_type lex;
-        T_queue_for_each(inp_queue, index, lex) {
+        queue_for_each(inp_queue, index, lex) {
             switch (lex.token) {
             case NUMBER_TOKEN:
                 lex_queue_enqueue(inp_queue_postfix, lex);
@@ -334,7 +334,7 @@ double eval(char* str, ssize_t len) {
         size_t i;
         lexeme_type lex;
         printf("Input queue (postfix):");
-        T_queue_for_each(inp_queue_postfix, i, lex) {
+        queue_for_each(inp_queue_postfix, i, lex) {
             switch (lex.token) {
             case NUMBER_TOKEN:
                 printf(" %g", lex.metadata.num);
@@ -354,7 +354,7 @@ double eval(char* str, ssize_t len) {
         size_t i;
         lexeme_type lex;
         num_stack = op_stack; // repurposing the stack
-        T_queue_for_each(inp_queue_postfix, i, lex) {
+        queue_for_each(inp_queue_postfix, i, lex) {
             switch (lex.token) {
             case NUMBER_TOKEN:
                 lex_stack_push(num_stack, lex);

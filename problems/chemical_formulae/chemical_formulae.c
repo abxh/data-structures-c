@@ -1,7 +1,7 @@
 #include <stdbool.h> // bool, true, false
 #include <stdint.h>  // uint64_t
 #include <stdio.h>   // getline, printf, sprintf, stdin, fopen, fclose, FILE, fgets
-#include <stdlib.h>  // NULL, free, qsort, size_t, ssize_t
+#include <stdlib.h>  // NULL, free, qsort, size_t, ssize_t, reallocarray, malloc, abort
 #include <string.h>  // memset, strlen, strnlen, strcspn, strcmp
 
 #define max(x, y) ((x) > (y) ? (x) : (y))
@@ -70,12 +70,13 @@ int main(void) {
         return 1;
     }
 
-    // read from file and store data as keys and values in strmap:
     static char line_buf[line_len_max];
-    static char line_buf2[line_len_max * 2];
-    fgets(line_buf, line_len_max, fp); // skip first line
+    static char* keys_arr_pp[4096];
+    static char* values_pp[4096];
+
+    size_t count = 0;
     while (true) {
-        if (fgets(line_buf, line_len_max, fp) == NULL) {
+        if (count >= 4096 || fgets(line_buf, line_len_max, fp) == NULL) {
             break;
         }
         size_t n = strnlen(line_buf, line_len_max);
@@ -98,30 +99,14 @@ int main(void) {
         char* synonym_str = &line_buf[i + 1];
         char* cas_str = &line_buf[j + 1];
 
-        sprintf(line_buf2, "%s%s%s", formula_str, *cas_str != '\0' ? ", CAS: " : "", cas_str);
-        strmap_update(strmap_p,
-                      strdup(synonym_str), // key
-                      strdup(line_buf2)    // value
-        );
+        keys_arr_pp[count] = strdup(synonym_str);
+        values_pp[count] = malloc(line_len_max);
+        sprintf(values_pp[count], "%s%s%s", formula_str, *cas_str != '\0' ? ", CAS: " : "", cas_str);
+
+        strmap_update(strmap_p, keys_arr_pp[count], values_pp[count]);
+        count++;
     }
     fclose(fp);
-
-    // create an array of key references:
-    size_t count = strmap_count(strmap_p);
-    char** keys_arr_pp = malloc(sizeof(char*) * count);
-    {
-        size_t keys_arr_index = 0;
-
-        // required for iterating strmap:
-        size_t index;
-        char* key_p;
-        char* value_p;
-
-        hashtable_for_each(strmap_p, index, key_p, value_p) {
-            keys_arr_pp[keys_arr_index++] = key_p; // store reference
-        }
-    }
-    printf("Type your input:\n");
 
     // actual program:
     char* line_p = NULL;
@@ -143,8 +128,11 @@ int main(void) {
     }
     // clean up stuff:
     free(line_p);
-    free(keys_arr_pp);
     strmap_destroy(strmap_p);
+    for (size_t i = 0; i < count; i++) {
+        free(keys_arr_pp[i]);
+        free(values_pp[i]);
+    }
 
     return 0;
 }

@@ -1,18 +1,9 @@
-
 name := calculator
-include_dir := ../../include/
-src_dir := ../../src
 
-default: ${name}
+.PHONY: all
+all:
+	cc -I../../src/ $(wildcard ../../src/*.c) -lm $(name).c -o $(name).out
 
-kattis:
-	cc -DKATTIS -lm -I${include_dir} -o ${name}.bin ${name}.c
-
-debug:
-	cc -DDEBUG -lm -I${include_dir} -o ${name}.bin ${name}.c
-
-${name}:
-	cc -lm -I${include_dir} -o ${name}.bin ${name}.c
-
+.PHONY: clean
 clean:
-	rm -f ${name}.bin
+	rm $(name).out
