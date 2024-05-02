@@ -11,8 +11,10 @@
 
 #include "rotate_bits.h" // rotate_bits_8
 
-#define VT_MOVUP "\033[A"
-#define VT_CLEARLINE "\33[2K"
+#define VT_ESC "\033"
+#define VT_MOVUP VT_ESC"[A"
+#define VT_CLEARLINE VT_ESC"[2K"
+
 #define VT_MOVTOFRONT "\r"
 
 uint64_t* generate_star_pattern() {
