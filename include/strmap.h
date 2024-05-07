@@ -52,10 +52,6 @@ bool strmap_set(strmap_type* strmap_p, const char* key_p, const char* value_p);
 
 bool strmap_del(strmap_type* strmap_p, const char* key_p);
 
-#define strmap_for_each(strmap_p, out_list_index, out_strmap_node_next_p, out_key_p, out_value_p)                   \
-    for ((out_list_index) = 0; (out_list_index) < (strmap_p)->list_count &&                                         \
-                               ((out_strmap_node_next_p) = (strmap_p)->lists_arr_p[(out_list_index)].head_p, true); \
-         (out_list_index)++)                                                                                        \
-        while ((out_strmap_node_next_p) != NULL &&                                                                  \
-               ((out_key_p) = (out_strmap_node_next_p)->key_p, (out_value_p) = (out_strmap_node_next_p)->value_p,   \
-                (out_strmap_node_next_p) = (out_strmap_node_next_p)->next_p, true))
+#define strmap_for_each(p, i, n, k, v)                                                        \
+    for ((i) = 0; (i) < (p)->list_count && ((n) = (p)->lists_arr_p[(i)].head_p, true); (i)++) \
+        while ((n) != NULL && ((k) = (n)->key_p, (v) = (n)->value_p, (n) = (n)->next_p, true))
