@@ -355,7 +355,8 @@ static inline bool JOIN(HASHTABLE_PREFIX, contains_key)(HASHTABLE_TYPE* hashtabl
 /**
  * @brief Get the pointer to a slot in the hashtable.
  *
- * Asserts hashtable_ptr is not `NULL`.
+ * Asserts hashtable_ptr is not `NULL`. Note this pointer is not garanteed to point
+ * to the same element after other operations.
  *
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key to search for.
@@ -383,7 +384,8 @@ static inline HASHTABLE_SLOT_TYPE* JOIN(HASHTABLE_PREFIX, get_key_value_mut)(HAS
 /**
  * @brief From a given key, get the pointer to the corresponding value in the hashtable.
  *
- * Asserts hashtable_ptr is not `NULL`.
+ * Asserts hashtable_ptr is not `NULL`. Note this pointer is not garanteed to point
+ * to the same element after other operations.
  *
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key to search for.
