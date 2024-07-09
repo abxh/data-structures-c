@@ -185,7 +185,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a6503cd01ff811ff8debe795d8f2d80d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">From a given key, get the pointer to the corresponding value in the hashtable.  <br /></td></tr>
 <tr class="separator:a6503cd01ff811ff8debe795d8f2d80d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec4a2cd79f7f45cec6812c069df8b2a2" id="r_aec4a2cd79f7f45cec6812c069df8b2a2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec4a2cd79f7f45cec6812c069df8b2a2">K_to_V_hashtable_get</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> default_value)</td></tr>
-<tr class="memdesc:aec4a2cd79f7f45cec6812c069df8b2a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">From a given key, get the corresponding value in the hashtable.  <br /></td></tr>
+<tr class="memdesc:aec4a2cd79f7f45cec6812c069df8b2a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">From a given key, get the copy of the corresponding value in the hashtable.  <br /></td></tr>
 <tr class="separator:aec4a2cd79f7f45cec6812c069df8b2a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc5b3f0cb875e0c985831218b09b98b3" id="r_afc5b3f0cb875e0c985831218b09b98b3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc5b3f0cb875e0c985831218b09b98b3">K_to_V_hashtable_search</a> (<a class="el" href="structK__to__V__hashtable__type.html">K_to_V_hashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
 <tr class="memdesc:afc5b3f0cb875e0c985831218b09b98b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search a given key in the hashtable and get the pointer to the corresponding value.  <br /></td></tr>
@@ -786,7 +786,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>From a given key, get the corresponding value in the hashtable. </p>
+<p>From a given key, get the copy of the corresponding value in the hashtable. </p>
 <p>Asserts hashtable_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -835,6 +835,7 @@ Functions</h2></td></tr>
 
 <p>Get the pointer to a slot in the hashtable. </p>
 <p>Asserts hashtable_ptr is not <code>NULL</code>. Note this pointer is not garanteed to point to the same element after other operations.</p>
+<p>The returned pointer is <b>not</b> garanteed to point to the same element if the hashtable is modified.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
@@ -881,6 +882,7 @@ Functions</h2></td></tr>
 
 <p>From a given key, get the pointer to the corresponding value in the hashtable. </p>
 <p>Asserts hashtable_ptr is not <code>NULL</code>. Note this pointer is not garanteed to point to the same element after other operations.</p>
+<p>The returned pointer is <b>not</b> garanteed to point to the same value if the hashtable is modified.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
@@ -1070,6 +1072,7 @@ Functions</h2></td></tr>
 
 <p>Search a given key in the hashtable and get the pointer to the corresponding value. </p>
 <p>Asserts hashtable_ptr is not <code>NULL</code>.</p>
+<p>The returned pointer is <b>not</b> garanteed to point to the same value if the hashtable is modified.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
