@@ -59,7 +59,7 @@ void* std_reallocate(void* context_ptr, void* mem_ptr, size_t alignment, size_t 
 void std_deallocate(void* context_ptr, void* mem_ptr);
 
 /**
- * @brief Static `allocator_ops_type`-typed struct with preset standard allocation operations for convienience.
+ * @brief Static `allocator_ops_type`-typed struct with preset standard allocation operations for convenience.
  */
 static const allocator_ops_type std_allocator_ops =
     (allocator_ops_type){.allocate_f_ptr = std_allocate, .reallocate_f_ptr = std_reallocate, .deallocate_f_ptr = std_deallocate};
