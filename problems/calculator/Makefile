@@ -1,9 +1,10 @@
 name := calculator
+# flags := -DDEBUG
 
-.PHONY: all
+.PHONY: all clean test
+
 all:
-	cc -I../../src/ $(wildcard ../../src/*.c) -lm $(name).c -o $(name).out
+	cc -I../../src/ $(flags) $(wildcard ../../src/*.c) -lm $(name).c -o a.out
 
-.PHONY: clean
 clean:
-	rm $(name).out
+	rm a.out

@@ -357,6 +357,9 @@ static inline bool JOIN(HASHTABLE_PREFIX, contains_key)(HASHTABLE_TYPE* hashtabl
  *
  * Asserts hashtable_ptr is not `NULL`.
  *
+ * The returned pointer is **not** garanteed to point to the same element if the hashtable
+ * is modified.
+ *
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key to search for.
  * @return A pointer to the slot containing the matched key and the corresponding value.
@@ -385,6 +388,9 @@ static inline HASHTABLE_SLOT_TYPE* JOIN(HASHTABLE_PREFIX, get_key_value_mut)(HAS
  *
  * Asserts hashtable_ptr is not `NULL`.
  *
+ * The returned pointer is **not** garanteed to point to the same value if the hashtable
+ * is modified.
+ *
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key to search for.
  * @return A pointer to the corresponding key.
@@ -396,7 +402,7 @@ static inline VALUE_TYPE* JOIN(HASHTABLE_PREFIX, get_mut)(HASHTABLE_TYPE* hashta
 }
 
 /**
- * @brief From a given key, get the corresponding value in the hashtable.
+ * @brief From a given key, get the copy of the corresponding value in the hashtable.
  *
  * Asserts hashtable_ptr is not `NULL`.
  *
@@ -416,6 +422,9 @@ static inline VALUE_TYPE JOIN(HASHTABLE_PREFIX, get)(HASHTABLE_TYPE* hashtable_p
  * @brief Search a given key in the hashtable and get the pointer to the corresponding value.
  *
  * Asserts hashtable_ptr is not `NULL`.
+ *
+ * The returned pointer is **not** garanteed to point to the same value if the hashtable
+ * is modified.
  *
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key to search for.
