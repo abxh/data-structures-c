@@ -139,10 +139,6 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>FHASHTABLE_EMPTY_SLOT_OFFSET</b>&#160;&#160;&#160;(SIZE_MAX)</td></tr>
 <tr class="memdesc:aa799886ed218fb21a6ca4787cf83e8d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset constant used to flag empty slots. <br /></td></tr>
 <tr class="separator:aa799886ed218fb21a6ca4787cf83e8d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac967dd5f568aed08d93482b934f8bbdc" id="r_ac967dd5f568aed08d93482b934f8bbdc"><td class="memItemLeft" align="right" valign="top"><a id="ac967dd5f568aed08d93482b934f8bbdc" name="ac967dd5f568aed08d93482b934f8bbdc"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>FHASHTABLE_CAPACITY_FACTOR</b>&#160;&#160;&#160;(4 / 3)</td></tr>
-<tr class="memdesc:ac967dd5f568aed08d93482b934f8bbdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factor used to keep load factor sufficiently low with regard to given capacity. <br /></td></tr>
-<tr class="separator:ac967dd5f568aed08d93482b934f8bbdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af85ee4bf84f4c5841caf3d020004e1bc" id="r_af85ee4bf84f4c5841caf3d020004e1bc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af85ee4bf84f4c5841caf3d020004e1bc">FHASHTABLE_FOREACH</a>(hashtable_ptr,  temp_index,  key_,  value_)</td></tr>
 <tr class="memdesc:af85ee4bf84f4c5841caf3d020004e1bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the non-empty slots in the hashtable in arbitary order.  <br /></td></tr>
 <tr class="separator:af85ee4bf84f4c5841caf3d020004e1bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -192,7 +188,7 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Fixed-size hashtable data structure based on open adressing (robin hood hashing). </p>
 <p>Prefer to use scalar values over structs as keys/values for utilizing cache the fullest. Strings are fine to use.</p>
-<p>A static / heap-allocated buffer should be used, should the key/values's lifetime extend beyond the function. See example.</p>
+<p>A static / heap-allocated buffer should be used, should the key/values's lifetime extend beyond the scope the arguments are provided. See example.</p>
 <p>The following macros must be defined: </p><ul>
 <li><code>NAME</code> </li>
 <li><code>KEY_TYPE</code> </li>
@@ -239,7 +235,7 @@ Functions</h2></td></tr>
 <div class="line">        if ((hashtable_ptr)-&gt;slots[(temp_index)].offset != <a class="code hl_define" href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a> &amp;&amp; \</div>
 <div class="line">                                                                                           \</div>
 <div class="line">            ((key_) = (hashtable_ptr)-&gt;slots[(temp_index)].key, (value_) = (hashtable_ptr)-&gt;slots[(temp_index)].value, <span class="keyword">true</span>))</div>
-<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:116</div></div>
+<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:117</div></div>
 </div><!-- fragment -->
 <p>Iterate over the non-empty slots in the hashtable in arbitary order. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the hashtable under the iteration may result in errors.</dd></dl>
@@ -531,7 +527,7 @@ Functions</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">`NULL`</td><td><ul>
 <li>If malloc fails. </li>
-<li>If <code>capacity * FHASHTABLE_CAPACITY_FACTOR</code> is larger than <code>UINTPTR_MAX / 4</code>. </li>
+<li>If <code>capacity</code> is larger than <code>UINTPTR_MAX / 4</code>. </li>
 </ul>
 </td></tr>
   </table>
