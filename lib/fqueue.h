@@ -136,6 +136,7 @@ static inline FQUEUE_TYPE* JOIN(FQUEUE_NAME, create)(const size_t capacity) {
         fprintf(stderr, "%s() failed: %s. returning NULL.\n", __func__, strerror(errno));
         return NULL;
     }
+    memset(queue_ptr, 0, offsetof(FQUEUE_TYPE, values) + capacity * sizeof(VALUE_TYPE));
 
     queue_ptr->begin_index = queue_ptr->end_index = 0;
     queue_ptr->count = 0;

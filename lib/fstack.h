@@ -133,6 +133,7 @@ static inline FSTACK_TYPE* JOIN(FSTACK_NAME, create)(const size_t capacity) {
         fprintf(stderr, "%s() failed: %s. returning NULL.\n", __func__, strerror(errno));
         return NULL;
     }
+    memset(stack_ptr, 0, offsetof(FSTACK_TYPE, values) + capacity * sizeof(VALUE_TYPE));
 
     stack_ptr->count = 0;
     stack_ptr->capacity = capacity;

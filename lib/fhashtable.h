@@ -195,6 +195,8 @@ static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const size_t capaci
         fprintf(stderr, "%s() failed: %s. returning NULL.\n", __func__, strerror(errno));
         return NULL;
     }
+    memset(hashtable_ptr, 0, offsetof(FHASHTABLE_TYPE, slots) + capacity_new1 * sizeof(FHASHTABLE_SLOT_TYPE));
+
     hashtable_ptr->count = 0;
     hashtable_ptr->capacity = capacity_new1;
 
