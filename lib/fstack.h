@@ -17,7 +17,7 @@
 #include "paste.h" // PASTE, XPASTE, JOIN
 
 #include <assert.h>
-#include <errno.h>
+#include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -127,10 +127,12 @@ typedef struct {
  *   @li If malloc fails.
  */
 static inline FSTACK_TYPE* JOIN(FSTACK_NAME, create)(const size_t capacity) {
+    if (capacity > (SIZE_MAX - offsetof(FSTACK_TYPE, values)) / sizeof(VALUE_TYPE)) {
+        return NULL;
+    }
     FSTACK_TYPE* stack_ptr = malloc(offsetof(FSTACK_TYPE, values) + capacity * sizeof(VALUE_TYPE));
 
     if (!stack_ptr) {
-        fprintf(stderr, "%s() failed: %s. returning NULL.\n", __func__, strerror(errno));
         return NULL;
     }
     memset(stack_ptr, 0, offsetof(FSTACK_TYPE, values) + capacity * sizeof(VALUE_TYPE));

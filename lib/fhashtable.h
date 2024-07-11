@@ -185,14 +185,15 @@ typedef struct {
 static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const size_t capacity) {
     const size_t capacity_new0 = capacity * FHASHTABLE_CAPACITY_FACTOR;
     if (capacity_new0 < capacity || capacity_new0 > UINTPTR_MAX / 4) {
-        fprintf(stderr, "capacity is too large. slots cannot be wrapped as intended. returning NULL.\n");
         return NULL;
     }
     const size_t capacity_new1 = round_up_pow2(capacity);
+    if (capacity_new1 > (SIZE_MAX - offsetof(FHASHTABLE_TYPE, slots)) / sizeof(FHASHTABLE_SLOT_TYPE)) {
+        return NULL;
+    }
 
     FHASHTABLE_TYPE* hashtable_ptr = malloc(offsetof(FHASHTABLE_TYPE, slots) + capacity_new1 * sizeof(FHASHTABLE_SLOT_TYPE));
     if (!hashtable_ptr) {
-        fprintf(stderr, "%s() failed: %s. returning NULL.\n", __func__, strerror(errno));
         return NULL;
     }
     memset(hashtable_ptr, 0, offsetof(FHASHTABLE_TYPE, slots) + capacity_new1 * sizeof(FHASHTABLE_SLOT_TYPE));

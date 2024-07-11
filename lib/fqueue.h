@@ -125,7 +125,6 @@ typedef struct {
  */
 static inline FQUEUE_TYPE* JOIN(FQUEUE_NAME, create)(const size_t capacity) {
     if (capacity > UINTPTR_MAX / 4) {
-        fprintf(stderr, "capacity is too large. ring buffer cannot be wrapped as intended. returning NULL.\n");
         return NULL;
     }
 
@@ -133,7 +132,6 @@ static inline FQUEUE_TYPE* JOIN(FQUEUE_NAME, create)(const size_t capacity) {
 
     FQUEUE_TYPE* queue_ptr = malloc(offsetof(FQUEUE_TYPE, values) + capacity_new * sizeof(VALUE_TYPE));
     if (!queue_ptr) {
-        fprintf(stderr, "%s() failed: %s. returning NULL.\n", __func__, strerror(errno));
         return NULL;
     }
     memset(queue_ptr, 0, offsetof(FQUEUE_TYPE, values) + capacity * sizeof(VALUE_TYPE));
