@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['list_0',['Todo List',['../todo.html',1,'']]],
-  ['list_2eh_1',['list.h',['../list_8h.html',1,'']]],
-  ['ll_5fnode_2',['ll_node',['../structll__node.html',1,'']]]
+  ['name_0',['NAME',['../fhashtable_8h.html#a47f2e62c0dbebc787052c165afcada0e',1,'NAME:&#160;fhashtable.h'],['../fqueue_8h.html#a47f2e62c0dbebc787052c165afcada0e',1,'NAME:&#160;fqueue.h'],['../fstack_8h.html#a47f2e62c0dbebc787052c165afcada0e',1,'NAME:&#160;fstack.h']]]
 ];

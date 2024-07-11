@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['deallocate_5ff_5fptr_0',['deallocate_f_ptr',['../structallocator__ops__type.html#a63d73130e7fa28bd190498477768f878',1,'allocator_ops_type']]]
+  ['end_5findex_0',['end_index',['../structfqueue__type.html#a2faf942a402bbdee9ee428e37d892e1a',1,'fqueue_type']]]
 ];

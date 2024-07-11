@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>dsa-c: src/murmurhash.h Source File</title>
+<title>data-structures-c: lib/murmurhash.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">dsa-c
+   <div id="projectname">data-structures-c
    </div>
   </td>
  </tr>
@@ -83,7 +83,7 @@ $(function(){ initResizable(false); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -92,13 +92,60 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 <a href="murmurhash_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;stdint.h&gt;</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>uint32_t <a class="code hl_function" href="murmurhash_8h.html#a30f3015b5b1e95eaeca0b8b48e03ce40">murmur3_32</a>(<span class="keyword">const</span> uint8_t* key, <span class="keywordtype">size_t</span> len, uint32_t seed);</div>
-<div class="ttc" id="amurmurhash_8h_html_a30f3015b5b1e95eaeca0b8b48e03ce40"><div class="ttname"><a href="murmurhash_8h.html#a30f3015b5b1e95eaeca0b8b48e03ce40">murmur3_32</a></div><div class="ttdeci">uint32_t murmur3_32(const uint8_t *key, size_t len, uint32_t seed)</div><div class="ttdef"><b>Definition</b> murmurhash.c:24</div></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">static</span> <span class="keyword">inline</span> uint32_t murmur_32_scramble(uint32_t k) {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    k *= 0xcc9e2d51;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    k = (k &lt;&lt; 15) | (k &gt;&gt; 17);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    k *= 0x1b873593;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordflow">return</span> k;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>}</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="foldopen" id="foldopen00038" data-start="{" data-end="}">
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="murmurhash_8h.html#acb0c380e343772042ae656fb60679886">   38</a></span><span class="keyword">static</span> <span class="keyword">inline</span> uint32_t <a class="code hl_function" href="murmurhash_8h.html#acb0c380e343772042ae656fb60679886">murmur3_32</a>(<span class="keyword">const</span> uint8_t* key_ptr, <span class="keyword">const</span> <span class="keywordtype">size_t</span> len, <span class="keyword">const</span> uint32_t seed) {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    uint32_t h = seed;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    uint32_t k;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="comment">/* Read in groups of 4. */</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = len &gt;&gt; 2; i; i--) {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="comment">// Here is a source of differing results across endiannesses.</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="comment">// A swap here has no effects on hash properties though.</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        memcpy(&amp;k, key_ptr, <span class="keyword">sizeof</span>(uint32_t));</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        key_ptr += <span class="keyword">sizeof</span>(uint32_t);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        h ^= murmur_32_scramble(k);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        h = (h &lt;&lt; 13) | (h &gt;&gt; 19);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        h = h * 5 + 0xe6546b64;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    }</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="comment">/* Read the rest. */</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    k = 0;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = len &amp; 3; i; i--) {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        k &lt;&lt;= 8;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        k |= key_ptr[i - 1];</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    }</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="comment">// A swap is *not* necessary here because the preceding loop already</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="comment">// places the low bytes in the low places according to whatever endianness</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="comment">// we use. Swaps only apply when the memory is copied in a chunk.</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    h ^= murmur_32_scramble(k);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="comment">/* Finalize. */</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    h ^= len;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    h ^= h &gt;&gt; 16;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    h *= 0x85ebca6b;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    h ^= h &gt;&gt; 13;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    h *= 0xc2b2ae35;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    h ^= h &gt;&gt; 16;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordflow">return</span> h;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
+</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="comment">// vim: ft=c</span></div>
+<div class="ttc" id="amurmurhash_8h_html_acb0c380e343772042ae656fb60679886"><div class="ttname"><a href="murmurhash_8h.html#acb0c380e343772042ae656fb60679886">murmur3_32</a></div><div class="ttdeci">static uint32_t murmur3_32(const uint8_t *key_ptr, const size_t len, const uint32_t seed)</div><div class="ttdef"><b>Definition</b> murmurhash.h:38</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

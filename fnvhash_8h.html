@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>dsa-c: src/fnvhash.h File Reference</title>
+<title>data-structures-c: lib/fnvhash.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">dsa-c
+   <div id="projectname">data-structures-c
    </div>
   </td>
  </tr>
@@ -83,7 +83,7 @@ $(function(){ initResizable(false); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -103,37 +103,46 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7f9bac06c5cf6776b0dfc5b81b029229" id="r_a7f9bac06c5cf6776b0dfc5b81b029229"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f9bac06c5cf6776b0dfc5b81b029229">fnvhash_32</a> (const uint8_t *bytes, size_t length)</td></tr>
-<tr class="separator:a7f9bac06c5cf6776b0dfc5b81b029229"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5112cf5cbbeb981229ff17e1b12450f" id="r_ab5112cf5cbbeb981229ff17e1b12450f"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab5112cf5cbbeb981229ff17e1b12450f">fnvhash_64</a> (const uint8_t *bytes, size_t length)</td></tr>
-<tr class="separator:ab5112cf5cbbeb981229ff17e1b12450f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8ab4359590f8a5dee7d9fe8e2fa7913" id="r_ab8ab4359590f8a5dee7d9fe8e2fa7913"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8ab4359590f8a5dee7d9fe8e2fa7913">fnvhash_32</a> (const uint8_t *char_p, const size_t length)</td></tr>
+<tr class="separator:ab8ab4359590f8a5dee7d9fe8e2fa7913"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a4392103012d0062180ba46f5698498" id="r_a4a4392103012d0062180ba46f5698498"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a4392103012d0062180ba46f5698498">fnvhash_64</a> (const uint8_t *char_p, const size_t length)</td></tr>
+<tr class="separator:a4a4392103012d0062180ba46f5698498"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>FNV-1a hashing function. </p>
-<dl class="section note"><dt>Note</dt><dd>FNV-1a is <b>not</b> a cryptographic hashing function. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>FNV-1a is <b>not</b> a cryptographic hashing function.</dd></dl>
+<p>Source: <a href="https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function">https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function</a> </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a7f9bac06c5cf6776b0dfc5b81b029229" name="a7f9bac06c5cf6776b0dfc5b81b029229"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f9bac06c5cf6776b0dfc5b81b029229">&#9670;&#160;</a></span>fnvhash_32()</h2>
+<a id="ab8ab4359590f8a5dee7d9fe8e2fa7913" name="ab8ab4359590f8a5dee7d9fe8e2fa7913"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8ab4359590f8a5dee7d9fe8e2fa7913">&#9670;&#160;</a></span>fnvhash_32()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t fnvhash_32 </td>
+          <td class="memname">static uint32_t fnvhash_32 </td>
           <td>(</td>
-          <td class="paramtype">const uint8_t *</td>          <td class="paramname"><span class="paramname"><em>bytes</em></span>, </td>
+          <td class="paramtype">const uint8_t *</td>          <td class="paramname"><span class="paramname"><em>char_p</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Get the FNV-1a 32-bit hash of a string of bytes.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">bytes</td><td>Pointer to the string of bytes. </td></tr>
+    <tr><td class="paramname">char_p</td><td>Pointer to the string of bytes. </td></tr>
     <tr><td class="paramname">length</td><td>Number of bytes. </td></tr>
   </table>
   </dd>
@@ -142,28 +151,36 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab5112cf5cbbeb981229ff17e1b12450f" name="ab5112cf5cbbeb981229ff17e1b12450f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5112cf5cbbeb981229ff17e1b12450f">&#9670;&#160;</a></span>fnvhash_64()</h2>
+<a id="a4a4392103012d0062180ba46f5698498" name="a4a4392103012d0062180ba46f5698498"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a4392103012d0062180ba46f5698498">&#9670;&#160;</a></span>fnvhash_64()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t fnvhash_64 </td>
+          <td class="memname">static uint64_t fnvhash_64 </td>
           <td>(</td>
-          <td class="paramtype">const uint8_t *</td>          <td class="paramname"><span class="paramname"><em>bytes</em></span>, </td>
+          <td class="paramtype">const uint8_t *</td>          <td class="paramname"><span class="paramname"><em>char_p</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Get the FNV-1a 64-bit hash of a string of bytes.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">bytes</td><td>Pointer to the string of bytes. </td></tr>
+    <tr><td class="paramname">char_p</td><td>Pointer to the string of bytes. </td></tr>
     <tr><td class="paramname">length</td><td>Number of bytes. </td></tr>
   </table>
   </dd>

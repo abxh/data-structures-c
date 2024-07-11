@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['hash_5ffunction_0',['HASH_FUNCTION',['../hashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44',1,'hashtable.h']]],
-  ['hashtable_2eh_1',['hashtable.h',['../hashtable_8h.html',1,'']]],
-  ['hashtable_5ffor_5feach_2',['hashtable_for_each',['../hashtable_8h.html#acd37713baee33bbd2ccb913392d8373e',1,'hashtable.h']]],
-  ['hashtable_5ffor_5feach_5f_3',['hashtable_for_each_',['../hashtable_8h.html#a39ef4959c5edb4f735ad748d7b0178bc',1,'hashtable.h']]]
+  ['is_5fpow2_0',['IS_POW2',['../is__pow2_8h.html#a36d931d2e505ad8cd048c723c3581e54',1,'is_pow2.h']]],
+  ['is_5fpow2_1',['is_pow2',['../is__pow2_8h.html#afdfaaa82d5cd20478f11fa9ed7ae0080',1,'is_pow2.h']]],
+  ['is_5fpow2_2eh_2',['is_pow2.h',['../is__pow2_8h.html',1,'']]]
 ];
