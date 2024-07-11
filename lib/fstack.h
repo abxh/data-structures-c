@@ -93,7 +93,7 @@
                                                               \
          (temp_index)++)
 
-#endif // __FSTACK__H
+#endif // FSTACK_H
 
 /// @cond DO_NOT_DOCUMENT
 #define FSTACK_TYPE JOIN(FSTACK_NAME, type)

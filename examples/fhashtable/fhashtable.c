@@ -14,7 +14,7 @@ size_t first_char(const char* c) {
 #include "fhashtable.h"
 
 static char buf[4096]; // a static / heap-allocated buffer should be used, should the key/values's lifetime
-                       // extend beyond the function.
+                       // extend beyond the function scope [in the function below].
 
 void str_int_ht_test(void) {
 

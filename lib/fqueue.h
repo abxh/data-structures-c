@@ -86,7 +86,7 @@
                                                                                            \
          (temp_index) = ((temp_index) - 1) & ((queue_ptr)->capacity - 1))
 
-#endif // __FQUEUE__H
+#endif // FQUEUE_H
 
 /// @cond DO_NOT_DOCUMENT
 #define FQUEUE_TYPE JOIN(FQUEUE_NAME, type)

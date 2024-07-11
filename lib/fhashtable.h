@@ -4,7 +4,8 @@
  *
  * Prefer to use scalar values over structs as keys/values for utilizing cache the fullest. Strings are fine to use.
  *
- * A static / heap-allocated buffer should be used, should the key/values's lifetime extend beyond the function. See example.
+ * A static / heap-allocated buffer should be used, should the key/values's lifetime extend beyond
+ * the scope the arguments are provided. See example.
  *
  * The following macros must be defined:
  *  @li `NAME`
@@ -116,14 +117,6 @@
 #define FHASHTABLE_EMPTY_SLOT_OFFSET (SIZE_MAX)
 
 /**
- * @def FHASHTABLE_CAPACITY_FACTOR
- * @brief Factor used to keep load factor sufficiently low with regard to given capacity.
- */
-#ifndef FHASHTABLE_CAPACITY_FACTOR
-#define FHASHTABLE_CAPACITY_FACTOR (4 / 3) // For keeping <75% load
-#endif
-
-/**
  * @def FHASHTABLE_FOREACH
  * @brief Iterate over the non-empty slots in the hashtable in arbitary order.
  * @warning Modifying the hashtable under the iteration may result in errors.
@@ -140,7 +133,7 @@
                                                                                            \
             ((key_) = (hashtable_ptr)->slots[(temp_index)].key, (value_) = (hashtable_ptr)->slots[(temp_index)].value, true))
 
-#endif // __FHASHTABLE__H
+#endif // FHASHTABLE_H
 
 /// @cond DO_NOT_DOCUMENT
 #define FHASHTABLE_TYPE JOIN(FHASHTABLE_NAME, type)
@@ -179,26 +172,25 @@ typedef struct {
  * @return A pointer to the queue.
  * @retval `NULL`
  *   @li If malloc fails.
- *   @li If `capacity * FHASHTABLE_CAPACITY_FACTOR` is larger than `UINTPTR_MAX / 4`.
+ *   @li If `capacity` is larger than `UINTPTR_MAX / 4`.
  */
 static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const size_t capacity) {
-    const size_t capacity_new0 = capacity * FHASHTABLE_CAPACITY_FACTOR;
-    if (capacity_new0 < capacity || capacity_new0 > UINTPTR_MAX / 4) {
+    if (capacity > UINTPTR_MAX / 4) {
         return NULL;
     }
-    const size_t capacity_new1 = round_up_pow2(capacity);
-    if (capacity_new1 > (SIZE_MAX - offsetof(FHASHTABLE_TYPE, slots)) / sizeof(FHASHTABLE_SLOT_TYPE)) {
+    const size_t capacity_new = round_up_pow2(capacity);
+    if (capacity_new > (SIZE_MAX - offsetof(FHASHTABLE_TYPE, slots)) / sizeof(FHASHTABLE_SLOT_TYPE)) {
         return NULL;
     }
 
-    FHASHTABLE_TYPE* hashtable_ptr = malloc(offsetof(FHASHTABLE_TYPE, slots) + capacity_new1 * sizeof(FHASHTABLE_SLOT_TYPE));
+    FHASHTABLE_TYPE* hashtable_ptr = malloc(offsetof(FHASHTABLE_TYPE, slots) + capacity_new * sizeof(FHASHTABLE_SLOT_TYPE));
     if (!hashtable_ptr) {
         return NULL;
     }
-    memset(hashtable_ptr, 0, offsetof(FHASHTABLE_TYPE, slots) + capacity_new1 * sizeof(FHASHTABLE_SLOT_TYPE));
+    memset(hashtable_ptr, 0, offsetof(FHASHTABLE_TYPE, slots) + capacity_new * sizeof(FHASHTABLE_SLOT_TYPE));
 
     hashtable_ptr->count = 0;
-    hashtable_ptr->capacity = capacity_new1;
+    hashtable_ptr->capacity = capacity_new;
 
     for (size_t i = 0; i < hashtable_ptr->capacity; i++) {
         hashtable_ptr->slots[i].offset = FHASHTABLE_EMPTY_SLOT_OFFSET;

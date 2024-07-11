@@ -1,4 +1,5 @@
 *.out
+*.o
 *.bin
 bin/
 html/
