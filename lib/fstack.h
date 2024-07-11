@@ -52,9 +52,9 @@
 #error "Must define VALUE_TYPE."
 #endif
 
-#ifndef __FSTACK__H
+#ifndef FSTACK_H
 /// @cond DO_NOT_DOCUMENT
-#define __FSTACK__H
+#define FSTACK_H
 /// @endcond
 
 /**

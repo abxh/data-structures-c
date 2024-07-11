@@ -17,7 +17,6 @@
 #include "paste.h"         // PASTE, XPASTE, JOIN
 #include "round_up_pow2.h" // round_up_pow2
 
-#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -46,9 +45,9 @@
 #error "Must define VALUE_TYPE."
 #endif
 
-#ifndef __FQUEUE__H
+#ifndef FQUEUE_H
 /// @cond DO_NOT_DOCUMENT
-#define __FQUEUE__H
+#define FQUEUE_H
 /// @endcond
 
 /**

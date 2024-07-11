@@ -30,7 +30,6 @@
 #include "round_up_pow2.h" // round_up_pow2
 
 #include <assert.h>
-#include <errno.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -105,9 +104,9 @@
 #define HASH_FUNCTION(key) (murmur3_32((uint8_t*)&(key), sizeof(KEY_TYPE), 0))
 #endif
 
-#ifndef __FHASHTABLE__H
+#ifndef FHASHTABLE_H
 /// @cond DO_NOT_DOCUMENT
-#define __FHASHTABLE__H
+#define FHASHTABLE_H
 /// @endcond
 
 /**
