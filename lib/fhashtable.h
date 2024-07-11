@@ -1,0 +1,572 @@
+/**
+ * @file fhashtable.h
+ * @brief Fixed-size hashtable data structure based on open adressing (robin hood hashing).
+ *
+ * Prefer to use scalar values over structs as keys/values for utilizing cache the fullest. Strings are fine to use.
+ *
+ * A static / heap-allocated buffer should be used, should the key/values's lifetime extend beyond the function. See example.
+ *
+ * The following macros must be defined:
+ *  @li `NAME`
+ *  @li `KEY_TYPE`
+ *  @li `VALUE_TYPE`
+ *  @li `KEY_IS_EQUAL(a,b)`
+ *  @li `HASH_FUNCTION(key)`
+ *
+ * Source(s) used for inspiration:
+ *  @li https://thenumb.at/Hashtables/#robin-hood-linear-probing
+ *  @li https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/
+ *  @li https://github.com/rmind/rhashmap/blob/master/src/rhashmap.c
+ */
+
+/**
+ * @example fhashtable/fhashtable.c
+ * Examples of how `fhashtable.h` header file is used in practice.
+ */
+
+// macro definitions: {{{
+#include "murmurhash.h"    // murmur_32
+#include "paste.h"         // PASTE, XPASTE, JOIN
+#include "round_up_pow2.h" // round_up_pow2
+
+#include <assert.h>
+#include <errno.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/**
+ * @def NAME
+ * @brief Prefix to queue type and operations.
+ *
+ * Is undefined after header is included.
+ *
+ * @attention This must be manually defined before including this header file.
+ */
+#ifndef NAME
+#define NAME fhashtable
+#error "Must define NAME."
+#else
+#define FHASHTABLE_NAME NAME
+#endif
+
+/**
+ * @def KEY_TYPE()
+ * @brief The key type. This must be manually defined before including this header file.
+ *
+ * Is undefined once header is included.
+ */
+#ifndef KEY_TYPE
+#error "Must declare KEY_TYPE."
+#define KEY_TYPE int
+#endif
+
+/**
+ * @def VALUE_TYPE
+ * @brief The value type. This must be manually defined before including this header file.
+ *
+ * Is undefined once header is included.
+ */
+#ifndef VALUE_TYPE
+#error "Must declare VALUE_TYPE."
+#define VALUE_TYPE int
+#endif
+
+/**
+ * @def KEY_IS_EQUAL(a, b)
+ * @brief Used to compare two keys. This must be manually defined before including this header file.
+ *
+ * Is undefined once header is included.
+ *
+ * @attention
+ *   @li If comparing two scalar values, set this macro to ((a) == (b)).
+ *   @li If comparing two structs, set this macro to a function that does element-wise comparison between the structs.
+ *   @li If comparing two strings, set this macro to strcmp() or strncmp() appropiately.
+ * @retval true If the two keys are equal. Equivalent to a non-zero int.
+ * @retval false If the two key are not equal. Equivalent to the int 0.
+ */
+#ifndef KEY_IS_EQUAL
+#error "Must define KEY_IS_EQUAL."
+#define KEY_IS_EQUAL(a, b) ((a) == (b))
+#endif
+
+/**
+ * @def HASH_FUNCTION(key)
+ * @brief Used to compute indicies of keys. This must be manually defined before including this header file.
+ *
+ * Is undefined once header is included.
+ *
+ * @param key The key.
+ * @retval The hash of the key as `size_t`.
+ */
+#ifndef HASH_FUNCTION
+#error "Must define HASH_FUNCTION."
+#define HASH_FUNCTION(key) (murmur3_32((uint8_t*)&(key), sizeof(KEY_TYPE), 0))
+#endif
+
+#ifndef __FHASHTABLE__H
+/// @cond DO_NOT_DOCUMENT
+#define __FHASHTABLE__H
+/// @endcond
+
+/**
+ * @def FHASHTABLE_EMPTY_SLOT_OFFSET
+ * @brief Offset constant used to flag empty slots.
+ */
+#define FHASHTABLE_EMPTY_SLOT_OFFSET (SIZE_MAX)
+
+/**
+ * @def FHASHTABLE_CAPACITY_FACTOR
+ * @brief Factor used to keep load factor sufficiently low with regard to given capacity.
+ */
+#ifndef FHASHTABLE_CAPACITY_FACTOR
+#define FHASHTABLE_CAPACITY_FACTOR (4 / 3) // For keeping <75% load
+#endif
+
+/**
+ * @def FHASHTABLE_FOREACH
+ * @brief Iterate over the non-empty slots in the hashtable in arbitary order.
+ * @warning Modifying the hashtable under the iteration may result in errors.
+ *
+ * @param[in] hashtable_ptr hashtable pointer.
+ * @param[out] temp_index Temporary variable used for indexing. Should be `size_t`.
+ * @param[out] key_ Current key. Should be `KEY_TYPE`.
+ * @param[out] value_ Current value. Should be `VALUE_TYPE`.
+ */
+#define FHASHTABLE_FOREACH(hashtable_ptr, temp_index, key_, value_)                        \
+    for ((temp_index) = 0; (temp_index) < (hashtable_ptr)->capacity; (temp_index)++)       \
+                                                                                           \
+        if ((hashtable_ptr)->slots[(temp_index)].offset != FHASHTABLE_EMPTY_SLOT_OFFSET && \
+                                                                                           \
+            ((key_) = (hashtable_ptr)->slots[(temp_index)].key, (value_) = (hashtable_ptr)->slots[(temp_index)].value, true))
+
+#endif // __FHASHTABLE__H
+
+/// @cond DO_NOT_DOCUMENT
+#define FHASHTABLE_TYPE JOIN(FHASHTABLE_NAME, type)
+#define FHASHTABLE_SLOT_TYPE JOIN(JOIN(FHASHTABLE_NAME, slot), type)
+/// @endcond
+
+// }}}
+
+// type definitions: {{{
+
+/**
+ * @brief Generated hashtable slot struct type for a given `KEY_TYPE` and `VALUE_TYPE`.
+ */
+typedef struct {
+    size_t offset;    ///< Offset from the ideal slot index.
+    KEY_TYPE key;     ///< The key in this slot
+    VALUE_TYPE value; ///< The value in this slot
+} FHASHTABLE_SLOT_TYPE;
+
+/**
+ * @brief Generated hashtable struct type for a given `KEY_TYPE` and `VALUE_TYPE`.
+ */
+typedef struct {
+    size_t count;                 ///< Number of non-empty slots.
+    size_t capacity;              ///< Number of slots allocated for in the hashtable.
+    FHASHTABLE_SLOT_TYPE slots[]; ///< Array of slots.
+} FHASHTABLE_TYPE;
+
+// }}}
+
+// function definitions: {{{
+/**
+ * @brief Create an hashtable with a given capacity with malloc().
+ *
+ * @param[in] capacity Maximum number of elements expected to be stored in the queue.
+ * @return A pointer to the queue.
+ * @retval `NULL`
+ *   @li If malloc fails.
+ *   @li If `capacity * FHASHTABLE_CAPACITY_FACTOR` is larger than `UINTPTR_MAX / 4`.
+ */
+static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const size_t capacity) {
+    const size_t capacity_new0 = capacity * FHASHTABLE_CAPACITY_FACTOR;
+    if (capacity_new0 < capacity || capacity_new0 > UINTPTR_MAX / 4) {
+        fprintf(stderr, "capacity is too large. slots cannot be wrapped as intended. returning NULL.\n");
+        return NULL;
+    }
+    const size_t capacity_new1 = round_up_pow2(capacity);
+
+    FHASHTABLE_TYPE* hashtable_ptr = malloc(offsetof(FHASHTABLE_TYPE, slots) + capacity_new1 * sizeof(FHASHTABLE_SLOT_TYPE));
+    if (!hashtable_ptr) {
+        fprintf(stderr, "%s() failed: %s. returning NULL.\n", __func__, strerror(errno));
+        return NULL;
+    }
+    hashtable_ptr->count = 0;
+    hashtable_ptr->capacity = capacity_new1;
+
+    for (size_t i = 0; i < hashtable_ptr->capacity; i++) {
+        hashtable_ptr->slots[i].offset = FHASHTABLE_EMPTY_SLOT_OFFSET;
+    }
+
+    return hashtable_ptr;
+}
+
+/**
+ * @brief Destroy an hashtable and free the underlying memory with free().
+ *
+ * Assumes:
+ * @li The hashtable pointer is not `NULL`.
+ *
+ * @param[in] hashtable_ptr The hashtable pointer.
+ * @warning May not be called twice in a row on the same object.
+ */
+static inline void JOIN(FHASHTABLE_NAME, destroy)(FHASHTABLE_TYPE* hashtable_ptr) {
+    free(hashtable_ptr);
+}
+
+/**
+ * @brief Return whether the hashtable is empty.
+ *
+ * Assumes the hashtable pointer is not `NULL`.
+ *
+ * @param[in] hashtable_ptr The hashtable pointer.
+ * @return whether the hashtable is empty.
+ */
+static inline bool JOIN(FHASHTABLE_NAME, is_empty)(const FHASHTABLE_TYPE* hashtable_ptr) {
+    assert(hashtable_ptr != NULL);
+
+    return hashtable_ptr->count == 0;
+}
+
+/**
+ * @brief Return whether the hashtable is full.
+ *
+ * Assumes the hashtable pointer is not `NULL`.
+ *
+ * @param[in] hashtable_ptr The hashtable pointer.
+ * @return whether the hashtable is full.
+ */
+static inline bool JOIN(FHASHTABLE_NAME, is_full)(const FHASHTABLE_TYPE* hashtable_ptr) {
+    assert(hashtable_ptr != NULL);
+
+    return hashtable_ptr->count == hashtable_ptr->capacity;
+}
+
+/**
+ * @brief Check if hashtable contains a key.
+ *
+ * Assumes hashtable_ptr is not `NULL`.
+ *
+ * @param[in] hashtable_ptr The hashtable pointer.
+ * @param[in] key The key.
+ * @return A boolean indicating whether the hashtable contains the given key.
+ */
+static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
+    assert(hashtable_ptr != NULL);
+
+    const size_t key_hash = HASH_FUNCTION(key);
+    const size_t index_mask = hashtable_ptr->capacity - 1;
+
+    size_t index = key_hash & index_mask;
+    size_t max_possible_offset = 0;
+
+    while (hashtable_ptr->slots[index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET &&
+
+           max_possible_offset <= hashtable_ptr->slots[index].offset) {
+
+        if (KEY_IS_EQUAL(hashtable_ptr->slots[index].key, key)) {
+            return true;
+        }
+
+        index++;
+        index &= index_mask;
+        max_possible_offset++;
+    }
+    return false;
+}
+
+/**
+ * @brief From a given key, get the pointer to the corresponding value in the hashtable.
+ *
+ * Assumes hashtable_ptr is not `NULL`.
+ *
+ * @note The returned pointer is **not** garanteed to point to the same value if the hashtable
+ * is modified.
+ *
+ * @param[in] hashtable_ptr The hashtable pointer.
+ * @param[in] key The key to search for.
+ * @return A pointer to the corresponding key.
+ *  @retval NULL If the hashtable did not contain the key.
+ */
+static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, get_value_mut)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
+    assert(hashtable_ptr != NULL);
+
+    const size_t key_hash = HASH_FUNCTION(key);
+    const size_t index_mask = hashtable_ptr->capacity - 1;
+
+    size_t index = key_hash & index_mask;
+    size_t max_possible_offset = 0;
+
+    while (hashtable_ptr->slots[index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET &&
+
+           max_possible_offset <= hashtable_ptr->slots[index].offset) {
+
+        if (KEY_IS_EQUAL(hashtable_ptr->slots[index].key, key)) {
+            return &hashtable_ptr->slots[index].value;
+        }
+
+        index++;
+        index &= index_mask;
+        max_possible_offset++;
+    }
+    return NULL;
+}
+
+/**
+ * @brief From a given key, get the copy of the corresponding value in the hashtable.
+ *
+ * Assumes hashtable_ptr is not `NULL`.
+ *
+ * @param[in] hashtable_ptr The hashtable pointer.
+ * @param[in] key The key to search for.
+ * @param[in] default_value The default value returned if the hashtable did not contain the key.
+ *
+ * @return The corresponding key.
+ *  @retval default_value If the hashtable did not contain the key.
+ */
+static inline VALUE_TYPE JOIN(FHASHTABLE_NAME, get_value)(const FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key,
+                                                          const VALUE_TYPE default_value) {
+    assert(hashtable_ptr != NULL);
+
+    const size_t key_hash = HASH_FUNCTION(key);
+    const size_t index_mask = hashtable_ptr->capacity - 1;
+
+    size_t index = key_hash & index_mask;
+    size_t max_possible_offset = 0;
+
+    while (hashtable_ptr->slots[index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET &&
+
+           max_possible_offset <= hashtable_ptr->slots[index].offset) {
+
+        if (KEY_IS_EQUAL(hashtable_ptr->slots[index].key, key)) {
+            return hashtable_ptr->slots[index].value;
+        }
+
+        index++;
+        index &= index_mask;
+        max_possible_offset++;
+    }
+    return default_value;
+}
+
+/**
+ * @brief Search a given key in the hashtable and get the pointer to the corresponding value.
+ *
+ * Assumes hashtable_ptr is not `NULL`.
+ *
+ * The returned pointer is **not** garanteed to point to the same value if the hashtable
+ * is modified.
+ *
+ * @param[in] hashtable_ptr The hashtable pointer.
+ * @param[in] key The key to search for.
+ * @return A pointer to the corresponding key.
+ * @retval NULL If the hashtable did not contain the key.
+ */
+static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, search)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
+    return JOIN(FHASHTABLE_NAME, get_value_mut)(hashtable_ptr, key);
+}
+
+/**
+ * @brief Insert a non-duplicate key and it's corresponding value inside the hashtable.
+ *
+ * Assumes:
+ * @li hashtable_ptr is not `NULL`.
+ * @li key is not already contained in the hashtable.
+ * @li hash table is not full (this should not happen with `FHASHTABLE_CAPACITY_FACTOR`).
+ *
+ * @param[in] hashtable_ptr The hashtable pointer.
+ * @param[in] key The key.
+ * @param[in] value The value.
+ */
+static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
+    assert(hashtable_ptr != NULL);
+    assert(JOIN(FHASHTABLE_NAME, contains_key)(hashtable_ptr, key) == false);
+    assert(JOIN(FHASHTABLE_NAME, is_full)(hashtable_ptr) == false);
+
+    const size_t index_mask = hashtable_ptr->capacity - 1;
+    const size_t key_hash = HASH_FUNCTION(key);
+
+    size_t index = key_hash & index_mask;
+    FHASHTABLE_SLOT_TYPE current_slot = {.offset = 0, .key = key, .value = value};
+
+    while (hashtable_ptr->slots[index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET) {
+
+        // swap if current offset is larger. will ensure the maximum
+        // offset (from the ideal position) is minimized.
+
+        if (current_slot.offset > hashtable_ptr->slots[index].offset) {
+
+            FHASHTABLE_SLOT_TYPE temp = hashtable_ptr->slots[index];
+            hashtable_ptr->slots[index] = current_slot;
+            current_slot = temp;
+        }
+        index++;
+        index &= index_mask;
+        current_slot.offset++;
+    }
+    hashtable_ptr->slots[index] = current_slot;
+    hashtable_ptr->count++;
+}
+
+/**
+ * @brief Update a key's corresponding value inside the hashtable. Allows duplicates.
+ *
+ * If a duplicate key is found, the corresponding value is overwritten.
+ *
+ * Assumes:
+ * @li hashtable_ptr is not `NULL`.
+ * @li hash table is not full (this should not happen with `FHASHTABLE_CAPACITY_FACTOR`).
+ *
+ * @param[in] hashtable_ptr The hashtable pointer.
+ * @param[in] key The key.
+ * @param[in] value The value.
+ */
+static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
+    assert(hashtable_ptr != NULL);
+    assert(JOIN(FHASHTABLE_NAME, is_full)(hashtable_ptr) == false);
+
+    const size_t index_mask = hashtable_ptr->capacity - 1;
+    const size_t key_hash = HASH_FUNCTION(key);
+
+    size_t index = key_hash & index_mask;
+    FHASHTABLE_SLOT_TYPE current_slot = {.offset = 0, .key = key, .value = value};
+
+    while (hashtable_ptr->slots[index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET) {
+
+        if (current_slot.offset == hashtable_ptr->slots[index].offset &&
+
+            KEY_IS_EQUAL(current_slot.key, hashtable_ptr->slots[index].key)) {
+
+            hashtable_ptr->slots[index].value = current_slot.value;
+            return;
+        }
+
+        // swap if current offset is larger. will ensure the maximum
+        // offset (from the ideal position) is minimized.
+
+        if (current_slot.offset > hashtable_ptr->slots[index].offset) {
+
+            FHASHTABLE_SLOT_TYPE temp = hashtable_ptr->slots[index];
+            hashtable_ptr->slots[index] = current_slot;
+            current_slot = temp;
+        }
+
+        index++;
+        index &= index_mask;
+        current_slot.offset++;
+    }
+    hashtable_ptr->slots[index] = current_slot;
+    hashtable_ptr->count++;
+}
+
+/**
+ * @brief Delete a key and it's corresponding value from the hashtable.
+ *
+ * Assumes hashtable_ptr is not `NULL`.
+ *
+ * @param[in] hashtable_ptr The hashtable pointer.
+ * @param[in] key The key.
+ * @return A boolean indicating whether the key was previously contained in the hashtable.
+ */
+static inline bool JOIN(FHASHTABLE_NAME, delete)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
+    assert(hashtable_ptr != NULL);
+
+    const size_t index_mask = hashtable_ptr->capacity - 1;
+    const size_t key_hash = HASH_FUNCTION(key);
+
+    size_t index = key_hash & index_mask;
+    size_t max_possible_offset = 0;
+
+    while (hashtable_ptr->slots[index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET &&
+
+           max_possible_offset <= hashtable_ptr->slots[index].offset) {
+
+        if (KEY_IS_EQUAL(hashtable_ptr->slots[index].key, key)) {
+
+            // mark as deleted:
+            hashtable_ptr->slots[index].offset = FHASHTABLE_EMPTY_SLOT_OFFSET;
+            hashtable_ptr->count--;
+
+            // reduce offsets as much as possible by moving back offset elements:
+
+            size_t next_index = (index + 1) & index_mask;
+
+            while (hashtable_ptr->slots[next_index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET &&
+
+                   hashtable_ptr->slots[next_index].offset > 0) {
+
+                hashtable_ptr->slots[index] = hashtable_ptr->slots[next_index];
+                hashtable_ptr->slots[index].offset--;
+
+                hashtable_ptr->slots[next_index].offset = FHASHTABLE_EMPTY_SLOT_OFFSET;
+
+                index = next_index;
+                next_index = (index + 1) & index_mask;
+            }
+            return true;
+        }
+        index = (index + 1) & index_mask;
+        max_possible_offset++;
+    }
+    return false;
+}
+
+/**
+ * @brief Clear an existing hashtable and flag all slots as empty.
+ * @param[in] hashtable_ptr The pointer of the hashtable to clear.
+ */
+static inline void JOIN(FHASHTABLE_NAME, clear)(FHASHTABLE_TYPE* hashtable_ptr) {
+    assert(hashtable_ptr != NULL);
+
+    for (size_t i = 0; i < hashtable_ptr->capacity; i++) {
+        hashtable_ptr->slots[i].offset = FHASHTABLE_EMPTY_SLOT_OFFSET;
+    }
+    hashtable_ptr->count = 0;
+}
+
+/**
+ * @brief Copy the values from a source hashtable to a destination hashtable.
+ *
+ * Assumes:
+ * @li Source and destination hashtable pointers are not pointing to the same memory.
+ * @li The hashtable pointers are not `NULL`.
+ * @li The destination hashtable has a capacity that is greater than or equal to source hashtable count.
+ * @li The destination hashtable is an empty hashtable.
+ *
+ * @param[out] dest_hashtable_ptr The destination hashtable.
+ * @param[in] src_hashtable_ptr The source hashtable.
+ */
+static inline void JOIN(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE* restrict dest_stack_ptr,
+                                               const FHASHTABLE_TYPE* restrict src_stack_ptr) {
+    assert(src_stack_ptr != NULL);
+    assert(dest_stack_ptr != NULL);
+    assert(src_stack_ptr->count <= dest_stack_ptr->capacity);
+    assert(dest_stack_ptr->count == 0);
+
+    for (size_t i = 0; i < src_stack_ptr->capacity; i++) {
+        dest_stack_ptr->slots[i] = src_stack_ptr->slots[i];
+    }
+
+    dest_stack_ptr->count = src_stack_ptr->count;
+}
+
+// }}}
+
+// macro undefs: {{{
+
+#undef NAME
+#undef KEY_TYPE
+#undef VALUE_TYPE
+#undef KEY_IS_EQUAL
+#undef HASH_FUNCTION
+
+#undef FHASHTABLE_SLOT_TYPE
+#undef FHASHTABLE_TYPE
+
+// }}}
+
+// vim: ft=c fdm=marker
