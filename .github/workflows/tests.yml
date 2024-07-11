@@ -19,11 +19,6 @@ jobs:
       uses: Dup4/actions-setup-gcc@v1
       with:
         version: latest
-    
-    - name: setup python3
-      run: |
-        sudo apt-get update
-        sudo apt-get install python3
 
-    - name: Run python test script
-      run: python3 ./tests/run_tests.py
+    - name: test application
+      run: make test
