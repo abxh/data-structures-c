@@ -135,7 +135,7 @@ static inline FSTACK_TYPE* JOIN(FSTACK_NAME, create)(const size_t capacity) {
     if (capacity == 0 || capacity > (SIZE_MAX - offsetof(FSTACK_TYPE, values)) / sizeof(VALUE_TYPE)) {
         return NULL;
     }
-    FSTACK_TYPE* stack_ptr = malloc(offsetof(FSTACK_TYPE, values) + capacity * sizeof(VALUE_TYPE));
+    FSTACK_TYPE* stack_ptr = (FSTACK_TYPE*)malloc(offsetof(FSTACK_TYPE, values) + capacity * sizeof(VALUE_TYPE));
 
     if (!stack_ptr) {
         return NULL;

@@ -132,7 +132,7 @@ static inline FQUEUE_TYPE* JOIN(FQUEUE_NAME, create)(const size_t capacity) {
     }
     const size_t capacity_new = round_up_pow2(capacity);
 
-    FQUEUE_TYPE* queue_ptr = malloc(offsetof(FQUEUE_TYPE, values) + capacity_new * sizeof(VALUE_TYPE));
+    FQUEUE_TYPE* queue_ptr = (FQUEUE_TYPE*)malloc(offsetof(FQUEUE_TYPE, values) + capacity_new * sizeof(VALUE_TYPE));
     if (!queue_ptr) {
         return NULL;
     }

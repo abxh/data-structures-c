@@ -193,7 +193,8 @@ static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const size_t capaci
         return NULL;
     }
 
-    FHASHTABLE_TYPE* hashtable_ptr = malloc(offsetof(FHASHTABLE_TYPE, slots) + capacity_new * sizeof(FHASHTABLE_SLOT_TYPE));
+    FHASHTABLE_TYPE* hashtable_ptr =
+        (FHASHTABLE_TYPE*)malloc(offsetof(FHASHTABLE_TYPE, slots) + capacity_new * sizeof(FHASHTABLE_SLOT_TYPE));
     if (!hashtable_ptr) {
         return NULL;
     }
