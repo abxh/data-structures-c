@@ -240,7 +240,7 @@ Functions</h2></td></tr>
 <div class="line">                                                                                                                     \</div>
 <div class="line">         ((value) = (queue_ptr)-&gt;values[((queue_ptr)-&gt;end_index - 1 - _index) &amp; ((queue_ptr)-&gt;capacity - 1)], <span class="keyword">true</span>); \</div>
 <div class="line">                                                                                                                     \</div>
-<div class="line">         _index--)</div>
+<div class="line">         _index++)</div>
 </div><!-- fragment -->
 <p>Iterate over the values in the queue from the back to front. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the queue under the iteration may result in errors.</dd></dl>
