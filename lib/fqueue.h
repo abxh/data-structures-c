@@ -88,7 +88,7 @@
                                                                                                                      \
          ((value) = (queue_ptr)->values[((queue_ptr)->end_index - 1 - _index) & ((queue_ptr)->capacity - 1)], true); \
                                                                                                                      \
-         _index--)
+         _index++)
 
 #endif // FQUEUE_H
 
