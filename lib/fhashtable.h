@@ -3,15 +3,15 @@
  * @brief Fixed-size hashtable data structure based on open adressing (robin hood hashing).
  *
  * Ensure the capacity rounded up to the power of 2 is 75% of the expected numbers of values to be stored to keep
- * load factor low and the hash table performant. Also, searching for missing keys in full hashtables makes the search
- * procedures loop indefinitely.
+ * load factor low and the hash table performant. Also note, searching for missing keys in full hashtables makes the search
+ * procedures loop indefinitely - so ensure the hashtable doesn't get full.
  *
  * Prefer to use scalar types (int/uint), pointers or strings as key/value pairs. Structs can be used with elementwise
  * equality check but will not make use the cache and hardware prefetching as well. Keep the structs in a seperate
  * buffer and use their pointers preferably.
  *
  * A static / heap-allocated buffer should be used, should the key/values's lifetime extend beyond
- * the scope the arguments are provided. See example.
+ * the scope the arguments are provided. This applies to strings. See example.
  *
  * The following macros must be defined:
  *  @li `NAME`
