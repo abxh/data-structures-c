@@ -6,7 +6,7 @@
  * load factor low and the hash table performant. Also note, searching for missing keys in full hashtables makes the search
  * procedures loop indefinitely - so ensure the hashtable doesn't get full.
  *
- * Prefer to use scalar types (int/uint), pointers or strings as key/value pairs. Structs can be used with elementwise
+ * Prefer to use scalar types (int/uint/pointers) or strings as key/value pairs. Structs can be used with elementwise
  * equality check but will not make use the cache and hardware prefetching as well. Keep the structs in a seperate
  * buffer and use their pointers preferably.
  *

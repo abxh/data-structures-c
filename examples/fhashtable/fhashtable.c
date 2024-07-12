@@ -3,14 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-size_t first_char(const char* c) {
-    return *c;
-}
+#include "fnvhash.h"
+
 #define NAME strint_ht
 #define KEY_TYPE char*
 #define VALUE_TYPE int
 #define KEY_IS_EQUAL(a, b) (strcmp((a), (b)) == 0)
-#define HASH_FUNCTION(v) (first_char(v))
+#define HASH_FUNCTION(v) (fnvhash_32_str(v))
 #include "fhashtable.h"
 
 static char buf[4096]; // a static / heap-allocated buffer should be used, should the key/values's lifetime
