@@ -4,7 +4,7 @@
  | ![tests](https://github.com/abxh/data-structures-c/actions/workflows/tests.yml/badge.svg?event=push)
 
 Asserts are used to check various assumptions.
-Use `-NDEBUG` for turning off asserts in release builds.
+Use `NDEBUG` flag for turning off asserts in release builds.
 
 | **File**                                                                             | Description                                                                      |                                                                                                                                                                               |
 |--------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
