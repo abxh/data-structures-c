@@ -169,7 +169,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    }</div>
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> capacity_new = <a class="code hl_function" href="round__up__pow2_8h.html#aeb1f6516cf6ffc3107d86d7ee7e47569">round_up_pow2</a>(capacity);</div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    FQUEUE_TYPE* queue_ptr = malloc(offsetof(FQUEUE_TYPE, values) + capacity_new * <span class="keyword">sizeof</span>(<a class="code hl_define" href="fqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>));</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    FQUEUE_TYPE* queue_ptr = (FQUEUE_TYPE*)malloc(offsetof(FQUEUE_TYPE, values) + capacity_new * <span class="keyword">sizeof</span>(<a class="code hl_define" href="fqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>));</div>
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <span class="keywordflow">if</span> (!queue_ptr) {</div>
 <div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <span class="keywordflow">return</span> NULL;</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    }</div>
