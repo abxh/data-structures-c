@@ -100,9 +100,9 @@ $(function(){ initResizable(false); });
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="paste_8h_source.html">paste.h</a>&quot;</code><br />
 <code>#include &lt;assert.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
@@ -123,12 +123,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ae17cb099b4c9aee7835032339b5a9e0d" id="r_ae17cb099b4c9aee7835032339b5a9e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;&#160;&#160;int</td></tr>
 <tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stack value type.  <br /></td></tr>
 <tr class="separator:ae17cb099b4c9aee7835032339b5a9e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acce26cc745fb283c1c7198dbefb3330c" id="r_acce26cc745fb283c1c7198dbefb3330c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acce26cc745fb283c1c7198dbefb3330c">FSTACK_FOREACH</a>(stack_ptr,  temp_index,  value)</td></tr>
-<tr class="memdesc:acce26cc745fb283c1c7198dbefb3330c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the stack from the top to bottom.  <br /></td></tr>
-<tr class="separator:acce26cc745fb283c1c7198dbefb3330c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0367b0d65653eaccc21c6e91833d440" id="r_aa0367b0d65653eaccc21c6e91833d440"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0367b0d65653eaccc21c6e91833d440">FSTACK_FOREACH_REVERSE</a>(stack_ptr,  temp_index,  value)</td></tr>
-<tr class="memdesc:aa0367b0d65653eaccc21c6e91833d440"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the stack from the bottom to top.  <br /></td></tr>
-<tr class="separator:aa0367b0d65653eaccc21c6e91833d440"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7733e9718ef5fa1f484920a5e268e24b" id="r_a7733e9718ef5fa1f484920a5e268e24b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7733e9718ef5fa1f484920a5e268e24b">FSTACK_FOREACH</a>(stack_ptr,  value)</td></tr>
+<tr class="memdesc:a7733e9718ef5fa1f484920a5e268e24b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the stack from the top to bottom.  <br /></td></tr>
+<tr class="separator:a7733e9718ef5fa1f484920a5e268e24b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a751c8b8b3e15e40bf3693cba1466ec0b" id="r_a751c8b8b3e15e40bf3693cba1466ec0b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a751c8b8b3e15e40bf3693cba1466ec0b">FSTACK_FOREACH_REVERSE</a>(stack_ptr,  value)</td></tr>
+<tr class="memdesc:a751c8b8b3e15e40bf3693cba1466ec0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the stack from the bottom to top.  <br /></td></tr>
+<tr class="separator:a751c8b8b3e15e40bf3693cba1466ec0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -176,8 +176,8 @@ Functions</h2></td></tr>
 <li><code>VALUE_TYPE</code> </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="acce26cc745fb283c1c7198dbefb3330c" name="acce26cc745fb283c1c7198dbefb3330c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acce26cc745fb283c1c7198dbefb3330c">&#9670;&#160;</a></span>FSTACK_FOREACH</h2>
+<a id="a7733e9718ef5fa1f484920a5e268e24b" name="a7733e9718ef5fa1f484920a5e268e24b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7733e9718ef5fa1f484920a5e268e24b">&#9670;&#160;</a></span>FSTACK_FOREACH</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -190,29 +190,26 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>temp_index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((temp_index) = (stack_ptr)-&gt;count;                       \</div>
-<div class="line">                                                                  \</div>
-<div class="line">         (temp_index) &gt; 0 &amp;&amp;                                      \</div>
-<div class="line">                                                                  \</div>
-<div class="line">         ((value) = (stack_ptr)-&gt;values[(temp_index) - 1], <span class="keyword">true</span>); \</div>
-<div class="line">                                                                  \</div>
-<div class="line">         (temp_index)--)</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> _index = (stack_ptr)-&gt;count;                \</div>
+<div class="line">                                                            \</div>
+<div class="line">         _index &gt; 0 &amp;&amp;                                      \</div>
+<div class="line">                                                            \</div>
+<div class="line">         ((value) = (stack_ptr)-&gt;values[_index - 1], <span class="keyword">true</span>); \</div>
+<div class="line">                                                            \</div>
+<div class="line">         _index--)</div>
 </div><!-- fragment -->
 <p>Iterate over the values in the stack from the top to bottom. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the stack under the iteration may result in errors.</dd></dl>
+<p>temporary variables visible in scope: </p><ul>
+<li>_index</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>Stack pointer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">temp_index</td><td>Temporary variable used for indexing. Should be <code>size_t</code>. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>Current value. Should be <code>VALUE_TYPE</code>. </td></tr>
   </table>
   </dd>
@@ -222,8 +219,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa0367b0d65653eaccc21c6e91833d440" name="aa0367b0d65653eaccc21c6e91833d440"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0367b0d65653eaccc21c6e91833d440">&#9670;&#160;</a></span>FSTACK_FOREACH_REVERSE</h2>
+<a id="a751c8b8b3e15e40bf3693cba1466ec0b" name="a751c8b8b3e15e40bf3693cba1466ec0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a751c8b8b3e15e40bf3693cba1466ec0b">&#9670;&#160;</a></span>FSTACK_FOREACH_REVERSE</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -236,29 +233,26 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>temp_index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((temp_index) = 0;                                    \</div>
-<div class="line">                                                              \</div>
-<div class="line">         (temp_index) &lt; (stack_ptr)-&gt;count &amp;&amp;                 \</div>
-<div class="line">                                                              \</div>
-<div class="line">         ((value) = (stack_ptr)-&gt;values[(temp_index)], <span class="keyword">true</span>); \</div>
-<div class="line">                                                              \</div>
-<div class="line">         (temp_index)++)</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> _index = 0;                             \</div>
+<div class="line">                                                        \</div>
+<div class="line">         _index &lt; (stack_ptr)-&gt;count &amp;&amp;                 \</div>
+<div class="line">                                                        \</div>
+<div class="line">         ((value) = (stack_ptr)-&gt;values[_index], <span class="keyword">true</span>); \</div>
+<div class="line">                                                        \</div>
+<div class="line">         _index++)</div>
 </div><!-- fragment -->
 <p>Iterate over the values in the stack from the bottom to top. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the stack under the iteration may result in errors.</dd></dl>
+<p>temporary variables visible in scope: </p><ul>
+<li>_index</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>Stack pointer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">temp_index</td><td>Temporary variable used for indexing. Should be <code>size_t</code>. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>Current value. Should be <code>VALUE_TYPE</code>. </td></tr>
   </table>
   </dd>
@@ -461,6 +455,7 @@ Functions</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">`NULL`</td><td><ul>
+<li>If capacity is 0 or the stack size cannot be represented by <code>size_t</code>. </li>
 <li>If malloc fails. </li>
 </ul>
 </td></tr>

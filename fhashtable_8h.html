@@ -139,9 +139,9 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>FHASHTABLE_EMPTY_SLOT_OFFSET</b>&#160;&#160;&#160;(SIZE_MAX)</td></tr>
 <tr class="memdesc:aa799886ed218fb21a6ca4787cf83e8d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset constant used to flag empty slots. <br /></td></tr>
 <tr class="separator:aa799886ed218fb21a6ca4787cf83e8d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af85ee4bf84f4c5841caf3d020004e1bc" id="r_af85ee4bf84f4c5841caf3d020004e1bc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af85ee4bf84f4c5841caf3d020004e1bc">FHASHTABLE_FOREACH</a>(hashtable_ptr,  temp_index,  key_,  value_)</td></tr>
-<tr class="memdesc:af85ee4bf84f4c5841caf3d020004e1bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the non-empty slots in the hashtable in arbitary order.  <br /></td></tr>
-<tr class="separator:af85ee4bf84f4c5841caf3d020004e1bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73ab43d6ec197c44dc97808300246ad2" id="r_a73ab43d6ec197c44dc97808300246ad2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73ab43d6ec197c44dc97808300246ad2">FHASHTABLE_FOREACH</a>(hashtable_ptr,  key_,  value_)</td></tr>
+<tr class="memdesc:a73ab43d6ec197c44dc97808300246ad2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the non-empty slots in the hashtable in arbitary order.  <br /></td></tr>
+<tr class="separator:a73ab43d6ec197c44dc97808300246ad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -187,7 +187,8 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Fixed-size hashtable data structure based on open adressing (robin hood hashing). </p>
-<p>Prefer to use scalar values over structs as keys/values for utilizing cache the fullest. Strings are fine to use.</p>
+<p>Ensure the capacity rounded up to the power of 2 is 75% of the expected numbers of values to be stored to keep load factor low and the hash table performant. Also, searching for missing keys in full hashtables makes the search procedures loops indefinitely.</p>
+<p>Prefer to use scalar types (int/uint), pointers or strings as key/value pairs. Structs can be used with elementwise equality check but will not make use the cache and hardware prefetching as well. Keep the structs in a seperate buffer and use their pointers preferably.</p>
 <p>A static / heap-allocated buffer should be used, should the key/values's lifetime extend beyond the scope the arguments are provided. See example.</p>
 <p>The following macros must be defined: </p><ul>
 <li><code>NAME</code> </li>
@@ -200,10 +201,11 @@ Functions</h2></td></tr>
 <li><a href="https://thenumb.at/Hashtables/#robin-hood-linear-probing">https://thenumb.at/Hashtables/#robin-hood-linear-probing</a> </li>
 <li><a href="https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/">https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/</a> </li>
 <li><a href="https://github.com/rmind/rhashmap/blob/master/src/rhashmap.c">https://github.com/rmind/rhashmap/blob/master/src/rhashmap.c</a> </li>
+<li><a href="https://github.com/tezc/sc/tree/master/map">https://github.com/tezc/sc/tree/master/map</a> </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="af85ee4bf84f4c5841caf3d020004e1bc" name="af85ee4bf84f4c5841caf3d020004e1bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af85ee4bf84f4c5841caf3d020004e1bc">&#9670;&#160;</a></span>FHASHTABLE_FOREACH</h2>
+<a id="a73ab43d6ec197c44dc97808300246ad2" name="a73ab43d6ec197c44dc97808300246ad2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73ab43d6ec197c44dc97808300246ad2">&#9670;&#160;</a></span>FHASHTABLE_FOREACH</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -212,11 +214,6 @@ Functions</h2></td></tr>
           <td class="memname">#define FHASHTABLE_FOREACH</td>
           <td>(</td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>temp_index</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -230,19 +227,21 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((temp_index) = 0; (temp_index) &lt; (hashtable_ptr)-&gt;capacity; (temp_index)++)       \</div>
-<div class="line">                                                                                           \</div>
-<div class="line">        if ((hashtable_ptr)-&gt;slots[(temp_index)].offset != <a class="code hl_define" href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a> &amp;&amp; \</div>
-<div class="line">                                                                                           \</div>
-<div class="line">            ((key_) = (hashtable_ptr)-&gt;slots[(temp_index)].key, (value_) = (hashtable_ptr)-&gt;slots[(temp_index)].value, <span class="keyword">true</span>))</div>
-<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:117</div></div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> _index = 0; _index &lt; (hashtable_ptr)-&gt;capacity; _index++)            \</div>
+<div class="line">                                                                                     \</div>
+<div class="line">        <span class="keywordflow">if</span> ((hashtable_ptr)-&gt;slots[_index].offset != <a class="code hl_define" href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a> &amp;&amp; \</div>
+<div class="line">                                                                                     \</div>
+<div class="line">            ((key_) = (hashtable_ptr)-&gt;slots[_index].key, (value_) = (hashtable_ptr)-&gt;slots[_index].value, <span class="keyword">true</span>))</div>
+<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:124</div></div>
 </div><!-- fragment -->
 <p>Iterate over the non-empty slots in the hashtable in arbitary order. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the hashtable under the iteration may result in errors.</dd></dl>
+<p>temporary variables visible in scope: </p><ul>
+<li>_index</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>hashtable pointer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">temp_index</td><td>Temporary variable used for indexing. Should be <code>size_t</code>. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">key_</td><td>Current key. Should be <code>KEY_TYPE</code>. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">value_</td><td>Current value. Should be <code>VALUE_TYPE</code>. </td></tr>
   </table>
@@ -308,8 +307,8 @@ Functions</h2></td></tr>
 <p>Is undefined once header is included.</p>
 <dl class="section attention"><dt>Attention</dt><dd><ul>
 <li>If comparing two scalar values, set this macro to ((a) == (b)). </li>
-<li>If comparing two structs, set this macro to a function that does element-wise comparison between the structs. </li>
 <li>If comparing two strings, set this macro to strcmp() or strncmp() appropiately. </li>
+<li>If comparing two structs, set this macro to a function that does element-wise comparison between the structs. </li>
 </ul>
 </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
@@ -436,7 +435,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check if hashtable contains a key. </p>
-<p>Assumes hashtable_ptr is not <code>NULL</code>.</p>
+<p>Assumes: </p><ul>
+<li>hashtable_ptr is not <code>NULL</code>. </li>
+<li>there exists at least one empty slot - aka the hashtable is not full.</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
@@ -527,7 +529,7 @@ Functions</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">`NULL`</td><td><ul>
 <li>If malloc fails. </li>
-<li>If <code>capacity</code> is larger than <code>UINTPTR_MAX / 4</code>. </li>
+<li>If capacity is less than 2 or the hashtable size [rounded up to the power of 2] is larger than UINT32_MAX / 4. </li>
 </ul>
 </td></tr>
   </table>
@@ -646,7 +648,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>From a given key, get the copy of the corresponding value in the hashtable. </p>
-<p>Assumes hashtable_ptr is not <code>NULL</code>.</p>
+<p>Assumes: </p><ul>
+<li>hashtable_ptr is not <code>NULL</code>. </li>
+<li>there exists at least one empty slot - aka the hashtable is not full.</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
@@ -693,7 +698,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>From a given key, get the pointer to the corresponding value in the hashtable. </p>
-<p>Assumes hashtable_ptr is not <code>NULL</code>.</p>
+<p>Assumes: </p><ul>
+<li>hashtable_ptr is not <code>NULL</code>. </li>
+<li>there exists at least one empty slot - aka the hashtable is not full.</li>
+</ul>
 <dl class="section note"><dt>Note</dt><dd>The returned pointer is <b>not</b> garanteed to point to the same value if the hashtable is modified.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -748,7 +756,7 @@ Functions</h2></td></tr>
 <p>Assumes: </p><ul>
 <li>hashtable_ptr is not <code>NULL</code>. </li>
 <li>key is not already contained in the hashtable. </li>
-<li>hash table is not full (this should not happen with <code>FHASHTABLE_CAPACITY_FACTOR</code>).</li>
+<li>hash table is not full.</li>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -914,7 +922,7 @@ Functions</h2></td></tr>
 <p>If a duplicate key is found, the corresponding value is overwritten.</p>
 <p>Assumes: </p><ul>
 <li>hashtable_ptr is not <code>NULL</code>. </li>
-<li>hash table is not full (this should not happen with <code>FHASHTABLE_CAPACITY_FACTOR</code>).</li>
+<li>hash table is not full.</li>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

@@ -120,12 +120,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ae17cb099b4c9aee7835032339b5a9e0d" id="r_ae17cb099b4c9aee7835032339b5a9e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;&#160;&#160;int</td></tr>
 <tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue value type. This must be manually defined before including this header file.  <br /></td></tr>
 <tr class="separator:ae17cb099b4c9aee7835032339b5a9e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5520359f813beb86e05cad414f52ba2e" id="r_a5520359f813beb86e05cad414f52ba2e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5520359f813beb86e05cad414f52ba2e">FQUEUE_FOREACH</a>(queue_ptr,  temp_index,  value)</td></tr>
-<tr class="memdesc:a5520359f813beb86e05cad414f52ba2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the queue from the front to back.  <br /></td></tr>
-<tr class="separator:a5520359f813beb86e05cad414f52ba2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a624e3a87dfaf7b43b2144ba3b67ea545" id="r_a624e3a87dfaf7b43b2144ba3b67ea545"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a624e3a87dfaf7b43b2144ba3b67ea545">FQUEUE_FOREACH_REVERSE</a>(queue_ptr,  temp_index,  value)</td></tr>
-<tr class="memdesc:a624e3a87dfaf7b43b2144ba3b67ea545"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the queue from the back to front.  <br /></td></tr>
-<tr class="separator:a624e3a87dfaf7b43b2144ba3b67ea545"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61432804243f13fe74ae7512611fe035" id="r_a61432804243f13fe74ae7512611fe035"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61432804243f13fe74ae7512611fe035">FQUEUE_FOREACH</a>(queue_ptr,  value)</td></tr>
+<tr class="memdesc:a61432804243f13fe74ae7512611fe035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the queue from the front to back.  <br /></td></tr>
+<tr class="separator:a61432804243f13fe74ae7512611fe035"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad44c6c64d6ca9b7e41cd7753cbd3bacc" id="r_ad44c6c64d6ca9b7e41cd7753cbd3bacc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad44c6c64d6ca9b7e41cd7753cbd3bacc">FQUEUE_FOREACH_REVERSE</a>(queue_ptr,  value)</td></tr>
+<tr class="memdesc:ad44c6c64d6ca9b7e41cd7753cbd3bacc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the queue from the back to front.  <br /></td></tr>
+<tr class="separator:ad44c6c64d6ca9b7e41cd7753cbd3bacc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -173,8 +173,8 @@ Functions</h2></td></tr>
 <li><code>VALUE_TYPE</code> </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a5520359f813beb86e05cad414f52ba2e" name="a5520359f813beb86e05cad414f52ba2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5520359f813beb86e05cad414f52ba2e">&#9670;&#160;</a></span>FQUEUE_FOREACH</h2>
+<a id="a61432804243f13fe74ae7512611fe035" name="a61432804243f13fe74ae7512611fe035"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61432804243f13fe74ae7512611fe035">&#9670;&#160;</a></span>FQUEUE_FOREACH</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -187,29 +187,26 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>temp_index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((temp_index) = (queue_ptr)-&gt;begin_index;             \</div>
-<div class="line">                                                              \</div>
-<div class="line">         (temp_index) != (queue_ptr)-&gt;end_index &amp;&amp;            \</div>
-<div class="line">                                                              \</div>
-<div class="line">         ((value) = (queue_ptr)-&gt;values[(temp_index)], <span class="keyword">true</span>); \</div>
-<div class="line">                                                              \</div>
-<div class="line">         (temp_index) = ((temp_index) + 1) &amp; ((queue_ptr)-&gt;capacity - 1))</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> _index = 0;                                                                                        \</div>
+<div class="line">                                                                                                                   \</div>
+<div class="line">         _index &lt; (queue_ptr)-&gt;count &amp;&amp;                                                                            \</div>
+<div class="line">                                                                                                                   \</div>
+<div class="line">         ((value) = (queue_ptr)-&gt;values[((queue_ptr)-&gt;begin_index + _index) &amp; ((queue_ptr)-&gt;capacity - 1)], <span class="keyword">true</span>); \</div>
+<div class="line">                                                                                                                   \</div>
+<div class="line">         _index++)</div>
 </div><!-- fragment -->
 <p>Iterate over the values in the queue from the front to back. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the queue under the iteration may result in errors.</dd></dl>
+<p>temporary variables visible in scope: </p><ul>
+<li>_index</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>Queue pointer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">temp_index</td><td>Temporary variable used for indexing. Should be <code>size_t</code>. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>Current value. Should be <code>VALUE_TYPE</code>. </td></tr>
   </table>
   </dd>
@@ -219,8 +216,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a624e3a87dfaf7b43b2144ba3b67ea545" name="a624e3a87dfaf7b43b2144ba3b67ea545"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a624e3a87dfaf7b43b2144ba3b67ea545">&#9670;&#160;</a></span>FQUEUE_FOREACH_REVERSE</h2>
+<a id="ad44c6c64d6ca9b7e41cd7753cbd3bacc" name="ad44c6c64d6ca9b7e41cd7753cbd3bacc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad44c6c64d6ca9b7e41cd7753cbd3bacc">&#9670;&#160;</a></span>FQUEUE_FOREACH_REVERSE</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -233,29 +230,26 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>temp_index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((temp_index) = (queue_ptr)-&gt;end_index - 1;                                        \</div>
-<div class="line">                                                                                           \</div>
-<div class="line">         (temp_index) != (((queue_ptr)-&gt;begin_index - 1) &amp; ((queue_ptr)-&gt;capacity - 1)) &amp;&amp; \</div>
-<div class="line">                                                                                           \</div>
-<div class="line">         ((value) = (queue_ptr)-&gt;values[(temp_index)], <span class="keyword">true</span>);                              \</div>
-<div class="line">                                                                                           \</div>
-<div class="line">         (temp_index) = ((temp_index) - 1) &amp; ((queue_ptr)-&gt;capacity - 1))</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> _index = 0;                                                                                          \</div>
+<div class="line">                                                                                                                     \</div>
+<div class="line">         _index &lt; (queue_ptr)-&gt;count &amp;&amp;                                                                              \</div>
+<div class="line">                                                                                                                     \</div>
+<div class="line">         ((value) = (queue_ptr)-&gt;values[((queue_ptr)-&gt;end_index - 1 - _index) &amp; ((queue_ptr)-&gt;capacity - 1)], <span class="keyword">true</span>); \</div>
+<div class="line">                                                                                                                     \</div>
+<div class="line">         _index--)</div>
 </div><!-- fragment -->
 <p>Iterate over the values in the queue from the back to front. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the queue under the iteration may result in errors.</dd></dl>
+<p>temporary variables visible in scope: </p><ul>
+<li>_index</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>Queue pointer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">temp_index</td><td>Temporary variable used for indexing. Should be <code>size_t</code>. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>Current value. Should be <code>VALUE_TYPE</code>. </td></tr>
   </table>
   </dd>
@@ -457,7 +451,7 @@ Functions</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">`NULL`</td><td><ul>
 <li>If malloc fails. </li>
-<li>If <code>capacity</code> is larger than UINTPTR_MAX / 4. </li>
+<li>If capacity is 0 or the queue size [rounded up to the power of 2] is larger than UINT32_MAX / 4. </li>
 </ul>
 </td></tr>
   </table>
