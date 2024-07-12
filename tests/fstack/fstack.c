@@ -64,24 +64,23 @@ static inline bool check_ordered_values(const i64_stk_type* stk_p, const size_t 
     for (size_t i = 0; i < n; i++) {
         res &= i64_stk_at(stk_p, i) == expected_value[i];
     }
-    bool entered_loop1 = false, entered_loop2 = false;
     {
         size_t index = 0;
         int64_t value;
         FSTACK_FOREACH(stk_p, value) {
-            entered_loop1 = true;
             res &= value == expected_value[index++];
         }
+        assert(index == n);
     }
     {
         size_t index = n;
         int64_t value;
         FSTACK_FOREACH_REVERSE(stk_p, value) {
-            entered_loop2 = true;
             res &= value == expected_value[--index];
         }
+        assert(index == 0);
     }
-    return res && entered_loop1 && entered_loop2;
+    return res;
 }
 
 static inline bool copy_values_and_check_ordered_values(const i64_stk_type* stk_p, const size_t n, const int64_t expected_value[n]) {

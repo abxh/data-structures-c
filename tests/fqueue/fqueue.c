@@ -65,24 +65,23 @@ static inline bool check_ordered_values(const i64_que_type* que_p, const size_t 
     for (size_t i = 0; i < n; i++) {
         res &= i64_que_at(que_p, i) == expected_value[i];
     }
-    bool entered_loop1 = false, entered_loop2 = false;
     {
         size_t index = 0;
         int64_t value;
         FQUEUE_FOREACH(que_p, value) {
-            entered_loop1 = true;
             res &= value == expected_value[index++];
         }
+        assert(index == n);
     }
     {
         size_t index = n;
         int64_t value;
         FQUEUE_FOREACH_REVERSE(que_p, value) {
-            entered_loop2 = true;
             res &= value == expected_value[--index];
         }
+        assert(index == 0);
     }
-    return res && entered_loop1 && entered_loop2;
+    return res;
 }
 
 static inline bool copy_values_and_check_ordered_values(const i64_que_type* que_p, const size_t n, const int64_t expected_value[n]) {
@@ -242,11 +241,17 @@ int main(void) {
 
         i64_que_destroy(que_p);
     }
-    // N = 10, enqueue * 10 -> dequeue * 5 -> enqueue * 5
+    // N = 10, enqueue * 3, dequeue * 3, enqueue * 10 -> dequeue * 5 -> enqueue * 3
     {
         i64_que_type* que_p = i64_que_create(10);
         if (!que_p) {
             assert(false);
+        }
+        for (size_t i = 0; i < 5; i++) {
+            i64_que_enqueue(que_p, i);
+        }
+        for (size_t i = 0; i < 5; i++) {
+            i64_que_dequeue(que_p);
         }
         i64_que_enqueue(que_p, 421);
         i64_que_enqueue(que_p, 422);
@@ -265,16 +270,13 @@ int main(void) {
 
         i64_que_enqueue(que_p, 431);
         i64_que_enqueue(que_p, 432);
-        i64_que_enqueue(que_p, 433);
-        i64_que_enqueue(que_p, 434);
-        i64_que_enqueue(que_p, 435);
 
-        assert(check_count_invariance(que_p, 15, 5));
+        assert(check_count_invariance(que_p, 12, 5));
         assert(check_capacity_invariance(que_p, 10));
-        assert(check_empty_full(que_p, 15, 5));
-        assert(check_front_back(que_p, 426, 435));
-        assert(check_ordered_values(que_p, 10, (int64_t[10]){426, 427, 428, 429, 430, 431, 432, 433, 434, 435}));
-        assert(copy_values_and_check_ordered_values(que_p, 10, (int64_t[10]){426, 427, 428, 429, 430, 431, 432, 433, 434, 435}));
+        assert(check_empty_full(que_p, 12, 5));
+        assert(check_front_back(que_p, 426, 432));
+        assert(check_ordered_values(que_p, 7, (int64_t[8]){426, 427, 428, 429, 430, 431, 432}));
+        assert(copy_values_and_check_ordered_values(que_p, 7, (int64_t[7]){426, 427, 428, 429, 430, 431, 432}));
 
         i64_que_destroy(que_p);
     }
