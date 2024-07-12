@@ -51,40 +51,44 @@
 /// @endcond
 
 /**
- * @def FQUEUE_FOREACH(queue_ptr, temp_index, value)
+ * @def FQUEUE_FOREACH(queue_ptr, value)
  * @brief Iterate over the values in the queue from the front to back.
  * @warning Modifying the queue under the iteration may result in errors.
  *
+ * temporary variables visible in scope:
+ * @li _index
+ *
  * @param[in] queue_ptr Queue pointer.
- * @param[out] temp_index Temporary variable used for indexing. Should be `size_t`.
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
-#define FQUEUE_FOREACH(queue_ptr, temp_index, value)          \
-    for ((temp_index) = (queue_ptr)->begin_index;             \
-                                                              \
-         (temp_index) != (queue_ptr)->end_index &&            \
-                                                              \
-         ((value) = (queue_ptr)->values[(temp_index)], true); \
-                                                              \
-         (temp_index) = ((temp_index) + 1) & ((queue_ptr)->capacity - 1))
+#define FQUEUE_FOREACH(queue_ptr, value)                                                                           \
+    for (size_t _index = 0;                                                                                        \
+                                                                                                                   \
+         _index < (queue_ptr)->count &&                                                                            \
+                                                                                                                   \
+         ((value) = (queue_ptr)->values[((queue_ptr)->begin_index + _index) & ((queue_ptr)->capacity - 1)], true); \
+                                                                                                                   \
+         _index++)
 
 /**
- * @def FQUEUE_FOREACH_REVERSE(queue_ptr, temp_index, value)
+ * @def FQUEUE_FOREACH_REVERSE(queue_ptr, value)
  * @brief Iterate over the values in the queue from the back to front.
  * @warning Modifying the queue under the iteration may result in errors.
  *
+ * temporary variables visible in scope:
+ * @li _index
+ *
  * @param[in] queue_ptr Queue pointer.
- * @param[out] temp_index Temporary variable used for indexing. Should be `size_t`.
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
-#define FQUEUE_FOREACH_REVERSE(queue_ptr, temp_index, value)                               \
-    for ((temp_index) = (queue_ptr)->end_index - 1;                                        \
-                                                                                           \
-         (temp_index) != (((queue_ptr)->begin_index - 1) & ((queue_ptr)->capacity - 1)) && \
-                                                                                           \
-         ((value) = (queue_ptr)->values[(temp_index)], true);                              \
-                                                                                           \
-         (temp_index) = ((temp_index) - 1) & ((queue_ptr)->capacity - 1))
+#define FQUEUE_FOREACH_REVERSE(queue_ptr, value)                                                                     \
+    for (size_t _index = 0;                                                                                          \
+                                                                                                                     \
+         _index < (queue_ptr)->count &&                                                                              \
+                                                                                                                     \
+         ((value) = (queue_ptr)->values[((queue_ptr)->end_index - 1 - _index) & ((queue_ptr)->capacity - 1)], true); \
+                                                                                                                     \
+         _index--)
 
 #endif // FQUEUE_H
 
@@ -120,13 +124,12 @@ typedef struct {
  * @return A pointer to the queue.
  * @retval `NULL`
  *   @li If malloc fails.
- *   @li If `capacity` is larger than UINTPTR_MAX / 4.
+ *   @li If capacity is 0 or the queue size [rounded up to the power of 2] is larger than UINT32_MAX / 4.
  */
 static inline FQUEUE_TYPE* JOIN(FQUEUE_NAME, create)(const size_t capacity) {
-    if (capacity > UINTPTR_MAX / 4) {
+    if (capacity == 0 || capacity > UINT32_MAX / 4) {
         return NULL;
     }
-
     const size_t capacity_new = round_up_pow2(capacity);
 
     FQUEUE_TYPE* queue_ptr = malloc(offsetof(FQUEUE_TYPE, values) + capacity_new * sizeof(VALUE_TYPE));
@@ -204,7 +207,9 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, at)(const FQUEUE_TYPE* queue_ptr, con
     assert(queue_ptr != NULL);
     assert(index < queue_ptr->count);
 
-    return queue_ptr->values[index];
+    const int index_mask = (queue_ptr->capacity - 1);
+
+    return queue_ptr->values[(queue_ptr->begin_index + index) & index_mask];
 }
 
 /**
@@ -337,22 +342,16 @@ static inline void JOIN(FQUEUE_NAME, copy)(FQUEUE_TYPE* restrict dest_queue_ptr,
     assert(src_queue_ptr->count <= dest_queue_ptr->capacity);
     assert(FQUEUE_IS_EMPTY(dest_queue_ptr));
 
-    if (src_queue_ptr->begin_index <= src_queue_ptr->end_index) {
-        for (size_t i = src_queue_ptr->begin_index; i < src_queue_ptr->end_index; i++) {
-            dest_queue_ptr->values[i] = src_queue_ptr->values[i];
-        }
-    } else {
-        for (size_t i = 0; i < src_queue_ptr->end_index; i++) {
-            dest_queue_ptr->values[i] = src_queue_ptr->values[i];
-        }
-        for (size_t i = src_queue_ptr->begin_index; i < src_queue_ptr->capacity; i++) {
-            dest_queue_ptr->values[i] = src_queue_ptr->values[i];
-        }
+    const size_t src_begin_index = src_queue_ptr->begin_index;
+    const size_t src_index_mask = src_queue_ptr->capacity - 1;
+
+    for (size_t i = 0; i < src_queue_ptr->count; i++) {
+        dest_queue_ptr->values[i] = src_queue_ptr->values[(src_begin_index + i) & src_index_mask];
     }
 
     dest_queue_ptr->count = src_queue_ptr->count;
-    dest_queue_ptr->begin_index = src_queue_ptr->begin_index;
-    dest_queue_ptr->end_index = src_queue_ptr->end_index;
+    dest_queue_ptr->begin_index = 0;
+    dest_queue_ptr->end_index = src_queue_ptr->count;
 }
 
 // }}}

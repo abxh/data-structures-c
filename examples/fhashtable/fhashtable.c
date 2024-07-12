@@ -104,12 +104,11 @@ void int_to_int_hashtable_test(void) {
 
     bool table[LIM] = {false};
     {
-        size_t temp_index;
         int key;
         int value;
         (void)(value); // mark unused
 
-        FHASHTABLE_FOREACH(ht_copy, temp_index, key, value) {
+        FHASHTABLE_FOREACH(ht_copy, key, value) {
             const bool inside_range = 0 <= key && key < LIM;
             const bool already_counted = table[key];
 

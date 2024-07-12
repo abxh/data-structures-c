@@ -17,9 +17,9 @@
 #include "paste.h" // PASTE, XPASTE, JOIN
 
 #include <assert.h>
-#include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -58,40 +58,44 @@
 /// @endcond
 
 /**
- * @def FSTACK_FOREACH(stack_ptr, temp_index, value)
+ * @def FSTACK_FOREACH(stack_ptr, value)
  * @brief Iterate over the values in the stack from the top to bottom.
  * @warning Modifying the stack under the iteration may result in errors.
  *
+ * temporary variables visible in scope:
+ * @li _index
+ *
  * @param[in] stack_ptr Stack pointer.
- * @param[out] temp_index Temporary variable used for indexing. Should be `size_t`.
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
-#define FSTACK_FOREACH(stack_ptr, temp_index, value)              \
-    for ((temp_index) = (stack_ptr)->count;                       \
-                                                                  \
-         (temp_index) > 0 &&                                      \
-                                                                  \
-         ((value) = (stack_ptr)->values[(temp_index) - 1], true); \
-                                                                  \
-         (temp_index)--)
+#define FSTACK_FOREACH(stack_ptr, value)                    \
+    for (size_t _index = (stack_ptr)->count;                \
+                                                            \
+         _index > 0 &&                                      \
+                                                            \
+         ((value) = (stack_ptr)->values[_index - 1], true); \
+                                                            \
+         _index--)
 
 /**
- * @def FSTACK_FOREACH_REVERSE(stack_ptr, temp_index, value)
+ * @def FSTACK_FOREACH_REVERSE(stack_ptr, value)
  * @brief Iterate over the values in the stack from the bottom to top.
  * @warning Modifying the stack under the iteration may result in errors.
  *
+ * temporary variables visible in scope:
+ * @li _index
+ *
  * @param[in] stack_ptr Stack pointer.
- * @param[out] temp_index Temporary variable used for indexing. Should be `size_t`.
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
-#define FSTACK_FOREACH_REVERSE(stack_ptr, temp_index, value)  \
-    for ((temp_index) = 0;                                    \
-                                                              \
-         (temp_index) < (stack_ptr)->count &&                 \
-                                                              \
-         ((value) = (stack_ptr)->values[(temp_index)], true); \
-                                                              \
-         (temp_index)++)
+#define FSTACK_FOREACH_REVERSE(stack_ptr, value)        \
+    for (size_t _index = 0;                             \
+                                                        \
+         _index < (stack_ptr)->count &&                 \
+                                                        \
+         ((value) = (stack_ptr)->values[_index], true); \
+                                                        \
+         _index++)
 
 #endif // FSTACK_H
 
@@ -124,10 +128,11 @@ typedef struct {
  * @param[in] capacity Maximum number of elements expected to be stored in the stack.
  * @return A pointer to the stack.
  * @retval `NULL`
+ *   @li If capacity is 0 or the stack size cannot be represented by `size_t`.
  *   @li If malloc fails.
  */
 static inline FSTACK_TYPE* JOIN(FSTACK_NAME, create)(const size_t capacity) {
-    if (capacity > (SIZE_MAX - offsetof(FSTACK_TYPE, values)) / sizeof(VALUE_TYPE)) {
+    if (capacity == 0 || capacity > (SIZE_MAX - offsetof(FSTACK_TYPE, values)) / sizeof(VALUE_TYPE)) {
         return NULL;
     }
     FSTACK_TYPE* stack_ptr = malloc(offsetof(FSTACK_TYPE, values) + capacity * sizeof(VALUE_TYPE));
