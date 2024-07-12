@@ -20,5 +20,9 @@ jobs:
       with:
         version: latest
 
+    - uses: Bacondish2023/setup-googletest@v1
+      with:
+        tag: v1.14.0
+
     - name: test application
       run: make test

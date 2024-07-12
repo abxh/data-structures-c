@@ -1,5 +1,5 @@
 TOPTARGETS := all clean test
-SUBDIRS := $(wildcard ./examples/*)
+SUBDIRS := $(wildcard ./examples/*) $(wildcard ./tests/*)
 
 $(TOPTARGETS): $(SUBDIRS)
 
