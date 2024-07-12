@@ -4,7 +4,7 @@
  *
  * Ensure the capacity rounded up to the power of 2 is 75% of the expected numbers of values to be stored to keep
  * load factor low and the hash table performant. Also, searching for missing keys in full hashtables makes the search
- * procedures loops indefinitely.
+ * procedures loop indefinitely.
  *
  * Prefer to use scalar types (int/uint), pointers or strings as key/value pairs. Structs can be used with elementwise
  * equality check but will not make use the cache and hardware prefetching as well. Keep the structs in a seperate
