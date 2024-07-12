@@ -98,9 +98,9 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span> <span class="comment">// size_t, NULL</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
 <div class="foldopen" id="foldopen00022" data-start="{" data-end="}">
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="fnvhash_8h.html#ab8ab4359590f8a5dee7d9fe8e2fa7913">   22</a></span><span class="keyword">static</span> <span class="keyword">inline</span> uint32_t <a class="code hl_function" href="fnvhash_8h.html#ab8ab4359590f8a5dee7d9fe8e2fa7913">fnvhash_32</a>(<span class="keyword">const</span> uint8_t* char_p, <span class="keyword">const</span> <span class="keywordtype">size_t</span> length) {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="fnvhash_8h.html#a61e23f79deaf20d3880e6f35fd39878f">   22</a></span><span class="keyword">static</span> <span class="keyword">inline</span> uint32_t <a class="code hl_function" href="fnvhash_8h.html#a61e23f79deaf20d3880e6f35fd39878f">fnvhash_32_str</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* char_p) {</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    uint32_t hash = 0x811c9dc5;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; length; i++) {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordflow">while</span> (*char_p != <span class="charliteral">&#39;\0&#39;</span>) {</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        hash ^= *(char_p++);</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        hash *= 0x01000193;</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    }</div>
@@ -109,19 +109,19 @@ $(function(){ initResizable(false); });
 </div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
 <div class="foldopen" id="foldopen00038" data-start="{" data-end="}">
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="fnvhash_8h.html#a4a4392103012d0062180ba46f5698498">   38</a></span><span class="keyword">static</span> <span class="keyword">inline</span> uint64_t <a class="code hl_function" href="fnvhash_8h.html#a4a4392103012d0062180ba46f5698498">fnvhash_64</a>(<span class="keyword">const</span> uint8_t* char_p, <span class="keyword">const</span> <span class="keywordtype">size_t</span> length) {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    uint64_t hash = 0xcbf29ce484222325LLU;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="fnvhash_8h.html#ab8ab4359590f8a5dee7d9fe8e2fa7913">   38</a></span><span class="keyword">static</span> <span class="keyword">inline</span> uint32_t <a class="code hl_function" href="fnvhash_8h.html#ab8ab4359590f8a5dee7d9fe8e2fa7913">fnvhash_32</a>(<span class="keyword">const</span> uint8_t* char_p, <span class="keyword">const</span> <span class="keywordtype">size_t</span> length) {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    uint32_t hash = 0x811c9dc5;</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; length; i++) {</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        hash ^= *(char_p++);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        hash *= 0x00000100000001B3LLU;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        hash *= 0x01000193;</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    }</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordflow">return</span> hash;</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>}</div>
 </div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="comment">// vim: ft=c</span></div>
-<div class="ttc" id="afnvhash_8h_html_a4a4392103012d0062180ba46f5698498"><div class="ttname"><a href="fnvhash_8h.html#a4a4392103012d0062180ba46f5698498">fnvhash_64</a></div><div class="ttdeci">static uint64_t fnvhash_64(const uint8_t *char_p, const size_t length)</div><div class="ttdef"><b>Definition</b> fnvhash.h:38</div></div>
-<div class="ttc" id="afnvhash_8h_html_ab8ab4359590f8a5dee7d9fe8e2fa7913"><div class="ttname"><a href="fnvhash_8h.html#ab8ab4359590f8a5dee7d9fe8e2fa7913">fnvhash_32</a></div><div class="ttdeci">static uint32_t fnvhash_32(const uint8_t *char_p, const size_t length)</div><div class="ttdef"><b>Definition</b> fnvhash.h:22</div></div>
+<div class="ttc" id="afnvhash_8h_html_a61e23f79deaf20d3880e6f35fd39878f"><div class="ttname"><a href="fnvhash_8h.html#a61e23f79deaf20d3880e6f35fd39878f">fnvhash_32_str</a></div><div class="ttdeci">static uint32_t fnvhash_32_str(const char *char_p)</div><div class="ttdef"><b>Definition</b> fnvhash.h:22</div></div>
+<div class="ttc" id="afnvhash_8h_html_ab8ab4359590f8a5dee7d9fe8e2fa7913"><div class="ttname"><a href="fnvhash_8h.html#ab8ab4359590f8a5dee7d9fe8e2fa7913">fnvhash_32</a></div><div class="ttdeci">static uint32_t fnvhash_32(const uint8_t *char_p, const size_t length)</div><div class="ttdef"><b>Definition</b> fnvhash.h:38</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

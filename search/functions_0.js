@@ -14,7 +14,7 @@ var searchData=
   ['fhashtable_5fsearch_11',['fhashtable_search',['../fhashtable_8h.html#ac45f2b3725a831db88804e05a55baf15',1,'fhashtable.h']]],
   ['fhashtable_5fupdate_12',['fhashtable_update',['../fhashtable_8h.html#a5c9175c3e992a4e42e9b56e62245e8c8',1,'fhashtable.h']]],
   ['fnvhash_5f32_13',['fnvhash_32',['../fnvhash_8h.html#ab8ab4359590f8a5dee7d9fe8e2fa7913',1,'fnvhash.h']]],
-  ['fnvhash_5f64_14',['fnvhash_64',['../fnvhash_8h.html#a4a4392103012d0062180ba46f5698498',1,'fnvhash.h']]],
+  ['fnvhash_5f32_5fstr_14',['fnvhash_32_str',['../fnvhash_8h.html#a61e23f79deaf20d3880e6f35fd39878f',1,'fnvhash.h']]],
   ['fqueue_5fat_15',['fqueue_at',['../fqueue_8h.html#af5e47c5b21fd2898a09ecfa3f69e9edc',1,'fqueue.h']]],
   ['fqueue_5fclear_16',['fqueue_clear',['../fqueue_8h.html#ab24528e4c991e194ff0fb3c48c0222e0',1,'fqueue.h']]],
   ['fqueue_5fcopy_17',['fqueue_copy',['../fqueue_8h.html#a3c9049e918c462a7f56f058cedaa0f1c',1,'fqueue.h']]],
