@@ -9,7 +9,7 @@
 #define KEY_TYPE char*
 #define VALUE_TYPE int
 #define KEY_IS_EQUAL(a, b) (strcmp((a), (b)) == 0)
-#define HASH_FUNCTION(v) (fnvhash_32_str(v))
+#define HASH_FUNCTION(key) (fnvhash_32_str(key))
 #include "fhashtable.h"
 
 static char buf[4096]; // a static / heap-allocated buffer should be used, should the key/values's lifetime

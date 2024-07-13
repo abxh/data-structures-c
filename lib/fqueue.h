@@ -12,14 +12,16 @@
  * Examples of how `fqueue.h` header file is used in practice.
  */
 
-// macro definitions: {{{
-
 #include "paste.h"         // PASTE, XPASTE, JOIN
 #include "round_up_pow2.h" // round_up_pow2
 
+#include <assert.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+// macro definitions: {{{
 
 /**
  * @def NAME

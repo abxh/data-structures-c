@@ -32,7 +32,6 @@
  * Examples of how `fhashtable.h` header file is used in practice.
  */
 
-// macro definitions: {{{
 #include "murmurhash.h"    // murmur_32
 #include "paste.h"         // PASTE, XPASTE, JOIN
 #include "round_up_pow2.h" // round_up_pow2
@@ -42,6 +41,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+// macro definitions: {{{
 
 /**
  * @def NAME
@@ -177,6 +178,9 @@ typedef struct {
 // function definitions: {{{
 /**
  * @brief Create an hashtable with a given capacity with malloc().
+ *
+ * @note Ensure the capacity rounded up to the power of 2 is 75% of the expected numbers of values to be stored to keep
+ * load factor low and the hash table performant.
  *
  * @param[in] capacity Maximum number of elements expected to be stored in the queue.
  * @return A pointer to the queue.

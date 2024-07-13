@@ -12,8 +12,6 @@
  * Examples of how `fstack.h` header file is used in practice.
  */
 
-// macro definitions: {{{
-
 #include "paste.h" // PASTE, XPASTE, JOIN
 
 #include <assert.h>
@@ -23,6 +21,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+// macro definitions: {{{
 
 /**
  * @def NAME
@@ -115,7 +115,7 @@
 typedef struct {
     size_t count;        ///< number of values in the stack.
     size_t capacity;     ///< maximum number of values allocated for in the stack.
-    VALUE_TYPE values[]; ///< pointer to stack values buffer.
+    VALUE_TYPE values[]; ///< array of values.
 } FSTACK_TYPE;
 
 // }}}
