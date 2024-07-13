@@ -15,7 +15,7 @@
 static char buf[4096]; // a static / heap-allocated buffer should be used, should the key/values's lifetime
                        // extend beyond the function scope [in the function below].
 
-void str_int_ht_test(void) {
+void str_int_ht_test_alt(void) {
 
     strint_ht_type* ht =
         strint_ht_create(3 * 4 / 3); // (4/3) scaling factor is to ensure hashtable performance by reducing maximum laod
@@ -129,7 +129,7 @@ void int_to_int_hashtable_test(void) {
 }
 
 int main(void) {
-    str_int_ht_test();
+    str_int_ht_test_alt();
     int_to_int_hashtable_test();
     return 0;
 }

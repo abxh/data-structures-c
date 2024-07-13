@@ -3,6 +3,8 @@
 [doxygen documentation](https://abxh.github.io/data-structures-c/)
  | ![tests](https://github.com/abxh/data-structures-c/actions/workflows/tests.yml/badge.svg?event=push)
 
+Run `make test` to test all tests and examples.
+
 Asserts are used to check various assumptions.
 Use `NDEBUG` flag for turning off asserts in release builds.
 

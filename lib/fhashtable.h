@@ -23,13 +23,16 @@
  * Source(s) used for inspiration:
  *  @li https://thenumb.at/Hashtables/#robin-hood-linear-probing
  *  @li https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/
- *  @li https://github.com/rmind/rhashmap/blob/master/src/rhashmap.c
- *  @li https://github.com/tezc/sc/tree/master/map
  */
 
 /**
  * @example fhashtable/fhashtable.c
- * Examples of how `fhashtable.h` header file is used in practice.
+ * Example of how `fhashtable.h` header file is used in practice.
+ */
+
+/**
+ * @example arena/fhashtable.c
+ * Example of how `fhashtable.h` header file is used in practice with `arena.h`.
  */
 
 #include "murmurhash.h"    // murmur_32
