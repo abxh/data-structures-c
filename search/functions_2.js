@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['murmur3_5f32_0',['murmur3_32',['../murmurhash_8h.html#acb0c380e343772042ae656fb60679886',1,'murmurhash.h']]]
+  ['is_5fpow2_0',['is_pow2',['../is__pow2_8h.html#afdfaaa82d5cd20478f11fa9ed7ae0080',1,'is_pow2.h']]]
 ];

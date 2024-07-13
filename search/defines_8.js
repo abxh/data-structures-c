@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['xpaste_0',['XPASTE',['../paste_8h.html#a7da53f5f985268bcb6d4e9b48fb11d7b',1,'paste.h']]]
+  ['paste_0',['PASTE',['../paste_8h.html#a188ea780417dce4eb720d161d85f9f44',1,'paste.h']]]
 ];

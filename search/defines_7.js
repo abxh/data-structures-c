@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['value_5ftype_0',['VALUE_TYPE',['../fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d',1,'VALUE_TYPE:&#160;fhashtable.h'],['../fqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d',1,'VALUE_TYPE:&#160;fqueue.h'],['../fstack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d',1,'VALUE_TYPE:&#160;fstack.h']]]
+  ['name_0',['NAME',['../fhashtable_8h.html#a47f2e62c0dbebc787052c165afcada0e',1,'NAME:&#160;fhashtable.h'],['../fqueue_8h.html#a47f2e62c0dbebc787052c165afcada0e',1,'NAME:&#160;fqueue.h'],['../fstack_8h.html#a47f2e62c0dbebc787052c165afcada0e',1,'NAME:&#160;fstack.h']]]
 ];
