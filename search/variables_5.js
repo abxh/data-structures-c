@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['slots_0',['slots',['../structfhashtable__type.html#a333fe0290d5cbdca699ecda7640dbc1f',1,'fhashtable_type']]]
+  ['next_5fptr_0',['next_ptr',['../structlist__node__type.html#a854d8ff4881eac59fc52af844e977816',1,'list_node_type']]]
 ];

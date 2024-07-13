@@ -97,7 +97,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>arena allocator.  
+<p>Arena allocator.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="align__forward_8h_source.html">align_forward.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="is__pow2_8h_source.html">is_pow2.h</a>&quot;</code><br />
@@ -112,6 +112,7 @@ $(function(){ initResizable(false); });
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarena__type.html">arena_type</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Arena data struct.  <a href="structarena__type.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -125,36 +126,333 @@ Macros</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:a4b6de7fd053a1a3dff06876264941d1d" id="r_a4b6de7fd053a1a3dff06876264941d1d"><td class="memItemLeft" align="right" valign="top"><a id="a4b6de7fd053a1a3dff06876264941d1d" name="a4b6de7fd053a1a3dff06876264941d1d"></a>
 typedef struct arena_type&#160;</td><td class="memItemRight" valign="bottom"><b>arena_type</b></td></tr>
+<tr class="memdesc:a4b6de7fd053a1a3dff06876264941d1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Arena data struct. <br /></td></tr>
 <tr class="separator:a4b6de7fd053a1a3dff06876264941d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a6286c90f463a386ce16750bfd92511f4" id="r_a6286c90f463a386ce16750bfd92511f4"><td class="memItemLeft" align="right" valign="top"><a id="a6286c90f463a386ce16750bfd92511f4" name="a6286c90f463a386ce16750bfd92511f4"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>arena_init</b> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, void *backing_buffer, const size_t backing_buffer_length)</td></tr>
-<tr class="separator:a6286c90f463a386ce16750bfd92511f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a837b27f52b9ac6127ae51fc731a4a749" id="r_a837b27f52b9ac6127ae51fc731a4a749"><td class="memItemLeft" align="right" valign="top"><a id="a837b27f52b9ac6127ae51fc731a4a749" name="a837b27f52b9ac6127ae51fc731a4a749"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>arena_deallocate_all</b> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr)</td></tr>
+<tr class="memitem:a67ada6b5c6f09a6b530b75ef8d553a45" id="r_a67ada6b5c6f09a6b530b75ef8d553a45"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67ada6b5c6f09a6b530b75ef8d553a45">arena_init</a> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, const size_t n, unsigned char backing_buffer[n])</td></tr>
+<tr class="memdesc:a67ada6b5c6f09a6b530b75ef8d553a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the arena.  <br /></td></tr>
+<tr class="separator:a67ada6b5c6f09a6b530b75ef8d553a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a837b27f52b9ac6127ae51fc731a4a749" id="r_a837b27f52b9ac6127ae51fc731a4a749"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a837b27f52b9ac6127ae51fc731a4a749">arena_deallocate_all</a> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr)</td></tr>
+<tr class="memdesc:a837b27f52b9ac6127ae51fc731a4a749"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deallocate all allocations in the arena.  <br /></td></tr>
 <tr class="separator:a837b27f52b9ac6127ae51fc731a4a749"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf3c879986d619cef7734aaccc2ea8da" id="r_acf3c879986d619cef7734aaccc2ea8da"><td class="memItemLeft" align="right" valign="top"><a id="acf3c879986d619cef7734aaccc2ea8da" name="acf3c879986d619cef7734aaccc2ea8da"></a>
-static void *&#160;</td><td class="memItemRight" valign="bottom"><b>arena_allocate_aligned</b> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, const size_t alignment, const size_t size)</td></tr>
+<tr class="memitem:acf3c879986d619cef7734aaccc2ea8da" id="r_acf3c879986d619cef7734aaccc2ea8da"><td class="memItemLeft" align="right" valign="top">static void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, const size_t alignment, const size_t size)</td></tr>
+<tr class="memdesc:acf3c879986d619cef7734aaccc2ea8da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the pointer to a chunk of the arena. With alignment.  <br /></td></tr>
 <tr class="separator:acf3c879986d619cef7734aaccc2ea8da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06147b0435c4f73b80e996ac50eb563d" id="r_a06147b0435c4f73b80e996ac50eb563d"><td class="memItemLeft" align="right" valign="top"><a id="a06147b0435c4f73b80e996ac50eb563d" name="a06147b0435c4f73b80e996ac50eb563d"></a>
-static void *&#160;</td><td class="memItemRight" valign="bottom"><b>arena_allocate</b> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, const size_t size)</td></tr>
+<tr class="memitem:a06147b0435c4f73b80e996ac50eb563d" id="r_a06147b0435c4f73b80e996ac50eb563d"><td class="memItemLeft" align="right" valign="top">static void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a06147b0435c4f73b80e996ac50eb563d">arena_allocate</a> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, const size_t size)</td></tr>
+<tr class="memdesc:a06147b0435c4f73b80e996ac50eb563d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the pointer to a chunk of the arena.  <br /></td></tr>
 <tr class="separator:a06147b0435c4f73b80e996ac50eb563d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ef1a56d6db89e3b795e8e81a03cbba8" id="r_a7ef1a56d6db89e3b795e8e81a03cbba8"><td class="memItemLeft" align="right" valign="top"><a id="a7ef1a56d6db89e3b795e8e81a03cbba8" name="a7ef1a56d6db89e3b795e8e81a03cbba8"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>arena_deallocate</b> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, void *ptr)</td></tr>
-<tr class="separator:a7ef1a56d6db89e3b795e8e81a03cbba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0afd0eb441fee154889d557627d2a17" id="r_ac0afd0eb441fee154889d557627d2a17"><td class="memItemLeft" align="right" valign="top"><a id="ac0afd0eb441fee154889d557627d2a17" name="ac0afd0eb441fee154889d557627d2a17"></a>
-static void *&#160;</td><td class="memItemRight" valign="bottom"><b>arena_reallocate_aligned</b> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, void *old_memory_ptr, const size_t alignment, const size_t old_size, const size_t new_size)</td></tr>
+<tr class="memitem:ac0afd0eb441fee154889d557627d2a17" id="r_ac0afd0eb441fee154889d557627d2a17"><td class="memItemLeft" align="right" valign="top">static void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0afd0eb441fee154889d557627d2a17">arena_reallocate_aligned</a> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, void *old_memory_ptr, const size_t alignment, const size_t old_size, const size_t new_size)</td></tr>
+<tr class="memdesc:ac0afd0eb441fee154889d557627d2a17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reallocate a previously allocated chunk in the arena. With aligment.  <br /></td></tr>
 <tr class="separator:ac0afd0eb441fee154889d557627d2a17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71757c212c9e05e129e95fc44980ea0b" id="r_a71757c212c9e05e129e95fc44980ea0b"><td class="memItemLeft" align="right" valign="top"><a id="a71757c212c9e05e129e95fc44980ea0b" name="a71757c212c9e05e129e95fc44980ea0b"></a>
-static void *&#160;</td><td class="memItemRight" valign="bottom"><b>arena_reallocate</b> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, void *old_memory, const size_t old_size, const size_t new_size)</td></tr>
+<tr class="memitem:a71757c212c9e05e129e95fc44980ea0b" id="r_a71757c212c9e05e129e95fc44980ea0b"><td class="memItemLeft" align="right" valign="top">static void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71757c212c9e05e129e95fc44980ea0b">arena_reallocate</a> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, void *old_memory, const size_t old_size, const size_t new_size)</td></tr>
+<tr class="memdesc:a71757c212c9e05e129e95fc44980ea0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reallocate a previously allocated chunk in the arena.  <br /></td></tr>
 <tr class="separator:a71757c212c9e05e129e95fc44980ea0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>arena allocator. </p>
+<div class="textblock"><p>Arena allocator. </p>
 <p>Source used: <a href="https://www.gingerbill.org/article/2019/02/08/memory-allocation-strategies-002/">https://www.gingerbill.org/article/2019/02/08/memory-allocation-strategies-002/</a> </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a06147b0435c4f73b80e996ac50eb563d" name="a06147b0435c4f73b80e996ac50eb563d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06147b0435c4f73b80e996ac50eb563d">&#9670;&#160;</a></span>arena_allocate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void * arena_allocate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structarena__type.html">arena_type</a> *</td>          <td class="paramname"><span class="paramname"><em>arena_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the pointer to a chunk of the arena. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The section size in bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the memory chunk. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NULL</td><td>If the arena doesn't have enough memory for the allocation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="arena_2fhashtable_8c-example.html#a3">arena/fhashtable.c</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="acf3c879986d619cef7734aaccc2ea8da" name="acf3c879986d619cef7734aaccc2ea8da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf3c879986d619cef7734aaccc2ea8da">&#9670;&#160;</a></span>arena_allocate_aligned()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void * arena_allocate_aligned </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structarena__type.html">arena_type</a> *</td>          <td class="paramname"><span class="paramname"><em>arena_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>alignment</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the pointer to a chunk of the arena. With alignment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>The alignment size in bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The section size in bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the memory chunk. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NULL</td><td>If the arena doesn't have enough memory for the allocation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="arena_2fhashtable_8c-example.html#a2">arena/fhashtable.c</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="a837b27f52b9ac6127ae51fc731a4a749" name="a837b27f52b9ac6127ae51fc731a4a749"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a837b27f52b9ac6127ae51fc731a4a749">&#9670;&#160;</a></span>arena_deallocate_all()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void arena_deallocate_all </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structarena__type.html">arena_type</a> *</td>          <td class="paramname"><span class="paramname"><em>arena_ptr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Deallocate all allocations in the arena. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a67ada6b5c6f09a6b530b75ef8d553a45" name="a67ada6b5c6f09a6b530b75ef8d553a45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67ada6b5c6f09a6b530b75ef8d553a45">&#9670;&#160;</a></span>arena_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void arena_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structarena__type.html">arena_type</a> *</td>          <td class="paramname"><span class="paramname"><em>arena_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>n</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char</td>          <td class="paramname"><span class="paramname"><em>backing_buffer</em></span>[n]&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initialize the arena. </p>
+<dl class="section note"><dt>Note</dt><dd>The arena struct could stack / heap-allocated depending on program structure.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>The length of the backing buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">backing_buffer</td><td>The backing buffer to use. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="arena_2fhashtable_8c-example.html#a1">arena/fhashtable.c</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="a71757c212c9e05e129e95fc44980ea0b" name="a71757c212c9e05e129e95fc44980ea0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71757c212c9e05e129e95fc44980ea0b">&#9670;&#160;</a></span>arena_reallocate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void * arena_reallocate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structarena__type.html">arena_type</a> *</td>          <td class="paramname"><span class="paramname"><em>arena_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>old_memory</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>old_size</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>new_size</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reallocate a previously allocated chunk in the arena. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">old_memory_ptr</td><td>A pointer, pointing to the beginning of the memory chunk. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">old_size</td><td>Old size allocated. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_size</td><td>New size to grow/shrink to. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to reallocated the memory chunk. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NULL</td><td>If arena doesn't have enough memory for the reallocation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac0afd0eb441fee154889d557627d2a17" name="ac0afd0eb441fee154889d557627d2a17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0afd0eb441fee154889d557627d2a17">&#9670;&#160;</a></span>arena_reallocate_aligned()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void * arena_reallocate_aligned </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structarena__type.html">arena_type</a> *</td>          <td class="paramname"><span class="paramname"><em>arena_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>old_memory_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>alignment</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>old_size</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>new_size</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reallocate a previously allocated chunk in the arena. With aligment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">old_memory_ptr</td><td>A pointer, pointing to the beginning of the memory chunk. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>Alignment size. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">old_size</td><td>Old size allocated. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_size</td><td>New size to grow/shrink to. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to reallocated the memory chunk. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NULL</td><td>If arena doesn't have enough memory for the reallocation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.11.0

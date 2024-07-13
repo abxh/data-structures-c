@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>data-structures-c: Class List</title>
+<title>data-structures-c: list_type Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -55,8 +55,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
-<div id="doc-content">
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function(){ initResizable(false); });
@@ -83,21 +81,41 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
+</div><!-- top -->
+<div id="doc-content">
 <div class="header">
-  <div class="headertitle"><div class="title">Class List</div></div>
+  <div class="summary">
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="structlist__type-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">list_type Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here are the classes, structs, unions and interfaces with brief descriptions:</div><div class="directory">
-<table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structarena__type.html" target="_self">arena_type</a></td><td class="desc">Arena data struct </td></tr>
-<tr id="row_1_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structfhashtable__slot__type.html" target="_self">fhashtable_slot_type</a></td><td class="desc">Generated hashtable slot struct type for a given <code>KEY_TYPE</code> and <code>VALUE_TYPE</code> </td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structfhashtable__type.html" target="_self">fhashtable_type</a></td><td class="desc">Generated hashtable struct type for a given <code>KEY_TYPE</code> and <code>VALUE_TYPE</code> </td></tr>
-<tr id="row_3_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structfqueue__type.html" target="_self">fqueue_type</a></td><td class="desc">Generated queue struct type for a <code>VALUE_TYPE</code> </td></tr>
-<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structfstack__type.html" target="_self">fstack_type</a></td><td class="desc">Generated stack struct type for a given <code>VALUE_TYPE</code> </td></tr>
-<tr id="row_5_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structlist__node__type.html" target="_self">list_node_type</a></td><td class="desc">Intrusive list node structure </td></tr>
-<tr id="row_6_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structlist__type.html" target="_self">list_type</a></td><td class="desc">List structure, keeping track of head nod, tail node and node count </td></tr>
+
+<p>List structure, keeping track of head nod, tail node and node count.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="list_8h_source.html">list.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ad5166819517168091da5258ca579a51a" id="r_ad5166819517168091da5258ca579a51a"><td class="memItemLeft" align="right" valign="top"><a id="ad5166819517168091da5258ca579a51a" name="ad5166819517168091da5258ca579a51a"></a>
+struct <a class="el" href="structlist__node__type.html">list_node_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>head_ptr</b></td></tr>
+<tr class="memdesc:ad5166819517168091da5258ca579a51a"><td class="mdescLeft">&#160;</td><td class="mdescRight">head node pointer. <br /></td></tr>
+<tr class="separator:ad5166819517168091da5258ca579a51a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa769702c8a230ed29c5e87839fe7c421" id="r_aa769702c8a230ed29c5e87839fe7c421"><td class="memItemLeft" align="right" valign="top"><a id="aa769702c8a230ed29c5e87839fe7c421" name="aa769702c8a230ed29c5e87839fe7c421"></a>
+struct <a class="el" href="structlist__node__type.html">list_node_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>tail_ptr</b></td></tr>
+<tr class="memdesc:aa769702c8a230ed29c5e87839fe7c421"><td class="mdescLeft">&#160;</td><td class="mdescRight">tail node pointer. <br /></td></tr>
+<tr class="separator:aa769702c8a230ed29c5e87839fe7c421"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad33f1284e5bda03b002cd2e4ef4c55e1" id="r_ad33f1284e5bda03b002cd2e4ef4c55e1"><td class="memItemLeft" align="right" valign="top"><a id="ad33f1284e5bda03b002cd2e4ef4c55e1" name="ad33f1284e5bda03b002cd2e4ef4c55e1"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>count</b></td></tr>
+<tr class="memdesc:ad33f1284e5bda03b002cd2e4ef4c55e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Node count. <br /></td></tr>
+<tr class="separator:ad33f1284e5bda03b002cd2e4ef4c55e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- directory -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>List structure, keeping track of head nod, tail node and node count. </p>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
+<li>lib/<a class="el" href="list_8h_source.html">list.h</a></li>
+</ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

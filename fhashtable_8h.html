@@ -200,8 +200,6 @@ Functions</h2></td></tr>
 <p>Source(s) used for inspiration: </p><ul>
 <li><a href="https://thenumb.at/Hashtables/#robin-hood-linear-probing">https://thenumb.at/Hashtables/#robin-hood-linear-probing</a> </li>
 <li><a href="https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/">https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/</a> </li>
-<li><a href="https://github.com/rmind/rhashmap/blob/master/src/rhashmap.c">https://github.com/rmind/rhashmap/blob/master/src/rhashmap.c</a> </li>
-<li><a href="https://github.com/tezc/sc/tree/master/map">https://github.com/tezc/sc/tree/master/map</a> </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a73ab43d6ec197c44dc97808300246ad2" name="a73ab43d6ec197c44dc97808300246ad2"></a>
@@ -232,7 +230,7 @@ Functions</h2></td></tr>
 <div class="line">        <span class="keywordflow">if</span> ((hashtable_ptr)-&gt;slots[_index].offset != <a class="code hl_define" href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a> &amp;&amp; \</div>
 <div class="line">                                                                                     \</div>
 <div class="line">            ((key_) = (hashtable_ptr)-&gt;slots[_index].key, (value_) = (hashtable_ptr)-&gt;slots[_index].value, <span class="keyword">true</span>))</div>
-<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:125</div></div>
+<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:128</div></div>
 </div><!-- fragment -->
 <p>Iterate over the non-empty slots in the hashtable in arbitary order. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the hashtable under the iteration may result in errors.</dd></dl>
