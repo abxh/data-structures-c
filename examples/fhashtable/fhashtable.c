@@ -17,7 +17,8 @@ static char buf[4096]; // a static / heap-allocated buffer should be used, shoul
 
 void str_int_ht_test(void) {
 
-    strint_ht_type* ht = strint_ht_create(3);
+    strint_ht_type* ht =
+        strint_ht_create(3 * 4 / 3); // (4/3) scaling factor is to ensure hashtable performance by reducing maximum laod
     if (!ht) {
         assert(false);
     }
@@ -29,14 +30,14 @@ void str_int_ht_test(void) {
     char* egg_str_p = &buf[buf_offset];
     buf_offset += sizeof("egg");
 
-    strint_ht_insert(ht, egg_str_p, 1);
-    strint_ht_update(ht, egg_str_p, 2);
+    assert(strint_ht_insert(ht, egg_str_p, 1) == true);
+    assert(strint_ht_update(ht, egg_str_p, 2) == true);
 
     strcpy(&buf[buf_offset], "milk");
     char* milk_str_p = &buf[buf_offset];
     buf_offset += sizeof("milk");
 
-    strint_ht_update(ht, milk_str_p, 3);
+    assert(strint_ht_update(ht, milk_str_p, 3) == true);
 
     assert(ht->count == 2);
 
@@ -70,30 +71,31 @@ void str_int_ht_test(void) {
     strint_ht_destroy(ht);
 }
 
-#include "fnvhash.h"
+#include "murmurhash.h"
 
 #define NAME int_to_int_hashtable
 #define KEY_TYPE int
 #define VALUE_TYPE int
 #define KEY_IS_EQUAL(a, b) ((a) == (b))
-#define HASH_FUNCTION(key) (fnvhash_32((uint8_t*)&(key), sizeof(int)))
+#define HASH_FUNCTION(key) (murmur3_32((uint8_t*)&(key), sizeof(int), 0))
 #include "fhashtable.h"
 
 #define LIM ((int)(1e+6))
 
 void int_to_int_hashtable_test(void) {
-    int_to_int_hashtable_type* ht = int_to_int_hashtable_create(LIM);
+    int_to_int_hashtable_type* ht =
+        int_to_int_hashtable_create(LIM * 4 / 3); // (4/3) scaling factor is to ensure hashtable performance by reducing maximum laod
     if (!ht) {
         assert(false);
     }
     for (int i = 0; i < LIM; i++) {
-        int_to_int_hashtable_insert(ht, i, LIM - i);
+        assert(int_to_int_hashtable_insert(ht, i, LIM - i) == true);
     }
     for (int i = 0; i < LIM; i++) {
         assert(int_to_int_hashtable_get_value(ht, i, -1) == LIM - i);
     }
 
-    int_to_int_hashtable_type* ht_copy = int_to_int_hashtable_create(ht->count);
+    int_to_int_hashtable_type* ht_copy = int_to_int_hashtable_create(ht->capacity);
     if (!ht_copy) {
         assert(false);
     }

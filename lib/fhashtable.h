@@ -399,11 +399,18 @@ static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, search)(FHASHTABLE_TYPE* hashtab
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key.
  * @param[in] value The value.
+ * @return Whether the value is successfully inserted. 
+ *  @retval true If the hashtable does *not* become full, once the value is inserted.
+ *  @retval false If the hashtable does become full, once the value is inserted.
  */
-static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
+static inline bool JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
     assert(hashtable_ptr != NULL);
     assert(JOIN(FHASHTABLE_NAME, contains_key)(hashtable_ptr, key) == false);
     assert(FHASHTABLE_IS_FULL(hashtable_ptr) == false);
+
+    if (hashtable_ptr->count + 1 == hashtable_ptr->capacity) {
+        return false;
+    }
 
     const size_t index_mask = hashtable_ptr->capacity - 1;
     const size_t key_hash = HASH_FUNCTION(key);
@@ -428,6 +435,8 @@ static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr,
     }
     hashtable_ptr->slots[index] = current_slot;
     hashtable_ptr->count++;
+
+    return true;
 }
 
 /**
@@ -442,8 +451,11 @@ static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr,
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key.
  * @param[in] value The value.
+ * @return Whether the value is successfully inserted. 
+ *  @retval true If the hashtable does *not* become full, once the value is inserted.
+ *  @retval false If the hashtable does become full, once the value is inserted.
  */
-static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
+static inline bool JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
     assert(hashtable_ptr != NULL);
     assert(FHASHTABLE_IS_FULL(hashtable_ptr) == false);
 
@@ -460,7 +472,7 @@ static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr,
             KEY_IS_EQUAL(current_slot.key, hashtable_ptr->slots[index].key)) {
 
             hashtable_ptr->slots[index].value = current_slot.value;
-            return;
+            return true;
         }
 
         // swap if current offset is larger. will ensure the maximum
@@ -477,8 +489,15 @@ static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr,
         index &= index_mask;
         current_slot.offset++;
     }
+
+    if (hashtable_ptr->count + 1 == hashtable_ptr->capacity) {
+        return false;
+    }
+
     hashtable_ptr->slots[index] = current_slot;
     hashtable_ptr->count++;
+
+    return true;
 }
 
 /**
@@ -562,7 +581,7 @@ static inline void JOIN(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE* restrict dest_st
                                                const FHASHTABLE_TYPE* restrict src_stack_ptr) {
     assert(src_stack_ptr != NULL);
     assert(dest_stack_ptr != NULL);
-    assert(src_stack_ptr->count <= dest_stack_ptr->capacity);
+    assert(src_stack_ptr->capacity <= dest_stack_ptr->capacity);
     assert(dest_stack_ptr->count == 0);
 
     for (size_t i = 0; i < src_stack_ptr->capacity; i++) {
