@@ -169,12 +169,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ac45f2b3725a831db88804e05a55baf15" id="r_ac45f2b3725a831db88804e05a55baf15"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac45f2b3725a831db88804e05a55baf15">fhashtable_search</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
 <tr class="memdesc:ac45f2b3725a831db88804e05a55baf15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search a given key in the hashtable and get the pointer to the corresponding value.  <br /></td></tr>
 <tr class="separator:ac45f2b3725a831db88804e05a55baf15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa11d94d20047d74fe92ac185adc92400" id="r_aa11d94d20047d74fe92ac185adc92400"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa11d94d20047d74fe92ac185adc92400">fhashtable_insert</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
-<tr class="memdesc:aa11d94d20047d74fe92ac185adc92400"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a non-duplicate key and it's corresponding value inside the hashtable.  <br /></td></tr>
-<tr class="separator:aa11d94d20047d74fe92ac185adc92400"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c9175c3e992a4e42e9b56e62245e8c8" id="r_a5c9175c3e992a4e42e9b56e62245e8c8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c9175c3e992a4e42e9b56e62245e8c8">fhashtable_update</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
-<tr class="memdesc:a5c9175c3e992a4e42e9b56e62245e8c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update a key's corresponding value inside the hashtable. Allows duplicates.  <br /></td></tr>
-<tr class="separator:a5c9175c3e992a4e42e9b56e62245e8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8702aef6e6cde7a4caf53a94211d5b2c" id="r_a8702aef6e6cde7a4caf53a94211d5b2c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8702aef6e6cde7a4caf53a94211d5b2c">fhashtable_insert</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
+<tr class="memdesc:a8702aef6e6cde7a4caf53a94211d5b2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a non-duplicate key and it's corresponding value inside the hashtable.  <br /></td></tr>
+<tr class="separator:a8702aef6e6cde7a4caf53a94211d5b2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af81e598f7fc336670c089003be2c6709" id="r_af81e598f7fc336670c089003be2c6709"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af81e598f7fc336670c089003be2c6709">fhashtable_update</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
+<tr class="memdesc:af81e598f7fc336670c089003be2c6709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update a key's corresponding value inside the hashtable. Allows duplicates.  <br /></td></tr>
+<tr class="separator:af81e598f7fc336670c089003be2c6709"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c29d601849ae3126a2ae4847c8131d0" id="r_a0c29d601849ae3126a2ae4847c8131d0"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c29d601849ae3126a2ae4847c8131d0">fhashtable_delete</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
 <tr class="memdesc:a0c29d601849ae3126a2ae4847c8131d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a key and it's corresponding value from the hashtable.  <br /></td></tr>
 <tr class="separator:a0c29d601849ae3126a2ae4847c8131d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -721,8 +721,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa11d94d20047d74fe92ac185adc92400" name="aa11d94d20047d74fe92ac185adc92400"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa11d94d20047d74fe92ac185adc92400">&#9670;&#160;</a></span>fhashtable_insert()</h2>
+<a id="a8702aef6e6cde7a4caf53a94211d5b2c" name="a8702aef6e6cde7a4caf53a94211d5b2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8702aef6e6cde7a4caf53a94211d5b2c">&#9670;&#160;</a></span>fhashtable_insert()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -731,7 +731,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void fhashtable_insert </td>
+          <td class="memname">static bool fhashtable_insert </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structfhashtable__type.html">fhashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em></span>, </td>
         </tr>
@@ -764,6 +764,14 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the value is successfully inserted. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>If the hashtable does <em>not</em> become full, once the value is inserted. </td></tr>
+    <tr><td class="paramname">false</td><td>If the hashtable does become full, once the value is inserted. </td></tr>
   </table>
   </dd>
 </dl>
@@ -887,8 +895,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5c9175c3e992a4e42e9b56e62245e8c8" name="a5c9175c3e992a4e42e9b56e62245e8c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c9175c3e992a4e42e9b56e62245e8c8">&#9670;&#160;</a></span>fhashtable_update()</h2>
+<a id="af81e598f7fc336670c089003be2c6709" name="af81e598f7fc336670c089003be2c6709"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af81e598f7fc336670c089003be2c6709">&#9670;&#160;</a></span>fhashtable_update()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -897,7 +905,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void fhashtable_update </td>
+          <td class="memname">static bool fhashtable_update </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structfhashtable__type.html">fhashtable_type</a> *</td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em></span>, </td>
         </tr>
@@ -930,6 +938,14 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the value is successfully inserted. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>If the hashtable does <em>not</em> become full, once the value is inserted. </td></tr>
+    <tr><td class="paramname">false</td><td>If the hashtable does become full, once the value is inserted. </td></tr>
   </table>
   </dd>
 </dl>
