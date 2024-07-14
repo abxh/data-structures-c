@@ -36,8 +36,6 @@ static inline uintptr_t align_forward(const uintptr_t ptr, const size_t align) {
     //
     //           q*(a+1)
     //         ----------->
-    //              a
-    //         ----------->
     //           r    a-r
     //         ----> ----->
     //       q*a   p     p+a-r
