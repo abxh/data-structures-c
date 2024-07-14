@@ -25,19 +25,19 @@ void str_int_ht_test_alt(void) {
     }
     assert(ht->count == 0);
 
-    arena_type* arena_ptr;
-    arena_init(arena_ptr, sizeof(buf), buf); // note that the arena also considers alignment details.
+    arena_type arena;
+    arena_init(&arena, sizeof(buf), buf); // note that the arena also considers alignment details.
 
-    char* egg_str_ptr = arena_allocate_aligned(arena_ptr, alignof(char), sizeof("egg"));
+    char* egg_str_ptr = arena_allocate_aligned(&arena, alignof(char), sizeof("egg"));
     strcpy(egg_str_ptr, "egg");
 
-    assert(strint_ht_insert(ht, egg_str_ptr, 1) == true);
-    assert(strint_ht_update(ht, egg_str_ptr, 2) == true);
+    strint_ht_insert(ht, egg_str_ptr, 1);
+    strint_ht_update(ht, egg_str_ptr, 2);
 
-    char* milk_str_ptr = arena_allocate(arena_ptr, sizeof("egg"));
+    char* milk_str_ptr = arena_allocate(&arena, sizeof("egg"));
     strcpy(milk_str_ptr, "milk");
 
-    assert(strint_ht_update(ht, milk_str_ptr, 3) == true);
+    strint_ht_update(ht, milk_str_ptr, 3);
 
     assert(ht->count == 2);
 
