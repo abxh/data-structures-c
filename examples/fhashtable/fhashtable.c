@@ -30,14 +30,14 @@ void str_int_ht_test_alt(void) {
     char* egg_str_p = &buf[buf_offset];
     buf_offset += sizeof("egg");
 
-    assert(strint_ht_insert(ht, egg_str_p, 1) == true);
-    assert(strint_ht_update(ht, egg_str_p, 2) == true);
+    strint_ht_insert(ht, egg_str_p, 1);
+    strint_ht_update(ht, egg_str_p, 2);
 
     strcpy(&buf[buf_offset], "milk");
     char* milk_str_p = &buf[buf_offset];
     buf_offset += sizeof("milk");
 
-    assert(strint_ht_update(ht, milk_str_p, 3) == true);
+    strint_ht_update(ht, milk_str_p, 3);
 
     assert(ht->count == 2);
 
@@ -89,7 +89,7 @@ void int_to_int_hashtable_test(void) {
         assert(false);
     }
     for (int i = 0; i < LIM; i++) {
-        assert(int_to_int_hashtable_insert(ht, i, LIM - i) == true);
+        int_to_int_hashtable_insert(ht, i, LIM - i);
     }
     for (int i = 0; i < LIM; i++) {
         assert(int_to_int_hashtable_get_value(ht, i, -1) == LIM - i);
