@@ -146,9 +146,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ac0afd0eb441fee154889d557627d2a17" id="r_ac0afd0eb441fee154889d557627d2a17"><td class="memItemLeft" align="right" valign="top">static void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0afd0eb441fee154889d557627d2a17">arena_reallocate_aligned</a> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, void *old_memory_ptr, const size_t alignment, const size_t old_size, const size_t new_size)</td></tr>
 <tr class="memdesc:ac0afd0eb441fee154889d557627d2a17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reallocate a previously allocated chunk in the arena. With aligment.  <br /></td></tr>
 <tr class="separator:ac0afd0eb441fee154889d557627d2a17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71757c212c9e05e129e95fc44980ea0b" id="r_a71757c212c9e05e129e95fc44980ea0b"><td class="memItemLeft" align="right" valign="top">static void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71757c212c9e05e129e95fc44980ea0b">arena_reallocate</a> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, void *old_memory, const size_t old_size, const size_t new_size)</td></tr>
-<tr class="memdesc:a71757c212c9e05e129e95fc44980ea0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reallocate a previously allocated chunk in the arena.  <br /></td></tr>
-<tr class="separator:a71757c212c9e05e129e95fc44980ea0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa070834cf10ffada70569dbd3a338330" id="r_aa070834cf10ffada70569dbd3a338330"><td class="memItemLeft" align="right" valign="top">static void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa070834cf10ffada70569dbd3a338330">arena_reallocate</a> (<a class="el" href="structarena__type.html">arena_type</a> *arena_ptr, void *old_memory_ptr, const size_t old_size, const size_t new_size)</td></tr>
+<tr class="memdesc:aa070834cf10ffada70569dbd3a338330"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reallocate a previously allocated chunk in the arena.  <br /></td></tr>
+<tr class="separator:aa070834cf10ffada70569dbd3a338330"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Arena allocator. </p>
@@ -184,6 +184,7 @@ Functions</h2></td></tr>
 <p>Get the pointer to a chunk of the arena. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The section size in bytes. </td></tr>
   </table>
   </dd>
@@ -235,6 +236,7 @@ Functions</h2></td></tr>
 <p>Get the pointer to a chunk of the arena. With alignment. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>The alignment size in bytes. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The section size in bytes. </td></tr>
   </table>
@@ -332,8 +334,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a71757c212c9e05e129e95fc44980ea0b" name="a71757c212c9e05e129e95fc44980ea0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71757c212c9e05e129e95fc44980ea0b">&#9670;&#160;</a></span>arena_reallocate()</h2>
+<a id="aa070834cf10ffada70569dbd3a338330" name="aa070834cf10ffada70569dbd3a338330"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa070834cf10ffada70569dbd3a338330">&#9670;&#160;</a></span>arena_reallocate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -349,7 +351,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>old_memory</em></span>, </td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>old_memory_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

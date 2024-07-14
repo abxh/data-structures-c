@@ -454,18 +454,18 @@ $(function(){ initResizable(false); });
 </div>
 <div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span> </div>
 <div class="foldopen" id="foldopen00583" data-start="{" data-end="}">
-<div class="line"><a id="l00583" name="l00583"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a4b25dc161b7f4310985a9f3d5174e908">  583</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE* restrict dest_stack_ptr,</div>
-<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span>                                               <span class="keyword">const</span> FHASHTABLE_TYPE* restrict src_stack_ptr) {</div>
-<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span>    assert(src_stack_ptr != NULL);</div>
-<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span>    assert(dest_stack_ptr != NULL);</div>
-<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span>    assert(src_stack_ptr-&gt;capacity &lt;= dest_stack_ptr-&gt;capacity);</div>
-<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span>    assert(dest_stack_ptr-&gt;count == 0);</div>
+<div class="line"><a id="l00583" name="l00583"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#ab0946cab8687eecdfee4a771b4a7b78e">  583</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE* restrict dest_hashtable_ptr,</div>
+<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span>                                               <span class="keyword">const</span> FHASHTABLE_TYPE* restrict src_hashtable_ptr) {</div>
+<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span>    assert(src_hashtable_ptr != NULL);</div>
+<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span>    assert(dest_hashtable_ptr != NULL);</div>
+<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span>    assert(src_hashtable_ptr-&gt;capacity &lt;= dest_hashtable_ptr-&gt;capacity);</div>
+<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span>    assert(dest_hashtable_ptr-&gt;count == 0);</div>
 <div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span> </div>
-<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; src_stack_ptr-&gt;capacity; i++) {</div>
-<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span>        dest_stack_ptr-&gt;slots[i] = src_stack_ptr-&gt;slots[i];</div>
+<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; src_hashtable_ptr-&gt;capacity; i++) {</div>
+<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span>        dest_hashtable_ptr-&gt;slots[i] = src_hashtable_ptr-&gt;slots[i];</div>
 <div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>    }</div>
 <div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span> </div>
-<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>    dest_stack_ptr-&gt;count = src_stack_ptr-&gt;count;</div>
+<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>    dest_hashtable_ptr-&gt;count = src_hashtable_ptr-&gt;count;</div>
 <div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span>}</div>
 </div>
 <div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span> </div>
