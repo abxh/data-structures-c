@@ -577,21 +577,21 @@ static inline void JOIN(FHASHTABLE_NAME, clear)(FHASHTABLE_TYPE* hashtable_ptr) 
  * @li The destination hashtable has a capacity that is greater than or equal to source hashtable count.
  * @li The destination hashtable is an empty hashtable.
  *
- * @param[out] dest_hashtable_ptr The destination hashtable.
  * @param[in] src_hashtable_ptr The source hashtable.
+ * @param[out] dest_hashtable_ptr The destination hashtable.
  */
-static inline void JOIN(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE* restrict dest_stack_ptr,
-                                               const FHASHTABLE_TYPE* restrict src_stack_ptr) {
-    assert(src_stack_ptr != NULL);
-    assert(dest_stack_ptr != NULL);
-    assert(src_stack_ptr->capacity <= dest_stack_ptr->capacity);
-    assert(dest_stack_ptr->count == 0);
+static inline void JOIN(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE* restrict dest_hashtable_ptr,
+                                               const FHASHTABLE_TYPE* restrict src_hashtable_ptr) {
+    assert(src_hashtable_ptr != NULL);
+    assert(dest_hashtable_ptr != NULL);
+    assert(src_hashtable_ptr->capacity <= dest_hashtable_ptr->capacity);
+    assert(dest_hashtable_ptr->count == 0);
 
-    for (size_t i = 0; i < src_stack_ptr->capacity; i++) {
-        dest_stack_ptr->slots[i] = src_stack_ptr->slots[i];
+    for (size_t i = 0; i < src_hashtable_ptr->capacity; i++) {
+        dest_hashtable_ptr->slots[i] = src_hashtable_ptr->slots[i];
     }
 
-    dest_stack_ptr->count = src_stack_ptr->count;
+    dest_hashtable_ptr->count = src_hashtable_ptr->count;
 }
 
 // }}}

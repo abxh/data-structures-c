@@ -64,6 +64,7 @@ static inline void arena_deallocate_all(arena_type* arena_ptr) {
 /**
  * @brief Get the pointer to a chunk of the arena. With alignment.
  *
+ * @param[in] arena_ptr The arena pointer.
  * @param[in] alignment The alignment size in bytes.
  * @param[in] size The section size in bytes.
  * @return A pointer to the memory chunk.
@@ -101,6 +102,7 @@ static inline void* arena_allocate_aligned(arena_type* arena_ptr, const size_t a
 /**
  * @brief Get the pointer to a chunk of the arena.
  *
+ * @param[in] arena_ptr The arena pointer.
  * @param[in] size The section size in bytes.
  * @return A pointer to the memory chunk.
  *  @retval NULL If the arena doesn't have enough memory for the allocation.
@@ -161,6 +163,6 @@ static inline void* arena_reallocate_aligned(arena_type* arena_ptr, void* old_me
  * @return A pointer to reallocated the memory chunk.
  *  @retval NULL If arena doesn't have enough memory for the reallocation.
  */
-static inline void* arena_reallocate(arena_type* arena_ptr, void* old_memory, const size_t old_size, const size_t new_size) {
-    return arena_reallocate_aligned(arena_ptr, old_memory, DEFAULT_ALIGNMENT, old_size, new_size);
+static inline void* arena_reallocate(arena_type* arena_ptr, void* old_memory_ptr, const size_t old_size, const size_t new_size) {
+    return arena_reallocate_aligned(arena_ptr, old_memory_ptr, DEFAULT_ALIGNMENT, old_size, new_size);
 }

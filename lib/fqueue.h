@@ -111,7 +111,7 @@ typedef struct {
     size_t begin_index;  ///< index used to track the front of the queue.
     size_t end_index;    ///< index used to track the back of the queue.
     size_t count;        ///< number of values in the ring buffer
-    size_t capacity;     ///< maximum number of values allocated for in the stack.
+    size_t capacity;     ///< maximum number of values allocated for in the queue.
     VALUE_TYPE values[]; ///< array of values.
 } FQUEUE_TYPE;
 
