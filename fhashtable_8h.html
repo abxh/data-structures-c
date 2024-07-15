@@ -146,30 +146,43 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a6140b0b995c58340aca710028fccf7b3" id="r_a6140b0b995c58340aca710028fccf7b3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structfhashtable__type.html">fhashtable_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6140b0b995c58340aca710028fccf7b3">fhashtable_create</a> (const size_t capacity)</td></tr>
+<tr class="memdesc:a6140b0b995c58340aca710028fccf7b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an hashtable with a given capacity with malloc().  <br /></td></tr>
 <tr class="separator:a6140b0b995c58340aca710028fccf7b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb7aed9cc621ee1c8f14bad250b15a26" id="r_adb7aed9cc621ee1c8f14bad250b15a26"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adb7aed9cc621ee1c8f14bad250b15a26">fhashtable_destroy</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr)</td></tr>
+<tr class="memdesc:adb7aed9cc621ee1c8f14bad250b15a26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy an hashtable and free the underlying memory with free().  <br /></td></tr>
 <tr class="separator:adb7aed9cc621ee1c8f14bad250b15a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06bff642d403fc2ee334cdebffe0bcba" id="r_a06bff642d403fc2ee334cdebffe0bcba"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a06bff642d403fc2ee334cdebffe0bcba">fhashtable_is_empty</a> (const <a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr)</td></tr>
+<tr class="memdesc:a06bff642d403fc2ee334cdebffe0bcba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the hashtable is empty.  <br /></td></tr>
 <tr class="separator:a06bff642d403fc2ee334cdebffe0bcba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac08423f9c44b01727612d2e2c3c50bc8" id="r_ac08423f9c44b01727612d2e2c3c50bc8"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac08423f9c44b01727612d2e2c3c50bc8">fhashtable_is_full</a> (const <a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr)</td></tr>
+<tr class="memdesc:ac08423f9c44b01727612d2e2c3c50bc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the hashtable is full.  <br /></td></tr>
 <tr class="separator:ac08423f9c44b01727612d2e2c3c50bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62110c48325451d327323e324a844114" id="r_a62110c48325451d327323e324a844114"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62110c48325451d327323e324a844114">fhashtable_contains_key</a> (const <a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
+<tr class="memdesc:a62110c48325451d327323e324a844114"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if hashtable contains a key.  <br /></td></tr>
 <tr class="separator:a62110c48325451d327323e324a844114"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb2922923a570f5b7294467e155ddf27" id="r_afb2922923a570f5b7294467e155ddf27"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb2922923a570f5b7294467e155ddf27">fhashtable_get_value_mut</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
+<tr class="memdesc:afb2922923a570f5b7294467e155ddf27"><td class="mdescLeft">&#160;</td><td class="mdescRight">From a given key, get the pointer to the corresponding value in the hashtable.  <br /></td></tr>
 <tr class="separator:afb2922923a570f5b7294467e155ddf27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add1f9f3f4d3386f2aee8f864e5fb91ca" id="r_add1f9f3f4d3386f2aee8f864e5fb91ca"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#add1f9f3f4d3386f2aee8f864e5fb91ca">fhashtable_get_value</a> (const <a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, const <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> default_value)</td></tr>
+<tr class="memdesc:add1f9f3f4d3386f2aee8f864e5fb91ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">From a given key, get the copy of the corresponding value in the hashtable.  <br /></td></tr>
 <tr class="separator:add1f9f3f4d3386f2aee8f864e5fb91ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac45f2b3725a831db88804e05a55baf15" id="r_ac45f2b3725a831db88804e05a55baf15"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac45f2b3725a831db88804e05a55baf15">fhashtable_search</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
+<tr class="memdesc:ac45f2b3725a831db88804e05a55baf15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search a given key in the hashtable and get the pointer to the corresponding value.  <br /></td></tr>
 <tr class="separator:ac45f2b3725a831db88804e05a55baf15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa11d94d20047d74fe92ac185adc92400" id="r_aa11d94d20047d74fe92ac185adc92400"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa11d94d20047d74fe92ac185adc92400">fhashtable_insert</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
+<tr class="memdesc:aa11d94d20047d74fe92ac185adc92400"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a non-duplicate key and it's corresponding value inside the hashtable.  <br /></td></tr>
 <tr class="separator:aa11d94d20047d74fe92ac185adc92400"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c9175c3e992a4e42e9b56e62245e8c8" id="r_a5c9175c3e992a4e42e9b56e62245e8c8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c9175c3e992a4e42e9b56e62245e8c8">fhashtable_update</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr, <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
+<tr class="memdesc:a5c9175c3e992a4e42e9b56e62245e8c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update a key's corresponding value inside the hashtable. Allows duplicates.  <br /></td></tr>
 <tr class="separator:a5c9175c3e992a4e42e9b56e62245e8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c29d601849ae3126a2ae4847c8131d0" id="r_a0c29d601849ae3126a2ae4847c8131d0"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c29d601849ae3126a2ae4847c8131d0">fhashtable_delete</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr, const <a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
+<tr class="memdesc:a0c29d601849ae3126a2ae4847c8131d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a key and it's corresponding value from the hashtable.  <br /></td></tr>
 <tr class="separator:a0c29d601849ae3126a2ae4847c8131d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adeb4c4445b4a40dbfdff14570f1a62f4" id="r_adeb4c4445b4a40dbfdff14570f1a62f4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adeb4c4445b4a40dbfdff14570f1a62f4">fhashtable_clear</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *hashtable_ptr)</td></tr>
+<tr class="memdesc:adeb4c4445b4a40dbfdff14570f1a62f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear an existing hashtable and flag all slots as empty.  <br /></td></tr>
 <tr class="separator:adeb4c4445b4a40dbfdff14570f1a62f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0946cab8687eecdfee4a771b4a7b78e" id="r_ab0946cab8687eecdfee4a771b4a7b78e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab0946cab8687eecdfee4a771b4a7b78e">fhashtable_copy</a> (<a class="el" href="structfhashtable__type.html">fhashtable_type</a> *restrict dest_hashtable_ptr, const <a class="el" href="structfhashtable__type.html">fhashtable_type</a> *restrict src_hashtable_ptr)</td></tr>
+<tr class="memdesc:ab0946cab8687eecdfee4a771b4a7b78e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy the values from a source hashtable to a destination hashtable.  <br /></td></tr>
 <tr class="separator:ab0946cab8687eecdfee4a771b4a7b78e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -381,7 +394,8 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Clear an existing hashtable and flag all slots as empty.</p>
+
+<p>Clear an existing hashtable and flag all slots as empty. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The pointer of the hashtable to clear. </td></tr>
@@ -417,7 +431,8 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Check if hashtable contains a key.</p>
+
+<p>Check if hashtable contains a key. </p>
 <p>Assumes: </p><ul>
 <li>hashtable_ptr is not <code>NULL</code>.</li>
 </ul>
@@ -458,7 +473,8 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Copy the values from a source hashtable to a destination hashtable.</p>
+
+<p>Copy the values from a source hashtable to a destination hashtable. </p>
 <p>Assumes: </p><ul>
 <li>Source and destination hashtable pointers are not pointing to the same memory. </li>
 <li>The hashtable pointers are not <code>NULL</code>. </li>
@@ -497,8 +513,10 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Create an hashtable with a given capacity with malloc().</p>
-<p>Ensure the capacity rounded up to the power of 2 is 75% of the expected numbers of values to be stored to keep load factor low and the hash table performant. map github </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Create an hashtable with a given capacity with malloc(). </p>
+<dl class="section note"><dt>Note</dt><dd>Ensure the capacity rounded up to the power of 2 is 75% of the expected numbers of values to be stored to keep load factor low and the hash table performant.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the queue. </td></tr>
   </table>
@@ -544,7 +562,8 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Delete a key and it's corresponding value from the hashtable.</p>
+
+<p>Delete a key and it's corresponding value from the hashtable. </p>
 <p>Assumes hashtable_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -579,7 +598,8 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Destroy an hashtable and free the underlying memory with free().</p>
+
+<p>Destroy an hashtable and free the underlying memory with free(). </p>
 <p>Assumes: </p><ul>
 <li>The hashtable pointer is not <code>NULL</code>.</li>
 </ul>
@@ -624,7 +644,8 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>From a given key, get the copy of the corresponding value in the hashtable.</p>
+
+<p>From a given key, get the copy of the corresponding value in the hashtable. </p>
 <p>Assumes: </p><ul>
 <li>hashtable_ptr is not <code>NULL</code>.</li>
 </ul>
@@ -672,11 +693,12 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>From a given key, get the pointer to the corresponding value in the hashtable.</p>
+
+<p>From a given key, get the pointer to the corresponding value in the hashtable. </p>
 <p>Assumes: </p><ul>
 <li>hashtable_ptr is not <code>NULL</code>.</li>
 </ul>
-<p>The returned pointer is <b>not</b> garanteed to point to the same value if the hashtable is modified.</p>
+<dl class="section note"><dt>Note</dt><dd>The returned pointer is <b>not</b> garanteed to point to the same value if the hashtable is modified.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
@@ -725,7 +747,8 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Insert a non-duplicate key and it's corresponding value inside the hashtable.</p>
+
+<p>Insert a non-duplicate key and it's corresponding value inside the hashtable. </p>
 <p>Assumes: </p><ul>
 <li>hashtable_ptr is not <code>NULL</code>. </li>
 <li>key is not already contained in the hashtable. </li>
@@ -764,7 +787,8 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Return whether the hashtable is empty.</p>
+
+<p>Return whether the hashtable is empty. </p>
 <p>Assumes the hashtable pointer is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -798,7 +822,8 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Return whether the hashtable is full.</p>
+
+<p>Return whether the hashtable is full. </p>
 <p>Assumes the hashtable pointer is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -836,7 +861,8 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Search a given key in the hashtable and get the pointer to the corresponding value.</p>
+
+<p>Search a given key in the hashtable and get the pointer to the corresponding value. </p>
 <p>Assumes hashtable_ptr is not <code>NULL</code>.</p>
 <p>The returned pointer is <b>not</b> garanteed to point to the same value if the hashtable is modified.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -887,7 +913,8 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Update a key's corresponding value inside the hashtable. Allows duplicates.</p>
+
+<p>Update a key's corresponding value inside the hashtable. Allows duplicates. </p>
 <p>If a duplicate key is found, the corresponding value is overwritten.</p>
 <p>Assumes: </p><ul>
 <li>hashtable_ptr is not <code>NULL</code>. </li>
