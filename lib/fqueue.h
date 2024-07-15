@@ -5,9 +5,6 @@
  * The following macros must be defined:
  *  @li `NAME`
  *  @li `VALUE_TYPE`
- *
- * See:
- *
  */
 
 /**
