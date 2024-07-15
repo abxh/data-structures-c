@@ -3,16 +3,19 @@
 [doxygen documentation](https://abxh.github.io/data-structures-c/)
  | ![tests](https://github.com/abxh/data-structures-c/actions/workflows/tests.yml/badge.svg?event=push)
 
-Run `make test` to test all tests and examples.
+Generic, header-only and performant data structures. New memory allocation is kept to a minimum.
 
-Asserts are used to check various assumptions.
-Use `NDEBUG` flag for turning off asserts in release builds.
+Written for learning purposes, and to be used further in personal projects.
 
-| **File**                                                                             | Description                                                                      |                                                                                                                                                                               |
-|--------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [fstack.h](https://github.com/abxh/data-structures-c/blob/main/lib/fstack.h)         | Fixed-size array-based stack data structure                                      | [Documentation](https://abxh.github.io/data-structures-c/fstack_8h.html) [Example](https://github.com/abxh/data-structures-c/blob/main/examples/fstack/fstack.c)              |
-| [fqueue.h](https://github.com/abxh/data-structures-c/blob/main/lib/fqueue.h)         | Fixed-size ring-buffer-based queue data structure                                | [Documentation](https://abxh.github.io/data-structures-c/fqueue_8h.html) [Example](https://github.com/abxh/data-structures-c/blob/main/examples/fqueue/fqueue.c)              |
-| [fhashtable.h](https://github.com/abxh/data-structures-c/blob/main/lib/fhashtable.h) | Fixed-size hashtable data structure based on open adressing (robin hood hashing) | [Documentation](https://abxh.github.io/data-structures-c/fhashtable_8h.html) [Example](https://github.com/abxh/data-structures-c/blob/main/examples/fhashtable/fhashtable.c)  |
+Run `make test` to run all tests and examples.
+
+Asserts are used to check various assumptions. Use `NDEBUG` flag to turn off asserts in release builds.
+
+| **File**                                                                             | Description                                              |                                                                                                                                                                               |
+|--------------------------------------------------------------------------------------|----------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [fstack.h](https://github.com/abxh/data-structures-c/blob/main/lib/fstack.h)         | Fixed-size array based stack                             | [Documentation](https://abxh.github.io/data-structures-c/fstack_8h.html) [Example](https://github.com/abxh/data-structures-c/blob/main/examples/fstack/fstack.c)              |
+| [fqueue.h](https://github.com/abxh/data-structures-c/blob/main/lib/fqueue.h)         | Fixed-size ring buffer based queue                       | [Documentation](https://abxh.github.io/data-structures-c/fqueue_8h.html) [Example](https://github.com/abxh/data-structures-c/blob/main/examples/fqueue/fqueue.c)              |
+| [fhashtable.h](https://github.com/abxh/data-structures-c/blob/main/lib/fhashtable.h) | Fixed-size open-adressing hashtable (robin hood hashing) | [Documentation](https://abxh.github.io/data-structures-c/fhashtable_8h.html) [Example](https://github.com/abxh/data-structures-c/blob/main/examples/fhashtable/fhashtable.c)  |
 
 ## Log
 

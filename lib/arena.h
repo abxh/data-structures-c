@@ -6,6 +6,16 @@
  * https://www.gingerbill.org/article/2019/02/08/memory-allocation-strategies-002/
  */
 
+/**
+ * @example arena/fhashtable.c
+ * Example of how `arena.h` header file is used in practice.
+ */
+
+/**
+ * @example arena/char_array.c
+ * Example of how `arena.h` header file is used in practice.
+ */
+
 #pragma once
 
 #include "align_forward.h" // align_forward
@@ -19,7 +29,9 @@
 
 /**
  * @def DEFAULT_ALIGNMENT
- * @brief Set to the shown default value. Can be defined before including the header.
+ * @brief Default alignment when no alignment size is given.
+ *
+ * Can be defined before including the header.
  */
 #ifndef DEFAULT_ALIGNMENT
 #define DEFAULT_ALIGNMENT (2 * sizeof(void*))

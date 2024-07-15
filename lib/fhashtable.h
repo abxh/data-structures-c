@@ -1,6 +1,6 @@
 /**
  * @file fhashtable.h
- * @brief Fixed-size hashtable data structure based on open adressing (robin hood hashing).
+ * @brief Fixed-size open-adressing hashtable (robin hood hashing).
  *
  * Ensure the capacity rounded up to the power of 2 is 75% of the expected numbers of values to be stored to keep
  * load factor low and the hash table performant.

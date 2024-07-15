@@ -1,9 +1,14 @@
 /**
  * @file list.h
- * @brief Doubly linked list.
+ * @brief Intrusive doubly linked list.
  *
  * Inspired by:
  * https://github.com/torvalds/linux/blob/master/include/linux/list.h
+ */
+
+/**
+ * @example list/list_example.c
+ * Example of how `list.h` header file is used in practice with `arena.h`.
  */
 
 #pragma once
@@ -44,50 +49,32 @@ static inline void list_node_init(list_node_type* node_ptr) {
 }
 
 /**
- * @brief Check if a given list node is first in the list.
+ * @brief Check if a given list node is first in the list (aka it's after the head).
  *
  * @param[in] node_ptr The node pointer.
+ * @param[in] head_ptr The head node pointer.
  *
  * @return Whether the list node is first in the list.
  */
-static inline bool list_node_is_first(const list_node_type* node_ptr) {
-    return node_ptr->prev_ptr == node_ptr;
+static inline bool list_node_is_first(const list_node_type* node_ptr, const list_node_type* head_ptr) {
+    return node_ptr->prev_ptr == head_ptr;
 }
 
 /**
- * @brief Check if a given list node is last in the list.
+ * @brief Check if a given list node is the last of the list (aka it's before the tail).
  *
  * @param[in] node_ptr The node pointer.
+ * @param[in] tail_ptr The tail node pointer.
  *
  * @return Whether the list node is last in the list.
  */
-static inline bool list_node_is_last(const list_node_type* node_ptr) {
-    return node_ptr->next_ptr == node_ptr;
-}
-
-/**
- * @brief Count number of nodes after a given node.
- *
- * This does not count the given node itself. So if the given node is the last node,
- * the function returns 0.
- *
- * @param[in] head_ptr The head node pointer.
- *
- * @return Number of nodes *after* head_ptr.
- *  @retval 0 If the given node is the last node.
- */
-static inline size_t list_node_count_after(list_node_type* head_ptr) {
-    list_node_type* node_ptr = head_ptr;
-    size_t count = 0;
-
-    while (!list_node_is_last(node_ptr)) {
-        node_ptr = node_ptr->next_ptr;
-        count++;
-    }
-    return count;
+static inline bool list_node_is_last(const list_node_type* node_ptr, const list_node_type* tail_ptr) {
+    return node_ptr->next_ptr == tail_ptr;
 }
 
 /// @cond DO_NOT_DOCUMENT
+
+// Add a node between two (known) nodes.
 static inline void internal_list_node_add_between(list_node_type* node_ptr, list_node_type* before_ptr, list_node_type* after_ptr) {
     before_ptr->next_ptr = node_ptr;
     node_ptr->prev_ptr = before_ptr;
@@ -100,21 +87,63 @@ static inline void internal_list_node_add_between(list_node_type* node_ptr, list
 /**
  * @brief Add a node *after* the head node.
  *
- * @param[in] head_ptr The head node pointer.
- * @param[in] node_ptr The node pointer.
+ * @note This can be used to construct a stack.
+ *
+ * @param[in,out] prev_ptr The prev node pointer.
+ * @param[in,out] node_ptr The node pointer.
  */
-static inline void list_add_after(list_node_type* node_ptr, list_node_type* head_ptr) {
-    internal_list_node_add_between(node_ptr, head_ptr, head_ptr->next_ptr);
+static inline void list_node_add_after(list_node_type* node_ptr, list_node_type* prev_ptr) {
+    internal_list_node_add_between(node_ptr, prev_ptr, prev_ptr->next_ptr);
 }
 
 /**
  * @brief Add a node *before* the tail node.
  *
- * @param[in] tail_ptr The tail node pointer.
- * @param[in] node_ptr The node pointer.
+ * @note This can be used to construct a queue.
+ *
+ * @param[in,out] next_ptr The next node pointer.
+ * @param[in,out] node_ptr The node pointer.
  */
-static inline void list_add_before(list_node_type* node_ptr, list_node_type* tail_ptr) {
-    internal_list_node_add_between(node_ptr, tail_ptr->prev_ptr, tail_ptr);
+static inline void list_node_add_before(list_node_type* node_ptr, list_node_type* next_ptr) {
+    internal_list_node_add_between(node_ptr, next_ptr->prev_ptr, next_ptr);
 }
 
-// vim: ft=c fdm=marker
+/// @cond DO_NOT_DOCUMENT
+
+// Attach two nodes together, so anything in between is ignored.
+static inline void internal_list_node_attach(list_node_type* prev_ptr, list_node_type* next_ptr) {
+    prev_ptr->next_ptr = next_ptr;
+    next_ptr->prev_ptr = prev_ptr;
+}
+/// @endcond
+
+/**
+ * @brief Remove a node and deattach it from the list it resides in.
+ *
+ * @param[in,out] node_ptr The node pointer.
+ */
+static inline void list_node_remove(list_node_type* node_ptr) {
+    internal_list_node_attach(node_ptr->prev_ptr, node_ptr->next_ptr);
+    list_node_init(node_ptr);
+}
+
+/**
+ * @brief Replace a given node by a new node.
+ *
+ * Assumes:
+ * @li `old_ptr` and `new_ptr` are not pointing to the same node.
+ * @li old_ptr node is a part of a list and not the head or tail node.
+ *
+ * @param[in,out] old_ptr Pointer to old node.
+ * @param[in,out] new_ptr Pointer to new node.
+ */
+static inline void list_node_replace(list_node_type* old_ptr, list_node_type* new_ptr) {
+    assert(old_ptr != new_ptr);
+    assert(old_ptr->prev_ptr != old_ptr);
+    assert(old_ptr->next_ptr != old_ptr);
+
+    internal_list_node_add_between(new_ptr, old_ptr->prev_ptr, old_ptr->next_ptr);
+    list_node_init(old_ptr);
+}
+
+// vim: ft=c

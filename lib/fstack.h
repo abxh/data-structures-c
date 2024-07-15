@@ -1,6 +1,6 @@
 /**
  * @file fstack.h
- * @brief Fixed-size array-based stack data structure.
+ * @brief Fixed-size array-based stack
  *
  * The following macros must be defined:
  *  @li `NAME`

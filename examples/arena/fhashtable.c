@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "fhashtable_example.h"
-
 #include "arena.h"
 
 #include "fnvhash.h"
@@ -30,12 +28,18 @@ void str_int_ht_test_alt(void) {
                                           // and can be used to store different types simultaneously.
 
     char* egg_str_ptr = arena_allocate_aligned(&arena, alignof(char), sizeof("egg"));
+    if (!egg_str_ptr) {
+        assert(false);
+    }
     strcpy(egg_str_ptr, "egg");
 
     strint_ht_insert(ht, egg_str_ptr, 1);
     strint_ht_update(ht, egg_str_ptr, 2);
 
     char* milk_str_ptr = arena_allocate(&arena, sizeof("egg"));
+    if (!milk_str_ptr) {
+        assert(false);
+    }
     strcpy(milk_str_ptr, "milk");
 
     strint_ht_update(ht, milk_str_ptr, 3);

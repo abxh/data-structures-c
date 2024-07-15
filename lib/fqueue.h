@@ -1,6 +1,6 @@
 /**
  * @file fqueue.h
- * @brief Fixed-size ring-buffer-based queue data structure.
+ * @brief Fixed-size ring-buffer-based queue
  *
  * The following macros must be defined:
  *  @li `NAME`
