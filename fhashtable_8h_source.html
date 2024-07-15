@@ -425,50 +425,50 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span>}</div>
 </div>
 <div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span> </div>
-<div class="foldopen" id="foldopen00536" data-start="{" data-end="}">
-<div class="line"><a id="l00536" name="l00536"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#adeb4c4445b4a40dbfdff14570f1a62f4">  536</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, clear)(FHASHTABLE_TYPE* hashtable_ptr) {</div>
-<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>    assert(hashtable_ptr != NULL);</div>
-<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span> </div>
-<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; hashtable_ptr-&gt;capacity; i++) {</div>
-<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span>        hashtable_ptr-&gt;slots[i].offset = <a class="code hl_define" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a>;</div>
-<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span>    }</div>
-<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span>    hashtable_ptr-&gt;count = 0;</div>
-<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>}</div>
+<div class="foldopen" id="foldopen00537" data-start="{" data-end="}">
+<div class="line"><a id="l00537" name="l00537"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#adeb4c4445b4a40dbfdff14570f1a62f4">  537</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, clear)(FHASHTABLE_TYPE* hashtable_ptr) {</div>
+<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>    assert(hashtable_ptr != NULL);</div>
+<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span> </div>
+<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; hashtable_ptr-&gt;capacity; i++) {</div>
+<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span>        hashtable_ptr-&gt;slots[i].offset = <a class="code hl_define" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a>;</div>
+<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span>    }</div>
+<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>    hashtable_ptr-&gt;count = 0;</div>
+<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span>}</div>
 </div>
-<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span> </div>
-<div class="foldopen" id="foldopen00557" data-start="{" data-end="}">
-<div class="line"><a id="l00557" name="l00557"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#ab0946cab8687eecdfee4a771b4a7b78e">  557</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE* restrict dest_hashtable_ptr,</div>
-<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span>                                               <span class="keyword">const</span> FHASHTABLE_TYPE* restrict src_hashtable_ptr) {</div>
-<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span>    assert(src_hashtable_ptr != NULL);</div>
-<div class="line"><a id="l00560" name="l00560"></a><span class="lineno">  560</span>    assert(dest_hashtable_ptr != NULL);</div>
-<div class="line"><a id="l00561" name="l00561"></a><span class="lineno">  561</span>    assert(src_hashtable_ptr-&gt;capacity &lt;= dest_hashtable_ptr-&gt;capacity);</div>
-<div class="line"><a id="l00562" name="l00562"></a><span class="lineno">  562</span>    assert(dest_hashtable_ptr-&gt;count == 0);</div>
-<div class="line"><a id="l00563" name="l00563"></a><span class="lineno">  563</span> </div>
-<div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; src_hashtable_ptr-&gt;capacity; i++) {</div>
-<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span>        dest_hashtable_ptr-&gt;slots[i] = src_hashtable_ptr-&gt;slots[i];</div>
-<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>    }</div>
-<div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span> </div>
-<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span>    dest_hashtable_ptr-&gt;count = src_hashtable_ptr-&gt;count;</div>
-<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span>}</div>
+<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span> </div>
+<div class="foldopen" id="foldopen00558" data-start="{" data-end="}">
+<div class="line"><a id="l00558" name="l00558"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#ab0946cab8687eecdfee4a771b4a7b78e">  558</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE* restrict dest_hashtable_ptr,</div>
+<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span>                                               <span class="keyword">const</span> FHASHTABLE_TYPE* restrict src_hashtable_ptr) {</div>
+<div class="line"><a id="l00560" name="l00560"></a><span class="lineno">  560</span>    assert(src_hashtable_ptr != NULL);</div>
+<div class="line"><a id="l00561" name="l00561"></a><span class="lineno">  561</span>    assert(dest_hashtable_ptr != NULL);</div>
+<div class="line"><a id="l00562" name="l00562"></a><span class="lineno">  562</span>    assert(src_hashtable_ptr-&gt;capacity &lt;= dest_hashtable_ptr-&gt;capacity);</div>
+<div class="line"><a id="l00563" name="l00563"></a><span class="lineno">  563</span>    assert(dest_hashtable_ptr-&gt;count == 0);</div>
+<div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span> </div>
+<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; src_hashtable_ptr-&gt;capacity; i++) {</div>
+<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>        dest_hashtable_ptr-&gt;slots[i] = src_hashtable_ptr-&gt;slots[i];</div>
+<div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span>    }</div>
+<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span> </div>
+<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span>    dest_hashtable_ptr-&gt;count = src_hashtable_ptr-&gt;count;</div>
+<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span>}</div>
 </div>
-<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span> </div>
-<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span><span class="comment">// }}}</span></div>
-<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span> </div>
-<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span><span class="comment">// macro undefs: {{{</span></div>
-<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span> </div>
-<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span><span class="preprocessor">#undef NAME</span></div>
-<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span><span class="preprocessor">#undef KEY_TYPE</span></div>
-<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span><span class="preprocessor">#undef VALUE_TYPE</span></div>
-<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span><span class="preprocessor">#undef KEY_IS_EQUAL</span></div>
-<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span><span class="preprocessor">#undef HASH_FUNCTION</span></div>
-<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span> </div>
-<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span><span class="preprocessor">#undef FHASHTABLE_SLOT_TYPE</span></div>
-<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span><span class="preprocessor">#undef FHASHTABLE_TYPE</span></div>
-<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span><span class="preprocessor">#undef FHASHTABLE_IS_FULL</span></div>
-<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span> </div>
-<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span><span class="comment">// }}}</span></div>
-<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span> </div>
-<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span><span class="comment">// vim: ft=c fdm=marker</span></div>
+<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span> </div>
+<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span><span class="comment">// }}}</span></div>
+<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span> </div>
+<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span><span class="comment">// macro undefs: {{{</span></div>
+<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span> </div>
+<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span><span class="preprocessor">#undef NAME</span></div>
+<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span><span class="preprocessor">#undef KEY_TYPE</span></div>
+<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span><span class="preprocessor">#undef VALUE_TYPE</span></div>
+<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span><span class="preprocessor">#undef KEY_IS_EQUAL</span></div>
+<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span><span class="preprocessor">#undef HASH_FUNCTION</span></div>
+<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span> </div>
+<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span><span class="preprocessor">#undef FHASHTABLE_SLOT_TYPE</span></div>
+<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span><span class="preprocessor">#undef FHASHTABLE_TYPE</span></div>
+<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span><span class="preprocessor">#undef FHASHTABLE_IS_FULL</span></div>
+<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span> </div>
+<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span><span class="comment">// }}}</span></div>
+<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span> </div>
+<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span><span class="comment">// vim: ft=c fdm=marker</span></div>
 <div class="ttc" id="afhashtable_8h_html_a261e2befaaf40b08c99064bb53bf0b44"><div class="ttname"><a href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a></div><div class="ttdeci">#define HASH_FUNCTION(key)</div><div class="ttdoc">Used to compute indicies of keys. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:115</div></div>
 <div class="ttc" id="afhashtable_8h_html_a58a9b9662f87dfedd00cc6fd5dde7852"><div class="ttname"><a href="fhashtable_8h.html#a58a9b9662f87dfedd00cc6fd5dde7852">KEY_IS_EQUAL</a></div><div class="ttdeci">#define KEY_IS_EQUAL(a, b)</div><div class="ttdoc">Used to compare two keys. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:101</div></div>
 <div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:127</div></div>

@@ -404,7 +404,7 @@ Functions</h2></td></tr>
 <p>Clear an existing hashtable and flag all slots as empty. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The pointer of the hashtable to clear. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">hashtable_ptr</td><td>The pointer of the hashtable to clear. </td></tr>
   </table>
   </dd>
 </dl>
@@ -489,8 +489,8 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">dest_hashtable_ptr</td><td>The destination hashtable. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">src_hashtable_ptr</td><td>The source hashtable. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">dest_hashtable_ptr</td><td>The destination hashtable. </td></tr>
   </table>
   </dd>
 </dl>
@@ -573,7 +573,7 @@ Functions</h2></td></tr>
 <p>Assumes hashtable_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key. </td></tr>
   </table>
   </dd>
@@ -611,7 +611,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -762,7 +762,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value. </td></tr>
   </table>
@@ -928,7 +928,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value. </td></tr>
   </table>
