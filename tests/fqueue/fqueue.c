@@ -13,7 +13,7 @@
     - is_full
     - get_front / peek
     - get_back
-    - at + FQUEUE_FOREACH + FQUEUE_FOREACH_REVERSE
+    - at + fqueue_for_each + fqueue_for_each_reverse
 
     Mutating operation types:
     - enqueue
@@ -68,7 +68,7 @@ static inline bool check_ordered_values(const i64_que_type* que_p, const size_t 
     {
         size_t index = 0;
         int64_t value;
-        FQUEUE_FOREACH(que_p, value) {
+        fqueue_for_each(que_p, value) {
             res &= value == expected_value[index++];
         }
         assert(index == n);
@@ -76,7 +76,7 @@ static inline bool check_ordered_values(const i64_que_type* que_p, const size_t 
     {
         size_t index = n;
         int64_t value;
-        FQUEUE_FOREACH_REVERSE(que_p, value) {
+        fqueue_for_each_reverse(que_p, value) {
             res &= value == expected_value[--index];
         }
         assert(index == 0);

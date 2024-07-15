@@ -15,7 +15,7 @@
     - .capacity
     - is_empty
     - is_full
-    - contains_key + get_value + get_value_mut / search + FHASHTABLE_FOREACH
+    - contains_key + get_value + get_value_mut / search + fhashtable_for_each
 
     Mutating operation types:
     - insert
@@ -66,7 +66,7 @@
         bool res = true;                                                                         \
         key_type key;                                                                            \
         value_type value;                                                                        \
-        FHASHTABLE_FOREACH(ht_p, key, value) {                                                   \
+        fhashtable_for_each(ht_p, key, value) {                                                  \
             assert(key < (n));                                                                   \
             assert(value < (m));                                                                 \
             if (key_exists_table[key] == false) {                                                \
@@ -82,8 +82,6 @@
         }                                                                                        \
         res;                                                                                     \
     })
-
-
 
 void int_int_full_test() {
     // N = 0
@@ -228,7 +226,6 @@ void int_int_full_test() {
         assert(!int_to_int_ht_is_empty(ht_p));
         assert(!int_to_int_ht_is_full(ht_p));
 
-
         bool* key_exists = calloc(2000, sizeof(bool));
         bool* value_exists = calloc(2000, sizeof(bool));
         int_to_int_ht_type* ht_copy_p = int_to_int_ht_create(16);
@@ -241,8 +238,8 @@ void int_int_full_test() {
 
         // assert that the correct keys / values exists:
         for (size_t i = 0; i < 2000; i++) {
-            if (i == 421 || i == 422 || i == 423 || i == 425 || i == 426 || i == 431 || i == 31 || i == 555 || i == 3 || i == 556 || i == 4 ||
-                i == 2) {
+            if (i == 421 || i == 422 || i == 423 || i == 425 || i == 426 || i == 431 || i == 31 || i == 555 || i == 3 || i == 556 ||
+                i == 4 || i == 2) {
                 assert(value_exists[i]);
             } else if (i == 20 || i == 1 || i == 53 || i == 71 || i == 113 || i == 902 || i == 1375 || i == 0 || i == 555 || i == 2 ||
                        i == 3 || i == 4) {
@@ -334,7 +331,6 @@ void bad_hash_func_test() {
         if (!bd_ht_p) {
             assert(false);
         }
-        
     }
 }
 
@@ -364,7 +360,6 @@ static inline bool a_struct_eq(a_struct a, a_struct b) {
 #define KEY_IS_EQUAL(a, b) (a_struct_eq(a, b))
 #define HASH_FUNCTION(key) (murmur3_32((uint8_t*)&key, sizeof(a_struct), 0))
 #include "fhashtable.h"
-
 
 int main(void) {
     int_int_full_test();

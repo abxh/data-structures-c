@@ -58,7 +58,7 @@
 /// @endcond
 
 /**
- * @def FSTACK_FOREACH(stack_ptr, value)
+ * @def fstack_for_each(stack_ptr, value)
  * @brief Iterate over the values in the stack from the top to bottom.
  * @warning Modifying the stack under the iteration may result in errors.
  *
@@ -68,7 +68,7 @@
  * @param[in] stack_ptr Stack pointer.
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
-#define FSTACK_FOREACH(stack_ptr, value)                    \
+#define fstack_for_each(stack_ptr, value)                   \
     for (size_t _index = (stack_ptr)->count;                \
                                                             \
          _index > 0 &&                                      \
@@ -78,7 +78,7 @@
          _index--)
 
 /**
- * @def FSTACK_FOREACH_REVERSE(stack_ptr, value)
+ * @def fstack_for_each_reverse(stack_ptr, value)
  * @brief Iterate over the values in the stack from the bottom to top.
  * @warning Modifying the stack under the iteration may result in errors.
  *
@@ -88,7 +88,7 @@
  * @param[in] stack_ptr Stack pointer.
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
-#define FSTACK_FOREACH_REVERSE(stack_ptr, value)        \
+#define fstack_for_each_reverse(stack_ptr, value)       \
     for (size_t _index = 0;                             \
                                                         \
          _index < (stack_ptr)->count &&                 \

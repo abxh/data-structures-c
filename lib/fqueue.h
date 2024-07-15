@@ -53,7 +53,7 @@
 /// @endcond
 
 /**
- * @def FQUEUE_FOREACH(queue_ptr, value)
+ * @def fqueue_for_each(queue_ptr, value)
  * @brief Iterate over the values in the queue from the front to back.
  * @warning Modifying the queue under the iteration may result in errors.
  *
@@ -63,7 +63,7 @@
  * @param[in] queue_ptr Queue pointer.
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
-#define FQUEUE_FOREACH(queue_ptr, value)                                                                           \
+#define fqueue_for_each(queue_ptr, value)                                                                           \
     for (size_t _index = 0;                                                                                        \
                                                                                                                    \
          _index < (queue_ptr)->count &&                                                                            \
@@ -73,7 +73,7 @@
          _index++)
 
 /**
- * @def FQUEUE_FOREACH_REVERSE(queue_ptr, value)
+ * @def fqueue_for_each_reverse(queue_ptr, value)
  * @brief Iterate over the values in the queue from the back to front.
  * @warning Modifying the queue under the iteration may result in errors.
  *
@@ -83,7 +83,7 @@
  * @param[in] queue_ptr Queue pointer.
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
-#define FQUEUE_FOREACH_REVERSE(queue_ptr, value)                                                                     \
+#define fqueue_for_each_reverse(queue_ptr, value)                                                                     \
     for (size_t _index = 0;                                                                                          \
                                                                                                                      \
          _index < (queue_ptr)->count &&                                                                              \
