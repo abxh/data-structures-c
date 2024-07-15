@@ -77,7 +77,7 @@ void uintstk_example(void) {
     {
         size_t x = 1;
         unsigned int value;
-        FSTACK_FOREACH_REVERSE(s_copy, value) {
+        fstack_for_each_reverse(s_copy, value) {
             assert(value == x++);
         }
     }
@@ -86,7 +86,7 @@ void uintstk_example(void) {
         size_t cpy_count = 0;
         size_t x = lim;
         unsigned int value;
-        FSTACK_FOREACH(s_copy, value) {
+        fstack_for_each(s_copy, value) {
             assert(value == x--);
             cpy_count++;
         }

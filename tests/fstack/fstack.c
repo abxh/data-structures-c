@@ -13,7 +13,7 @@
     - is_full
     - get_top / peek
     - get_bottom
-    - at + FSTACK_FOREACH + FSTACK_FOREACH_REVERSE
+    - at + fstack_for_each + fstack_for_each_reverse
 
     Mutating operation types:
     - push
@@ -67,7 +67,7 @@ static inline bool check_ordered_values(const i64_stk_type* stk_p, const size_t 
     {
         size_t index = 0;
         int64_t value;
-        FSTACK_FOREACH(stk_p, value) {
+        fstack_for_each(stk_p, value) {
             res &= value == expected_value[index++];
         }
         assert(index == n);
@@ -75,7 +75,7 @@ static inline bool check_ordered_values(const i64_stk_type* stk_p, const size_t 
     {
         size_t index = n;
         int64_t value;
-        FSTACK_FOREACH_REVERSE(stk_p, value) {
+        fstack_for_each_reverse(stk_p, value) {
             res &= value == expected_value[--index];
         }
         assert(index == 0);

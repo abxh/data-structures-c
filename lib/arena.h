@@ -40,7 +40,7 @@ typedef struct arena_type {
  *
  * @note The arena struct could stack / heap-allocated depending on program structure.
  *
- * @param[in] arena_ptr The arena pointer.
+ * @param[in,out] arena_ptr The arena pointer.
  * @param[in] n The length of the backing buffer.
  * @param[in] backing_buffer The backing buffer to use.
  */
@@ -54,7 +54,7 @@ static inline void arena_init(arena_type* arena_ptr, const size_t n, unsigned ch
 /**
  * @brief Deallocate all allocations in the arena.
  *
- * @param[in] arena_ptr The arena pointer.
+ * @param[in,out] arena_ptr The arena pointer.
  */
 static inline void arena_deallocate_all(arena_type* arena_ptr) {
     arena_ptr->current_offset = 0;
