@@ -67,7 +67,9 @@ static inline bool check_ordered_values(const i64_stk_type* stk_p, const size_t 
     {
         size_t index = 0;
         int64_t value;
-        fstack_for_each(stk_p, value) {
+
+        size_t temp0;
+        fstack_for_each(stk_p, temp0, value) {
             res &= value == expected_value[index++];
         }
         assert(index == n);
@@ -75,7 +77,9 @@ static inline bool check_ordered_values(const i64_stk_type* stk_p, const size_t 
     {
         size_t index = n;
         int64_t value;
-        fstack_for_each_reverse(stk_p, value) {
+
+        size_t temp0;
+        fstack_for_each_reverse(stk_p, temp0, value) {
             res &= value == expected_value[--index];
         }
         assert(index == 0);

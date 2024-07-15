@@ -127,7 +127,7 @@
 #define FHASHTABLE_EMPTY_SLOT_OFFSET (SIZE_MAX)
 
 /**
- * @def fhashtable_for_each
+ * @def fhashtable_for_each(hashtable_ptr, index, key_, value_)
  * @brief Iterate over the non-empty slots in the hashtable in arbitary order.
  * @warning Modifying the hashtable under the iteration may result in errors.
  *
@@ -135,15 +135,16 @@
  * @li _index
  *
  * @param[in] hashtable_ptr hashtable pointer.
+ * @param[in] index Temporary indexing variable. Should be `size_t`
  * @param[out] key_ Current key. Should be `KEY_TYPE`.
  * @param[out] value_ Current value. Should be `VALUE_TYPE`.
  */
-#define fhashtable_for_each(hashtable_ptr, key_, value_)                             \
-    for (size_t _index = 0; _index < (hashtable_ptr)->capacity; _index++)            \
-                                                                                     \
-        if ((hashtable_ptr)->slots[_index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET && \
-                                                                                     \
-            ((key_) = (hashtable_ptr)->slots[_index].key, (value_) = (hashtable_ptr)->slots[_index].value, true))
+#define fhashtable_for_each(hashtable_ptr, index, key_, value_)                       \
+    for ((index) = 0; (index) < (hashtable_ptr)->capacity; (index)++)                 \
+                                                                                      \
+        if ((hashtable_ptr)->slots[(index)].offset != FHASHTABLE_EMPTY_SLOT_OFFSET && \
+                                                                                      \
+            ((key_) = (hashtable_ptr)->slots[(index)].key, (value_) = (hashtable_ptr)->slots[(index)].value, true))
 
 #endif // FHASHTABLE_H
 

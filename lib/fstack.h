@@ -58,44 +58,40 @@
 /// @endcond
 
 /**
- * @def fstack_for_each(stack_ptr, value)
+ * @def fstack_for_each(stack_ptr, index, value)
  * @brief Iterate over the values in the stack from the top to bottom.
  * @warning Modifying the stack under the iteration may result in errors.
  *
- * temporary variables visible in scope:
- * @li _index
- *
  * @param[in] stack_ptr Stack pointer.
+ * @param[in] index Temporary indexing variable. Should be `size_t`
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
-#define fstack_for_each(stack_ptr, value)                   \
-    for (size_t _index = (stack_ptr)->count;                \
-                                                            \
-         _index > 0 &&                                      \
-                                                            \
-         ((value) = (stack_ptr)->values[_index - 1], true); \
-                                                            \
-         _index--)
+#define fstack_for_each(stack_ptr, index, value)             \
+    for ((index) = (stack_ptr)->count;                       \
+                                                             \
+         (index) > 0 &&                                      \
+                                                             \
+         ((value) = (stack_ptr)->values[(index) - 1], true); \
+                                                             \
+         (index)--)
 
 /**
- * @def fstack_for_each_reverse(stack_ptr, value)
+ * @def fstack_for_each_reverse(stack_ptr, index, value)
  * @brief Iterate over the values in the stack from the bottom to top.
  * @warning Modifying the stack under the iteration may result in errors.
  *
- * temporary variables visible in scope:
- * @li _index
- *
  * @param[in] stack_ptr Stack pointer.
+ * @param[in] index Temporary indexing variable. Should be `size_t`
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
-#define fstack_for_each_reverse(stack_ptr, value)       \
-    for (size_t _index = 0;                             \
-                                                        \
-         _index < (stack_ptr)->count &&                 \
-                                                        \
-         ((value) = (stack_ptr)->values[_index], true); \
-                                                        \
-         _index++)
+#define fstack_for_each_reverse(stack_ptr, index, value) \
+    for ((index) = 0;                                    \
+                                                         \
+         (index) < (stack_ptr)->count &&                 \
+                                                         \
+         ((value) = (stack_ptr)->values[(index)], true); \
+                                                         \
+         (index)++)
 
 #endif // FSTACK_H
 

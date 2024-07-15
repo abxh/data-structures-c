@@ -53,44 +53,40 @@
 /// @endcond
 
 /**
- * @def fqueue_for_each(queue_ptr, value)
+ * @def fqueue_for_each(queue_ptr, index, value)
  * @brief Iterate over the values in the queue from the front to back.
  * @warning Modifying the queue under the iteration may result in errors.
  *
- * temporary variables visible in scope:
- * @li _index
- *
  * @param[in] queue_ptr Queue pointer.
+ * @param[in] index Temporary indexing variable. Should be `size_t`
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
-#define fqueue_for_each(queue_ptr, value)                                                                           \
-    for (size_t _index = 0;                                                                                        \
-                                                                                                                   \
-         _index < (queue_ptr)->count &&                                                                            \
-                                                                                                                   \
-         ((value) = (queue_ptr)->values[((queue_ptr)->begin_index + _index) & ((queue_ptr)->capacity - 1)], true); \
-                                                                                                                   \
-         _index++)
+#define fqueue_for_each(queue_ptr, index, value)                                                                    \
+    for ((index) = 0;                                                                                               \
+                                                                                                                    \
+         (index) < (queue_ptr)->count &&                                                                            \
+                                                                                                                    \
+         ((value) = (queue_ptr)->values[((queue_ptr)->begin_index + (index)) & ((queue_ptr)->capacity - 1)], true); \
+                                                                                                                    \
+         (index)++)
 
 /**
- * @def fqueue_for_each_reverse(queue_ptr, value)
+ * @def fqueue_for_each_reverse(queue_ptr, index, value)
  * @brief Iterate over the values in the queue from the back to front.
  * @warning Modifying the queue under the iteration may result in errors.
  *
- * temporary variables visible in scope:
- * @li _index
- *
  * @param[in] queue_ptr Queue pointer.
+ * @param[in] index Temporary indexing variable. Should be `size_t`
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
-#define fqueue_for_each_reverse(queue_ptr, value)                                                                     \
-    for (size_t _index = 0;                                                                                          \
-                                                                                                                     \
-         _index < (queue_ptr)->count &&                                                                              \
-                                                                                                                     \
-         ((value) = (queue_ptr)->values[((queue_ptr)->end_index - 1 - _index) & ((queue_ptr)->capacity - 1)], true); \
-                                                                                                                     \
-         _index++)
+#define fqueue_for_each_reverse(queue_ptr, index, value)                                                              \
+    for ((index) = 0;                                                                                                 \
+                                                                                                                      \
+         (index) < (queue_ptr)->count &&                                                                              \
+                                                                                                                      \
+         ((value) = (queue_ptr)->values[((queue_ptr)->end_index - 1 - (index)) & ((queue_ptr)->capacity - 1)], true); \
+                                                                                                                      \
+         (index)++)
 
 #endif // FQUEUE_H
 

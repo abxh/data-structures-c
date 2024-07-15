@@ -66,7 +66,9 @@
         bool res = true;                                                                         \
         key_type key;                                                                            \
         value_type value;                                                                        \
-        fhashtable_for_each(ht_p, key, value) {                                                  \
+                                                                                                 \
+        size_t temp0;                                                                            \
+        fhashtable_for_each(ht_p, temp0, key, value) {                                           \
             assert(key < (n));                                                                   \
             assert(value < (m));                                                                 \
             if (key_exists_table[key] == false) {                                                \

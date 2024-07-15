@@ -109,7 +109,8 @@ void int_to_int_hashtable_test(void) {
         int value;
         (void)(value); // mark unused
 
-        fhashtable_for_each(ht_copy, key, value) {
+        size_t temp0;
+        fhashtable_for_each(ht_copy, temp0, key, value) {
             const bool inside_range = 0 <= key && key < LIM;
             const bool already_counted = table[key];
 
