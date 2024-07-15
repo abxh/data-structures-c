@@ -3,8 +3,7 @@
  * @brief Fixed-size hashtable data structure based on open adressing (robin hood hashing).
  *
  * Ensure the capacity rounded up to the power of 2 is 75% of the expected numbers of values to be stored to keep
- * load factor low and the hash table performant. Also note, searching for missing keys in full hashtables makes the search
- * procedures loop indefinitely - so ensure the hashtable doesn't get full.
+ * load factor low and the hash table performant.
  *
  * Prefer to use scalar types (int/uint/pointers) or strings as key/value pairs. Structs can be used with elementwise
  * equality check but will not make use the cache and hardware prefetching as well. Keep the structs in a seperate
@@ -263,7 +262,6 @@ static inline bool JOIN(FHASHTABLE_NAME, is_full)(const FHASHTABLE_TYPE* hashtab
  *
  * Assumes:
  * @li hashtable_ptr is not `NULL`.
- * @li there exists at least one empty slot - aka the hashtable is not full.
  *
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key.
@@ -271,7 +269,6 @@ static inline bool JOIN(FHASHTABLE_NAME, is_full)(const FHASHTABLE_TYPE* hashtab
  */
 static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
     assert(hashtable_ptr != NULL);
-    assert(FHASHTABLE_IS_FULL(hashtable_ptr) == false);
 
     const size_t key_hash = HASH_FUNCTION(key);
     const size_t index_mask = hashtable_ptr->capacity - 1;
@@ -299,7 +296,6 @@ static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE* ha
  *
  * Assumes:
  * @li hashtable_ptr is not `NULL`.
- * @li there exists at least one empty slot - aka the hashtable is not full.
  *
  * @note The returned pointer is **not** garanteed to point to the same value if the hashtable
  * is modified.
@@ -311,7 +307,6 @@ static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE* ha
  */
 static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, get_value_mut)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
     assert(hashtable_ptr != NULL);
-    assert(FHASHTABLE_IS_FULL(hashtable_ptr) == false);
 
     const size_t key_hash = HASH_FUNCTION(key);
     const size_t index_mask = hashtable_ptr->capacity - 1;
@@ -339,7 +334,6 @@ static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, get_value_mut)(FHASHTABLE_TYPE* 
  *
  * Assumes:
  * @li hashtable_ptr is not `NULL`.
- * @li there exists at least one empty slot - aka the hashtable is not full.
  *
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key to search for.
@@ -351,7 +345,6 @@ static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, get_value_mut)(FHASHTABLE_TYPE* 
 static inline VALUE_TYPE JOIN(FHASHTABLE_NAME, get_value)(const FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key,
                                                           const VALUE_TYPE default_value) {
     assert(hashtable_ptr != NULL);
-    assert(FHASHTABLE_IS_FULL(hashtable_ptr) == false);
 
     const size_t key_hash = HASH_FUNCTION(key);
     const size_t index_mask = hashtable_ptr->capacity - 1;
@@ -406,7 +399,6 @@ static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, search)(FHASHTABLE_TYPE* hashtab
 static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
     assert(hashtable_ptr != NULL);
     assert(JOIN(FHASHTABLE_NAME, contains_key)(hashtable_ptr, key) == false);
-    assert(FHASHTABLE_IS_FULL(hashtable_ptr) == false);
 
     const size_t index_mask = hashtable_ptr->capacity - 1;
     const size_t key_hash = HASH_FUNCTION(key);
@@ -448,7 +440,6 @@ static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr,
  */
 static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
     assert(hashtable_ptr != NULL);
-    assert(FHASHTABLE_IS_FULL(hashtable_ptr) == false);
 
     const size_t index_mask = hashtable_ptr->capacity - 1;
     const size_t key_hash = HASH_FUNCTION(key);

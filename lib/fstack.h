@@ -5,6 +5,9 @@
  * The following macros must be defined:
  *  @li `NAME`
  *  @li `VALUE_TYPE`
+ *
+ * See:
+ * https://en.wikipedia.org/wiki/Stack_(abstract_data_type)#Array
  */
 
 /**
