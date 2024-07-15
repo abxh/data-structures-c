@@ -439,9 +439,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check if hashtable contains a key. </p>
-<p>Assumes: </p><ul>
-<li>hashtable_ptr is not <code>NULL</code>.</li>
-</ul>
+<p>Assumes hashtable_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
@@ -652,9 +650,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>From a given key, get the copy of the corresponding value in the hashtable. </p>
-<p>Assumes: </p><ul>
-<li>hashtable_ptr is not <code>NULL</code>.</li>
-</ul>
+<p>Assumes hashtable_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
@@ -701,9 +697,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>From a given key, get the pointer to the corresponding value in the hashtable. </p>
-<p>Assumes: </p><ul>
-<li>hashtable_ptr is not <code>NULL</code>.</li>
-</ul>
+<p>Assumes hashtable_ptr is not <code>NULL</code>.</p>
 <dl class="section note"><dt>Note</dt><dd>The returned pointer is <b>not</b> garanteed to point to the same value if the hashtable is modified.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -757,8 +751,7 @@ Functions</h2></td></tr>
 <p>Insert a non-duplicate key and it's corresponding value inside the hashtable. </p>
 <p>Assumes: </p><ul>
 <li>hashtable_ptr is not <code>NULL</code>. </li>
-<li>key is not already contained in the hashtable. </li>
-<li>hash table is not full.</li>
+<li>key is not already contained in the hashtable.</li>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -922,10 +915,7 @@ Functions</h2></td></tr>
 
 <p>Update a key's corresponding value inside the hashtable. Allows duplicates. </p>
 <p>If a duplicate key is found, the corresponding value is overwritten.</p>
-<p>Assumes: </p><ul>
-<li>hashtable_ptr is not <code>NULL</code>. </li>
-<li>hash table is not full.</li>
-</ul>
+<p>Assumes hashtable_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
