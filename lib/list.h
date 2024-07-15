@@ -35,7 +35,7 @@ typedef struct list_node_type {
  * @param[in] node_ptr A pointer to the node member.
  * @param[in] container_type The container type.
  * @param[in] node_member_name The node member name.
- * @retval A pointer to the container instance.
+ * @return A pointer to the container instance.
  */
 #define list_node_entry(node_ptr, container_type, node_member_name) container_of(node_ptr, container_type, node_member_name)
 

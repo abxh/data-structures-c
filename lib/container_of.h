@@ -16,7 +16,7 @@
  * @param[in] ptr A pointer to the member.
  * @param[in] type The container type.
  * @param[in] member The member name.
- * @retval A pointer to the container instance.
+ * @return A pointer to the container instance.
  */
 #define container_of(ptr, type, member)                   \
     __extension__({                                       \
