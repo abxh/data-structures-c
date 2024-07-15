@@ -253,7 +253,7 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, get_back)(const FQUEUE_TYPE* queue_pt
  * @li `queue_ptr` is not `NULL`.
  * @li The queue is not empty.
  *
- * @param[in] queue_ptr The queue pointer.
+ * @param[inmout] queue_ptr The queue pointer.
  * @return The next to-be-dequeued value.
  */
 static inline VALUE_TYPE JOIN(FQUEUE_NAME, peek)(const FQUEUE_TYPE* queue_ptr) {
@@ -267,7 +267,7 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, peek)(const FQUEUE_TYPE* queue_ptr) {
  * @li `queue_ptr` is not `NULL`.
  * @li The queue is not full.
  *
- * @param[in] queue_ptr The queue pointer.
+ * @param[in,out] queue_ptr The queue pointer.
  * @param[in] value The value to enqueue.
  */
 static inline bool JOIN(FQUEUE_NAME, enqueue)(FQUEUE_TYPE* queue_ptr, const VALUE_TYPE value) {
@@ -291,7 +291,7 @@ static inline bool JOIN(FQUEUE_NAME, enqueue)(FQUEUE_TYPE* queue_ptr, const VALU
  * @li `queue_ptr` is not `NULL`.
  * @li The queue is not full.
  *
- * @param[in] queue_ptr The queue pointer.
+ * @param[in,out] queue_ptr The queue pointer.
  * @return The front value.
  */
 static inline VALUE_TYPE JOIN(FQUEUE_NAME, dequeue)(FQUEUE_TYPE* queue_ptr) {
@@ -313,7 +313,7 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, dequeue)(FQUEUE_TYPE* queue_ptr) {
  *
  * Assumes `queue_ptr` is not `NULL`.
  *
- * @param[in] queue_ptr The queue pointer.
+ * @param[in,out] queue_ptr The queue pointer.
  */
 static inline void JOIN(FQUEUE_NAME, clear)(FQUEUE_TYPE* queue_ptr) {
     assert(queue_ptr != NULL);
@@ -331,8 +331,8 @@ static inline void JOIN(FQUEUE_NAME, clear)(FQUEUE_TYPE* queue_ptr) {
  * @li The destination queue has a capacity that is greater than or equal to source queue count.
  * @li The destination queue is an empty queue.
  *
+ * @param[im,out] dest_queue_ptr The destination queue.
  * @param[in] src_queue_ptr The source queue.
- * @param[out] dest_queue_ptr The destination queue.
  */
 static inline void JOIN(FQUEUE_NAME, copy)(FQUEUE_TYPE* restrict dest_queue_ptr, const FQUEUE_TYPE* restrict src_queue_ptr) {
     assert(src_queue_ptr != NULL);

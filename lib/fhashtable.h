@@ -223,7 +223,7 @@ static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const size_t capaci
  * Assumes:
  * @li The hashtable pointer is not `NULL`.
  *
- * @param[in] hashtable_ptr The hashtable pointer.
+ * @param[in,out] hashtable_ptr The hashtable pointer.
  * @warning May not be called twice in a row on the same object.
  */
 static inline void JOIN(FHASHTABLE_NAME, destroy)(FHASHTABLE_TYPE* hashtable_ptr) {
@@ -393,7 +393,7 @@ static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, search)(FHASHTABLE_TYPE* hashtab
  * @li key is not already contained in the hashtable.
  * @li hash table is not full.
  *
- * @param[in] hashtable_ptr The hashtable pointer.
+ * @param[in,out] hashtable_ptr The hashtable pointer.
  * @param[in] key The key.
  * @param[in] value The value.
  */
@@ -435,7 +435,7 @@ static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr,
  * @li hashtable_ptr is not `NULL`.
  * @li hash table is not full.
  *
- * @param[in] hashtable_ptr The hashtable pointer.
+ * @param[in,out] hashtable_ptr The hashtable pointer.
  * @param[in] key The key.
  * @param[in] value The value.
  */
@@ -482,7 +482,7 @@ static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr,
  *
  * Assumes hashtable_ptr is not `NULL`.
  *
- * @param[in] hashtable_ptr The hashtable pointer.
+ * @param[in,out] hashtable_ptr The hashtable pointer.
  * @param[in] key The key.
  * @return A boolean indicating whether the key was previously contained in the hashtable.
  */
@@ -531,7 +531,8 @@ static inline bool JOIN(FHASHTABLE_NAME, delete)(FHASHTABLE_TYPE* hashtable_ptr,
 
 /**
  * @brief Clear an existing hashtable and flag all slots as empty.
- * @param[in] hashtable_ptr The pointer of the hashtable to clear.
+ *
+ * @param[in,out] hashtable_ptr The pointer of the hashtable to clear.
  */
 static inline void JOIN(FHASHTABLE_NAME, clear)(FHASHTABLE_TYPE* hashtable_ptr) {
     assert(hashtable_ptr != NULL);
@@ -551,8 +552,8 @@ static inline void JOIN(FHASHTABLE_NAME, clear)(FHASHTABLE_TYPE* hashtable_ptr) 
  * @li The destination hashtable has a capacity that is greater than or equal to source hashtable count.
  * @li The destination hashtable is an empty hashtable.
  *
+ * @param[in,out] dest_hashtable_ptr The destination hashtable.
  * @param[in] src_hashtable_ptr The source hashtable.
- * @param[out] dest_hashtable_ptr The destination hashtable.
  */
 static inline void JOIN(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE* restrict dest_hashtable_ptr,
                                                const FHASHTABLE_TYPE* restrict src_hashtable_ptr) {

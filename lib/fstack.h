@@ -147,7 +147,7 @@ static inline FSTACK_TYPE* JOIN(FSTACK_NAME, create)(const size_t capacity) {
 /**
  * @brief Destroy an stack and free the underlying memory with free().
  *
- * @param[in] stack_ptr The stack pointer.
+ * @param[in,out] stack_ptr The stack pointer.
  * @warning May not be called twice in a row on the same object.
  */
 static inline void JOIN(FSTACK_NAME, destroy)(FSTACK_TYPE* stack_ptr) {
@@ -259,7 +259,7 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, peek)(const FSTACK_TYPE* stack_ptr) {
  * @li `stack_ptr` is not `NULL`.
  * @li The stack is not full.
  *
- * @param[in] stack_ptr The stack pointer.
+ * @param[in,out] stack_ptr The stack pointer.
  * @param[in] value The value.
  */
 static inline void JOIN(FSTACK_NAME, push)(FSTACK_TYPE* stack_ptr, const VALUE_TYPE value) {
@@ -276,7 +276,7 @@ static inline void JOIN(FSTACK_NAME, push)(FSTACK_TYPE* stack_ptr, const VALUE_T
  * @li `stack_ptr` is not `NULL`.
  * @li The stack is not empty.
  *
- * @param[in] stack_ptr The stack pointer.
+ * @param[in,out] stack_ptr The stack pointer.
  * @return The top value.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, pop)(FSTACK_TYPE* stack_ptr) {
@@ -291,7 +291,7 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, pop)(FSTACK_TYPE* stack_ptr) {
  *
  * Assumes `stack_ptr` is not `NULL`.
  *
- * @param[in] stack_ptr The stack pointer.
+ * @param[in,out] stack_ptr The stack pointer.
  */
 static inline void JOIN(FSTACK_NAME, clear)(FSTACK_TYPE* stack_ptr) {
     assert(stack_ptr != NULL);
@@ -307,7 +307,7 @@ static inline void JOIN(FSTACK_NAME, clear)(FSTACK_TYPE* stack_ptr) {
  * @li The destination stack has a capacity that is greater than or equal to source stack count.
  * @li The destination stack is an empty stack.
  *
- * @param[out] dest_stack_ptr The destination stack.
+ * @param[in,out] dest_stack_ptr The destination stack.
  * @param[in] src_stack_ptr The source stack.
  */
 static inline void JOIN(FSTACK_NAME, copy)(FSTACK_TYPE* restrict dest_stack_ptr, const FSTACK_TYPE* restrict src_stack_ptr) {
