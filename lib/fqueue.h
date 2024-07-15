@@ -253,7 +253,7 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, get_back)(const FQUEUE_TYPE* queue_pt
  * @li `queue_ptr` is not `NULL`.
  * @li The queue is not empty.
  *
- * @param[inmout] queue_ptr The queue pointer.
+ * @param[in,out] queue_ptr The queue pointer.
  * @return The next to-be-dequeued value.
  */
 static inline VALUE_TYPE JOIN(FQUEUE_NAME, peek)(const FQUEUE_TYPE* queue_ptr) {
@@ -331,7 +331,7 @@ static inline void JOIN(FQUEUE_NAME, clear)(FQUEUE_TYPE* queue_ptr) {
  * @li The destination queue has a capacity that is greater than or equal to source queue count.
  * @li The destination queue is an empty queue.
  *
- * @param[im,out] dest_queue_ptr The destination queue.
+ * @param[in,out] dest_queue_ptr The destination queue.
  * @param[in] src_queue_ptr The source queue.
  */
 static inline void JOIN(FQUEUE_NAME, copy)(FQUEUE_TYPE* restrict dest_queue_ptr, const FQUEUE_TYPE* restrict src_queue_ptr) {

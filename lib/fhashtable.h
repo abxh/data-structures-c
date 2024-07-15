@@ -261,8 +261,7 @@ static inline bool JOIN(FHASHTABLE_NAME, is_full)(const FHASHTABLE_TYPE* hashtab
 /**
  * @brief Check if hashtable contains a key.
  *
- * Assumes:
- * @li hashtable_ptr is not `NULL`.
+ * Assumes hashtable_ptr is not `NULL`.
  *
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key.
@@ -295,8 +294,7 @@ static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE* ha
 /**
  * @brief From a given key, get the pointer to the corresponding value in the hashtable.
  *
- * Assumes:
- * @li hashtable_ptr is not `NULL`.
+ * Assumes hashtable_ptr is not `NULL`.
  *
  * @note The returned pointer is **not** garanteed to point to the same value if the hashtable
  * is modified.
@@ -333,8 +331,7 @@ static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, get_value_mut)(FHASHTABLE_TYPE* 
 /**
  * @brief From a given key, get the copy of the corresponding value in the hashtable.
  *
- * Assumes:
- * @li hashtable_ptr is not `NULL`.
+ * Assumes hashtable_ptr is not `NULL`.
  *
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key to search for.
@@ -391,7 +388,6 @@ static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, search)(FHASHTABLE_TYPE* hashtab
  * Assumes:
  * @li hashtable_ptr is not `NULL`.
  * @li key is not already contained in the hashtable.
- * @li hash table is not full.
  *
  * @param[in,out] hashtable_ptr The hashtable pointer.
  * @param[in] key The key.
@@ -431,9 +427,7 @@ static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr,
  *
  * If a duplicate key is found, the corresponding value is overwritten.
  *
- * Assumes:
- * @li hashtable_ptr is not `NULL`.
- * @li hash table is not full.
+ * Assumes hashtable_ptr is not `NULL`.
  *
  * @param[in,out] hashtable_ptr The hashtable pointer.
  * @param[in] key The key.
