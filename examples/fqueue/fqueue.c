@@ -86,7 +86,9 @@ void int_queue_example(const bool offset) {
     {
         int x = lim;
         int value;
-        fqueue_for_each_reverse(q_copy, value) {
+
+        size_t tempi;
+        fqueue_for_each_reverse(q_copy, tempi, value) {
             assert(value == x--);
         }
     }
@@ -94,7 +96,9 @@ void int_queue_example(const bool offset) {
         int x = 1;
         int count = 0;
         int value;
-        fqueue_for_each(q_copy, value) {
+
+        size_t tempi;
+        fqueue_for_each(q_copy, tempi, value) {
             assert(value == x++);
             count++;
         }
