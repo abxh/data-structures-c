@@ -117,9 +117,8 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a03d83b460541e5ff9cae283d9f55afb2" id="r_a03d83b460541e5ff9cae283d9f55afb2"><td class="memItemLeft" align="right" valign="top"><a id="a03d83b460541e5ff9cae283d9f55afb2" name="a03d83b460541e5ff9cae283d9f55afb2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAULT_ALIGNMENT</b>&#160;&#160;&#160;(2 * sizeof(void*))</td></tr>
-<tr class="memdesc:a03d83b460541e5ff9cae283d9f55afb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set to the shown default value. Can be defined before including the header. <br /></td></tr>
+<tr class="memitem:a03d83b460541e5ff9cae283d9f55afb2" id="r_a03d83b460541e5ff9cae283d9f55afb2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03d83b460541e5ff9cae283d9f55afb2">DEFAULT_ALIGNMENT</a>&#160;&#160;&#160;(2 * sizeof(void*))</td></tr>
+<tr class="memdesc:a03d83b460541e5ff9cae283d9f55afb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default alignment when no alignment size is given.  <br /></td></tr>
 <tr class="separator:a03d83b460541e5ff9cae283d9f55afb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
@@ -153,7 +152,25 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Arena allocator. </p>
 <p>Source used: <a href="https://www.gingerbill.org/article/2019/02/08/memory-allocation-strategies-002/">https://www.gingerbill.org/article/2019/02/08/memory-allocation-strategies-002/</a> </p>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a03d83b460541e5ff9cae283d9f55afb2" name="a03d83b460541e5ff9cae283d9f55afb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03d83b460541e5ff9cae283d9f55afb2">&#9670;&#160;</a></span>DEFAULT_ALIGNMENT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEFAULT_ALIGNMENT&#160;&#160;&#160;(2 * sizeof(void*))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default alignment when no alignment size is given. </p>
+<p>Can be defined before including the header. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="a06147b0435c4f73b80e996ac50eb563d" name="a06147b0435c4f73b80e996ac50eb563d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a06147b0435c4f73b80e996ac50eb563d">&#9670;&#160;</a></span>arena_allocate()</h2>
 
@@ -249,7 +266,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="arena_2fhashtable_8c-example.html#a2">arena/fhashtable.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="arena_2char_array_8c-example.html#a2">arena/char_array.c</a>, <a class="el" href="arena_2fhashtable_8c-example.html#a2">arena/fhashtable.c</a>, and <a class="el" href="list_2list_example_8c-example.html#a4">list/list_example.c</a>.</dd>
 </dl>
 
 </div>
@@ -283,6 +300,8 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
   </table>
   </dd>
+</dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="arena_2char_array_8c-example.html#a4">arena/char_array.c</a>.</dd>
 </dl>
 
 </div>
@@ -329,7 +348,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="arena_2fhashtable_8c-example.html#a1">arena/fhashtable.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="arena_2char_array_8c-example.html#a1">arena/char_array.c</a>, <a class="el" href="arena_2fhashtable_8c-example.html#a1">arena/fhashtable.c</a>, and <a class="el" href="list_2list_example_8c-example.html#a2">list/list_example.c</a>.</dd>
 </dl>
 
 </div>
@@ -450,6 +469,8 @@ Functions</h2></td></tr>
     <tr><td class="paramname">NULL</td><td>If arena doesn't have enough memory for the reallocation. </td></tr>
   </table>
   </dd>
+</dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="arena_2char_array_8c-example.html#a3">arena/char_array.c</a>.</dd>
 </dl>
 
 </div>

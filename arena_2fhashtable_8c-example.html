@@ -87,14 +87,12 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">arena/fhashtable.c</div></div>
 </div><!--header-->
 <div class="contents">
-<p>Example of how <code><a class="el" href="fhashtable_8h.html" title="Fixed-size hashtable data structure based on open adressing (robin hood hashing).">fhashtable.h</a></code> header file is used in practice with <code><a class="el" href="arena_8h.html" title="Arena allocator.">arena.h</a></code>.</p>
+<p>Example of how <code><a class="el" href="arena_8h.html" title="Arena allocator.">arena.h</a></code> header file is used in practice.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;assert.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdalign.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &quot;fhashtable_example.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="arena_8h.html">arena.h</a>&quot;</span></div>
 <div class="line"> </div>
@@ -120,12 +118,18 @@ $(function(){ initResizable(false); });
 <div class="line">                                          <span class="comment">// and can be used to store different types simultaneously.</span></div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordtype">char</span>* egg_str_ptr = <a id="a2" name="a2"></a><a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(<span class="keywordtype">char</span>), <span class="keyword">sizeof</span>(<span class="stringliteral">&quot;egg&quot;</span>));</div>
+<div class="line">    <span class="keywordflow">if</span> (!egg_str_ptr) {</div>
+<div class="line">        assert(<span class="keyword">false</span>);</div>
+<div class="line">    }</div>
 <div class="line">    strcpy(egg_str_ptr, <span class="stringliteral">&quot;egg&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line">    strint_ht_insert(ht, egg_str_ptr, 1);</div>
 <div class="line">    strint_ht_update(ht, egg_str_ptr, 2);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordtype">char</span>* milk_str_ptr = <a id="a3" name="a3"></a><a class="code hl_function" href="arena_8h.html#a06147b0435c4f73b80e996ac50eb563d">arena_allocate</a>(&amp;arena, <span class="keyword">sizeof</span>(<span class="stringliteral">&quot;egg&quot;</span>));</div>
+<div class="line">    <span class="keywordflow">if</span> (!milk_str_ptr) {</div>
+<div class="line">        assert(<span class="keyword">false</span>);</div>
+<div class="line">    }</div>
 <div class="line">    strcpy(milk_str_ptr, <span class="stringliteral">&quot;milk&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line">    strint_ht_update(ht, milk_str_ptr, 3);</div>
@@ -162,12 +166,12 @@ $(function(){ initResizable(false); });
 <div class="line">    strint_ht_destroy(ht);</div>
 <div class="line">}</div>
 <div class="ttc" id="aarena_8h_html"><div class="ttname"><a href="arena_8h.html">arena.h</a></div><div class="ttdoc">Arena allocator.</div></div>
-<div class="ttc" id="aarena_8h_html_a06147b0435c4f73b80e996ac50eb563d"><div class="ttname"><a href="arena_8h.html#a06147b0435c4f73b80e996ac50eb563d">arena_allocate</a></div><div class="ttdeci">static void * arena_allocate(arena_type *arena_ptr, const size_t size)</div><div class="ttdoc">Get the pointer to a chunk of the arena.</div><div class="ttdef"><b>Definition</b> arena.h:110</div></div>
-<div class="ttc" id="aarena_8h_html_a67ada6b5c6f09a6b530b75ef8d553a45"><div class="ttname"><a href="arena_8h.html#a67ada6b5c6f09a6b530b75ef8d553a45">arena_init</a></div><div class="ttdeci">static void arena_init(arena_type *arena_ptr, const size_t n, unsigned char backing_buffer[n])</div><div class="ttdoc">Initialize the arena.</div><div class="ttdef"><b>Definition</b> arena.h:47</div></div>
-<div class="ttc" id="aarena_8h_html_acf3c879986d619cef7734aaccc2ea8da"><div class="ttname"><a href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a></div><div class="ttdeci">static void * arena_allocate_aligned(arena_type *arena_ptr, const size_t alignment, const size_t size)</div><div class="ttdoc">Get the pointer to a chunk of the arena. With alignment.</div><div class="ttdef"><b>Definition</b> arena.h:73</div></div>
-<div class="ttc" id="afhashtable_8h_html"><div class="ttname"><a href="fhashtable_8h.html">fhashtable.h</a></div><div class="ttdoc">Fixed-size hashtable data structure based on open adressing (robin hood hashing).</div></div>
+<div class="ttc" id="aarena_8h_html_a06147b0435c4f73b80e996ac50eb563d"><div class="ttname"><a href="arena_8h.html#a06147b0435c4f73b80e996ac50eb563d">arena_allocate</a></div><div class="ttdeci">static void * arena_allocate(arena_type *arena_ptr, const size_t size)</div><div class="ttdoc">Get the pointer to a chunk of the arena.</div><div class="ttdef"><b>Definition</b> arena.h:122</div></div>
+<div class="ttc" id="aarena_8h_html_a67ada6b5c6f09a6b530b75ef8d553a45"><div class="ttname"><a href="arena_8h.html#a67ada6b5c6f09a6b530b75ef8d553a45">arena_init</a></div><div class="ttdeci">static void arena_init(arena_type *arena_ptr, const size_t n, unsigned char backing_buffer[n])</div><div class="ttdoc">Initialize the arena.</div><div class="ttdef"><b>Definition</b> arena.h:59</div></div>
+<div class="ttc" id="aarena_8h_html_acf3c879986d619cef7734aaccc2ea8da"><div class="ttname"><a href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a></div><div class="ttdeci">static void * arena_allocate_aligned(arena_type *arena_ptr, const size_t alignment, const size_t size)</div><div class="ttdoc">Get the pointer to a chunk of the arena. With alignment.</div><div class="ttdef"><b>Definition</b> arena.h:85</div></div>
+<div class="ttc" id="afhashtable_8h_html"><div class="ttname"><a href="fhashtable_8h.html">fhashtable.h</a></div><div class="ttdoc">Fixed-size open-adressing hashtable (robin hood hashing).</div></div>
 <div class="ttc" id="afnvhash_8h_html"><div class="ttname"><a href="fnvhash_8h.html">fnvhash.h</a></div><div class="ttdoc">FNV-1a hashing function.</div></div>
-<div class="ttc" id="astructarena__type_html"><div class="ttname"><a href="structarena__type.html">arena_type</a></div><div class="ttdoc">Arena data struct.</div><div class="ttdef"><b>Definition</b> arena.h:31</div></div>
+<div class="ttc" id="astructarena__type_html"><div class="ttname"><a href="structarena__type.html">arena_type</a></div><div class="ttdoc">Arena data struct.</div><div class="ttdef"><b>Definition</b> arena.h:43</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
