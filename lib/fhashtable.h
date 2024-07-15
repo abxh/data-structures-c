@@ -370,7 +370,7 @@ static inline VALUE_TYPE JOIN(FHASHTABLE_NAME, get_value)(const FHASHTABLE_TYPE*
  *
  * Assumes hashtable_ptr is not `NULL`.
  *
- * The returned pointer is **not** garanteed to point to the same value if the hashtable
+ * @note The returned pointer is **not** garanteed to point to the same value if the hashtable
  * is modified.
  *
  * @param[in] hashtable_ptr The hashtable pointer.
