@@ -176,7 +176,7 @@ $(function(){ initResizable(false); });
 <div class="line">    {</div>
 <div class="line">        <span class="keywordtype">int</span> x = lim;</div>
 <div class="line">        <span class="keywordtype">int</span> value;</div>
-<div class="line">        <a id="a0" name="a0"></a><a class="code hl_define" href="fqueue_8h.html#ad44c6c64d6ca9b7e41cd7753cbd3bacc">FQUEUE_FOREACH_REVERSE</a>(q_copy, value) {</div>
+<div class="line">        <a id="a0" name="a0"></a><a class="code hl_define" href="fqueue_8h.html#a287d7c1cce25d3d7ef88a3e591751ae6">fqueue_for_each_reverse</a>(q_copy, value) {</div>
 <div class="line">            assert(value == x--);</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
@@ -184,7 +184,7 @@ $(function(){ initResizable(false); });
 <div class="line">        <span class="keywordtype">int</span> x = 1;</div>
 <div class="line">        <span class="keywordtype">int</span> count = 0;</div>
 <div class="line">        <span class="keywordtype">int</span> value;</div>
-<div class="line">        <a id="a1" name="a1"></a><a class="code hl_define" href="fqueue_8h.html#a61432804243f13fe74ae7512611fe035">FQUEUE_FOREACH</a>(q_copy, value) {</div>
+<div class="line">        <a id="a1" name="a1"></a><a class="code hl_define" href="fqueue_8h.html#a1bdfaf3b65b6807216d25209790ccfc9">fqueue_for_each</a>(q_copy, value) {</div>
 <div class="line">            assert(value == x++);</div>
 <div class="line">            count++;</div>
 <div class="line">        }</div>
@@ -201,8 +201,8 @@ $(function(){ initResizable(false); });
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="afqueue_8h_html"><div class="ttname"><a href="fqueue_8h.html">fqueue.h</a></div><div class="ttdoc">Fixed-size ring-buffer-based queue data structure.</div></div>
-<div class="ttc" id="afqueue_8h_html_a61432804243f13fe74ae7512611fe035"><div class="ttname"><a href="fqueue_8h.html#a61432804243f13fe74ae7512611fe035">FQUEUE_FOREACH</a></div><div class="ttdeci">#define FQUEUE_FOREACH(queue_ptr, value)</div><div class="ttdoc">Iterate over the values in the queue from the front to back.</div><div class="ttdef"><b>Definition</b> fqueue.h:66</div></div>
-<div class="ttc" id="afqueue_8h_html_ad44c6c64d6ca9b7e41cd7753cbd3bacc"><div class="ttname"><a href="fqueue_8h.html#ad44c6c64d6ca9b7e41cd7753cbd3bacc">FQUEUE_FOREACH_REVERSE</a></div><div class="ttdeci">#define FQUEUE_FOREACH_REVERSE(queue_ptr, value)</div><div class="ttdoc">Iterate over the values in the queue from the back to front.</div><div class="ttdef"><b>Definition</b> fqueue.h:86</div></div>
+<div class="ttc" id="afqueue_8h_html_a1bdfaf3b65b6807216d25209790ccfc9"><div class="ttname"><a href="fqueue_8h.html#a1bdfaf3b65b6807216d25209790ccfc9">fqueue_for_each</a></div><div class="ttdeci">#define fqueue_for_each(queue_ptr, value)</div><div class="ttdoc">Iterate over the values in the queue from the front to back.</div><div class="ttdef"><b>Definition</b> fqueue.h:66</div></div>
+<div class="ttc" id="afqueue_8h_html_a287d7c1cce25d3d7ef88a3e591751ae6"><div class="ttname"><a href="fqueue_8h.html#a287d7c1cce25d3d7ef88a3e591751ae6">fqueue_for_each_reverse</a></div><div class="ttdeci">#define fqueue_for_each_reverse(queue_ptr, value)</div><div class="ttdoc">Iterate over the values in the queue from the back to front.</div><div class="ttdef"><b>Definition</b> fqueue.h:86</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

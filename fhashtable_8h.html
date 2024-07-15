@@ -139,9 +139,9 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>FHASHTABLE_EMPTY_SLOT_OFFSET</b>&#160;&#160;&#160;(SIZE_MAX)</td></tr>
 <tr class="memdesc:aa799886ed218fb21a6ca4787cf83e8d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset constant used to flag empty slots. <br /></td></tr>
 <tr class="separator:aa799886ed218fb21a6ca4787cf83e8d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73ab43d6ec197c44dc97808300246ad2" id="r_a73ab43d6ec197c44dc97808300246ad2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73ab43d6ec197c44dc97808300246ad2">FHASHTABLE_FOREACH</a>(hashtable_ptr,  key_,  value_)</td></tr>
-<tr class="memdesc:a73ab43d6ec197c44dc97808300246ad2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the non-empty slots in the hashtable in arbitary order.  <br /></td></tr>
-<tr class="separator:a73ab43d6ec197c44dc97808300246ad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a938f5354d59d959f1a263b8e48450df8" id="r_a938f5354d59d959f1a263b8e48450df8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a938f5354d59d959f1a263b8e48450df8">fhashtable_for_each</a>(hashtable_ptr,  key_,  value_)</td></tr>
+<tr class="memdesc:a938f5354d59d959f1a263b8e48450df8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the non-empty slots in the hashtable in arbitary order.  <br /></td></tr>
+<tr class="separator:a938f5354d59d959f1a263b8e48450df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -202,14 +202,14 @@ Functions</h2></td></tr>
 <li><a href="https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/">https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/</a> </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a73ab43d6ec197c44dc97808300246ad2" name="a73ab43d6ec197c44dc97808300246ad2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a73ab43d6ec197c44dc97808300246ad2">&#9670;&#160;</a></span>FHASHTABLE_FOREACH</h2>
+<a id="a938f5354d59d959f1a263b8e48450df8" name="a938f5354d59d959f1a263b8e48450df8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a938f5354d59d959f1a263b8e48450df8">&#9670;&#160;</a></span>fhashtable_for_each</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FHASHTABLE_FOREACH</td>
+          <td class="memname">#define fhashtable_for_each</td>
           <td>(</td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>hashtable_ptr</em></span>, </td>
         </tr>

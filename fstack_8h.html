@@ -123,12 +123,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ae17cb099b4c9aee7835032339b5a9e0d" id="r_ae17cb099b4c9aee7835032339b5a9e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;&#160;&#160;int</td></tr>
 <tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stack value type.  <br /></td></tr>
 <tr class="separator:ae17cb099b4c9aee7835032339b5a9e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7733e9718ef5fa1f484920a5e268e24b" id="r_a7733e9718ef5fa1f484920a5e268e24b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7733e9718ef5fa1f484920a5e268e24b">FSTACK_FOREACH</a>(stack_ptr,  value)</td></tr>
-<tr class="memdesc:a7733e9718ef5fa1f484920a5e268e24b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the stack from the top to bottom.  <br /></td></tr>
-<tr class="separator:a7733e9718ef5fa1f484920a5e268e24b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a751c8b8b3e15e40bf3693cba1466ec0b" id="r_a751c8b8b3e15e40bf3693cba1466ec0b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a751c8b8b3e15e40bf3693cba1466ec0b">FSTACK_FOREACH_REVERSE</a>(stack_ptr,  value)</td></tr>
-<tr class="memdesc:a751c8b8b3e15e40bf3693cba1466ec0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the stack from the bottom to top.  <br /></td></tr>
-<tr class="separator:a751c8b8b3e15e40bf3693cba1466ec0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dea3e5bef9837de4c1cc1fe83f74fe4" id="r_a2dea3e5bef9837de4c1cc1fe83f74fe4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dea3e5bef9837de4c1cc1fe83f74fe4">fstack_for_each</a>(stack_ptr,  value)</td></tr>
+<tr class="memdesc:a2dea3e5bef9837de4c1cc1fe83f74fe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the stack from the top to bottom.  <br /></td></tr>
+<tr class="separator:a2dea3e5bef9837de4c1cc1fe83f74fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abea2c0fa99594a258d8f1a8f39944946" id="r_abea2c0fa99594a258d8f1a8f39944946"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abea2c0fa99594a258d8f1a8f39944946">fstack_for_each_reverse</a>(stack_ptr,  value)</td></tr>
+<tr class="memdesc:abea2c0fa99594a258d8f1a8f39944946"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the stack from the bottom to top.  <br /></td></tr>
+<tr class="separator:abea2c0fa99594a258d8f1a8f39944946"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -176,14 +176,14 @@ Functions</h2></td></tr>
 <li><code>VALUE_TYPE</code> </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a7733e9718ef5fa1f484920a5e268e24b" name="a7733e9718ef5fa1f484920a5e268e24b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7733e9718ef5fa1f484920a5e268e24b">&#9670;&#160;</a></span>FSTACK_FOREACH</h2>
+<a id="a2dea3e5bef9837de4c1cc1fe83f74fe4" name="a2dea3e5bef9837de4c1cc1fe83f74fe4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dea3e5bef9837de4c1cc1fe83f74fe4">&#9670;&#160;</a></span>fstack_for_each</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSTACK_FOREACH</td>
+          <td class="memname">#define fstack_for_each</td>
           <td>(</td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>stack_ptr</em></span>, </td>
         </tr>
@@ -219,14 +219,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a751c8b8b3e15e40bf3693cba1466ec0b" name="a751c8b8b3e15e40bf3693cba1466ec0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a751c8b8b3e15e40bf3693cba1466ec0b">&#9670;&#160;</a></span>FSTACK_FOREACH_REVERSE</h2>
+<a id="abea2c0fa99594a258d8f1a8f39944946" name="abea2c0fa99594a258d8f1a8f39944946"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abea2c0fa99594a258d8f1a8f39944946">&#9670;&#160;</a></span>fstack_for_each_reverse</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSTACK_FOREACH_REVERSE</td>
+          <td class="memname">#define fstack_for_each_reverse</td>
           <td>(</td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>stack_ptr</em></span>, </td>
         </tr>
