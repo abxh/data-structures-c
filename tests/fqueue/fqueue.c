@@ -68,7 +68,9 @@ static inline bool check_ordered_values(const i64_que_type* que_p, const size_t 
     {
         size_t index = 0;
         int64_t value;
-        fqueue_for_each(que_p, value) {
+
+        size_t temp0;
+        fqueue_for_each(que_p, temp0, value) {
             res &= value == expected_value[index++];
         }
         assert(index == n);
@@ -76,7 +78,9 @@ static inline bool check_ordered_values(const i64_que_type* que_p, const size_t 
     {
         size_t index = n;
         int64_t value;
-        fqueue_for_each_reverse(que_p, value) {
+
+        size_t temp0;
+        fqueue_for_each_reverse(que_p, temp0, value) {
             res &= value == expected_value[--index];
         }
         assert(index == 0);
