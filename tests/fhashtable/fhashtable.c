@@ -47,6 +47,7 @@
 */
 
 #include <assert.h>
+#include <stdio.h>
 
 #include "fnvhash.h"
 #include "murmurhash.h"
@@ -322,47 +323,136 @@ void int_int_full_test() {
 #define NAME bd_ht
 #define KEY_TYPE char*
 #define VALUE_TYPE int
-#define KEY_IS_EQUAL(a, b) (strcmp(a, b))
+#define KEY_IS_EQUAL(a, b) (strcmp(a, b) == 0)
 #define HASH_FUNCTION(key) (0)
 #include "fhashtable.h"
-
-void bad_hash_func_test() {
-    // N = 1000, insert 1000, delete 100, update 100
-    {
-        bd_ht_type* bd_ht_p = bd_ht_create(1000 + 1);
-        if (!bd_ht_p) {
-            assert(false);
-        }
-    }
-}
 
 static inline size_t first_char(const char* c) {
     return *c;
 }
 
-#define NAME ch_ht
+#define NAME strmap
 #define KEY_TYPE char*
-#define VALUE_TYPE int
-#define KEY_IS_EQUAL(a, b) (strcmp(a, b))
+#define VALUE_TYPE char*
+#define KEY_IS_EQUAL(a, b) (strcmp(a, b) == 0)
 #define HASH_FUNCTION(key) (first_char(key))
 #include "fhashtable.h"
 
+void bad_hash_func_test() {
+    const size_t m = ('z' - 'a' + 1);
+    // N = 1000, insert 1000
+    {
+        bd_ht_type* bd_ht_p = bd_ht_create(1000);
+        if (!bd_ht_p) {
+            assert(false);
+        }
+        for (int i = 0; i < 1000; i++) {
+            char c1 = i % m + 'a';
+            char c2 = (i / m) % m + 'a';
+            char c3 = (i / m / m) % m + 'a';
+            bd_ht_insert(bd_ht_p, strdup((char[]){c3, c2, c1, '\0'}), // slow [and potentially leaky] way to do this.
+                         i);
+        }
+        for (int i = 0; i < 1000; i++) {
+            char c1 = i % m + 'a';
+            char c2 = (i / m) % m + 'a';
+            char c3 = (i / m / m) % m + 'a';
+            assert(bd_ht_get_value(bd_ht_p, (char[]){c3, c2, c1, '\0'}, -1) == i);
+        }
+        {
+            char* key;
+            int value;
+            size_t tempi;
+
+            (void)(value);
+
+            fhashtable_for_each(bd_ht_p, tempi, key, value) {
+                free(key);
+            }
+        }
+        bd_ht_destroy(bd_ht_p);
+    }
+    // N = 1000, insert 1000
+    {
+        strmap_type* strmap_p = strmap_create(1000);
+
+        for (size_t i = 0; i < 1000; i++) {
+            char c1 = i % m + 'a';
+            char c2 = (i / m) % m + 'a';
+            char c3 = (i / m / m) % m + 'a';
+            strmap_insert(strmap_p, strdup((char[]){c3, c2, c1, '\0'}),
+                          strdup((char[]){c1, c2, c3, '\0'})); // slow [and potentially leaky] way to do this.
+        }
+        for (size_t i = 0; i < 1000; i++) {
+            char c1 = i % m + 'a';
+            char c2 = (i / m) % m + 'a';
+            char c3 = (i / m / m) % m + 'a';
+            assert(strcmp(*strmap_get_value_mut(strmap_p, (char[]){c3, c2, c1, '\0'}), (char[]){c1, c2, c3, '\0'}) == 0);
+        }
+        {
+            char* key;
+            char* value;
+            size_t tempi;
+            fhashtable_for_each(strmap_p, tempi, key, value) {
+                free(key);
+                free(value);
+            }
+        }
+        strmap_destroy(strmap_p);
+    }
+}
+
+#include <math.h>
+
 typedef struct {
     int foo;
-    int bar;
+    float bar;
 } a_struct;
 
+typedef struct {
+    int i;
+    int j;
+} b_struct;
+
 static inline bool a_struct_eq(a_struct a, a_struct b) {
-    return a.bar == b.bar && a.foo == b.foo;
+    return a.foo == b.foo && (fabsf(a.bar - b.bar) < 0.0001f);
 }
 
 #define NAME a_ht
 #define KEY_TYPE a_struct
-#define VALUE_TYPE int
+#define VALUE_TYPE b_struct
 #define KEY_IS_EQUAL(a, b) (a_struct_eq(a, b))
 #define HASH_FUNCTION(key) (murmur3_32((uint8_t*)&key, sizeof(a_struct), 0))
 #include "fhashtable.h"
 
+void struct_key_value_test() {
+    // N = 1000, insert 1000 -> update 500
+    {
+        a_ht_type* a_ht = a_ht_create(1000);
+
+        for (int i = 0; i < 1000; i++) {
+            a_ht_insert(a_ht, (a_struct){.foo = i, .bar = i + 42.f}, (b_struct){.i = i, .j = i + 1});
+        }
+        for (int i = 0; i < 1000; i+= 2) {
+            a_ht_update(a_ht, (a_struct){.foo = i, .bar = i + 42.f}, (b_struct){.i = i + 1, .j = i + 2});
+        }
+        for (int i = 0; i < 1000; i++) {
+            b_struct b = *a_ht_get_value_mut(a_ht, (a_struct){.foo = i, .bar = i + 42.f});
+            if (i % 2 == 0) {
+                assert(b.i == i + 1);
+                assert(b.j == i + 2);
+            } else {
+                assert(b.i == i);
+                assert(b.j == i + 1);
+            }
+        }
+
+        a_ht_destroy(a_ht);
+    }
+}
+
 int main(void) {
     int_int_full_test();
+    bad_hash_func_test();
+    struct_key_value_test();
 }
