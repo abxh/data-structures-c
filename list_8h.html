@@ -131,16 +131,16 @@ Functions</h2></td></tr>
 <tr class="memdesc:ae56b2024a6cdbe8d77b858189e7482e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a list node.  <br /></td></tr>
 <tr class="separator:ae56b2024a6cdbe8d77b858189e7482e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36f071a104ea93d5a56874a6e54a07db" id="r_a36f071a104ea93d5a56874a6e54a07db"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36f071a104ea93d5a56874a6e54a07db">list_node_is_first</a> (const <a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, const <a class="el" href="structlist__node__type.html">list_node_type</a> *head_ptr)</td></tr>
-<tr class="memdesc:a36f071a104ea93d5a56874a6e54a07db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is first in the list (aka it's after the head).  <br /></td></tr>
+<tr class="memdesc:a36f071a104ea93d5a56874a6e54a07db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is first in the list.  <br /></td></tr>
 <tr class="separator:a36f071a104ea93d5a56874a6e54a07db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a755a6ea8f577798c108045b8321ab192" id="r_a755a6ea8f577798c108045b8321ab192"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a755a6ea8f577798c108045b8321ab192">list_node_is_last</a> (const <a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, const <a class="el" href="structlist__node__type.html">list_node_type</a> *tail_ptr)</td></tr>
-<tr class="memdesc:a755a6ea8f577798c108045b8321ab192"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is the last of the list (aka it's before the tail).  <br /></td></tr>
+<tr class="memdesc:a755a6ea8f577798c108045b8321ab192"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is the last of the list.  <br /></td></tr>
 <tr class="separator:a755a6ea8f577798c108045b8321ab192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a548d598fa8d11a081e18f1023f8ddc4b" id="r_a548d598fa8d11a081e18f1023f8ddc4b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a548d598fa8d11a081e18f1023f8ddc4b">list_node_add_after</a> (<a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, <a class="el" href="structlist__node__type.html">list_node_type</a> *prev_ptr)</td></tr>
-<tr class="memdesc:a548d598fa8d11a081e18f1023f8ddc4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a node <em>after</em> the head node.  <br /></td></tr>
+<tr class="memdesc:a548d598fa8d11a081e18f1023f8ddc4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a node <em>after</em> the given node.  <br /></td></tr>
 <tr class="separator:a548d598fa8d11a081e18f1023f8ddc4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18ec80c25f28e1c569502dfe53ae9669" id="r_a18ec80c25f28e1c569502dfe53ae9669"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a18ec80c25f28e1c569502dfe53ae9669">list_node_add_before</a> (<a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, <a class="el" href="structlist__node__type.html">list_node_type</a> *next_ptr)</td></tr>
-<tr class="memdesc:a18ec80c25f28e1c569502dfe53ae9669"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a node <em>before</em> the tail node.  <br /></td></tr>
+<tr class="memdesc:a18ec80c25f28e1c569502dfe53ae9669"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a node <em>before</em> the given node.  <br /></td></tr>
 <tr class="separator:a18ec80c25f28e1c569502dfe53ae9669"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4161a94594ec9440db7f1c2e37b05485" id="r_a4161a94594ec9440db7f1c2e37b05485"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4161a94594ec9440db7f1c2e37b05485">list_node_remove</a> (<a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr)</td></tr>
 <tr class="memdesc:a4161a94594ec9440db7f1c2e37b05485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a node and deattach it from the list it resides in.  <br /></td></tr>
@@ -220,7 +220,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Add a node <em>after</em> the head node. </p>
+<p>Add a node <em>after</em> the given node. </p>
 <dl class="section note"><dt>Note</dt><dd>This can be used to construct a stack.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -261,7 +261,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Add a node <em>before</em> the tail node. </p>
+<p>Add a node <em>before</em> the given node. </p>
 <dl class="section note"><dt>Note</dt><dd>This can be used to construct a queue.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -337,7 +337,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Check if a given list node is first in the list (aka it's after the head). </p>
+<p>Check if a given list node is first in the list. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
@@ -378,7 +378,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Check if a given list node is the last of the list (aka it's before the tail). </p>
+<p>Check if a given list node is the last of the list. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
