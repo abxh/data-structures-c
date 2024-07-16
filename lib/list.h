@@ -49,7 +49,7 @@ static inline void list_node_init(list_node_type* node_ptr) {
 }
 
 /**
- * @brief Check if a given list node is first in the list (aka it's after the head).
+ * @brief Check if a given list node is first in the list.
  *
  * @param[in] node_ptr The node pointer.
  * @param[in] head_ptr The head node pointer.
@@ -61,7 +61,7 @@ static inline bool list_node_is_first(const list_node_type* node_ptr, const list
 }
 
 /**
- * @brief Check if a given list node is the last of the list (aka it's before the tail).
+ * @brief Check if a given list node is the last of the list.
  *
  * @param[in] node_ptr The node pointer.
  * @param[in] tail_ptr The tail node pointer.
@@ -85,7 +85,7 @@ static inline void internal_list_node_add_between(list_node_type* node_ptr, list
 /// @endcond
 
 /**
- * @brief Add a node *after* the head node.
+ * @brief Add a node *after* the given node.
  *
  * @note This can be used to construct a stack.
  *
@@ -97,7 +97,7 @@ static inline void list_node_add_after(list_node_type* node_ptr, list_node_type*
 }
 
 /**
- * @brief Add a node *before* the tail node.
+ * @brief Add a node *before* the given node.
  *
  * @note This can be used to construct a queue.
  *
