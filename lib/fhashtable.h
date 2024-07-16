@@ -341,7 +341,7 @@ static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, get_value_mut)(FHASHTABLE_TYPE* 
  *  @retval default_value If the hashtable did not contain the key.
  */
 static inline VALUE_TYPE JOIN(FHASHTABLE_NAME, get_value)(const FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key,
-                                                          const VALUE_TYPE default_value) {
+                                                          VALUE_TYPE default_value) {
     assert(hashtable_ptr != NULL);
 
     const size_t key_hash = HASH_FUNCTION(key);
