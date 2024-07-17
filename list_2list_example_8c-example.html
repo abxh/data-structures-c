@@ -94,22 +94,25 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;stdalign.h&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> buf[4096];</div>
-<div class="line"> </div>
 <div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">    <span class="keywordtype">char</span> c;</div>
 <div class="line">    <a id="_a0" name="_a0"></a><a class="code hl_struct" href="structlist__node__type.html">list_node_type</a> node;</div>
 <div class="line">} char_elm_type;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> list_stack(<span class="keywordtype">void</span>) {</div>
+<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>* buf = malloc(4096);</div>
+<div class="line"> </div>
 <div class="line">    <a id="_a1" name="_a1"></a><a class="code hl_struct" href="structarena__type.html">arena_type</a> arena;</div>
-<div class="line">    <a id="a2" name="a2"></a><a class="code hl_function" href="arena_8h.html#a67ada6b5c6f09a6b530b75ef8d553a45">arena_init</a>(&amp;arena, <span class="keyword">sizeof</span>(buf), buf);</div>
+<div class="line">    <a id="a2" name="a2"></a><a class="code hl_function" href="arena_8h.html#a67ada6b5c6f09a6b530b75ef8d553a45">arena_init</a>(&amp;arena, 4096, buf);</div>
 <div class="line"> </div>
 <div class="line">    <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a> head;</div>
 <div class="line">    <a id="a3" name="a3"></a><a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;head);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt;= <span class="charliteral">&#39;z&#39;</span> - <span class="charliteral">&#39;a&#39;</span>; i++) {</div>
 <div class="line">        char_elm_type* ptr = <a id="a4" name="a4"></a><a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(char_elm_type), <span class="keyword">sizeof</span>(char_elm_type));</div>
+<div class="line">        <span class="keywordflow">if</span> (!ptr) {</div>
+<div class="line">            assert(<span class="keyword">false</span>);</div>
+<div class="line">        }</div>
 <div class="line">        ptr-&gt;c = <span class="charliteral">&#39;a&#39;</span> + i;</div>
 <div class="line"> </div>
 <div class="line">        <a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;ptr-&gt;node);</div>
@@ -128,6 +131,9 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line">            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;m&#39;</span>) {</div>
 <div class="line">                char_elm_type* ptr = <a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(char_elm_type), <span class="keyword">sizeof</span>(char_elm_type));</div>
+<div class="line">                <span class="keywordflow">if</span> (!ptr) {</div>
+<div class="line">                    assert(<span class="keyword">false</span>);</div>
+<div class="line">                }</div>
 <div class="line">                ptr-&gt;c = <span class="charliteral">&#39;M&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">                <a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;ptr-&gt;node);</div>
@@ -174,16 +180,23 @@ $(function(){ initResizable(false); });
 <div class="line">        }</div>
 <div class="line">        assert(c + 1 == <span class="charliteral">&#39;a&#39;</span>);</div>
 <div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    free(buf);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> list_queue(<span class="keywordtype">void</span>) {</div>
+<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>* buf = malloc(4096);</div>
+<div class="line"> </div>
 <div class="line">    <a class="code hl_struct" href="structarena__type.html">arena_type</a> arena;</div>
-<div class="line">    <a class="code hl_function" href="arena_8h.html#a67ada6b5c6f09a6b530b75ef8d553a45">arena_init</a>(&amp;arena, <span class="keyword">sizeof</span>(buf), buf);</div>
+<div class="line">    <a class="code hl_function" href="arena_8h.html#a67ada6b5c6f09a6b530b75ef8d553a45">arena_init</a>(&amp;arena, 4096, buf);</div>
 <div class="line"> </div>
 <div class="line">    <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a> tail;</div>
 <div class="line">    <a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;tail);</div>
 <div class="line"> </div>
 <div class="line">    char_elm_type* first_elm_ptr = <a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(char_elm_type), <span class="keyword">sizeof</span>(char_elm_type));</div>
+<div class="line">    <span class="keywordflow">if</span> (!first_elm_ptr) {</div>
+<div class="line">        assert(<span class="keyword">false</span>);</div>
+<div class="line">    }</div>
 <div class="line">    first_elm_ptr-&gt;c = <span class="charliteral">&#39;a&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">    <a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;first_elm_ptr-&gt;node);</div>
@@ -191,6 +204,9 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 1; i &lt;= <span class="charliteral">&#39;z&#39;</span> - <span class="charliteral">&#39;a&#39;</span>; i++) {</div>
 <div class="line">        char_elm_type* ptr = <a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(char_elm_type), <span class="keyword">sizeof</span>(char_elm_type));</div>
+<div class="line">        <span class="keywordflow">if</span> (!ptr) {</div>
+<div class="line">            assert(<span class="keyword">false</span>);</div>
+<div class="line">        }</div>
 <div class="line">        ptr-&gt;c = <span class="charliteral">&#39;a&#39;</span> + i;</div>
 <div class="line"> </div>
 <div class="line">        <a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;ptr-&gt;node);</div>
@@ -245,6 +261,8 @@ $(function(){ initResizable(false); });
 <div class="line">            c++;</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    free(buf);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>) {</div>
