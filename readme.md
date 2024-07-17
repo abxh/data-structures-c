@@ -26,6 +26,5 @@ Asserts are used to check various assumptions. Use `NDEBUG` flag to turn off ass
 - binary search tree
 
 ## Log
-
-[70f329d](https://github.com/abxh/data-structures-c/tree/70f329d5061d6fb50f8a8ae275cb5377fb06d2ec): Most things are tested. Arena and list are added. Some previous code is changed.
-[5dd7555](https://github.com/abxh/data-structures-c/tree/5dd7555ac5e5312b42a5a2509fc0edee95acd621): Initial code and tests for fixed size stack / queue / hashtable.
+- [70f329d](https://github.com/abxh/data-structures-c/tree/70f329d5061d6fb50f8a8ae275cb5377fb06d2ec): Most things are tested. Arena and list are added. Some previous code is changed.
+- [5dd7555](https://github.com/abxh/data-structures-c/tree/5dd7555ac5e5312b42a5a2509fc0edee95acd621): Initial code and tests for fixed size stack / queue / hashtable.
