@@ -176,7 +176,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="comment">// function definitions: {{{</span></div>
 <div class="foldopen" id="foldopen00194" data-start="{" data-end="}">
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a6140b0b995c58340aca710028fccf7b3">  194</a></span><span class="keyword">static</span> <span class="keyword">inline</span> FHASHTABLE_TYPE* <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, create)(<span class="keyword">const</span> <span class="keywordtype">size_t</span> capacity) {</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    <span class="keywordflow">if</span> (capacity &lt; 2 || capacity &gt; UINT32_MAX / 4) {</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    <span class="keywordflow">if</span> (capacity == 0 || capacity &gt; UINT32_MAX / 4) {</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        <span class="keywordflow">return</span> NULL;</div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    }</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> capacity_new = <a class="code hl_function" href="round__up__pow2_8h.html#aeb1f6516cf6ffc3107d86d7ee7e47569">round_up_pow2</a>(capacity);</div>
