@@ -26,7 +26,6 @@ void list_stack(void) {
         list_node_add_after(&ptr->node, &head);
     }
 
-
     {
         char c = 'z';
         list_node_type* node_ptr = head.next_ptr;
@@ -57,13 +56,31 @@ void list_stack(void) {
         while (!list_node_is_head(node_ptr, &head)) {
             char_elm_type* elm = list_node_entry(node_ptr, char_elm_type, node);
 
-            assert(elm->c != 'm');
             if (c == 'm') {
                 assert(elm->c == 'M');
+            } else {
+                assert(elm->c == c);
             }
 
             c--;
             node_ptr = node_ptr->next_ptr;
+        }
+        assert(c + 1 == 'a');
+    }
+
+    {
+        char c = 'z';
+        while (!list_node_is_head(head.next_ptr, &head)) {
+            list_node_type* node_ptr = list_node_remove(head.next_ptr);
+            char_elm_type* elm = list_node_entry(node_ptr, char_elm_type, node);
+
+            if (c == 'm') {
+                assert(elm->c == 'M');
+            } else {
+                assert(elm->c == c);
+            }
+
+            c--;
         }
         assert(c + 1 == 'a');
     }
@@ -114,18 +131,30 @@ void list_queue(void) {
         }
     }
 
-    size_t new_count = 0;
     {
+        size_t new_count = 0;
         list_node_type* node_ptr = &first_elm_ptr->node;
-
         while (!list_node_is_tail(node_ptr, &tail)) {
             node_ptr = node_ptr->next_ptr;
-
             new_count++;
         }
+        assert(count - 1 == new_count);
     }
 
-    assert(count - 1 == new_count);
+    {
+        char c = 'a';
+        list_node_type* node_ptr = &first_elm_ptr->node;
+
+        while (!list_node_is_tail(node_ptr->prev_ptr, &tail)) {
+            node_ptr = list_node_remove(node_ptr->prev_ptr);
+            char_elm_type* elm = list_node_entry(node_ptr, char_elm_type, node);
+
+            if (c != 'm') {
+                assert(c == elm->c);
+            }
+            c++;
+        }
+    }
 }
 
 int main(void) {

@@ -145,10 +145,13 @@ static inline void internal_list_node_attach(list_node_type* prev_ptr, list_node
  * @brief Remove a node and deattach it from the list it resides in.
  *
  * @param[in,out] node_ptr The node pointer.
+ * @return pointer to the remoed node
  */
-static inline void list_node_remove(list_node_type* node_ptr) {
+static inline list_node_type* list_node_remove(list_node_type* node_ptr) {
     internal_list_node_attach(node_ptr->prev_ptr, node_ptr->next_ptr);
     list_node_init(node_ptr);
+
+    return node_ptr;
 }
 
 /**
