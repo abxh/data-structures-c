@@ -148,9 +148,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a18ec80c25f28e1c569502dfe53ae9669" id="r_a18ec80c25f28e1c569502dfe53ae9669"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a18ec80c25f28e1c569502dfe53ae9669">list_node_add_before</a> (<a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, <a class="el" href="structlist__node__type.html">list_node_type</a> *next_ptr)</td></tr>
 <tr class="memdesc:a18ec80c25f28e1c569502dfe53ae9669"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a node <em>before</em> the given node.  <br /></td></tr>
 <tr class="separator:a18ec80c25f28e1c569502dfe53ae9669"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4161a94594ec9440db7f1c2e37b05485" id="r_a4161a94594ec9440db7f1c2e37b05485"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4161a94594ec9440db7f1c2e37b05485">list_node_remove</a> (<a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr)</td></tr>
-<tr class="memdesc:a4161a94594ec9440db7f1c2e37b05485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a node and deattach it from the list it resides in.  <br /></td></tr>
-<tr class="separator:a4161a94594ec9440db7f1c2e37b05485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20ac6c43a6726b638982d485288c56a2" id="r_a20ac6c43a6726b638982d485288c56a2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structlist__node__type.html">list_node_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20ac6c43a6726b638982d485288c56a2">list_node_remove</a> (<a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr)</td></tr>
+<tr class="memdesc:a20ac6c43a6726b638982d485288c56a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a node and deattach it from the list it resides in.  <br /></td></tr>
+<tr class="separator:a20ac6c43a6726b638982d485288c56a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a720a9582420c136a02875abafe8cddcd" id="r_a720a9582420c136a02875abafe8cddcd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a720a9582420c136a02875abafe8cddcd">list_node_replace</a> (<a class="el" href="structlist__node__type.html">list_node_type</a> *old_ptr, <a class="el" href="structlist__node__type.html">list_node_type</a> *new_ptr)</td></tr>
 <tr class="memdesc:a720a9582420c136a02875abafe8cddcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace a given node by a new node.  <br /></td></tr>
 <tr class="separator:a720a9582420c136a02875abafe8cddcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -276,7 +276,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="list_2list_example_8c-example.html#a10">list/list_example.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="list_2list_example_8c-example.html#a11">list/list_example.c</a>.</dd>
 </dl>
 
 </div>
@@ -352,7 +352,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the list node is first in the list. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="list_2list_example_8c-example.html#a11">list/list_example.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="list_2list_example_8c-example.html#a12">list/list_example.c</a>.</dd>
 </dl>
 
 </div>
@@ -473,13 +473,13 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the list node is the tail of the list. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="list_2list_example_8c-example.html#a12">list/list_example.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="list_2list_example_8c-example.html#a13">list/list_example.c</a>.</dd>
 </dl>
 
 </div>
 </div>
-<a id="a4161a94594ec9440db7f1c2e37b05485" name="a4161a94594ec9440db7f1c2e37b05485"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4161a94594ec9440db7f1c2e37b05485">&#9670;&#160;</a></span>list_node_remove()</h2>
+<a id="a20ac6c43a6726b638982d485288c56a2" name="a20ac6c43a6726b638982d485288c56a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20ac6c43a6726b638982d485288c56a2">&#9670;&#160;</a></span>list_node_remove()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -488,7 +488,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void list_node_remove </td>
+          <td class="memname">static <a class="el" href="structlist__node__type.html">list_node_type</a> * list_node_remove </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span></td><td>)</td>
           <td></td>
@@ -508,7 +508,8 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="list_2list_example_8c-example.html#a13">list/list_example.c</a>.</dd>
+<dl class="section return"><dt>Returns</dt><dd>pointer to the remoed node </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="list_2list_example_8c-example.html#a10">list/list_example.c</a>.</dd>
 </dl>
 
 </div>
