@@ -137,8 +137,11 @@ Functions</h2></td></tr>
 <tr class="memdesc:a755a6ea8f577798c108045b8321ab192"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is the last of the list.  <br /></td></tr>
 <tr class="separator:a755a6ea8f577798c108045b8321ab192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a309f918c33372b4df39c3e60abf2f6f2" id="r_a309f918c33372b4df39c3e60abf2f6f2"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a309f918c33372b4df39c3e60abf2f6f2">list_node_is_head</a> (const <a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, const <a class="el" href="structlist__node__type.html">list_node_type</a> *head_ptr)</td></tr>
-<tr class="memdesc:a309f918c33372b4df39c3e60abf2f6f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is head in the list.  <br /></td></tr>
+<tr class="memdesc:a309f918c33372b4df39c3e60abf2f6f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is head of the list.  <br /></td></tr>
 <tr class="separator:a309f918c33372b4df39c3e60abf2f6f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2dce9872ec5d321810eb173adf2533e" id="r_af2dce9872ec5d321810eb173adf2533e"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af2dce9872ec5d321810eb173adf2533e">list_node_is_tail</a> (const <a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, const <a class="el" href="structlist__node__type.html">list_node_type</a> *tail_ptr)</td></tr>
+<tr class="memdesc:af2dce9872ec5d321810eb173adf2533e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is tail of the list.  <br /></td></tr>
+<tr class="separator:af2dce9872ec5d321810eb173adf2533e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a548d598fa8d11a081e18f1023f8ddc4b" id="r_a548d598fa8d11a081e18f1023f8ddc4b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a548d598fa8d11a081e18f1023f8ddc4b">list_node_add_after</a> (<a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, <a class="el" href="structlist__node__type.html">list_node_type</a> *prev_ptr)</td></tr>
 <tr class="memdesc:a548d598fa8d11a081e18f1023f8ddc4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a node <em>after</em> the given node.  <br /></td></tr>
 <tr class="separator:a548d598fa8d11a081e18f1023f8ddc4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -381,7 +384,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Check if a given list node is head in the list. </p>
+<p>Check if a given list node is head of the list. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
@@ -389,7 +392,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Whether the list node is head in the list. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the list node is head of the list. </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="list_2list_example_8c-example.html#a7">list/list_example.c</a>.</dd>
 </dl>
 
@@ -434,6 +437,47 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="af2dce9872ec5d321810eb173adf2533e" name="af2dce9872ec5d321810eb173adf2533e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2dce9872ec5d321810eb173adf2533e">&#9670;&#160;</a></span>list_node_is_tail()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool list_node_is_tail </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>tail_ptr</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check if a given list node is tail of the list. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">head_ptr</td><td>The tail node pointer.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the list node is tail of the list. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="list_2list_example_8c-example.html#a12">list/list_example.c</a>.</dd>
+</dl>
+
+</div>
+</div>
 <a id="a4161a94594ec9440db7f1c2e37b05485" name="a4161a94594ec9440db7f1c2e37b05485"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4161a94594ec9440db7f1c2e37b05485">&#9670;&#160;</a></span>list_node_remove()</h2>
 
@@ -464,7 +508,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="list_2list_example_8c-example.html#a12">list/list_example.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="list_2list_example_8c-example.html#a13">list/list_example.c</a>.</dd>
 </dl>
 
 </div>
