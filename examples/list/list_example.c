@@ -4,22 +4,25 @@
 
 #include <stdalign.h>
 
-static unsigned char buf[4096];
-
 typedef struct {
     char c;
     list_node_type node;
 } char_elm_type;
 
 void list_stack(void) {
+    unsigned char* buf = malloc(4096);
+
     arena_type arena;
-    arena_init(&arena, sizeof(buf), buf);
+    arena_init(&arena, 4096, buf);
 
     list_node_type head;
     list_node_init(&head);
 
     for (size_t i = 0; i <= 'z' - 'a'; i++) {
         char_elm_type* ptr = arena_allocate_aligned(&arena, alignof(char_elm_type), sizeof(char_elm_type));
+        if (!ptr) {
+            assert(false);
+        }
         ptr->c = 'a' + i;
 
         list_node_init(&ptr->node);
@@ -38,6 +41,9 @@ void list_stack(void) {
 
             if (c == 'm') {
                 char_elm_type* ptr = arena_allocate_aligned(&arena, alignof(char_elm_type), sizeof(char_elm_type));
+                if (!ptr) {
+                    assert(false);
+                }
                 ptr->c = 'M';
 
                 list_node_init(&ptr->node);
@@ -84,16 +90,23 @@ void list_stack(void) {
         }
         assert(c + 1 == 'a');
     }
+
+    free(buf);
 }
 
 void list_queue(void) {
+    unsigned char* buf = malloc(4096);
+
     arena_type arena;
-    arena_init(&arena, sizeof(buf), buf);
+    arena_init(&arena, 4096, buf);
 
     list_node_type tail;
     list_node_init(&tail);
 
     char_elm_type* first_elm_ptr = arena_allocate_aligned(&arena, alignof(char_elm_type), sizeof(char_elm_type));
+    if (!first_elm_ptr) {
+        assert(false);
+    }
     first_elm_ptr->c = 'a';
 
     list_node_init(&first_elm_ptr->node);
@@ -101,6 +114,9 @@ void list_queue(void) {
 
     for (size_t i = 1; i <= 'z' - 'a'; i++) {
         char_elm_type* ptr = arena_allocate_aligned(&arena, alignof(char_elm_type), sizeof(char_elm_type));
+        if (!ptr) {
+            assert(false);
+        }
         ptr->c = 'a' + i;
 
         list_node_init(&ptr->node);
@@ -155,6 +171,8 @@ void list_queue(void) {
             c++;
         }
     }
+
+    free(buf);
 }
 
 int main(void) {
