@@ -19,6 +19,12 @@ Asserts are used to check various assumptions. Use `NDEBUG` flag to turn off ass
 | [arena.h](https://github.com/abxh/data-structures-c/blob/main/lib/arena.h)           | Arena allocator.                                         | [Documentation](https://abxh.github.io/data-structures-c/arena_8h.html) [Example](https://github.com/abxh/data-structures-c/blob/main/examples/arena/char_array.c)  |
 | [list.h](https://github.com/abxh/data-structures-c/blob/main/lib/list.h)             | Intrusive doubly linked list.                            | [Documentation](https://abxh.github.io/data-structures-c/list_8h.html) [Example](https://github.com/abxh/data-structures-c/blob/main/examples/list/list_example.c)  |
 
+## TODO
+- test arena and list
+- vector + string (as dynamic array)
+- min/max heap
+- binary search tree
+
 ## Log
 
 [5dd7555](https://github.com/abxh/data-structures-c/tree/5dd7555ac5e5312b42a5a2509fc0edee95acd621): Initial code and tests for fixed size stack / queue / hashtable.
