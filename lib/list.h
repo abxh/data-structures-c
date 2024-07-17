@@ -49,7 +49,7 @@ static inline void list_node_init(list_node_type* node_ptr) {
 }
 
 /**
- * @brief Check if a given list node is first in the list.
+ * @brief Check if a given list node is first in the list (aka after the head).
  *
  * @param[in] node_ptr The node pointer.
  * @param[in] head_ptr The head node pointer.
@@ -61,19 +61,19 @@ static inline bool list_node_is_first(const list_node_type* node_ptr, const list
 }
 
 /**
- * @brief Check if a given list node is the last of the list.
+ * @brief Check if a given list node is the last of the list (aka before the tail).
  *
  * @param[in] node_ptr The node pointer.
  * @param[in] tail_ptr The tail node pointer.
  *
- * @return Whether the list node is last in the list.
+ * @return Whether the list node is the last in the list.
  */
 static inline bool list_node_is_last(const list_node_type* node_ptr, const list_node_type* tail_ptr) {
     return node_ptr->next_ptr == tail_ptr;
 }
 
 /**
- * @brief Check if a given list node is head of the list.
+ * @brief Check if a given list node is the head of the list.
  *
  * @param[in] node_ptr The node pointer.
  * @param[in] head_ptr The head node pointer.
@@ -85,12 +85,12 @@ static inline bool list_node_is_head(const list_node_type* node_ptr, const list_
 }
 
 /**
- * @brief Check if a given list node is tail of the list.
+ * @brief Check if a given list node is the tail of the list.
  *
  * @param[in] node_ptr The node pointer.
  * @param[in] head_ptr The tail node pointer.
  *
- * @return Whether the list node is tail of the list.
+ * @return Whether the list node is the tail of the list.
  */
 static inline bool list_node_is_tail(const list_node_type* node_ptr, const list_node_type* tail_ptr) {
     return node_ptr == tail_ptr;
