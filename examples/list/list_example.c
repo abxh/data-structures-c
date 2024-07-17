@@ -158,18 +158,19 @@ void list_queue(void) {
     }
 
     {
-        char c = 'a';
-        list_node_type* node_ptr = &first_elm_ptr->node;
+        char c = 'z';
 
-        while (!list_node_is_tail(node_ptr->prev_ptr, &tail)) {
-            node_ptr = list_node_remove(node_ptr->prev_ptr);
+        while (!list_node_is_tail(tail.prev_ptr, &tail)) {
+            list_node_type* node_ptr = list_node_remove(tail.prev_ptr);
             char_elm_type* elm = list_node_entry(node_ptr, char_elm_type, node);
 
-            if (c != 'm') {
-                assert(c == elm->c);
+            if (c == 'm') {
+                c--;
             }
-            c++;
+            assert(c == elm->c);
+            c--;
         }
+        assert(c + 1 == 'a');
     }
 
     free(buf);
