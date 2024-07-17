@@ -12,5 +12,5 @@ var searchData=
   ['list_5fnode_5fremove_9',['list_node_remove',['../list_8h.html#a20ac6c43a6726b638982d485288c56a2',1,'list.h']]],
   ['list_5fnode_5freplace_10',['list_node_replace',['../list_8h.html#a720a9582420c136a02875abafe8cddcd',1,'list.h']]],
   ['list_5fnode_5ftype_11',['list_node_type',['../structlist__node__type.html',1,'list_node_type'],['../list_8h.html#aae33b2001a10848d7d84e171b2574289',1,'list_node_type:&#160;list.h']]],
-  ['log_12',['Log',['../index.html#autotoc_md1',1,'']]]
+  ['log_12',['Log',['../index.html#autotoc_md2',1,'']]]
 ];
