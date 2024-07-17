@@ -248,18 +248,19 @@ $(function(){ initResizable(false); });
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    {</div>
-<div class="line">        <span class="keywordtype">char</span> c = <span class="charliteral">&#39;a&#39;</span>;</div>
-<div class="line">        <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* node_ptr = &amp;first_elm_ptr-&gt;node;</div>
+<div class="line">        <span class="keywordtype">char</span> c = <span class="charliteral">&#39;z&#39;</span>;</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">while</span> (!<a class="code hl_function" href="list_8h.html#af2dce9872ec5d321810eb173adf2533e">list_node_is_tail</a>(node_ptr-&gt;<a id="a14" name="a14"></a><a class="code hl_variable" href="structlist__node__type.html#a3fa0a386042f5f3ded236f5b3f4e06f1">prev_ptr</a>, &amp;tail)) {</div>
-<div class="line">            node_ptr = <a class="code hl_function" href="list_8h.html#a20ac6c43a6726b638982d485288c56a2">list_node_remove</a>(node_ptr-&gt;<a class="code hl_variable" href="structlist__node__type.html#a3fa0a386042f5f3ded236f5b3f4e06f1">prev_ptr</a>);</div>
+<div class="line">        <span class="keywordflow">while</span> (!<a class="code hl_function" href="list_8h.html#af2dce9872ec5d321810eb173adf2533e">list_node_is_tail</a>(tail.<a id="a14" name="a14"></a><a class="code hl_variable" href="structlist__node__type.html#a3fa0a386042f5f3ded236f5b3f4e06f1">prev_ptr</a>, &amp;tail)) {</div>
+<div class="line">            <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* node_ptr = <a class="code hl_function" href="list_8h.html#a20ac6c43a6726b638982d485288c56a2">list_node_remove</a>(tail.<a class="code hl_variable" href="structlist__node__type.html#a3fa0a386042f5f3ded236f5b3f4e06f1">prev_ptr</a>);</div>
 <div class="line">            char_elm_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, char_elm_type, node);</div>
 <div class="line"> </div>
-<div class="line">            <span class="keywordflow">if</span> (c != <span class="charliteral">&#39;m&#39;</span>) {</div>
-<div class="line">                assert(c == elm-&gt;c);</div>
+<div class="line">            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;m&#39;</span>) {</div>
+<div class="line">                c--;</div>
 <div class="line">            }</div>
-<div class="line">            c++;</div>
+<div class="line">            assert(c == elm-&gt;c);</div>
+<div class="line">            c--;</div>
 <div class="line">        }</div>
+<div class="line">        assert(c + 1 == <span class="charliteral">&#39;a&#39;</span>);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    free(buf);</div>
