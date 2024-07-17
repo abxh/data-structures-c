@@ -31,7 +31,7 @@ void list_stack(void) {
         char c = 'z';
         list_node_type* node_ptr = head.next_ptr;
 
-        while (!list_node_is_first(node_ptr, &head)) {
+        while (!list_node_is_head(node_ptr, &head)) {
             list_node_type* next_ptr = node_ptr->next_ptr; // this must be stored, should the list be modified under interation
             char_elm_type* elm = list_node_entry(node_ptr, char_elm_type, node);
 
@@ -48,12 +48,13 @@ void list_stack(void) {
             c--;
             node_ptr = next_ptr;
         }
+        assert(c + 1 == 'a');
     }
 
     {
         char c = 'z';
         list_node_type* node_ptr = head.next_ptr;
-        while (!list_node_is_first(node_ptr, &head)) {
+        while (!list_node_is_head(node_ptr, &head)) {
             char_elm_type* elm = list_node_entry(node_ptr, char_elm_type, node);
 
             assert(elm->c != 'm');
@@ -64,6 +65,7 @@ void list_stack(void) {
             c--;
             node_ptr = node_ptr->next_ptr;
         }
+        assert(c + 1 == 'a');
     }
 }
 
@@ -95,7 +97,7 @@ void list_queue(void) {
         char c = 'a';
         list_node_type* node_ptr = &first_elm_ptr->node;
 
-        while (!list_node_is_last(node_ptr, &tail)) {
+        while (!list_node_is_tail(node_ptr, &tail)) {
             list_node_type* next_ptr = node_ptr->next_ptr; // this must be stored, should the list be modified under interation
             char_elm_type* elm = list_node_entry(node_ptr, char_elm_type, node);
 
@@ -116,12 +118,14 @@ void list_queue(void) {
     {
         list_node_type* node_ptr = &first_elm_ptr->node;
 
-        while (!list_node_is_last(node_ptr, &tail)) {
+        while (!list_node_is_tail(node_ptr, &tail)) {
             node_ptr = node_ptr->next_ptr;
 
             new_count++;
         }
     }
+
+    assert(count - 1 == new_count);
 }
 
 int main(void) {

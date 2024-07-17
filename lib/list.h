@@ -72,6 +72,30 @@ static inline bool list_node_is_last(const list_node_type* node_ptr, const list_
     return node_ptr->next_ptr == tail_ptr;
 }
 
+/**
+ * @brief Check if a given list node is head of the list.
+ *
+ * @param[in] node_ptr The node pointer.
+ * @param[in] head_ptr The head node pointer.
+ *
+ * @return Whether the list node is head of the list.
+ */
+static inline bool list_node_is_head(const list_node_type* node_ptr, const list_node_type* head_ptr) {
+    return node_ptr == head_ptr;
+}
+
+/**
+ * @brief Check if a given list node is tail of the list.
+ *
+ * @param[in] node_ptr The node pointer.
+ * @param[in] head_ptr The tail node pointer.
+ *
+ * @return Whether the list node is tail of the list.
+ */
+static inline bool list_node_is_tail(const list_node_type* node_ptr, const list_node_type* tail_ptr) {
+    return node_ptr == tail_ptr;
+}
+
 /// @cond DO_NOT_DOCUMENT
 
 // Add a node between two (known) nodes.
