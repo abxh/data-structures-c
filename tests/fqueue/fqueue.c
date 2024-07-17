@@ -35,8 +35,8 @@ static inline bool check_count_invariance(const i64_que_type* que_p, const size_
     return que_p->count == (enqueue_op_count - dequeue_op_count);
 }
 
-static inline bool check_capacity_invariance(const i64_que_type* que_p, const size_t old_capacity) {
-    return que_p->capacity >= old_capacity;
+static inline bool check_capacity_invariance(const i64_que_type* que_p, const size_t suggested_capacity) {
+    return que_p->capacity >= suggested_capacity;
 }
 
 static inline bool check_empty_full(const i64_que_type* que_p, const size_t enqueue_op_count, const size_t dequeue_op_count) {

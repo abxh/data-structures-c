@@ -5,7 +5,6 @@
     Test cases (N):
     - N := 0
     - N := 1
-    - N := 2
     - N := 16
     - N := 1e+3
     - N := 1e+9
@@ -97,13 +96,6 @@ void int_int_full_test() {
     // N = 1
     {
         int_to_int_ht_type* ht_p = int_to_int_ht_create(1);
-        if (ht_p) {
-            assert(false);
-        }
-    }
-    // N = 2
-    {
-        int_to_int_ht_type* ht_p = int_to_int_ht_create(2);
         if (!ht_p) {
             assert(false);
         }
@@ -116,15 +108,15 @@ void int_int_full_test() {
         assert(int_to_int_ht_get_value_mut(ht_p, 69) == NULL);
 
         assert(ht_p->count == 0);
-        assert(ht_p->capacity >= 2);
+        assert(ht_p->capacity == 1);
         assert(int_to_int_ht_is_empty(ht_p));
         assert(!int_to_int_ht_is_full(ht_p));
 
         int_to_int_ht_destroy(ht_p);
     }
-    // N = 2, insert
+    // N = 1, insert
     {
-        int_to_int_ht_type* ht_p = int_to_int_ht_create(2);
+        int_to_int_ht_type* ht_p = int_to_int_ht_create(1);
         if (!ht_p) {
             assert(false);
         }
@@ -139,9 +131,9 @@ void int_int_full_test() {
         assert(int_to_int_ht_get_value_mut(ht_p, 69) == NULL);
 
         assert(ht_p->count == 1);
-        assert(ht_p->capacity >= 2);
+        assert(ht_p->capacity == 1);
         assert(!int_to_int_ht_is_empty(ht_p));
-        assert(!int_to_int_ht_is_full(ht_p));
+        assert(int_to_int_ht_is_full(ht_p));
 
         bool key_exists[69 + 1] = {false};
         bool value_exists[69 + 1] = {false};

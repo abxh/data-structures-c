@@ -189,10 +189,10 @@ typedef struct {
  * @return A pointer to the queue.
  * @retval `NULL`
  *   @li If malloc fails.
- *   @li If capacity is less than 2 or the hashtable size [rounded up to the power of 2] is larger than UINT32_MAX / 4.
+ *   @li If capacity is equal to 0 or the hashtable size [rounded up to the power of 2] is larger than UINT32_MAX / 4.
  */
 static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const size_t capacity) {
-    if (capacity < 2 || capacity > UINT32_MAX / 4) {
+    if (capacity == 0 || capacity > UINT32_MAX / 4) {
         return NULL;
     }
     const size_t capacity_new = round_up_pow2(capacity);
