@@ -1,6 +1,6 @@
 /*  fhashtable.h
  *
- *  Copyright (C) 2023 abxh 
+ *  Copyright (C) 2023 abxh
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -128,7 +128,7 @@
  * Is undefined once header is included.
  *
  * @param key The key.
- * @retval The hash of the key as `size_t`.
+ * @retval The hash of the key as `uint32_t`.
  */
 #ifndef HASH_FUNCTION
 #error "Must define HASH_FUNCTION."
@@ -144,7 +144,7 @@
  * @def FHASHTABLE_EMPTY_SLOT_OFFSET
  * @brief Offset constant used to flag empty slots.
  */
-#define FHASHTABLE_EMPTY_SLOT_OFFSET (SIZE_MAX)
+#define FHASHTABLE_EMPTY_SLOT_OFFSET (UINT32_MAX)
 
 /**
  * @def fhashtable_for_each(hashtable_ptr, index, key_, value_)
@@ -155,7 +155,7 @@
  * @li _index
  *
  * @param[in] hashtable_ptr hashtable pointer.
- * @param[in] index Temporary indexing variable. Should be `size_t`
+ * @param[in] index Temporary indexing variable. Should be `uint32_t`
  * @param[out] key_ Current key. Should be `KEY_TYPE`.
  * @param[out] value_ Current value. Should be `VALUE_TYPE`.
  */
@@ -182,7 +182,7 @@
  * @brief Generated hashtable slot struct type for a given `KEY_TYPE` and `VALUE_TYPE`.
  */
 typedef struct {
-    size_t offset;    ///< Offset from the ideal slot index.
+    uint32_t offset;  ///< Offset from the ideal slot index.
     KEY_TYPE key;     ///< The key in this slot
     VALUE_TYPE value; ///< The value in this slot
 } FHASHTABLE_SLOT_TYPE;
@@ -191,8 +191,8 @@ typedef struct {
  * @brief Generated hashtable struct type for a given `KEY_TYPE` and `VALUE_TYPE`.
  */
 typedef struct {
-    size_t count;                 ///< Number of non-empty slots.
-    size_t capacity;              ///< Number of slots allocated for in the hashtable.
+    uint32_t count;               ///< Number of non-empty slots.
+    uint32_t capacity;            ///< Number of slots allocated for in the hashtable.
     FHASHTABLE_SLOT_TYPE slots[]; ///< Array of slots.
 } FHASHTABLE_TYPE;
 
@@ -211,12 +211,12 @@ typedef struct {
  *   @li If malloc fails.
  *   @li If capacity is equal to 0 or the hashtable size [rounded up to the power of 2] is larger than UINT32_MAX / 4.
  */
-static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const size_t capacity) {
+static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const uint32_t capacity) {
     if (capacity == 0 || capacity > UINT32_MAX / 4) {
         return NULL;
     }
-    const size_t capacity_new = round_up_pow2(capacity);
-    if (capacity_new > (SIZE_MAX - offsetof(FHASHTABLE_TYPE, slots)) / sizeof(FHASHTABLE_SLOT_TYPE)) {
+    const uint32_t capacity_new = round_up_pow2(capacity);
+    if (capacity_new > (uint32_t)(SIZE_MAX - offsetof(FHASHTABLE_TYPE, slots)) / sizeof(FHASHTABLE_SLOT_TYPE)) {
         return NULL;
     }
 
@@ -230,7 +230,7 @@ static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const size_t capaci
     hashtable_ptr->count = 0;
     hashtable_ptr->capacity = capacity_new;
 
-    for (size_t i = 0; i < hashtable_ptr->capacity; i++) {
+    for (uint32_t i = 0; i < hashtable_ptr->capacity; i++) {
         hashtable_ptr->slots[i].offset = FHASHTABLE_EMPTY_SLOT_OFFSET;
     }
 
@@ -290,11 +290,11 @@ static inline bool JOIN(FHASHTABLE_NAME, is_full)(const FHASHTABLE_TYPE* hashtab
 static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
     assert(hashtable_ptr != NULL);
 
-    const size_t key_hash = HASH_FUNCTION(key);
-    const size_t index_mask = hashtable_ptr->capacity - 1;
+    const uint32_t key_hash = HASH_FUNCTION(key);
+    const uint32_t index_mask = hashtable_ptr->capacity - 1;
 
-    size_t index = key_hash & index_mask;
-    size_t max_possible_offset = 0;
+    uint32_t index = key_hash & index_mask;
+    uint32_t max_possible_offset = 0;
 
     while (hashtable_ptr->slots[index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET &&
 
@@ -327,11 +327,11 @@ static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE* ha
 static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, get_value_mut)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
     assert(hashtable_ptr != NULL);
 
-    const size_t key_hash = HASH_FUNCTION(key);
-    const size_t index_mask = hashtable_ptr->capacity - 1;
+    const uint32_t key_hash = HASH_FUNCTION(key);
+    const uint32_t index_mask = hashtable_ptr->capacity - 1;
 
-    size_t index = key_hash & index_mask;
-    size_t max_possible_offset = 0;
+    uint32_t index = key_hash & index_mask;
+    uint32_t max_possible_offset = 0;
 
     while (hashtable_ptr->slots[index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET &&
 
@@ -364,11 +364,11 @@ static inline VALUE_TYPE JOIN(FHASHTABLE_NAME, get_value)(const FHASHTABLE_TYPE*
                                                           VALUE_TYPE default_value) {
     assert(hashtable_ptr != NULL);
 
-    const size_t key_hash = HASH_FUNCTION(key);
-    const size_t index_mask = hashtable_ptr->capacity - 1;
+    const uint32_t key_hash = HASH_FUNCTION(key);
+    const uint32_t index_mask = hashtable_ptr->capacity - 1;
 
-    size_t index = key_hash & index_mask;
-    size_t max_possible_offset = 0;
+    uint32_t index = key_hash & index_mask;
+    uint32_t max_possible_offset = 0;
 
     while (hashtable_ptr->slots[index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET &&
 
@@ -417,10 +417,10 @@ static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr,
     assert(hashtable_ptr != NULL);
     assert(JOIN(FHASHTABLE_NAME, contains_key)(hashtable_ptr, key) == false);
 
-    const size_t index_mask = hashtable_ptr->capacity - 1;
-    const size_t key_hash = HASH_FUNCTION(key);
+    const uint32_t index_mask = hashtable_ptr->capacity - 1;
+    const uint32_t key_hash = HASH_FUNCTION(key);
 
-    size_t index = key_hash & index_mask;
+    uint32_t index = key_hash & index_mask;
     FHASHTABLE_SLOT_TYPE current_slot = {.offset = 0, .key = key, .value = value};
 
     while (hashtable_ptr->slots[index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET) {
@@ -456,10 +456,10 @@ static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr,
 static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
     assert(hashtable_ptr != NULL);
 
-    const size_t index_mask = hashtable_ptr->capacity - 1;
-    const size_t key_hash = HASH_FUNCTION(key);
+    const uint32_t index_mask = hashtable_ptr->capacity - 1;
+    const uint32_t key_hash = HASH_FUNCTION(key);
 
-    size_t index = key_hash & index_mask;
+    uint32_t index = key_hash & index_mask;
     FHASHTABLE_SLOT_TYPE current_slot = {.offset = 0, .key = key, .value = value};
 
     while (hashtable_ptr->slots[index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET) {
@@ -503,11 +503,11 @@ static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr,
 static inline bool JOIN(FHASHTABLE_NAME, delete)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
     assert(hashtable_ptr != NULL);
 
-    const size_t index_mask = hashtable_ptr->capacity - 1;
-    const size_t key_hash = HASH_FUNCTION(key);
+    const uint32_t index_mask = hashtable_ptr->capacity - 1;
+    const uint32_t key_hash = HASH_FUNCTION(key);
 
-    size_t index = key_hash & index_mask;
-    size_t max_possible_offset = 0;
+    uint32_t index = key_hash & index_mask;
+    uint32_t max_possible_offset = 0;
 
     while (hashtable_ptr->slots[index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET &&
 
@@ -521,7 +521,7 @@ static inline bool JOIN(FHASHTABLE_NAME, delete)(FHASHTABLE_TYPE* hashtable_ptr,
 
             // reduce offsets as much as possible by moving back offset elements:
 
-            size_t next_index = (index + 1) & index_mask;
+            uint32_t next_index = (index + 1) & index_mask;
 
             while (hashtable_ptr->slots[next_index].offset != FHASHTABLE_EMPTY_SLOT_OFFSET &&
 
@@ -551,7 +551,7 @@ static inline bool JOIN(FHASHTABLE_NAME, delete)(FHASHTABLE_TYPE* hashtable_ptr,
 static inline void JOIN(FHASHTABLE_NAME, clear)(FHASHTABLE_TYPE* hashtable_ptr) {
     assert(hashtable_ptr != NULL);
 
-    for (size_t i = 0; i < hashtable_ptr->capacity; i++) {
+    for (uint32_t i = 0; i < hashtable_ptr->capacity; i++) {
         hashtable_ptr->slots[i].offset = FHASHTABLE_EMPTY_SLOT_OFFSET;
     }
     hashtable_ptr->count = 0;
@@ -576,7 +576,7 @@ static inline void JOIN(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE* restrict dest_ha
     assert(src_hashtable_ptr->capacity <= dest_hashtable_ptr->capacity);
     assert(dest_hashtable_ptr->count == 0);
 
-    for (size_t i = 0; i < src_hashtable_ptr->capacity; i++) {
+    for (uint32_t i = 0; i < src_hashtable_ptr->capacity; i++) {
         dest_hashtable_ptr->slots[i] = src_hashtable_ptr->slots[i];
     }
 

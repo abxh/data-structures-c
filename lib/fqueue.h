@@ -1,6 +1,6 @@
 /*  fqueue.h
  *
- *  Copyright (C) 2023 abxh 
+ *  Copyright (C) 2023 abxh
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -78,7 +78,7 @@
  * @warning Modifying the queue under the iteration may result in errors.
  *
  * @param[in] queue_ptr Queue pointer.
- * @param[in] index Temporary indexing variable. Should be `size_t`
+ * @param[in] index Temporary indexing variable. Should be `uint32_t`
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
 #define fqueue_for_each(queue_ptr, index, value)                                                                    \
@@ -96,7 +96,7 @@
  * @warning Modifying the queue under the iteration may result in errors.
  *
  * @param[in] queue_ptr Queue pointer.
- * @param[in] index Temporary indexing variable. Should be `size_t`
+ * @param[in] index Temporary indexing variable. Should be `uint32_t`
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
 #define fqueue_for_each_reverse(queue_ptr, index, value)                                                              \
@@ -124,11 +124,11 @@
  * @brief Generated queue struct type for a `VALUE_TYPE`.
  */
 typedef struct {
-    size_t begin_index;  ///< index used to track the front of the queue.
-    size_t end_index;    ///< index used to track the back of the queue.
-    size_t count;        ///< number of values in the ring buffer
-    size_t capacity;     ///< maximum number of values allocated for in the queue.
-    VALUE_TYPE values[]; ///< array of values.
+    uint32_t begin_index; ///< index used to track the front of the queue.
+    uint32_t end_index;   ///< index used to track the back of the queue.
+    uint32_t count;       ///< number of values in the ring buffer
+    uint32_t capacity;    ///< maximum number of values allocated for in the queue.
+    VALUE_TYPE values[];  ///< array of values.
 } FQUEUE_TYPE;
 
 // }}}
@@ -144,11 +144,11 @@ typedef struct {
  *   @li If malloc fails.
  *   @li If capacity is 0 or the queue size [rounded up to the power of 2] is larger than UINT32_MAX / 4.
  */
-static inline FQUEUE_TYPE* JOIN(FQUEUE_NAME, create)(const size_t capacity) {
+static inline FQUEUE_TYPE* JOIN(FQUEUE_NAME, create)(const uint32_t capacity) {
     if (capacity == 0 || capacity > UINT32_MAX / 4) {
         return NULL;
     }
-    const size_t capacity_new = round_up_pow2(capacity);
+    const uint32_t capacity_new = round_up_pow2(capacity);
 
     FQUEUE_TYPE* queue_ptr = (FQUEUE_TYPE*)malloc(offsetof(FQUEUE_TYPE, values) + capacity_new * sizeof(VALUE_TYPE));
     if (!queue_ptr) {
@@ -221,7 +221,7 @@ static inline bool JOIN(FQUEUE_NAME, is_full)(const FQUEUE_TYPE* queue_ptr) {
  * @param[in] index The index to retrieve to value from.
  * @return The value at `index`.
  */
-static inline VALUE_TYPE JOIN(FQUEUE_NAME, at)(const FQUEUE_TYPE* queue_ptr, const size_t index) {
+static inline VALUE_TYPE JOIN(FQUEUE_NAME, at)(const FQUEUE_TYPE* queue_ptr, const uint32_t index) {
     assert(queue_ptr != NULL);
     assert(index < queue_ptr->count);
 
@@ -360,10 +360,10 @@ static inline void JOIN(FQUEUE_NAME, copy)(FQUEUE_TYPE* restrict dest_queue_ptr,
     assert(src_queue_ptr->count <= dest_queue_ptr->capacity);
     assert(FQUEUE_IS_EMPTY(dest_queue_ptr));
 
-    const size_t src_begin_index = src_queue_ptr->begin_index;
-    const size_t src_index_mask = src_queue_ptr->capacity - 1;
+    const uint32_t src_begin_index = src_queue_ptr->begin_index;
+    const uint32_t src_index_mask = src_queue_ptr->capacity - 1;
 
-    for (size_t i = 0; i < src_queue_ptr->count; i++) {
+    for (uint32_t i = 0; i < src_queue_ptr->count; i++) {
         dest_queue_ptr->values[i] = src_queue_ptr->values[(src_begin_index + i) & src_index_mask];
     }
 
