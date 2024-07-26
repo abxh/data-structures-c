@@ -93,7 +93,7 @@ $(function(){ initResizable(false); });
 <div class="contents">
 <a href="fhashtable_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*  fhashtable.h</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> *  Copyright (C) 2023 abxh </span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> *  Copyright (C) 2023 abxh</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> *  This library is free software; you can redistribute it and/or</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> *  modify it under the terms of the GNU Lesser General Public</span></div>
@@ -153,7 +153,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="preprocessor">#ifndef FHASHTABLE_H</span></div>
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="preprocessor">#define FHASHTABLE_H</span></div>
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">  147</a></span><span class="preprocessor">#define FHASHTABLE_EMPTY_SLOT_OFFSET (SIZE_MAX)</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">  147</a></span><span class="preprocessor">#define FHASHTABLE_EMPTY_SLOT_OFFSET (UINT32_MAX)</span></div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
 <div class="foldopen" id="foldopen00162" data-start="" data-end="">
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a7fce22aae470d0fe6af1109f752d72e7">  162</a></span><span class="preprocessor">#define fhashtable_for_each(hashtable_ptr, index, key_, value_)                       \</span></div>
@@ -176,7 +176,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
 <div class="foldopen" id="foldopen00184" data-start="{" data-end="};">
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno"><a class="line" href="structfhashtable__slot__type.html">  184</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno"><a class="line" href="structfhashtable__slot__type.html#a8ddc85bfe1c600e8b375385f0e460dd3">  185</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structfhashtable__slot__type.html#a8ddc85bfe1c600e8b375385f0e460dd3">offset</a>;    </div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno"><a class="line" href="structfhashtable__slot__type.html#a7af661271fe512b2a1d2a132988e9e27">  185</a></span>    uint32_t <a class="code hl_variable" href="structfhashtable__slot__type.html#a7af661271fe512b2a1d2a132988e9e27">offset</a>;  </div>
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno"><a class="line" href="structfhashtable__slot__type.html#af5ba0630ddb1ac9645cfe6b4c3d00dcf">  186</a></span>    <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> <a class="code hl_variable" href="structfhashtable__slot__type.html#af5ba0630ddb1ac9645cfe6b4c3d00dcf">key</a>;     </div>
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno"><a class="line" href="structfhashtable__slot__type.html#a26411369e95f68e6b61128261536c68d">  187</a></span>    <a class="code hl_define" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_variable" href="structfhashtable__slot__type.html#a26411369e95f68e6b61128261536c68d">value</a>; </div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>} FHASHTABLE_SLOT_TYPE;</div>
@@ -184,8 +184,8 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
 <div class="foldopen" id="foldopen00193" data-start="{" data-end="};">
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno"><a class="line" href="structfhashtable__type.html">  193</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno"><a class="line" href="structfhashtable__type.html#a828c8eb87dabd52fa06a6685c0bb4042">  194</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structfhashtable__type.html#a828c8eb87dabd52fa06a6685c0bb4042">count</a>;                 </div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno"><a class="line" href="structfhashtable__type.html#a9fa88a5a49b70195c09dbdb71dd67901">  195</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structfhashtable__type.html#a9fa88a5a49b70195c09dbdb71dd67901">capacity</a>;              </div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno"><a class="line" href="structfhashtable__type.html#afa5f7955f4ac5be5e5813e31f57969d3">  194</a></span>    uint32_t <a class="code hl_variable" href="structfhashtable__type.html#afa5f7955f4ac5be5e5813e31f57969d3">count</a>;               </div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno"><a class="line" href="structfhashtable__type.html#ad6f2f345f3ce8393a6acf9eefcc1a000">  195</a></span>    uint32_t <a class="code hl_variable" href="structfhashtable__type.html#ad6f2f345f3ce8393a6acf9eefcc1a000">capacity</a>;            </div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno"><a class="line" href="structfhashtable__type.html#a333fe0290d5cbdca699ecda7640dbc1f">  196</a></span>    FHASHTABLE_SLOT_TYPE slots[]; </div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>} FHASHTABLE_TYPE;</div>
 </div>
@@ -194,12 +194,12 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="comment">// function definitions: {{{</span></div>
 <div class="foldopen" id="foldopen00214" data-start="{" data-end="}">
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a6140b0b995c58340aca710028fccf7b3">  214</a></span><span class="keyword">static</span> <span class="keyword">inline</span> FHASHTABLE_TYPE* <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, create)(<span class="keyword">const</span> <span class="keywordtype">size_t</span> capacity) {</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#aafda8878c16015028035cf1df08469a4">  214</a></span><span class="keyword">static</span> <span class="keyword">inline</span> FHASHTABLE_TYPE* <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, create)(<span class="keyword">const</span> uint32_t capacity) {</div>
 <div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    <span class="keywordflow">if</span> (capacity == 0 || capacity &gt; UINT32_MAX / 4) {</div>
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        <span class="keywordflow">return</span> NULL;</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    }</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> capacity_new = <a class="code hl_function" href="round__up__pow2_8h.html#aeb1f6516cf6ffc3107d86d7ee7e47569">round_up_pow2</a>(capacity);</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    <span class="keywordflow">if</span> (capacity_new &gt; (SIZE_MAX - offsetof(FHASHTABLE_TYPE, slots)) / <span class="keyword">sizeof</span>(FHASHTABLE_SLOT_TYPE)) {</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    <span class="keyword">const</span> uint32_t capacity_new = <a class="code hl_function" href="round__up__pow2_8h.html#aeb1f6516cf6ffc3107d86d7ee7e47569">round_up_pow2</a>(capacity);</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    <span class="keywordflow">if</span> (capacity_new &gt; (uint32_t)(SIZE_MAX - offsetof(FHASHTABLE_TYPE, slots)) / <span class="keyword">sizeof</span>(FHASHTABLE_SLOT_TYPE)) {</div>
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        <span class="keywordflow">return</span> NULL;</div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    }</div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
@@ -213,7 +213,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    hashtable_ptr-&gt;count = 0;</div>
 <div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    hashtable_ptr-&gt;capacity = capacity_new;</div>
 <div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; hashtable_ptr-&gt;capacity; i++) {</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; hashtable_ptr-&gt;capacity; i++) {</div>
 <div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        hashtable_ptr-&gt;slots[i].offset = <a class="code hl_define" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a>;</div>
 <div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    }</div>
 <div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
@@ -247,11 +247,11 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00290" name="l00290"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a62110c48325451d327323e324a844114">  290</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, contains_key)(<span class="keyword">const</span> FHASHTABLE_TYPE* hashtable_ptr, <span class="keyword">const</span> <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key) {</div>
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    assert(hashtable_ptr != NULL);</div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> </div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> key_hash = <a class="code hl_define" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> index_mask = hashtable_ptr-&gt;capacity - 1;</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    <span class="keyword">const</span> uint32_t key_hash = <a class="code hl_define" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    <span class="keyword">const</span> uint32_t index_mask = hashtable_ptr-&gt;capacity - 1;</div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span> </div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    <span class="keywordtype">size_t</span> index = key_hash &amp; index_mask;</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>    <span class="keywordtype">size_t</span> max_possible_offset = 0;</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    uint32_t index = key_hash &amp; index_mask;</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>    uint32_t max_possible_offset = 0;</div>
 <div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span> </div>
 <div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>    <span class="keywordflow">while</span> (hashtable_ptr-&gt;slots[index].offset != <a class="code hl_define" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a> &amp;&amp;</div>
 <div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span> </div>
@@ -273,11 +273,11 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00327" name="l00327"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#afb2922923a570f5b7294467e155ddf27">  327</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>* <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, get_value_mut)(FHASHTABLE_TYPE* hashtable_ptr, <span class="keyword">const</span> <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key) {</div>
 <div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>    assert(hashtable_ptr != NULL);</div>
 <div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span> </div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> key_hash = <a class="code hl_define" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> index_mask = hashtable_ptr-&gt;capacity - 1;</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    <span class="keyword">const</span> uint32_t key_hash = <a class="code hl_define" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    <span class="keyword">const</span> uint32_t index_mask = hashtable_ptr-&gt;capacity - 1;</div>
 <div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span> </div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>    <span class="keywordtype">size_t</span> index = key_hash &amp; index_mask;</div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>    <span class="keywordtype">size_t</span> max_possible_offset = 0;</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>    uint32_t index = key_hash &amp; index_mask;</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>    uint32_t max_possible_offset = 0;</div>
 <div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span> </div>
 <div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    <span class="keywordflow">while</span> (hashtable_ptr-&gt;slots[index].offset != <a class="code hl_define" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a> &amp;&amp;</div>
 <div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span> </div>
@@ -300,11 +300,11 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>                                                          <a class="code hl_define" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> default_value) {</div>
 <div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>    assert(hashtable_ptr != NULL);</div>
 <div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span> </div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> key_hash = <a class="code hl_define" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> index_mask = hashtable_ptr-&gt;capacity - 1;</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>    <span class="keyword">const</span> uint32_t key_hash = <a class="code hl_define" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    <span class="keyword">const</span> uint32_t index_mask = hashtable_ptr-&gt;capacity - 1;</div>
 <div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span> </div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>    <span class="keywordtype">size_t</span> index = key_hash &amp; index_mask;</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>    <span class="keywordtype">size_t</span> max_possible_offset = 0;</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>    uint32_t index = key_hash &amp; index_mask;</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>    uint32_t max_possible_offset = 0;</div>
 <div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span> </div>
 <div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>    <span class="keywordflow">while</span> (hashtable_ptr-&gt;slots[index].offset != <a class="code hl_define" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a> &amp;&amp;</div>
 <div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span> </div>
@@ -333,10 +333,10 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>    assert(hashtable_ptr != NULL);</div>
 <div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>    assert(<a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, contains_key)(hashtable_ptr, key) == <span class="keyword">false</span>);</div>
 <div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span> </div>
-<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> index_mask = hashtable_ptr-&gt;capacity - 1;</div>
-<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> key_hash = <a class="code hl_define" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>    <span class="keyword">const</span> uint32_t index_mask = hashtable_ptr-&gt;capacity - 1;</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>    <span class="keyword">const</span> uint32_t key_hash = <a class="code hl_define" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
 <div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span> </div>
-<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>    <span class="keywordtype">size_t</span> index = key_hash &amp; index_mask;</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>    uint32_t index = key_hash &amp; index_mask;</div>
 <div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>    FHASHTABLE_SLOT_TYPE current_slot = {.offset = 0, .key = key, .value = value};</div>
 <div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span> </div>
 <div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>    <span class="keywordflow">while</span> (hashtable_ptr-&gt;slots[index].offset != <a class="code hl_define" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a>) {</div>
@@ -363,10 +363,10 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00456" name="l00456"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a5c9175c3e992a4e42e9b56e62245e8c8">  456</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr, <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key, <a class="code hl_define" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value) {</div>
 <div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>    assert(hashtable_ptr != NULL);</div>
 <div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span> </div>
-<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> index_mask = hashtable_ptr-&gt;capacity - 1;</div>
-<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> key_hash = <a class="code hl_define" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
+<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>    <span class="keyword">const</span> uint32_t index_mask = hashtable_ptr-&gt;capacity - 1;</div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>    <span class="keyword">const</span> uint32_t key_hash = <a class="code hl_define" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
 <div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span> </div>
-<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>    <span class="keywordtype">size_t</span> index = key_hash &amp; index_mask;</div>
+<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>    uint32_t index = key_hash &amp; index_mask;</div>
 <div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>    FHASHTABLE_SLOT_TYPE current_slot = {.offset = 0, .key = key, .value = value};</div>
 <div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span> </div>
 <div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>    <span class="keywordflow">while</span> (hashtable_ptr-&gt;slots[index].offset != <a class="code hl_define" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a>) {</div>
@@ -403,11 +403,11 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00503" name="l00503"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a0c29d601849ae3126a2ae4847c8131d0">  503</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, <span class="keyword">delete</span>)(FHASHTABLE_TYPE* hashtable_ptr, <span class="keyword">const</span> <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key) {</div>
 <div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span>    assert(hashtable_ptr != NULL);</div>
 <div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span> </div>
-<div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> index_mask = hashtable_ptr-&gt;capacity - 1;</div>
-<div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> key_hash = <a class="code hl_define" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
+<div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span>    <span class="keyword">const</span> uint32_t index_mask = hashtable_ptr-&gt;capacity - 1;</div>
+<div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>    <span class="keyword">const</span> uint32_t key_hash = <a class="code hl_define" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key);</div>
 <div class="line"><a id="l00508" name="l00508"></a><span class="lineno">  508</span> </div>
-<div class="line"><a id="l00509" name="l00509"></a><span class="lineno">  509</span>    <span class="keywordtype">size_t</span> index = key_hash &amp; index_mask;</div>
-<div class="line"><a id="l00510" name="l00510"></a><span class="lineno">  510</span>    <span class="keywordtype">size_t</span> max_possible_offset = 0;</div>
+<div class="line"><a id="l00509" name="l00509"></a><span class="lineno">  509</span>    uint32_t index = key_hash &amp; index_mask;</div>
+<div class="line"><a id="l00510" name="l00510"></a><span class="lineno">  510</span>    uint32_t max_possible_offset = 0;</div>
 <div class="line"><a id="l00511" name="l00511"></a><span class="lineno">  511</span> </div>
 <div class="line"><a id="l00512" name="l00512"></a><span class="lineno">  512</span>    <span class="keywordflow">while</span> (hashtable_ptr-&gt;slots[index].offset != <a class="code hl_define" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a> &amp;&amp;</div>
 <div class="line"><a id="l00513" name="l00513"></a><span class="lineno">  513</span> </div>
@@ -421,7 +421,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span> </div>
 <div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span>            <span class="comment">// reduce offsets as much as possible by moving back offset elements:</span></div>
 <div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span> </div>
-<div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span>            <span class="keywordtype">size_t</span> next_index = (index + 1) &amp; index_mask;</div>
+<div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span>            uint32_t next_index = (index + 1) &amp; index_mask;</div>
 <div class="line"><a id="l00525" name="l00525"></a><span class="lineno">  525</span> </div>
 <div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span>            <span class="keywordflow">while</span> (hashtable_ptr-&gt;slots[next_index].offset != <a class="code hl_define" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a> &amp;&amp;</div>
 <div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span> </div>
@@ -448,7 +448,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00551" name="l00551"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#adeb4c4445b4a40dbfdff14570f1a62f4">  551</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, clear)(FHASHTABLE_TYPE* hashtable_ptr) {</div>
 <div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span>    assert(hashtable_ptr != NULL);</div>
 <div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span> </div>
-<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; hashtable_ptr-&gt;capacity; i++) {</div>
+<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; hashtable_ptr-&gt;capacity; i++) {</div>
 <div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>        hashtable_ptr-&gt;slots[i].offset = <a class="code hl_define" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a>;</div>
 <div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span>    }</div>
 <div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span>    hashtable_ptr-&gt;count = 0;</div>
@@ -463,7 +463,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>    assert(src_hashtable_ptr-&gt;capacity &lt;= dest_hashtable_ptr-&gt;capacity);</div>
 <div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>    assert(dest_hashtable_ptr-&gt;count == 0);</div>
 <div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span> </div>
-<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; src_hashtable_ptr-&gt;capacity; i++) {</div>
+<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; src_hashtable_ptr-&gt;capacity; i++) {</div>
 <div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span>        dest_hashtable_ptr-&gt;slots[i] = src_hashtable_ptr-&gt;slots[i];</div>
 <div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span>    }</div>
 <div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span> </div>
@@ -499,10 +499,10 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="around__up__pow2_8h_html"><div class="ttname"><a href="round__up__pow2_8h.html">round_up_pow2.h</a></div><div class="ttdoc">Round up to the next power of two.</div></div>
 <div class="ttc" id="around__up__pow2_8h_html_aeb1f6516cf6ffc3107d86d7ee7e47569"><div class="ttname"><a href="round__up__pow2_8h.html#aeb1f6516cf6ffc3107d86d7ee7e47569">round_up_pow2</a></div><div class="ttdeci">static uint32_t round_up_pow2(uint32_t x)</div><div class="ttdef"><b>Definition</b> round_up_pow2.h:47</div></div>
 <div class="ttc" id="astructfhashtable__slot__type_html_a26411369e95f68e6b61128261536c68d"><div class="ttname"><a href="structfhashtable__slot__type.html#a26411369e95f68e6b61128261536c68d">fhashtable_slot_type::value</a></div><div class="ttdeci">VALUE_TYPE value</div><div class="ttdoc">The value in this slot.</div><div class="ttdef"><b>Definition</b> fhashtable.h:187</div></div>
-<div class="ttc" id="astructfhashtable__slot__type_html_a8ddc85bfe1c600e8b375385f0e460dd3"><div class="ttname"><a href="structfhashtable__slot__type.html#a8ddc85bfe1c600e8b375385f0e460dd3">fhashtable_slot_type::offset</a></div><div class="ttdeci">size_t offset</div><div class="ttdoc">Offset from the ideal slot index.</div><div class="ttdef"><b>Definition</b> fhashtable.h:185</div></div>
+<div class="ttc" id="astructfhashtable__slot__type_html_a7af661271fe512b2a1d2a132988e9e27"><div class="ttname"><a href="structfhashtable__slot__type.html#a7af661271fe512b2a1d2a132988e9e27">fhashtable_slot_type::offset</a></div><div class="ttdeci">uint32_t offset</div><div class="ttdoc">Offset from the ideal slot index.</div><div class="ttdef"><b>Definition</b> fhashtable.h:185</div></div>
 <div class="ttc" id="astructfhashtable__slot__type_html_af5ba0630ddb1ac9645cfe6b4c3d00dcf"><div class="ttname"><a href="structfhashtable__slot__type.html#af5ba0630ddb1ac9645cfe6b4c3d00dcf">fhashtable_slot_type::key</a></div><div class="ttdeci">KEY_TYPE key</div><div class="ttdoc">The key in this slot.</div><div class="ttdef"><b>Definition</b> fhashtable.h:186</div></div>
-<div class="ttc" id="astructfhashtable__type_html_a828c8eb87dabd52fa06a6685c0bb4042"><div class="ttname"><a href="structfhashtable__type.html#a828c8eb87dabd52fa06a6685c0bb4042">fhashtable_type::count</a></div><div class="ttdeci">size_t count</div><div class="ttdoc">Number of non-empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:194</div></div>
-<div class="ttc" id="astructfhashtable__type_html_a9fa88a5a49b70195c09dbdb71dd67901"><div class="ttname"><a href="structfhashtable__type.html#a9fa88a5a49b70195c09dbdb71dd67901">fhashtable_type::capacity</a></div><div class="ttdeci">size_t capacity</div><div class="ttdoc">Number of slots allocated for in the hashtable.</div><div class="ttdef"><b>Definition</b> fhashtable.h:195</div></div>
+<div class="ttc" id="astructfhashtable__type_html_ad6f2f345f3ce8393a6acf9eefcc1a000"><div class="ttname"><a href="structfhashtable__type.html#ad6f2f345f3ce8393a6acf9eefcc1a000">fhashtable_type::capacity</a></div><div class="ttdeci">uint32_t capacity</div><div class="ttdoc">Number of slots allocated for in the hashtable.</div><div class="ttdef"><b>Definition</b> fhashtable.h:195</div></div>
+<div class="ttc" id="astructfhashtable__type_html_afa5f7955f4ac5be5e5813e31f57969d3"><div class="ttname"><a href="structfhashtable__type.html#afa5f7955f4ac5be5e5813e31f57969d3">fhashtable_type::count</a></div><div class="ttdeci">uint32_t count</div><div class="ttdoc">Number of non-empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:194</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
