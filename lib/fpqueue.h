@@ -108,7 +108,7 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, peek)(const FPQUEUE_TYPE* pqueue_ptr
 
 static inline void JOIN(FPQUEUE_NAME, downheap)(FPQUEUE_TYPE* pqueue_ptr, const uint32_t index) {
     assert(pqueue_ptr != NULL);
-    assert(index < pqueue_ptr->count);
+    assert(index <= pqueue_ptr->count);
 
     const uint32_t l = FPQUEUE_LCHILD(index);
     const uint32_t r = FPQUEUE_RCHILD(index);
@@ -142,9 +142,7 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE* pqueue_ptr) {
 
     pqueue_ptr->count--;
 
-    if (pqueue_ptr->count != 0) {
-        JOIN(FPQUEUE_NAME, downheap)(pqueue_ptr, 0);
-    }
+    JOIN(FPQUEUE_NAME, downheap)(pqueue_ptr, 0);
 
     return max;
 }
