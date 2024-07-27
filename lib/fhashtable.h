@@ -88,7 +88,7 @@
  * Is undefined once header is included.
  */
 #ifndef KEY_TYPE
-#error "Must declare KEY_TYPE."
+#error "Must define KEY_TYPE."
 #define KEY_TYPE int
 #endif
 
@@ -99,7 +99,7 @@
  * Is undefined once header is included.
  */
 #ifndef VALUE_TYPE
-#error "Must declare VALUE_TYPE."
+#error "Must define VALUE_TYPE."
 #define VALUE_TYPE int
 #endif
 
@@ -209,7 +209,7 @@ typedef struct {
  * @return A pointer to the queue.
  * @retval `NULL`
  *   @li If malloc fails.
- *   @li If capacity is equal to 0 or the hashtable size [rounded up to the power of 2] is larger than UINT32_MAX / 4.
+ *   @li If capacity is equal to 0 or [capacity rounded up to the power of 2] is larger than UINT32_MAX / 4.
  */
 static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const uint32_t capacity) {
     if (capacity == 0 || capacity > UINT32_MAX / 4) {
