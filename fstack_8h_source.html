@@ -172,8 +172,8 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
 <div class="foldopen" id="foldopen00131" data-start="{" data-end="};">
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="structfstack__type.html">  131</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="structfstack__type.html#a32743d8d3850883728b416a0436993a7">  132</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structfstack__type.html#a32743d8d3850883728b416a0436993a7">count</a>;        </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="structfstack__type.html#a7ca8f0f4a893dffee65e7dd24b92fc6c">  133</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structfstack__type.html#a7ca8f0f4a893dffee65e7dd24b92fc6c">capacity</a>;     </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="structfstack__type.html#a1cf73bcac0b5b7f692e8b30f1c4a71d5">  132</a></span>    uint32_t <a class="code hl_variable" href="structfstack__type.html#a1cf73bcac0b5b7f692e8b30f1c4a71d5">count</a>;        </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="structfstack__type.html#a4004a0010b2fbc8d51110ecd61a3997c">  133</a></span>    uint32_t <a class="code hl_variable" href="structfstack__type.html#a4004a0010b2fbc8d51110ecd61a3997c">capacity</a>;     </div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="structfstack__type.html#a89c607abf9825e717dacd72c45822f57">  134</a></span>    <a class="code hl_define" href="fstack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> values[]; </div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>} FSTACK_TYPE;</div>
 </div>
@@ -183,8 +183,8 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="comment">// function definitions: {{{</span></div>
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
 <div class="foldopen" id="foldopen00150" data-start="{" data-end="}">
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="fstack_8h.html#aabda75525d351ea221337b7fa37d9905">  150</a></span><span class="keyword">static</span> <span class="keyword">inline</span> FSTACK_TYPE* <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FSTACK_NAME, create)(<span class="keyword">const</span> <span class="keywordtype">size_t</span> capacity) {</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keywordflow">if</span> (capacity == 0 || capacity &gt; (SIZE_MAX - offsetof(FSTACK_TYPE, values)) / <span class="keyword">sizeof</span>(<a class="code hl_define" href="fstack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>)) {</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="fstack_8h.html#ae21db93f52ef49428faa45b834aebffa">  150</a></span><span class="keyword">static</span> <span class="keyword">inline</span> FSTACK_TYPE* <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FSTACK_NAME, create)(<span class="keyword">const</span> uint32_t capacity) {</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keywordflow">if</span> (capacity == 0 || capacity &gt; (UINT32_MAX - offsetof(FSTACK_TYPE, values)) / <span class="keyword">sizeof</span>(<a class="code hl_define" href="fstack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>)) {</div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        <span class="keywordflow">return</span> NULL;</div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    }</div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    FSTACK_TYPE* stack_ptr = (FSTACK_TYPE*)malloc(offsetof(FSTACK_TYPE, values) + capacity * <span class="keyword">sizeof</span>(<a class="code hl_define" href="fstack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>));</div>
@@ -226,7 +226,7 @@ $(function(){ initResizable(false); });
 </div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
 <div class="foldopen" id="foldopen00220" data-start="{" data-end="}">
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno"><a class="line" href="fstack_8h.html#aca8ff4a99fc61b3b6a36c644eb16e0e8">  220</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="fstack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FSTACK_NAME, at)(<span class="keyword">const</span> FSTACK_TYPE* stack_ptr, <span class="keyword">const</span> <span class="keywordtype">size_t</span> index) {</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno"><a class="line" href="fstack_8h.html#acab6831aaa75e8a575b33f7a766af721">  220</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="fstack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FSTACK_NAME, at)(<span class="keyword">const</span> FSTACK_TYPE* stack_ptr, <span class="keyword">const</span> uint32_t index) {</div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    assert(stack_ptr != NULL);</div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    assert(index &lt; stack_ptr-&gt;count);</div>
 <div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
@@ -290,7 +290,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    assert(src_stack_ptr-&gt;count &lt;= dest_stack_ptr-&gt;capacity);</div>
 <div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    assert(FSTACK_IS_EMPTY(dest_stack_ptr));</div>
 <div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span> </div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; src_stack_ptr-&gt;count; i++) {</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; src_stack_ptr-&gt;count; i++) {</div>
 <div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>        dest_stack_ptr-&gt;values[i] = src_stack_ptr-&gt;values[i];</div>
 <div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>    }</div>
 <div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>    dest_stack_ptr-&gt;count = src_stack_ptr-&gt;count;</div>
@@ -313,8 +313,8 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="afstack_8h_html_ae17cb099b4c9aee7835032339b5a9e0d"><div class="ttname"><a href="fstack_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></div><div class="ttdeci">#define VALUE_TYPE</div><div class="ttdoc">Stack value type.</div><div class="ttdef"><b>Definition</b> fstack.h:71</div></div>
 <div class="ttc" id="apaste_8h_html"><div class="ttname"><a href="paste_8h.html">paste.h</a></div><div class="ttdoc">C preprocessor macros for pasting tokens together.</div></div>
 <div class="ttc" id="apaste_8h_html_a1665af4d61d120cdba4d77101d179703"><div class="ttname"><a href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a></div><div class="ttdeci">#define JOIN(a, b)</div><div class="ttdoc">First expand tokens, then paste them together with a _ in between.</div><div class="ttdef"><b>Definition</b> paste.h:44</div></div>
-<div class="ttc" id="astructfstack__type_html_a32743d8d3850883728b416a0436993a7"><div class="ttname"><a href="structfstack__type.html#a32743d8d3850883728b416a0436993a7">fstack_type::count</a></div><div class="ttdeci">size_t count</div><div class="ttdoc">number of values in the stack.</div><div class="ttdef"><b>Definition</b> fstack.h:132</div></div>
-<div class="ttc" id="astructfstack__type_html_a7ca8f0f4a893dffee65e7dd24b92fc6c"><div class="ttname"><a href="structfstack__type.html#a7ca8f0f4a893dffee65e7dd24b92fc6c">fstack_type::capacity</a></div><div class="ttdeci">size_t capacity</div><div class="ttdoc">maximum number of values allocated for in the stack.</div><div class="ttdef"><b>Definition</b> fstack.h:133</div></div>
+<div class="ttc" id="astructfstack__type_html_a1cf73bcac0b5b7f692e8b30f1c4a71d5"><div class="ttname"><a href="structfstack__type.html#a1cf73bcac0b5b7f692e8b30f1c4a71d5">fstack_type::count</a></div><div class="ttdeci">uint32_t count</div><div class="ttdoc">number of values in the stack.</div><div class="ttdef"><b>Definition</b> fstack.h:132</div></div>
+<div class="ttc" id="astructfstack__type_html_a4004a0010b2fbc8d51110ecd61a3997c"><div class="ttname"><a href="structfstack__type.html#a4004a0010b2fbc8d51110ecd61a3997c">fstack_type::capacity</a></div><div class="ttdeci">uint32_t capacity</div><div class="ttdoc">maximum number of values allocated for in the stack.</div><div class="ttdef"><b>Definition</b> fstack.h:133</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

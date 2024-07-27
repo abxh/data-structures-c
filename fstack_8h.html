@@ -132,9 +132,9 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aabda75525d351ea221337b7fa37d9905" id="r_aabda75525d351ea221337b7fa37d9905"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structfstack__type.html">fstack_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aabda75525d351ea221337b7fa37d9905">fstack_create</a> (const size_t capacity)</td></tr>
-<tr class="memdesc:aabda75525d351ea221337b7fa37d9905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an stack with a given capacity with malloc().  <br /></td></tr>
-<tr class="separator:aabda75525d351ea221337b7fa37d9905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae21db93f52ef49428faa45b834aebffa" id="r_ae21db93f52ef49428faa45b834aebffa"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structfstack__type.html">fstack_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae21db93f52ef49428faa45b834aebffa">fstack_create</a> (const uint32_t capacity)</td></tr>
+<tr class="memdesc:ae21db93f52ef49428faa45b834aebffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an stack with a given capacity with malloc().  <br /></td></tr>
+<tr class="separator:ae21db93f52ef49428faa45b834aebffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01ace41de207307970f19c57852f38b7" id="r_a01ace41de207307970f19c57852f38b7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a01ace41de207307970f19c57852f38b7">fstack_destroy</a> (<a class="el" href="structfstack__type.html">fstack_type</a> *stack_ptr)</td></tr>
 <tr class="memdesc:a01ace41de207307970f19c57852f38b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy an stack and free the underlying memory with free().  <br /></td></tr>
 <tr class="separator:a01ace41de207307970f19c57852f38b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -144,9 +144,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a0cb7287f7fe7f1532d0c2685bd0436b2" id="r_a0cb7287f7fe7f1532d0c2685bd0436b2"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0cb7287f7fe7f1532d0c2685bd0436b2">fstack_is_full</a> (const <a class="el" href="structfstack__type.html">fstack_type</a> *stack_ptr)</td></tr>
 <tr class="memdesc:a0cb7287f7fe7f1532d0c2685bd0436b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the stack is full.  <br /></td></tr>
 <tr class="separator:a0cb7287f7fe7f1532d0c2685bd0436b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca8ff4a99fc61b3b6a36c644eb16e0e8" id="r_aca8ff4a99fc61b3b6a36c644eb16e0e8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca8ff4a99fc61b3b6a36c644eb16e0e8">fstack_at</a> (const <a class="el" href="structfstack__type.html">fstack_type</a> *stack_ptr, const size_t index)</td></tr>
-<tr class="memdesc:aca8ff4a99fc61b3b6a36c644eb16e0e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value at index.  <br /></td></tr>
-<tr class="separator:aca8ff4a99fc61b3b6a36c644eb16e0e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acab6831aaa75e8a575b33f7a766af721" id="r_acab6831aaa75e8a575b33f7a766af721"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acab6831aaa75e8a575b33f7a766af721">fstack_at</a> (const <a class="el" href="structfstack__type.html">fstack_type</a> *stack_ptr, const uint32_t index)</td></tr>
+<tr class="memdesc:acab6831aaa75e8a575b33f7a766af721"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value at index.  <br /></td></tr>
+<tr class="separator:acab6831aaa75e8a575b33f7a766af721"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e4c7659b5d081f4c3fe39d63436dda1" id="r_a9e4c7659b5d081f4c3fe39d63436dda1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9e4c7659b5d081f4c3fe39d63436dda1">fstack_get_top</a> (const <a class="el" href="structfstack__type.html">fstack_type</a> *stack_ptr)</td></tr>
 <tr class="memdesc:a9e4c7659b5d081f4c3fe39d63436dda1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the top of the stack.  <br /></td></tr>
 <tr class="separator:a9e4c7659b5d081f4c3fe39d63436dda1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,7 +212,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>Stack pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>Temporary indexing variable. Should be <code>size_t</code> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>Temporary indexing variable. Should be <code>uint32_t</code> </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>Current value. Should be <code>VALUE_TYPE</code>. </td></tr>
   </table>
   </dd>
@@ -258,7 +258,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>Stack pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>Temporary indexing variable. Should be <code>size_t</code> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>Temporary indexing variable. Should be <code>uint32_t</code> </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>Current value. Should be <code>VALUE_TYPE</code>. </td></tr>
   </table>
   </dd>
@@ -305,8 +305,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="aca8ff4a99fc61b3b6a36c644eb16e0e8" name="aca8ff4a99fc61b3b6a36c644eb16e0e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca8ff4a99fc61b3b6a36c644eb16e0e8">&#9670;&#160;</a></span>fstack_at()</h2>
+<a id="acab6831aaa75e8a575b33f7a766af721" name="acab6831aaa75e8a575b33f7a766af721"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acab6831aaa75e8a575b33f7a766af721">&#9670;&#160;</a></span>fstack_at()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -322,7 +322,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span>&#160;)</td>
+          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -427,8 +427,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aabda75525d351ea221337b7fa37d9905" name="aabda75525d351ea221337b7fa37d9905"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabda75525d351ea221337b7fa37d9905">&#9670;&#160;</a></span>fstack_create()</h2>
+<a id="ae21db93f52ef49428faa45b834aebffa" name="ae21db93f52ef49428faa45b834aebffa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae21db93f52ef49428faa45b834aebffa">&#9670;&#160;</a></span>fstack_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -439,7 +439,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="structfstack__type.html">fstack_type</a> * fstack_create </td>
           <td>(</td>
-          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span></td><td>)</td>
+          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -461,7 +461,7 @@ Functions</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">`NULL`</td><td><ul>
-<li>If capacity is 0 or the stack size cannot be represented by <code>size_t</code>. </li>
+<li>If capacity is 0 or is larger than UINT32_MAX. </li>
 <li>If malloc fails. </li>
 </ul>
 </td></tr>
