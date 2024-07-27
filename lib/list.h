@@ -129,7 +129,7 @@ static inline bool list_node_is_head(const list_node_type* node_ptr, const list_
  * Assumes the given pointers are not NULL.
  *
  * @param[in] node_ptr The node pointer.
- * @param[in] head_ptr The tail node pointer.
+ * @param[in] tail_ptr The tail node pointer.
  *
  * @return Whether the list node is the tail of the list.
  */
@@ -144,6 +144,10 @@ static inline bool list_node_is_tail(const list_node_type* node_ptr, const list_
 
 // Add a node between two (known) nodes.
 static inline void internal_list_node_add_between(list_node_type* node_ptr, list_node_type* before_ptr, list_node_type* after_ptr) {
+    assert(node_ptr != NULL);
+    assert(before_ptr != NULL);
+    assert(after_ptr != NULL);
+
     before_ptr->next_ptr = node_ptr;
     node_ptr->prev_ptr = before_ptr;
 
@@ -190,6 +194,9 @@ static inline void list_node_add_before(list_node_type* node_ptr, list_node_type
 
 // Attach two nodes together, so anything in between is ignored.
 static inline void internal_list_node_attach(list_node_type* prev_ptr, list_node_type* next_ptr) {
+    assert(prev_ptr != NULL);
+    assert(next_ptr != NULL);
+
     prev_ptr->next_ptr = next_ptr;
     next_ptr->prev_ptr = prev_ptr;
 }

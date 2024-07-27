@@ -18,6 +18,20 @@
  *  USA
  */
 
+/**
+ * @file fpqueue.h
+ * @brief Fixed-size heap-based priority queue
+ *
+ * The following macros must be defined:
+ *  @li `NAME`
+ *  @li `VALUE_TYPE`
+ */
+
+/**
+ * @example fpqueue/fpqueue.c
+ * Example of how `fpqueue.h` header file is used in practice.
+ */
+
 #include "paste.h" // PASTE, XPASTE, JOIN
 
 #include <assert.h>
@@ -27,6 +41,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+// macro definitions: {{{
+
+/**
+ * @def NAME
+ * @brief Prefix to priority queue type and operations.
+ *
+ * Is undefined after header is included.
+ *
+ * @attention This must be manually defined before including this header file.
+ */
 #ifndef NAME
 #define NAME fpqueue
 #error "Must define NAME."
@@ -34,31 +58,109 @@
 #define FPQUEUE_NAME NAME
 #endif
 
+/**
+ * @def VALUE_TYPE
+ * @brief Priority queue value type.
+ *
+ * Is undefined after header is included.
+ *
+ * @attention This must be manually defined before including this header file.
+ */
 #ifndef VALUE_TYPE
 #error "Must declare VALUE_TYPE."
 #define VALUE_TYPE int
 #endif
 
+#ifndef FPQUEUE_H
+/// @cond DO_NOT_DOCUMENT
+#define FPQUEUE_H
+/// @endcond
+
+/**
+ * @def fpqueue_left_child(index)
+ * @brief Given an element index, get the index of the left child.
+ *
+ * @param[in] index The element index.
+ */
+#define fpqueue_left_child(index) (2 * (index) + 1)
+
+/**
+ * @def fpqueue_right_child(index)
+ * @brief Given an element index, get the index of the right child.
+ *
+ * @param[in] index The element index.
+ */
+#define fpqueue_right_child(index) (2 * (index) + 2)
+
+/**
+ * @def fpqueue_parent(index)
+ * @brief Given an element index, get the index of the parent.
+ *
+ * @param[in] index The element index.
+ */
+#define fpqueue_parent(index) (((index) - 1) / 2)
+
+/**
+ * @def fpqueue_for_each(pqueue_ptr, index, value_)
+ * @brief Iterate over the values in the priority queue in arbitary order.
+ * @warning Modifying the priority queue under the iteration may result in errors.
+ *
+ * @param[in] pqueue_ptr Priority queue pointer.
+ * @param[in] index Temporary indexing variable. Should be `uint32_t`
+ * @param[out] value_ Current value. Should be `VALUE_TYPE`.
+ */
+#define fpqueue_for_each(pqueue_ptr, index, value_)                \
+    for ((index) = 0;                                              \
+                                                                   \
+         (index) < (pqueue_ptr)->count &&                          \
+                                                                   \
+         ((value_) = (pqueue_ptr)->elements[(index)].value, true); \
+                                                                   \
+         (index)++)
+
+#endif // FPQUEUE_H
+
+/// @cond DO_NOT_DOCUMENT
 #define FPQUEUE_TYPE JOIN(FPQUEUE_NAME, type)
-#define FPQUEUE_ELEMENT_TYPE JOIN(FPQUEUE_ELEMENT, type)
-
-typedef struct {
-    uint32_t priority;
-    VALUE_TYPE value;
-} FPQUEUE_ELEMENT_TYPE;
-
-typedef struct {
-    uint32_t count;
-    uint32_t capacity;
-    FPQUEUE_ELEMENT_TYPE elements[];
-} FPQUEUE_TYPE;
-
-#define FPQUEUE_LCHILD(index) (2 * (index) + 1)
-#define FPQUEUE_RCHILD(index) (2 * (index) + 2)
-#define FPQUEUE_PARENT(index) (((index) - 1) / 2)
+#define FPQUEUE_ELEMENT_TYPE JOIN(FPQUEUE_NAME, element_type)
 #define FPQUEUE_IS_EMPTY JOIN(FPQUEUE_NAME, is_empty)
 #define FPQUEUE_IS_FULL JOIN(FPQUEUE_NAME, is_full)
+/// @endcond
 
+// }}}
+
+// type definitions: {{{
+
+/**
+ * @brief Generated priority queue element struct type for a given `VALUE_TYPE`.
+ */
+typedef struct {
+    uint32_t priority; ///< element priority (highest is next to-be-popped).
+    VALUE_TYPE value;  ///< element value member.
+} FPQUEUE_ELEMENT_TYPE;
+
+/**
+ * @brief Generated priority queue struct type for a given `VALUE_TYPE`.
+ */
+typedef struct {
+    uint32_t count;                  ///< Number of non-empty elements.
+    uint32_t capacity;               ///< Number of elements allocated for in the priority queue.
+    FPQUEUE_ELEMENT_TYPE elements[]; ///< Array of elements.
+} FPQUEUE_TYPE;
+
+// }}}
+
+// function definitions: {{{
+
+/**
+ * @brief Create an priority queue with a given capacity with malloc().
+ *
+ * @param[in] capacity Maximum number of elements expected to be stored in the priority queue.
+ * @return A pointer to the priority queue.
+ * @retval `NULL`
+ *   @li If capacity is 0 or is larger than UINT32_MAX.
+ *   @li If malloc fails.
+ */
 static inline FPQUEUE_TYPE* JOIN(FPQUEUE_NAME, create)(const uint32_t capacity) {
     if (capacity == 0 || capacity > (UINT32_MAX - offsetof(FPQUEUE_TYPE, elements)) / sizeof(FPQUEUE_ELEMENT_TYPE)) {
         return NULL;
@@ -76,42 +178,84 @@ static inline FPQUEUE_TYPE* JOIN(FPQUEUE_NAME, create)(const uint32_t capacity) 
     return pqueue_ptr;
 }
 
+/**
+ * @brief Destroy an priority queue and free the underlying memory with free().
+ *
+ * @param[in,out] pqueue_ptr The priority queue pointer.
+ * @warning May not be called twice in a row on the same object.
+ */
 static inline void JOIN(FPQUEUE_NAME, destroy)(FPQUEUE_TYPE* pqueue_ptr) {
     assert(pqueue_ptr != NULL);
 
     free(pqueue_ptr);
 }
 
+/**
+ * @brief Return whether the priority queue is empty.
+ *
+ * Assumes the priority queue pointer is not `NULL`.
+ *
+ * @param[in] pqueue_ptr The priority queue pointer.
+ * @return whether the priority queue is empty.
+ */
 static inline bool JOIN(FPQUEUE_NAME, is_empty)(const FPQUEUE_TYPE* pqueue_ptr) {
     assert(pqueue_ptr != NULL);
 
     return pqueue_ptr->count == 0;
 }
 
+/**
+ * @brief Return whether the priority queue is full.
+ *
+ * Assumes the priority queue pointer is not `NULL`.
+ *
+ * @param[in] pqueue_ptr The priority queue pointer.
+ * @return whether the priority queue is full.
+ */
 static inline bool JOIN(FPQUEUE_NAME, is_full)(const FPQUEUE_TYPE* pqueue_ptr) {
     assert(pqueue_ptr != NULL);
 
     return pqueue_ptr->count == pqueue_ptr->capacity;
 }
 
+/**
+ * @brief Get the max value in the priority queue.
+ *
+ * Assumes:
+ * @li `pqueue_ptr` is not `NULL`.
+ * @li The priority queue is not empty.
+ *
+ * @param[in] pqueue_ptr The priority queue pointer.
+ * @return The max value.
+ */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_max)(const FPQUEUE_TYPE* pqueue_ptr) {
     assert(pqueue_ptr != NULL);
+    assert(FPQUEUE_IS_EMPTY(pqueue_ptr) == false);
 
     return pqueue_ptr->elements[0].value;
 }
 
+/**
+ * @brief Peek the priority queue and get it's next to-be-popped (max) value.
+ *
+ * Assumes:
+ * @li `pqueue_ptr` is not `NULL`.
+ * @li The priority queue is not empty.
+ *
+ * @param[in] pqueue_ptr The priority queue pointer.
+ * @return The next to-be-popped (max) value.
+ */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, peek)(const FPQUEUE_TYPE* pqueue_ptr) {
-    assert(pqueue_ptr != NULL);
-
     return JOIN(FPQUEUE_NAME, get_max)(pqueue_ptr);
 }
 
+/// @cond DO_NOT_DOCUMENT
 static inline void JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(FPQUEUE_TYPE* pqueue_ptr, const uint32_t index) {
     assert(pqueue_ptr != NULL);
     assert(pqueue_ptr->count == 0 || index < pqueue_ptr->count);
 
-    const uint32_t l = FPQUEUE_LCHILD(index);
-    const uint32_t r = FPQUEUE_RCHILD(index);
+    const uint32_t l = fpqueue_left_child(index);
+    const uint32_t r = fpqueue_right_child(index);
 
     uint32_t largest = index;
     if (l < pqueue_ptr->count && pqueue_ptr->elements[l].priority > pqueue_ptr->elements[index].priority) {
@@ -131,7 +275,18 @@ static inline void JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(FPQUEUE_TYPE* pq
 
     JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(pqueue_ptr, largest);
 }
+/// @endcond
 
+/**
+ * @brief Pop the max value away from the priority queue.
+ *
+ * Assumes:
+ * @li `pqueue_ptr` is not `NULL`.
+ * @li The priority queue is not empty.
+ *
+ * @param[in,out] pqueue_ptr The priority queue pointer.
+ * @return The max value.
+ */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE* pqueue_ptr) {
     assert(pqueue_ptr != NULL);
     assert(FPQUEUE_IS_EMPTY(pqueue_ptr) == false);
@@ -147,12 +302,13 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE* pqueue_ptr) {
     return max;
 }
 
+/// @cond DO_NOT_DOCUMENT
 static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE* pqueue_ptr, uint32_t index) {
     assert(pqueue_ptr != NULL);
     assert(index < pqueue_ptr->count);
 
     uint32_t parent;
-    while (index > 0 && (parent = FPQUEUE_PARENT(index),
+    while (index > 0 && (parent = fpqueue_parent(index),
 
                          pqueue_ptr->elements[parent].priority < pqueue_ptr->elements[index].priority)) {
 
@@ -163,7 +319,19 @@ static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE* pque
         index = parent;
     }
 }
+/// @endcond
 
+/**
+ * @brief Push a value with given priority onto the priority queue.
+ *
+ * Assumes:
+ * @li `pqueue_ptr` is not `NULL`.
+ * @li The priority queue is not full.
+ *
+ * @param[in,out] pqueue_ptr The priority queue pointer.
+ * @param[in] value The value.
+ * @param[in] priority The priority (with large number meaning high priority and vice versa).
+ */
 static inline void JOIN(FPQUEUE_NAME, push)(FPQUEUE_TYPE* pqueue_ptr, const VALUE_TYPE value, const uint32_t priority) {
     assert(pqueue_ptr != NULL);
     assert(FPQUEUE_IS_FULL(pqueue_ptr) == false);
@@ -177,12 +345,31 @@ static inline void JOIN(FPQUEUE_NAME, push)(FPQUEUE_TYPE* pqueue_ptr, const VALU
     JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(pqueue_ptr, index);
 }
 
+/**
+ * @brief Clear the elements in the priority queue.
+ *
+ * Assumes `pqueue_ptr` is not `NULL`.
+ *
+ * @param[in,out] pqueue_ptr The priority queue pointer.
+ */
 static inline void JOIN(FPQUEUE_NAME, clear)(FPQUEUE_TYPE* pqueue_ptr) {
     assert(pqueue_ptr != NULL);
 
     pqueue_ptr->count = 0;
 }
 
+/**
+ * @brief Copy the values from a source priority queue to a destination priority queue.
+ *
+ * Assumes:
+ * @li Source and destination priority queue pointers are not pointing to the same memory.
+ * @li The priority queue pointers are not `NULL`.
+ * @li The destination priority queue has a capacity that is greater than or equal to source priority queue count.
+ * @li The destination priority queue is an empty priority queue.
+ *
+ * @param[in,out] dest_pqueue_ptr The destination priority queue.
+ * @param[in] src_pqueue_ptr The source priority queue.
+ */
 static inline void JOIN(FPQUEUE_NAME, copy)(FPQUEUE_TYPE* restrict dest_pqueue_ptr, const FPQUEUE_TYPE* restrict src_pqueue_ptr) {
     assert(src_pqueue_ptr != NULL);
     assert(dest_pqueue_ptr != NULL);
@@ -195,6 +382,10 @@ static inline void JOIN(FPQUEUE_NAME, copy)(FPQUEUE_TYPE* restrict dest_pqueue_p
     dest_pqueue_ptr->count = src_pqueue_ptr->count;
 }
 
+// }}}
+
+// macro undefs: {{{
+
 #undef NAME
 #undef VALUE_TYPE
 
@@ -204,8 +395,6 @@ static inline void JOIN(FPQUEUE_NAME, copy)(FPQUEUE_TYPE* restrict dest_pqueue_p
 #undef FPQUEUE_IS_EMPTY
 #undef FPQUEUE_IS_FULL
 
-#undef FPQUEUE_LCHILD
-#undef FPQUEUE_RCHILD
-#undef FPQUEUE_PARENT
+// }}}
 
 // vim: ft=c fdm=marker

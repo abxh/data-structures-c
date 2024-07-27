@@ -55,6 +55,7 @@
  */
 
 #include "murmurhash.h"    // murmur_32
+#include "fnvhash.h"       // fnvhash_32, fnvhash_32_str
 #include "paste.h"         // PASTE, XPASTE, JOIN
 #include "round_up_pow2.h" // round_up_pow2
 
