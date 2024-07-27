@@ -124,7 +124,7 @@ $(function(){ initResizable(false); });
 <div class="line">        <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* node_ptr = head.<a id="a6" name="a6"></a><a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>;</div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">while</span> (!<a id="a7" name="a7"></a><a class="code hl_function" href="list_8h.html#a309f918c33372b4df39c3e60abf2f6f2">list_node_is_head</a>(node_ptr, &amp;head)) {</div>
-<div class="line">            <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* next_ptr = node_ptr-&gt;<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>; <span class="comment">// this must be stored, should the list be modified under interation</span></div>
+<div class="line">            <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* next_ptr = node_ptr-&gt;<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>; <span class="comment">// this must be stored, should the list be modified under iteration (not in this particular case)</span></div>
 <div class="line">            char_elm_type* elm = <a id="a8" name="a8"></a><a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, char_elm_type, node);</div>
 <div class="line"> </div>
 <div class="line">            assert(c == elm-&gt;c);</div>
@@ -221,7 +221,7 @@ $(function(){ initResizable(false); });
 <div class="line">        <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* node_ptr = &amp;first_elm_ptr-&gt;node;</div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">while</span> (!<a id="a13" name="a13"></a><a class="code hl_function" href="list_8h.html#af2dce9872ec5d321810eb173adf2533e">list_node_is_tail</a>(node_ptr, &amp;tail)) {</div>
-<div class="line">            <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* next_ptr = node_ptr-&gt;<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>; <span class="comment">// this must be stored, should the list be modified under interation</span></div>
+<div class="line">            <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* next_ptr = node_ptr-&gt;<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>; <span class="comment">// this must be stored, should the list be modified under iteration</span></div>
 <div class="line">            char_elm_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, char_elm_type, node);</div>
 <div class="line"> </div>
 <div class="line">            assert(c == elm-&gt;c);</div>
