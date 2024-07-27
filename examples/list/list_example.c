@@ -34,7 +34,7 @@ void list_stack(void) {
         list_node_type* node_ptr = head.next_ptr;
 
         while (!list_node_is_head(node_ptr, &head)) {
-            list_node_type* next_ptr = node_ptr->next_ptr; // this must be stored, should the list be modified under interation
+            list_node_type* next_ptr = node_ptr->next_ptr; // this must be stored, should the list be modified under iteration (not in this particular case)
             char_elm_type* elm = list_node_entry(node_ptr, char_elm_type, node);
 
             assert(c == elm->c);
@@ -131,7 +131,7 @@ void list_queue(void) {
         list_node_type* node_ptr = &first_elm_ptr->node;
 
         while (!list_node_is_tail(node_ptr, &tail)) {
-            list_node_type* next_ptr = node_ptr->next_ptr; // this must be stored, should the list be modified under interation
+            list_node_type* next_ptr = node_ptr->next_ptr; // this must be stored, should the list be modified under iteration
             char_elm_type* elm = list_node_entry(node_ptr, char_elm_type, node);
 
             assert(c == elm->c);
