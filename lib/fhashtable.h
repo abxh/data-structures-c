@@ -216,10 +216,6 @@ static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const uint32_t capa
         return NULL;
     }
     const uint32_t capacity_new = round_up_pow2(capacity);
-    if (capacity_new > (uint32_t)(SIZE_MAX - offsetof(FHASHTABLE_TYPE, slots)) / sizeof(FHASHTABLE_SLOT_TYPE)) {
-        return NULL;
-    }
-
     FHASHTABLE_TYPE* hashtable_ptr =
         (FHASHTABLE_TYPE*)malloc(offsetof(FHASHTABLE_TYPE, slots) + capacity_new * sizeof(FHASHTABLE_SLOT_TYPE));
     if (!hashtable_ptr) {
