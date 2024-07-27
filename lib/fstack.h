@@ -83,7 +83,7 @@
  * @warning Modifying the stack under the iteration may result in errors.
  *
  * @param[in] stack_ptr Stack pointer.
- * @param[in] index Temporary indexing variable. Should be `size_t`
+ * @param[in] index Temporary indexing variable. Should be `uint32_t`
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
 #define fstack_for_each(stack_ptr, index, value)             \
@@ -101,7 +101,7 @@
  * @warning Modifying the stack under the iteration may result in errors.
  *
  * @param[in] stack_ptr Stack pointer.
- * @param[in] index Temporary indexing variable. Should be `size_t`
+ * @param[in] index Temporary indexing variable. Should be `uint32_t`
  * @param[out] value Current value. Should be `VALUE_TYPE`.
  */
 #define fstack_for_each_reverse(stack_ptr, index, value) \
@@ -129,8 +129,8 @@
  * @brief Generated stack struct type for a given `VALUE_TYPE`.
  */
 typedef struct {
-    size_t count;        ///< number of values in the stack.
-    size_t capacity;     ///< maximum number of values allocated for in the stack.
+    uint32_t count;        ///< number of values in the stack.
+    uint32_t capacity;     ///< maximum number of values allocated for in the stack.
     VALUE_TYPE values[]; ///< array of values.
 } FSTACK_TYPE;
 
@@ -144,11 +144,11 @@ typedef struct {
  * @param[in] capacity Maximum number of elements expected to be stored in the stack.
  * @return A pointer to the stack.
  * @retval `NULL`
- *   @li If capacity is 0 or the stack size cannot be represented by `size_t`.
+ *   @li If capacity is 0 or is larger than UINT32_MAX.
  *   @li If malloc fails.
  */
-static inline FSTACK_TYPE* JOIN(FSTACK_NAME, create)(const size_t capacity) {
-    if (capacity == 0 || capacity > (SIZE_MAX - offsetof(FSTACK_TYPE, values)) / sizeof(VALUE_TYPE)) {
+static inline FSTACK_TYPE* JOIN(FSTACK_NAME, create)(const uint32_t capacity) {
+    if (capacity == 0 || capacity > (UINT32_MAX - offsetof(FSTACK_TYPE, values)) / sizeof(VALUE_TYPE)) {
         return NULL;
     }
     FSTACK_TYPE* stack_ptr = (FSTACK_TYPE*)malloc(offsetof(FSTACK_TYPE, values) + capacity * sizeof(VALUE_TYPE));
@@ -217,7 +217,7 @@ static inline bool JOIN(FSTACK_NAME, is_full)(const FSTACK_TYPE* stack_ptr) {
  * @param[in] index The index to retrieve to value from.
  * @return The value at `index`.
  */
-static inline VALUE_TYPE JOIN(FSTACK_NAME, at)(const FSTACK_TYPE* stack_ptr, const size_t index) {
+static inline VALUE_TYPE JOIN(FSTACK_NAME, at)(const FSTACK_TYPE* stack_ptr, const uint32_t index) {
     assert(stack_ptr != NULL);
     assert(index < stack_ptr->count);
 
@@ -336,7 +336,7 @@ static inline void JOIN(FSTACK_NAME, copy)(FSTACK_TYPE* restrict dest_stack_ptr,
     assert(src_stack_ptr->count <= dest_stack_ptr->capacity);
     assert(FSTACK_IS_EMPTY(dest_stack_ptr));
 
-    for (size_t i = 0; i < src_stack_ptr->count; i++) {
+    for (uint32_t i = 0; i < src_stack_ptr->count; i++) {
         dest_stack_ptr->values[i] = src_stack_ptr->values[i];
     }
     dest_stack_ptr->count = src_stack_ptr->count;

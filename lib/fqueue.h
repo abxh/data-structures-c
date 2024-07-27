@@ -142,7 +142,7 @@ typedef struct {
  * @return A pointer to the queue.
  * @retval `NULL`
  *   @li If malloc fails.
- *   @li If capacity is 0 or the queue size [rounded up to the power of 2] is larger than UINT32_MAX / 4.
+ *   @li If capacity is 0 or [capacity rounded up to the power of 2] is larger than UINT32_MAX / 4.
  */
 static inline FQUEUE_TYPE* JOIN(FQUEUE_NAME, create)(const uint32_t capacity) {
     if (capacity == 0 || capacity > UINT32_MAX / 4) {
