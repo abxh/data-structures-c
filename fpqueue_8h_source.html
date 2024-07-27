@@ -205,7 +205,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, downheap)(<a class="code hl_struct" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a>* pqueue_ptr, <span class="keyword">const</span> uint32_t index) {</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    assert(pqueue_ptr != NULL);</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    assert(index &lt; pqueue_ptr-&gt;count);</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    assert(index &lt;= pqueue_ptr-&gt;count);</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="keyword">const</span> uint32_t l = FPQUEUE_LCHILD(index);</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keyword">const</span> uint32_t r = FPQUEUE_RCHILD(index);</div>
@@ -239,75 +239,73 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    pqueue_ptr-&gt;count--;</div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="keywordflow">if</span> (pqueue_ptr-&gt;count != 0) {</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, downheap)(pqueue_ptr, 0);</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    }</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    <span class="keywordflow">return</span> max;</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>}</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, upheap)(<a class="code hl_struct" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a>* pqueue_ptr, uint32_t index) {</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    assert(pqueue_ptr != NULL);</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    assert(index &lt; pqueue_ptr-&gt;count);</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    uint32_t parent;</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <span class="keywordflow">while</span> (index &gt; 0 &amp;&amp; (parent = FPQUEUE_PARENT(index),</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, downheap)(pqueue_ptr, 0);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordflow">return</span> max;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>}</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, upheap)(<a class="code hl_struct" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a>* pqueue_ptr, uint32_t index) {</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    assert(pqueue_ptr != NULL);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    assert(index &lt; pqueue_ptr-&gt;count);</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    uint32_t parent;</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keywordflow">while</span> (index &gt; 0 &amp;&amp; (parent = FPQUEUE_PARENT(index),</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>                         pqueue_ptr-&gt;elements[parent].priority &lt; pqueue_ptr-&gt;elements[index].priority)) {</div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>                         pqueue_ptr-&gt;elements[parent].priority &lt; pqueue_ptr-&gt;elements[index].priority)) {</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        <span class="keyword">const</span> <a class="code hl_struct" href="structFPQUEUE__ELEMENT__TYPE.html">FPQUEUE_ELEMENT_TYPE</a> temp = pqueue_ptr-&gt;elements[index];</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        pqueue_ptr-&gt;elements[index] = pqueue_ptr-&gt;elements[parent];</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        pqueue_ptr-&gt;elements[parent] = temp;</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        index = parent;</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    }</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>}</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, push)(<a class="code hl_struct" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a>* pqueue_ptr, <span class="keyword">const</span> <a class="code hl_define" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value, <span class="keyword">const</span> uint32_t priority) {</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    assert(pqueue_ptr != NULL);</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    assert(!FPQUEUE_IS_FULL(pqueue_ptr));</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keyword">const</span> <a class="code hl_struct" href="structFPQUEUE__ELEMENT__TYPE.html">FPQUEUE_ELEMENT_TYPE</a> temp = pqueue_ptr-&gt;elements[index];</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        pqueue_ptr-&gt;elements[index] = pqueue_ptr-&gt;elements[parent];</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        pqueue_ptr-&gt;elements[parent] = temp;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        index = parent;</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    }</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>}</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, push)(<a class="code hl_struct" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a>* pqueue_ptr, <span class="keyword">const</span> <a class="code hl_define" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value, <span class="keyword">const</span> uint32_t priority) {</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    assert(pqueue_ptr != NULL);</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    assert(!FPQUEUE_IS_FULL(pqueue_ptr));</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <span class="keyword">const</span> uint32_t index = pqueue_ptr-&gt;count;</div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    <span class="keyword">const</span> uint32_t index = pqueue_ptr-&gt;count;</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    pqueue_ptr-&gt;elements[index] = (<a class="code hl_struct" href="structFPQUEUE__ELEMENT__TYPE.html">FPQUEUE_ELEMENT_TYPE</a>){.priority = priority, .value = value};</div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    pqueue_ptr-&gt;elements[index] = (<a class="code hl_struct" href="structFPQUEUE__ELEMENT__TYPE.html">FPQUEUE_ELEMENT_TYPE</a>){.priority = priority, .value = value};</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    pqueue_ptr-&gt;count++;</div>
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    pqueue_ptr-&gt;count++;</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, upheap)(pqueue_ptr, index);</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>}</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, clear)(<a class="code hl_struct" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a>* pqueue_ptr) {</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    assert(pqueue_ptr != NULL);</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    pqueue_ptr-&gt;count = 0;</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>}</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, copy)(<a class="code hl_struct" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a>* restrict dest_pqueue_ptr, <span class="keyword">const</span> <a class="code hl_struct" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a>* restrict src_pqueue_ptr) {</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    assert(src_pqueue_ptr != NULL);</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    assert(dest_pqueue_ptr != NULL);</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    assert(src_pqueue_ptr-&gt;count &lt;= dest_pqueue_ptr-&gt;capacity);</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    assert(FPQUEUE_IS_EMPTY(dest_pqueue_ptr));</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; src_pqueue_ptr-&gt;count; i++) {</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        dest_pqueue_ptr-&gt;elements[i] = src_pqueue_ptr-&gt;elements[i];</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    }</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    dest_pqueue_ptr-&gt;count = src_pqueue_ptr-&gt;count;</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>}</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span><span class="preprocessor">#undef NAME</span></div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="preprocessor">#undef VALUE_TYPE</span></div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="preprocessor">#undef FPQUEUE_NAME</span></div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="preprocessor">#undef FPQUEUE_TYPE</span></div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span><span class="preprocessor">#undef FPQUEUE_ELEMENT_TYPE</span></div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span><span class="preprocessor">#undef FPQUEUE_IS_EMPTY</span></div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><span class="preprocessor">#undef FPQUEUE_IS_FULL</span></div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="preprocessor">#undef FPQUEUE_LCHILD</span></div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span><span class="preprocessor">#undef FPQUEUE_RCHILD</span></div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span><span class="preprocessor">#undef FPQUEUE_PARENT</span></div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span><span class="comment">// vim: ft=c fdm=marker</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, upheap)(pqueue_ptr, index);</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>}</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, clear)(<a class="code hl_struct" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a>* pqueue_ptr) {</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    assert(pqueue_ptr != NULL);</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    pqueue_ptr-&gt;count = 0;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>}</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, copy)(<a class="code hl_struct" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a>* restrict dest_pqueue_ptr, <span class="keyword">const</span> <a class="code hl_struct" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a>* restrict src_pqueue_ptr) {</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    assert(src_pqueue_ptr != NULL);</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    assert(dest_pqueue_ptr != NULL);</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    assert(src_pqueue_ptr-&gt;count &lt;= dest_pqueue_ptr-&gt;capacity);</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    assert(FPQUEUE_IS_EMPTY(dest_pqueue_ptr));</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; src_pqueue_ptr-&gt;count; i++) {</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        dest_pqueue_ptr-&gt;elements[i] = src_pqueue_ptr-&gt;elements[i];</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    }</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    dest_pqueue_ptr-&gt;count = src_pqueue_ptr-&gt;count;</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>}</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="preprocessor">#undef NAME</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="preprocessor">#undef VALUE_TYPE</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="preprocessor">#undef FPQUEUE_NAME</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span><span class="preprocessor">#undef FPQUEUE_TYPE</span></div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="preprocessor">#undef FPQUEUE_ELEMENT_TYPE</span></div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="preprocessor">#undef FPQUEUE_IS_EMPTY</span></div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span><span class="preprocessor">#undef FPQUEUE_IS_FULL</span></div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><span class="preprocessor">#undef FPQUEUE_LCHILD</span></div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span><span class="preprocessor">#undef FPQUEUE_RCHILD</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="preprocessor">#undef FPQUEUE_PARENT</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span><span class="comment">// vim: ft=c fdm=marker</span></div>
 <div class="ttc" id="afhashtable_8h_html_ae17cb099b4c9aee7835032339b5a9e0d"><div class="ttname"><a href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></div><div class="ttdeci">#define VALUE_TYPE</div><div class="ttdoc">The value type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:103</div></div>
 <div class="ttc" id="apaste_8h_html"><div class="ttname"><a href="paste_8h.html">paste.h</a></div><div class="ttdoc">C preprocessor macros for pasting tokens together.</div></div>
 <div class="ttc" id="apaste_8h_html_a1665af4d61d120cdba4d77101d179703"><div class="ttname"><a href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a></div><div class="ttdeci">#define JOIN(a, b)</div><div class="ttdoc">First expand tokens, then paste them together with a _ in between.</div><div class="ttdef"><b>Definition</b> paste.h:44</div></div>
