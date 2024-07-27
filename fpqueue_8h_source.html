@@ -273,7 +273,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    assert(pqueue_ptr != NULL);</div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    assert(FPQUEUE_IS_EMPTY(pqueue_ptr) == <span class="keyword">false</span>);</div>
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    <span class="keyword">const</span> <a class="code hl_define" href="fpqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> max = pqueue_ptr-&gt;elements[0].value;</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    <a class="code hl_define" href="fpqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> max = pqueue_ptr-&gt;elements[0].value;</div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span> </div>
 <div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    pqueue_ptr-&gt;elements[0] = pqueue_ptr-&gt;elements[pqueue_ptr-&gt;count - 1];</div>
 <div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> </div>
@@ -303,7 +303,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>}</div>
 <div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> </div>
 <div class="foldopen" id="foldopen00335" data-start="{" data-end="}">
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno"><a class="line" href="fpqueue_8h.html#a176a7010fbfcddb3a60c0b6fbfce1632">  335</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, push)(<a class="code hl_struct" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a>* pqueue_ptr, <span class="keyword">const</span> <a class="code hl_define" href="fpqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value, <span class="keyword">const</span> uint32_t priority) {</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno"><a class="line" href="fpqueue_8h.html#a6c2bca5876a07f60c039ef1bf50789bf">  335</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, push)(<a class="code hl_struct" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a>* pqueue_ptr, <a class="code hl_define" href="fpqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value, uint32_t priority) {</div>
 <div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    assert(pqueue_ptr != NULL);</div>
 <div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    assert(FPQUEUE_IS_FULL(pqueue_ptr) == <span class="keyword">false</span>);</div>
 <div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span> </div>

@@ -161,9 +161,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a809dfa9a9a0424e1332023c8b3b479ca" id="r_a809dfa9a9a0424e1332023c8b3b479ca"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a809dfa9a9a0424e1332023c8b3b479ca">FPQUEUE_NAME_pop_max</a> (<a class="el" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a> *pqueue_ptr)</td></tr>
 <tr class="memdesc:a809dfa9a9a0424e1332023c8b3b479ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop the max value away from the priority queue.  <br /></td></tr>
 <tr class="separator:a809dfa9a9a0424e1332023c8b3b479ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a176a7010fbfcddb3a60c0b6fbfce1632" id="r_a176a7010fbfcddb3a60c0b6fbfce1632"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a176a7010fbfcddb3a60c0b6fbfce1632">FPQUEUE_NAME_push</a> (<a class="el" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a> *pqueue_ptr, const <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value, const uint32_t priority)</td></tr>
-<tr class="memdesc:a176a7010fbfcddb3a60c0b6fbfce1632"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value with given priority onto the priority queue.  <br /></td></tr>
-<tr class="separator:a176a7010fbfcddb3a60c0b6fbfce1632"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c2bca5876a07f60c039ef1bf50789bf" id="r_a6c2bca5876a07f60c039ef1bf50789bf"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c2bca5876a07f60c039ef1bf50789bf">FPQUEUE_NAME_push</a> (<a class="el" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a> *pqueue_ptr, <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value, uint32_t priority)</td></tr>
+<tr class="memdesc:a6c2bca5876a07f60c039ef1bf50789bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value with given priority onto the priority queue.  <br /></td></tr>
+<tr class="separator:a6c2bca5876a07f60c039ef1bf50789bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f02a766eff92b254eee343caa204126" id="r_a5f02a766eff92b254eee343caa204126"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f02a766eff92b254eee343caa204126">FPQUEUE_NAME_clear</a> (<a class="el" href="structFPQUEUE__TYPE.html">FPQUEUE_TYPE</a> *pqueue_ptr)</td></tr>
 <tr class="memdesc:a5f02a766eff92b254eee343caa204126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the elements in the priority queue.  <br /></td></tr>
 <tr class="separator:a5f02a766eff92b254eee343caa204126"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -678,8 +678,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a176a7010fbfcddb3a60c0b6fbfce1632" name="a176a7010fbfcddb3a60c0b6fbfce1632"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a176a7010fbfcddb3a60c0b6fbfce1632">&#9670;&#160;</a></span>FPQUEUE_NAME_push()</h2>
+<a id="a6c2bca5876a07f60c039ef1bf50789bf" name="a6c2bca5876a07f60c039ef1bf50789bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c2bca5876a07f60c039ef1bf50789bf">&#9670;&#160;</a></span>FPQUEUE_NAME_push()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -695,12 +695,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
+          <td class="paramtype"><a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></td>          <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>priority</em></span>&#160;)</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>priority</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
