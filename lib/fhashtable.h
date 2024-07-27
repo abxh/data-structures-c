@@ -172,6 +172,7 @@
 #define FHASHTABLE_TYPE JOIN(FHASHTABLE_NAME, type)
 #define FHASHTABLE_SLOT_TYPE JOIN(JOIN(FHASHTABLE_NAME, slot), type)
 #define FHASHTABLE_IS_FULL JOIN(FHASHTABLE_NAME, is_full)
+#define FHASHTABLE_CONTAINS_KEY JOIN(FHASHTABLE_NAME, contains_key)
 /// @endcond
 
 // }}}
@@ -411,7 +412,7 @@ static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, search)(FHASHTABLE_TYPE* hashtab
  */
 static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
     assert(hashtable_ptr != NULL);
-    assert(JOIN(FHASHTABLE_NAME, contains_key)(hashtable_ptr, key) == false);
+    assert(FHASHTABLE_CONTAINS_KEY(hashtable_ptr, key) == false);
 
     const uint32_t index_mask = hashtable_ptr->capacity - 1;
     const uint32_t key_hash = HASH_FUNCTION(key);
@@ -592,6 +593,7 @@ static inline void JOIN(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE* restrict dest_ha
 #undef FHASHTABLE_SLOT_TYPE
 #undef FHASHTABLE_TYPE
 #undef FHASHTABLE_IS_FULL
+#undef FHASHTABLE_CONTAINS_KEY
 
 // }}}
 

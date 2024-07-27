@@ -106,7 +106,7 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, peek)(const FPQUEUE_TYPE* pqueue_ptr
     return JOIN(FPQUEUE_NAME, get_max)(pqueue_ptr);
 }
 
-static inline void JOIN(FPQUEUE_NAME, downheap)(FPQUEUE_TYPE* pqueue_ptr, const uint32_t index) {
+static inline void JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(FPQUEUE_TYPE* pqueue_ptr, const uint32_t index) {
     assert(pqueue_ptr != NULL);
     assert(pqueue_ptr->count == 0 || index < pqueue_ptr->count);
 
@@ -129,12 +129,12 @@ static inline void JOIN(FPQUEUE_NAME, downheap)(FPQUEUE_TYPE* pqueue_ptr, const 
     pqueue_ptr->elements[index] = pqueue_ptr->elements[largest];
     pqueue_ptr->elements[largest] = temp;
 
-    JOIN(FPQUEUE_NAME, downheap)(pqueue_ptr, largest);
+    JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(pqueue_ptr, largest);
 }
 
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE* pqueue_ptr) {
     assert(pqueue_ptr != NULL);
-    assert(!FPQUEUE_IS_EMPTY(pqueue_ptr));
+    assert(FPQUEUE_IS_EMPTY(pqueue_ptr) == false);
 
     const VALUE_TYPE max = pqueue_ptr->elements[0].value;
 
@@ -142,12 +142,12 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE* pqueue_ptr) {
 
     pqueue_ptr->count--;
 
-    JOIN(FPQUEUE_NAME, downheap)(pqueue_ptr, 0);
+    JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(pqueue_ptr, 0);
 
     return max;
 }
 
-static inline void JOIN(FPQUEUE_NAME, upheap)(FPQUEUE_TYPE* pqueue_ptr, uint32_t index) {
+static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE* pqueue_ptr, uint32_t index) {
     assert(pqueue_ptr != NULL);
     assert(index < pqueue_ptr->count);
 
@@ -166,7 +166,7 @@ static inline void JOIN(FPQUEUE_NAME, upheap)(FPQUEUE_TYPE* pqueue_ptr, uint32_t
 
 static inline void JOIN(FPQUEUE_NAME, push)(FPQUEUE_TYPE* pqueue_ptr, const VALUE_TYPE value, const uint32_t priority) {
     assert(pqueue_ptr != NULL);
-    assert(!FPQUEUE_IS_FULL(pqueue_ptr));
+    assert(FPQUEUE_IS_FULL(pqueue_ptr) == false);
 
     const uint32_t index = pqueue_ptr->count;
 
@@ -174,7 +174,7 @@ static inline void JOIN(FPQUEUE_NAME, push)(FPQUEUE_TYPE* pqueue_ptr, const VALU
 
     pqueue_ptr->count++;
 
-    JOIN(FPQUEUE_NAME, upheap)(pqueue_ptr, index);
+    JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(pqueue_ptr, index);
 }
 
 static inline void JOIN(FPQUEUE_NAME, clear)(FPQUEUE_TYPE* pqueue_ptr) {
