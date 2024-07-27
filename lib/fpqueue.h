@@ -291,7 +291,7 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE* pqueue_ptr) {
     assert(pqueue_ptr != NULL);
     assert(FPQUEUE_IS_EMPTY(pqueue_ptr) == false);
 
-    const VALUE_TYPE max = pqueue_ptr->elements[0].value;
+    VALUE_TYPE max = pqueue_ptr->elements[0].value;
 
     pqueue_ptr->elements[0] = pqueue_ptr->elements[pqueue_ptr->count - 1];
 
@@ -332,7 +332,7 @@ static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE* pque
  * @param[in] value The value.
  * @param[in] priority The priority (with large number meaning high priority and vice versa).
  */
-static inline void JOIN(FPQUEUE_NAME, push)(FPQUEUE_TYPE* pqueue_ptr, const VALUE_TYPE value, const uint32_t priority) {
+static inline void JOIN(FPQUEUE_NAME, push)(FPQUEUE_TYPE* pqueue_ptr, VALUE_TYPE value, uint32_t priority) {
     assert(pqueue_ptr != NULL);
     assert(FPQUEUE_IS_FULL(pqueue_ptr) == false);
 
