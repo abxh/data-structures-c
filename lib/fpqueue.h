@@ -206,4 +206,8 @@ static inline void JOIN(FPQUEUE_NAME, copy)(FPQUEUE_TYPE* restrict dest_pqueue_p
 #undef FPQUEUE_IS_EMPTY
 #undef FPQUEUE_IS_FULL
 
+#undef FPQUEUE_LCHILD
+#undef FPQUEUE_RCHILD
+#undef FPQUEUE_PARENT
+
 // vim: ft=c fdm=marker
