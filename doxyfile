@@ -24,7 +24,11 @@ PREDEFINED = \
              \
              "FHASHTABLE_NAME=fhashtable" \
              "FHASHTABLE_TYPE=fhashtable_type" \
-             "FHASHTABLE_SLOT_TYPE=fhashtable_slot_type"
+             "FHASHTABLE_SLOT_TYPE=fhashtable_slot_type" \
+             \
+             "FPQUEUE_NAME=fpqueue" \
+             "FPQUEUE_TYPE=fpqueue_type" \
+             "FPQUEUE_ELEMENT_TYPE=fpqueue_element_type"
 
 EXPAND_AS_DEFINED = \
                     PASTE \
