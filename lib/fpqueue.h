@@ -102,7 +102,7 @@
 
 /**
  * @def fpqueue_for_each(pqueue_ptr, index, value_)
- * @brief Iterate over the values in the priority queue in arbitary order.
+ * @brief Iterate over the values in the priority queue in breadth-first order.
  * @warning Modifying the priority queue under the iteration may result in errors.
  *
  * @param[in] pqueue_ptr Priority queue pointer.
