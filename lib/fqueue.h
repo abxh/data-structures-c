@@ -33,7 +33,7 @@
  */
 
 #include "paste.h"         // PASTE, XPASTE, JOIN
-#include "round_up_pow2.h" // round_up_pow2
+#include "round_up_pow2.h" // round_up_pow2_32
 
 #include <assert.h>
 #include <stdint.h>

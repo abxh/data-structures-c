@@ -57,7 +57,7 @@
 #include "murmurhash.h"    // murmur_32
 #include "fnvhash.h"       // fnvhash_32, fnvhash_32_str
 #include "paste.h"         // PASTE, XPASTE, JOIN
-#include "round_up_pow2.h" // round_up_pow2
+#include "round_up_pow2.h" // round_up_pow2_32
 
 #include <assert.h>
 #include <stdint.h>
@@ -217,7 +217,7 @@ static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const uint32_t capa
     if (capacity == 0 || capacity > UINT32_MAX / 4) {
         return NULL;
     }
-    const uint32_t capacity_new = round_up_pow2(capacity);
+    const uint32_t capacity_new = round_up_pow2_32(capacity);
     FHASHTABLE_TYPE* hashtable_ptr =
         (FHASHTABLE_TYPE*)malloc(offsetof(FHASHTABLE_TYPE, slots) + capacity_new * sizeof(FHASHTABLE_SLOT_TYPE));
     if (!hashtable_ptr) {
