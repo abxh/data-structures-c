@@ -187,6 +187,10 @@ $(function(){ initResizable(false); });
 <div class="line">        assert(cpy_count == lim);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
+<div class="line">    assert(s_copy-&gt;count == lim);</div>
+<div class="line">    uintstk_clear(s_copy);</div>
+<div class="line">    assert(s_copy-&gt;count == 0);</div>
+<div class="line"> </div>
 <div class="line">    uintstk_destroy(s);</div>
 <div class="line">    uintstk_destroy(s_copy);</div>
 <div class="line">}</div>

@@ -113,9 +113,12 @@ $(function(){ initResizable(false); });
 <div class="line">        assert(<span class="keyword">false</span>);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
+<div class="line">    assert(pq-&gt;capacity &gt;= 10);</div>
+<div class="line"> </div>
 <div class="line">    <span class="keyword">const</span> <span class="keywordtype">int</span> values[10] = {3, 1, 5, 2, 4, 7, 6, 10, 9, 8};</div>
 <div class="line"> </div>
 <div class="line">    assert(pqueue_int_is_empty(pq));</div>
+<div class="line">    assert(pq-&gt;count == 0);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 10; i++) {</div>
 <div class="line">        <span class="keyword">const</span> uint32_t priority = values[i];</div>
@@ -126,15 +129,31 @@ $(function(){ initResizable(false); });
 <div class="line">        printf(<span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
+<div class="line">    assert(pq-&gt;count == 10);</div>
 <div class="line">    assert(pqueue_int_is_full(pq));</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 10; i++) {</div>
-<div class="line">        assert(pqueue_int_get_max(pq) == 10 - i);</div>
+<div class="line">    assert(pqueue_int_peek(pq) == 10);</div>
+<div class="line">    assert(pqueue_int_get_max(pq) == 10);</div>
 <div class="line"> </div>
+<div class="line">    pqueue_int_type* pq_copy = pqueue_int_create(10);</div>
+<div class="line">    <span class="keywordflow">if</span> (!pq) {</div>
+<div class="line">        assert(<span class="keyword">false</span>);</div>
+<div class="line">    }</div>
+<div class="line">    pqueue_int_copy(pq_copy, pq);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 10; i++) {</div>
 <div class="line">        assert(pqueue_int_pop_max(pq) == 10 - i);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
+<div class="line">    <span class="keywordtype">bool</span> covered[11] = {<span class="keyword">true</span>, <span class="keyword">false</span>};</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 10; i++) {</div>
+<div class="line">        assert(!covered[pqueue_int_get_max(pq_copy)]);</div>
+<div class="line"> </div>
+<div class="line">        covered[pqueue_int_pop_max(pq_copy)] = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
 <div class="line">    pqueue_int_destroy(pq);</div>
+<div class="line">    pqueue_int_destroy(pq_copy);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>) {</div>

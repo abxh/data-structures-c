@@ -216,6 +216,10 @@ $(function(){ initResizable(false); });
 <div class="line">        assert(table[i] == <span class="keyword">true</span>);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
+<div class="line">    assert(ht_copy-&gt;count == (<span class="keywordtype">size_t</span>)LIM);</div>
+<div class="line">    int_to_int_hashtable_clear(ht_copy);</div>
+<div class="line">    assert(ht_copy-&gt;count == 0);</div>
+<div class="line"> </div>
 <div class="line">    int_to_int_hashtable_destroy(ht_copy);</div>
 <div class="line">}</div>
 <div class="line"> </div>

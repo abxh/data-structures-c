@@ -194,6 +194,10 @@ $(function(){ initResizable(false); });
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"> </div>
+<div class="line">    assert(q_copy-&gt;count == (<span class="keywordtype">size_t</span>)lim);</div>
+<div class="line">    int_queue_clear(q_copy);</div>
+<div class="line">    assert(q_copy-&gt;count == 0);</div>
+<div class="line"> </div>
 <div class="line">    int_queue_destroy(q);</div>
 <div class="line">    int_queue_destroy(q_copy);</div>
 <div class="line">}</div>
