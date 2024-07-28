@@ -105,8 +105,8 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aeb1f6516cf6ffc3107d86d7ee7e47569" id="r_aeb1f6516cf6ffc3107d86d7ee7e47569"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb1f6516cf6ffc3107d86d7ee7e47569">round_up_pow2</a> (uint32_t x)</td></tr>
-<tr class="separator:aeb1f6516cf6ffc3107d86d7ee7e47569"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac941ab6788f53c3a24b85c5ae53ec954" id="r_ac941ab6788f53c3a24b85c5ae53ec954"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac941ab6788f53c3a24b85c5ae53ec954">round_up_pow2_32</a> (uint32_t x)</td></tr>
+<tr class="separator:ac941ab6788f53c3a24b85c5ae53ec954"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Round up to the next power of two. </p>
@@ -115,8 +115,8 @@ Functions</h2></td></tr>
 <li>Intrinsics: <a href="https://en.wikipedia.org/wiki/Find_first_set#Tool_and_library_support">https://en.wikipedia.org/wiki/Find_first_set#Tool_and_library_support</a> </li>
 </ul>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="aeb1f6516cf6ffc3107d86d7ee7e47569" name="aeb1f6516cf6ffc3107d86d7ee7e47569"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb1f6516cf6ffc3107d86d7ee7e47569">&#9670;&#160;</a></span>round_up_pow2()</h2>
+<a id="ac941ab6788f53c3a24b85c5ae53ec954" name="ac941ab6788f53c3a24b85c5ae53ec954"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac941ab6788f53c3a24b85c5ae53ec954">&#9670;&#160;</a></span>round_up_pow2_32()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -125,7 +125,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t round_up_pow2 </td>
+          <td class="memname">static uint32_t round_up_pow2_32 </td>
           <td>(</td>
           <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
           <td></td>
@@ -140,7 +140,7 @@ Functions</h2></td></tr>
 <p>Round up to the next power of two.</p>
 <p>Assumes: </p><ul>
 <li>x is strictly larger than 0. </li>
-<li>x is smaller than than the defined UINTPTR_MAX / 4.</li>
+<li>x is smaller than than the defined UINT32_MAX / 4.</li>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

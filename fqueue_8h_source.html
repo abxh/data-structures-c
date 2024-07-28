@@ -112,7 +112,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;<a class="code" href="paste_8h.html">paste.h</a>&quot;</span>         <span class="comment">// PASTE, XPASTE, JOIN</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;<a class="code" href="round__up__pow2_8h.html">round_up_pow2.h</a>&quot;</span> <span class="comment">// round_up_pow2</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;<a class="code" href="round__up__pow2_8h.html">round_up_pow2.h</a>&quot;</span> <span class="comment">// round_up_pow2_32</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &lt;assert.h&gt;</span></div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
@@ -188,7 +188,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <span class="keywordflow">if</span> (capacity == 0 || capacity &gt; UINT32_MAX / 4) {</div>
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        <span class="keywordflow">return</span> NULL;</div>
 <div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    }</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keyword">const</span> uint32_t capacity_new = <a class="code hl_function" href="round__up__pow2_8h.html#aeb1f6516cf6ffc3107d86d7ee7e47569">round_up_pow2</a>(capacity);</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keyword">const</span> uint32_t capacity_new = round_up_pow2(capacity);</div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    FQUEUE_TYPE* queue_ptr = (FQUEUE_TYPE*)malloc(offsetof(FQUEUE_TYPE, values) + capacity_new * <span class="keyword">sizeof</span>(<a class="code hl_define" href="fqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>));</div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keywordflow">if</span> (!queue_ptr) {</div>
@@ -345,7 +345,6 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="apaste_8h_html"><div class="ttname"><a href="paste_8h.html">paste.h</a></div><div class="ttdoc">C preprocessor macros for pasting tokens together.</div></div>
 <div class="ttc" id="apaste_8h_html_a1665af4d61d120cdba4d77101d179703"><div class="ttname"><a href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a></div><div class="ttdeci">#define JOIN(a, b)</div><div class="ttdoc">First expand tokens, then paste them together with a _ in between.</div><div class="ttdef"><b>Definition</b> paste.h:44</div></div>
 <div class="ttc" id="around__up__pow2_8h_html"><div class="ttname"><a href="round__up__pow2_8h.html">round_up_pow2.h</a></div><div class="ttdoc">Round up to the next power of two.</div></div>
-<div class="ttc" id="around__up__pow2_8h_html_aeb1f6516cf6ffc3107d86d7ee7e47569"><div class="ttname"><a href="round__up__pow2_8h.html#aeb1f6516cf6ffc3107d86d7ee7e47569">round_up_pow2</a></div><div class="ttdeci">static uint32_t round_up_pow2(uint32_t x)</div><div class="ttdef"><b>Definition</b> round_up_pow2.h:47</div></div>
 <div class="ttc" id="astructfqueue__type_html_a403424ab39715341668d147958961235"><div class="ttname"><a href="structfqueue__type.html#a403424ab39715341668d147958961235">fqueue_type::count</a></div><div class="ttdeci">uint32_t count</div><div class="ttdoc">number of values in the ring buffer</div><div class="ttdef"><b>Definition</b> fqueue.h:129</div></div>
 <div class="ttc" id="astructfqueue__type_html_a481691530f1c7bcd3612c9e13c09874d"><div class="ttname"><a href="structfqueue__type.html#a481691530f1c7bcd3612c9e13c09874d">fqueue_type::end_index</a></div><div class="ttdeci">uint32_t end_index</div><div class="ttdoc">index used to track the back of the queue.</div><div class="ttdef"><b>Definition</b> fqueue.h:128</div></div>
 <div class="ttc" id="astructfqueue__type_html_ac251b40e64c75ab389df1836863801a6"><div class="ttname"><a href="structfqueue__type.html#ac251b40e64c75ab389df1836863801a6">fqueue_type::begin_index</a></div><div class="ttdeci">uint32_t begin_index</div><div class="ttdoc">index used to track the front of the queue.</div><div class="ttdef"><b>Definition</b> fqueue.h:127</div></div>
