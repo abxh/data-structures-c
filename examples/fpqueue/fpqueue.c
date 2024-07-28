@@ -46,10 +46,12 @@ void int_example(void) {
     assert(pqueue_int_get_max(pq) == 10);
 
     pqueue_int_type* pq_copy = pqueue_int_create(10);
-    if (!pq) {
+    pqueue_int_type* pq_copy_copy = pqueue_int_create(10);
+    if (!pq_copy || !pq_copy_copy) {
         assert(false);
     }
     pqueue_int_copy(pq_copy, pq);
+    pqueue_int_copy(pq_copy_copy, pq_copy);
 
     for (int i = 0; i < 10; i++) {
         assert(pqueue_int_pop_max(pq) == 10 - i);
@@ -62,8 +64,23 @@ void int_example(void) {
         covered[pqueue_int_pop_max(pq_copy)] = true;
     }
 
+    size_t count = 0;
+    {
+        int value;
+        size_t tempi;
+
+        (void)(value); // mark unused
+        fpqueue_for_each(pq_copy_copy, tempi, value) {
+            count++;
+        }
+    }
+    assert(count == 10);
+    pqueue_int_clear(pq_copy_copy);
+    assert(pq_copy_copy->count == 0);
+
     pqueue_int_destroy(pq);
     pqueue_int_destroy(pq_copy);
+    pqueue_int_destroy(pq_copy_copy);
 }
 
 int main(void) {
