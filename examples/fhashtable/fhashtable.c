@@ -126,6 +126,10 @@ void int_to_int_hashtable_test(void) {
         assert(table[i] == true);
     }
 
+    assert(ht_copy->count == (size_t)LIM);
+    int_to_int_hashtable_clear(ht_copy);
+    assert(ht_copy->count == 0);
+
     int_to_int_hashtable_destroy(ht_copy);
 }
 

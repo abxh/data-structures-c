@@ -104,6 +104,10 @@ void int_queue_example(const bool offset) {
         }
     }
 
+    assert(q_copy->count == (size_t)lim);
+    int_queue_clear(q_copy);
+    assert(q_copy->count == 0);
+
     int_queue_destroy(q);
     int_queue_destroy(q_copy);
 }

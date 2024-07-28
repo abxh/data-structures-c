@@ -23,9 +23,12 @@ void int_example(void) {
         assert(false);
     }
 
+    assert(pq->capacity >= 10);
+
     const int values[10] = {3, 1, 5, 2, 4, 7, 6, 10, 9, 8};
 
     assert(pqueue_int_is_empty(pq));
+    assert(pq->count == 0);
 
     for (int i = 0; i < 10; i++) {
         const uint32_t priority = values[i];
@@ -36,15 +39,31 @@ void int_example(void) {
         printf("\n");
     }
 
+    assert(pq->count == 10);
     assert(pqueue_int_is_full(pq));
 
-    for (int i = 0; i < 10; i++) {
-        assert(pqueue_int_get_max(pq) == 10 - i);
+    assert(pqueue_int_peek(pq) == 10);
+    assert(pqueue_int_get_max(pq) == 10);
 
+    pqueue_int_type* pq_copy = pqueue_int_create(10);
+    if (!pq) {
+        assert(false);
+    }
+    pqueue_int_copy(pq_copy, pq);
+
+    for (int i = 0; i < 10; i++) {
         assert(pqueue_int_pop_max(pq) == 10 - i);
     }
 
+    bool covered[11] = {true, false};
+    for (int i = 0; i < 10; i++) {
+        assert(!covered[pqueue_int_get_max(pq_copy)]);
+
+        covered[pqueue_int_pop_max(pq_copy)] = true;
+    }
+
     pqueue_int_destroy(pq);
+    pqueue_int_destroy(pq_copy);
 }
 
 int main(void) {

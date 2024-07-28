@@ -97,6 +97,10 @@ void uintstk_example(void) {
         assert(cpy_count == lim);
     }
 
+    assert(s_copy->count == lim);
+    uintstk_clear(s_copy);
+    assert(s_copy->count == 0);
+
     uintstk_destroy(s);
     uintstk_destroy(s_copy);
 }
