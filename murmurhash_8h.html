@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>data-structures-c: lib/murmurhash.h File Reference</title>
+<title>dsa-c: src/murmurhash.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">data-structures-c
+   <div id="projectname">dsa-c
    </div>
   </td>
  </tr>
@@ -83,7 +83,7 @@ $(function(){ initResizable(false); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -98,63 +98,52 @@ $(function(){ initResizable(false); });
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
 </div>
 <p><a href="murmurhash_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acb0c380e343772042ae656fb60679886" id="r_acb0c380e343772042ae656fb60679886"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb0c380e343772042ae656fb60679886">murmur3_32</a> (const uint8_t *key_ptr, const size_t len, const uint32_t seed)</td></tr>
-<tr class="separator:acb0c380e343772042ae656fb60679886"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30f3015b5b1e95eaeca0b8b48e03ce40" id="r_a30f3015b5b1e95eaeca0b8b48e03ce40"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a30f3015b5b1e95eaeca0b8b48e03ce40">murmur3_32</a> (const uint8_t *key, size_t len, uint32_t seed)</td></tr>
+<tr class="separator:a30f3015b5b1e95eaeca0b8b48e03ce40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Murmur3 hash hashing function. </p>
 <dl class="section note"><dt>Note</dt><dd>Murmur3 hash is <b>not</b> a cryptographic hashing function.</dd></dl>
-<p>Original Source: <a href="http://code.google.com/p/smhasher/source/browse/trunk/MurmurHash3.cpp">http://code.google.com/p/smhasher/source/browse/trunk/MurmurHash3.cpp</a></p>
-<p>Source used: <a href="https://en.wikipedia.org/wiki/MurmurHash#Algorithm">https://en.wikipedia.org/wiki/MurmurHash#Algorithm</a></p>
 <p>MurmurHash3 was written by Austin Appleby, and is placed in the public domain. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="acb0c380e343772042ae656fb60679886" name="acb0c380e343772042ae656fb60679886"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb0c380e343772042ae656fb60679886">&#9670;&#160;</a></span>murmur3_32()</h2>
+<a id="a30f3015b5b1e95eaeca0b8b48e03ce40" name="a30f3015b5b1e95eaeca0b8b48e03ce40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30f3015b5b1e95eaeca0b8b48e03ce40">&#9670;&#160;</a></span>murmur3_32()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t murmur3_32 </td>
+          <td class="memname">uint32_t murmur3_32 </td>
           <td>(</td>
-          <td class="paramtype">const uint8_t *</td>          <td class="paramname"><span class="paramname"><em>key_ptr</em></span>, </td>
+          <td class="paramtype">const uint8_t *</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>len</em></span>, </td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>len</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>seed</em></span>&#160;)</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>seed</em></span>&#160;)</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Get the Murmur3 (32-bit) hash of a string of bytes.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">key_ptr</td><td>Pointer to the string of bytes. </td></tr>
+    <tr><td class="paramname">key</td><td>Pointer to the string of bytes. </td></tr>
     <tr><td class="paramname">len</td><td>Number of bytes. </td></tr>
-    <tr><td class="paramname">seed</td><td>A seed, for whom matched with a given key, makes the hash function produce the same hash for the key. </td></tr>
+    <tr><td class="paramname">seed</td><td>The seed - determining the hash. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A <code>uint32_t</code>-sized hash of the bytes. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A <code>size_t</code>-sized hash of the bytes. </dd></dl>
 
 </div>
 </div>

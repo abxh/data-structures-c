@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>data-structures-c: lib/round_up_pow2.h File Reference</title>
+<title>dsa-c: src/round_up_pow2.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">data-structures-c
+   <div id="projectname">dsa-c
    </div>
   </td>
  </tr>
@@ -83,7 +83,7 @@ $(function(){ initResizable(false); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -96,52 +96,34 @@ $(function(){ initResizable(false); });
 
 <p>Round up to the next power of two.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;assert.h&gt;</code><br />
-<code>#include &lt;stdbool.h&gt;</code><br />
-<code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
 </div>
 <p><a href="round__up__pow2_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac941ab6788f53c3a24b85c5ae53ec954" id="r_ac941ab6788f53c3a24b85c5ae53ec954"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac941ab6788f53c3a24b85c5ae53ec954">round_up_pow2_32</a> (uint32_t x)</td></tr>
-<tr class="separator:ac941ab6788f53c3a24b85c5ae53ec954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9395bb56cc0916c1c35f3756cc96a57b" id="r_a9395bb56cc0916c1c35f3756cc96a57b"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9395bb56cc0916c1c35f3756cc96a57b">round_up_pow2</a> (size_t x)</td></tr>
+<tr class="separator:a9395bb56cc0916c1c35f3756cc96a57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Round up to the next power of two. </p>
-<p>Sources used: </p><ul>
-<li>Fallback: <a href="https://stackoverflow.com/questions/466204/rounding-up-to-next-power-of-2">https://stackoverflow.com/questions/466204/rounding-up-to-next-power-of-2</a> </li>
-<li>Intrinsics: <a href="https://en.wikipedia.org/wiki/Find_first_set#Tool_and_library_support">https://en.wikipedia.org/wiki/Find_first_set#Tool_and_library_support</a> </li>
-</ul>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="ac941ab6788f53c3a24b85c5ae53ec954" name="ac941ab6788f53c3a24b85c5ae53ec954"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac941ab6788f53c3a24b85c5ae53ec954">&#9670;&#160;</a></span>round_up_pow2_32()</h2>
+<a id="a9395bb56cc0916c1c35f3756cc96a57b" name="a9395bb56cc0916c1c35f3756cc96a57b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9395bb56cc0916c1c35f3756cc96a57b">&#9670;&#160;</a></span>round_up_pow2()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t round_up_pow2_32 </td>
+          <td class="memname">size_t round_up_pow2 </td>
           <td>(</td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Round up to the next power of two.</p>
-<p>Assumes: </p><ul>
-<li>x is strictly larger than 0. </li>
-<li>x is smaller than than the defined UINT32_MAX / 4.</li>
-</ul>
+<p>Asserts x is not 0.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>The number at hand. </td></tr>
