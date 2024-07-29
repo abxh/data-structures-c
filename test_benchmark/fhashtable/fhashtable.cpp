@@ -59,12 +59,12 @@ int main(void) {
     using std::chrono::microseconds;
 
     for (size_t N = 10; N < 10000000; N *= 10) {
-        srand(N);
+        srand(time(NULL));
         auto c_start1 = high_resolution_clock::now();
         benchmark_uint_ht(N);
         auto c_end1 = high_resolution_clock::now();
 
-        srand(N);
+        srand(time(NULL));
         auto c_start2 = high_resolution_clock::now();
         benchmark_std_unordered_map(N);
         auto c_end2 = high_resolution_clock::now();
