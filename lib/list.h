@@ -211,7 +211,7 @@ static inline void internal_list_node_attach(list_node_type* prev_ptr, list_node
  * @li node_ptr node is not the head or tail node.
  *
  * @param[in,out] node_ptr The node pointer.
- * @return pointer to the remoed node
+ * @return pointer to the removed node
  */
 static inline list_node_type* list_node_remove(list_node_type* node_ptr) {
     assert(node_ptr != NULL);
