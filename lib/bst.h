@@ -2,6 +2,8 @@
 // sources used:
 // https://en.wikipedia.org/wiki/Binary_search_tree#Operations
 
+#include "paste.h" // PASTE, XPASTE, JOIN
+
 #include <assert.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -31,34 +33,49 @@
 
 static_assert(sizeof(unsigned long) == sizeof(void*), "unsigned long size is address size");
 
-typedef struct bst_node_type {
+#define BST_TYPE JOIN(BST_NAME, type)
+#define BST_NODE_TYPE JOIN(BST_NAME, node_type)
+
+#define BST_CONTAINS_KEY JOIN(BST_NAME, contains_key)
+
+#define BST_NODE_SET_COLOR JOIN(internal, JOIN(BST_NAME, node_set_color))
+#define BST_NODE_SET_PARENT JOIN(internal, JOIN(BST_NAME, node_set_parent))
+#define BST_NODE_PARENT_PTR JOIN(BST_NAME, node_parent_ptr)
+#define BST_NODE_REPLACE_NODE JOIN(internal, JOIN(BST_NAME, node_replace_node))
+#define BST_NODE_FIND_MIN JOIN(internal, JOIN(BST_NAME, node_find_min))
+#define BST_NODE_FIND_MAX JOIN(internal, JOIN(BST_NAME, node_find_max))
+#define BST_NODE_SUCCESSOR JOIN(internal, JOIN(BST_NAME, node_successor))
+
+typedef struct BST_NODE_TYPE {
     unsigned long __parent_ptr_color;
-    struct bst_node_type* left_ptr;
-    struct bst_node_type* right_ptr;
+    struct BST_NODE_TYPE* left_ptr;
+    struct BST_NODE_TYPE* right_ptr;
     KEY_TYPE key;
     VALUE_TYPE value;
-} bst_node_type;
+} BST_NODE_TYPE;
 
-typedef struct bst_type {
-    bst_node_type* root_ptr;
-} bst_type;
+typedef struct BST_TYPE {
+    BST_NODE_TYPE* root_ptr;
+} BST_TYPE;
 
-static inline void bst_init(bst_type* bst_ptr) {
+static inline void JOIN(BST_NAME, init)(BST_TYPE* bst_ptr) {
     assert(bst_ptr != NULL);
 
     bst_ptr->root_ptr = NULL;
 }
 
 /// @cond DO_NOT_DOCUMENT
+
 // set the color of a node
-static inline void internal_bst_node_set_color(bst_node_type* node_ptr, const bool is_black) {
+static inline void JOIN(internal, JOIN(BST_NAME, node_set_color))(BST_NODE_TYPE* node_ptr, const bool is_black) {
     assert(node_ptr != NULL);
 
     node_ptr->__parent_ptr_color &= ~1;
     node_ptr->__parent_ptr_color += is_black;
 }
 
-static inline void internal_bst_node_set_parent(bst_node_type* node_ptr, bst_node_type* parent_ptr) {
+// set the parent of a node
+static inline void JOIN(internal, JOIN(BST_NAME, node_set_parent))(BST_NODE_TYPE* node_ptr, BST_NODE_TYPE* parent_ptr) {
     assert(node_ptr != NULL);
 
     const bool is_black = ((unsigned long)node_ptr->__parent_ptr_color) & 1;
@@ -67,43 +84,43 @@ static inline void internal_bst_node_set_parent(bst_node_type* node_ptr, bst_nod
 }
 /// @endcond
 
-static inline void bst_node_init(bst_node_type* node_ptr, KEY_TYPE key, VALUE_TYPE value) {
+static inline void JOIN(BST_NAME, node_init)(BST_NODE_TYPE* node_ptr, KEY_TYPE key, VALUE_TYPE value) {
     assert(node_ptr != NULL);
 
     node_ptr->left_ptr = NULL;
     node_ptr->right_ptr = NULL;
     node_ptr->key = key;
     node_ptr->value = value;
-    internal_bst_node_set_color(node_ptr, false);
-    internal_bst_node_set_parent(node_ptr, NULL);
+    BST_NODE_SET_COLOR(node_ptr, false);
+    BST_NODE_SET_PARENT(node_ptr, NULL);
 }
 
-static inline bst_node_type* bst_node_parent_ptr(bst_node_type* node_ptr) {
-    return (bst_node_type*)(node_ptr->__parent_ptr_color & ~1);
+static inline BST_NODE_TYPE* JOIN(BST_NAME, node_parent_ptr)(BST_NODE_TYPE* node_ptr) {
+    return (BST_NODE_TYPE*)(node_ptr->__parent_ptr_color & ~1);
 }
 
-static inline bool bst_node_is_black(const bst_node_type* node_ptr) {
+static inline bool JOIN(BST_NAME, node_is_black)(const BST_NODE_TYPE* node_ptr) {
     assert(node_ptr != NULL);
 
-    return (bool)(node_ptr->__parent_ptr_color & 1);
+    return (node_ptr->__parent_ptr_color & 1);
 }
 
-static inline bool bst_node_is_red(const bst_node_type* node_ptr) {
+static inline bool JOIN(BST_NAME, node_is_red)(const BST_NODE_TYPE* node_ptr) {
     assert(node_ptr != NULL);
 
-    return !bst_node_is_black(node_ptr);
+    return !(node_ptr->__parent_ptr_color & 1);
 }
 
-static inline bool bst_is_empty(const bst_type* bst_ptr) {
+static inline bool JOIN(BST_NAME, is_empty)(const BST_TYPE* bst_ptr) {
     assert(bst_ptr != NULL);
 
     return bst_ptr->root_ptr == NULL;
 }
 
-static inline bool bst_contains_key(const bst_type* bst_ptr, const KEY_TYPE key) {
+static inline bool JOIN(BST_NAME, contains_key)(const BST_TYPE* bst_ptr, const KEY_TYPE key) {
     assert(bst_ptr != NULL);
 
-    bst_node_type* node_ptr = bst_ptr->root_ptr;
+    BST_NODE_TYPE* node_ptr = bst_ptr->root_ptr;
     while (node_ptr != NULL) {
         const KEY_TYPE current_key = node_ptr->key;
         const bool is_less = KEY_IS_LESS(key, current_key);
@@ -120,10 +137,10 @@ static inline bool bst_contains_key(const bst_type* bst_ptr, const KEY_TYPE key)
     return false;
 }
 
-static inline VALUE_TYPE bst_get_value(const bst_type* bst_ptr, const KEY_TYPE key, VALUE_TYPE default_value) {
+static inline VALUE_TYPE JOIN(BST_NAME, get_value)(const BST_TYPE* bst_ptr, const KEY_TYPE key, VALUE_TYPE default_value) {
     assert(bst_ptr != NULL);
 
-    bst_node_type* node_ptr = bst_ptr->root_ptr;
+    BST_NODE_TYPE* node_ptr = bst_ptr->root_ptr;
     while (node_ptr != NULL) {
         const KEY_TYPE current_key = node_ptr->key;
         const bool is_less = KEY_IS_LESS(key, current_key);
@@ -140,10 +157,10 @@ static inline VALUE_TYPE bst_get_value(const bst_type* bst_ptr, const KEY_TYPE k
     return default_value;
 }
 
-static inline VALUE_TYPE* bst_get_value_mut(bst_type* bst_ptr, const KEY_TYPE key) {
+static inline VALUE_TYPE* JOIN(BST_NAME, get_value_mut)(BST_TYPE* bst_ptr, const KEY_TYPE key) {
     assert(bst_ptr != NULL);
 
-    bst_node_type* node_ptr = bst_ptr->root_ptr;
+    BST_NODE_TYPE* node_ptr = bst_ptr->root_ptr;
     while (node_ptr != NULL) {
         const bool is_less = KEY_IS_LESS(key, node_ptr->key);
         const bool is_greater = KEY_IS_LESS(node_ptr->key, key);
@@ -159,10 +176,10 @@ static inline VALUE_TYPE* bst_get_value_mut(bst_type* bst_ptr, const KEY_TYPE ke
     return NULL;
 }
 
-static inline bst_node_type* bst_search_node(bst_type* bst_ptr, const KEY_TYPE key) {
+static inline BST_NODE_TYPE* JOIN(BST_NAME, search_node)(BST_TYPE* bst_ptr, const KEY_TYPE key) {
     assert(bst_ptr != NULL);
 
-    bst_node_type* node_ptr = bst_ptr->root_ptr;
+    BST_NODE_TYPE* node_ptr = bst_ptr->root_ptr;
     while (node_ptr != NULL) {
         const bool is_less = KEY_IS_LESS(key, node_ptr->key);
         const bool is_greater = KEY_IS_LESS(node_ptr->key, key);
@@ -178,13 +195,13 @@ static inline bst_node_type* bst_search_node(bst_type* bst_ptr, const KEY_TYPE k
     return NULL;
 }
 
-static inline void bst_insert_node(bst_type* bst_ptr, bst_node_type* node_ptr) {
+static inline void JOIN(BST_NAME, insert_node)(BST_TYPE* bst_ptr, BST_NODE_TYPE* node_ptr) {
     assert(bst_ptr != NULL);
-    assert(bst_contains_key(bst_ptr, node_ptr->key) == false);
+    assert(BST_CONTAINS_KEY(bst_ptr, node_ptr->key) == false);
     assert(node_ptr->left_ptr == NULL && node_ptr->right_ptr == NULL && "must initialize node");
 
-    bst_node_type* parent_ptr = NULL;
-    bst_node_type* current_ptr = bst_ptr->root_ptr;
+    BST_NODE_TYPE* parent_ptr = NULL;
+    BST_NODE_TYPE* current_ptr = bst_ptr->root_ptr;
 
     while (current_ptr != NULL) {
         parent_ptr = current_ptr;
@@ -196,7 +213,7 @@ static inline void bst_insert_node(bst_type* bst_ptr, bst_node_type* node_ptr) {
         }
     }
 
-    internal_bst_node_set_parent(node_ptr, parent_ptr);
+    BST_NODE_SET_PARENT(node_ptr, parent_ptr);
 
     if (parent_ptr == NULL) {
         bst_ptr->root_ptr = node_ptr;
@@ -210,7 +227,7 @@ static inline void bst_insert_node(bst_type* bst_ptr, bst_node_type* node_ptr) {
 /// @cond DO_NOT_DOCUMENT
 
 // find the node with the largest key after node_ptr
-static inline bst_node_type* internal_bst_node_find_max_node(bst_node_type* node_ptr) {
+static inline BST_NODE_TYPE* JOIN(internal, JOIN(BST_NAME, node_find_max))(BST_NODE_TYPE* node_ptr) {
     assert(node_ptr != NULL);
 
     while (node_ptr->right_ptr != NULL) {
@@ -220,7 +237,7 @@ static inline bst_node_type* internal_bst_node_find_max_node(bst_node_type* node
 }
 
 // find the node with the smallest key after node_ptr
-static inline bst_node_type* internal_bst_node_find_min_node(bst_node_type* node_ptr) {
+static inline BST_NODE_TYPE* JOIN(internal, JOIN(BST_NAME, node_find_min))(BST_NODE_TYPE* node_ptr) {
     assert(node_ptr != NULL);
 
     while (node_ptr->left_ptr != NULL) {
@@ -230,73 +247,87 @@ static inline bst_node_type* internal_bst_node_find_min_node(bst_node_type* node
 }
 
 // find the node with the smallest key larger than node_ptr key
-static inline bst_node_type* internal_bst_node_successor(bst_node_type* node_ptr) {
+static inline BST_NODE_TYPE* JOIN(internal, JOIN(BST_NAME, node_successor))(BST_NODE_TYPE* node_ptr) {
     assert(node_ptr != NULL);
 
     if (node_ptr->right_ptr != NULL) {
-        return internal_bst_node_find_min_node(node_ptr->right_ptr);
+        return BST_NODE_FIND_MIN(node_ptr->right_ptr);
     }
-    bst_node_type* parent_ptr = bst_node_parent_ptr(node_ptr);
+    BST_NODE_TYPE* parent_ptr = BST_NODE_PARENT_PTR(node_ptr);
     while (parent_ptr != NULL && node_ptr == parent_ptr->right_ptr) {
         node_ptr = parent_ptr;
-        parent_ptr = bst_node_parent_ptr(parent_ptr);
+        parent_ptr = BST_NODE_PARENT_PTR(parent_ptr);
     }
     return parent_ptr;
 }
 
 // find the node with the largest key smaller than node_ptr key
-static inline bst_node_type* internal_bst_node_predecessor(bst_node_type* node_ptr) {
+static inline BST_NODE_TYPE* JOIN(internal, JOIN(BST_NAME, node_predecessor))(BST_NODE_TYPE* node_ptr) {
     assert(node_ptr != NULL);
 
     if (node_ptr->left_ptr != NULL) {
-        return internal_bst_node_find_max_node(node_ptr->left_ptr);
+        return BST_NODE_FIND_MAX(node_ptr->left_ptr);
     }
-    bst_node_type* parent_ptr = bst_node_parent_ptr(node_ptr);
+    BST_NODE_TYPE* parent_ptr = BST_NODE_PARENT_PTR(node_ptr);
     while (parent_ptr != NULL && node_ptr == parent_ptr->left_ptr) {
         node_ptr = parent_ptr;
-        parent_ptr = bst_node_parent_ptr(parent_ptr);
+        parent_ptr = BST_NODE_PARENT_PTR(parent_ptr);
     }
     return parent_ptr;
 }
 
-static inline void internal_bst_node_shift_nodes(bst_type* bst_ptr, bst_node_type* u_ptr, bst_node_type* v_ptr) {
+// replace a given node with a new node (new NULL node is allowed)
+static inline void JOIN(internal, JOIN(BST_NAME, node_replace_node))(BST_TYPE* bst_ptr, BST_NODE_TYPE* old_node, BST_NODE_TYPE* new_node) {
     assert(bst_ptr != NULL);
-    assert(u_ptr != NULL);
-    assert(v_ptr != NULL);
+    assert(old_node != NULL);
 
-    if (bst_node_parent_ptr(u_ptr) == NULL) {
-        bst_ptr->root_ptr = u_ptr;
-    } else if (u_ptr == bst_node_parent_ptr(u_ptr)->left_ptr) {
-        bst_node_parent_ptr(u_ptr)->left_ptr = v_ptr;
-    } else if (u_ptr == bst_node_parent_ptr(u_ptr)->right_ptr) {
-        bst_node_parent_ptr(u_ptr)->right_ptr = v_ptr;
+    if (BST_NODE_PARENT_PTR(old_node) == NULL) {
+        bst_ptr->root_ptr = old_node;
+
+    } else if (old_node == BST_NODE_PARENT_PTR(old_node)->left_ptr) {
+        BST_NODE_PARENT_PTR(old_node)->left_ptr = new_node;
+
+    } else if (old_node == BST_NODE_PARENT_PTR(old_node)->right_ptr) {
+        BST_NODE_PARENT_PTR(old_node)->right_ptr = new_node;
     }
-    if (v_ptr != NULL) {
-        internal_bst_node_set_parent(v_ptr, bst_node_parent_ptr(u_ptr));
+    if (new_node != NULL) {
+        BST_NODE_SET_PARENT(new_node, BST_NODE_PARENT_PTR(old_node));
     }
 }
 /// @endcond
 
-void bst_delete(bst_type* bst_ptr, bst_node_type* node_ptr) {
-    if (node_ptr->left_ptr == NULL) {
-        internal_bst_node_shift_nodes(bst_ptr, node_ptr, node_ptr->right_ptr);
-    } else if (node_ptr->left_ptr == NULL) {
-        internal_bst_node_shift_nodes(bst_ptr, node_ptr, node_ptr->left_ptr);
-    } else {
-        bst_node_type* successor_ptr = internal_bst_node_successor(node_ptr);
+BST_NODE_TYPE* bst_delete(BST_TYPE* bst_ptr, BST_NODE_TYPE* node_ptr) {
+    assert(bst_ptr != NULL);
+    assert(node_ptr != NULL);
 
-        if (bst_node_parent_ptr(successor_ptr) != node_ptr) {
-            internal_bst_node_shift_nodes(bst_ptr, successor_ptr, successor_ptr->right_ptr);
+    if (node_ptr->left_ptr == NULL) {
+        BST_NODE_REPLACE_NODE(bst_ptr, node_ptr, node_ptr->right_ptr); // NULL right_ptr is allowed
+
+    } else if (node_ptr->left_ptr == NULL) {
+        BST_NODE_REPLACE_NODE(bst_ptr, node_ptr, node_ptr->left_ptr); // NULL left_ptr is allowed
+
+    } else {
+        BST_NODE_TYPE* successor_ptr = BST_NODE_SUCCESSOR(node_ptr);
+
+        // note: the successor is the node with the smallest key larger than node key
+        //       that means successor does *not* have a left node.
+
+        if (BST_NODE_PARENT_PTR(successor_ptr) != node_ptr) {
+            BST_NODE_REPLACE_NODE(bst_ptr, successor_ptr, successor_ptr->right_ptr); // NULL right_ptr is allowed
 
             successor_ptr->right_ptr = node_ptr->right_ptr;
-            internal_bst_node_set_parent(node_ptr->right_ptr, successor_ptr);
+            BST_NODE_SET_PARENT(node_ptr->right_ptr, successor_ptr);
         }
 
-        internal_bst_node_shift_nodes(bst_ptr, node_ptr, successor_ptr);
+        assert(successor_ptr != NULL);
+
+        BST_NODE_REPLACE_NODE(bst_ptr, node_ptr, successor_ptr);
 
         successor_ptr->left_ptr = node_ptr->left_ptr;
-        internal_bst_node_set_parent(node_ptr->left_ptr, successor_ptr);
+        BST_NODE_SET_PARENT(node_ptr->left_ptr, successor_ptr);
     }
+
+    return node_ptr;
 }
 
 // vim: ft=c
