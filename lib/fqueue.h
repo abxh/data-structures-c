@@ -148,7 +148,7 @@ static inline FQUEUE_TYPE* JOIN(FQUEUE_NAME, create)(const uint32_t capacity) {
     if (capacity == 0 || capacity > UINT32_MAX / 4) {
         return NULL;
     }
-    const uint32_t capacity_new = round_up_pow2(capacity);
+    const uint32_t capacity_new = round_up_pow2_32(capacity);
 
     FQUEUE_TYPE* queue_ptr = (FQUEUE_TYPE*)malloc(offsetof(FQUEUE_TYPE, values) + capacity_new * sizeof(VALUE_TYPE));
     if (!queue_ptr) {
