@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['paste_0',['PASTE',['../macros_8h.html#a188ea780417dce4eb720d161d85f9f44',1,'macros.h']]],
-  ['prefix_1',['PREFIX',['../hashtable_8h.html#add51b53e8b628f95078327028dccb20c',1,'PREFIX:&#160;hashtable.h'],['../queue_8h.html#add51b53e8b628f95078327028dccb20c',1,'PREFIX:&#160;queue.h'],['../stack_8h.html#add51b53e8b628f95078327028dccb20c',1,'PREFIX:&#160;stack.h']]]
+  ['list_5fnode_5fentry_0',['list_node_entry',['../list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946',1,'list.h']]]
 ];

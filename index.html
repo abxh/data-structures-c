@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>dsa-c: Main Page</title>
+<title>data-structures-c: data-structures-c</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">dsa-c
+   <div id="projectname">data-structures-c
    </div>
   </td>
  </tr>
@@ -83,10 +83,39 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">dsa-c Documentation</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">data-structures-c </div></div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p><a class="anchor" id="md_readme"></a> <a href="https://abxh.github.io/data-structures-c/">doxygen documentation</a> | <img src="https://github.com/abxh/data-structures-c/actions/workflows/tests.yml/badge.svg?event=push" alt="tests" style="pointer-events: none;" class="inline"/></p>
+<p>Generic, header-only and performant data structures. New memory allocation is kept to a minimum.</p>
+<p>Written for learning purposes, and to be used further in personal projects.</p>
+<p>Run <code>make test</code> to run all tests and examples.</p>
+<p>Asserts are used to check various assumptions. Use <code>NDEBUG</code> flag to turn off asserts in release builds.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"><b>File</b>   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone"></th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="https://github.com/abxh/data-structures-c/blob/main/lib/fstack.h">fstack.h</a>   </td><td class="markdownTableBodyNone">Fixed-size array-based stack   </td><td class="markdownTableBodyNone"><a href="https://abxh.github.io/data-structures-c/fstack_8h.html">Documentation</a> <a href="https://github.com/abxh/data-structures-c/blob/main/examples/fstack/fstack.c">Example</a>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="https://github.com/abxh/data-structures-c/blob/main/lib/fqueue.h">fqueue.h</a>   </td><td class="markdownTableBodyNone">Fixed-size ring-buffer-based queue   </td><td class="markdownTableBodyNone"><a href="https://abxh.github.io/data-structures-c/fqueue_8h.html">Documentation</a> <a href="https://github.com/abxh/data-structures-c/blob/main/examples/fqueue/fqueue.c">Example</a>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="https://github.com/abxh/data-structures-c/blob/main/lib/fpqueue.h">fpqueue.h</a>   </td><td class="markdownTableBodyNone">Fixed-size heap-based priority queue.   </td><td class="markdownTableBodyNone"><a href="https://abxh.github.io/data-structures-c/fpqueue_8h.html">Documentation</a> <a href="https://github.com/abxh/data-structures-c/blob/main/examples/fpqueue/fpqueue.c">Example</a>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="https://github.com/abxh/data-structures-c/blob/main/lib/fhashtable.h">fhashtable.h</a>   </td><td class="markdownTableBodyNone">Fixed-size open-adressing hashtable (robin hood hashing)   </td><td class="markdownTableBodyNone"><a href="https://abxh.github.io/data-structures-c/fhashtable_8h.html">Documentation</a> <a href="https://github.com/abxh/data-structures-c/blob/main/examples/fhashtable/fhashtable.c">Example</a>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="https://github.com/abxh/data-structures-c/blob/main/lib/arena.h">arena.h</a>   </td><td class="markdownTableBodyNone">Arena allocator.   </td><td class="markdownTableBodyNone"><a href="https://abxh.github.io/data-structures-c/arena_8h.html">Documentation</a> <a href="https://github.com/abxh/data-structures-c/blob/main/examples/arena/char_array.c">Example</a>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="https://github.com/abxh/data-structures-c/blob/main/lib/list.h">list.h</a>   </td><td class="markdownTableBodyNone">Intrusive doubly linked list.   </td><td class="markdownTableBodyNone"><a href="https://abxh.github.io/data-structures-c/list_8h.html">Documentation</a> <a href="https://github.com/abxh/data-structures-c/blob/main/examples/list/list_example.c">Example</a>   </td></tr>
+</table>
+<h1><a class="anchor" id="autotoc_md1"></a>
+TODO</h1>
+<ul>
+<li>test arena, list and priority queue</li>
+<li>vector + string (as dynamic array)</li>
+<li>binary search tree </li>
+</ul>
+</div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"/>
 </div><!-- contents -->
 <!-- start footer part -->

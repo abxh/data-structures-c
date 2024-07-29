@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['offset_0',['offset',['../structK__to__V__hashtable__type.html#a7dbd43733825a983756f6b3aea808779',1,'K_to_V_hashtable_type']]]
+  ['prev_5fptr_0',['prev_ptr',['../structlist__node__type.html#a3fa0a386042f5f3ded236f5b3f4e06f1',1,'list_node_type']]],
+  ['previous_5foffset_1',['previous_offset',['../structarena__type.html#a4d10e8bff20f87ce9da095cb4ae7eeae',1,'arena_type']]],
+  ['priority_2',['priority',['../structfpqueue__element__type.html#ac14415e79706160d0fbc6185fdc029c8',1,'fpqueue_element_type']]]
 ];

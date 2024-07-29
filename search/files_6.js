@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['queue_2eh_0',['queue.h',['../queue_8h.html',1,'']]]
+  ['paste_2eh_0',['paste.h',['../paste_8h.html',1,'']]]
 ];
