@@ -1,4 +1,7 @@
 
+// inspiration:
+// https://github.com/torvalds/linux/blob/master/include/linux/rbtree_augmented.h
+
 // sources used:
 // https://en.wikipedia.org/wiki/Binary_search_tree#Operations
 
@@ -10,8 +13,8 @@
 #include <stdint.h>
 
 #ifndef NAME
-#define NAME bst
 #error "Must define NAME."
+#define NAME bst
 #else
 #define BST_NAME NAME
 #endif
@@ -26,9 +29,9 @@
 #define VALUE_TYPE int
 #endif
 
-#ifndef KEY_IS_LESS
-#error "Must define KEY_IS_LESS."
-#define KEY_IS_LESS(a, b) ((a) < (b))
+#ifndef KEY_IS_STRICTLY_LESS
+#error "Must define KEY_IS_STRICTLY_LESS."
+#define KEY_IS_STRICTLY_LESS(a, b) ((a) < (b))
 #endif
 
 static_assert(sizeof(unsigned long) == sizeof(void*), "unsigned long size is address size");
@@ -36,8 +39,8 @@ static_assert(sizeof(unsigned long) == sizeof(void*), "unsigned long size is add
 #define BST_TYPE JOIN(BST_NAME, type)
 #define BST_NODE_TYPE JOIN(BST_NAME, node_type)
 
+/// @cond DO_NOT_DOCUMENT
 #define BST_CONTAINS_KEY JOIN(BST_NAME, contains_key)
-
 #define BST_NODE_SET_COLOR JOIN(internal, JOIN(BST_NAME, node_set_color))
 #define BST_NODE_SET_PARENT JOIN(internal, JOIN(BST_NAME, node_set_parent))
 #define BST_NODE_PARENT_PTR JOIN(BST_NAME, node_parent_ptr)
@@ -45,6 +48,7 @@ static_assert(sizeof(unsigned long) == sizeof(void*), "unsigned long size is add
 #define BST_NODE_FIND_MIN JOIN(internal, JOIN(BST_NAME, node_find_min))
 #define BST_NODE_FIND_MAX JOIN(internal, JOIN(BST_NAME, node_find_max))
 #define BST_NODE_SUCCESSOR JOIN(internal, JOIN(BST_NAME, node_successor))
+/// @endcond
 
 typedef struct BST_NODE_TYPE {
     unsigned long __parent_ptr_color;
@@ -123,8 +127,8 @@ static inline bool JOIN(BST_NAME, contains_key)(const BST_TYPE* bst_ptr, const K
     BST_NODE_TYPE* node_ptr = bst_ptr->root_ptr;
     while (node_ptr != NULL) {
         const KEY_TYPE current_key = node_ptr->key;
-        const bool is_less = KEY_IS_LESS(key, current_key);
-        const bool is_greater = KEY_IS_LESS(current_key, key);
+        const bool is_less = KEY_IS_STRICTLY_LESS(key, current_key);
+        const bool is_greater = KEY_IS_STRICTLY_LESS(current_key, key);
 
         if (!is_less && !is_greater) {
             return true;
@@ -143,12 +147,12 @@ static inline VALUE_TYPE JOIN(BST_NAME, get_value)(const BST_TYPE* bst_ptr, cons
     BST_NODE_TYPE* node_ptr = bst_ptr->root_ptr;
     while (node_ptr != NULL) {
         const KEY_TYPE current_key = node_ptr->key;
-        const bool is_less = KEY_IS_LESS(key, current_key);
-        const bool is_greater = KEY_IS_LESS(current_key, key);
+        const bool is_strictly_less = KEY_IS_STRICTLY_LESS(key, current_key);
+        const bool is_strictly_greater = KEY_IS_STRICTLY_LESS(current_key, key);
 
-        if (!is_less && !is_greater) {
+        if (!is_strictly_less && !is_strictly_greater) {
             return node_ptr->value;
-        } else if (is_less) {
+        } else if (is_strictly_less) {
             node_ptr = node_ptr->left_ptr;
         } else {
             node_ptr = node_ptr->right_ptr;
@@ -162,8 +166,8 @@ static inline VALUE_TYPE* JOIN(BST_NAME, get_value_mut)(BST_TYPE* bst_ptr, const
 
     BST_NODE_TYPE* node_ptr = bst_ptr->root_ptr;
     while (node_ptr != NULL) {
-        const bool is_less = KEY_IS_LESS(key, node_ptr->key);
-        const bool is_greater = KEY_IS_LESS(node_ptr->key, key);
+        const bool is_less = KEY_IS_STRICTLY_LESS(key, node_ptr->key);
+        const bool is_greater = KEY_IS_STRICTLY_LESS(node_ptr->key, key);
 
         if (!is_less && !is_greater) {
             return &node_ptr->value;
@@ -181,8 +185,8 @@ static inline BST_NODE_TYPE* JOIN(BST_NAME, search_node)(BST_TYPE* bst_ptr, cons
 
     BST_NODE_TYPE* node_ptr = bst_ptr->root_ptr;
     while (node_ptr != NULL) {
-        const bool is_less = KEY_IS_LESS(key, node_ptr->key);
-        const bool is_greater = KEY_IS_LESS(node_ptr->key, key);
+        const bool is_less = KEY_IS_STRICTLY_LESS(key, node_ptr->key);
+        const bool is_greater = KEY_IS_STRICTLY_LESS(node_ptr->key, key);
 
         if (!is_less && !is_greater) {
             return node_ptr;
@@ -206,7 +210,7 @@ static inline void JOIN(BST_NAME, insert_node)(BST_TYPE* bst_ptr, BST_NODE_TYPE*
     while (current_ptr != NULL) {
         parent_ptr = current_ptr;
 
-        if (KEY_IS_LESS(node_ptr->key, current_ptr->key)) {
+        if (KEY_IS_STRICTLY_LESS(node_ptr->key, current_ptr->key)) {
             current_ptr = current_ptr->left_ptr;
         } else {
             current_ptr = current_ptr->right_ptr;
@@ -217,7 +221,7 @@ static inline void JOIN(BST_NAME, insert_node)(BST_TYPE* bst_ptr, BST_NODE_TYPE*
 
     if (parent_ptr == NULL) {
         bst_ptr->root_ptr = node_ptr;
-    } else if (KEY_IS_LESS(node_ptr->key, parent_ptr->key)) {
+    } else if (KEY_IS_STRICTLY_LESS(node_ptr->key, parent_ptr->key)) {
         parent_ptr->left_ptr = node_ptr;
     } else {
         parent_ptr->right_ptr = node_ptr;
@@ -277,7 +281,8 @@ static inline BST_NODE_TYPE* JOIN(internal, JOIN(BST_NAME, node_predecessor))(BS
 }
 
 // replace a given node with a new node (new NULL node is allowed)
-static inline void JOIN(internal, JOIN(BST_NAME, node_replace_node))(BST_TYPE* bst_ptr, BST_NODE_TYPE* old_node, BST_NODE_TYPE* new_node) {
+static inline void JOIN(internal, JOIN(BST_NAME, node_replace_node))(BST_TYPE* bst_ptr, BST_NODE_TYPE* old_node,
+                                                                     BST_NODE_TYPE* new_node) {
     assert(bst_ptr != NULL);
     assert(old_node != NULL);
 
@@ -296,7 +301,7 @@ static inline void JOIN(internal, JOIN(BST_NAME, node_replace_node))(BST_TYPE* b
 }
 /// @endcond
 
-BST_NODE_TYPE* bst_delete(BST_TYPE* bst_ptr, BST_NODE_TYPE* node_ptr) {
+BST_NODE_TYPE* JOIN(BST_NAME, delete_node)(BST_TYPE* bst_ptr, BST_NODE_TYPE* node_ptr) {
     assert(bst_ptr != NULL);
     assert(node_ptr != NULL);
 
@@ -329,5 +334,28 @@ BST_NODE_TYPE* bst_delete(BST_TYPE* bst_ptr, BST_NODE_TYPE* node_ptr) {
 
     return node_ptr;
 }
+
+void JOIN(BST_NAME, clear)(BST_TYPE* bst_ptr) {
+    assert(bst_ptr != NULL);
+
+    bst_ptr->root_ptr = NULL;
+}
+
+#undef NAME
+#undef KEY_TYPE
+#undef VALUE_TYPE
+#undef KEY_IS_STRICTLY_LESS
+
+#undef BST_TYPE
+#undef BST_NAME
+#undef BST_NODE_TYPE
+#undef BST_CONTAINS_KEY
+#undef BST_NODE_SET_COLOR
+#undef BST_NODE_SET_PARENT
+#undef BST_NODE_PARENT_PTR
+#undef BST_NODE_REPLACE_NODE
+#undef BST_NODE_FIND_MIN
+#undef BST_NODE_FIND_MAX
+#undef BST_NODE_SUCCESSOR
 
 // vim: ft=c
