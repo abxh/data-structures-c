@@ -8,6 +8,7 @@
 
 void preorder_print_and_traverse(pqueue_int_type* pq, uint32_t index) {
     if (index >= pq->count) {
+        printf(" ()");
         return;
     }
     printf(" ( %d", index);
