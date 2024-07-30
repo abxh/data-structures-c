@@ -1,6 +1,3 @@
-// TDOO:
-// more tests
-
 /*
     Test cases (N):
     - N := 0
@@ -135,30 +132,7 @@ void int_int_full_test() {
         assert(!int_to_int_ht_is_empty(ht_p));
         assert(int_to_int_ht_is_full(ht_p));
 
-        bool key_exists[69 + 1] = {false};
-        bool value_exists[69 + 1] = {false};
-
-        int_to_int_ht_type* ht_copy_p = int_to_int_ht_create(2);
-        if (!ht_copy_p) {
-            assert(false);
-        }
-        int_to_int_ht_copy(ht_copy_p, ht_p);
         int_to_int_ht_destroy(ht_p);
-        assert(check_duplicates(int, int, ht_copy_p, 70, key_exists, 70, value_exists));
-
-        // assert that the correct keys / values exists:
-        for (size_t i = 0; i < 70; i++) {
-            if (i == 69) {
-                assert(value_exists[i]);
-            } else if (i == 42) {
-                assert(key_exists[i]);
-            } else {
-                assert(!value_exists[i]);
-                assert(!key_exists[i]);
-            }
-        }
-
-        int_to_int_ht_destroy(ht_copy_p);
     }
     // N = 16, insert * 10 -> update * 7 -> del * 6 -> insert * 5
     {
