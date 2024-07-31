@@ -1,11 +1,9 @@
 /*
-    Test cases (N): // NOTE: MAY BE CHANGED
+    Test cases (N):
     - N := 0
     - N := 1
-    - N := 8
     - N := 16
-    - N := 1e+3
-    - N := 1e+9
+    - N := 4096
 
     Non-mutating operation types / properties:
     - .root_ptr
@@ -26,7 +24,9 @@
 */
 
 #include <assert.h>
+#include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define NAME bst
 #define KEY_TYPE int
@@ -127,7 +127,8 @@ int main(void) {
         assert(is_valid_binary_search_tree(bst.root_ptr));
         assert(count_nodes(bst.root_ptr) == 1);
     }
-    // N = 8, insert_node * 8, delete_node * 4
+
+    // N = 16, insert_node * 8, delete_node * 4, insert_node * 12
     {
         bst_type bst;
         bst_init(&bst);
@@ -138,20 +139,74 @@ int main(void) {
             bst_node_init(&node[i], values[i], values[i]);
             bst_insert_node(&bst, &node[i]);
 
-            preorder_print_and_traverse(bst.root_ptr);
-            printf("\n");
+            assert(count_nodes(bst.root_ptr) == i + 1);
+            assert(is_valid_binary_search_tree(bst.root_ptr));
         }
-        assert(count_nodes(bst.root_ptr) == 8);
-        assert(is_valid_binary_search_tree(bst.root_ptr));
 
         const int deleted_values[4] = {3, 2, 4, 8};
         for (int i = 0; i < 4; i++) {
             bst_delete_node(&bst, bst_search_node(&bst, deleted_values[i]));
 
-            preorder_print_and_traverse(bst.root_ptr);
-            printf("\n");
+            assert(count_nodes(bst.root_ptr) == 8 - i - 1);
+            assert(is_valid_binary_search_tree(bst.root_ptr));
         }
 
-        assert(is_valid_binary_search_tree(bst.root_ptr));
+        bst_node_type new_node[12];
+        const int new_values[12] = {4, 12, 9, 10, 11, 16, 13, 14, 17, 16, 15, 8};
+        for (int i = 0; i < 6; i++) {
+            bst_node_init(&new_node[i], new_values[i], new_values[i]);
+            bst_insert_node(&bst, &new_node[i]);
+
+            assert(count_nodes(bst.root_ptr) == 4 + i + 1);
+            assert(is_valid_binary_search_tree(bst.root_ptr));
+        }
+    }
+
+    // N = 4096, insert_node * 4096, delete_node * 4096, insert_node * 4096
+    {
+        bst_type bst;
+        bst_init(&bst);
+
+        srand(time(NULL));
+
+        bst_node_type* node_buf = calloc(8192, sizeof(bst_node_type));
+        size_t count = 0;
+
+        for (int i = 0; i < 4096; i++) {
+            int val = i % 2048;
+            bst_node_type* node_ptr = bst_search_node(&bst, val);
+            if (!node_ptr) {
+                bst_node_init(&node_buf[count], val, 0);
+                bst_insert_node(&bst, &node_buf[count]);
+                count++;
+            } else {
+                node_ptr->value++;
+            }
+            assert(is_valid_binary_search_tree(bst.root_ptr));
+        }
+
+        for (int i = 0; i < 4096; i++) {
+            int val = i % 2048;
+            bst_node_type* node_ptr = bst_search_node(&bst, val);
+            if (node_ptr) {
+                bst_delete_node(&bst, node_ptr);
+            }
+            assert(is_valid_binary_search_tree(bst.root_ptr));
+        }
+
+        for (int i = 0; i < 4096; i++) {
+            int val = i % 2048;
+            bst_node_type* node_ptr = bst_search_node(&bst, val);
+            if (!node_ptr) {
+                bst_node_init(&node_buf[count], val, 0);
+                bst_insert_node(&bst, &node_buf[count]);
+                count++;
+            } else {
+                node_ptr->value++;
+            }
+            assert(is_valid_binary_search_tree(bst.root_ptr));
+        }
+
+        free(node_buf);
     }
 }
