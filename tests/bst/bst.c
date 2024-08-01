@@ -49,6 +49,9 @@ static int count_nodes(bst_node_type* root_ptr) {
     return count;
 }
 
+/* static int count_height(bst_node_type* root_ptr) { */
+/* } */
+
 static bool is_valid_binary_search_tree(bst_node_type* root_ptr) {
     // no duplicates allowed (however the value can be used as a counter)
 
@@ -68,16 +71,8 @@ static bool is_valid_binary_search_tree(bst_node_type* root_ptr) {
     return ret;
 }
 
-static void preorder_print_and_traverse(bst_node_type* root_ptr) {
-    if (root_ptr == NULL) {
-        printf(" ()");
-        return;
-    }
-    printf(" ( %d", root_ptr->key);
-    preorder_print_and_traverse(root_ptr->left_ptr);
-    preorder_print_and_traverse(root_ptr->right_ptr);
-    printf(" )");
-}
+/* static bool is_valid_red_black_tree(bst_type* bst_ptr, bst_node_type* node_ptr) { */
+/* } */
 
 int main(void) {
     // N = 0
