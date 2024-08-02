@@ -20,7 +20,7 @@
 
 /**
  * @file is_pow2.h
- * @brief Check if a number is a power of two.
+ * @brief Check if a number is a power of two
  */
 
 #pragma once
@@ -39,7 +39,8 @@
  * @param x The number at hand.
  * @return A boolean value indicating whether the number is a power of two.
  */
-static inline size_t is_pow2(const size_t x) {
+static inline size_t is_pow2(const size_t x)
+{
     return x != 0 && (x & (x - 1)) == 0;
 }
 

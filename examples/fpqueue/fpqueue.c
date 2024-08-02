@@ -2,11 +2,12 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#define NAME pqueue_int
+#define NAME       pqueue_int
 #define VALUE_TYPE int
 #include "fpqueue.h"
 
-void preorder_print_and_traverse(pqueue_int_type* pq, uint32_t index) {
+void preorder_print_and_traverse(pqueue_int_type* pq, uint32_t index)
+{
     if (index >= pq->count) {
         printf(" ()");
         return;
@@ -17,7 +18,8 @@ void preorder_print_and_traverse(pqueue_int_type* pq, uint32_t index) {
     printf(" )");
 }
 
-void int_example(void) {
+void int_example(void)
+{
     pqueue_int_type* pq = pqueue_int_create(10);
 
     if (!pq) {
@@ -71,7 +73,8 @@ void int_example(void) {
         size_t tempi;
 
         (void)(value); // mark unused
-        fpqueue_for_each(pq_copy_copy, tempi, value) {
+        fpqueue_for_each(pq_copy_copy, tempi, value)
+        {
             count++;
         }
     }
@@ -84,7 +87,8 @@ void int_example(void) {
     pqueue_int_destroy(pq_copy_copy);
 }
 
-int main(void) {
+int main(void)
+{
     int_example();
     return 0;
 }

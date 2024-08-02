@@ -26,39 +26,46 @@
     - copy
 */
 
-#define NAME i64_que
+#define NAME       i64_que
 #define VALUE_TYPE int64_t
 #include "fqueue.h"
 
-static inline bool check_count_invariance(const i64_que_type* que_p, const size_t enqueue_op_count, const size_t dequeue_op_count) {
+static inline bool check_count_invariance(const i64_que_type* que_p, const size_t enqueue_op_count, const size_t dequeue_op_count)
+{
     // enqueue and dequeue operations *after* the stack is cleared / created
     return que_p->count == (enqueue_op_count - dequeue_op_count);
 }
 
-static inline bool check_capacity_invariance(const i64_que_type* que_p, const size_t suggested_capacity) {
+static inline bool check_capacity_invariance(const i64_que_type* que_p, const size_t suggested_capacity)
+{
     return que_p->capacity >= suggested_capacity;
 }
 
-static inline bool check_empty_full(const i64_que_type* que_p, const size_t enqueue_op_count, const size_t dequeue_op_count) {
+static inline bool check_empty_full(const i64_que_type* que_p, const size_t enqueue_op_count, const size_t dequeue_op_count)
+{
     // enqueue and dequeue operations *after* the stack is cleared / created
     const size_t diff = enqueue_op_count - dequeue_op_count;
 
     if (i64_que_is_empty(que_p)) {
         return diff == 0;
-    } else if (i64_que_is_full(que_p)) {
+    }
+    else if (i64_que_is_full(que_p)) {
         return diff == que_p->capacity;
-    } else {
+    }
+    else {
         return true;
     }
 }
 
 static inline bool check_front_back(const i64_que_type* que_p, const int64_t latest_value_enqueueed,
-                                    const int64_t first_value_enqueueed) {
+                                    const int64_t first_value_enqueueed)
+{
     // first and last value enqueueed *after* the stack is cleared / created
     return i64_que_get_front(que_p) == latest_value_enqueueed && i64_que_get_back(que_p) == first_value_enqueueed;
 }
 
-static inline bool check_ordered_values(const i64_que_type* que_p, const size_t n, const int64_t expected_value[n]) {
+static inline bool check_ordered_values(const i64_que_type* que_p, const size_t n, const int64_t expected_value[n])
+{
     assert(n != 0);
 
     bool res = true;
@@ -70,7 +77,8 @@ static inline bool check_ordered_values(const i64_que_type* que_p, const size_t 
         int64_t value;
 
         size_t tempi;
-        fqueue_for_each(que_p, tempi, value) {
+        fqueue_for_each(que_p, tempi, value)
+        {
             res &= value == expected_value[index++];
         }
         assert(index == n);
@@ -80,7 +88,8 @@ static inline bool check_ordered_values(const i64_que_type* que_p, const size_t 
         int64_t value;
 
         size_t tempi;
-        fqueue_for_each_reverse(que_p, tempi, value) {
+        fqueue_for_each_reverse(que_p, tempi, value)
+        {
             res &= value == expected_value[--index];
         }
         assert(index == 0);
@@ -88,7 +97,8 @@ static inline bool check_ordered_values(const i64_que_type* que_p, const size_t 
     return res;
 }
 
-static inline bool copy_values_and_check_ordered_values(const i64_que_type* que_p, const size_t n, const int64_t expected_value[n]) {
+static inline bool copy_values_and_check_ordered_values(const i64_que_type* que_p, const size_t n, const int64_t expected_value[n])
+{
     assert(n != 0);
 
     i64_que_type* que_copy_p = i64_que_create(n);
@@ -101,7 +111,8 @@ static inline bool copy_values_and_check_ordered_values(const i64_que_type* que_
     return res;
 }
 
-int main(void) {
+int main(void)
+{
     // N = 0
     {
         i64_que_type* que_p = i64_que_create(0);

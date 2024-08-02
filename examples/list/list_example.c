@@ -9,7 +9,8 @@ typedef struct {
     list_node_type node;
 } char_elm_type;
 
-void list_stack(void) {
+void list_stack(void)
+{
     unsigned char* buf = malloc(4096);
 
     arena_type arena;
@@ -34,7 +35,8 @@ void list_stack(void) {
         list_node_type* node_ptr = head.next_ptr;
 
         while (!list_node_is_head(node_ptr, &head)) {
-            list_node_type* next_ptr = node_ptr->next_ptr; // this must be stored, should the list be modified under iteration (not in this particular case)
+            list_node_type* next_ptr =
+                node_ptr->next_ptr; // this must be stored, should the list be modified under iteration (not in this particular case)
             char_elm_type* elm = list_node_entry(node_ptr, char_elm_type, node);
 
             assert(c == elm->c);
@@ -64,7 +66,8 @@ void list_stack(void) {
 
             if (c == 'm') {
                 assert(elm->c == 'M');
-            } else {
+            }
+            else {
                 assert(elm->c == c);
             }
 
@@ -82,7 +85,8 @@ void list_stack(void) {
 
             if (c == 'm') {
                 assert(elm->c == 'M');
-            } else {
+            }
+            else {
                 assert(elm->c == c);
             }
 
@@ -94,7 +98,8 @@ void list_stack(void) {
     free(buf);
 }
 
-void list_queue(void) {
+void list_queue(void)
+{
     unsigned char* buf = malloc(4096);
 
     arena_type arena;
@@ -176,7 +181,8 @@ void list_queue(void) {
     free(buf);
 }
 
-int main(void) {
+int main(void)
+{
     list_stack();
     list_queue();
 }

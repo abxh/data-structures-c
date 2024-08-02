@@ -20,7 +20,7 @@
 
 /**
  * @file paste.h
- * @brief C preprocessor macros for pasting tokens together.
+ * @brief C preprocessor macros for pasting tokens together
  */
 
 #pragma once

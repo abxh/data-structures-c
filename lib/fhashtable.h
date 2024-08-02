@@ -20,7 +20,7 @@
 
 /**
  * @file fhashtable.h
- * @brief Fixed-size open-adressing hashtable (robin hood hashing).
+ * @brief Fixed-size open-adressing hashtable (robin hood hashing)
  *
  * Ensure the capacity rounded up to the power of 2 is 75% of the expected numbers of values to be stored to keep
  * load factor low and the hash table performant.
@@ -54,8 +54,8 @@
  * Example of how `fhashtable.h` header file is used in practice with `arena.h`.
  */
 
-#include "murmurhash.h"    // murmur_32
 #include "fnvhash.h"       // fnvhash_32, fnvhash_32_str
+#include "murmurhash.h"    // murmur_32
 #include "paste.h"         // PASTE, XPASTE, JOIN
 #include "round_up_pow2.h" // round_up_pow2_32
 
@@ -170,9 +170,9 @@
 #endif // FHASHTABLE_H
 
 /// @cond DO_NOT_DOCUMENT
-#define FHASHTABLE_TYPE JOIN(FHASHTABLE_NAME, type)
-#define FHASHTABLE_SLOT_TYPE JOIN(JOIN(FHASHTABLE_NAME, slot), type)
-#define FHASHTABLE_IS_FULL JOIN(FHASHTABLE_NAME, is_full)
+#define FHASHTABLE_TYPE         JOIN(FHASHTABLE_NAME, type)
+#define FHASHTABLE_SLOT_TYPE    JOIN(JOIN(FHASHTABLE_NAME, slot), type)
+#define FHASHTABLE_IS_FULL      JOIN(FHASHTABLE_NAME, is_full)
 #define FHASHTABLE_CONTAINS_KEY JOIN(FHASHTABLE_NAME, contains_key)
 /// @endcond
 
@@ -213,7 +213,8 @@ typedef struct {
  *   @li If malloc fails.
  *   @li If capacity is equal to 0 or [capacity rounded up to the power of 2] is larger than UINT32_MAX / 4.
  */
-static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const uint32_t capacity) {
+static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const uint32_t capacity)
+{
     if (capacity == 0 || capacity > UINT32_MAX / 4) {
         return NULL;
     }
@@ -244,7 +245,8 @@ static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const uint32_t capa
  * @param[in,out] hashtable_ptr The hashtable pointer.
  * @warning May not be called twice in a row on the same object.
  */
-static inline void JOIN(FHASHTABLE_NAME, destroy)(FHASHTABLE_TYPE* hashtable_ptr) {
+static inline void JOIN(FHASHTABLE_NAME, destroy)(FHASHTABLE_TYPE* hashtable_ptr)
+{
     free(hashtable_ptr);
 }
 
@@ -256,7 +258,8 @@ static inline void JOIN(FHASHTABLE_NAME, destroy)(FHASHTABLE_TYPE* hashtable_ptr
  * @param[in] hashtable_ptr The hashtable pointer.
  * @return whether the hashtable is empty.
  */
-static inline bool JOIN(FHASHTABLE_NAME, is_empty)(const FHASHTABLE_TYPE* hashtable_ptr) {
+static inline bool JOIN(FHASHTABLE_NAME, is_empty)(const FHASHTABLE_TYPE* hashtable_ptr)
+{
     assert(hashtable_ptr != NULL);
 
     return hashtable_ptr->count == 0;
@@ -270,7 +273,8 @@ static inline bool JOIN(FHASHTABLE_NAME, is_empty)(const FHASHTABLE_TYPE* hashta
  * @param[in] hashtable_ptr The hashtable pointer.
  * @return whether the hashtable is full.
  */
-static inline bool JOIN(FHASHTABLE_NAME, is_full)(const FHASHTABLE_TYPE* hashtable_ptr) {
+static inline bool JOIN(FHASHTABLE_NAME, is_full)(const FHASHTABLE_TYPE* hashtable_ptr)
+{
     assert(hashtable_ptr != NULL);
 
     return hashtable_ptr->count == hashtable_ptr->capacity;
@@ -285,7 +289,8 @@ static inline bool JOIN(FHASHTABLE_NAME, is_full)(const FHASHTABLE_TYPE* hashtab
  * @param[in] key The key.
  * @return A boolean indicating whether the hashtable contains the given key.
  */
-static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
+static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key)
+{
     assert(hashtable_ptr != NULL);
 
     const uint32_t key_hash = HASH_FUNCTION(key);
@@ -322,7 +327,8 @@ static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE* ha
  * @return A pointer to the corresponding key.
  *  @retval NULL If the hashtable did not contain the key.
  */
-static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, get_value_mut)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
+static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, get_value_mut)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key)
+{
     assert(hashtable_ptr != NULL);
 
     const uint32_t key_hash = HASH_FUNCTION(key);
@@ -359,7 +365,8 @@ static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, get_value_mut)(FHASHTABLE_TYPE* 
  *  @retval default_value If the hashtable did not contain the key.
  */
 static inline VALUE_TYPE JOIN(FHASHTABLE_NAME, get_value)(const FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key,
-                                                          VALUE_TYPE default_value) {
+                                                          VALUE_TYPE default_value)
+{
     assert(hashtable_ptr != NULL);
 
     const uint32_t key_hash = HASH_FUNCTION(key);
@@ -396,7 +403,8 @@ static inline VALUE_TYPE JOIN(FHASHTABLE_NAME, get_value)(const FHASHTABLE_TYPE*
  * @return A pointer to the corresponding key.
  * @retval NULL If the hashtable did not contain the key.
  */
-static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, search)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
+static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, search)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key)
+{
     return JOIN(FHASHTABLE_NAME, get_value_mut)(hashtable_ptr, key);
 }
 
@@ -411,7 +419,8 @@ static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, search)(FHASHTABLE_TYPE* hashtab
  * @param[in] key The key.
  * @param[in] value The value.
  */
-static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
+static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value)
+{
     assert(hashtable_ptr != NULL);
     assert(FHASHTABLE_CONTAINS_KEY(hashtable_ptr, key) == false);
 
@@ -451,7 +460,8 @@ static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr,
  * @param[in] key The key.
  * @param[in] value The value.
  */
-static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value) {
+static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr, KEY_TYPE key, VALUE_TYPE value)
+{
     assert(hashtable_ptr != NULL);
 
     const uint32_t index_mask = hashtable_ptr->capacity - 1;
@@ -498,7 +508,8 @@ static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr,
  * @param[in] key The key.
  * @return A boolean indicating whether the key was previously contained in the hashtable.
  */
-static inline bool JOIN(FHASHTABLE_NAME, delete)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key) {
+static inline bool JOIN(FHASHTABLE_NAME, delete)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key)
+{
     assert(hashtable_ptr != NULL);
 
     const uint32_t index_mask = hashtable_ptr->capacity - 1;
@@ -546,7 +557,8 @@ static inline bool JOIN(FHASHTABLE_NAME, delete)(FHASHTABLE_TYPE* hashtable_ptr,
  *
  * @param[in,out] hashtable_ptr The pointer of the hashtable to clear.
  */
-static inline void JOIN(FHASHTABLE_NAME, clear)(FHASHTABLE_TYPE* hashtable_ptr) {
+static inline void JOIN(FHASHTABLE_NAME, clear)(FHASHTABLE_TYPE* hashtable_ptr)
+{
     assert(hashtable_ptr != NULL);
 
     for (uint32_t i = 0; i < hashtable_ptr->capacity; i++) {
@@ -568,7 +580,8 @@ static inline void JOIN(FHASHTABLE_NAME, clear)(FHASHTABLE_TYPE* hashtable_ptr) 
  * @param[in] src_hashtable_ptr The source hashtable.
  */
 static inline void JOIN(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE* restrict dest_hashtable_ptr,
-                                               const FHASHTABLE_TYPE* restrict src_hashtable_ptr) {
+                                               const FHASHTABLE_TYPE* restrict src_hashtable_ptr)
+{
     assert(src_hashtable_ptr != NULL);
     assert(dest_hashtable_ptr != NULL);
     assert(src_hashtable_ptr->capacity <= dest_hashtable_ptr->capacity);

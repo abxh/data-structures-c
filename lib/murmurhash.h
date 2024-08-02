@@ -20,7 +20,7 @@
 
 /**
  * @file murmurhash.h
- * @brief Murmur3 hash hashing function.
+ * @brief Murmur3 hash hashing function
  * @note Murmur3 hash is **not** a cryptographic hashing function.
  *
  * Original Source:
@@ -39,7 +39,8 @@
 #include <string.h>
 
 /// @cond DO_NOT_DOCUMENT
-static inline uint32_t murmur_32_scramble(uint32_t k) {
+static inline uint32_t murmur_32_scramble(uint32_t k)
+{
     k *= 0xcc9e2d51;
     k = (k << 15) | (k >> 17);
     k *= 0x1b873593;
@@ -55,7 +56,8 @@ static inline uint32_t murmur_32_scramble(uint32_t k) {
  * @param seed A seed, for whom matched with a given key, makes the hash function produce the same hash for the key.
  * @return A `uint32_t`-sized hash of the bytes.
  */
-static inline uint32_t murmur3_32(const uint8_t* key_ptr, const size_t len, const uint32_t seed) {
+static inline uint32_t murmur3_32(const uint8_t* key_ptr, const size_t len, const uint32_t seed)
+{
     uint32_t h = seed;
     uint32_t k;
 

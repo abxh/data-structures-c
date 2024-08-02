@@ -2,11 +2,12 @@
 
 #include <assert.h>
 
-#define NAME int_stack
+#define NAME       int_stack
 #define VALUE_TYPE int
 #include "fstack.h"
 
-void int_stack_example(void) {
+void int_stack_example(void)
+{
     int_stack_type* s = int_stack_create(3);
 
     if (!s) {
@@ -48,11 +49,12 @@ void int_stack_example(void) {
     int_stack_destroy(s);
 }
 
-#define NAME uintstk
+#define NAME       uintstk
 #define VALUE_TYPE unsigned int
 #include "fstack.h"
 
-void uintstk_example(void) {
+void uintstk_example(void)
+{
     const size_t lim = 1e+6;
 
     uintstk_type* s = uintstk_create(lim);
@@ -79,7 +81,8 @@ void uintstk_example(void) {
         unsigned int value;
 
         size_t tempi;
-        fstack_for_each_reverse(s_copy, tempi, value) {
+        fstack_for_each_reverse(s_copy, tempi, value)
+        {
             assert(value == x++);
         }
     }
@@ -90,7 +93,8 @@ void uintstk_example(void) {
         unsigned int value;
 
         size_t tempi;
-        fstack_for_each(s_copy, tempi, value) {
+        fstack_for_each(s_copy, tempi, value)
+        {
             assert(value == x--);
             cpy_count++;
         }
@@ -105,7 +109,8 @@ void uintstk_example(void) {
     uintstk_destroy(s_copy);
 }
 
-int main(void) {
+int main(void)
+{
     int_stack_example();
     uintstk_example();
 }

@@ -16,7 +16,8 @@
     - N := 129
 */
 
-int main(void) {
+int main(void)
+{
     {
         assert(!is_pow2(0));
         assert(is_pow2(1)); // 2**0

@@ -7,16 +7,17 @@
 #include "arena.h"
 
 #include "fnvhash.h"
-#define NAME strint_ht
-#define KEY_TYPE char*
-#define VALUE_TYPE int
+#define NAME               strint_ht
+#define KEY_TYPE           char*
+#define VALUE_TYPE         int
 #define KEY_IS_EQUAL(a, b) (strcmp((a), (b)) == 0)
 #define HASH_FUNCTION(key) (fnvhash_32_str(key))
 #include "fhashtable.h"
 
 static unsigned char buf[4096];
 
-void str_int_ht_test_alt(void) {
+void str_int_ht_test_alt(void)
+{
     strint_ht_type* ht = strint_ht_create(3 * 4 / 3);
     if (!ht) {
         assert(false);
@@ -25,7 +26,7 @@ void str_int_ht_test_alt(void) {
 
     arena_type arena;
     arena_init(&arena, sizeof(buf), buf); // note that the arena also considers alignment details
-                                          // and can be used to store different types simultaneously.
+    // and can be used to store different types simultaneously.
 
     char* egg_str_ptr = arena_allocate_aligned(&arena, alignof(char), sizeof("egg"));
     if (!egg_str_ptr) {

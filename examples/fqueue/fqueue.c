@@ -1,11 +1,12 @@
 #include <assert.h>
 #include <stdbool.h>
 
-#define NAME chque
+#define NAME       chque
 #define VALUE_TYPE char
 #include "fqueue.h"
 
-void chque_example(void) {
+void chque_example(void)
+{
     chque_type* q = chque_create(4);
     if (!q) {
         assert(false);
@@ -47,11 +48,12 @@ void chque_example(void) {
     chque_destroy(q);
 }
 
-#define NAME int_queue
+#define NAME       int_queue
 #define VALUE_TYPE int
 #include "fqueue.h"
 
-void int_queue_example(const bool offset) {
+void int_queue_example(const bool offset)
+{
     const int lim = 1e+6;
 
     int_queue_type* q = int_queue_create(lim);
@@ -88,7 +90,8 @@ void int_queue_example(const bool offset) {
         int value;
 
         size_t tempi;
-        fqueue_for_each_reverse(q_copy, tempi, value) {
+        fqueue_for_each_reverse(q_copy, tempi, value)
+        {
             assert(value == x--);
         }
     }
@@ -98,7 +101,8 @@ void int_queue_example(const bool offset) {
         int value;
 
         size_t tempi;
-        fqueue_for_each(q_copy, tempi, value) {
+        fqueue_for_each(q_copy, tempi, value)
+        {
             assert(value == x++);
             count++;
         }
@@ -112,7 +116,8 @@ void int_queue_example(const bool offset) {
     int_queue_destroy(q_copy);
 }
 
-int main(void) {
+int main(void)
+{
     chque_example();
     int_queue_example(true);
     int_queue_example(false);

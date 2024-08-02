@@ -4,7 +4,8 @@
 #include <stddef.h>
 #include <string.h>
 
-void char_array_test(void) {
+void char_array_test(void)
+{
     unsigned char* buf = malloc(4096);
 
     arena_type arena;

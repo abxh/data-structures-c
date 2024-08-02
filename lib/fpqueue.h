@@ -20,7 +20,7 @@
 
 /**
  * @file fpqueue.h
- * @brief Fixed-size heap-based priority queue
+ * @brief Fixed-size priority queue based on binary heap
  *
  * The following macros must be defined:
  *  @li `NAME`
@@ -121,10 +121,10 @@
 #endif // FPQUEUE_H
 
 /// @cond DO_NOT_DOCUMENT
-#define FPQUEUE_TYPE JOIN(FPQUEUE_NAME, type)
+#define FPQUEUE_TYPE         JOIN(FPQUEUE_NAME, type)
 #define FPQUEUE_ELEMENT_TYPE JOIN(FPQUEUE_NAME, element_type)
-#define FPQUEUE_IS_EMPTY JOIN(FPQUEUE_NAME, is_empty)
-#define FPQUEUE_IS_FULL JOIN(FPQUEUE_NAME, is_full)
+#define FPQUEUE_IS_EMPTY     JOIN(FPQUEUE_NAME, is_empty)
+#define FPQUEUE_IS_FULL      JOIN(FPQUEUE_NAME, is_full)
 /// @endcond
 
 // }}}
@@ -161,7 +161,8 @@ typedef struct {
  *   @li If capacity is 0 or is larger than UINT32_MAX.
  *   @li If malloc fails.
  */
-static inline FPQUEUE_TYPE* JOIN(FPQUEUE_NAME, create)(const uint32_t capacity) {
+static inline FPQUEUE_TYPE* JOIN(FPQUEUE_NAME, create)(const uint32_t capacity)
+{
     if (capacity == 0 || capacity > (UINT32_MAX - offsetof(FPQUEUE_TYPE, elements)) / sizeof(FPQUEUE_ELEMENT_TYPE)) {
         return NULL;
     }
@@ -184,7 +185,8 @@ static inline FPQUEUE_TYPE* JOIN(FPQUEUE_NAME, create)(const uint32_t capacity) 
  * @param[in,out] pqueue_ptr The priority queue pointer.
  * @warning May not be called twice in a row on the same object.
  */
-static inline void JOIN(FPQUEUE_NAME, destroy)(FPQUEUE_TYPE* pqueue_ptr) {
+static inline void JOIN(FPQUEUE_NAME, destroy)(FPQUEUE_TYPE* pqueue_ptr)
+{
     assert(pqueue_ptr != NULL);
 
     free(pqueue_ptr);
@@ -198,7 +200,8 @@ static inline void JOIN(FPQUEUE_NAME, destroy)(FPQUEUE_TYPE* pqueue_ptr) {
  * @param[in] pqueue_ptr The priority queue pointer.
  * @return whether the priority queue is empty.
  */
-static inline bool JOIN(FPQUEUE_NAME, is_empty)(const FPQUEUE_TYPE* pqueue_ptr) {
+static inline bool JOIN(FPQUEUE_NAME, is_empty)(const FPQUEUE_TYPE* pqueue_ptr)
+{
     assert(pqueue_ptr != NULL);
 
     return pqueue_ptr->count == 0;
@@ -212,7 +215,8 @@ static inline bool JOIN(FPQUEUE_NAME, is_empty)(const FPQUEUE_TYPE* pqueue_ptr) 
  * @param[in] pqueue_ptr The priority queue pointer.
  * @return whether the priority queue is full.
  */
-static inline bool JOIN(FPQUEUE_NAME, is_full)(const FPQUEUE_TYPE* pqueue_ptr) {
+static inline bool JOIN(FPQUEUE_NAME, is_full)(const FPQUEUE_TYPE* pqueue_ptr)
+{
     assert(pqueue_ptr != NULL);
 
     return pqueue_ptr->count == pqueue_ptr->capacity;
@@ -228,7 +232,8 @@ static inline bool JOIN(FPQUEUE_NAME, is_full)(const FPQUEUE_TYPE* pqueue_ptr) {
  * @param[in] pqueue_ptr The priority queue pointer.
  * @return The max value.
  */
-static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_max)(const FPQUEUE_TYPE* pqueue_ptr) {
+static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_max)(const FPQUEUE_TYPE* pqueue_ptr)
+{
     assert(pqueue_ptr != NULL);
     assert(FPQUEUE_IS_EMPTY(pqueue_ptr) == false);
 
@@ -245,12 +250,14 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_max)(const FPQUEUE_TYPE* pqueue_
  * @param[in] pqueue_ptr The priority queue pointer.
  * @return The next to-be-popped (max) value.
  */
-static inline VALUE_TYPE JOIN(FPQUEUE_NAME, peek)(const FPQUEUE_TYPE* pqueue_ptr) {
+static inline VALUE_TYPE JOIN(FPQUEUE_NAME, peek)(const FPQUEUE_TYPE* pqueue_ptr)
+{
     return JOIN(FPQUEUE_NAME, get_max)(pqueue_ptr);
 }
 
 /// @cond DO_NOT_DOCUMENT
-static inline void JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(FPQUEUE_TYPE* pqueue_ptr, const uint32_t index) {
+static inline void JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(FPQUEUE_TYPE* pqueue_ptr, const uint32_t index)
+{
     assert(pqueue_ptr != NULL);
     assert(pqueue_ptr->count == 0 || index < pqueue_ptr->count);
 
@@ -287,7 +294,8 @@ static inline void JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(FPQUEUE_TYPE* pq
  * @param[in,out] pqueue_ptr The priority queue pointer.
  * @return The max value.
  */
-static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE* pqueue_ptr) {
+static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE* pqueue_ptr)
+{
     assert(pqueue_ptr != NULL);
     assert(FPQUEUE_IS_EMPTY(pqueue_ptr) == false);
 
@@ -303,7 +311,8 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE* pqueue_ptr) {
 }
 
 /// @cond DO_NOT_DOCUMENT
-static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE* pqueue_ptr, uint32_t index) {
+static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE* pqueue_ptr, uint32_t index)
+{
     assert(pqueue_ptr != NULL);
     assert(index < pqueue_ptr->count);
 
@@ -332,7 +341,8 @@ static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE* pque
  * @param[in] value The value.
  * @param[in] priority The priority (with large number meaning high priority and vice versa).
  */
-static inline void JOIN(FPQUEUE_NAME, push)(FPQUEUE_TYPE* pqueue_ptr, VALUE_TYPE value, uint32_t priority) {
+static inline void JOIN(FPQUEUE_NAME, push)(FPQUEUE_TYPE* pqueue_ptr, VALUE_TYPE value, uint32_t priority)
+{
     assert(pqueue_ptr != NULL);
     assert(FPQUEUE_IS_FULL(pqueue_ptr) == false);
 
@@ -352,7 +362,8 @@ static inline void JOIN(FPQUEUE_NAME, push)(FPQUEUE_TYPE* pqueue_ptr, VALUE_TYPE
  *
  * @param[in,out] pqueue_ptr The priority queue pointer.
  */
-static inline void JOIN(FPQUEUE_NAME, clear)(FPQUEUE_TYPE* pqueue_ptr) {
+static inline void JOIN(FPQUEUE_NAME, clear)(FPQUEUE_TYPE* pqueue_ptr)
+{
     assert(pqueue_ptr != NULL);
 
     pqueue_ptr->count = 0;
@@ -370,7 +381,8 @@ static inline void JOIN(FPQUEUE_NAME, clear)(FPQUEUE_TYPE* pqueue_ptr) {
  * @param[in,out] dest_pqueue_ptr The destination priority queue.
  * @param[in] src_pqueue_ptr The source priority queue.
  */
-static inline void JOIN(FPQUEUE_NAME, copy)(FPQUEUE_TYPE* restrict dest_pqueue_ptr, const FPQUEUE_TYPE* restrict src_pqueue_ptr) {
+static inline void JOIN(FPQUEUE_NAME, copy)(FPQUEUE_TYPE* restrict dest_pqueue_ptr, const FPQUEUE_TYPE* restrict src_pqueue_ptr)
+{
     assert(src_pqueue_ptr != NULL);
     assert(dest_pqueue_ptr != NULL);
     assert(src_pqueue_ptr->count <= dest_pqueue_ptr->capacity);

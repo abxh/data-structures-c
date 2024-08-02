@@ -5,17 +5,18 @@
 
 #include "fnvhash.h"
 
-#define NAME strint_ht
-#define KEY_TYPE char*
-#define VALUE_TYPE int
+#define NAME               strint_ht
+#define KEY_TYPE           char*
+#define VALUE_TYPE         int
 #define KEY_IS_EQUAL(a, b) (strcmp((a), (b)) == 0)
 #define HASH_FUNCTION(key) (fnvhash_32_str(key))
 #include "fhashtable.h"
 
 static char buf[4096]; // a static / heap-allocated buffer should be used, should the key/values's lifetime
-                       // extend beyond the function scope [in the function below].
+// extend beyond the function scope [in the function below].
 
-void str_int_ht_test_alt(void) {
+void str_int_ht_test_alt(void)
+{
 
     strint_ht_type* ht =
         strint_ht_create(3 * 4 / 3); // (4/3) scaling factor is to ensure hashtable performance by reducing maximum laod
@@ -73,16 +74,17 @@ void str_int_ht_test_alt(void) {
 
 #include "murmurhash.h"
 
-#define NAME int_to_int_hashtable
-#define KEY_TYPE int
-#define VALUE_TYPE int
+#define NAME               int_to_int_hashtable
+#define KEY_TYPE           int
+#define VALUE_TYPE         int
 #define KEY_IS_EQUAL(a, b) ((a) == (b))
 #define HASH_FUNCTION(key) (murmur3_32((uint8_t*)&(key), sizeof(int), 0))
 #include "fhashtable.h"
 
 #define LIM ((int)(1e+6))
 
-void int_to_int_hashtable_test(void) {
+void int_to_int_hashtable_test(void)
+{
     int_to_int_hashtable_type* ht =
         int_to_int_hashtable_create(LIM * 4 / 3); // (4/3) scaling factor is to ensure hashtable performance by reducing maximum laod
     if (!ht) {
@@ -110,7 +112,8 @@ void int_to_int_hashtable_test(void) {
         (void)(value); // mark unused
 
         size_t tempi;
-        fhashtable_for_each(ht_copy, tempi, key, value) {
+        fhashtable_for_each(ht_copy, tempi, key, value)
+        {
             const bool inside_range = 0 <= key && key < LIM;
             const bool already_counted = table[key];
 
@@ -133,7 +136,8 @@ void int_to_int_hashtable_test(void) {
     int_to_int_hashtable_destroy(ht_copy);
 }
 
-int main(void) {
+int main(void)
+{
     str_int_ht_test_alt();
     int_to_int_hashtable_test();
     return 0;

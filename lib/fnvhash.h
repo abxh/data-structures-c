@@ -1,6 +1,6 @@
 /*  fnvhash.h
  *
- *  Copyright (C) 2023 abxh 
+ *  Copyright (C) 2023 abxh
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
 
 /**
  * @file fnvhash.h
- * @brief FNV-1a hashing function.
+ * @brief FNV-1a hashing function
  * @note FNV-1a is **not** a cryptographic hashing function.
  *
  * Source:
@@ -38,7 +38,8 @@
  * @param char_p Pointer to the string of bytes.
  * @return A 32-bit hash of the bytes.
  */
-static inline uint32_t fnvhash_32_str(const char* char_p) {
+static inline uint32_t fnvhash_32_str(const char* char_p)
+{
     uint32_t hash = 0x811c9dc5;
     while (*char_p != '\0') {
         hash ^= *(char_p++);
@@ -54,7 +55,8 @@ static inline uint32_t fnvhash_32_str(const char* char_p) {
  * @param length Number of bytes.
  * @return A 32-bit hash of the bytes.
  */
-static inline uint32_t fnvhash_32(const uint8_t* char_p, const size_t length) {
+static inline uint32_t fnvhash_32(const uint8_t* char_p, const size_t length)
+{
     uint32_t hash = 0x811c9dc5;
     for (size_t i = 0; i < length; i++) {
         hash ^= *(char_p++);

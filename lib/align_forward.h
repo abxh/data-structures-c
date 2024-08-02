@@ -20,7 +20,7 @@
 
 /**
  * @file align_forward.h
- * @brief align pointer to the next alignment boundary.
+ * @brief align pointer to the next alignment boundary
  *
  * Using source:
  * https://www.gingerbill.org/article/2019/02/08/memory-allocation-strategies-002/
@@ -41,7 +41,8 @@
  * @param align The alignment
  * @return A new pointer as number of bytes, which is aligned to `align` and is larger than or equal to `ptr`.
  */
-static inline uintptr_t align_forward(const uintptr_t ptr, const size_t align) {
+static inline uintptr_t align_forward(const uintptr_t ptr, const size_t align)
+{
     assert(is_pow2(align));
 
     const uintptr_t p = ptr;
@@ -65,7 +66,8 @@ static inline uintptr_t align_forward(const uintptr_t ptr, const size_t align) {
         // If 'p' address is not aligned, push the address to the
         // next value which is aligned
         return p + a - r;
-    } else {
+    }
+    else {
         return p;
     }
 }

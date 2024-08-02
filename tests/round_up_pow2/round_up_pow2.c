@@ -14,7 +14,8 @@
     - N := UINT32_MAX / 4
 */
 
-int main(void) {
+int main(void)
+{
     {
         assert(round_up_pow2_32(1) == 1);
         assert(round_up_pow2_32(2) == 2);

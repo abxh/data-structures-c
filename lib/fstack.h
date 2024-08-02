@@ -1,6 +1,6 @@
 /*  fstack.h
  *
- *  Copyright (C) 2023 abxh 
+ *  Copyright (C) 2023 abxh
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -116,9 +116,9 @@
 #endif // FSTACK_H
 
 /// @cond DO_NOT_DOCUMENT
-#define FSTACK_TYPE JOIN(FSTACK_NAME, type)
+#define FSTACK_TYPE     JOIN(FSTACK_NAME, type)
 #define FSTACK_IS_EMPTY JOIN(FSTACK_NAME, is_empty)
-#define FSTACK_IS_FULL JOIN(FSTACK_NAME, is_full)
+#define FSTACK_IS_FULL  JOIN(FSTACK_NAME, is_full)
 /// @endcond
 
 // }}}
@@ -129,8 +129,8 @@
  * @brief Generated stack struct type for a given `VALUE_TYPE`.
  */
 typedef struct {
-    uint32_t count;        ///< number of values in the stack.
-    uint32_t capacity;     ///< maximum number of values allocated for in the stack.
+    uint32_t count;      ///< number of values in the stack.
+    uint32_t capacity;   ///< maximum number of values allocated for in the stack.
     VALUE_TYPE values[]; ///< array of values.
 } FSTACK_TYPE;
 
@@ -147,7 +147,8 @@ typedef struct {
  *   @li If capacity is 0 or is larger than UINT32_MAX.
  *   @li If malloc fails.
  */
-static inline FSTACK_TYPE* JOIN(FSTACK_NAME, create)(const uint32_t capacity) {
+static inline FSTACK_TYPE* JOIN(FSTACK_NAME, create)(const uint32_t capacity)
+{
     if (capacity == 0 || capacity > (UINT32_MAX - offsetof(FSTACK_TYPE, values)) / sizeof(VALUE_TYPE)) {
         return NULL;
     }
@@ -170,7 +171,8 @@ static inline FSTACK_TYPE* JOIN(FSTACK_NAME, create)(const uint32_t capacity) {
  * @param[in,out] stack_ptr The stack pointer.
  * @warning May not be called twice in a row on the same object.
  */
-static inline void JOIN(FSTACK_NAME, destroy)(FSTACK_TYPE* stack_ptr) {
+static inline void JOIN(FSTACK_NAME, destroy)(FSTACK_TYPE* stack_ptr)
+{
     assert(stack_ptr != NULL);
 
     free(stack_ptr);
@@ -184,7 +186,8 @@ static inline void JOIN(FSTACK_NAME, destroy)(FSTACK_TYPE* stack_ptr) {
  * @param[in] stack_ptr The stack pointer.
  * @return whether the stack is empty.
  */
-static inline bool JOIN(FSTACK_NAME, is_empty)(const FSTACK_TYPE* stack_ptr) {
+static inline bool JOIN(FSTACK_NAME, is_empty)(const FSTACK_TYPE* stack_ptr)
+{
     assert(stack_ptr != NULL);
 
     return stack_ptr->count == 0;
@@ -198,7 +201,8 @@ static inline bool JOIN(FSTACK_NAME, is_empty)(const FSTACK_TYPE* stack_ptr) {
  * @param[in] stack_ptr The stack pointer.
  * @return whether the stack is full.
  */
-static inline bool JOIN(FSTACK_NAME, is_full)(const FSTACK_TYPE* stack_ptr) {
+static inline bool JOIN(FSTACK_NAME, is_full)(const FSTACK_TYPE* stack_ptr)
+{
     assert(stack_ptr != NULL);
 
     return stack_ptr->count == stack_ptr->capacity;
@@ -217,7 +221,8 @@ static inline bool JOIN(FSTACK_NAME, is_full)(const FSTACK_TYPE* stack_ptr) {
  * @param[in] index The index to retrieve to value from.
  * @return The value at `index`.
  */
-static inline VALUE_TYPE JOIN(FSTACK_NAME, at)(const FSTACK_TYPE* stack_ptr, const uint32_t index) {
+static inline VALUE_TYPE JOIN(FSTACK_NAME, at)(const FSTACK_TYPE* stack_ptr, const uint32_t index)
+{
     assert(stack_ptr != NULL);
     assert(index < stack_ptr->count);
 
@@ -234,7 +239,8 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, at)(const FSTACK_TYPE* stack_ptr, con
  * @param[in] stack_ptr The stack pointer.
  * @return The top value.
  */
-static inline VALUE_TYPE JOIN(FSTACK_NAME, get_top)(const FSTACK_TYPE* stack_ptr) {
+static inline VALUE_TYPE JOIN(FSTACK_NAME, get_top)(const FSTACK_TYPE* stack_ptr)
+{
     assert(stack_ptr != NULL);
     assert(FSTACK_IS_EMPTY(stack_ptr) == false);
 
@@ -251,7 +257,8 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, get_top)(const FSTACK_TYPE* stack_ptr
  * @param[in] stack_ptr The stack pointer.
  * @return The bottom value.
  */
-static inline VALUE_TYPE JOIN(FSTACK_NAME, get_bottom)(const FSTACK_TYPE* stack_ptr) {
+static inline VALUE_TYPE JOIN(FSTACK_NAME, get_bottom)(const FSTACK_TYPE* stack_ptr)
+{
     assert(stack_ptr != NULL);
     assert(FSTACK_IS_EMPTY(stack_ptr) == false);
 
@@ -268,7 +275,8 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, get_bottom)(const FSTACK_TYPE* stack_
  * @param[in] stack_ptr The stack pointer.
  * @return The next to-be-popped value.
  */
-static inline VALUE_TYPE JOIN(FSTACK_NAME, peek)(const FSTACK_TYPE* stack_ptr) {
+static inline VALUE_TYPE JOIN(FSTACK_NAME, peek)(const FSTACK_TYPE* stack_ptr)
+{
     return JOIN(FSTACK_NAME, get_top)(stack_ptr);
 }
 
@@ -282,7 +290,8 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, peek)(const FSTACK_TYPE* stack_ptr) {
  * @param[in,out] stack_ptr The stack pointer.
  * @param[in] value The value.
  */
-static inline void JOIN(FSTACK_NAME, push)(FSTACK_TYPE* stack_ptr, const VALUE_TYPE value) {
+static inline void JOIN(FSTACK_NAME, push)(FSTACK_TYPE* stack_ptr, const VALUE_TYPE value)
+{
     assert(stack_ptr != NULL);
     assert(FSTACK_IS_FULL(stack_ptr) == false);
 
@@ -299,7 +308,8 @@ static inline void JOIN(FSTACK_NAME, push)(FSTACK_TYPE* stack_ptr, const VALUE_T
  * @param[in,out] stack_ptr The stack pointer.
  * @return The top value.
  */
-static inline VALUE_TYPE JOIN(FSTACK_NAME, pop)(FSTACK_TYPE* stack_ptr) {
+static inline VALUE_TYPE JOIN(FSTACK_NAME, pop)(FSTACK_TYPE* stack_ptr)
+{
     assert(stack_ptr != NULL);
     assert(FSTACK_IS_EMPTY(stack_ptr) == false);
 
@@ -313,7 +323,8 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, pop)(FSTACK_TYPE* stack_ptr) {
  *
  * @param[in,out] stack_ptr The stack pointer.
  */
-static inline void JOIN(FSTACK_NAME, clear)(FSTACK_TYPE* stack_ptr) {
+static inline void JOIN(FSTACK_NAME, clear)(FSTACK_TYPE* stack_ptr)
+{
     assert(stack_ptr != NULL);
     stack_ptr->count = 0;
 }
@@ -330,7 +341,8 @@ static inline void JOIN(FSTACK_NAME, clear)(FSTACK_TYPE* stack_ptr) {
  * @param[in,out] dest_stack_ptr The destination stack.
  * @param[in] src_stack_ptr The source stack.
  */
-static inline void JOIN(FSTACK_NAME, copy)(FSTACK_TYPE* restrict dest_stack_ptr, const FSTACK_TYPE* restrict src_stack_ptr) {
+static inline void JOIN(FSTACK_NAME, copy)(FSTACK_TYPE* restrict dest_stack_ptr, const FSTACK_TYPE* restrict src_stack_ptr)
+{
     assert(src_stack_ptr != NULL);
     assert(dest_stack_ptr != NULL);
     assert(src_stack_ptr->count <= dest_stack_ptr->capacity);

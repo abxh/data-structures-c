@@ -19,3 +19,6 @@ BreakConstructorInitializers: BeforeComma
 # IndentPPDirectives: AfterHash
 
 PointerAlignment: Left
+
+AlignConsecutiveMacros: "AcrossEmptyLines"
+BreakBeforeBraces: Stroustrup

@@ -20,7 +20,7 @@
 
 /**
  * @file fqueue.h
- * @brief Fixed-size ring-buffer-based queue
+ * @brief Fixed-size queue based on ring buffer
  *
  * The following macros must be defined:
  *  @li `NAME`
@@ -111,9 +111,9 @@
 #endif // FQUEUE_H
 
 /// @cond DO_NOT_DOCUMENT
-#define FQUEUE_TYPE JOIN(FQUEUE_NAME, type)
+#define FQUEUE_TYPE     JOIN(FQUEUE_NAME, type)
 #define FQUEUE_IS_EMPTY JOIN(FQUEUE_NAME, is_empty)
-#define FQUEUE_IS_FULL JOIN(FQUEUE_NAME, is_full)
+#define FQUEUE_IS_FULL  JOIN(FQUEUE_NAME, is_full)
 /// @endcond
 
 // }}}
@@ -144,7 +144,8 @@ typedef struct {
  *   @li If malloc fails.
  *   @li If capacity is 0 or [capacity rounded up to the power of 2] is larger than UINT32_MAX / 4.
  */
-static inline FQUEUE_TYPE* JOIN(FQUEUE_NAME, create)(const uint32_t capacity) {
+static inline FQUEUE_TYPE* JOIN(FQUEUE_NAME, create)(const uint32_t capacity)
+{
     if (capacity == 0 || capacity > UINT32_MAX / 4) {
         return NULL;
     }
@@ -172,7 +173,8 @@ static inline FQUEUE_TYPE* JOIN(FQUEUE_NAME, create)(const uint32_t capacity) {
  * @param[in] queue_ptr The queue pointer.
  * @warning May not be called twice in a row on the same object.
  */
-static inline void JOIN(FQUEUE_NAME, destroy)(FQUEUE_TYPE* queue_ptr) {
+static inline void JOIN(FQUEUE_NAME, destroy)(FQUEUE_TYPE* queue_ptr)
+{
     assert(queue_ptr != NULL);
 
     free(queue_ptr);
@@ -187,7 +189,8 @@ static inline void JOIN(FQUEUE_NAME, destroy)(FQUEUE_TYPE* queue_ptr) {
  * @param[in] queue_ptr The queue pointer.
  * @return whether the queue is empty.
  */
-static inline bool JOIN(FQUEUE_NAME, is_empty)(const FQUEUE_TYPE* queue_ptr) {
+static inline bool JOIN(FQUEUE_NAME, is_empty)(const FQUEUE_TYPE* queue_ptr)
+{
     assert(queue_ptr != NULL);
 
     return queue_ptr->count == 0;
@@ -202,7 +205,8 @@ static inline bool JOIN(FQUEUE_NAME, is_empty)(const FQUEUE_TYPE* queue_ptr) {
  * @param[in] queue_ptr The queue pointer.
  * @return whether the queue is full.
  */
-static inline bool JOIN(FQUEUE_NAME, is_full)(const FQUEUE_TYPE* queue_ptr) {
+static inline bool JOIN(FQUEUE_NAME, is_full)(const FQUEUE_TYPE* queue_ptr)
+{
     assert(queue_ptr != NULL);
 
     return queue_ptr->count == queue_ptr->capacity;
@@ -221,7 +225,8 @@ static inline bool JOIN(FQUEUE_NAME, is_full)(const FQUEUE_TYPE* queue_ptr) {
  * @param[in] index The index to retrieve to value from.
  * @return The value at `index`.
  */
-static inline VALUE_TYPE JOIN(FQUEUE_NAME, at)(const FQUEUE_TYPE* queue_ptr, const uint32_t index) {
+static inline VALUE_TYPE JOIN(FQUEUE_NAME, at)(const FQUEUE_TYPE* queue_ptr, const uint32_t index)
+{
     assert(queue_ptr != NULL);
     assert(index < queue_ptr->count);
 
@@ -240,7 +245,8 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, at)(const FQUEUE_TYPE* queue_ptr, con
  * @param[in] queue_ptr The queue pointer.
  * @return The front value.
  */
-static inline VALUE_TYPE JOIN(FQUEUE_NAME, get_front)(const FQUEUE_TYPE* queue_ptr) {
+static inline VALUE_TYPE JOIN(FQUEUE_NAME, get_front)(const FQUEUE_TYPE* queue_ptr)
+{
     assert(queue_ptr != NULL);
     assert(!FQUEUE_IS_EMPTY(queue_ptr));
 
@@ -257,7 +263,8 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, get_front)(const FQUEUE_TYPE* queue_p
  * @param[in] queue_ptr The queue pointer.
  * @return The back value.
  */
-static inline VALUE_TYPE JOIN(FQUEUE_NAME, get_back)(const FQUEUE_TYPE* queue_ptr) {
+static inline VALUE_TYPE JOIN(FQUEUE_NAME, get_back)(const FQUEUE_TYPE* queue_ptr)
+{
     assert(queue_ptr != NULL);
     assert(!FQUEUE_IS_EMPTY(queue_ptr));
 
@@ -276,7 +283,8 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, get_back)(const FQUEUE_TYPE* queue_pt
  * @param[in,out] queue_ptr The queue pointer.
  * @return The next to-be-dequeued value.
  */
-static inline VALUE_TYPE JOIN(FQUEUE_NAME, peek)(const FQUEUE_TYPE* queue_ptr) {
+static inline VALUE_TYPE JOIN(FQUEUE_NAME, peek)(const FQUEUE_TYPE* queue_ptr)
+{
     return JOIN(FQUEUE_NAME, get_front)(queue_ptr);
 }
 
@@ -290,7 +298,8 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, peek)(const FQUEUE_TYPE* queue_ptr) {
  * @param[in,out] queue_ptr The queue pointer.
  * @param[in] value The value to enqueue.
  */
-static inline bool JOIN(FQUEUE_NAME, enqueue)(FQUEUE_TYPE* queue_ptr, const VALUE_TYPE value) {
+static inline bool JOIN(FQUEUE_NAME, enqueue)(FQUEUE_TYPE* queue_ptr, const VALUE_TYPE value)
+{
     assert(queue_ptr != NULL);
     assert(!FQUEUE_IS_FULL(queue_ptr));
 
@@ -314,7 +323,8 @@ static inline bool JOIN(FQUEUE_NAME, enqueue)(FQUEUE_TYPE* queue_ptr, const VALU
  * @param[in,out] queue_ptr The queue pointer.
  * @return The front value.
  */
-static inline VALUE_TYPE JOIN(FQUEUE_NAME, dequeue)(FQUEUE_TYPE* queue_ptr) {
+static inline VALUE_TYPE JOIN(FQUEUE_NAME, dequeue)(FQUEUE_TYPE* queue_ptr)
+{
     assert(queue_ptr != NULL);
     assert(!FQUEUE_IS_EMPTY(queue_ptr));
 
@@ -335,7 +345,8 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, dequeue)(FQUEUE_TYPE* queue_ptr) {
  *
  * @param[in,out] queue_ptr The queue pointer.
  */
-static inline void JOIN(FQUEUE_NAME, clear)(FQUEUE_TYPE* queue_ptr) {
+static inline void JOIN(FQUEUE_NAME, clear)(FQUEUE_TYPE* queue_ptr)
+{
     assert(queue_ptr != NULL);
 
     queue_ptr->count = 0;
@@ -354,7 +365,8 @@ static inline void JOIN(FQUEUE_NAME, clear)(FQUEUE_TYPE* queue_ptr) {
  * @param[in,out] dest_queue_ptr The destination queue.
  * @param[in] src_queue_ptr The source queue.
  */
-static inline void JOIN(FQUEUE_NAME, copy)(FQUEUE_TYPE* restrict dest_queue_ptr, const FQUEUE_TYPE* restrict src_queue_ptr) {
+static inline void JOIN(FQUEUE_NAME, copy)(FQUEUE_TYPE* restrict dest_queue_ptr, const FQUEUE_TYPE* restrict src_queue_ptr)
+{
     assert(src_queue_ptr != NULL);
     assert(dest_queue_ptr != NULL);
     assert(src_queue_ptr->count <= dest_queue_ptr->capacity);

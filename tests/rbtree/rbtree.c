@@ -29,17 +29,19 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define NAME bst
-#define KEY_TYPE int
-#define VALUE_TYPE int
+#define NAME                       bst
+#define KEY_TYPE                   int
+#define VALUE_TYPE                 int
 #define KEY_IS_STRICTLY_LESS(a, b) ((a) < (b))
 #include "rbtree.h"
 
-static int max_int(int a, int b) {
+static int max_int(int a, int b)
+{
     return (a >= b) ? a : b;
 }
 
-static int count_height(bst_node_type* root_ptr) {
+static int count_height(bst_node_type* root_ptr)
+{
     if (root_ptr == NULL) {
         return 0;
     }
@@ -53,7 +55,8 @@ static int count_height(bst_node_type* root_ptr) {
     return height;
 }
 
-static bool is_valid_binary_search_tree(bst_node_type* root_ptr) {
+static bool is_valid_binary_search_tree(bst_node_type* root_ptr)
+{
     // no duplicates allowed (however the value can be used as a counter)
 
     if (root_ptr == NULL) {
@@ -72,7 +75,8 @@ static bool is_valid_binary_search_tree(bst_node_type* root_ptr) {
     return ret;
 }
 
-static bool rbtree_check_for_no_consecutive_reds(bst_node_type* root_ptr) {
+static bool rbtree_check_for_no_consecutive_reds(bst_node_type* root_ptr)
+{
     if (root_ptr == NULL) {
         return true;
     }
@@ -87,7 +91,8 @@ static bool rbtree_check_for_no_consecutive_reds(bst_node_type* root_ptr) {
     return rbtree_check_for_no_consecutive_reds(root_ptr->left_ptr) && rbtree_check_for_no_consecutive_reds(root_ptr->right_ptr);
 }
 
-static bool rbtree_check_equal_black_height(bst_node_type* root_ptr, unsigned int height) {
+static bool rbtree_check_equal_black_height(bst_node_type* root_ptr, unsigned int height)
+{
     if (root_ptr == NULL) {
         return true;
     }
@@ -96,11 +101,13 @@ static bool rbtree_check_equal_black_height(bst_node_type* root_ptr, unsigned in
     return rbtree_check_equal_black_height(root_ptr->left_ptr, height) == rbtree_check_equal_black_height(root_ptr->right_ptr, height);
 }
 
-static bool is_valid_red_black_tree(bst_node_type* root_ptr) {
+static bool is_valid_red_black_tree(bst_node_type* root_ptr)
+{
     return rbtree_check_for_no_consecutive_reds(root_ptr) && rbtree_check_equal_black_height(root_ptr, 0);
 }
 
-int main(void) {
+int main(void)
+{
     // N = 0
     {
         bst_type bst;
@@ -209,7 +216,8 @@ int main(void) {
                 bst_node_init(&node_buf[count], val, 0);
                 bst_insert_node(&bst, &node_buf[count]);
                 count++;
-            } else {
+            }
+            else {
                 node_ptr->value++;
             }
             assert(is_valid_binary_search_tree(bst.root_ptr));
@@ -222,7 +230,8 @@ int main(void) {
             if (node_ptr) {
                 if (node_ptr->value > 1) {
                     node_ptr->value--;
-                } else {
+                }
+                else {
                     bst_delete_node(&bst, node_ptr);
                 }
             }
@@ -237,7 +246,8 @@ int main(void) {
                 bst_node_init(&node_buf[count], val, 0);
                 bst_insert_node(&bst, &node_buf[count]);
                 count++;
-            } else {
+            }
+            else {
                 node_ptr->value++;
             }
             assert(is_valid_binary_search_tree(bst.root_ptr));

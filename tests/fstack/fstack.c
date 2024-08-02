@@ -26,38 +26,45 @@
     - copy
 */
 
-#define NAME i64_stk
+#define NAME       i64_stk
 #define VALUE_TYPE int64_t
 #include "fstack.h"
 
-static inline bool check_count_invariance(const i64_stk_type* stk_p, const size_t push_op_count, const size_t pop_op_count) {
+static inline bool check_count_invariance(const i64_stk_type* stk_p, const size_t push_op_count, const size_t pop_op_count)
+{
     // push and pop operations *after* the stack is cleared / created
     return stk_p->count == (push_op_count - pop_op_count);
 }
 
-static inline bool check_capacity_invariance(const i64_stk_type* stk_p, const size_t old_capacity) {
+static inline bool check_capacity_invariance(const i64_stk_type* stk_p, const size_t old_capacity)
+{
     return stk_p->capacity >= old_capacity;
 }
 
-static inline bool check_empty_full(const i64_stk_type* stk_p, const size_t push_op_count, const size_t pop_op_count) {
+static inline bool check_empty_full(const i64_stk_type* stk_p, const size_t push_op_count, const size_t pop_op_count)
+{
     // push and pop operations *after* the stack is cleared / created
     const size_t diff = push_op_count - pop_op_count;
 
     if (i64_stk_is_empty(stk_p)) {
         return diff == 0;
-    } else if (i64_stk_is_full(stk_p)) {
+    }
+    else if (i64_stk_is_full(stk_p)) {
         return diff == stk_p->capacity;
-    } else {
+    }
+    else {
         return true;
     }
 }
 
-static inline bool check_top_bottom(const i64_stk_type* stk_p, const int64_t latest_value_pushed, const int64_t first_value_pushed) {
+static inline bool check_top_bottom(const i64_stk_type* stk_p, const int64_t latest_value_pushed, const int64_t first_value_pushed)
+{
     // first and last value pushed *after* the stack is cleared / created
     return i64_stk_get_top(stk_p) == latest_value_pushed && i64_stk_get_bottom(stk_p) == first_value_pushed;
 }
 
-static inline bool check_ordered_values(const i64_stk_type* stk_p, const size_t n, const int64_t expected_value[n]) {
+static inline bool check_ordered_values(const i64_stk_type* stk_p, const size_t n, const int64_t expected_value[n])
+{
     assert(n != 0);
 
     bool res = true;
@@ -69,7 +76,8 @@ static inline bool check_ordered_values(const i64_stk_type* stk_p, const size_t 
         int64_t value;
 
         size_t tempi;
-        fstack_for_each(stk_p, tempi, value) {
+        fstack_for_each(stk_p, tempi, value)
+        {
             res &= value == expected_value[index++];
         }
         assert(index == n);
@@ -79,7 +87,8 @@ static inline bool check_ordered_values(const i64_stk_type* stk_p, const size_t 
         int64_t value;
 
         size_t tempi;
-        fstack_for_each_reverse(stk_p, tempi, value) {
+        fstack_for_each_reverse(stk_p, tempi, value)
+        {
             res &= value == expected_value[--index];
         }
         assert(index == 0);
@@ -87,7 +96,8 @@ static inline bool check_ordered_values(const i64_stk_type* stk_p, const size_t 
     return res;
 }
 
-static inline bool copy_values_and_check_ordered_values(const i64_stk_type* stk_p, const size_t n, const int64_t expected_value[n]) {
+static inline bool copy_values_and_check_ordered_values(const i64_stk_type* stk_p, const size_t n, const int64_t expected_value[n])
+{
     assert(n != 0);
 
     i64_stk_type* stk_copy_p = i64_stk_create(n);
@@ -100,7 +110,8 @@ static inline bool copy_values_and_check_ordered_values(const i64_stk_type* stk_
     return res;
 }
 
-int main(void) {
+int main(void)
+{
     // N = 0
     {
         i64_stk_type* stk_p = i64_stk_create(0);
