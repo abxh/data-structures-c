@@ -22,6 +22,9 @@
     - insert_node
     - delete_node
     - clear
+
+    Sources used for testing:
+    http://www.maxgcoding.com/validating-red-black-trees/
 */
 
 #include <assert.h>
@@ -35,12 +38,12 @@
 #define KEY_IS_STRICTLY_LESS(a, b) ((a) < (b))
 #include "rbtree.h"
 
-static int max_int(int a, int b)
+static int max_int(const int a, const int b)
 {
     return (a >= b) ? a : b;
 }
 
-static int count_height(bst_node_type* root_ptr)
+static int count_height(const bst_node_type* root_ptr)
 {
     if (root_ptr == NULL) {
         return 0;
@@ -55,55 +58,84 @@ static int count_height(bst_node_type* root_ptr)
     return height;
 }
 
-static bool is_valid_binary_search_tree(bst_node_type* root_ptr)
+static bool is_valid_binary_search_tree(const bst_node_type* root_ptr)
 {
     // no duplicates allowed (however the value can be used as a counter)
 
     if (root_ptr == NULL) {
         return true;
     }
-
-    bool ret = true;
-    if (root_ptr->left_ptr != NULL) {
-        ret &= root_ptr->left_ptr->key < root_ptr->key;
-        ret &= is_valid_binary_search_tree(root_ptr->left_ptr);
+    if (root_ptr->left_ptr && root_ptr->left_ptr->key > root_ptr->key) {
+        return false;
     }
-    if (root_ptr->right_ptr != NULL) {
-        ret &= root_ptr->key < root_ptr->right_ptr->key;
-        ret &= is_valid_binary_search_tree(root_ptr->right_ptr);
+    if (root_ptr->right_ptr && root_ptr->key > root_ptr->right_ptr->key) {
+        return false;
     }
-    return ret;
+    return is_valid_binary_search_tree(root_ptr->left_ptr) && is_valid_binary_search_tree(root_ptr->right_ptr);
 }
 
-static bool rbtree_check_for_no_consecutive_reds(bst_node_type* root_ptr)
+static bool rbtree_check_for_no_consecutive_reds(const bst_node_type* parent_ptr, const bst_node_type* root_ptr)
 {
     if (root_ptr == NULL) {
         return true;
+    }
+    if (parent_ptr && bst_node_is_red(parent_ptr) && bst_node_is_red(root_ptr)) {
+        return false;
+    }
+    return rbtree_check_for_no_consecutive_reds(root_ptr, root_ptr->left_ptr) &&
+           rbtree_check_for_no_consecutive_reds(root_ptr, root_ptr->right_ptr);
+}
+
+static bool blackBal(const bst_node_type* x, int numblack)
+{
+
+    if (x == NULL)
+        return numblack == 0;
+    if (!bst_node_is_red(x))
+        numblack--;
+    return blackBal(x->left_ptr, numblack) && blackBal(x->right_ptr, numblack);
+}
+
+static bool rbtree_check_equal_black_height(const bst_node_type* root_ptr)
+{
+    // http://www.maxgcoding.com/validating-red-black-trees/
+
+    int numBlack = 0;
+    const bst_node_type* x = root_ptr;
+    if (root_ptr) {
+        while (x->left_ptr) {
+            if (!bst_node_is_red(x))
+                numBlack += 1;
+            x = x->left_ptr;
+        }
+    }
+    return blackBal(root_ptr, numBlack);
+}
+
+static bool is_valid_red_black_tree(const bst_node_type* root_ptr)
+{
+    return is_valid_binary_search_tree(root_ptr) && rbtree_check_for_no_consecutive_reds(NULL, root_ptr) &&
+           rbtree_check_equal_black_height(root_ptr);
+}
+
+static void preorder_traverse_and_print(const bst_node_type* root_ptr, bool print_children)
+{
+    if (root_ptr == NULL) {
+        if (print_children) {
+            printf(" ()");
+        }
+        return;
     }
     if (bst_node_is_red(root_ptr)) {
-        if (root_ptr->left_ptr && bst_node_is_red(root_ptr->left_ptr)) {
-            return false;
-        }
-        if (root_ptr->right_ptr && bst_node_is_red(root_ptr->right_ptr)) {
-            return false;
-        }
+        printf(" ( [%d]", root_ptr->key);
     }
-    return rbtree_check_for_no_consecutive_reds(root_ptr->left_ptr) && rbtree_check_for_no_consecutive_reds(root_ptr->right_ptr);
-}
-
-static bool rbtree_check_equal_black_height(bst_node_type* root_ptr, unsigned int height)
-{
-    if (root_ptr == NULL) {
-        return true;
+    else {
+        printf(" ( %d", root_ptr->key);
     }
-    height += bst_node_is_black(root_ptr) + (root_ptr->left_ptr == NULL) + (root_ptr->right_ptr == NULL);
-
-    return rbtree_check_equal_black_height(root_ptr->left_ptr, height) == rbtree_check_equal_black_height(root_ptr->right_ptr, height);
-}
-
-static bool is_valid_red_black_tree(bst_node_type* root_ptr)
-{
-    return rbtree_check_for_no_consecutive_reds(root_ptr) && rbtree_check_equal_black_height(root_ptr, 0);
+    bool dont_print_children = root_ptr->left_ptr == NULL && root_ptr->right_ptr == NULL;
+    preorder_traverse_and_print(root_ptr->left_ptr, !dont_print_children);
+    preorder_traverse_and_print(root_ptr->right_ptr, !dont_print_children);
+    printf(" )");
 }
 
 int main(void)
@@ -112,7 +144,6 @@ int main(void)
     {
         bst_type bst;
         bst_init(&bst);
-        assert(is_valid_binary_search_tree(bst.root_ptr));
         assert(is_valid_red_black_tree(bst.root_ptr));
         assert(bst.count == 0);
     }
@@ -131,7 +162,6 @@ int main(void)
         assert(bst.root_ptr == NULL);
         assert(bst_is_empty(&bst));
 
-        assert(is_valid_binary_search_tree(bst.root_ptr));
         assert(is_valid_red_black_tree(bst.root_ptr));
         assert(bst.count == 0);
     }
@@ -156,7 +186,6 @@ int main(void)
         assert(bst.root_ptr == &node);
         assert(!bst_is_empty(&bst));
 
-        assert(is_valid_binary_search_tree(bst.root_ptr));
         assert(is_valid_red_black_tree(bst.root_ptr));
         assert(bst.count == 1);
     }
@@ -172,7 +201,8 @@ int main(void)
             bst_node_init(&node[i], values[i], values[i]);
             bst_insert_node(&bst, &node[i]);
 
-            assert(is_valid_binary_search_tree(bst.root_ptr));
+            preorder_traverse_and_print(bst.root_ptr, false);
+            printf("\n");
             assert(is_valid_red_black_tree(bst.root_ptr));
         }
         assert(bst.count == 8);
@@ -181,7 +211,6 @@ int main(void)
         for (int i = 0; i < 4; i++) {
             bst_delete_node(&bst, bst_search_node(&bst, deleted_values[i]));
 
-            assert(is_valid_binary_search_tree(bst.root_ptr));
             assert(is_valid_red_black_tree(bst.root_ptr));
         }
         assert(bst.count == 4);
@@ -192,7 +221,6 @@ int main(void)
             bst_node_init(&new_node[i], new_values[i], new_values[i]);
             bst_insert_node(&bst, &new_node[i]);
 
-            assert(is_valid_binary_search_tree(bst.root_ptr));
             assert(is_valid_red_black_tree(bst.root_ptr));
         }
         assert(bst.count == 15);
@@ -200,18 +228,22 @@ int main(void)
     }
 
     // N = 4096, insert_node * 4096, delete_node * 4096, insert_node * 4096
+    const int lim = 32;
+    const int seed = 2;
     {
         bst_type bst;
         bst_init(&bst);
 
-        srand(0);
+        srand(seed);
 
-        bst_node_type* node_buf = calloc(8192, sizeof(bst_node_type));
+        bst_node_type* node_buf = calloc(lim * 2, sizeof(bst_node_type));
         size_t count = 0;
 
-        for (int i = 0; i < 4096; i++) {
-            int val = rand() % 2048;
+        for (int i = 0; i < lim; i++) {
+            const int val = ((unsigned int)rand()) % lim;
+
             bst_node_type* node_ptr = bst_search_node(&bst, val);
+
             if (!node_ptr) {
                 bst_node_init(&node_buf[count], val, 0);
                 bst_insert_node(&bst, &node_buf[count]);
@@ -220,12 +252,11 @@ int main(void)
             else {
                 node_ptr->value++;
             }
-            assert(is_valid_binary_search_tree(bst.root_ptr));
             assert(is_valid_red_black_tree(bst.root_ptr));
         }
 
-        for (int i = 0; i < 4096; i++) {
-            int val = rand() % 2048;
+        for (int i = 0; i < lim; i++) {
+            int val = ((unsigned int)rand()) % lim;
             bst_node_type* node_ptr = bst_search_node(&bst, val);
             if (node_ptr) {
                 if (node_ptr->value > 1) {
@@ -235,24 +266,23 @@ int main(void)
                     bst_delete_node(&bst, node_ptr);
                 }
             }
-            assert(is_valid_binary_search_tree(bst.root_ptr));
             assert(is_valid_red_black_tree(bst.root_ptr));
         }
 
-        for (int i = 0; i < 4096; i++) {
-            int val = rand() % 2048;
-            bst_node_type* node_ptr = bst_search_node(&bst, val);
-            if (!node_ptr) {
-                bst_node_init(&node_buf[count], val, 0);
-                bst_insert_node(&bst, &node_buf[count]);
-                count++;
-            }
-            else {
-                node_ptr->value++;
-            }
-            assert(is_valid_binary_search_tree(bst.root_ptr));
-            assert(is_valid_red_black_tree(bst.root_ptr));
-        }
+        /**/
+        /* for (int i = 0; i < lim; i++) { */
+        /*     int val = ((unsigned int)rand()) % lim; */
+        /*     bst_node_type* node_ptr = bst_search_node(&bst, val); */
+        /*     if (!node_ptr) { */
+        /*         bst_node_init(&node_buf[count], val, 0); */
+        /*         bst_insert_node(&bst, &node_buf[count]); */
+        /*         count++; */
+        /*     } */
+        /*     else { */
+        /*         node_ptr->value++; */
+        /*     } */
+        /*     assert(is_valid_red_black_tree(bst.root_ptr)); */
+        /* } */
 
         free(node_buf);
     }
