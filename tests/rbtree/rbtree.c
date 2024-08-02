@@ -203,7 +203,7 @@ int main(void) {
         size_t count = 0;
 
         for (int i = 0; i < 4096; i++) {
-            int val = i % 2048;
+            int val = rand() % 2048;
             bst_node_type* node_ptr = bst_search_node(&bst, val);
             if (!node_ptr) {
                 bst_node_init(&node_buf[count], val, 0);
@@ -217,17 +217,21 @@ int main(void) {
         }
 
         for (int i = 0; i < 4096; i++) {
-            int val = i % 2048;
+            int val = rand() % 2048;
             bst_node_type* node_ptr = bst_search_node(&bst, val);
             if (node_ptr) {
-                bst_delete_node(&bst, node_ptr);
+                if (node_ptr->value > 1) {
+                    node_ptr->value--;
+                } else {
+                    bst_delete_node(&bst, node_ptr);
+                }
             }
             assert(is_valid_binary_search_tree(bst.root_ptr));
             assert(is_valid_red_black_tree(bst.root_ptr));
         }
 
         for (int i = 0; i < 4096; i++) {
-            int val = i % 2048;
+            int val = rand() % 2048;
             bst_node_type* node_ptr = bst_search_node(&bst, val);
             if (!node_ptr) {
                 bst_node_init(&node_buf[count], val, 0);
