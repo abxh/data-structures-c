@@ -120,36 +120,34 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
 <div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="align__forward_8h.html#ae0338b79c3d7b8cce64c8c251fc7567a">   44</a></span><span class="keyword">static</span> <span class="keyword">inline</span> uintptr_t <a class="code hl_function" href="align__forward_8h.html#ae0338b79c3d7b8cce64c8c251fc7567a">align_forward</a>(<span class="keyword">const</span> uintptr_t ptr, <span class="keyword">const</span> <span class="keywordtype">size_t</span> align)</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>{</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    assert(<a class="code hl_function" href="is__pow2_8h.html#afdfaaa82d5cd20478f11fa9ed7ae0080">is_pow2</a>(align));</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keyword">const</span> uintptr_t p = ptr;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keyword">const</span> uintptr_t a = (uintptr_t)align;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keyword">const</span> uintptr_t r = p &amp; (a - 1); <span class="comment">// Same as (p % a) but faster as &#39;a&#39; is a power of two</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="comment">// % is defined so for r = (p % a), q: some integer</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="comment">//     p = q * a + r</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="comment">// &lt;=&gt; r = p - q * a</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="comment">// assuming r != 0:</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="comment">//</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="comment">//           q*(a+1)</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="comment">//         -----------&gt;</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="comment">//           r    a-r</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="comment">//         ----&gt; -----&gt;</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="comment">//       q*a   p     p+a-r</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="comment">// &lt;------|----|------|------&gt;</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keywordflow">if</span> (r != 0) {</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="comment">// If &#39;p&#39; address is not aligned, push the address to the</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="comment">// next value which is aligned</span></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keywordflow">return</span> p + a - r;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    }</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keywordflow">return</span> p;</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    }</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="align__forward_8h.html#ae0338b79c3d7b8cce64c8c251fc7567a">   44</a></span><span class="keyword">static</span> <span class="keyword">inline</span> uintptr_t <a class="code hl_function" href="align__forward_8h.html#ae0338b79c3d7b8cce64c8c251fc7567a">align_forward</a>(<span class="keyword">const</span> uintptr_t ptr, <span class="keyword">const</span> <span class="keywordtype">size_t</span> align) {</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    assert(<a class="code hl_function" href="is__pow2_8h.html#afdfaaa82d5cd20478f11fa9ed7ae0080">is_pow2</a>(align));</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keyword">const</span> uintptr_t p = ptr;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keyword">const</span> uintptr_t a = (uintptr_t)align;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keyword">const</span> uintptr_t r = p &amp; (a - 1); <span class="comment">// Same as (p % a) but faster as &#39;a&#39; is a power of two</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="comment">// % is defined so for r = (p % a), q: some integer</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="comment">//     p = q * a + r</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="comment">// &lt;=&gt; r = p - q * a</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="comment">// assuming r != 0:</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="comment">//</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="comment">//           q*(a+1)</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="comment">//         -----------&gt;</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="comment">//           r    a-r</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="comment">//         ----&gt; -----&gt;</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="comment">//       q*a   p     p+a-r</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="comment">// &lt;------|----|------|------&gt;</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordflow">if</span> (r != 0) {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="comment">// If &#39;p&#39; address is not aligned, push the address to the</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="comment">// next value which is aligned</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keywordflow">return</span> p + a - r;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keywordflow">return</span> p;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    }</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>}</div>
 </div>
 <div class="ttc" id="aalign__forward_8h_html_ae0338b79c3d7b8cce64c8c251fc7567a"><div class="ttname"><a href="align__forward_8h.html#ae0338b79c3d7b8cce64c8c251fc7567a">align_forward</a></div><div class="ttdeci">static uintptr_t align_forward(const uintptr_t ptr, const size_t align)</div><div class="ttdef"><b>Definition</b> align_forward.h:44</div></div>
 <div class="ttc" id="ais__pow2_8h_html"><div class="ttname"><a href="is__pow2_8h.html">is_pow2.h</a></div><div class="ttdoc">Check if a number is a power of two.</div></div>

@@ -199,13 +199,13 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">for</span> ((index) = (stack_ptr)-&gt;count;                       \</div>
-<div class="line">    \</div>
-<div class="line">    (index) &gt; 0 &amp;&amp;                                      \</div>
-<div class="line">    \</div>
-<div class="line">    ((value) = (stack_ptr)-&gt;values[(index) - 1], <span class="keyword">true</span>); \</div>
-<div class="line">    \</div>
-<div class="line">    (index)--)</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((index) = (stack_ptr)-&gt;count;                       \</div>
+<div class="line">                                                             \</div>
+<div class="line">         (index) &gt; 0 &amp;&amp;                                      \</div>
+<div class="line">                                                             \</div>
+<div class="line">         ((value) = (stack_ptr)-&gt;values[(index) - 1], <span class="keyword">true</span>); \</div>
+<div class="line">                                                             \</div>
+<div class="line">         (index)--)</div>
 </div><!-- fragment -->
 <p>Iterate over the values in the stack from the top to bottom. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the stack under the iteration may result in errors.</dd></dl>
@@ -245,13 +245,13 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">for</span> ((index) = 0;                                    \</div>
-<div class="line">    \</div>
-<div class="line">    (index) &lt; (stack_ptr)-&gt;count &amp;&amp;                 \</div>
-<div class="line">    \</div>
-<div class="line">    ((value) = (stack_ptr)-&gt;values[(index)], <span class="keyword">true</span>); \</div>
-<div class="line">    \</div>
-<div class="line">    (index)++)</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((index) = 0;                                    \</div>
+<div class="line">                                                         \</div>
+<div class="line">         (index) &lt; (stack_ptr)-&gt;count &amp;&amp;                 \</div>
+<div class="line">                                                         \</div>
+<div class="line">         ((value) = (stack_ptr)-&gt;values[(index)], <span class="keyword">true</span>); \</div>
+<div class="line">                                                         \</div>
+<div class="line">         (index)++)</div>
 </div><!-- fragment -->
 <p>Iterate over the values in the stack from the bottom to top. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the stack under the iteration may result in errors.</dd></dl>

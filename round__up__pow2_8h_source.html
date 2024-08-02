@@ -119,26 +119,25 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
 <div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="round__up__pow2_8h.html#ac941ab6788f53c3a24b85c5ae53ec954">   47</a></span><span class="keyword">static</span> <span class="keyword">inline</span> uint32_t <a class="code hl_function" href="round__up__pow2_8h.html#ac941ab6788f53c3a24b85c5ae53ec954">round_up_pow2_32</a>(uint32_t x)</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>{</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    assert(0 &lt; x &amp;&amp; x &lt;= UINT32_MAX / 4);</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#if defined(__GNUC__) &amp;&amp; (__GNUC__ &gt; 3 || (__GNUC__ == 3 &amp;&amp; (__GNUC_MINOR__ &gt; 4 || __GNUC_MINOR__ == 4))) </span><span class="comment">// Test for GCC &gt;= 3.4.0</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">return</span> x == 1 ? 1 : 1 &lt;&lt; (32 - __builtin_clz(x - 1));</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    x--;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    x |= x &gt;&gt; 1;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    x |= x &gt;&gt; 2;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    x |= x &gt;&gt; 4;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    x |= x &gt;&gt; 8;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    x |= x &gt;&gt; 16;</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    x++;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordflow">return</span> x;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="round__up__pow2_8h.html#ac941ab6788f53c3a24b85c5ae53ec954">   47</a></span><span class="keyword">static</span> <span class="keyword">inline</span> uint32_t <a class="code hl_function" href="round__up__pow2_8h.html#ac941ab6788f53c3a24b85c5ae53ec954">round_up_pow2_32</a>(uint32_t x) {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    assert(0 &lt; x &amp;&amp; x &lt;= UINT32_MAX / 4);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">#if defined(__GNUC__) &amp;&amp; (__GNUC__ &gt; 3 || (__GNUC__ == 3 &amp;&amp; (__GNUC_MINOR__ &gt; 4 || __GNUC_MINOR__ == 4))) </span><span class="comment">// Test for GCC &gt;= 3.4.0</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">return</span> x == 1 ? 1 : 1 &lt;&lt; (32 - __builtin_clz(x - 1));</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    x--;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    x |= x &gt;&gt; 1;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    x |= x &gt;&gt; 2;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    x |= x &gt;&gt; 4;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    x |= x &gt;&gt; 8;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    x |= x &gt;&gt; 16;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    x++;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordflow">return</span> x;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>}</div>
 </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="comment">// vim: ft=c</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="comment">// vim: ft=c</span></div>
 <div class="ttc" id="around__up__pow2_8h_html_ac941ab6788f53c3a24b85c5ae53ec954"><div class="ttname"><a href="round__up__pow2_8h.html#ac941ab6788f53c3a24b85c5ae53ec954">round_up_pow2_32</a></div><div class="ttdeci">static uint32_t round_up_pow2_32(uint32_t x)</div><div class="ttdef"><b>Definition</b> round_up_pow2.h:47</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
