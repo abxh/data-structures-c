@@ -21,6 +21,5 @@ Asserts are used to check various assumptions. Use `NDEBUG` flag to turn off ass
 | [list.h](https://github.com/abxh/data-structures-c/blob/main/lib/list.h)             | Intrusive doubly linked list.                            | [Documentation](https://abxh.github.io/data-structures-c/list_8h.html) [Example](https://github.com/abxh/data-structures-c/blob/main/examples/list/list_example.c)            |
 
 ## TODO
-- test arena, list and priority queue
+- test arena, list and priority queue. test rbtree by case.
 - vector + string (as dynamic array)
-- binary search tree
