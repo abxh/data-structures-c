@@ -132,10 +132,10 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    __extension__({                                       \</div>
-<div class="line">        <span class="keyword">const</span> typeof(((type*)0)-&gt;member)* __mptr = (ptr); \</div>
-<div class="line">        (type*)((<span class="keywordtype">char</span>*)__mptr - offsetof(type, member));  \</div>
-<div class="line">    })</div>
+<b>Value:</b><div class="fragment"><div class="line">__extension__({                                       \</div>
+<div class="line">    <span class="keyword">const</span> typeof(((type*)0)-&gt;member)* __mptr = (ptr); \</div>
+<div class="line">    (type*)((<span class="keywordtype">char</span>*)__mptr - offsetof(type, member));  \</div>
+<div class="line">})</div>
 </div><!-- fragment -->
 <p>Get the pointer to the container instance, given a pointer to to the member instance, container type, and member name. </p>
 <dl class="params"><dt>Parameters</dt><dd>

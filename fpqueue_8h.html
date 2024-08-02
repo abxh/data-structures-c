@@ -96,7 +96,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>Fixed-size heap-based priority queue.  
+<p>Fixed-size priority queue based on binary heap.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="paste_8h_source.html">paste.h</a>&quot;</code><br />
 <code>#include &lt;assert.h&gt;</code><br />
@@ -172,7 +172,7 @@ Functions</h2></td></tr>
 <tr class="separator:a8ef82655cf07771ce9628d366dbe3c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Fixed-size heap-based priority queue. </p>
+<div class="textblock"><p>Fixed-size priority queue based on binary heap. </p>
 <p>The following macros must be defined: </p><ul>
 <li><code>NAME</code> </li>
 <li><code>VALUE_TYPE</code> </li>
@@ -201,13 +201,13 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((index) = 0;                                              \</div>
-<div class="line">                                                                   \</div>
-<div class="line">         (index) &lt; (pqueue_ptr)-&gt;count &amp;&amp;                          \</div>
-<div class="line">                                                                   \</div>
-<div class="line">         ((value_) = (pqueue_ptr)-&gt;elements[(index)].value, <span class="keyword">true</span>); \</div>
-<div class="line">                                                                   \</div>
-<div class="line">         (index)++)</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">for</span> ((index) = 0;                                              \</div>
+<div class="line">    \</div>
+<div class="line">    (index) &lt; (pqueue_ptr)-&gt;count &amp;&amp;                          \</div>
+<div class="line">    \</div>
+<div class="line">    ((value_) = (pqueue_ptr)-&gt;elements[(index)].value, <span class="keyword">true</span>); \</div>
+<div class="line">    \</div>
+<div class="line">    (index)++)</div>
 </div><!-- fragment -->
 <p>Iterate over the values in the priority queue in breadth-first order. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the priority queue under the iteration may result in errors.</dd></dl>

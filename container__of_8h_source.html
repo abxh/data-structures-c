@@ -115,10 +115,10 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
 <div class="foldopen" id="foldopen00041" data-start="" data-end="">
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="container__of_8h.html#af8c317a42292b61c93aae91e59118a46">   41</a></span><span class="preprocessor">#define container_of(ptr, type, member)                   \</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">    __extension__({                                       \</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">        const typeof(((type*)0)-&gt;member)* __mptr = (ptr); \</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">        (type*)((char*)__mptr - offsetof(type, member));  \</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">    })</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">__extension__({                                       \</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">    const typeof(((type*)0)-&gt;member)* __mptr = (ptr); \</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">    (type*)((char*)__mptr - offsetof(type, member));  \</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">})</span></div>
 </div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
