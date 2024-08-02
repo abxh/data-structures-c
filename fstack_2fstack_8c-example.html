@@ -92,11 +92,12 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;assert.h&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#define NAME int_stack</span></div>
+<div class="line"><span class="preprocessor">#define NAME       int_stack</span></div>
 <div class="line"><span class="preprocessor">#define VALUE_TYPE int</span></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="fstack_8h.html">fstack.h</a>&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> int_stack_example(<span class="keywordtype">void</span>) {</div>
+<div class="line"><span class="keywordtype">void</span> int_stack_example(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
 <div class="line">    int_stack_type* s = int_stack_create(3);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span> (!s) {</div>
@@ -138,11 +139,12 @@ $(function(){ initResizable(false); });
 <div class="line">    int_stack_destroy(s);</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#define NAME uintstk</span></div>
+<div class="line"><span class="preprocessor">#define NAME       uintstk</span></div>
 <div class="line"><span class="preprocessor">#define VALUE_TYPE unsigned int</span></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="fstack_8h.html">fstack.h</a>&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> uintstk_example(<span class="keywordtype">void</span>) {</div>
+<div class="line"><span class="keywordtype">void</span> uintstk_example(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
 <div class="line">    <span class="keyword">const</span> <span class="keywordtype">size_t</span> lim = 1e+6;</div>
 <div class="line"> </div>
 <div class="line">    uintstk_type* s = uintstk_create(lim);</div>
@@ -169,7 +171,8 @@ $(function(){ initResizable(false); });
 <div class="line">        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> value;</div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordtype">size_t</span> tempi;</div>
-<div class="line">        <a id="a0" name="a0"></a><a class="code hl_define" href="fstack_8h.html#af49eab3b3cfb87396b6e4de58219a084">fstack_for_each_reverse</a>(s_copy, tempi, value) {</div>
+<div class="line">        <a id="a0" name="a0"></a><a class="code hl_define" href="fstack_8h.html#af49eab3b3cfb87396b6e4de58219a084">fstack_for_each_reverse</a>(s_copy, tempi, value)</div>
+<div class="line">        {</div>
 <div class="line">            assert(value == x++);</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
@@ -180,7 +183,8 @@ $(function(){ initResizable(false); });
 <div class="line">        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> value;</div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordtype">size_t</span> tempi;</div>
-<div class="line">        <a id="a1" name="a1"></a><a class="code hl_define" href="fstack_8h.html#ab4ce686da462284572ef631b7a201151">fstack_for_each</a>(s_copy, tempi, value) {</div>
+<div class="line">        <a id="a1" name="a1"></a><a class="code hl_define" href="fstack_8h.html#ab4ce686da462284572ef631b7a201151">fstack_for_each</a>(s_copy, tempi, value)</div>
+<div class="line">        {</div>
 <div class="line">            assert(value == x--);</div>
 <div class="line">            cpy_count++;</div>
 <div class="line">        }</div>
@@ -195,7 +199,8 @@ $(function(){ initResizable(false); });
 <div class="line">    uintstk_destroy(s_copy);</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>) {</div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
 <div class="line">    int_stack_example();</div>
 <div class="line">    uintstk_example();</div>
 <div class="line">}</div>
