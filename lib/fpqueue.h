@@ -25,12 +25,20 @@
  * The following macros must be defined:
  *  @li `NAME`
  *  @li `VALUE_TYPE`
+ *
+ * Sources used:
+ * CLRS
  */
 
 /**
  * @example fpqueue/fpqueue.c
  * Example of how `fpqueue.h` header file is used in practice.
  */
+
+// macro definitions: {{{
+
+#ifndef FPQUEUE_H
+#define FPQUEUE_H
 
 #include "paste.h" // PASTE, XPASTE, JOIN
 
@@ -40,41 +48,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-
-// macro definitions: {{{
-
-/**
- * @def NAME
- * @brief Prefix to priority queue type and operations.
- *
- * Is undefined after header is included.
- *
- * @attention This must be manually defined before including this header file.
- */
-#ifndef NAME
-#define NAME fpqueue
-#error "Must define NAME."
-#else
-#define FPQUEUE_NAME NAME
-#endif
-
-/**
- * @def VALUE_TYPE
- * @brief Priority queue value type.
- *
- * Is undefined after header is included.
- *
- * @attention This must be manually defined before including this header file.
- */
-#ifndef VALUE_TYPE
-#error "Must declare VALUE_TYPE."
-#define VALUE_TYPE int
-#endif
-
-#ifndef FPQUEUE_H
-/// @cond DO_NOT_DOCUMENT
-#define FPQUEUE_H
-/// @endcond
 
 /**
  * @def fpqueue_left_child(index)
@@ -119,6 +92,34 @@
          (index)++)
 
 #endif // FPQUEUE_H
+
+/**
+ * @def NAME
+ * @brief Prefix to priority queue type and operations.
+ *
+ * Is undefined after header is included.
+ *
+ * @attention This must be manually defined before including this header file.
+ */
+#ifndef NAME
+#define NAME fpqueue
+#error "Must define NAME."
+#else
+#define FPQUEUE_NAME NAME
+#endif
+
+/**
+ * @def VALUE_TYPE
+ * @brief Priority queue value type.
+ *
+ * Is undefined after header is included.
+ *
+ * @attention This must be manually defined before including this header file.
+ */
+#ifndef VALUE_TYPE
+#error "Must declare VALUE_TYPE."
+#define VALUE_TYPE int
+#endif
 
 /// @cond DO_NOT_DOCUMENT
 #define FPQUEUE_TYPE         JOIN(FPQUEUE_NAME, type)

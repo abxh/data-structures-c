@@ -12,8 +12,8 @@
 #define HASH_FUNCTION(key) (fnvhash_32_str(key))
 #include "fhashtable.h"
 
-static char buf[4096]; // a static / heap-allocated buffer should be used, should the key/values's lifetime
-// extend beyond the function scope [in the function below].
+static char buf[4096]; /* a static / heap-allocated buffer should be used, should the key/values's lifetime
+                          extend beyond the function scope */
 
 void str_int_ht_test_alt(void)
 {

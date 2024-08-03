@@ -32,6 +32,11 @@
  * Examples of how `fstack.h` header file is used in practice.
  */
 
+// macro definitions: {{{
+
+#ifndef FSTACK_H
+#define FSTACK_H
+
 #include "paste.h" // PASTE, XPASTE, JOIN
 
 #include <assert.h>
@@ -41,41 +46,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-// macro definitions: {{{
-
-/**
- * @def NAME
- * @brief Prefix to stack type and operations.
- *
- * Is undefined after header is included.
- *
- * @attention This must be manually defined before including this header file.
- */
-#ifndef NAME
-#define NAME fstack
-#error "Must define NAME."
-#else
-#define FSTACK_NAME NAME
-#endif
-
-/**
- * @def VALUE_TYPE
- * @brief Stack value type.
- *
- * Is undefined after header is included.
- *
- * @attention This must be manually defined before including this header file.
- */
-#ifndef VALUE_TYPE
-#define VALUE_TYPE int
-#error "Must define VALUE_TYPE."
-#endif
-
-#ifndef FSTACK_H
-/// @cond DO_NOT_DOCUMENT
-#define FSTACK_H
-/// @endcond
 
 /**
  * @def fstack_for_each(stack_ptr, index, value)
@@ -114,6 +84,34 @@
          (index)++)
 
 #endif // FSTACK_H
+
+/**
+ * @def NAME
+ * @brief Prefix to stack type and operations.
+ *
+ * Is undefined after header is included.
+ *
+ * @attention This must be manually defined before including this header file.
+ */
+#ifndef NAME
+#define NAME fstack
+#error "Must define NAME."
+#else
+#define FSTACK_NAME NAME
+#endif
+
+/**
+ * @def VALUE_TYPE
+ * @brief Stack value type.
+ *
+ * Is undefined after header is included.
+ *
+ * @attention This must be manually defined before including this header file.
+ */
+#ifndef VALUE_TYPE
+#define VALUE_TYPE int
+#error "Must define VALUE_TYPE."
+#endif
 
 /// @cond DO_NOT_DOCUMENT
 #define FSTACK_TYPE     JOIN(FSTACK_NAME, type)

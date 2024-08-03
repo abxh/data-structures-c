@@ -6,19 +6,19 @@
 #define VALUE_TYPE int
 #include "fpqueue.h"
 
-void preorder_print_and_traverse(pqueue_int_type* pq, uint32_t index)
+static void preorder_traverse_and_print(pqueue_int_type* pq, uint32_t index)
 {
     if (index >= pq->count) {
         printf(" ()");
         return;
     }
     printf(" ( %d", index);
-    preorder_print_and_traverse(pq, fpqueue_left_child(index));
-    preorder_print_and_traverse(pq, fpqueue_right_child(index));
+    preorder_traverse_and_print(pq, fpqueue_left_child(index));
+    preorder_traverse_and_print(pq, fpqueue_right_child(index));
     printf(" )");
 }
 
-void int_example(void)
+static void int_example(void)
 {
     pqueue_int_type* pq = pqueue_int_create(10);
 
@@ -38,7 +38,7 @@ void int_example(void)
 
         pqueue_int_push(pq, values[i], priority);
 
-        preorder_print_and_traverse(pq, 0);
+        preorder_traverse_and_print(pq, 0);
         printf("\n");
     }
 

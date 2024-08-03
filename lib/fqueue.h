@@ -32,6 +32,11 @@
  * Examples of how `fqueue.h` header file is used in practice.
  */
 
+// macro definitions: {{{
+
+#ifndef FQUEUE_H
+#define FQUEUE_H
+
 #include "paste.h"         // PASTE, XPASTE, JOIN
 #include "round_up_pow2.h" // round_up_pow2_32
 
@@ -40,37 +45,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-// macro definitions: {{{
-
-/**
- * @def NAME
- * @brief Prefix to queue type and operations. This must be manually defined before including this header file.
- *
- * Is undefined after header is included.
- */
-#ifndef NAME
-#define NAME fqueue
-#error "Must define NAME."
-#else
-#define FQUEUE_NAME NAME
-#endif
-
-/**
- * @def VALUE_TYPE
- * @brief Queue value type. This must be manually defined before including this header file.
- *
- * Is undefined after header is included.
- */
-#ifndef VALUE_TYPE
-#define VALUE_TYPE int
-#error "Must define VALUE_TYPE."
-#endif
-
-#ifndef FQUEUE_H
-/// @cond DO_NOT_DOCUMENT
-#define FQUEUE_H
-/// @endcond
 
 /**
  * @def fqueue_for_each(queue_ptr, index, value)
@@ -109,6 +83,30 @@
          (index)++)
 
 #endif // FQUEUE_H
+
+/**
+ * @def NAME
+ * @brief Prefix to queue type and operations. This must be manually defined before including this header file.
+ *
+ * Is undefined after header is included.
+ */
+#ifndef NAME
+#define NAME fqueue
+#error "Must define NAME."
+#else
+#define FQUEUE_NAME NAME
+#endif
+
+/**
+ * @def VALUE_TYPE
+ * @brief Queue value type. This must be manually defined before including this header file.
+ *
+ * Is undefined after header is included.
+ */
+#ifndef VALUE_TYPE
+#define VALUE_TYPE int
+#error "Must define VALUE_TYPE."
+#endif
 
 /// @cond DO_NOT_DOCUMENT
 #define FQUEUE_TYPE     JOIN(FQUEUE_NAME, type)

@@ -54,6 +54,11 @@
  * Example of how `fhashtable.h` header file is used in practice with `arena.h`.
  */
 
+// macro definitions: {{{
+
+#ifndef FHASHTABLE_H
+#define FHASHTABLE_H
+
 #include "fnvhash.h"       // fnvhash_32, fnvhash_32_str
 #include "murmurhash.h"    // murmur_32
 #include "paste.h"         // PASTE, XPASTE, JOIN
@@ -65,7 +70,33 @@
 #include <stdlib.h>
 #include <string.h>
 
-// macro definitions: {{{
+/**
+ * @def FHASHTABLE_EMPTY_SLOT_OFFSET
+ * @brief Offset constant used to flag empty slots.
+ */
+#define FHASHTABLE_EMPTY_SLOT_OFFSET (UINT32_MAX)
+
+/**
+ * @def fhashtable_for_each(hashtable_ptr, index, key_, value_)
+ * @brief Iterate over the non-empty slots in the hashtable in arbitary order.
+ * @warning Modifying the hashtable under the iteration may result in errors.
+ *
+ * temporary variables visible in scope:
+ * @li _index
+ *
+ * @param[in] hashtable_ptr hashtable pointer.
+ * @param[in] index Temporary indexing variable. Should be `uint32_t`
+ * @param[out] key_ Current key. Should be `KEY_TYPE`.
+ * @param[out] value_ Current value. Should be `VALUE_TYPE`.
+ */
+#define fhashtable_for_each(hashtable_ptr, index, key_, value_)                       \
+    for ((index) = 0; (index) < (hashtable_ptr)->capacity; (index)++)                 \
+                                                                                      \
+        if ((hashtable_ptr)->slots[(index)].offset != FHASHTABLE_EMPTY_SLOT_OFFSET && \
+                                                                                      \
+            ((key_) = (hashtable_ptr)->slots[(index)].key, (value_) = (hashtable_ptr)->slots[(index)].value, true))
+
+#endif // FHASHTABLE_H
 
 /**
  * @def NAME
@@ -135,39 +166,6 @@
 #error "Must define HASH_FUNCTION."
 #define HASH_FUNCTION(key) (murmur3_32((uint8_t*)&(key), sizeof(KEY_TYPE), 0))
 #endif
-
-#ifndef FHASHTABLE_H
-/// @cond DO_NOT_DOCUMENT
-#define FHASHTABLE_H
-/// @endcond
-
-/**
- * @def FHASHTABLE_EMPTY_SLOT_OFFSET
- * @brief Offset constant used to flag empty slots.
- */
-#define FHASHTABLE_EMPTY_SLOT_OFFSET (UINT32_MAX)
-
-/**
- * @def fhashtable_for_each(hashtable_ptr, index, key_, value_)
- * @brief Iterate over the non-empty slots in the hashtable in arbitary order.
- * @warning Modifying the hashtable under the iteration may result in errors.
- *
- * temporary variables visible in scope:
- * @li _index
- *
- * @param[in] hashtable_ptr hashtable pointer.
- * @param[in] index Temporary indexing variable. Should be `uint32_t`
- * @param[out] key_ Current key. Should be `KEY_TYPE`.
- * @param[out] value_ Current value. Should be `VALUE_TYPE`.
- */
-#define fhashtable_for_each(hashtable_ptr, index, key_, value_)                       \
-    for ((index) = 0; (index) < (hashtable_ptr)->capacity; (index)++)                 \
-                                                                                      \
-        if ((hashtable_ptr)->slots[(index)].offset != FHASHTABLE_EMPTY_SLOT_OFFSET && \
-                                                                                      \
-            ((key_) = (hashtable_ptr)->slots[(index)].key, (value_) = (hashtable_ptr)->slots[(index)].value, true))
-
-#endif // FHASHTABLE_H
 
 /// @cond DO_NOT_DOCUMENT
 #define FHASHTABLE_TYPE         JOIN(FHASHTABLE_NAME, type)
