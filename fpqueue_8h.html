@@ -119,12 +119,6 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a47f2e62c0dbebc787052c165afcada0e" id="r_a47f2e62c0dbebc787052c165afcada0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47f2e62c0dbebc787052c165afcada0e">NAME</a>&#160;&#160;&#160;fpqueue</td></tr>
-<tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to priority queue type and operations.  <br /></td></tr>
-<tr class="separator:a47f2e62c0dbebc787052c165afcada0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae17cb099b4c9aee7835032339b5a9e0d" id="r_ae17cb099b4c9aee7835032339b5a9e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;&#160;&#160;int</td></tr>
-<tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority queue value type.  <br /></td></tr>
-<tr class="separator:ae17cb099b4c9aee7835032339b5a9e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79c322cf0fdabf69d9cffa001e00c24e" id="r_a79c322cf0fdabf69d9cffa001e00c24e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a79c322cf0fdabf69d9cffa001e00c24e">fpqueue_left_child</a>(index)&#160;&#160;&#160;(2 * (index) + 1)</td></tr>
 <tr class="memdesc:a79c322cf0fdabf69d9cffa001e00c24e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given an element index, get the index of the left child.  <br /></td></tr>
 <tr class="separator:a79c322cf0fdabf69d9cffa001e00c24e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,6 +131,12 @@ Macros</h2></td></tr>
 <tr class="memitem:a46464e70eaa13c211bb08f5a9c0dc3a9" id="r_a46464e70eaa13c211bb08f5a9c0dc3a9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a46464e70eaa13c211bb08f5a9c0dc3a9">fpqueue_for_each</a>(pqueue_ptr,  index,  value_)</td></tr>
 <tr class="memdesc:a46464e70eaa13c211bb08f5a9c0dc3a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the priority queue in breadth-first order.  <br /></td></tr>
 <tr class="separator:a46464e70eaa13c211bb08f5a9c0dc3a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47f2e62c0dbebc787052c165afcada0e" id="r_a47f2e62c0dbebc787052c165afcada0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47f2e62c0dbebc787052c165afcada0e">NAME</a>&#160;&#160;&#160;fpqueue</td></tr>
+<tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to priority queue type and operations.  <br /></td></tr>
+<tr class="separator:a47f2e62c0dbebc787052c165afcada0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae17cb099b4c9aee7835032339b5a9e0d" id="r_ae17cb099b4c9aee7835032339b5a9e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;&#160;&#160;int</td></tr>
+<tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority queue value type.  <br /></td></tr>
+<tr class="separator:ae17cb099b4c9aee7835032339b5a9e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -175,8 +175,9 @@ Functions</h2></td></tr>
 <div class="textblock"><p>Fixed-size priority queue based on binary heap. </p>
 <p>The following macros must be defined: </p><ul>
 <li><code>NAME</code> </li>
-<li><code>VALUE_TYPE</code> </li>
+<li><code>VALUE_TYPE</code></li>
 </ul>
+<p>Sources used: CLRS </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a46464e70eaa13c211bb08f5a9c0dc3a9" name="a46464e70eaa13c211bb08f5a9c0dc3a9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a46464e70eaa13c211bb08f5a9c0dc3a9">&#9670;&#160;</a></span>fpqueue_for_each</h2>

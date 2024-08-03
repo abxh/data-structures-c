@@ -121,6 +121,13 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:aa799886ed218fb21a6ca4787cf83e8d4" id="r_aa799886ed218fb21a6ca4787cf83e8d4"><td class="memItemLeft" align="right" valign="top"><a id="aa799886ed218fb21a6ca4787cf83e8d4" name="aa799886ed218fb21a6ca4787cf83e8d4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FHASHTABLE_EMPTY_SLOT_OFFSET</b>&#160;&#160;&#160;(UINT32_MAX)</td></tr>
+<tr class="memdesc:aa799886ed218fb21a6ca4787cf83e8d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset constant used to flag empty slots. <br /></td></tr>
+<tr class="separator:aa799886ed218fb21a6ca4787cf83e8d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fce22aae470d0fe6af1109f752d72e7" id="r_a7fce22aae470d0fe6af1109f752d72e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fce22aae470d0fe6af1109f752d72e7">fhashtable_for_each</a>(hashtable_ptr,  index,  key_,  value_)</td></tr>
+<tr class="memdesc:a7fce22aae470d0fe6af1109f752d72e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the non-empty slots in the hashtable in arbitary order.  <br /></td></tr>
+<tr class="separator:a7fce22aae470d0fe6af1109f752d72e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47f2e62c0dbebc787052c165afcada0e" id="r_a47f2e62c0dbebc787052c165afcada0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47f2e62c0dbebc787052c165afcada0e">NAME</a>&#160;&#160;&#160;fhashtable</td></tr>
 <tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to queue type and operations.  <br /></td></tr>
 <tr class="separator:a47f2e62c0dbebc787052c165afcada0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,13 +143,6 @@ Macros</h2></td></tr>
 <tr class="memitem:a261e2befaaf40b08c99064bb53bf0b44" id="r_a261e2befaaf40b08c99064bb53bf0b44"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a>(key)&#160;&#160;&#160;(<a class="el" href="murmurhash_8h.html#acb0c380e343772042ae656fb60679886">murmur3_32</a>((uint8_t*)&amp;(key), sizeof(<a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a>), 0))</td></tr>
 <tr class="memdesc:a261e2befaaf40b08c99064bb53bf0b44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to compute indicies of keys. This must be manually defined before including this header file.  <br /></td></tr>
 <tr class="separator:a261e2befaaf40b08c99064bb53bf0b44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa799886ed218fb21a6ca4787cf83e8d4" id="r_aa799886ed218fb21a6ca4787cf83e8d4"><td class="memItemLeft" align="right" valign="top"><a id="aa799886ed218fb21a6ca4787cf83e8d4" name="aa799886ed218fb21a6ca4787cf83e8d4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>FHASHTABLE_EMPTY_SLOT_OFFSET</b>&#160;&#160;&#160;(UINT32_MAX)</td></tr>
-<tr class="memdesc:aa799886ed218fb21a6ca4787cf83e8d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset constant used to flag empty slots. <br /></td></tr>
-<tr class="separator:aa799886ed218fb21a6ca4787cf83e8d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fce22aae470d0fe6af1109f752d72e7" id="r_a7fce22aae470d0fe6af1109f752d72e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fce22aae470d0fe6af1109f752d72e7">fhashtable_for_each</a>(hashtable_ptr,  index,  key_,  value_)</td></tr>
-<tr class="memdesc:a7fce22aae470d0fe6af1109f752d72e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the non-empty slots in the hashtable in arbitary order.  <br /></td></tr>
-<tr class="separator:a7fce22aae470d0fe6af1109f752d72e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -236,7 +236,7 @@ Functions</h2></td></tr>
 <div class="line">        if ((hashtable_ptr)-&gt;slots[(index)].offset != <a class="code hl_define" href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a> &amp;&amp; \</div>
 <div class="line">                                                                                      \</div>
 <div class="line">            ((key_) = (hashtable_ptr)-&gt;slots[(index)].key, (value_) = (hashtable_ptr)-&gt;slots[(index)].value, <span class="keyword">true</span>))</div>
-<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:148</div></div>
+<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:77</div></div>
 </div><!-- fragment -->
 <p>Iterate over the non-empty slots in the hashtable in arbitary order. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the hashtable under the iteration may result in errors.</dd></dl>

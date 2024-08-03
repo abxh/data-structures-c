@@ -102,8 +102,8 @@ $(function(){ initResizable(false); });
 <div class="line"><span class="preprocessor">#define HASH_FUNCTION(key) (fnvhash_32_str(key))</span></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="fhashtable_8h.html">fhashtable.h</a>&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">char</span> buf[4096]; <span class="comment">// a static / heap-allocated buffer should be used, should the key/values&#39;s lifetime</span></div>
-<div class="line"><span class="comment">// extend beyond the function scope [in the function below].</span></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">char</span> buf[4096]; <span class="comment">/* a static / heap-allocated buffer should be used, should the key/values&#39;s lifetime</span></div>
+<div class="line"><span class="comment">                          extend beyond the function scope */</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> str_int_ht_test_alt(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
@@ -233,7 +233,7 @@ $(function(){ initResizable(false); });
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="afhashtable_8h_html"><div class="ttname"><a href="fhashtable_8h.html">fhashtable.h</a></div><div class="ttdoc">Fixed-size open-adressing hashtable (robin hood hashing)</div></div>
-<div class="ttc" id="afhashtable_8h_html_a7fce22aae470d0fe6af1109f752d72e7"><div class="ttname"><a href="fhashtable_8h.html#a7fce22aae470d0fe6af1109f752d72e7">fhashtable_for_each</a></div><div class="ttdeci">#define fhashtable_for_each(hashtable_ptr, index, key_, value_)</div><div class="ttdoc">Iterate over the non-empty slots in the hashtable in arbitary order.</div><div class="ttdef"><b>Definition</b> fhashtable.h:163</div></div>
+<div class="ttc" id="afhashtable_8h_html_a7fce22aae470d0fe6af1109f752d72e7"><div class="ttname"><a href="fhashtable_8h.html#a7fce22aae470d0fe6af1109f752d72e7">fhashtable_for_each</a></div><div class="ttdeci">#define fhashtable_for_each(hashtable_ptr, index, key_, value_)</div><div class="ttdoc">Iterate over the non-empty slots in the hashtable in arbitary order.</div><div class="ttdef"><b>Definition</b> fhashtable.h:92</div></div>
 <div class="ttc" id="afnvhash_8h_html"><div class="ttname"><a href="fnvhash_8h.html">fnvhash.h</a></div><div class="ttdoc">FNV-1a hashing function.</div></div>
 <div class="ttc" id="amurmurhash_8h_html"><div class="ttname"><a href="murmurhash_8h.html">murmurhash.h</a></div><div class="ttdoc">Murmur3 hash hashing function.</div></div>
 </div><!-- fragment --> </div><!-- contents -->
