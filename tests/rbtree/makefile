@@ -12,6 +12,7 @@ OBJ_FILES   := $(C_FILES:.c=.o)
 
 LD_FLAGS   += -fsanitize=undefined
 LD_FLAGS   += -fsanitize=address
+LD_FLAGS   += -lm
 
 .PHONY: all clean test
 
