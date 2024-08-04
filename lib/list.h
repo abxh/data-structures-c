@@ -27,7 +27,7 @@
  */
 
 /**
- * @example list/list_example.c
+ * @example examples/list/list_example.c
  * Example of how `list.h` header file is used in practice with `arena.h`.
  */
 

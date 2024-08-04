@@ -45,7 +45,7 @@
  */
 
 /**
- * @example fhashtable/fhashtable.c
+ * @example examples/fhashtable/fhashtable.c
  * Example of how `fhashtable.h` header file is used in practice.
  */
 

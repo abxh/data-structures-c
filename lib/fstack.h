@@ -28,7 +28,7 @@
  */
 
 /**
- * @example fstack/fstack.c
+ * @example examples/fstack/fstack.c
  * Examples of how `fstack.h` header file is used in practice.
  */
 

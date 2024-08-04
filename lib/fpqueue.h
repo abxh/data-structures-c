@@ -31,7 +31,7 @@
  */
 
 /**
- * @example fpqueue/fpqueue.c
+ * @example examples/fpqueue/fpqueue.c
  * Example of how `fpqueue.h` header file is used in practice.
  */
 

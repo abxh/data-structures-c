@@ -6,7 +6,7 @@ INPUT        = "./lib"
 INPUT       += readme.md
 USE_MDFILE_AS_MAINPAGE = readme.md
 
-EXAMPLE_PATH = "./examples"
+EXAMPLE_PATH = "./"
 # EXAMPLE_RECURSIVE = YES
 
 EXTRACT_STATIC = YES

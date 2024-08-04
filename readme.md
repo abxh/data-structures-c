@@ -19,7 +19,7 @@ Asserts are used to check various assumptions. Use `NDEBUG` flag to turn off ass
 | [fhashtable.h](https://github.com/abxh/data-structures-c/blob/main/lib/fhashtable.h) | Fixed-size open-adressing hashtable (robin hood hashing) | [Documentation](https://abxh.github.io/data-structures-c/fhashtable_8h.html) [Example](https://github.com/abxh/data-structures-c/blob/main/examples/fhashtable/fhashtable.c)  |
 | [arena.h](https://github.com/abxh/data-structures-c/blob/main/lib/arena.h)           | Arena allocator                                          | [Documentation](https://abxh.github.io/data-structures-c/arena_8h.html) [Example](https://github.com/abxh/data-structures-c/blob/main/examples/arena/char_array.c)            |
 | [list.h](https://github.com/abxh/data-structures-c/blob/main/lib/list.h)             | Intrusive circular doubly linked list                    | [Documentation](https://abxh.github.io/data-structures-c/list_8h.html) [Example](https://github.com/abxh/data-structures-c/blob/main/examples/list/list_example.c)            |
-| [rbtree.h](https://github.com/abxh/data-structures-c/blob/main/lib/rbtree.h)         | Intrusive red-black tree                                 | [Documentation](https://abxh.github.io/data-structures-c/rbtree_8h.html)                                                                                                      |
+| [rbtree.h](https://github.com/abxh/data-structures-c/blob/main/lib/rbtree.h)         | Intrusive red-black tree                                 | [Documentation](https://abxh.github.io/data-structures-c/rbtree_8h.html)  [Example](https://github.com/abxh/data-structures-c/blob/main/examples/rbtree/rbtree_example.c)     |
 
 ## TODO
 - test arena, list and priority queue. test rbtree by case.

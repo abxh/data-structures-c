@@ -27,12 +27,12 @@
  */
 
 /**
- * @example arena/fhashtable.c
+ * @example examples/arena/fhashtable.c
  * Example of how `arena.h` header file is used in practice.
  */
 
 /**
- * @example arena/char_array.c
+ * @example examples/arena/char_array.c
  * Example of how `arena.h` header file is used in practice.
  */
 

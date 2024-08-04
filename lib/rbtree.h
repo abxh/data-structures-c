@@ -36,6 +36,11 @@
  * @li CLRS
  */
 
+/**
+ * @example examples/rbtree/rbtree.c
+ * Examples of how `rbtree.h` header file is used in practice.
+ */
+
 // macro definitions: {{{
 
 #ifndef RBTREE_H

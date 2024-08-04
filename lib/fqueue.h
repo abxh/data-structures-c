@@ -28,7 +28,7 @@
  */
 
 /**
- * @example fqueue/fqueue.c
+ * @example examples/fqueue/fqueue.c
  * Examples of how `fqueue.h` header file is used in practice.
  */
 
