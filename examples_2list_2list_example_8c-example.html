@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>data-structures-c: list/list_example.c</title>
+<title>data-structures-c: examples/list/list_example.c</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -84,7 +84,7 @@ $(function(){ initResizable(false); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">list/list_example.c</div></div>
+  <div class="headertitle"><div class="title">examples/list/list_example.c</div></div>
 </div><!--header-->
 <div class="contents">
 <p>Example of how <code><a class="el" href="list_8h.html" title="Intrusive circular doubly linked list.">list.h</a></code> header file is used in practice with <code><a class="el" href="arena_8h.html" title="Arena allocator.">arena.h</a></code>.</p>
@@ -97,7 +97,7 @@ $(function(){ initResizable(false); });
 <div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">    <span class="keywordtype">char</span> c;</div>
 <div class="line">    <a id="_a0" name="_a0"></a><a class="code hl_struct" href="structlist__node__type.html">list_node_type</a> node;</div>
-<div class="line">} char_elm_type;</div>
+<div class="line">} con_type;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> list_stack(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
@@ -110,7 +110,7 @@ $(function(){ initResizable(false); });
 <div class="line">    <a id="a3" name="a3"></a><a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;head);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt;= <span class="charliteral">&#39;z&#39;</span> - <span class="charliteral">&#39;a&#39;</span>; i++) {</div>
-<div class="line">        char_elm_type* ptr = <a id="a4" name="a4"></a><a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(char_elm_type), <span class="keyword">sizeof</span>(char_elm_type));</div>
+<div class="line">        con_type* ptr = <a id="a4" name="a4"></a><a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(con_type), <span class="keyword">sizeof</span>(con_type));</div>
 <div class="line">        <span class="keywordflow">if</span> (!ptr) {</div>
 <div class="line">            assert(<span class="keyword">false</span>);</div>
 <div class="line">        }</div>
@@ -127,12 +127,12 @@ $(function(){ initResizable(false); });
 <div class="line">        <span class="keywordflow">while</span> (!<a id="a7" name="a7"></a><a class="code hl_function" href="list_8h.html#a309f918c33372b4df39c3e60abf2f6f2">list_node_is_head</a>(node_ptr, &amp;head)) {</div>
 <div class="line">            <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* next_ptr =</div>
 <div class="line">                node_ptr-&gt;<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>; <span class="comment">// this must be stored, should the list be modified under iteration (not in this particular case)</span></div>
-<div class="line">            char_elm_type* elm = <a id="a8" name="a8"></a><a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, char_elm_type, node);</div>
+<div class="line">            con_type* elm = <a id="a8" name="a8"></a><a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, con_type, node);</div>
 <div class="line"> </div>
 <div class="line">            assert(c == elm-&gt;c);</div>
 <div class="line"> </div>
 <div class="line">            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;m&#39;</span>) {</div>
-<div class="line">                char_elm_type* ptr = <a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(char_elm_type), <span class="keyword">sizeof</span>(char_elm_type));</div>
+<div class="line">                con_type* ptr = <a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(con_type), <span class="keyword">sizeof</span>(con_type));</div>
 <div class="line">                <span class="keywordflow">if</span> (!ptr) {</div>
 <div class="line">                    assert(<span class="keyword">false</span>);</div>
 <div class="line">                }</div>
@@ -152,7 +152,7 @@ $(function(){ initResizable(false); });
 <div class="line">        <span class="keywordtype">char</span> c = <span class="charliteral">&#39;z&#39;</span>;</div>
 <div class="line">        <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* node_ptr = head.<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>;</div>
 <div class="line">        <span class="keywordflow">while</span> (!<a class="code hl_function" href="list_8h.html#a309f918c33372b4df39c3e60abf2f6f2">list_node_is_head</a>(node_ptr, &amp;head)) {</div>
-<div class="line">            char_elm_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, char_elm_type, node);</div>
+<div class="line">            con_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, con_type, node);</div>
 <div class="line"> </div>
 <div class="line">            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;m&#39;</span>) {</div>
 <div class="line">                assert(elm-&gt;c == <span class="charliteral">&#39;M&#39;</span>);</div>
@@ -171,7 +171,7 @@ $(function(){ initResizable(false); });
 <div class="line">        <span class="keywordtype">char</span> c = <span class="charliteral">&#39;z&#39;</span>;</div>
 <div class="line">        <span class="keywordflow">while</span> (!<a class="code hl_function" href="list_8h.html#a309f918c33372b4df39c3e60abf2f6f2">list_node_is_head</a>(head.<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>, &amp;head)) {</div>
 <div class="line">            <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* node_ptr = <a id="a10" name="a10"></a><a class="code hl_function" href="list_8h.html#a20ac6c43a6726b638982d485288c56a2">list_node_remove</a>(head.<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>);</div>
-<div class="line">            char_elm_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, char_elm_type, node);</div>
+<div class="line">            con_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, con_type, node);</div>
 <div class="line"> </div>
 <div class="line">            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;m&#39;</span>) {</div>
 <div class="line">                assert(elm-&gt;c == <span class="charliteral">&#39;M&#39;</span>);</div>
@@ -198,7 +198,7 @@ $(function(){ initResizable(false); });
 <div class="line">    <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a> tail;</div>
 <div class="line">    <a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;tail);</div>
 <div class="line"> </div>
-<div class="line">    char_elm_type* first_elm_ptr = <a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(char_elm_type), <span class="keyword">sizeof</span>(char_elm_type));</div>
+<div class="line">    con_type* first_elm_ptr = <a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(con_type), <span class="keyword">sizeof</span>(con_type));</div>
 <div class="line">    <span class="keywordflow">if</span> (!first_elm_ptr) {</div>
 <div class="line">        assert(<span class="keyword">false</span>);</div>
 <div class="line">    }</div>
@@ -208,7 +208,7 @@ $(function(){ initResizable(false); });
 <div class="line">    <a id="a11" name="a11"></a><a class="code hl_function" href="list_8h.html#a18ec80c25f28e1c569502dfe53ae9669">list_node_add_before</a>(&amp;first_elm_ptr-&gt;node, &amp;tail);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 1; i &lt;= <span class="charliteral">&#39;z&#39;</span> - <span class="charliteral">&#39;a&#39;</span>; i++) {</div>
-<div class="line">        char_elm_type* ptr = <a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(char_elm_type), <span class="keyword">sizeof</span>(char_elm_type));</div>
+<div class="line">        con_type* ptr = <a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(con_type), <span class="keyword">sizeof</span>(con_type));</div>
 <div class="line">        <span class="keywordflow">if</span> (!ptr) {</div>
 <div class="line">            assert(<span class="keyword">false</span>);</div>
 <div class="line">        }</div>
@@ -227,7 +227,7 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">while</span> (!<a id="a13" name="a13"></a><a class="code hl_function" href="list_8h.html#af2dce9872ec5d321810eb173adf2533e">list_node_is_tail</a>(node_ptr, &amp;tail)) {</div>
 <div class="line">            <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* next_ptr = node_ptr-&gt;<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>; <span class="comment">// this must be stored, should the list be modified under iteration</span></div>
-<div class="line">            char_elm_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, char_elm_type, node);</div>
+<div class="line">            con_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, con_type, node);</div>
 <div class="line"> </div>
 <div class="line">            assert(c == elm-&gt;c);</div>
 <div class="line"> </div>
@@ -257,7 +257,7 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">while</span> (!<a class="code hl_function" href="list_8h.html#af2dce9872ec5d321810eb173adf2533e">list_node_is_tail</a>(tail.<a id="a14" name="a14"></a><a class="code hl_variable" href="structlist__node__type.html#a3fa0a386042f5f3ded236f5b3f4e06f1">prev_ptr</a>, &amp;tail)) {</div>
 <div class="line">            <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* node_ptr = <a class="code hl_function" href="list_8h.html#a20ac6c43a6726b638982d485288c56a2">list_node_remove</a>(tail.<a class="code hl_variable" href="structlist__node__type.html#a3fa0a386042f5f3ded236f5b3f4e06f1">prev_ptr</a>);</div>
-<div class="line">            char_elm_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, char_elm_type, node);</div>
+<div class="line">            con_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, con_type, node);</div>
 <div class="line"> </div>
 <div class="line">            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;m&#39;</span>) {</div>
 <div class="line">                c--;</div>
