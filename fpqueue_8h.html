@@ -132,7 +132,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:a46464e70eaa13c211bb08f5a9c0dc3a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the priority queue in breadth-first order.  <br /></td></tr>
 <tr class="separator:a46464e70eaa13c211bb08f5a9c0dc3a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47f2e62c0dbebc787052c165afcada0e" id="r_a47f2e62c0dbebc787052c165afcada0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47f2e62c0dbebc787052c165afcada0e">NAME</a>&#160;&#160;&#160;fpqueue</td></tr>
-<tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to priority queue type and operations.  <br /></td></tr>
+<tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to priority queue types and operations.  <br /></td></tr>
 <tr class="separator:a47f2e62c0dbebc787052c165afcada0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae17cb099b4c9aee7835032339b5a9e0d" id="r_ae17cb099b4c9aee7835032339b5a9e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;&#160;&#160;int</td></tr>
 <tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority queue value type.  <br /></td></tr>
@@ -316,7 +316,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Prefix to priority queue type and operations. </p>
+<p>Prefix to priority queue types and operations. </p>
 <p>Is undefined after header is included.</p>
 <dl class="section attention"><dt>Attention</dt><dd>This must be manually defined before including this header file. </dd></dl>
 
@@ -368,7 +368,7 @@ Functions</h2></td></tr>
 <p>Assumes <code>pqueue_ptr</code> is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -445,7 +445,7 @@ Functions</h2></td></tr>
 <p>Create an priority queue with a given capacity with malloc(). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the priority queue. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the priority queue.</td></tr>
   </table>
   </dd>
 </dl>
@@ -487,13 +487,13 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Destroy an priority queue and free the underlying memory with free(). </p>
+<dl class="section warning"><dt>Warning</dt><dd>May not be called twice in a row on the same object.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section warning"><dt>Warning</dt><dd>May not be called twice in a row on the same object. </dd></dl>
 
 </div>
 </div>
@@ -527,7 +527,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -562,7 +562,7 @@ Functions</h2></td></tr>
 <p>Assumes the priority queue pointer is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -597,7 +597,7 @@ Functions</h2></td></tr>
 <p>Assumes the priority queue pointer is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -635,7 +635,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -673,7 +673,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -720,7 +720,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The priority (with large number meaning high priority and vice versa). </td></tr>
   </table>

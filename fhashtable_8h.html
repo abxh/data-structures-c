@@ -129,7 +129,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:a7fce22aae470d0fe6af1109f752d72e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the non-empty slots in the hashtable in arbitary order.  <br /></td></tr>
 <tr class="separator:a7fce22aae470d0fe6af1109f752d72e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47f2e62c0dbebc787052c165afcada0e" id="r_a47f2e62c0dbebc787052c165afcada0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47f2e62c0dbebc787052c165afcada0e">NAME</a>&#160;&#160;&#160;fhashtable</td></tr>
-<tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to queue type and operations.  <br /></td></tr>
+<tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to hashtable types and operations.  <br /></td></tr>
 <tr class="separator:a47f2e62c0dbebc787052c165afcada0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae35c40bc2f912c11f0e36ac66cba4489" id="r_ae35c40bc2f912c11f0e36ac66cba4489"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a>&#160;&#160;&#160;int</td></tr>
 <tr class="memdesc:ae35c40bc2f912c11f0e36ac66cba4489"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key type. This must be manually defined before including this header file.  <br /></td></tr>
@@ -236,7 +236,7 @@ Functions</h2></td></tr>
 <div class="line">        if ((hashtable_ptr)-&gt;slots[(index)].offset != <a class="code hl_define" href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a> &amp;&amp; \</div>
 <div class="line">                                                                                      \</div>
 <div class="line">            ((key_) = (hashtable_ptr)-&gt;slots[(index)].key, (value_) = (hashtable_ptr)-&gt;slots[(index)].value, <span class="keyword">true</span>))</div>
-<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:77</div></div>
+<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:72</div></div>
 </div><!-- fragment -->
 <p>Iterate over the non-empty slots in the hashtable in arbitary order. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the hashtable under the iteration may result in errors.</dd></dl>
@@ -313,7 +313,7 @@ Functions</h2></td></tr>
 <dl class="section attention"><dt>Attention</dt><dd><ul>
 <li>If comparing two scalar values, set this macro to ((a) == (b)). </li>
 <li>If comparing two strings, set this macro to strcmp() or strncmp() appropiately. </li>
-<li>If comparing two structs, set this macro to a function that does element-wise comparison between the structs. </li>
+<li>If comparing two structs, set this macro to a function that does element-wise comparison between the structs.</li>
 </ul>
 </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
@@ -355,7 +355,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Prefix to queue type and operations. </p>
+<p>Prefix to hashtable types and operations. </p>
 <p>Is undefined after header is included.</p>
 <dl class="section attention"><dt>Attention</dt><dd>This must be manually defined before including this header file. </dd></dl>
 
@@ -405,7 +405,7 @@ Functions</h2></td></tr>
 <p>Clear an existing hashtable and flag all slots as empty. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">hashtable_ptr</td><td>The pointer of the hashtable to clear. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The pointer of the hashtable to clear. </td></tr>
   </table>
   </dd>
 </dl>
@@ -444,7 +444,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key.</td></tr>
   </table>
   </dd>
 </dl>
@@ -523,7 +523,7 @@ Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>Ensure the capacity rounded up to the power of 2 is 75% of the expected numbers of values to be stored to keep load factor low and the hash table performant.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the queue. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the queue.</td></tr>
   </table>
   </dd>
 </dl>
@@ -572,8 +572,8 @@ Functions</h2></td></tr>
 <p>Assumes hashtable_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key.</td></tr>
   </table>
   </dd>
 </dl>
@@ -608,13 +608,13 @@ Functions</h2></td></tr>
 <p>Assumes: </p><ul>
 <li>The hashtable pointer is not <code>NULL</code>.</li>
 </ul>
+<dl class="section warning"><dt>Warning</dt><dd>May not be called twice in a row on the same object.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section warning"><dt>Warning</dt><dd>May not be called twice in a row on the same object. </dd></dl>
 
 </div>
 </div>
@@ -703,7 +703,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key to search for. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key to search for.</td></tr>
   </table>
   </dd>
 </dl>
@@ -756,7 +756,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value. </td></tr>
   </table>
@@ -792,7 +792,7 @@ Functions</h2></td></tr>
 <p>Assumes the hashtable pointer is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -827,7 +827,7 @@ Functions</h2></td></tr>
 <p>Assumes the hashtable pointer is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -868,7 +868,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key to search for. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key to search for.</td></tr>
   </table>
   </dd>
 </dl>
@@ -919,7 +919,7 @@ Functions</h2></td></tr>
 <p>Assumes hashtable_ptr is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>The hashtable pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value. </td></tr>
   </table>

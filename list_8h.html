@@ -97,7 +97,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>Intrusive doubly linked list.  
+<p>Intrusive circular doubly linked list.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="container__of_8h_source.html">container_of.h</a>&quot;</code><br />
 <code>#include &lt;assert.h&gt;</code><br />
@@ -156,8 +156,10 @@ Functions</h2></td></tr>
 <tr class="separator:a720a9582420c136a02875abafe8cddcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Intrusive doubly linked list. </p>
-<p>Inspired by: <a href="https://github.com/torvalds/linux/blob/master/include/linux/list.h">https://github.com/torvalds/linux/blob/master/include/linux/list.h</a> </p>
+<div class="textblock"><p>Intrusive circular doubly linked list. </p>
+<p>Inspired by: </p><ul>
+<li><a href="https://github.com/torvalds/linux/blob/master/include/linux/list.h">https://github.com/torvalds/linux/blob/master/include/linux/list.h</a> </li>
+</ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="af8cb8fcd688faaa3dfc35d7d3d285946" name="af8cb8fcd688faaa3dfc35d7d3d285946"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af8cb8fcd688faaa3dfc35d7d3d285946">&#9670;&#160;</a></span>list_node_entry</h2>
@@ -231,8 +233,8 @@ Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This can be used to construct a stack.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">prev_ptr</td><td>The prev node pointer. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">prev_ptr</td><td>The prev node pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -273,8 +275,8 @@ Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This can be used to construct a queue.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">next_ptr</td><td>The next node pointer. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">next_ptr</td><td>The next node pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -310,7 +312,7 @@ Functions</h2></td></tr>
 <p>Assumes the given pointers are not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -516,7 +518,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -561,8 +563,8 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">old_ptr</td><td>Pointer to old node. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">new_ptr</td><td>Pointer to new node. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">old_ptr</td><td>Pointer to old node. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_ptr</td><td>Pointer to new node. </td></tr>
   </table>
   </dd>
 </dl>

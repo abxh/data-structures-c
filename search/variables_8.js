@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['value_0',['value',['../structfhashtable__slot__type.html#a26411369e95f68e6b61128261536c68d',1,'fhashtable_slot_type::value'],['../structfpqueue__element__type.html#a7c5b68c2b1af543e231b912737e76a93',1,'fpqueue_element_type::value']]],
-  ['values_1',['values',['../structfqueue__type.html#a4748d3edba3ed21b15f90c27cf41dacb',1,'fqueue_type::values'],['../structfstack__type.html#a89c607abf9825e717dacd72c45822f57',1,'fstack_type::values']]]
+  ['prev_5fptr_0',['prev_ptr',['../structlist__node__type.html#a3fa0a386042f5f3ded236f5b3f4e06f1',1,'list_node_type']]],
+  ['previous_5foffset_1',['previous_offset',['../structarena__type.html#a4d10e8bff20f87ce9da095cb4ae7eeae',1,'arena_type']]],
+  ['priority_2',['priority',['../structfpqueue__element__type.html#ac14415e79706160d0fbc6185fdc029c8',1,'fpqueue_element_type']]]
 ];

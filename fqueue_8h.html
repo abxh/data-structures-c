@@ -338,7 +338,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>The index to retrieve to value from. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>The index to retrieve to value from.</td></tr>
   </table>
   </dd>
 </dl>
@@ -373,7 +373,7 @@ Functions</h2></td></tr>
 <p>Assumes <code>queue_ptr</code> is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -450,7 +450,7 @@ Functions</h2></td></tr>
 <p>Create an queue with a given capacity with malloc(). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the queue. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the queue.</td></tr>
   </table>
   </dd>
 </dl>
@@ -498,7 +498,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -533,13 +533,13 @@ Functions</h2></td></tr>
 <p>Assumes: </p><ul>
 <li>The queue pointer is not <code>NULL</code>.</li>
 </ul>
+<dl class="section warning"><dt>Warning</dt><dd>May not be called twice in a row on the same object.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section warning"><dt>Warning</dt><dd>May not be called twice in a row on the same object. </dd></dl>
 
 </div>
 </div>
@@ -577,7 +577,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value to enqueue. </td></tr>
   </table>
   </dd>
@@ -615,7 +615,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -653,7 +653,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -690,7 +690,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -727,7 +727,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -765,7 +765,7 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer.</td></tr>
   </table>
   </dd>
 </dl>

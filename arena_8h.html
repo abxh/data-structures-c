@@ -202,7 +202,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The section size in bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The section size in bytes.</td></tr>
   </table>
   </dd>
 </dl>
@@ -255,7 +255,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>The alignment size in bytes. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The section size in bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The section size in bytes.</td></tr>
   </table>
   </dd>
 </dl>
@@ -297,7 +297,7 @@ Functions</h2></td></tr>
 <p>Deallocate all allocations in the arena. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -342,7 +342,7 @@ Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>The arena struct could stack / heap-allocated depending on program structure.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>The length of the backing buffer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">backing_buffer</td><td>The backing buffer to use. </td></tr>
   </table>
@@ -396,7 +396,7 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">old_memory_ptr</td><td>A pointer, pointing to the beginning of the memory chunk. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">old_size</td><td>Old size allocated. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">new_size</td><td>New size to grow/shrink to. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_size</td><td>New size to grow/shrink to.</td></tr>
   </table>
   </dd>
 </dl>
@@ -459,7 +459,7 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">old_memory_ptr</td><td>A pointer, pointing to the beginning of the memory chunk. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>Alignment size. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">old_size</td><td>Old size allocated. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">new_size</td><td>New size to grow/shrink to. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_size</td><td>New size to grow/shrink to.</td></tr>
   </table>
   </dd>
 </dl>
