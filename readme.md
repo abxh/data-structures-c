@@ -5,7 +5,7 @@
 
 Generic, header-only and performant data structures. New memory allocation is kept to a minimum.
 
-Written for learning purposes, and to be used further in personal projects.
+Made for my own exploration and use.
 
 Run `make test` to run all tests and examples.
 
