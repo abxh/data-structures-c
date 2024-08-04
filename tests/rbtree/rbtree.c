@@ -257,7 +257,7 @@ int main(void)
             if (node_ptr) {
                 unsigned int* value_ptr = &rbtree_node_entry(node_ptr, extended_bst_node, node)->value;
                 if (*value_ptr > 1) {
-                    value_ptr--;
+                    (*value_ptr)--;
                 }
                 else {
                     bst_delete_node(&bst, node_ptr);
