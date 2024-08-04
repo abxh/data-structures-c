@@ -95,7 +95,7 @@
 
 /**
  * @def NAME
- * @brief Prefix to priority queue type and operations.
+ * @brief Prefix to priority queue types and operations.
  *
  * Is undefined after header is included.
  *
@@ -157,6 +157,7 @@ typedef struct {
  * @brief Create an priority queue with a given capacity with malloc().
  *
  * @param[in] capacity Maximum number of elements expected to be stored in the priority queue.
+ *
  * @return A pointer to the priority queue.
  * @retval `NULL`
  *   @li If capacity is 0 or is larger than UINT32_MAX.
@@ -183,8 +184,9 @@ static inline FPQUEUE_TYPE* JOIN(FPQUEUE_NAME, create)(const uint32_t capacity)
 /**
  * @brief Destroy an priority queue and free the underlying memory with free().
  *
- * @param[in,out] pqueue_ptr The priority queue pointer.
  * @warning May not be called twice in a row on the same object.
+ *
+ * @param[in] pqueue_ptr The priority queue pointer.
  */
 static inline void JOIN(FPQUEUE_NAME, destroy)(FPQUEUE_TYPE* pqueue_ptr)
 {
@@ -199,6 +201,7 @@ static inline void JOIN(FPQUEUE_NAME, destroy)(FPQUEUE_TYPE* pqueue_ptr)
  * Assumes the priority queue pointer is not `NULL`.
  *
  * @param[in] pqueue_ptr The priority queue pointer.
+ *
  * @return whether the priority queue is empty.
  */
 static inline bool JOIN(FPQUEUE_NAME, is_empty)(const FPQUEUE_TYPE* pqueue_ptr)
@@ -214,6 +217,7 @@ static inline bool JOIN(FPQUEUE_NAME, is_empty)(const FPQUEUE_TYPE* pqueue_ptr)
  * Assumes the priority queue pointer is not `NULL`.
  *
  * @param[in] pqueue_ptr The priority queue pointer.
+ *
  * @return whether the priority queue is full.
  */
 static inline bool JOIN(FPQUEUE_NAME, is_full)(const FPQUEUE_TYPE* pqueue_ptr)
@@ -231,6 +235,7 @@ static inline bool JOIN(FPQUEUE_NAME, is_full)(const FPQUEUE_TYPE* pqueue_ptr)
  * @li The priority queue is not empty.
  *
  * @param[in] pqueue_ptr The priority queue pointer.
+ *
  * @return The max value.
  */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_max)(const FPQUEUE_TYPE* pqueue_ptr)
@@ -249,6 +254,7 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_max)(const FPQUEUE_TYPE* pqueue_
  * @li The priority queue is not empty.
  *
  * @param[in] pqueue_ptr The priority queue pointer.
+ *
  * @return The next to-be-popped (max) value.
  */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, peek)(const FPQUEUE_TYPE* pqueue_ptr)
@@ -292,7 +298,8 @@ static inline void JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(FPQUEUE_TYPE* pq
  * @li `pqueue_ptr` is not `NULL`.
  * @li The priority queue is not empty.
  *
- * @param[in,out] pqueue_ptr The priority queue pointer.
+ * @param[in] pqueue_ptr The priority queue pointer.
+ *
  * @return The max value.
  */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE* pqueue_ptr)
@@ -338,7 +345,7 @@ static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE* pque
  * @li `pqueue_ptr` is not `NULL`.
  * @li The priority queue is not full.
  *
- * @param[in,out] pqueue_ptr The priority queue pointer.
+ * @param[in] pqueue_ptr The priority queue pointer.
  * @param[in] value The value.
  * @param[in] priority The priority (with large number meaning high priority and vice versa).
  */
@@ -361,7 +368,7 @@ static inline void JOIN(FPQUEUE_NAME, push)(FPQUEUE_TYPE* pqueue_ptr, VALUE_TYPE
  *
  * Assumes `pqueue_ptr` is not `NULL`.
  *
- * @param[in,out] pqueue_ptr The priority queue pointer.
+ * @param[in] pqueue_ptr The priority queue pointer.
  */
 static inline void JOIN(FPQUEUE_NAME, clear)(FPQUEUE_TYPE* pqueue_ptr)
 {

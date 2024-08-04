@@ -42,6 +42,7 @@
  * @li x is smaller than than the defined UINT32_MAX / 4.
  *
  * @param x The number at hand.
+ *
  * @return A power of two that is larger than or equal to the given number.
  */
 static inline uint32_t round_up_pow2_32(uint32_t x)

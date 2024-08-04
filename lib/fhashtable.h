@@ -49,11 +49,6 @@
  * Example of how `fhashtable.h` header file is used in practice.
  */
 
-/**
- * @example arena/fhashtable.c
- * Example of how `fhashtable.h` header file is used in practice with `arena.h`.
- */
-
 // macro definitions: {{{
 
 #ifndef FHASHTABLE_H
@@ -100,21 +95,21 @@
 
 /**
  * @def NAME
- * @brief Prefix to queue type and operations.
+ * @brief Prefix to hashtable types and operations.
  *
  * Is undefined after header is included.
  *
  * @attention This must be manually defined before including this header file.
  */
 #ifndef NAME
-#define NAME fhashtable
 #error "Must define NAME."
+#define NAME fhashtable
 #else
 #define FHASHTABLE_NAME NAME
 #endif
 
 /**
- * @def KEY_TYPE()
+ * @def KEY_TYPE
  * @brief The key type. This must be manually defined before including this header file.
  *
  * Is undefined once header is included.
@@ -145,6 +140,7 @@
  *   @li If comparing two scalar values, set this macro to ((a) == (b)).
  *   @li If comparing two strings, set this macro to strcmp() or strncmp() appropiately.
  *   @li If comparing two structs, set this macro to a function that does element-wise comparison between the structs.
+ *
  * @retval true If the two keys are equal. Equivalent to a non-zero int.
  * @retval false If the two key are not equal. Equivalent to the int 0.
  */
@@ -169,7 +165,7 @@
 
 /// @cond DO_NOT_DOCUMENT
 #define FHASHTABLE_TYPE         JOIN(FHASHTABLE_NAME, type)
-#define FHASHTABLE_SLOT_TYPE    JOIN(JOIN(FHASHTABLE_NAME, slot), type)
+#define FHASHTABLE_SLOT_TYPE    JOIN(FHASHTABLE_NAME, slot_type)
 #define FHASHTABLE_IS_FULL      JOIN(FHASHTABLE_NAME, is_full)
 #define FHASHTABLE_CONTAINS_KEY JOIN(FHASHTABLE_NAME, contains_key)
 /// @endcond
@@ -199,6 +195,7 @@ typedef struct {
 // }}}
 
 // function definitions: {{{
+
 /**
  * @brief Create an hashtable with a given capacity with malloc().
  *
@@ -206,6 +203,7 @@ typedef struct {
  * load factor low and the hash table performant.
  *
  * @param[in] capacity Maximum number of elements expected to be stored in the queue.
+ *
  * @return A pointer to the queue.
  * @retval `NULL`
  *   @li If malloc fails.
@@ -240,8 +238,9 @@ static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const uint32_t capa
  * Assumes:
  * @li The hashtable pointer is not `NULL`.
  *
- * @param[in,out] hashtable_ptr The hashtable pointer.
  * @warning May not be called twice in a row on the same object.
+ *
+ * @param[in] hashtable_ptr The hashtable pointer.
  */
 static inline void JOIN(FHASHTABLE_NAME, destroy)(FHASHTABLE_TYPE* hashtable_ptr)
 {
@@ -254,6 +253,7 @@ static inline void JOIN(FHASHTABLE_NAME, destroy)(FHASHTABLE_TYPE* hashtable_ptr
  * Assumes the hashtable pointer is not `NULL`.
  *
  * @param[in] hashtable_ptr The hashtable pointer.
+ *
  * @return whether the hashtable is empty.
  */
 static inline bool JOIN(FHASHTABLE_NAME, is_empty)(const FHASHTABLE_TYPE* hashtable_ptr)
@@ -269,6 +269,7 @@ static inline bool JOIN(FHASHTABLE_NAME, is_empty)(const FHASHTABLE_TYPE* hashta
  * Assumes the hashtable pointer is not `NULL`.
  *
  * @param[in] hashtable_ptr The hashtable pointer.
+ *
  * @return whether the hashtable is full.
  */
 static inline bool JOIN(FHASHTABLE_NAME, is_full)(const FHASHTABLE_TYPE* hashtable_ptr)
@@ -285,6 +286,7 @@ static inline bool JOIN(FHASHTABLE_NAME, is_full)(const FHASHTABLE_TYPE* hashtab
  *
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key.
+ *
  * @return A boolean indicating whether the hashtable contains the given key.
  */
 static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key)
@@ -322,6 +324,7 @@ static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE* ha
  *
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key to search for.
+ *
  * @return A pointer to the corresponding key.
  *  @retval NULL If the hashtable did not contain the key.
  */
@@ -398,8 +401,9 @@ static inline VALUE_TYPE JOIN(FHASHTABLE_NAME, get_value)(const FHASHTABLE_TYPE*
  *
  * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key to search for.
+ *
  * @return A pointer to the corresponding key.
- * @retval NULL If the hashtable did not contain the key.
+ *  @retval NULL If the hashtable did not contain the key.
  */
 static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, search)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key)
 {
@@ -413,7 +417,7 @@ static inline VALUE_TYPE* JOIN(FHASHTABLE_NAME, search)(FHASHTABLE_TYPE* hashtab
  * @li hashtable_ptr is not `NULL`.
  * @li key is not already contained in the hashtable.
  *
- * @param[in,out] hashtable_ptr The hashtable pointer.
+ * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key.
  * @param[in] value The value.
  */
@@ -454,7 +458,7 @@ static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE* hashtable_ptr,
  *
  * Assumes hashtable_ptr is not `NULL`.
  *
- * @param[in,out] hashtable_ptr The hashtable pointer.
+ * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key.
  * @param[in] value The value.
  */
@@ -502,8 +506,9 @@ static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE* hashtable_ptr,
  *
  * Assumes hashtable_ptr is not `NULL`.
  *
- * @param[in,out] hashtable_ptr The hashtable pointer.
+ * @param[in] hashtable_ptr The hashtable pointer.
  * @param[in] key The key.
+ *
  * @return A boolean indicating whether the key was previously contained in the hashtable.
  */
 static inline bool JOIN(FHASHTABLE_NAME, delete)(FHASHTABLE_TYPE* hashtable_ptr, const KEY_TYPE key)
@@ -553,7 +558,7 @@ static inline bool JOIN(FHASHTABLE_NAME, delete)(FHASHTABLE_TYPE* hashtable_ptr,
 /**
  * @brief Clear an existing hashtable and flag all slots as empty.
  *
- * @param[in,out] hashtable_ptr The pointer of the hashtable to clear.
+ * @param[in] hashtable_ptr The pointer of the hashtable to clear.
  */
 static inline void JOIN(FHASHTABLE_NAME, clear)(FHASHTABLE_TYPE* hashtable_ptr)
 {

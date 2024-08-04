@@ -1,11 +1,42 @@
+/*  rbtree.h
+ *
+ *  Copyright (C) 2023 abxh
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+ *  USA
+ */
 
-// inspiration:
-// https://github.com/torvalds/linux/blob/master/include/linux/rbtree.h
+/**
+ * @file rbtree.h
+ * @brief Intrusive red-black tree
+ *
+ * Duplicates are not allowed. For supporting duplicate keys, you may store a counter for each node,
+ * and count up when a node key already exists.
+ *
+ * The memory of the nodes are expected to managed seperately.
+ *
+ * Inspired by:
+ * @li https://github.com/torvalds/linux/blob/master/include/linux/rbtree.h
+ *
+ * Sources used:
+ * @li https://en.wikipedia.org/wiki/Binary_search_tree#Operations
+ * @li https://en.wikipedia.org/wiki/Red-black_tree#Operations
+ * @li CLRS
+ */
 
-// sources used:
-// https://en.wikipedia.org/wiki/Binary_search_tree#Operations
-// https://en.wikipedia.org/wiki/Red-black_tree#Operations
-// CLRS
+// macro definitions: {{{
 
 #ifndef RBTREE_H
 #define RBTREE_H
@@ -18,10 +49,29 @@
 #include <stddef.h>
 #include <stdint.h>
 
+/**
+ * @def rbtree_node_entry(node_ptr, container_type, node_member_name)
+ * @brief Get the pointer to the container instance, given a pointer to
+ *        to the node member instance, container type, and node member name.
+ *
+ * @param[in] node_ptr A pointer to the node member.
+ * @param[in] container_type The container type.
+ * @param[in] node_member_name The node member name.
+ *
+ * @return A pointer to the container instance.
+ */
 #define rbtree_node_entry(node_ptr, container_type, node_member_name) container_of(node_ptr, container_type, node_member_name)
 
 #endif
 
+/**
+ * @def NAME
+ * @brief Prefix to red black tree types and operations.
+ *
+ * Is undefined after header is included.
+ *
+ * @attention This must be manually defined before including this header file.
+ */
 #ifndef NAME
 #error "Must define NAME."
 #define NAME rbtree
@@ -29,20 +79,40 @@
 #define RBTREE_NAME NAME
 #endif
 
+/**
+ * @def KEY_TYPE
+ * @brief The key type. This must be manually defined before including this header file.
+ *
+ * Is undefined once header is included.
+ *
+ * @attention This must be manually defined before including this header file.
+ */
 #ifndef KEY_TYPE
 #error "Must define KEY_TYPE."
 #define KEY_TYPE int
 #endif
 
+/**
+ * @def KEY_IS_STRICTLY_LESS(a, b)
+ * @brief Used to compare two keys. This must be manually defined before including this header file.
+ *
+ * Is undefined once header is included.
+ *
+ * Equality for two keys a and b is defined as !KEY_IS_STRICTLY_LESS(a,b) && !KEY_IS_STRICTLY_LESS(b,a).
+ *
+ * @attention This must be manually defined before including this header file.
+ *
+ * @retval true If key a is strictly less than b.
+ * @retval false If key a is greater than or equal to b.
+ */
 #ifndef KEY_IS_STRICTLY_LESS
 #error "Must define KEY_IS_STRICTLY_LESS."
 #define KEY_IS_STRICTLY_LESS(a, b) ((a) < (b))
 #endif
 
-#define RBTREE_TYPE      JOIN(RBTREE_NAME, type)
-#define RBTREE_NODE_TYPE JOIN(RBTREE_NAME, node_type)
-
 /// @cond DO_NOT_DOCUMENT
+#define RBTREE_TYPE                             JOIN(RBTREE_NAME, type)
+#define RBTREE_NODE_TYPE                        JOIN(RBTREE_NAME, node_type)
 #define RBTREE_CONTAINS_KEY                     JOIN(RBTREE_NAME, contains_key)
 #define RBTREE_NODE_IS_RED                      JOIN(RBTREE_NAME, node_is_red)
 #define RBTREE_NODE_IS_BLACK                    JOIN(RBTREE_NAME, node_is_black)
@@ -58,57 +128,50 @@
 #define RBTREE_CHILD_DIR(node_ptr)              ((node_ptr) == RBTREE_NODE_GET_PARENT_PTR(node_ptr)->left_ptr ? 0 : 1)
 /// @endcond
 
+// }}}
+
+// type definitions: {{{
+
+/**
+ * @brief Generated red-black tree node struct type for a given `KEY_TYPE`.
+ */
 typedef struct RBTREE_NODE_TYPE {
-    uintptr_t __parent_ptr_with_color;
+    uintptr_t __parent_ptr_with_color; ///< variable containing both the parent pointer and color info
     union {
         struct {
-            struct RBTREE_NODE_TYPE* left_ptr;
-            struct RBTREE_NODE_TYPE* right_ptr;
+            struct RBTREE_NODE_TYPE* left_ptr;  ///< pointer to left node
+            struct RBTREE_NODE_TYPE* right_ptr; ///< pointer to right node
         };
-        struct RBTREE_NODE_TYPE* child_ptrs[2];
+        struct RBTREE_NODE_TYPE* child_ptrs[2]; ///< array of child pointers
     };
-    KEY_TYPE key;
+    KEY_TYPE key; ///< node key
 } RBTREE_NODE_TYPE;
 
+/**
+ * @brief Generated red-black tree struct type for a given `KEY_TYPE`.
+ */
 typedef struct RBTREE_TYPE {
-    RBTREE_NODE_TYPE* root_ptr;
-    uint32_t count;
+    RBTREE_NODE_TYPE* root_ptr; ///< pointer to root node
+    uint32_t count;             ///< total node count
 } RBTREE_TYPE;
 
+// }}}
+
+// function definitions: {{{
+
+/**
+ * @brief Initialize a red-black tree struct
+ *
+ * Assumes the given pointer is not NULL.
+ *
+ * @param[in] rbtree_ptr The tree pointer.
+ */
 static inline void JOIN(RBTREE_NAME, init)(RBTREE_TYPE* rbtree_ptr)
 {
     assert(rbtree_ptr != NULL);
 
     rbtree_ptr->root_ptr = NULL;
     rbtree_ptr->count = 0;
-}
-
-static inline void JOIN(RBTREE_NAME, node_init)(RBTREE_NODE_TYPE* node_ptr, KEY_TYPE key)
-{
-    assert(node_ptr != NULL);
-
-    node_ptr->key = key;
-}
-
-static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, node_get_parent_ptr)(RBTREE_NODE_TYPE* node_ptr)
-{
-    assert(node_ptr != NULL);
-
-    return (RBTREE_NODE_TYPE*)(node_ptr->__parent_ptr_with_color & ~1);
-}
-
-static inline bool JOIN(RBTREE_NAME, node_is_black)(const RBTREE_NODE_TYPE* node_ptr)
-{
-    assert(node_ptr != NULL);
-
-    return (node_ptr->__parent_ptr_with_color & 1);
-}
-
-static inline bool JOIN(RBTREE_NAME, node_is_red)(const RBTREE_NODE_TYPE* node_ptr)
-{
-    assert(node_ptr != NULL);
-
-    return !JOIN(RBTREE_NAME, node_is_black)(node_ptr);
 }
 
 /// @cond DO_NOT_DOCUMENT
@@ -118,14 +181,12 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_red))(RBTR
 
     node_ptr->__parent_ptr_with_color &= ~1;
 }
-
 static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_black))(RBTREE_NODE_TYPE* node_ptr)
 {
     assert(node_ptr != NULL);
 
     node_ptr->__parent_ptr_with_color |= 1;
 }
-
 static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_color_of_other))(RBTREE_NODE_TYPE* node_ptr,
                                                                                        const RBTREE_NODE_TYPE* other_ptr)
 {
@@ -137,7 +198,6 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_color_of_o
     node_ptr->__parent_ptr_with_color &= ~1;
     node_ptr->__parent_ptr_with_color += is_black;
 }
-
 static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_parent_ptr))(RBTREE_NODE_TYPE* node_ptr, RBTREE_NODE_TYPE* parent_ptr)
 {
     assert(node_ptr != NULL);
@@ -149,6 +209,74 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_parent_ptr))(RBTREE
 }
 /// @endcond
 
+/**
+ * @brief Initialize a red-black tree node
+ *
+ * Assumes the given pointer is not NULL.
+ *
+ * @param[in] node_ptr The node pointer.
+ * @param[in]     key      The key to initialize the node with.
+ */
+static inline void JOIN(RBTREE_NAME, node_init)(RBTREE_NODE_TYPE* node_ptr, KEY_TYPE key)
+{
+    assert(node_ptr != NULL);
+
+    node_ptr->key = key;
+    node_ptr->left_ptr = node_ptr->right_ptr = NULL;
+    RBTREE_NODE_SET_PARENT_PTR(node_ptr, NULL);
+}
+
+/**
+ * @brief Extract the parent pointer of a node.
+ *
+ * Assumes the given pointer is not NULL.
+ *
+ * @param[in] node_ptr The node pointer.
+ */
+static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, node_get_parent_ptr)(RBTREE_NODE_TYPE* node_ptr)
+{
+    assert(node_ptr != NULL);
+
+    return (RBTREE_NODE_TYPE*)(node_ptr->__parent_ptr_with_color & ~1);
+}
+
+/**
+ * @brief Check if the given node is colored black.
+ *
+ * Assumes the given pointer is not NULL.
+ *
+ * @param[in] node_ptr The node pointer.
+ */
+static inline bool JOIN(RBTREE_NAME, node_is_black)(const RBTREE_NODE_TYPE* node_ptr)
+{
+    assert(node_ptr != NULL);
+
+    return (node_ptr->__parent_ptr_with_color & 1);
+}
+
+/**
+ * @brief Check if the given node is colored red.
+ *
+ * Assumes the given pointer is not NULL.
+ *
+ * @param[in] node_ptr The node pointer.
+ */
+static inline bool JOIN(RBTREE_NAME, node_is_red)(const RBTREE_NODE_TYPE* node_ptr)
+{
+    assert(node_ptr != NULL);
+
+    return !JOIN(RBTREE_NAME, node_is_black)(node_ptr);
+}
+
+/**
+ * @brief Check if the tree is empty.
+ *
+ * Assumes the given pointer is not NULL.
+ *
+ * @param[in] rbtree_ptr The tree pointer.
+ *
+ * @return Whether the tree is empty.
+ */
 static inline bool JOIN(RBTREE_NAME, is_empty)(const RBTREE_TYPE* rbtree_ptr)
 {
     assert(rbtree_ptr != NULL);
@@ -156,6 +284,16 @@ static inline bool JOIN(RBTREE_NAME, is_empty)(const RBTREE_TYPE* rbtree_ptr)
     return rbtree_ptr->root_ptr == NULL;
 }
 
+/**
+ * @brief Check if the tree contains a given key.
+ *
+ * Assumes the given pointer is not NULL.
+ *
+ * @param[in] rbtree_ptr The tree pointer.
+ * @param[in] key The key
+ *
+ * @return Whether the tree contains the key.
+ */
 static inline bool JOIN(RBTREE_NAME, contains_key)(const RBTREE_TYPE* rbtree_ptr, const KEY_TYPE key)
 {
     assert(rbtree_ptr != NULL);
@@ -179,6 +317,17 @@ static inline bool JOIN(RBTREE_NAME, contains_key)(const RBTREE_TYPE* rbtree_ptr
     return false;
 }
 
+/**
+ * @brief Search for a given node and return a pointer to the node.
+ *
+ * Assumes the given pointer is not NULL.
+ *
+ * @param[in] rbtree_ptr The tree pointer.
+ * @param[in] key      The key of the node being searched for.
+ *
+ * @return A pointer to the searched node
+ *  @retval `NULL` If a node with the given key wasn't found.
+ */
 static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, search_node)(RBTREE_TYPE* rbtree_ptr, const KEY_TYPE key)
 {
     assert(rbtree_ptr != NULL);
@@ -299,9 +448,20 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(RBTREE_TYPE* 
 
 /// @endcond
 
+/**
+ * @brief Insert a given node in the tree.
+ *
+ * Assumes:
+ * @li The node key is not already contained in the tree. (no duplicate keys)
+ * @li The given pointers are not NULL.
+ *
+ * @param[in] rbtree_ptr The tree pointer.
+ * @param[in] node_ptr The node pointer.
+ */
 static inline void JOIN(RBTREE_NAME, insert_node)(RBTREE_TYPE* rbtree_ptr, RBTREE_NODE_TYPE* node_ptr)
 {
     assert(rbtree_ptr != NULL);
+    assert(node_ptr != NULL);
     assert(RBTREE_CONTAINS_KEY(rbtree_ptr, node_ptr->key) == false);
 
     RBTREE_NODE_TYPE* parent_ptr = NULL;
@@ -427,6 +587,16 @@ Case_6:
 
 /// @endcond
 
+/**
+ * @brief Delete a given node from the tree.
+ *
+ * Assumes The given pointers are not NULL.
+ *
+ * @param[in] rbtree_ptr The tree pointer.
+ * @param[in] node_ptr The node pointer.
+ *
+ * @return Pointer to the deleted node reinitialized.
+ */
 static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, delete_node)(RBTREE_TYPE* rbtree_ptr, RBTREE_NODE_TYPE* node_ptr)
 {
     assert(rbtree_ptr != NULL);
@@ -508,12 +678,25 @@ static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, delete_node)(RBTREE_TYPE* rbtr
     return node_ptr;
 }
 
+/**
+ * @brief Clear the tree.
+ *
+ * Assumes the given pointer is not NULL.
+ *
+ * @note This doesn't free the memory of any of the nodes. Merely sets the root pointer to `NULL`.
+ *
+ * @param[in] rbtree_ptr The tree pointer.
+ */
 static inline void JOIN(RBTREE_NAME, clear)(RBTREE_TYPE* rbtree_ptr)
 {
     assert(rbtree_ptr != NULL);
 
     rbtree_ptr->root_ptr = NULL;
 }
+
+// }}}
+
+// macro undefs: {{{
 
 #undef NAME
 #undef KEY_TYPE
@@ -535,4 +718,6 @@ static inline void JOIN(RBTREE_NAME, clear)(RBTREE_TYPE* rbtree_ptr)
 #undef RBTREE_NODE_SET_PARENT_PTR
 #undef RBTREE_CHILD_DIR
 
-// vim: ft=c
+// }}}
+
+// vim: ft=c fdm=marker

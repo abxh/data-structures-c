@@ -72,7 +72,7 @@ typedef struct arena_type {
  *
  * @note The arena struct could stack / heap-allocated depending on program structure.
  *
- * @param[in,out] arena_ptr The arena pointer.
+ * @param[in] arena_ptr The arena pointer.
  * @param[in] n The length of the backing buffer.
  * @param[in] backing_buffer The backing buffer to use.
  */
@@ -87,7 +87,7 @@ static inline void arena_init(arena_type* arena_ptr, const size_t n, unsigned ch
 /**
  * @brief Deallocate all allocations in the arena.
  *
- * @param[in,out] arena_ptr The arena pointer.
+ * @param[in] arena_ptr The arena pointer.
  */
 static inline void arena_deallocate_all(arena_type* arena_ptr)
 {
@@ -101,6 +101,7 @@ static inline void arena_deallocate_all(arena_type* arena_ptr)
  * @param[in] arena_ptr The arena pointer.
  * @param[in] alignment The alignment size in bytes.
  * @param[in] size The section size in bytes.
+ *
  * @return A pointer to the memory chunk.
  *  @retval NULL If the arena doesn't have enough memory for the allocation.
  */
@@ -139,6 +140,7 @@ static inline void* arena_allocate_aligned(arena_type* arena_ptr, const size_t a
  *
  * @param[in] arena_ptr The arena pointer.
  * @param[in] size The section size in bytes.
+ *
  * @return A pointer to the memory chunk.
  *  @retval NULL If the arena doesn't have enough memory for the allocation.
  */
@@ -155,6 +157,7 @@ static inline void* arena_allocate(arena_type* arena_ptr, const size_t size)
  * @param[in] alignment Alignment size.
  * @param[in] old_size Old size allocated.
  * @param[in] new_size New size to grow/shrink to.
+ *
  * @return A pointer to reallocated the memory chunk.
  *  @retval NULL If arena doesn't have enough memory for the reallocation.
  */
@@ -198,6 +201,7 @@ static inline void* arena_reallocate_aligned(arena_type* arena_ptr, void* old_me
  * @param[in] old_memory_ptr A pointer, pointing to the beginning of the memory chunk.
  * @param[in] old_size Old size allocated.
  * @param[in] new_size New size to grow/shrink to.
+ *
  * @return A pointer to reallocated the memory chunk.
  *  @retval NULL If arena doesn't have enough memory for the reallocation.
  */

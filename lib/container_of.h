@@ -36,6 +36,7 @@
  * @param[in] ptr A pointer to the member.
  * @param[in] type The container type.
  * @param[in] member The member name.
+ *
  * @return A pointer to the container instance.
  */
 #define container_of(ptr, type, member)                   \

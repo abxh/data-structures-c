@@ -20,10 +20,10 @@
 
 /**
  * @file list.h
- * @brief Intrusive doubly linked list
+ * @brief Intrusive circular doubly linked list
  *
  * Inspired by:
- * https://github.com/torvalds/linux/blob/master/include/linux/list.h
+ * @li https://github.com/torvalds/linux/blob/master/include/linux/list.h
  */
 
 /**
@@ -64,7 +64,7 @@ typedef struct list_node_type {
  *
  * Assumes the given pointers are not NULL.
  *
- * @param[in,out] node_ptr The node pointer.
+ * @param[in] node_ptr The node pointer.
  */
 static inline void list_node_init(list_node_type* node_ptr)
 {
@@ -169,8 +169,8 @@ static inline void internal_list_node_add_between(list_node_type* node_ptr, list
  *
  * @note This can be used to construct a stack.
  *
- * @param[in,out] prev_ptr The prev node pointer.
- * @param[in,out] node_ptr The node pointer.
+ * @param[in] prev_ptr The prev node pointer.
+ * @param[in] node_ptr The node pointer.
  */
 static inline void list_node_add_after(list_node_type* node_ptr, list_node_type* prev_ptr)
 {
@@ -187,8 +187,8 @@ static inline void list_node_add_after(list_node_type* node_ptr, list_node_type*
  *
  * @note This can be used to construct a queue.
  *
- * @param[in,out] next_ptr The next node pointer.
- * @param[in,out] node_ptr The node pointer.
+ * @param[in] next_ptr The next node pointer.
+ * @param[in] node_ptr The node pointer.
  */
 static inline void list_node_add_before(list_node_type* node_ptr, list_node_type* next_ptr)
 {
@@ -219,7 +219,8 @@ static inline void internal_list_node_attach(list_node_type* prev_ptr, list_node
  * @li node_ptr node is a part of a list.
  * @li node_ptr node is not the head or tail node.
  *
- * @param[in,out] node_ptr The node pointer.
+ * @param[in] node_ptr The node pointer.
+ *
  * @return pointer to the removed node
  */
 static inline list_node_type* list_node_remove(list_node_type* node_ptr)
@@ -242,8 +243,8 @@ static inline list_node_type* list_node_remove(list_node_type* node_ptr)
  * @li `old_ptr` and `new_ptr` are not pointing to the same node.
  * @li old_ptr node is a part of a list and not the head or tail node.
  *
- * @param[in,out] old_ptr Pointer to old node.
- * @param[in,out] new_ptr Pointer to new node.
+ * @param[in] old_ptr Pointer to old node.
+ * @param[in] new_ptr Pointer to new node.
  */
 static inline void list_node_replace(list_node_type* old_ptr, list_node_type* new_ptr)
 {

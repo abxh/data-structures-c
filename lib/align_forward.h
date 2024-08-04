@@ -39,6 +39,7 @@
  *
  * @param ptr The pointer as number of bytes.
  * @param align The alignment
+ *
  * @return A new pointer as number of bytes, which is aligned to `align` and is larger than or equal to `ptr`.
  */
 static inline uintptr_t align_forward(const uintptr_t ptr, const size_t align)

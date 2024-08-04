@@ -28,7 +28,11 @@ PREDEFINED = \
              \
              "FPQUEUE_NAME=fpqueue" \
              "FPQUEUE_TYPE=fpqueue_type" \
-             "FPQUEUE_ELEMENT_TYPE=fpqueue_element_type"
+             "FPQUEUE_ELEMENT_TYPE=fpqueue_element_type" \
+             \
+             "RBTREE_NAME=rbtree" \
+             "RBTREE_TYPE=rbtree_type" \
+             "RBTREE_NODE_TYPE=rbtree_node_type"
 
 EXPAND_AS_DEFINED = \
                     PASTE \

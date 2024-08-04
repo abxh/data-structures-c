@@ -36,6 +36,7 @@
  * Get the FNV-1a 32-bit hash of a char array (ending with a `\0`).
  *
  * @param char_p Pointer to the string of bytes.
+ *
  * @return A 32-bit hash of the bytes.
  */
 static inline uint32_t fnvhash_32_str(const char* char_p)
@@ -53,6 +54,7 @@ static inline uint32_t fnvhash_32_str(const char* char_p)
  *
  * @param char_p Pointer to the string of bytes.
  * @param length Number of bytes.
+ *
  * @return A 32-bit hash of the bytes.
  */
 static inline uint32_t fnvhash_32(const uint8_t* char_p, const size_t length)

@@ -140,6 +140,7 @@ typedef struct {
  * @brief Create an stack with a given capacity with malloc().
  *
  * @param[in] capacity Maximum number of elements expected to be stored in the stack.
+ *
  * @return A pointer to the stack.
  * @retval `NULL`
  *   @li If capacity is 0 or is larger than UINT32_MAX.
@@ -166,8 +167,9 @@ static inline FSTACK_TYPE* JOIN(FSTACK_NAME, create)(const uint32_t capacity)
 /**
  * @brief Destroy an stack and free the underlying memory with free().
  *
- * @param[in,out] stack_ptr The stack pointer.
  * @warning May not be called twice in a row on the same object.
+ *
+ * @param[in] stack_ptr The stack pointer.
  */
 static inline void JOIN(FSTACK_NAME, destroy)(FSTACK_TYPE* stack_ptr)
 {
@@ -182,6 +184,7 @@ static inline void JOIN(FSTACK_NAME, destroy)(FSTACK_TYPE* stack_ptr)
  * Assumes the stack pointer is not `NULL`.
  *
  * @param[in] stack_ptr The stack pointer.
+ *
  * @return whether the stack is empty.
  */
 static inline bool JOIN(FSTACK_NAME, is_empty)(const FSTACK_TYPE* stack_ptr)
@@ -197,6 +200,7 @@ static inline bool JOIN(FSTACK_NAME, is_empty)(const FSTACK_TYPE* stack_ptr)
  * Assumes the stack pointer is not `NULL`.
  *
  * @param[in] stack_ptr The stack pointer.
+ *
  * @return whether the stack is full.
  */
 static inline bool JOIN(FSTACK_NAME, is_full)(const FSTACK_TYPE* stack_ptr)
@@ -217,6 +221,7 @@ static inline bool JOIN(FSTACK_NAME, is_full)(const FSTACK_TYPE* stack_ptr)
  *
  * @param[in] stack_ptr The stack pointer.
  * @param[in] index The index to retrieve to value from.
+ *
  * @return The value at `index`.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, at)(const FSTACK_TYPE* stack_ptr, const uint32_t index)
@@ -235,6 +240,7 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, at)(const FSTACK_TYPE* stack_ptr, con
  * @li The stack is not empty.
  *
  * @param[in] stack_ptr The stack pointer.
+ *
  * @return The top value.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, get_top)(const FSTACK_TYPE* stack_ptr)
@@ -253,6 +259,7 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, get_top)(const FSTACK_TYPE* stack_ptr
  * @li The stack is not empty.
  *
  * @param[in] stack_ptr The stack pointer.
+ *
  * @return The bottom value.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, get_bottom)(const FSTACK_TYPE* stack_ptr)
@@ -271,6 +278,7 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, get_bottom)(const FSTACK_TYPE* stack_
  * @li The stack is not empty.
  *
  * @param[in] stack_ptr The stack pointer.
+ *
  * @return The next to-be-popped value.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, peek)(const FSTACK_TYPE* stack_ptr)
@@ -285,7 +293,7 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, peek)(const FSTACK_TYPE* stack_ptr)
  * @li `stack_ptr` is not `NULL`.
  * @li The stack is not full.
  *
- * @param[in,out] stack_ptr The stack pointer.
+ * @param[in] stack_ptr The stack pointer.
  * @param[in] value The value.
  */
 static inline void JOIN(FSTACK_NAME, push)(FSTACK_TYPE* stack_ptr, const VALUE_TYPE value)
@@ -303,7 +311,8 @@ static inline void JOIN(FSTACK_NAME, push)(FSTACK_TYPE* stack_ptr, const VALUE_T
  * @li `stack_ptr` is not `NULL`.
  * @li The stack is not empty.
  *
- * @param[in,out] stack_ptr The stack pointer.
+ * @param[in] stack_ptr The stack pointer.
+ *
  * @return The top value.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, pop)(FSTACK_TYPE* stack_ptr)
@@ -319,7 +328,7 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, pop)(FSTACK_TYPE* stack_ptr)
  *
  * Assumes `stack_ptr` is not `NULL`.
  *
- * @param[in,out] stack_ptr The stack pointer.
+ * @param[in] stack_ptr The stack pointer.
  */
 static inline void JOIN(FSTACK_NAME, clear)(FSTACK_TYPE* stack_ptr)
 {
