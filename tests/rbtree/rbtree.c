@@ -63,20 +63,16 @@ static int count_height(const bst_node_type* root_ptr)
     return height;
 }
 
-static bool is_valid_binary_search_tree(const bst_node_type* root_ptr)
+static bool is_valid_binary_search_tree(const float left_key, const bst_node_type* root_ptr, const float right_key)
 {
-    // no duplicates allowed (however the value can be used as a counter)
-
     if (root_ptr == NULL) {
         return true;
     }
-    if (root_ptr->left_ptr && root_ptr->left_ptr->key > root_ptr->key) {
+    if (!(left_key < root_ptr->key && root_ptr->key < right_key)) {
         return false;
     }
-    if (root_ptr->right_ptr && root_ptr->key > root_ptr->right_ptr->key) {
-        return false;
-    }
-    return is_valid_binary_search_tree(root_ptr->left_ptr) && is_valid_binary_search_tree(root_ptr->right_ptr);
+    return is_valid_binary_search_tree(left_key, root_ptr->left_ptr, root_ptr->key) &&
+           is_valid_binary_search_tree(root_ptr->key, root_ptr->right_ptr, right_key);
 }
 
 static bool rbtree_check_for_no_consecutive_reds(const bst_node_type* parent_ptr, const bst_node_type* root_ptr)
@@ -112,7 +108,7 @@ static bool rbtree_check_equal_black_height(const bst_node_type* root_ptr, const
 
 static bool is_valid_red_black_tree(const bst_node_type* root_ptr)
 {
-    const bool is_valid_bst = is_valid_binary_search_tree(root_ptr);
+    const bool is_valid_bst = is_valid_binary_search_tree(-INFINITY, root_ptr, INFINITY);
     const bool is_valid_234 = rbtree_check_for_no_consecutive_reds(NULL, root_ptr);
     const bool balanced_black_height = rbtree_check_equal_black_height(root_ptr, rbtree_get_black_height_of_some_path(root_ptr));
 
