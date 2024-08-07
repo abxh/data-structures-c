@@ -100,7 +100,7 @@ $(function(){ initResizable(false); });
 <div class="line">    <a id="_a0" name="_a0"></a><a class="code hl_struct" href="structrbtree__node__type.html">rbtree_node_type</a> node;</div>
 <div class="line">} con_type;</div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#define static_arr_count(arr) sizeof(arr) / sizeof(*arr)</span></div>
+<div class="line"><span class="preprocessor">#define arr_count(arr) sizeof(arr) / sizeof(*arr)</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> inorder_traverse_and_putchar(<a class="code hl_struct" href="structrbtree__node__type.html">rbtree_node_type</a>* n)</div>
 <div class="line">{</div>
@@ -135,9 +135,9 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line">    assert(<a id="a6" name="a6"></a><a class="code hl_function" href="rbtree_8h.html#a52b41fb3086bcb7af50935a66873b5ac">rbtree_is_empty</a>(&amp;rb));</div>
 <div class="line"> </div>
-<div class="line">    con_type cons[static_arr_count(pairs)];</div>
+<div class="line">    con_type cons[arr_count(pairs)];</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; static_arr_count(pairs); i++) {</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; arr_count(pairs); i++) {</div>
 <div class="line">        cons[i].c = pairs[i].c;</div>
 <div class="line">        <a id="a7" name="a7"></a><a class="code hl_function" href="rbtree_8h.html#a0e1490185762247223539bb1373f5c9f">rbtree_node_init</a>(&amp;cons[i].node, pairs[i].key);</div>
 <div class="line"> </div>
