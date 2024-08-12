@@ -10,7 +10,7 @@ typedef struct {
     rbtree_node_type node;
 } con_type;
 
-#define static_arr_count(arr) sizeof(arr) / sizeof(*arr)
+#define arr_count(arr) sizeof(arr) / sizeof(*arr)
 
 static void inorder_traverse_and_putchar(rbtree_node_type* n)
 {
@@ -45,9 +45,9 @@ void hello_world(void)
 
     assert(rbtree_is_empty(&rb));
 
-    con_type cons[static_arr_count(pairs)];
+    con_type cons[arr_count(pairs)];
 
-    for (size_t i = 0; i < static_arr_count(pairs); i++) {
+    for (size_t i = 0; i < arr_count(pairs); i++) {
         cons[i].c = pairs[i].c;
         rbtree_node_init(&cons[i].node, pairs[i].key);
 
