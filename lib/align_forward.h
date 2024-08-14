@@ -43,7 +43,6 @@ static inline uintptr_t align_forward(const uintptr_t ptr, const size_t align)
 
     // % is defined so for r = (p % a), q: some integer
     //     p = q * a + r
-    // <=> r = p - q * a
 
     // assuming r != 0:
     //
