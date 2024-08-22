@@ -240,9 +240,6 @@ Functions</h2></td></tr>
 </div><!-- fragment -->
 <p>Iterate over the non-empty slots in the hashtable in arbitary order. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the hashtable under the iteration may result in errors.</dd></dl>
-<p>temporary variables visible in scope: </p><ul>
-<li>_index</li>
-</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">hashtable_ptr</td><td>hashtable pointer. </td></tr>
@@ -272,7 +269,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">(<a class="code hl_function" href="murmurhash_8h.html#acb0c380e343772042ae656fb60679886">murmur3_32</a>((uint8_t*)&amp;(key), <span class="keyword">sizeof</span>(<a class="code hl_define" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a>), 0))</div>
-<div class="ttc" id="afhashtable_8h_html_ae35c40bc2f912c11f0e36ac66cba4489"><div class="ttname"><a href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></div><div class="ttdeci">#define KEY_TYPE</div><div class="ttdoc">The key type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:110</div></div>
+<div class="ttc" id="afhashtable_8h_html_ae35c40bc2f912c11f0e36ac66cba4489"><div class="ttname"><a href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></div><div class="ttdeci">#define KEY_TYPE</div><div class="ttdoc">The key type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:107</div></div>
 <div class="ttc" id="amurmurhash_8h_html_acb0c380e343772042ae656fb60679886"><div class="ttname"><a href="murmurhash_8h.html#acb0c380e343772042ae656fb60679886">murmur3_32</a></div><div class="ttdeci">static uint32_t murmur3_32(const uint8_t *key_ptr, const size_t len, const uint32_t seed)</div><div class="ttdef"><b>Definition</b> murmurhash.h:51</div></div>
 </div><!-- fragment -->
 <p>Used to compute indicies of keys. This must be manually defined before including this header file. </p>
