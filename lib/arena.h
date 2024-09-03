@@ -29,8 +29,7 @@
 
 #pragma once
 
-#include "align_forward.h" // align_forward
-#include "is_pow2.h"       // is_pow2
+#include "is_pow2.h" // is_pow2
 
 #include <assert.h>
 #include <stdbool.h>
@@ -51,9 +50,9 @@
 /**
  * @brief Arena data struct.
  */
-typedef struct arena_type {
-    size_t buffer_length;      ///< Underlying buffer length.
+typedef struct {
     unsigned char* buffer_ptr; ///< Underlying buffer pointer.
+    size_t buffer_length;      ///< Underlying buffer length.
     size_t previous_offset;    ///< Previous offset describing space allocated in buffer.
     size_t current_offset;     ///< Current offset describing space allocated in buffer.
 } arena_type;
@@ -86,6 +85,37 @@ static inline void arena_deallocate_all(arena_type* arena_ptr)
     arena_ptr->previous_offset = 0;
 }
 
+/* align pointer to the next alignment boundary */
+static inline uintptr_t internal_align_forward(const uintptr_t ptr, const size_t align)
+{
+    assert(is_pow2(align));
+
+    const uintptr_t p = ptr;
+    const uintptr_t a = (uintptr_t)align;
+    const uintptr_t r = p & (a - 1); // Same as (p % a) but faster as 'a' is a power of two
+
+    // % is defined so for r = (p % a), q: some integer
+    //     p = q * a + r
+
+    // assuming r != 0:
+    //
+    //           (q+1)*a
+    //         ----------->
+    //           r    a-r
+    //         ----> ----->
+    //       q*a   p     p+a-r
+    // <------|----|------|------>
+
+    if (r != 0) {
+        // If 'p' address is not aligned, push the address to the
+        // next value which is aligned
+        return p + a - r;
+    }
+    else {
+        return p;
+    }
+}
+
 /**
  * @brief Get the pointer to a chunk of the arena. With alignment.
  *
@@ -107,7 +137,7 @@ static inline void* arena_allocate_aligned(arena_type* arena_ptr, const size_t a
         + (uintptr_t) arena_ptr->current_offset;
 
     const uintptr_t relative_offset = 
-        + (uintptr_t) align_forward(current_ptr, alignment)
+        + (uintptr_t) internal_align_forward(current_ptr, alignment)
         - (uintptr_t) arena_ptr->buffer_ptr;
 
     // clang-format on
