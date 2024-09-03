@@ -40,7 +40,7 @@ void hello_world(void)
         {7, 'o'},  {10, 'd'}, {9, 'l'},  {1, 'e'}, {3, 'l'}, {8, 'r'}, {13, '\0'},
     };
 
-    rbtree_type rb;
+    rbtree_node_type* rb;
     rbtree_init(&rb);
 
     assert(rbtree_is_empty(&rb));
@@ -67,9 +67,7 @@ void hello_world(void)
         assert(false);
     }
 
-    inorder_traverse_and_putchar(rb.root_ptr);
-
-    rbtree_clear(&rb); // doesn't deallocate memory. merely sets root pointer to NULL, marking the tree empty.
+    inorder_traverse_and_putchar(rb);
 }
 
 int main(void)

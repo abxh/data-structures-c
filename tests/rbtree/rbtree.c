@@ -6,8 +6,6 @@
     - N := 8192
 
     Non-mutating operation types / properties:
-    - .count
-    - .root_ptr
     - node_parent_ptr
     - node_is_black
     - node_is_red
@@ -21,7 +19,6 @@
     - node_init
     - insert_node
     - delete_node
-    - clear
 
     Sources used for testing:
     http://www.maxgcoding.com/validating-red-black-trees/
@@ -141,49 +138,45 @@ int main(void)
 
     // N = 0
     {
-        bst_type bst;
+        bst_node_type* bst;
         bst_init(&bst);
-        assert(is_valid_red_black_tree(bst.root_ptr));
-        assert(bst.count == 0);
+        assert(is_valid_red_black_tree(bst));
     }
     // N = 1
     {
-        bst_type bst;
+        bst_node_type* bst;
         bst_init(&bst);
 
         assert(!bst_contains_key(&bst, 42));
         assert(!bst_contains_key(&bst, 69));
 
-        assert(bst.root_ptr == NULL);
+        assert(bst == NULL);
         assert(bst_is_empty(&bst));
 
-        assert(is_valid_red_black_tree(bst.root_ptr));
-        assert(bst.count == 0);
+        assert(is_valid_red_black_tree(bst));
     }
     // N = 1, insert_node
     {
-        bst_type bst;
+        bst_node_type* bst;
         bst_init(&bst);
 
         bst_node_type node;
 
-        assert(bst.count == 0);
         bst_node_init(&node, 42);
         bst_insert_node(&bst, &node);
 
         assert(bst_contains_key(&bst, 42));
         assert(!bst_contains_key(&bst, 69));
 
-        assert(bst.root_ptr == &node);
+        assert(bst == &node);
         assert(!bst_is_empty(&bst));
 
-        assert(is_valid_red_black_tree(bst.root_ptr));
-        assert(bst.count == 1);
+        assert(is_valid_red_black_tree(bst));
     }
 
     // N = 15, insert_node * 8, delete_node * 4, insert_node * 11
     {
-        bst_type bst;
+        bst_node_type* bst;
         bst_init(&bst);
 
         bst_node_type node[8];
@@ -192,17 +185,15 @@ int main(void)
             bst_node_init(&node[i], values[i]);
             bst_insert_node(&bst, &node[i]);
 
-            assert(is_valid_red_black_tree(bst.root_ptr));
+            assert(is_valid_red_black_tree(bst));
         }
-        assert(bst.count == 8);
 
         const int deleted_values[4] = {3, 2, 4, 8};
         for (int i = 0; i < 4; i++) {
             bst_delete_node(&bst, bst_search_node(&bst, deleted_values[i]));
 
-            assert(is_valid_red_black_tree(bst.root_ptr));
+            assert(is_valid_red_black_tree(bst));
         }
-        assert(bst.count == 4);
 
         bst_node_type new_node[11];
         const int new_values[11] = {4, 12, 9, 10, 11, 16, 13, 14, 17, 15, 8};
@@ -210,16 +201,15 @@ int main(void)
             bst_node_init(&new_node[i], new_values[i]);
             bst_insert_node(&bst, &new_node[i]);
 
-            assert(is_valid_red_black_tree(bst.root_ptr));
+            assert(is_valid_red_black_tree(bst));
         }
-        assert(bst.count == 15);
-        assert(count_height(bst.root_ptr) == 4);
+        assert(count_height(bst) == 4);
     }
 
     // N = 8192, 8 * (insert_node * 1024, delete_node * 1024, insert_node * 1024)
     const int lim = 1024;
     for (int seed = 0; seed < 8; seed++) {
-        bst_type bst;
+        bst_node_type* bst;
         bst_init(&bst);
 
         srand(seed);
@@ -242,10 +232,10 @@ int main(void)
                 rbtree_node_entry(node_ptr, extended_bst_node, node)->value++;
             }
 
-            assert(is_valid_red_black_tree(bst.root_ptr));
+            assert(is_valid_red_black_tree(bst));
         }
 
-        assert(count_height(bst.root_ptr) <= 2 * log2(lim));
+        assert(count_height(bst) <= 2 * log2(lim));
 
         for (int i = 0; i < lim; i++) {
             int val = ((unsigned int)rand()) % lim;
@@ -259,7 +249,7 @@ int main(void)
                     bst_delete_node(&bst, node_ptr);
                 }
             }
-            assert(is_valid_red_black_tree(bst.root_ptr));
+            assert(is_valid_red_black_tree(bst));
         }
 
         for (int i = 0; i < lim; i++) {
@@ -276,7 +266,7 @@ int main(void)
             else {
                 rbtree_node_entry(node_ptr, extended_bst_node, node)->value++;
             }
-            assert(is_valid_red_black_tree(bst.root_ptr));
+            assert(is_valid_red_black_tree(bst));
         }
 
         free(node_buf);

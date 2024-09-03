@@ -143,14 +143,6 @@ typedef struct RBTREE_NODE_TYPE {
     KEY_TYPE key; ///< node key
 } RBTREE_NODE_TYPE;
 
-/**
- * @brief Generated red-black tree struct type for a given `KEY_TYPE`.
- */
-typedef struct RBTREE_TYPE {
-    RBTREE_NODE_TYPE* root_ptr; ///< pointer to root node
-    uint32_t count;             ///< total node count
-} RBTREE_TYPE;
-
 // }}}
 
 // function definitions: {{{
@@ -160,14 +152,15 @@ typedef struct RBTREE_TYPE {
  *
  * Assumes the given pointer is not NULL.
  *
- * @param[in] rbtree_ptr The tree pointer.
+ * @note This should be initialized with the address to a pointer to a node.
+ *
+ * @param[in] rootptr_ptr A pointer to the pointer to the root node.
  */
-static inline void JOIN(RBTREE_NAME, init)(RBTREE_TYPE* rbtree_ptr)
+static inline void JOIN(RBTREE_NAME, init)(RBTREE_NODE_TYPE** rootptr_ptr)
 {
-    assert(rbtree_ptr != NULL);
+    assert(rootptr_ptr != NULL);
 
-    rbtree_ptr->root_ptr = NULL;
-    rbtree_ptr->count = 0;
+    *rootptr_ptr = NULL;
 }
 
 /// @cond DO_NOT_DOCUMENT
@@ -269,15 +262,15 @@ static inline bool JOIN(RBTREE_NAME, node_is_red)(const RBTREE_NODE_TYPE* node_p
  *
  * Assumes the given pointer is not NULL.
  *
- * @param[in] rbtree_ptr The tree pointer.
+ * @param[in] rootptr_ptr A pointer to the pointer to the root node.
  *
  * @return Whether the tree is empty.
  */
-static inline bool JOIN(RBTREE_NAME, is_empty)(const RBTREE_TYPE* rbtree_ptr)
+static inline bool JOIN(RBTREE_NAME, is_empty)(RBTREE_NODE_TYPE** rootptr_ptr)
 {
-    assert(rbtree_ptr != NULL);
+    assert(rootptr_ptr != NULL);
 
-    return rbtree_ptr->root_ptr == NULL;
+    return *rootptr_ptr == NULL;
 }
 
 /**
@@ -285,16 +278,16 @@ static inline bool JOIN(RBTREE_NAME, is_empty)(const RBTREE_TYPE* rbtree_ptr)
  *
  * Assumes the given pointer is not NULL.
  *
- * @param[in] rbtree_ptr The tree pointer.
+ * @param[in] rootptr_ptr A pointer to the pointer to the root node.
  * @param[in] key The key
  *
  * @return Whether the tree contains the key.
  */
-static inline bool JOIN(RBTREE_NAME, contains_key)(const RBTREE_TYPE* rbtree_ptr, const KEY_TYPE key)
+static inline bool JOIN(RBTREE_NAME, contains_key)(RBTREE_NODE_TYPE** rootptr_ptr, const KEY_TYPE key)
 {
-    assert(rbtree_ptr != NULL);
+    assert(rootptr_ptr != NULL);
 
-    RBTREE_NODE_TYPE* node_ptr = rbtree_ptr->root_ptr;
+    RBTREE_NODE_TYPE* node_ptr = *rootptr_ptr;
 
     while (node_ptr != NULL) {
         const bool is_strictly_less = KEY_IS_STRICTLY_LESS(key, node_ptr->key);
@@ -318,17 +311,17 @@ static inline bool JOIN(RBTREE_NAME, contains_key)(const RBTREE_TYPE* rbtree_ptr
  *
  * Assumes the given pointer is not NULL.
  *
- * @param[in] rbtree_ptr The tree pointer.
+ * @param[in] rootptr_ptr A pointer to the pointer to the root node.
  * @param[in] key      The key of the node being searched for.
  *
  * @return A pointer to the searched node
  *  @retval `NULL` If a node with the given key wasn't found.
  */
-static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, search_node)(RBTREE_TYPE* rbtree_ptr, const KEY_TYPE key)
+static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, search_node)(RBTREE_NODE_TYPE** rootptr_ptr, const KEY_TYPE key)
 {
-    assert(rbtree_ptr != NULL);
+    assert(rootptr_ptr != NULL);
 
-    RBTREE_NODE_TYPE* node_ptr = rbtree_ptr->root_ptr;
+    RBTREE_NODE_TYPE* node_ptr = *rootptr_ptr;
     while (node_ptr != NULL) {
         const bool is_strictly_less = KEY_IS_STRICTLY_LESS(key, node_ptr->key);
         const bool is_strictly_greater = KEY_IS_STRICTLY_LESS(node_ptr->key, key);
@@ -349,10 +342,10 @@ static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, search_node)(RBTREE_TYPE* rbtr
 /// @cond DO_NOT_DOCUMENT
 
 // rotate a subtree around a given subtree root node and direction (0: left or 1: right). returns the new subtree root
-static inline RBTREE_NODE_TYPE* JOIN(internal, JOIN(RBTREE_NAME, rotate_dir))(RBTREE_TYPE* rbtree_ptr, RBTREE_NODE_TYPE* P,
+static inline RBTREE_NODE_TYPE* JOIN(internal, JOIN(RBTREE_NAME, rotate_dir))(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* P,
                                                                               const uint8_t dir)
 {
-    assert(rbtree_ptr != NULL);
+    assert(rootptr_ptr != NULL);
     assert(P != NULL);
     assert(dir == 0 || dir == 1);
 
@@ -393,18 +386,18 @@ static inline RBTREE_NODE_TYPE* JOIN(internal, JOIN(RBTREE_NAME, rotate_dir))(RB
         G->child_ptrs[P == G->left_ptr ? 0 : 1] = S;
     }
     else {
-        rbtree_ptr->root_ptr = S;
+        *rootptr_ptr = S;
     }
     return S;
 }
 
 // rebalance tree after insert. see explanation in the sources linked above.
-static inline void JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(RBTREE_TYPE* rbtree_ptr, RBTREE_NODE_TYPE* N)
+static inline void JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* N)
 {
-    assert(rbtree_ptr != NULL);
+    assert(rootptr_ptr != NULL);
     assert(N != NULL);
     assert(RBTREE_NODE_IS_RED(N));
-    assert(N != rbtree_ptr->root_ptr);
+    assert(N != *rootptr_ptr);
 
     RBTREE_NODE_TYPE* P = RBTREE_NODE_GET_PARENT_PTR(N); // parent
     RBTREE_NODE_TYPE* G = NULL;                          // grandparent
@@ -423,13 +416,13 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(RBTREE_TYPE* 
 
         if (U == NULL || RBTREE_NODE_IS_BLACK(U)) {
             if (N == P->child_ptrs[1 - dir]) {
-                RBTREE_ROTATE_DIR(rbtree_ptr, P, dir);
+                RBTREE_ROTATE_DIR(rootptr_ptr, P, dir);
                 N = P;
                 P = G->child_ptrs[dir];
             }
             RBTREE_NODE_SET_COLOR_TO_BLACK(P);
             RBTREE_NODE_SET_COLOR_TO_RED(G);
-            RBTREE_ROTATE_DIR(rbtree_ptr, G, 1 - dir);
+            RBTREE_ROTATE_DIR(rootptr_ptr, G, 1 - dir);
             return;
         }
 
@@ -451,17 +444,17 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(RBTREE_TYPE* 
  * @li The node key is not already contained in the tree. (no duplicate keys)
  * @li The given pointers are not NULL.
  *
- * @param[in] rbtree_ptr The tree pointer.
+ * @param[in] rootptr_ptr A pointer to the pointer to the root node.
  * @param[in] node_ptr The node pointer.
  */
-static inline void JOIN(RBTREE_NAME, insert_node)(RBTREE_TYPE* rbtree_ptr, RBTREE_NODE_TYPE* node_ptr)
+static inline void JOIN(RBTREE_NAME, insert_node)(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* node_ptr)
 {
-    assert(rbtree_ptr != NULL);
+    assert(rootptr_ptr != NULL);
     assert(node_ptr != NULL);
-    assert(RBTREE_CONTAINS_KEY(rbtree_ptr, node_ptr->key) == false);
+    assert(RBTREE_CONTAINS_KEY(rootptr_ptr, node_ptr->key) == false);
 
     RBTREE_NODE_TYPE* parent_ptr = NULL;
-    RBTREE_NODE_TYPE* current_ptr = rbtree_ptr->root_ptr;
+    RBTREE_NODE_TYPE* current_ptr = *rootptr_ptr;
 
     while (current_ptr != NULL) {
         parent_ptr = current_ptr;
@@ -479,31 +472,29 @@ static inline void JOIN(RBTREE_NAME, insert_node)(RBTREE_TYPE* rbtree_ptr, RBTRE
     RBTREE_NODE_SET_COLOR_TO_RED(node_ptr);
 
     if (parent_ptr == NULL) {
-        rbtree_ptr->root_ptr = node_ptr;
+        *rootptr_ptr = node_ptr;
     }
     else {
         const uint8_t dir = KEY_IS_STRICTLY_LESS(parent_ptr->key, node_ptr->key);
         parent_ptr->child_ptrs[dir] = node_ptr;
 
-        JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(rbtree_ptr, node_ptr);
+        JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(rootptr_ptr, node_ptr);
     }
-
-    rbtree_ptr->count++;
 }
 
 /// @cond DO_NOT_DOCUMENT
 
 // move the parent of a node (src) to another node (dest).
-static inline void JOIN(internal, JOIN(RBTREE_NAME, node_transplant))(RBTREE_TYPE* rbtree_ptr, RBTREE_NODE_TYPE* src_node,
+static inline void JOIN(internal, JOIN(RBTREE_NAME, node_transplant))(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* src_node,
                                                                       RBTREE_NODE_TYPE* dest_node)
 {
-    assert(rbtree_ptr != NULL);
+    assert(rootptr_ptr != NULL);
     assert(src_node != NULL);
 
     RBTREE_NODE_TYPE* src_node_parent_ptr = RBTREE_NODE_GET_PARENT_PTR(src_node);
 
     if (src_node_parent_ptr == NULL) {
-        rbtree_ptr->root_ptr = dest_node;
+        *rootptr_ptr = dest_node;
     }
     else {
         src_node_parent_ptr->child_ptrs[RBTREE_CHILD_DIR(src_node)] = dest_node;
@@ -516,8 +507,9 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, node_transplant))(RBTREE_TYP
 
 // rebalance tree after delete. see explanation in the sources linked above. for the special case where:
 //      (P's child) was not root and was black and had no children
-static inline void JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(RBTREE_TYPE* rbtree_ptr, RBTREE_NODE_TYPE* P, int dir)
+static inline void JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* P, int dir)
 {
+    assert(rootptr_ptr != NULL);
     assert(P != NULL);
     assert(dir == 0 || dir == 1);
 
@@ -551,7 +543,7 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(RBTREE_TYPE* 
 
     return;
 Case_3:
-    RBTREE_ROTATE_DIR(rbtree_ptr, P, dir);
+    RBTREE_ROTATE_DIR(rootptr_ptr, P, dir);
     RBTREE_NODE_SET_COLOR_TO_RED(P);
     RBTREE_NODE_SET_COLOR_TO_BLACK(S);
     S = C;
@@ -568,13 +560,13 @@ Case_4:
     RBTREE_NODE_SET_COLOR_TO_BLACK(P);
     return;
 Case_5:
-    RBTREE_ROTATE_DIR(rbtree_ptr, S, 1 - dir);
+    RBTREE_ROTATE_DIR(rootptr_ptr, S, 1 - dir);
     RBTREE_NODE_SET_COLOR_TO_RED(S);
     RBTREE_NODE_SET_COLOR_TO_BLACK(C);
     D = S;
     S = C;
 Case_6:
-    RBTREE_ROTATE_DIR(rbtree_ptr, P, dir);
+    RBTREE_ROTATE_DIR(rootptr_ptr, P, dir);
     RBTREE_NODE_SET_COLOR_TO_COLOR_OF_OTHER(S, P);
     RBTREE_NODE_SET_COLOR_TO_BLACK(P);
     RBTREE_NODE_SET_COLOR_TO_BLACK(D);
@@ -588,27 +580,27 @@ Case_6:
  *
  * Assumes The given pointers are not NULL.
  *
- * @param[in] rbtree_ptr The tree pointer.
+ * @param[in] rootptr_ptr A pointer to the pointer to the root node.
  * @param[in] node_ptr The node pointer.
  *
  * @return Pointer to the deleted node reinitialized.
  */
-static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, delete_node)(RBTREE_TYPE* rbtree_ptr, RBTREE_NODE_TYPE* node_ptr)
+static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, delete_node)(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* node_ptr)
 {
-    assert(rbtree_ptr != NULL);
+    assert(rootptr_ptr != NULL);
     assert(node_ptr != NULL);
 
     if (node_ptr->left_ptr == NULL && node_ptr->right_ptr == NULL) {
-        if (node_ptr == rbtree_ptr->root_ptr || RBTREE_NODE_IS_RED(node_ptr)) {
-            RBTREE_NODE_TRANSPLANT(rbtree_ptr, node_ptr, NULL);
+        if (node_ptr == *rootptr_ptr || RBTREE_NODE_IS_RED(node_ptr)) {
+            RBTREE_NODE_TRANSPLANT(rootptr_ptr, node_ptr, NULL);
         }
         else {
             RBTREE_NODE_TYPE* const parent_ptr = RBTREE_NODE_GET_PARENT_PTR(node_ptr);
             const int dir = RBTREE_CHILD_DIR(node_ptr);
 
-            RBTREE_NODE_TRANSPLANT(rbtree_ptr, node_ptr, NULL);
+            RBTREE_NODE_TRANSPLANT(rootptr_ptr, node_ptr, NULL);
 
-            JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(rbtree_ptr, parent_ptr, dir);
+            JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(rootptr_ptr, parent_ptr, dir);
         }
     }
     else if (node_ptr->left_ptr == NULL || node_ptr->right_ptr == NULL) {
@@ -619,7 +611,7 @@ static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, delete_node)(RBTREE_TYPE* rbtr
 
         RBTREE_NODE_SET_COLOR_TO_BLACK(node_ptr->child_ptrs[dir]);
 
-        RBTREE_NODE_TRANSPLANT(rbtree_ptr, node_ptr, node_ptr->child_ptrs[dir]);
+        RBTREE_NODE_TRANSPLANT(rootptr_ptr, node_ptr, node_ptr->child_ptrs[dir]);
     }
     else {
         RBTREE_NODE_TYPE* successor_ptr = node_ptr->right_ptr;
@@ -635,12 +627,12 @@ static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, delete_node)(RBTREE_TYPE* rbtr
 
         {
             if (RBTREE_NODE_GET_PARENT_PTR(successor_ptr) != node_ptr) {
-                RBTREE_NODE_TRANSPLANT(rbtree_ptr, successor_ptr, successor_ptr->right_ptr);
+                RBTREE_NODE_TRANSPLANT(rootptr_ptr, successor_ptr, successor_ptr->right_ptr);
 
                 successor_ptr->right_ptr = node_ptr->right_ptr;
                 RBTREE_NODE_SET_PARENT_PTR(node_ptr->right_ptr, successor_ptr);
             }
-            RBTREE_NODE_TRANSPLANT(rbtree_ptr, node_ptr, successor_ptr);
+            RBTREE_NODE_TRANSPLANT(rootptr_ptr, node_ptr, successor_ptr);
 
             successor_ptr->left_ptr = node_ptr->left_ptr;
             RBTREE_NODE_SET_PARENT_PTR(node_ptr->left_ptr, successor_ptr);
@@ -657,10 +649,10 @@ static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, delete_node)(RBTREE_TYPE* rbtr
             }
             else if (prev_successor_child_ptr == NULL && prev_successor_black) {
                 if (prev_successor_parent_ptr == node_ptr) {
-                    JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(rbtree_ptr, successor_ptr, prev_successor_dir);
+                    JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(rootptr_ptr, successor_ptr, prev_successor_dir);
                 }
                 else {
-                    JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(rbtree_ptr, prev_successor_parent_ptr, prev_successor_dir);
+                    JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(rootptr_ptr, prev_successor_parent_ptr, prev_successor_dir);
                 }
             }
         }
@@ -669,25 +661,7 @@ static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, delete_node)(RBTREE_TYPE* rbtr
     node_ptr->left_ptr = node_ptr->right_ptr = NULL;
     RBTREE_NODE_SET_PARENT_PTR(node_ptr, NULL);
 
-    rbtree_ptr->count--;
-
     return node_ptr;
-}
-
-/**
- * @brief Clear the tree.
- *
- * Assumes the given pointer is not NULL.
- *
- * @note This doesn't free the memory of any of the nodes. Merely sets the root pointer to `NULL`.
- *
- * @param[in] rbtree_ptr The tree pointer.
- */
-static inline void JOIN(RBTREE_NAME, clear)(RBTREE_TYPE* rbtree_ptr)
-{
-    assert(rbtree_ptr != NULL);
-
-    rbtree_ptr->root_ptr = NULL;
 }
 
 // }}}
