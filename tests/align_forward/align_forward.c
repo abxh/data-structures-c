@@ -14,7 +14,7 @@
     or P + A - (P % A) otherwise.
 */
 
-#include "align_forward.h"
+#include "arena.h"
 
 #include <stddef.h>
 #include <stdint.h>
@@ -31,10 +31,10 @@ int main(void)
     for (size_t i = 0; i < 129; i++) {
         for (size_t j = 0; j < sizeof(A) / sizeof(*A); j++) {
             if (P[i] % A[j] == 0) {
-                assert(align_forward(P[i], A[j]) == P[i]);
+                assert(internal_align_forward(P[i], A[j]) == P[i]);
             }
             else {
-                assert(align_forward(P[i], A[j]) == P[i] + A[j] - (P[i] % A[j]));
+                assert(internal_align_forward(P[i], A[j]) == P[i] + A[j] - (P[i] % A[j]));
             }
         }
     }
