@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['arena_5ftype_0',['arena_type',['../arena_8h.html#a4b6de7fd053a1a3dff06876264941d1d',1,'arena.h']]]
+  ['list_5fnode_5ftype_0',['list_node_type',['../list_8h.html#aae33b2001a10848d7d84e171b2574289',1,'list.h']]]
 ];
