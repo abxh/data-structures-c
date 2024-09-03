@@ -54,7 +54,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 /**
  * @def FHASHTABLE_EMPTY_SLOT_OFFSET
@@ -206,12 +205,13 @@ static inline FHASHTABLE_TYPE* JOIN(FHASHTABLE_NAME, create)(const uint32_t capa
         return NULL;
     }
     const uint32_t capacity_new = round_up_pow2_32(capacity);
+
     FHASHTABLE_TYPE* hashtable_ptr =
-        (FHASHTABLE_TYPE*)malloc(offsetof(FHASHTABLE_TYPE, slots) + capacity_new * sizeof(FHASHTABLE_SLOT_TYPE));
+        (FHASHTABLE_TYPE*)calloc(1, offsetof(FHASHTABLE_TYPE, slots) + capacity_new * sizeof(FHASHTABLE_SLOT_TYPE));
+
     if (!hashtable_ptr) {
         return NULL;
     }
-    memset(hashtable_ptr, 0, offsetof(FHASHTABLE_TYPE, slots) + capacity_new * sizeof(FHASHTABLE_SLOT_TYPE));
 
     hashtable_ptr->count = 0;
     hashtable_ptr->capacity = capacity_new;

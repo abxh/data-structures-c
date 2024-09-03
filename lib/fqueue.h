@@ -35,7 +35,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 /**
  * @def fqueue_for_each(queue_ptr, index, value)
@@ -141,11 +140,11 @@ static inline FQUEUE_TYPE* JOIN(FQUEUE_NAME, create)(const uint32_t capacity)
     }
     const uint32_t capacity_new = round_up_pow2_32(capacity);
 
-    FQUEUE_TYPE* queue_ptr = (FQUEUE_TYPE*)malloc(offsetof(FQUEUE_TYPE, values) + capacity_new * sizeof(VALUE_TYPE));
+    FQUEUE_TYPE* queue_ptr = (FQUEUE_TYPE*)calloc(1, offsetof(FQUEUE_TYPE, values) + capacity_new * sizeof(VALUE_TYPE));
+
     if (!queue_ptr) {
         return NULL;
     }
-    memset(queue_ptr, 0, offsetof(FQUEUE_TYPE, values) + capacity * sizeof(VALUE_TYPE));
 
     queue_ptr->begin_index = queue_ptr->end_index = 0;
     queue_ptr->count = 0;

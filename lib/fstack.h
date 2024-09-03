@@ -36,7 +36,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 /**
  * @def fstack_for_each(stack_ptr, index, value)
@@ -142,12 +141,11 @@ static inline FSTACK_TYPE* JOIN(FSTACK_NAME, create)(const uint32_t capacity)
     if (capacity == 0 || capacity > (UINT32_MAX - offsetof(FSTACK_TYPE, values)) / sizeof(VALUE_TYPE)) {
         return NULL;
     }
-    FSTACK_TYPE* stack_ptr = (FSTACK_TYPE*)malloc(offsetof(FSTACK_TYPE, values) + capacity * sizeof(VALUE_TYPE));
+    FSTACK_TYPE* stack_ptr = (FSTACK_TYPE*)calloc(1, offsetof(FSTACK_TYPE, values) + capacity * sizeof(VALUE_TYPE));
 
     if (!stack_ptr) {
         return NULL;
     }
-    memset(stack_ptr, 0, offsetof(FSTACK_TYPE, values) + capacity * sizeof(VALUE_TYPE));
 
     stack_ptr->count = 0;
     stack_ptr->capacity = capacity;

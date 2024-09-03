@@ -38,7 +38,6 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <string.h>
 
 /**
  * @def fpqueue_left_child(index)
@@ -159,12 +158,11 @@ static inline FPQUEUE_TYPE* JOIN(FPQUEUE_NAME, create)(const uint32_t capacity)
     if (capacity == 0 || capacity > (UINT32_MAX - offsetof(FPQUEUE_TYPE, elements)) / sizeof(FPQUEUE_ELEMENT_TYPE)) {
         return NULL;
     }
-    FPQUEUE_TYPE* pqueue_ptr = (FPQUEUE_TYPE*)malloc(offsetof(FPQUEUE_TYPE, elements) + capacity * sizeof(FPQUEUE_ELEMENT_TYPE));
+    FPQUEUE_TYPE* pqueue_ptr = (FPQUEUE_TYPE*)calloc(1, offsetof(FPQUEUE_TYPE, elements) + capacity * sizeof(FPQUEUE_ELEMENT_TYPE));
 
     if (!pqueue_ptr) {
         return NULL;
     }
-    memset(pqueue_ptr, 0, offsetof(FPQUEUE_TYPE, elements) + capacity * sizeof(FPQUEUE_ELEMENT_TYPE));
 
     pqueue_ptr->count = 0;
     pqueue_ptr->capacity = capacity;
