@@ -113,9 +113,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrbtree__node__type.html">rbtree_node_type</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generated red-black tree node struct type for a given <code>KEY_TYPE</code>.  <a href="structrbtree__node__type.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrbtree__type.html">rbtree_type</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generated red-black tree struct type for a given <code>KEY_TYPE</code>.  <a href="structrbtree__type.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
@@ -138,16 +135,12 @@ Typedefs</h2></td></tr>
 typedef struct rbtree_node_type&#160;</td><td class="memItemRight" valign="bottom"><b>rbtree_node_type</b></td></tr>
 <tr class="memdesc:abdf930d320874d68decb61ca12503bdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generated red-black tree node struct type for a given <code>KEY_TYPE</code>. <br /></td></tr>
 <tr class="separator:abdf930d320874d68decb61ca12503bdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa002fb7399df455450bdc698d792622" id="r_afa002fb7399df455450bdc698d792622"><td class="memItemLeft" align="right" valign="top"><a id="afa002fb7399df455450bdc698d792622" name="afa002fb7399df455450bdc698d792622"></a>
-typedef struct rbtree_type&#160;</td><td class="memItemRight" valign="bottom"><b>rbtree_type</b></td></tr>
-<tr class="memdesc:afa002fb7399df455450bdc698d792622"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generated red-black tree struct type for a given <code>KEY_TYPE</code>. <br /></td></tr>
-<tr class="separator:afa002fb7399df455450bdc698d792622"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3500171734aa446d659095f7c669b803" id="r_a3500171734aa446d659095f7c669b803"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3500171734aa446d659095f7c669b803">rbtree_init</a> (<a class="el" href="structrbtree__type.html">rbtree_type</a> *rbtree_ptr)</td></tr>
-<tr class="memdesc:a3500171734aa446d659095f7c669b803"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a red-black tree struct.  <br /></td></tr>
-<tr class="separator:a3500171734aa446d659095f7c669b803"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16f171132f6dba32635c307de7cdea78" id="r_a16f171132f6dba32635c307de7cdea78"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16f171132f6dba32635c307de7cdea78">rbtree_init</a> (<a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **rootptr_ptr)</td></tr>
+<tr class="memdesc:a16f171132f6dba32635c307de7cdea78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a red-black tree struct.  <br /></td></tr>
+<tr class="separator:a16f171132f6dba32635c307de7cdea78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e1490185762247223539bb1373f5c9f" id="r_a0e1490185762247223539bb1373f5c9f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e1490185762247223539bb1373f5c9f">rbtree_node_init</a> (<a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *node_ptr, <a class="el" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
 <tr class="memdesc:a0e1490185762247223539bb1373f5c9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a red-black tree node.  <br /></td></tr>
 <tr class="separator:a0e1490185762247223539bb1373f5c9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,24 +153,21 @@ Functions</h2></td></tr>
 <tr class="memitem:a364f922fc40b7b44a499f65073452396" id="r_a364f922fc40b7b44a499f65073452396"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a364f922fc40b7b44a499f65073452396">rbtree_node_is_red</a> (const <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *node_ptr)</td></tr>
 <tr class="memdesc:a364f922fc40b7b44a499f65073452396"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the given node is colored red.  <br /></td></tr>
 <tr class="separator:a364f922fc40b7b44a499f65073452396"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52b41fb3086bcb7af50935a66873b5ac" id="r_a52b41fb3086bcb7af50935a66873b5ac"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a52b41fb3086bcb7af50935a66873b5ac">rbtree_is_empty</a> (const <a class="el" href="structrbtree__type.html">rbtree_type</a> *rbtree_ptr)</td></tr>
-<tr class="memdesc:a52b41fb3086bcb7af50935a66873b5ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the tree is empty.  <br /></td></tr>
-<tr class="separator:a52b41fb3086bcb7af50935a66873b5ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0d83bb43101462cc3739f80bfde2422" id="r_af0d83bb43101462cc3739f80bfde2422"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0d83bb43101462cc3739f80bfde2422">rbtree_contains_key</a> (const <a class="el" href="structrbtree__type.html">rbtree_type</a> *rbtree_ptr, const <a class="el" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
-<tr class="memdesc:af0d83bb43101462cc3739f80bfde2422"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the tree contains a given key.  <br /></td></tr>
-<tr class="separator:af0d83bb43101462cc3739f80bfde2422"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a916627dd6f3ddb7c6edcc69c66fe02f2" id="r_a916627dd6f3ddb7c6edcc69c66fe02f2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a916627dd6f3ddb7c6edcc69c66fe02f2">rbtree_search_node</a> (<a class="el" href="structrbtree__type.html">rbtree_type</a> *rbtree_ptr, const <a class="el" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
-<tr class="memdesc:a916627dd6f3ddb7c6edcc69c66fe02f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search for a given node and return a pointer to the node.  <br /></td></tr>
-<tr class="separator:a916627dd6f3ddb7c6edcc69c66fe02f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adadd03516ae68281323105797d24ba00" id="r_adadd03516ae68281323105797d24ba00"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adadd03516ae68281323105797d24ba00">rbtree_insert_node</a> (<a class="el" href="structrbtree__type.html">rbtree_type</a> *rbtree_ptr, <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *node_ptr)</td></tr>
-<tr class="memdesc:adadd03516ae68281323105797d24ba00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a given node in the tree.  <br /></td></tr>
-<tr class="separator:adadd03516ae68281323105797d24ba00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84a0f3367b7fda97bde5df4e9c67eb40" id="r_a84a0f3367b7fda97bde5df4e9c67eb40"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84a0f3367b7fda97bde5df4e9c67eb40">rbtree_delete_node</a> (<a class="el" href="structrbtree__type.html">rbtree_type</a> *rbtree_ptr, <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *node_ptr)</td></tr>
-<tr class="memdesc:a84a0f3367b7fda97bde5df4e9c67eb40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a given node from the tree.  <br /></td></tr>
-<tr class="separator:a84a0f3367b7fda97bde5df4e9c67eb40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b6791bef8bd9089cf791272905da4a2" id="r_a8b6791bef8bd9089cf791272905da4a2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b6791bef8bd9089cf791272905da4a2">rbtree_clear</a> (<a class="el" href="structrbtree__type.html">rbtree_type</a> *rbtree_ptr)</td></tr>
-<tr class="memdesc:a8b6791bef8bd9089cf791272905da4a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the tree.  <br /></td></tr>
-<tr class="separator:a8b6791bef8bd9089cf791272905da4a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a8aad553ecdfbcaa05e2545037cb6d4" id="r_a7a8aad553ecdfbcaa05e2545037cb6d4"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a8aad553ecdfbcaa05e2545037cb6d4">rbtree_is_empty</a> (<a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **rootptr_ptr)</td></tr>
+<tr class="memdesc:a7a8aad553ecdfbcaa05e2545037cb6d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the tree is empty.  <br /></td></tr>
+<tr class="separator:a7a8aad553ecdfbcaa05e2545037cb6d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75ff31d07cf30f7bbe777e6dfbd03849" id="r_a75ff31d07cf30f7bbe777e6dfbd03849"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a75ff31d07cf30f7bbe777e6dfbd03849">rbtree_contains_key</a> (<a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **rootptr_ptr, const <a class="el" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
+<tr class="memdesc:a75ff31d07cf30f7bbe777e6dfbd03849"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the tree contains a given key.  <br /></td></tr>
+<tr class="separator:a75ff31d07cf30f7bbe777e6dfbd03849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0befbba8132e748956d546893515e030" id="r_a0befbba8132e748956d546893515e030"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0befbba8132e748956d546893515e030">rbtree_search_node</a> (<a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **rootptr_ptr, const <a class="el" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</td></tr>
+<tr class="memdesc:a0befbba8132e748956d546893515e030"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search for a given node and return a pointer to the node.  <br /></td></tr>
+<tr class="separator:a0befbba8132e748956d546893515e030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0363191df47836001954409c0d88a50c" id="r_a0363191df47836001954409c0d88a50c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0363191df47836001954409c0d88a50c">rbtree_insert_node</a> (<a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **rootptr_ptr, <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *node_ptr)</td></tr>
+<tr class="memdesc:a0363191df47836001954409c0d88a50c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a given node in the tree.  <br /></td></tr>
+<tr class="separator:a0363191df47836001954409c0d88a50c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49e157d208e3124be62ea9c2fb51f8d0" id="r_a49e157d208e3124be62ea9c2fb51f8d0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49e157d208e3124be62ea9c2fb51f8d0">rbtree_delete_node</a> (<a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **rootptr_ptr, <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *node_ptr)</td></tr>
+<tr class="memdesc:a49e157d208e3124be62ea9c2fb51f8d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a given node from the tree.  <br /></td></tr>
+<tr class="separator:a49e157d208e3124be62ea9c2fb51f8d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Intrusive red-black tree. </p>
@@ -304,45 +294,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a8b6791bef8bd9089cf791272905da4a2" name="a8b6791bef8bd9089cf791272905da4a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b6791bef8bd9089cf791272905da4a2">&#9670;&#160;</a></span>rbtree_clear()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void rbtree_clear </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structrbtree__type.html">rbtree_type</a> *</td>          <td class="paramname"><span class="paramname"><em>rbtree_ptr</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Clear the tree. </p>
-<p>Assumes the given pointer is not NULL.</p>
-<dl class="section note"><dt>Note</dt><dd>This doesn't free the memory of any of the nodes. Merely sets the root pointer to <code>NULL</code>.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">rbtree_ptr</td><td>The tree pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a13">examples/rbtree/rbtree.c</a>.</dd>
-</dl>
-
-</div>
-</div>
-<a id="af0d83bb43101462cc3739f80bfde2422" name="af0d83bb43101462cc3739f80bfde2422"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0d83bb43101462cc3739f80bfde2422">&#9670;&#160;</a></span>rbtree_contains_key()</h2>
+<a id="a75ff31d07cf30f7bbe777e6dfbd03849" name="a75ff31d07cf30f7bbe777e6dfbd03849"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75ff31d07cf30f7bbe777e6dfbd03849">&#9670;&#160;</a></span>rbtree_contains_key()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -353,7 +306,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static bool rbtree_contains_key </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structrbtree__type.html">rbtree_type</a> *</td>          <td class="paramname"><span class="paramname"><em>rbtree_ptr</em></span>, </td>
+          <td class="paramtype"><a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **</td>          <td class="paramname"><span class="paramname"><em>rootptr_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -372,19 +325,19 @@ Functions</h2></td></tr>
 <p>Assumes the given pointer is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">rbtree_ptr</td><td>The tree pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rootptr_ptr</td><td>A pointer to the pointer to the root node. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the tree contains the key. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a8">examples/rbtree/rbtree.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a7">examples/rbtree/rbtree.c</a>.</dd>
 </dl>
 
 </div>
 </div>
-<a id="a84a0f3367b7fda97bde5df4e9c67eb40" name="a84a0f3367b7fda97bde5df4e9c67eb40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a84a0f3367b7fda97bde5df4e9c67eb40">&#9670;&#160;</a></span>rbtree_delete_node()</h2>
+<a id="a49e157d208e3124be62ea9c2fb51f8d0" name="a49e157d208e3124be62ea9c2fb51f8d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49e157d208e3124be62ea9c2fb51f8d0">&#9670;&#160;</a></span>rbtree_delete_node()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -395,7 +348,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> * rbtree_delete_node </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structrbtree__type.html">rbtree_type</a> *</td>          <td class="paramname"><span class="paramname"><em>rbtree_ptr</em></span>, </td>
+          <td class="paramtype"><a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **</td>          <td class="paramname"><span class="paramname"><em>rootptr_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -414,19 +367,19 @@ Functions</h2></td></tr>
 <p>Assumes The given pointers are not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">rbtree_ptr</td><td>The tree pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rootptr_ptr</td><td>A pointer to the pointer to the root node. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the deleted node reinitialized. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a11">examples/rbtree/rbtree.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a10">examples/rbtree/rbtree.c</a>.</dd>
 </dl>
 
 </div>
 </div>
-<a id="a3500171734aa446d659095f7c669b803" name="a3500171734aa446d659095f7c669b803"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3500171734aa446d659095f7c669b803">&#9670;&#160;</a></span>rbtree_init()</h2>
+<a id="a16f171132f6dba32635c307de7cdea78" name="a16f171132f6dba32635c307de7cdea78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16f171132f6dba32635c307de7cdea78">&#9670;&#160;</a></span>rbtree_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -437,7 +390,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void rbtree_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structrbtree__type.html">rbtree_type</a> *</td>          <td class="paramname"><span class="paramname"><em>rbtree_ptr</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **</td>          <td class="paramname"><span class="paramname"><em>rootptr_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -450,19 +403,20 @@ Functions</h2></td></tr>
 
 <p>Initialize a red-black tree struct. </p>
 <p>Assumes the given pointer is not NULL.</p>
+<dl class="section note"><dt>Note</dt><dd>This should be initialized with the address to a pointer to a node.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">rbtree_ptr</td><td>The tree pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rootptr_ptr</td><td>A pointer to the pointer to the root node. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a5">examples/rbtree/rbtree.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a4">examples/rbtree/rbtree.c</a>.</dd>
 </dl>
 
 </div>
 </div>
-<a id="adadd03516ae68281323105797d24ba00" name="adadd03516ae68281323105797d24ba00"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adadd03516ae68281323105797d24ba00">&#9670;&#160;</a></span>rbtree_insert_node()</h2>
+<a id="a0363191df47836001954409c0d88a50c" name="a0363191df47836001954409c0d88a50c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0363191df47836001954409c0d88a50c">&#9670;&#160;</a></span>rbtree_insert_node()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -473,7 +427,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void rbtree_insert_node </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structrbtree__type.html">rbtree_type</a> *</td>          <td class="paramname"><span class="paramname"><em>rbtree_ptr</em></span>, </td>
+          <td class="paramtype"><a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **</td>          <td class="paramname"><span class="paramname"><em>rootptr_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -495,18 +449,18 @@ Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">rbtree_ptr</td><td>The tree pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rootptr_ptr</td><td>A pointer to the pointer to the root node. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a9">examples/rbtree/rbtree.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a8">examples/rbtree/rbtree.c</a>.</dd>
 </dl>
 
 </div>
 </div>
-<a id="a52b41fb3086bcb7af50935a66873b5ac" name="a52b41fb3086bcb7af50935a66873b5ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52b41fb3086bcb7af50935a66873b5ac">&#9670;&#160;</a></span>rbtree_is_empty()</h2>
+<a id="a7a8aad553ecdfbcaa05e2545037cb6d4" name="a7a8aad553ecdfbcaa05e2545037cb6d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a8aad553ecdfbcaa05e2545037cb6d4">&#9670;&#160;</a></span>rbtree_is_empty()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -517,7 +471,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static bool rbtree_is_empty </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structrbtree__type.html">rbtree_type</a> *</td>          <td class="paramname"><span class="paramname"><em>rbtree_ptr</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **</td>          <td class="paramname"><span class="paramname"><em>rootptr_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -532,12 +486,12 @@ Functions</h2></td></tr>
 <p>Assumes the given pointer is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">rbtree_ptr</td><td>The tree pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rootptr_ptr</td><td>A pointer to the pointer to the root node.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the tree is empty. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a6">examples/rbtree/rbtree.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a5">examples/rbtree/rbtree.c</a>.</dd>
 </dl>
 
 </div>
@@ -612,7 +566,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a7">examples/rbtree/rbtree.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a6">examples/rbtree/rbtree.c</a>.</dd>
 </dl>
 
 </div>
@@ -685,8 +639,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a916627dd6f3ddb7c6edcc69c66fe02f2" name="a916627dd6f3ddb7c6edcc69c66fe02f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a916627dd6f3ddb7c6edcc69c66fe02f2">&#9670;&#160;</a></span>rbtree_search_node()</h2>
+<a id="a0befbba8132e748956d546893515e030" name="a0befbba8132e748956d546893515e030"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0befbba8132e748956d546893515e030">&#9670;&#160;</a></span>rbtree_search_node()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -697,7 +651,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> * rbtree_search_node </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structrbtree__type.html">rbtree_type</a> *</td>          <td class="paramname"><span class="paramname"><em>rbtree_ptr</em></span>, </td>
+          <td class="paramtype"><a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **</td>          <td class="paramname"><span class="paramname"><em>rootptr_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -716,7 +670,7 @@ Functions</h2></td></tr>
 <p>Assumes the given pointer is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">rbtree_ptr</td><td>The tree pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rootptr_ptr</td><td>A pointer to the pointer to the root node. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key of the node being searched for.</td></tr>
   </table>
   </dd>
@@ -728,7 +682,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a10">examples/rbtree/rbtree.c</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2rbtree_2rbtree_8c-example.html#a9">examples/rbtree/rbtree.c</a>.</dd>
 </dl>
 
 </div>

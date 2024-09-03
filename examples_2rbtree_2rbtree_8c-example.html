@@ -130,36 +130,34 @@ $(function(){ initResizable(false); });
 <div class="line">        {7, <span class="charliteral">&#39;o&#39;</span>},  {10, <span class="charliteral">&#39;d&#39;</span>}, {9, <span class="charliteral">&#39;l&#39;</span>},  {1, <span class="charliteral">&#39;e&#39;</span>}, {3, <span class="charliteral">&#39;l&#39;</span>}, {8, <span class="charliteral">&#39;r&#39;</span>}, {13, <span class="charliteral">&#39;\0&#39;</span>},</div>
 <div class="line">    };</div>
 <div class="line"> </div>
-<div class="line">    <a id="_a4" name="_a4"></a><a class="code hl_struct" href="structrbtree__type.html">rbtree_type</a> rb;</div>
-<div class="line">    <a id="a5" name="a5"></a><a class="code hl_function" href="rbtree_8h.html#a3500171734aa446d659095f7c669b803">rbtree_init</a>(&amp;rb);</div>
+<div class="line">    <a class="code hl_struct" href="structrbtree__node__type.html">rbtree_node_type</a>* rb;</div>
+<div class="line">    <a id="a4" name="a4"></a><a class="code hl_function" href="rbtree_8h.html#a16f171132f6dba32635c307de7cdea78">rbtree_init</a>(&amp;rb);</div>
 <div class="line"> </div>
-<div class="line">    assert(<a id="a6" name="a6"></a><a class="code hl_function" href="rbtree_8h.html#a52b41fb3086bcb7af50935a66873b5ac">rbtree_is_empty</a>(&amp;rb));</div>
+<div class="line">    assert(<a id="a5" name="a5"></a><a class="code hl_function" href="rbtree_8h.html#a7a8aad553ecdfbcaa05e2545037cb6d4">rbtree_is_empty</a>(&amp;rb));</div>
 <div class="line"> </div>
 <div class="line">    con_type cons[arr_count(pairs)];</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; arr_count(pairs); i++) {</div>
 <div class="line">        cons[i].c = pairs[i].c;</div>
-<div class="line">        <a id="a7" name="a7"></a><a class="code hl_function" href="rbtree_8h.html#a0e1490185762247223539bb1373f5c9f">rbtree_node_init</a>(&amp;cons[i].node, pairs[i].key);</div>
+<div class="line">        <a id="a6" name="a6"></a><a class="code hl_function" href="rbtree_8h.html#a0e1490185762247223539bb1373f5c9f">rbtree_node_init</a>(&amp;cons[i].node, pairs[i].key);</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">if</span> (!<a id="a8" name="a8"></a><a class="code hl_function" href="rbtree_8h.html#af0d83bb43101462cc3739f80bfde2422">rbtree_contains_key</a>(&amp;rb, pairs[i].key)) {</div>
-<div class="line">            <a id="a9" name="a9"></a><a class="code hl_function" href="rbtree_8h.html#adadd03516ae68281323105797d24ba00">rbtree_insert_node</a>(&amp;rb, &amp;cons[i].node);</div>
+<div class="line">        <span class="keywordflow">if</span> (!<a id="a7" name="a7"></a><a class="code hl_function" href="rbtree_8h.html#a75ff31d07cf30f7bbe777e6dfbd03849">rbtree_contains_key</a>(&amp;rb, pairs[i].key)) {</div>
+<div class="line">            <a id="a8" name="a8"></a><a class="code hl_function" href="rbtree_8h.html#a0363191df47836001954409c0d88a50c">rbtree_insert_node</a>(&amp;rb, &amp;cons[i].node);</div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span> {</div>
 <div class="line">            assert(<span class="keyword">false</span>);</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_struct" href="structrbtree__node__type.html">rbtree_node_type</a>* node_ptr = <a id="a10" name="a10"></a><a class="code hl_function" href="rbtree_8h.html#a916627dd6f3ddb7c6edcc69c66fe02f2">rbtree_search_node</a>(&amp;rb, -1);</div>
+<div class="line">    <a class="code hl_struct" href="structrbtree__node__type.html">rbtree_node_type</a>* node_ptr = <a id="a9" name="a9"></a><a class="code hl_function" href="rbtree_8h.html#a0befbba8132e748956d546893515e030">rbtree_search_node</a>(&amp;rb, -1);</div>
 <div class="line">    <span class="keywordflow">if</span> (node_ptr) {</div>
-<div class="line">        deallocate(<a id="a11" name="a11"></a><a class="code hl_function" href="rbtree_8h.html#a84a0f3367b7fda97bde5df4e9c67eb40">rbtree_delete_node</a>(&amp;rb, node_ptr));</div>
+<div class="line">        deallocate(<a id="a10" name="a10"></a><a class="code hl_function" href="rbtree_8h.html#a49e157d208e3124be62ea9c2fb51f8d0">rbtree_delete_node</a>(&amp;rb, node_ptr));</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">else</span> {</div>
 <div class="line">        assert(<span class="keyword">false</span>);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    inorder_traverse_and_putchar(rb.<a id="a12" name="a12"></a><a class="code hl_variable" href="structrbtree__type.html#af652d5cf9153932a33f5271be70ed117">root_ptr</a>);</div>
-<div class="line"> </div>
-<div class="line">    <a id="a13" name="a13"></a><a class="code hl_function" href="rbtree_8h.html#a8b6791bef8bd9089cf791272905da4a2">rbtree_clear</a>(&amp;rb); <span class="comment">// doesn&#39;t deallocate memory. merely sets root pointer to NULL, marking the tree empty.</span></div>
+<div class="line">    inorder_traverse_and_putchar(rb);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
@@ -167,20 +165,17 @@ $(function(){ initResizable(false); });
 <div class="line">    hello_world();</div>
 <div class="line">}</div>
 <div class="ttc" id="arbtree_8h_html"><div class="ttname"><a href="rbtree_8h.html">rbtree.h</a></div><div class="ttdoc">Intrusive red-black tree.</div></div>
-<div class="ttc" id="arbtree_8h_html_a0e1490185762247223539bb1373f5c9f"><div class="ttname"><a href="rbtree_8h.html#a0e1490185762247223539bb1373f5c9f">rbtree_node_init</a></div><div class="ttdeci">static void rbtree_node_init(rbtree_node_type *node_ptr, KEY_TYPE key)</div><div class="ttdoc">Initialize a red-black tree node.</div><div class="ttdef"><b>Definition</b> rbtree.h:216</div></div>
-<div class="ttc" id="arbtree_8h_html_a3500171734aa446d659095f7c669b803"><div class="ttname"><a href="rbtree_8h.html#a3500171734aa446d659095f7c669b803">rbtree_init</a></div><div class="ttdeci">static void rbtree_init(rbtree_type *rbtree_ptr)</div><div class="ttdoc">Initialize a red-black tree struct.</div><div class="ttdef"><b>Definition</b> rbtree.h:165</div></div>
-<div class="ttc" id="arbtree_8h_html_a52b41fb3086bcb7af50935a66873b5ac"><div class="ttname"><a href="rbtree_8h.html#a52b41fb3086bcb7af50935a66873b5ac">rbtree_is_empty</a></div><div class="ttdeci">static bool rbtree_is_empty(const rbtree_type *rbtree_ptr)</div><div class="ttdoc">Check if the tree is empty.</div><div class="ttdef"><b>Definition</b> rbtree.h:276</div></div>
-<div class="ttc" id="arbtree_8h_html_a84a0f3367b7fda97bde5df4e9c67eb40"><div class="ttname"><a href="rbtree_8h.html#a84a0f3367b7fda97bde5df4e9c67eb40">rbtree_delete_node</a></div><div class="ttdeci">static rbtree_node_type * rbtree_delete_node(rbtree_type *rbtree_ptr, rbtree_node_type *node_ptr)</div><div class="ttdoc">Delete a given node from the tree.</div><div class="ttdef"><b>Definition</b> rbtree.h:596</div></div>
-<div class="ttc" id="arbtree_8h_html_a8b6791bef8bd9089cf791272905da4a2"><div class="ttname"><a href="rbtree_8h.html#a8b6791bef8bd9089cf791272905da4a2">rbtree_clear</a></div><div class="ttdeci">static void rbtree_clear(rbtree_type *rbtree_ptr)</div><div class="ttdoc">Clear the tree.</div><div class="ttdef"><b>Definition</b> rbtree.h:686</div></div>
-<div class="ttc" id="arbtree_8h_html_a916627dd6f3ddb7c6edcc69c66fe02f2"><div class="ttname"><a href="rbtree_8h.html#a916627dd6f3ddb7c6edcc69c66fe02f2">rbtree_search_node</a></div><div class="ttdeci">static rbtree_node_type * rbtree_search_node(rbtree_type *rbtree_ptr, const KEY_TYPE key)</div><div class="ttdoc">Search for a given node and return a pointer to the node.</div><div class="ttdef"><b>Definition</b> rbtree.h:327</div></div>
-<div class="ttc" id="arbtree_8h_html_adadd03516ae68281323105797d24ba00"><div class="ttname"><a href="rbtree_8h.html#adadd03516ae68281323105797d24ba00">rbtree_insert_node</a></div><div class="ttdeci">static void rbtree_insert_node(rbtree_type *rbtree_ptr, rbtree_node_type *node_ptr)</div><div class="ttdoc">Insert a given node in the tree.</div><div class="ttdef"><b>Definition</b> rbtree.h:457</div></div>
-<div class="ttc" id="arbtree_8h_html_af0d83bb43101462cc3739f80bfde2422"><div class="ttname"><a href="rbtree_8h.html#af0d83bb43101462cc3739f80bfde2422">rbtree_contains_key</a></div><div class="ttdeci">static bool rbtree_contains_key(const rbtree_type *rbtree_ptr, const KEY_TYPE key)</div><div class="ttdoc">Check if the tree contains a given key.</div><div class="ttdef"><b>Definition</b> rbtree.h:293</div></div>
+<div class="ttc" id="arbtree_8h_html_a0363191df47836001954409c0d88a50c"><div class="ttname"><a href="rbtree_8h.html#a0363191df47836001954409c0d88a50c">rbtree_insert_node</a></div><div class="ttdeci">static void rbtree_insert_node(rbtree_node_type **rootptr_ptr, rbtree_node_type *node_ptr)</div><div class="ttdoc">Insert a given node in the tree.</div><div class="ttdef"><b>Definition</b> rbtree.h:450</div></div>
+<div class="ttc" id="arbtree_8h_html_a0befbba8132e748956d546893515e030"><div class="ttname"><a href="rbtree_8h.html#a0befbba8132e748956d546893515e030">rbtree_search_node</a></div><div class="ttdeci">static rbtree_node_type * rbtree_search_node(rbtree_node_type **rootptr_ptr, const KEY_TYPE key)</div><div class="ttdoc">Search for a given node and return a pointer to the node.</div><div class="ttdef"><b>Definition</b> rbtree.h:320</div></div>
+<div class="ttc" id="arbtree_8h_html_a0e1490185762247223539bb1373f5c9f"><div class="ttname"><a href="rbtree_8h.html#a0e1490185762247223539bb1373f5c9f">rbtree_node_init</a></div><div class="ttdeci">static void rbtree_node_init(rbtree_node_type *node_ptr, KEY_TYPE key)</div><div class="ttdoc">Initialize a red-black tree node.</div><div class="ttdef"><b>Definition</b> rbtree.h:209</div></div>
+<div class="ttc" id="arbtree_8h_html_a16f171132f6dba32635c307de7cdea78"><div class="ttname"><a href="rbtree_8h.html#a16f171132f6dba32635c307de7cdea78">rbtree_init</a></div><div class="ttdeci">static void rbtree_init(rbtree_node_type **rootptr_ptr)</div><div class="ttdoc">Initialize a red-black tree struct.</div><div class="ttdef"><b>Definition</b> rbtree.h:159</div></div>
+<div class="ttc" id="arbtree_8h_html_a49e157d208e3124be62ea9c2fb51f8d0"><div class="ttname"><a href="rbtree_8h.html#a49e157d208e3124be62ea9c2fb51f8d0">rbtree_delete_node</a></div><div class="ttdeci">static rbtree_node_type * rbtree_delete_node(rbtree_node_type **rootptr_ptr, rbtree_node_type *node_ptr)</div><div class="ttdoc">Delete a given node from the tree.</div><div class="ttdef"><b>Definition</b> rbtree.h:588</div></div>
+<div class="ttc" id="arbtree_8h_html_a75ff31d07cf30f7bbe777e6dfbd03849"><div class="ttname"><a href="rbtree_8h.html#a75ff31d07cf30f7bbe777e6dfbd03849">rbtree_contains_key</a></div><div class="ttdeci">static bool rbtree_contains_key(rbtree_node_type **rootptr_ptr, const KEY_TYPE key)</div><div class="ttdoc">Check if the tree contains a given key.</div><div class="ttdef"><b>Definition</b> rbtree.h:286</div></div>
+<div class="ttc" id="arbtree_8h_html_a7a8aad553ecdfbcaa05e2545037cb6d4"><div class="ttname"><a href="rbtree_8h.html#a7a8aad553ecdfbcaa05e2545037cb6d4">rbtree_is_empty</a></div><div class="ttdeci">static bool rbtree_is_empty(rbtree_node_type **rootptr_ptr)</div><div class="ttdoc">Check if the tree is empty.</div><div class="ttdef"><b>Definition</b> rbtree.h:269</div></div>
 <div class="ttc" id="arbtree_8h_html_afc5e017c6a4415b552731a1276a79232"><div class="ttname"><a href="rbtree_8h.html#afc5e017c6a4415b552731a1276a79232">rbtree_node_entry</a></div><div class="ttdeci">#define rbtree_node_entry(node_ptr, container_type, node_member_name)</div><div class="ttdoc">Get the pointer to the container instance, given a pointer to to the node member instance,...</div><div class="ttdef"><b>Definition</b> rbtree.h:59</div></div>
 <div class="ttc" id="astructrbtree__node__type_html"><div class="ttname"><a href="structrbtree__node__type.html">rbtree_node_type</a></div><div class="ttdoc">Generated red-black tree node struct type for a given KEY_TYPE.</div><div class="ttdef"><b>Definition</b> rbtree.h:134</div></div>
 <div class="ttc" id="astructrbtree__node__type_html_a205abe073caeb726bc7d69099612d1af"><div class="ttname"><a href="structrbtree__node__type.html#a205abe073caeb726bc7d69099612d1af">rbtree_node_type::right_ptr</a></div><div class="ttdeci">struct rbtree_node_type * right_ptr</div><div class="ttdoc">pointer to right node</div><div class="ttdef"><b>Definition</b> rbtree.h:139</div></div>
 <div class="ttc" id="astructrbtree__node__type_html_aec20e07fa0ce04328e172552031775ea"><div class="ttname"><a href="structrbtree__node__type.html#aec20e07fa0ce04328e172552031775ea">rbtree_node_type::left_ptr</a></div><div class="ttdeci">struct rbtree_node_type * left_ptr</div><div class="ttdoc">pointer to left node</div><div class="ttdef"><b>Definition</b> rbtree.h:138</div></div>
-<div class="ttc" id="astructrbtree__type_html"><div class="ttname"><a href="structrbtree__type.html">rbtree_type</a></div><div class="ttdoc">Generated red-black tree struct type for a given KEY_TYPE.</div><div class="ttdef"><b>Definition</b> rbtree.h:149</div></div>
-<div class="ttc" id="astructrbtree__type_html_af652d5cf9153932a33f5271be70ed117"><div class="ttname"><a href="structrbtree__type.html#af652d5cf9153932a33f5271be70ed117">rbtree_type::root_ptr</a></div><div class="ttdeci">rbtree_node_type * root_ptr</div><div class="ttdoc">pointer to root node</div><div class="ttdef"><b>Definition</b> rbtree.h:150</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
