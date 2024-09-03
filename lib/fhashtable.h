@@ -66,9 +66,6 @@
  * @brief Iterate over the non-empty slots in the hashtable in arbitary order.
  * @warning Modifying the hashtable under the iteration may result in errors.
  *
- * temporary variables visible in scope:
- * @li _index
- *
  * @param[in] hashtable_ptr hashtable pointer.
  * @param[in] index Temporary indexing variable. Should be `uint32_t`
  * @param[out] key_ Current key. Should be `KEY_TYPE`.
