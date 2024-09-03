@@ -116,90 +116,90 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">   63</a></span><span class="preprocessor">#define FHASHTABLE_EMPTY_SLOT_OFFSET (UINT32_MAX)</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="foldopen" id="foldopen00075" data-start="" data-end="">
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a7fce22aae470d0fe6af1109f752d72e7">   75</a></span><span class="preprocessor">#define fhashtable_for_each(hashtable_ptr, index, key_, value_)                       \</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">    for ((index) = 0; (index) &lt; (hashtable_ptr)-&gt;capacity; (index)++)                 \</span></div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="preprocessor">                                                                                      \</span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">        if ((hashtable_ptr)-&gt;slots[(index)].offset != FHASHTABLE_EMPTY_SLOT_OFFSET &amp;&amp; \</span></div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="preprocessor">                                                                                      \</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="preprocessor">            ((key_) = (hashtable_ptr)-&gt;slots[(index)].key, (value_) = (hashtable_ptr)-&gt;slots[(index)].value, true))</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">   62</a></span><span class="preprocessor">#define FHASHTABLE_EMPTY_SLOT_OFFSET (UINT32_MAX)</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="foldopen" id="foldopen00074" data-start="" data-end="">
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a7fce22aae470d0fe6af1109f752d72e7">   74</a></span><span class="preprocessor">#define fhashtable_for_each(hashtable_ptr, index, key_, value_)                       \</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">    for ((index) = 0; (index) &lt; (hashtable_ptr)-&gt;capacity; (index)++)                 \</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">                                                                                      \</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="preprocessor">        if ((hashtable_ptr)-&gt;slots[(index)].offset != FHASHTABLE_EMPTY_SLOT_OFFSET &amp;&amp; \</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">                                                                                      \</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="preprocessor">            ((key_) = (hashtable_ptr)-&gt;slots[(index)].key, (value_) = (hashtable_ptr)-&gt;slots[(index)].value, true))</span></div>
 </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="preprocessor">#endif </span><span class="comment">// FHASHTABLE_H</span></div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="preprocessor">#ifndef NAME</span></div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#error &quot;Must define NAME.&quot;</span></div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a47f2e62c0dbebc787052c165afcada0e">   94</a></span><span class="preprocessor">#define NAME fhashtable</span></div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#define FHASHTABLE_NAME NAME</span></div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="preprocessor">#ifndef KEY_TYPE</span></div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="preprocessor">#error &quot;Must define KEY_TYPE.&quot;</span></div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">  107</a></span><span class="preprocessor">#define KEY_TYPE int</span></div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="preprocessor">#ifndef VALUE_TYPE</span></div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="preprocessor">#error &quot;Must define VALUE_TYPE.&quot;</span></div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">  118</a></span><span class="preprocessor">#define VALUE_TYPE int</span></div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="preprocessor">#ifndef KEY_IS_EQUAL</span></div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="preprocessor">#error &quot;Must define KEY_IS_EQUAL.&quot;</span></div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a58a9b9662f87dfedd00cc6fd5dde7852">  137</a></span><span class="preprocessor">#define KEY_IS_EQUAL(a, b) ((a) == (b))</span></div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="preprocessor">#ifndef HASH_FUNCTION</span></div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="preprocessor">#error &quot;Must define HASH_FUNCTION.&quot;</span></div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">  151</a></span><span class="preprocessor">#define HASH_FUNCTION(key) (murmur3_32((uint8_t*)&amp;(key), sizeof(KEY_TYPE), 0))</span></div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="preprocessor">#define FHASHTABLE_TYPE         JOIN(FHASHTABLE_NAME, type)</span></div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="preprocessor">#define FHASHTABLE_SLOT_TYPE    JOIN(FHASHTABLE_NAME, slot_type)</span></div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="preprocessor">#define FHASHTABLE_IS_FULL      JOIN(FHASHTABLE_NAME, is_full)</span></div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="preprocessor">#define FHASHTABLE_CONTAINS_KEY JOIN(FHASHTABLE_NAME, contains_key)</span></div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span><span class="comment">// }}}</span></div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="comment">// type definitions: {{{</span></div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
-<div class="foldopen" id="foldopen00168" data-start="{" data-end="};">
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno"><a class="line" href="structfhashtable__slot__type.html">  168</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="structfhashtable__slot__type.html#a7af661271fe512b2a1d2a132988e9e27">  169</a></span>    uint32_t <a class="code hl_variable" href="structfhashtable__slot__type.html#a7af661271fe512b2a1d2a132988e9e27">offset</a>;  </div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno"><a class="line" href="structfhashtable__slot__type.html#af5ba0630ddb1ac9645cfe6b4c3d00dcf">  170</a></span>    <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> <a class="code hl_variable" href="structfhashtable__slot__type.html#af5ba0630ddb1ac9645cfe6b4c3d00dcf">key</a>;     </div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno"><a class="line" href="structfhashtable__slot__type.html#a26411369e95f68e6b61128261536c68d">  171</a></span>    <a class="code hl_define" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_variable" href="structfhashtable__slot__type.html#a26411369e95f68e6b61128261536c68d">value</a>; </div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>} FHASHTABLE_SLOT_TYPE;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="preprocessor">#endif </span><span class="comment">// FHASHTABLE_H</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="preprocessor">#ifndef NAME</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="preprocessor">#error &quot;Must define NAME.&quot;</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a47f2e62c0dbebc787052c165afcada0e">   93</a></span><span class="preprocessor">#define NAME fhashtable</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#define FHASHTABLE_NAME NAME</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="preprocessor">#ifndef KEY_TYPE</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="preprocessor">#error &quot;Must define KEY_TYPE.&quot;</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">  106</a></span><span class="preprocessor">#define KEY_TYPE int</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="preprocessor">#ifndef VALUE_TYPE</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="preprocessor">#error &quot;Must define VALUE_TYPE.&quot;</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">  117</a></span><span class="preprocessor">#define VALUE_TYPE int</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="preprocessor">#ifndef KEY_IS_EQUAL</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="preprocessor">#error &quot;Must define KEY_IS_EQUAL.&quot;</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a58a9b9662f87dfedd00cc6fd5dde7852">  136</a></span><span class="preprocessor">#define KEY_IS_EQUAL(a, b) ((a) == (b))</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="preprocessor">#ifndef HASH_FUNCTION</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="preprocessor">#error &quot;Must define HASH_FUNCTION.&quot;</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">  150</a></span><span class="preprocessor">#define HASH_FUNCTION(key) (murmur3_32((uint8_t*)&amp;(key), sizeof(KEY_TYPE), 0))</span></div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="preprocessor">#define FHASHTABLE_TYPE         JOIN(FHASHTABLE_NAME, type)</span></div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="preprocessor">#define FHASHTABLE_SLOT_TYPE    JOIN(FHASHTABLE_NAME, slot_type)</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="preprocessor">#define FHASHTABLE_IS_FULL      JOIN(FHASHTABLE_NAME, is_full)</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="preprocessor">#define FHASHTABLE_CONTAINS_KEY JOIN(FHASHTABLE_NAME, contains_key)</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="comment">// }}}</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span><span class="comment">// type definitions: {{{</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
+<div class="foldopen" id="foldopen00167" data-start="{" data-end="};">
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="structfhashtable__slot__type.html">  167</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno"><a class="line" href="structfhashtable__slot__type.html#a7af661271fe512b2a1d2a132988e9e27">  168</a></span>    uint32_t <a class="code hl_variable" href="structfhashtable__slot__type.html#a7af661271fe512b2a1d2a132988e9e27">offset</a>;  </div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="structfhashtable__slot__type.html#af5ba0630ddb1ac9645cfe6b4c3d00dcf">  169</a></span>    <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> <a class="code hl_variable" href="structfhashtable__slot__type.html#af5ba0630ddb1ac9645cfe6b4c3d00dcf">key</a>;     </div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno"><a class="line" href="structfhashtable__slot__type.html#a26411369e95f68e6b61128261536c68d">  170</a></span>    <a class="code hl_define" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_variable" href="structfhashtable__slot__type.html#a26411369e95f68e6b61128261536c68d">value</a>; </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>} FHASHTABLE_SLOT_TYPE;</div>
 </div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
-<div class="foldopen" id="foldopen00177" data-start="{" data-end="};">
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno"><a class="line" href="structfhashtable__type.html">  177</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="structfhashtable__type.html#afa5f7955f4ac5be5e5813e31f57969d3">  178</a></span>    uint32_t <a class="code hl_variable" href="structfhashtable__type.html#afa5f7955f4ac5be5e5813e31f57969d3">count</a>;               </div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno"><a class="line" href="structfhashtable__type.html#ad6f2f345f3ce8393a6acf9eefcc1a000">  179</a></span>    uint32_t <a class="code hl_variable" href="structfhashtable__type.html#ad6f2f345f3ce8393a6acf9eefcc1a000">capacity</a>;            </div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno"><a class="line" href="structfhashtable__type.html#a333fe0290d5cbdca699ecda7640dbc1f">  180</a></span>    FHASHTABLE_SLOT_TYPE slots[]; </div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>} FHASHTABLE_TYPE;</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
+<div class="foldopen" id="foldopen00176" data-start="{" data-end="};">
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno"><a class="line" href="structfhashtable__type.html">  176</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno"><a class="line" href="structfhashtable__type.html#afa5f7955f4ac5be5e5813e31f57969d3">  177</a></span>    uint32_t <a class="code hl_variable" href="structfhashtable__type.html#afa5f7955f4ac5be5e5813e31f57969d3">count</a>;               </div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="structfhashtable__type.html#ad6f2f345f3ce8393a6acf9eefcc1a000">  178</a></span>    uint32_t <a class="code hl_variable" href="structfhashtable__type.html#ad6f2f345f3ce8393a6acf9eefcc1a000">capacity</a>;            </div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno"><a class="line" href="structfhashtable__type.html#a333fe0290d5cbdca699ecda7640dbc1f">  179</a></span>    FHASHTABLE_SLOT_TYPE slots[]; </div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>} FHASHTABLE_TYPE;</div>
 </div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="comment">// }}}</span></div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="comment">// function definitions: {{{</span></div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
-<div class="foldopen" id="foldopen00200" data-start="{" data-end="}">
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#aafda8878c16015028035cf1df08469a4">  200</a></span><span class="keyword">static</span> <span class="keyword">inline</span> FHASHTABLE_TYPE* <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, create)(<span class="keyword">const</span> uint32_t capacity)</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>{</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    <span class="keywordflow">if</span> (capacity == 0 || capacity &gt; UINT32_MAX / 4) {</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    }</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    <span class="keyword">const</span> uint32_t capacity_new = <a class="code hl_function" href="round__up__pow2_8h.html#ac941ab6788f53c3a24b85c5ae53ec954">round_up_pow2_32</a>(capacity);</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="comment">// }}}</span></div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="comment">// function definitions: {{{</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
+<div class="foldopen" id="foldopen00199" data-start="{" data-end="}">
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno"><a class="line" href="fhashtable_8h.html#aafda8878c16015028035cf1df08469a4">  199</a></span><span class="keyword">static</span> <span class="keyword">inline</span> FHASHTABLE_TYPE* <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FHASHTABLE_NAME, create)(<span class="keyword">const</span> uint32_t capacity)</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>{</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <span class="keywordflow">if</span> (capacity == 0 || capacity &gt; UINT32_MAX / 4) {</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    }</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    <span class="keyword">const</span> uint32_t capacity_new = <a class="code hl_function" href="round__up__pow2_8h.html#ac941ab6788f53c3a24b85c5ae53ec954">round_up_pow2_32</a>(capacity);</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    FHASHTABLE_TYPE* hashtable_ptr =</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        (FHASHTABLE_TYPE*)malloc(offsetof(FHASHTABLE_TYPE, slots) + capacity_new * <span class="keyword">sizeof</span>(FHASHTABLE_SLOT_TYPE));</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    <span class="keywordflow">if</span> (!hashtable_ptr) {</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    }</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    memset(hashtable_ptr, 0, offsetof(FHASHTABLE_TYPE, slots) + capacity_new * <span class="keyword">sizeof</span>(FHASHTABLE_SLOT_TYPE));</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        (FHASHTABLE_TYPE*)calloc(1, offsetof(FHASHTABLE_TYPE, slots) + capacity_new * <span class="keyword">sizeof</span>(FHASHTABLE_SLOT_TYPE));</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    <span class="keywordflow">if</span> (!hashtable_ptr) {</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    }</div>
 <div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
 <div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    hashtable_ptr-&gt;count = 0;</div>
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    hashtable_ptr-&gt;capacity = capacity_new;</div>
@@ -492,22 +492,22 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span><span class="comment">// }}}</span></div>
 <div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span> </div>
 <div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span><span class="comment">// vim: ft=c fdm=marker</span></div>
-<div class="ttc" id="afhashtable_8h_html_a261e2befaaf40b08c99064bb53bf0b44"><div class="ttname"><a href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a></div><div class="ttdeci">#define HASH_FUNCTION(key)</div><div class="ttdoc">Used to compute indicies of keys. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:151</div></div>
-<div class="ttc" id="afhashtable_8h_html_a58a9b9662f87dfedd00cc6fd5dde7852"><div class="ttname"><a href="fhashtable_8h.html#a58a9b9662f87dfedd00cc6fd5dde7852">KEY_IS_EQUAL</a></div><div class="ttdeci">#define KEY_IS_EQUAL(a, b)</div><div class="ttdoc">Used to compare two keys. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:137</div></div>
-<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:63</div></div>
-<div class="ttc" id="afhashtable_8h_html_ae17cb099b4c9aee7835032339b5a9e0d"><div class="ttname"><a href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></div><div class="ttdeci">#define VALUE_TYPE</div><div class="ttdoc">The value type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:118</div></div>
-<div class="ttc" id="afhashtable_8h_html_ae35c40bc2f912c11f0e36ac66cba4489"><div class="ttname"><a href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></div><div class="ttdeci">#define KEY_TYPE</div><div class="ttdoc">The key type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:107</div></div>
+<div class="ttc" id="afhashtable_8h_html_a261e2befaaf40b08c99064bb53bf0b44"><div class="ttname"><a href="fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44">HASH_FUNCTION</a></div><div class="ttdeci">#define HASH_FUNCTION(key)</div><div class="ttdoc">Used to compute indicies of keys. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:150</div></div>
+<div class="ttc" id="afhashtable_8h_html_a58a9b9662f87dfedd00cc6fd5dde7852"><div class="ttname"><a href="fhashtable_8h.html#a58a9b9662f87dfedd00cc6fd5dde7852">KEY_IS_EQUAL</a></div><div class="ttdeci">#define KEY_IS_EQUAL(a, b)</div><div class="ttdoc">Used to compare two keys. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:136</div></div>
+<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="fhashtable_8h.html#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:62</div></div>
+<div class="ttc" id="afhashtable_8h_html_ae17cb099b4c9aee7835032339b5a9e0d"><div class="ttname"><a href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a></div><div class="ttdeci">#define VALUE_TYPE</div><div class="ttdoc">The value type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:117</div></div>
+<div class="ttc" id="afhashtable_8h_html_ae35c40bc2f912c11f0e36ac66cba4489"><div class="ttname"><a href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></div><div class="ttdeci">#define KEY_TYPE</div><div class="ttdoc">The key type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:106</div></div>
 <div class="ttc" id="afnvhash_8h_html"><div class="ttname"><a href="fnvhash_8h.html">fnvhash.h</a></div><div class="ttdoc">FNV-1a hashing function.</div></div>
 <div class="ttc" id="amurmurhash_8h_html"><div class="ttname"><a href="murmurhash_8h.html">murmurhash.h</a></div><div class="ttdoc">Murmur3 hash hashing function.</div></div>
 <div class="ttc" id="apaste_8h_html"><div class="ttname"><a href="paste_8h.html">paste.h</a></div><div class="ttdoc">C preprocessor macros for pasting tokens together.</div></div>
 <div class="ttc" id="apaste_8h_html_a1665af4d61d120cdba4d77101d179703"><div class="ttname"><a href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a></div><div class="ttdeci">#define JOIN(a, b)</div><div class="ttdoc">First expand tokens, then paste them together with a _ in between.</div><div class="ttdef"><b>Definition</b> paste.h:35</div></div>
 <div class="ttc" id="around__up__pow2_8h_html"><div class="ttname"><a href="round__up__pow2_8h.html">round_up_pow2.h</a></div><div class="ttdoc">Round up to the next power of two.</div></div>
 <div class="ttc" id="around__up__pow2_8h_html_ac941ab6788f53c3a24b85c5ae53ec954"><div class="ttname"><a href="round__up__pow2_8h.html#ac941ab6788f53c3a24b85c5ae53ec954">round_up_pow2_32</a></div><div class="ttdeci">static uint32_t round_up_pow2_32(uint32_t x)</div><div class="ttdef"><b>Definition</b> round_up_pow2.h:39</div></div>
-<div class="ttc" id="astructfhashtable__slot__type_html_a26411369e95f68e6b61128261536c68d"><div class="ttname"><a href="structfhashtable__slot__type.html#a26411369e95f68e6b61128261536c68d">fhashtable_slot_type::value</a></div><div class="ttdeci">VALUE_TYPE value</div><div class="ttdoc">The value in this slot.</div><div class="ttdef"><b>Definition</b> fhashtable.h:171</div></div>
-<div class="ttc" id="astructfhashtable__slot__type_html_a7af661271fe512b2a1d2a132988e9e27"><div class="ttname"><a href="structfhashtable__slot__type.html#a7af661271fe512b2a1d2a132988e9e27">fhashtable_slot_type::offset</a></div><div class="ttdeci">uint32_t offset</div><div class="ttdoc">Offset from the ideal slot index.</div><div class="ttdef"><b>Definition</b> fhashtable.h:169</div></div>
-<div class="ttc" id="astructfhashtable__slot__type_html_af5ba0630ddb1ac9645cfe6b4c3d00dcf"><div class="ttname"><a href="structfhashtable__slot__type.html#af5ba0630ddb1ac9645cfe6b4c3d00dcf">fhashtable_slot_type::key</a></div><div class="ttdeci">KEY_TYPE key</div><div class="ttdoc">The key in this slot.</div><div class="ttdef"><b>Definition</b> fhashtable.h:170</div></div>
-<div class="ttc" id="astructfhashtable__type_html_ad6f2f345f3ce8393a6acf9eefcc1a000"><div class="ttname"><a href="structfhashtable__type.html#ad6f2f345f3ce8393a6acf9eefcc1a000">fhashtable_type::capacity</a></div><div class="ttdeci">uint32_t capacity</div><div class="ttdoc">Number of slots allocated for in the hashtable.</div><div class="ttdef"><b>Definition</b> fhashtable.h:179</div></div>
-<div class="ttc" id="astructfhashtable__type_html_afa5f7955f4ac5be5e5813e31f57969d3"><div class="ttname"><a href="structfhashtable__type.html#afa5f7955f4ac5be5e5813e31f57969d3">fhashtable_type::count</a></div><div class="ttdeci">uint32_t count</div><div class="ttdoc">Number of non-empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:178</div></div>
+<div class="ttc" id="astructfhashtable__slot__type_html_a26411369e95f68e6b61128261536c68d"><div class="ttname"><a href="structfhashtable__slot__type.html#a26411369e95f68e6b61128261536c68d">fhashtable_slot_type::value</a></div><div class="ttdeci">VALUE_TYPE value</div><div class="ttdoc">The value in this slot.</div><div class="ttdef"><b>Definition</b> fhashtable.h:170</div></div>
+<div class="ttc" id="astructfhashtable__slot__type_html_a7af661271fe512b2a1d2a132988e9e27"><div class="ttname"><a href="structfhashtable__slot__type.html#a7af661271fe512b2a1d2a132988e9e27">fhashtable_slot_type::offset</a></div><div class="ttdeci">uint32_t offset</div><div class="ttdoc">Offset from the ideal slot index.</div><div class="ttdef"><b>Definition</b> fhashtable.h:168</div></div>
+<div class="ttc" id="astructfhashtable__slot__type_html_af5ba0630ddb1ac9645cfe6b4c3d00dcf"><div class="ttname"><a href="structfhashtable__slot__type.html#af5ba0630ddb1ac9645cfe6b4c3d00dcf">fhashtable_slot_type::key</a></div><div class="ttdeci">KEY_TYPE key</div><div class="ttdoc">The key in this slot.</div><div class="ttdef"><b>Definition</b> fhashtable.h:169</div></div>
+<div class="ttc" id="astructfhashtable__type_html_ad6f2f345f3ce8393a6acf9eefcc1a000"><div class="ttname"><a href="structfhashtable__type.html#ad6f2f345f3ce8393a6acf9eefcc1a000">fhashtable_type::capacity</a></div><div class="ttdeci">uint32_t capacity</div><div class="ttdoc">Number of slots allocated for in the hashtable.</div><div class="ttdef"><b>Definition</b> fhashtable.h:178</div></div>
+<div class="ttc" id="astructfhashtable__type_html_afa5f7955f4ac5be5e5813e31f57969d3"><div class="ttname"><a href="structfhashtable__type.html#afa5f7955f4ac5be5e5813e31f57969d3">fhashtable_type::count</a></div><div class="ttdeci">uint32_t count</div><div class="ttdoc">Number of non-empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:177</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
