@@ -89,7 +89,7 @@ static int rbtree_get_black_height_of_some_path(const bst_node_type* root_ptr)
     if (root_ptr == NULL) {
         return 1;
     }
-    return bst_node_is_black(root_ptr) + rbtree_get_black_height_of_some_path(root_ptr->left_ptr);
+    return (bst_node_is_black(root_ptr) ? 1 : 0) + rbtree_get_black_height_of_some_path(root_ptr->left_ptr);
 }
 
 static bool rbtree_check_equal_black_height(const bst_node_type* root_ptr, const int height)
@@ -97,7 +97,7 @@ static bool rbtree_check_equal_black_height(const bst_node_type* root_ptr, const
     if (root_ptr == NULL) {
         return height == 1;
     }
-    const bool is_black = bst_node_is_black(root_ptr);
+    const int is_black = bst_node_is_black(root_ptr) ? 1 : 0;
 
     return rbtree_check_equal_black_height(root_ptr->left_ptr, height - is_black) &&
            rbtree_check_equal_black_height(root_ptr->right_ptr, height - is_black);
