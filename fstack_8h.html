@@ -147,19 +147,19 @@ Functions</h2></td></tr>
 <tr class="memdesc:acab6831aaa75e8a575b33f7a766af721"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value at index.  <br /></td></tr>
 <tr class="separator:acab6831aaa75e8a575b33f7a766af721"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e4c7659b5d081f4c3fe39d63436dda1" id="r_a9e4c7659b5d081f4c3fe39d63436dda1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9e4c7659b5d081f4c3fe39d63436dda1">fstack_get_top</a> (const <a class="el" href="structfstack__type.html">fstack_type</a> *stack_ptr)</td></tr>
-<tr class="memdesc:a9e4c7659b5d081f4c3fe39d63436dda1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the top of the stack.  <br /></td></tr>
+<tr class="memdesc:a9e4c7659b5d081f4c3fe39d63436dda1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the top of a non-empty stack.  <br /></td></tr>
 <tr class="separator:a9e4c7659b5d081f4c3fe39d63436dda1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63798821f21640d7efa75905f419d73c" id="r_a63798821f21640d7efa75905f419d73c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63798821f21640d7efa75905f419d73c">fstack_get_bottom</a> (const <a class="el" href="structfstack__type.html">fstack_type</a> *stack_ptr)</td></tr>
-<tr class="memdesc:a63798821f21640d7efa75905f419d73c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the bottom of the stack.  <br /></td></tr>
+<tr class="memdesc:a63798821f21640d7efa75905f419d73c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the bottom of a non-empty stack.  <br /></td></tr>
 <tr class="separator:a63798821f21640d7efa75905f419d73c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69d24b9459cb83efcc42b48ae0f683ba" id="r_a69d24b9459cb83efcc42b48ae0f683ba"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a69d24b9459cb83efcc42b48ae0f683ba">fstack_peek</a> (const <a class="el" href="structfstack__type.html">fstack_type</a> *stack_ptr)</td></tr>
-<tr class="memdesc:a69d24b9459cb83efcc42b48ae0f683ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek the stack and get it's next to-be-popped value.  <br /></td></tr>
+<tr class="memdesc:a69d24b9459cb83efcc42b48ae0f683ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek a non-empty stack and get it's next to-be-popped value.  <br /></td></tr>
 <tr class="separator:a69d24b9459cb83efcc42b48ae0f683ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96624be204200fad8045c25c14351152" id="r_a96624be204200fad8045c25c14351152"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a96624be204200fad8045c25c14351152">fstack_push</a> (<a class="el" href="structfstack__type.html">fstack_type</a> *stack_ptr, const <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
-<tr class="memdesc:a96624be204200fad8045c25c14351152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value onto the stack.  <br /></td></tr>
+<tr class="memdesc:a96624be204200fad8045c25c14351152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value onto a non-full stack.  <br /></td></tr>
 <tr class="separator:a96624be204200fad8045c25c14351152"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a226d7b0f58ac42723c3d27cc283ba851" id="r_a226d7b0f58ac42723c3d27cc283ba851"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a226d7b0f58ac42723c3d27cc283ba851">fstack_pop</a> (<a class="el" href="structfstack__type.html">fstack_type</a> *stack_ptr)</td></tr>
-<tr class="memdesc:a226d7b0f58ac42723c3d27cc283ba851"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop a value away from the stack.  <br /></td></tr>
+<tr class="memdesc:a226d7b0f58ac42723c3d27cc283ba851"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop a value away from a non-empty stack.  <br /></td></tr>
 <tr class="separator:a226d7b0f58ac42723c3d27cc283ba851"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4225ef3dd04aaca4d80e44247de01fcd" id="r_a4225ef3dd04aaca4d80e44247de01fcd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4225ef3dd04aaca4d80e44247de01fcd">fstack_clear</a> (<a class="el" href="structfstack__type.html">fstack_type</a> *stack_ptr)</td></tr>
 <tr class="memdesc:a4225ef3dd04aaca4d80e44247de01fcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the elements in the stack.  <br /></td></tr>
@@ -333,14 +333,10 @@ Functions</h2></td></tr>
 
 <p>Get the value at index. </p>
 <p>index starts from the top as <code>0</code> and is counted upward to <code>count - 1</code> as bottom.</p>
-<p>Assumes: </p><ul>
-<li><code>stack_ptr</code> is not <code>NULL</code>. </li>
-<li><code>index</code> is strictly less than stack count.</li>
-</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>The index to retrieve to value from.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>The index to retrieve to value from. </td></tr>
   </table>
   </dd>
 </dl>
@@ -372,7 +368,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clear the elements in the stack. </p>
-<p>Assumes <code>stack_ptr</code> is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
@@ -410,12 +405,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Copy the values from a source stack to a destination stack. </p>
-<p>Assumes: </p><ul>
-<li>Source and destination stack pointers are not pointing to the same memory. </li>
-<li>The stack pointers are not <code>NULL</code>. </li>
-<li>The destination stack has a capacity that is greater than or equal to source stack count. </li>
-<li>The destination stack is an empty stack.</li>
-</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">dest_stack_ptr</td><td>The destination stack. </td></tr>
@@ -452,7 +441,7 @@ Functions</h2></td></tr>
 <p>Create an stack with a given capacity with malloc(). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the stack.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the stack. </td></tr>
   </table>
   </dd>
 </dl>
@@ -527,14 +516,10 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get the value from the bottom of the stack. </p>
-<p>Assumes: </p><ul>
-<li><code>stack_ptr</code> is not <code>NULL</code>. </li>
-<li>The stack is not empty.</li>
-</ul>
+<p>Get the value from the bottom of a non-empty stack. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -565,14 +550,10 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get the value from the top of the stack. </p>
-<p>Assumes: </p><ul>
-<li><code>stack_ptr</code> is not <code>NULL</code>. </li>
-<li>The stack is not empty.</li>
-</ul>
+<p>Get the value from the top of a non-empty stack. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -604,10 +585,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return whether the stack is empty. </p>
-<p>Assumes the stack pointer is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -639,10 +619,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return whether the stack is full. </p>
-<p>Assumes the stack pointer is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -673,14 +652,10 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Peek the stack and get it's next to-be-popped value. </p>
-<p>Assumes: </p><ul>
-<li><code>stack_ptr</code> is not <code>NULL</code>. </li>
-<li>The stack is not empty.</li>
-</ul>
+<p>Peek a non-empty stack and get it's next to-be-popped value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -711,14 +686,10 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Pop a value away from the stack. </p>
-<p>Assumes: </p><ul>
-<li><code>stack_ptr</code> is not <code>NULL</code>. </li>
-<li>The stack is not empty.</li>
-</ul>
+<p>Pop a value away from a non-empty stack. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -753,11 +724,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Push a value onto the stack. </p>
-<p>Assumes: </p><ul>
-<li><code>stack_ptr</code> is not <code>NULL</code>. </li>
-<li>The stack is not full.</li>
-</ul>
+<p>Push a value onto a non-full stack. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">stack_ptr</td><td>The stack pointer. </td></tr>

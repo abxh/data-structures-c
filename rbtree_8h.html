@@ -163,7 +163,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a0befbba8132e748956d546893515e030"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search for a given node and return a pointer to the node.  <br /></td></tr>
 <tr class="separator:a0befbba8132e748956d546893515e030"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0363191df47836001954409c0d88a50c" id="r_a0363191df47836001954409c0d88a50c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0363191df47836001954409c0d88a50c">rbtree_insert_node</a> (<a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **rootptr_ptr, <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *node_ptr)</td></tr>
-<tr class="memdesc:a0363191df47836001954409c0d88a50c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a given node in the tree.  <br /></td></tr>
+<tr class="memdesc:a0363191df47836001954409c0d88a50c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a given node with a non-duplicate key in the tree.  <br /></td></tr>
 <tr class="separator:a0363191df47836001954409c0d88a50c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49e157d208e3124be62ea9c2fb51f8d0" id="r_a49e157d208e3124be62ea9c2fb51f8d0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49e157d208e3124be62ea9c2fb51f8d0">rbtree_delete_node</a> (<a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **rootptr_ptr, <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *node_ptr)</td></tr>
 <tr class="memdesc:a49e157d208e3124be62ea9c2fb51f8d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a given node from the tree.  <br /></td></tr>
@@ -322,11 +322,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check if the tree contains a given key. </p>
-<p>Assumes the given pointer is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">rootptr_ptr</td><td>A pointer to the pointer to the root node. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key </td></tr>
   </table>
   </dd>
 </dl>
@@ -364,11 +363,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Delete a given node from the tree. </p>
-<p>Assumes The given pointers are not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">rootptr_ptr</td><td>A pointer to the pointer to the root node. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -402,7 +400,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialize a red-black tree struct. </p>
-<p>Assumes the given pointer is not NULL.</p>
 <dl class="section note"><dt>Note</dt><dd>This should be initialized with the address to a pointer to a node.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -442,11 +439,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Insert a given node in the tree. </p>
-<p>Assumes: </p><ul>
-<li>The node key is not already contained in the tree. (no duplicate keys) </li>
-<li>The given pointers are not NULL.</li>
-</ul>
+<p>Insert a given node with a non-duplicate key in the tree. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">rootptr_ptr</td><td>A pointer to the pointer to the root node. </td></tr>
@@ -483,10 +476,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check if the tree is empty. </p>
-<p>Assumes the given pointer is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">rootptr_ptr</td><td>A pointer to the pointer to the root node.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rootptr_ptr</td><td>A pointer to the pointer to the root node. </td></tr>
   </table>
   </dd>
 </dl>
@@ -520,7 +512,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Extract the parent pointer of a node. </p>
-<p>Assumes the given pointer is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
@@ -558,7 +549,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialize a red-black tree node. </p>
-<p>Assumes the given pointer is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
@@ -595,7 +585,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check if the given node is colored black. </p>
-<p>Assumes the given pointer is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
@@ -629,7 +618,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check if the given node is colored red. </p>
-<p>Assumes the given pointer is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
@@ -667,11 +655,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Search for a given node and return a pointer to the node. </p>
-<p>Assumes the given pointer is not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">rootptr_ptr</td><td>A pointer to the pointer to the root node. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key of the node being searched for.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The key of the node being searched for. </td></tr>
   </table>
   </dd>
 </dl>

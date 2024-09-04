@@ -152,16 +152,16 @@ Functions</h2></td></tr>
 <tr class="memdesc:a20a36f75d2c05a2332f064b1fc74f899"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the priority queue is full.  <br /></td></tr>
 <tr class="separator:a20a36f75d2c05a2332f064b1fc74f899"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b94fa8941ceceff88019660a7bb017b" id="r_a1b94fa8941ceceff88019660a7bb017b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b94fa8941ceceff88019660a7bb017b">fpqueue_get_max</a> (const <a class="el" href="structfpqueue__type.html">fpqueue_type</a> *pqueue_ptr)</td></tr>
-<tr class="memdesc:a1b94fa8941ceceff88019660a7bb017b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the max value in the priority queue.  <br /></td></tr>
+<tr class="memdesc:a1b94fa8941ceceff88019660a7bb017b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the max value in a non-empty priority queue.  <br /></td></tr>
 <tr class="separator:a1b94fa8941ceceff88019660a7bb017b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abaad8227c2a2e713dca34b29ed356a36" id="r_abaad8227c2a2e713dca34b29ed356a36"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abaad8227c2a2e713dca34b29ed356a36">fpqueue_peek</a> (const <a class="el" href="structfpqueue__type.html">fpqueue_type</a> *pqueue_ptr)</td></tr>
-<tr class="memdesc:abaad8227c2a2e713dca34b29ed356a36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek the priority queue and get it's next to-be-popped (max) value.  <br /></td></tr>
+<tr class="memdesc:abaad8227c2a2e713dca34b29ed356a36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek a non-empty priority queue and get it's next to-be-popped (max) value.  <br /></td></tr>
 <tr class="separator:abaad8227c2a2e713dca34b29ed356a36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a1a1f20754dca9ce3eea47243e0f134" id="r_a8a1a1f20754dca9ce3eea47243e0f134"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a1a1f20754dca9ce3eea47243e0f134">fpqueue_pop_max</a> (<a class="el" href="structfpqueue__type.html">fpqueue_type</a> *pqueue_ptr)</td></tr>
-<tr class="memdesc:a8a1a1f20754dca9ce3eea47243e0f134"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop the max value away from the priority queue.  <br /></td></tr>
+<tr class="memdesc:a8a1a1f20754dca9ce3eea47243e0f134"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop the max value away from a non-empty priority queue.  <br /></td></tr>
 <tr class="separator:a8a1a1f20754dca9ce3eea47243e0f134"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a579cebd954e1ca46d49b5769d07cc760" id="r_a579cebd954e1ca46d49b5769d07cc760"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a579cebd954e1ca46d49b5769d07cc760">fpqueue_push</a> (<a class="el" href="structfpqueue__type.html">fpqueue_type</a> *pqueue_ptr, <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value, uint32_t priority)</td></tr>
-<tr class="memdesc:a579cebd954e1ca46d49b5769d07cc760"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value with given priority onto the priority queue.  <br /></td></tr>
+<tr class="memdesc:a579cebd954e1ca46d49b5769d07cc760"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value with given priority onto a non-full priority queue.  <br /></td></tr>
 <tr class="separator:a579cebd954e1ca46d49b5769d07cc760"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a614e5de36c8b34f7e941772aae3ac495" id="r_a614e5de36c8b34f7e941772aae3ac495"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a614e5de36c8b34f7e941772aae3ac495">fpqueue_clear</a> (<a class="el" href="structfpqueue__type.html">fpqueue_type</a> *pqueue_ptr)</td></tr>
 <tr class="memdesc:a614e5de36c8b34f7e941772aae3ac495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the elements in the priority queue.  <br /></td></tr>
@@ -367,7 +367,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clear the elements in the priority queue. </p>
-<p>Assumes <code>pqueue_ptr</code> is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
@@ -405,12 +404,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Copy the values from a source priority queue to a destination priority queue. </p>
-<p>Assumes: </p><ul>
-<li>Source and destination priority queue pointers are not pointing to the same memory. </li>
-<li>The priority queue pointers are not <code>NULL</code>. </li>
-<li>The destination priority queue has a capacity that is greater than or equal to source priority queue count. </li>
-<li>The destination priority queue is an empty priority queue.</li>
-</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">dest_pqueue_ptr</td><td>The destination priority queue. </td></tr>
@@ -447,7 +440,7 @@ Functions</h2></td></tr>
 <p>Create an priority queue with a given capacity with malloc(). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the priority queue.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the priority queue. </td></tr>
   </table>
   </dd>
 </dl>
@@ -522,14 +515,10 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get the max value in the priority queue. </p>
-<p>Assumes: </p><ul>
-<li><code>pqueue_ptr</code> is not <code>NULL</code>. </li>
-<li>The priority queue is not empty.</li>
-</ul>
+<p>Get the max value in a non-empty priority queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -561,10 +550,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return whether the priority queue is empty. </p>
-<p>Assumes the priority queue pointer is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -596,10 +584,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return whether the priority queue is full. </p>
-<p>Assumes the priority queue pointer is not <code>NULL</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -630,14 +617,10 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Peek the priority queue and get it's next to-be-popped (max) value. </p>
-<p>Assumes: </p><ul>
-<li><code>pqueue_ptr</code> is not <code>NULL</code>. </li>
-<li>The priority queue is not empty.</li>
-</ul>
+<p>Peek a non-empty priority queue and get it's next to-be-popped (max) value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -668,14 +651,10 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Pop the max value away from the priority queue. </p>
-<p>Assumes: </p><ul>
-<li><code>pqueue_ptr</code> is not <code>NULL</code>. </li>
-<li>The priority queue is not empty.</li>
-</ul>
+<p>Pop the max value away from a non-empty priority queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -715,11 +694,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Push a value with given priority onto the priority queue. </p>
-<p>Assumes: </p><ul>
-<li><code>pqueue_ptr</code> is not <code>NULL</code>. </li>
-<li>The priority queue is not full.</li>
-</ul>
+<p>Push a value with given priority onto a non-full priority queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>

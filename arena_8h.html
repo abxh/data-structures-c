@@ -196,7 +196,7 @@ static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><b>internal_
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The section size in bytes.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The section size in bytes. </td></tr>
   </table>
   </dd>
 </dl>
@@ -249,7 +249,7 @@ static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><b>internal_
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>The alignment size in bytes. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The section size in bytes.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The section size in bytes. </td></tr>
   </table>
   </dd>
 </dl>
@@ -333,7 +333,6 @@ static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><b>internal_
 </div><div class="memdoc">
 
 <p>Initialize the arena. </p>
-<dl class="section note"><dt>Note</dt><dd>The arena struct could stack / heap-allocated depending on program structure.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
@@ -390,7 +389,7 @@ static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><b>internal_
     <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">old_memory_ptr</td><td>A pointer, pointing to the beginning of the memory chunk. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">old_size</td><td>Old size allocated. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">new_size</td><td>New size to grow/shrink to.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_size</td><td>New size to grow/shrink to. </td></tr>
   </table>
   </dd>
 </dl>
@@ -453,7 +452,7 @@ static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><b>internal_
     <tr><td class="paramdir">[in]</td><td class="paramname">old_memory_ptr</td><td>A pointer, pointing to the beginning of the memory chunk. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>Alignment size. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">old_size</td><td>Old size allocated. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">new_size</td><td>New size to grow/shrink to.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_size</td><td>New size to grow/shrink to. </td></tr>
   </table>
   </dd>
 </dl>

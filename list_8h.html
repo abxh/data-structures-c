@@ -231,7 +231,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Add a node <em>after</em> the given node. </p>
-<p>Assumes the given pointers are not NULL.</p>
 <dl class="section note"><dt>Note</dt><dd>This can be used to construct a stack.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -273,7 +272,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Add a node <em>before</em> the given node. </p>
-<p>Assumes the given pointers are not NULL.</p>
 <dl class="section note"><dt>Note</dt><dd>This can be used to construct a queue.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -311,7 +309,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialize a list node. </p>
-<p>Assumes the given pointers are not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
@@ -351,11 +348,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check if a given list node is first in the list (aka after the head). </p>
-<p>Assumes the given pointers are not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">head_ptr</td><td>The head node pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">head_ptr</td><td>The head node pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -393,11 +389,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check if a given list node is the head of the list. </p>
-<p>Assumes the given pointers are not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">head_ptr</td><td>The head node pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">head_ptr</td><td>The head node pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -435,11 +430,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check if a given list node is the last of the list (aka before the tail). </p>
-<p>Assumes the given pointers are not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">tail_ptr</td><td>The tail node pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tail_ptr</td><td>The tail node pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -475,11 +469,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check if a given list node is the tail of the list. </p>
-<p>Assumes the given pointers are not NULL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">tail_ptr</td><td>The tail node pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tail_ptr</td><td>The tail node pointer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -514,7 +507,6 @@ Functions</h2></td></tr>
 
 <p>Remove a node and deattach it from the list it resides in. </p>
 <p>Assumes: </p><ul>
-<li>node_ptr is not NULL. </li>
 <li>node_ptr node is a part of a list. </li>
 <li>node_ptr node is not the head or tail node.</li>
 </ul>
@@ -558,11 +550,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Replace a given node by a new node. </p>
-<p>Assumes: </p><ul>
-<li>the given pointers are not null. </li>
-<li><code>old_ptr</code> and <code>new_ptr</code> are not pointing to the same node. </li>
-<li>old_ptr node is a part of a list and not the head or tail node.</li>
-</ul>
+<p>Assumes the node is a part of a list and not the head or tail node.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">old_ptr</td><td>Pointer to old node. </td></tr>
