@@ -60,14 +60,14 @@ typedef struct {
 /**
  * @brief Initialize the arena.
  *
- * @note The arena struct could stack / heap-allocated depending on program structure.
- *
  * @param[in] arena_ptr The arena pointer.
  * @param[in] n The length of the backing buffer.
  * @param[in] backing_buffer The backing buffer to use.
  */
 static inline void arena_init(arena_type* arena_ptr, const size_t n, unsigned char backing_buffer[n])
 {
+    assert(arena_ptr);
+    assert(backing_buffer);
     arena_ptr->buffer_ptr = backing_buffer;
     arena_ptr->buffer_length = n;
     arena_ptr->current_offset = 0;
@@ -81,6 +81,7 @@ static inline void arena_init(arena_type* arena_ptr, const size_t n, unsigned ch
  */
 static inline void arena_deallocate_all(arena_type* arena_ptr)
 {
+    assert(arena_ptr);
     arena_ptr->current_offset = 0;
     arena_ptr->previous_offset = 0;
 }
@@ -122,12 +123,12 @@ static inline uintptr_t internal_align_forward(const uintptr_t ptr, const size_t
  * @param[in] arena_ptr The arena pointer.
  * @param[in] alignment The alignment size in bytes.
  * @param[in] size The section size in bytes.
- *
  * @return A pointer to the memory chunk.
  *  @retval NULL If the arena doesn't have enough memory for the allocation.
  */
 static inline void* arena_allocate_aligned(arena_type* arena_ptr, const size_t alignment, const size_t size)
 {
+    assert(arena_ptr);
     // clang-format off
 
     // Align `current_offset` forward to the specified alignment
@@ -161,12 +162,12 @@ static inline void* arena_allocate_aligned(arena_type* arena_ptr, const size_t a
  *
  * @param[in] arena_ptr The arena pointer.
  * @param[in] size The section size in bytes.
- *
  * @return A pointer to the memory chunk.
  *  @retval NULL If the arena doesn't have enough memory for the allocation.
  */
 static inline void* arena_allocate(arena_type* arena_ptr, const size_t size)
 {
+    assert(arena_ptr);
     return arena_allocate_aligned(arena_ptr, DEFAULT_ALIGNMENT, size);
 }
 
@@ -178,13 +179,13 @@ static inline void* arena_allocate(arena_type* arena_ptr, const size_t size)
  * @param[in] alignment Alignment size.
  * @param[in] old_size Old size allocated.
  * @param[in] new_size New size to grow/shrink to.
- *
  * @return A pointer to reallocated the memory chunk.
  *  @retval NULL If arena doesn't have enough memory for the reallocation.
  */
 static inline void* arena_reallocate_aligned(arena_type* arena_ptr, void* old_memory_ptr, const size_t alignment,
                                              const size_t old_size, const size_t new_size)
 {
+    assert(arena_ptr);
     assert(is_pow2(alignment));
 
     const unsigned char* old_mem_buf = (unsigned char*)old_memory_ptr;
@@ -222,11 +223,11 @@ static inline void* arena_reallocate_aligned(arena_type* arena_ptr, void* old_me
  * @param[in] old_memory_ptr A pointer, pointing to the beginning of the memory chunk.
  * @param[in] old_size Old size allocated.
  * @param[in] new_size New size to grow/shrink to.
- *
  * @return A pointer to reallocated the memory chunk.
  *  @retval NULL If arena doesn't have enough memory for the reallocation.
  */
 static inline void* arena_reallocate(arena_type* arena_ptr, void* old_memory_ptr, const size_t old_size, const size_t new_size)
 {
+    assert(arena_ptr);
     return arena_reallocate_aligned(arena_ptr, old_memory_ptr, DEFAULT_ALIGNMENT, old_size, new_size);
 }

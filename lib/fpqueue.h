@@ -147,7 +147,6 @@ typedef struct {
  * @brief Create an priority queue with a given capacity with malloc().
  *
  * @param[in] capacity Maximum number of elements expected to be stored in the priority queue.
- *
  * @return A pointer to the priority queue.
  * @retval `NULL`
  *   @li If capacity is 0 or is larger than UINT32_MAX.
@@ -187,10 +186,7 @@ static inline void JOIN(FPQUEUE_NAME, destroy)(FPQUEUE_TYPE* pqueue_ptr)
 /**
  * @brief Return whether the priority queue is empty.
  *
- * Assumes the priority queue pointer is not `NULL`.
- *
  * @param[in] pqueue_ptr The priority queue pointer.
- *
  * @return whether the priority queue is empty.
  */
 static inline bool JOIN(FPQUEUE_NAME, is_empty)(const FPQUEUE_TYPE* pqueue_ptr)
@@ -203,10 +199,7 @@ static inline bool JOIN(FPQUEUE_NAME, is_empty)(const FPQUEUE_TYPE* pqueue_ptr)
 /**
  * @brief Return whether the priority queue is full.
  *
- * Assumes the priority queue pointer is not `NULL`.
- *
  * @param[in] pqueue_ptr The priority queue pointer.
- *
  * @return whether the priority queue is full.
  */
 static inline bool JOIN(FPQUEUE_NAME, is_full)(const FPQUEUE_TYPE* pqueue_ptr)
@@ -217,14 +210,9 @@ static inline bool JOIN(FPQUEUE_NAME, is_full)(const FPQUEUE_TYPE* pqueue_ptr)
 }
 
 /**
- * @brief Get the max value in the priority queue.
- *
- * Assumes:
- * @li `pqueue_ptr` is not `NULL`.
- * @li The priority queue is not empty.
+ * @brief Get the max value in a non-empty priority queue.
  *
  * @param[in] pqueue_ptr The priority queue pointer.
- *
  * @return The max value.
  */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_max)(const FPQUEUE_TYPE* pqueue_ptr)
@@ -236,14 +224,9 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_max)(const FPQUEUE_TYPE* pqueue_
 }
 
 /**
- * @brief Peek the priority queue and get it's next to-be-popped (max) value.
- *
- * Assumes:
- * @li `pqueue_ptr` is not `NULL`.
- * @li The priority queue is not empty.
+ * @brief Peek a non-empty priority queue and get it's next to-be-popped (max) value.
  *
  * @param[in] pqueue_ptr The priority queue pointer.
- *
  * @return The next to-be-popped (max) value.
  */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, peek)(const FPQUEUE_TYPE* pqueue_ptr)
@@ -281,14 +264,9 @@ static inline void JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(FPQUEUE_TYPE* pq
 /// @endcond
 
 /**
- * @brief Pop the max value away from the priority queue.
- *
- * Assumes:
- * @li `pqueue_ptr` is not `NULL`.
- * @li The priority queue is not empty.
+ * @brief Pop the max value away from a non-empty priority queue.
  *
  * @param[in] pqueue_ptr The priority queue pointer.
- *
  * @return The max value.
  */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE* pqueue_ptr)
@@ -328,11 +306,7 @@ static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE* pque
 /// @endcond
 
 /**
- * @brief Push a value with given priority onto the priority queue.
- *
- * Assumes:
- * @li `pqueue_ptr` is not `NULL`.
- * @li The priority queue is not full.
+ * @brief Push a value with given priority onto a non-full priority queue.
  *
  * @param[in] pqueue_ptr The priority queue pointer.
  * @param[in] value The value.
@@ -355,8 +329,6 @@ static inline void JOIN(FPQUEUE_NAME, push)(FPQUEUE_TYPE* pqueue_ptr, VALUE_TYPE
 /**
  * @brief Clear the elements in the priority queue.
  *
- * Assumes `pqueue_ptr` is not `NULL`.
- *
  * @param[in] pqueue_ptr The priority queue pointer.
  */
 static inline void JOIN(FPQUEUE_NAME, clear)(FPQUEUE_TYPE* pqueue_ptr)
@@ -368,12 +340,6 @@ static inline void JOIN(FPQUEUE_NAME, clear)(FPQUEUE_TYPE* pqueue_ptr)
 
 /**
  * @brief Copy the values from a source priority queue to a destination priority queue.
- *
- * Assumes:
- * @li Source and destination priority queue pointers are not pointing to the same memory.
- * @li The priority queue pointers are not `NULL`.
- * @li The destination priority queue has a capacity that is greater than or equal to source priority queue count.
- * @li The destination priority queue is an empty priority queue.
  *
  * @param[in,out] dest_pqueue_ptr The destination priority queue.
  * @param[in] src_pqueue_ptr The source priority queue.

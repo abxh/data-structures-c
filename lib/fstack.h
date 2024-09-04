@@ -130,7 +130,6 @@ typedef struct {
  * @brief Create an stack with a given capacity with malloc().
  *
  * @param[in] capacity Maximum number of elements expected to be stored in the stack.
- *
  * @return A pointer to the stack.
  * @retval `NULL`
  *   @li If capacity is 0 or is larger than UINT32_MAX.
@@ -170,10 +169,7 @@ static inline void JOIN(FSTACK_NAME, destroy)(FSTACK_TYPE* stack_ptr)
 /**
  * @brief Return whether the stack is empty.
  *
- * Assumes the stack pointer is not `NULL`.
- *
  * @param[in] stack_ptr The stack pointer.
- *
  * @return whether the stack is empty.
  */
 static inline bool JOIN(FSTACK_NAME, is_empty)(const FSTACK_TYPE* stack_ptr)
@@ -186,10 +182,7 @@ static inline bool JOIN(FSTACK_NAME, is_empty)(const FSTACK_TYPE* stack_ptr)
 /**
  * @brief Return whether the stack is full.
  *
- * Assumes the stack pointer is not `NULL`.
- *
  * @param[in] stack_ptr The stack pointer.
- *
  * @return whether the stack is full.
  */
 static inline bool JOIN(FSTACK_NAME, is_full)(const FSTACK_TYPE* stack_ptr)
@@ -204,13 +197,8 @@ static inline bool JOIN(FSTACK_NAME, is_full)(const FSTACK_TYPE* stack_ptr)
  *
  * index starts from the top as `0` and is counted upward to `count - 1` as bottom.
  *
- * Assumes:
- * @li `stack_ptr` is not `NULL`.
- * @li `index` is strictly less than stack count.
- *
  * @param[in] stack_ptr The stack pointer.
  * @param[in] index The index to retrieve to value from.
- *
  * @return The value at `index`.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, at)(const FSTACK_TYPE* stack_ptr, const uint32_t index)
@@ -222,14 +210,9 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, at)(const FSTACK_TYPE* stack_ptr, con
 }
 
 /**
- * @brief Get the value from the top of the stack.
- *
- * Assumes:
- * @li `stack_ptr` is not `NULL`.
- * @li The stack is not empty.
+ * @brief Get the value from the top of a non-empty stack.
  *
  * @param[in] stack_ptr The stack pointer.
- *
  * @return The top value.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, get_top)(const FSTACK_TYPE* stack_ptr)
@@ -241,14 +224,9 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, get_top)(const FSTACK_TYPE* stack_ptr
 }
 
 /**
- * @brief Get the value from the bottom of the stack.
- *
- * Assumes:
- * @li `stack_ptr` is not `NULL`.
- * @li The stack is not empty.
+ * @brief Get the value from the bottom of a non-empty stack.
  *
  * @param[in] stack_ptr The stack pointer.
- *
  * @return The bottom value.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, get_bottom)(const FSTACK_TYPE* stack_ptr)
@@ -260,14 +238,9 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, get_bottom)(const FSTACK_TYPE* stack_
 }
 
 /**
- * @brief Peek the stack and get it's next to-be-popped value.
- *
- * Assumes:
- * @li `stack_ptr` is not `NULL`.
- * @li The stack is not empty.
+ * @brief Peek a non-empty stack and get it's next to-be-popped value.
  *
  * @param[in] stack_ptr The stack pointer.
- *
  * @return The next to-be-popped value.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, peek)(const FSTACK_TYPE* stack_ptr)
@@ -276,11 +249,7 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, peek)(const FSTACK_TYPE* stack_ptr)
 }
 
 /**
- * @brief Push a value onto the stack.
- *
- * Assumes:
- * @li `stack_ptr` is not `NULL`.
- * @li The stack is not full.
+ * @brief Push a value onto a non-full stack.
  *
  * @param[in] stack_ptr The stack pointer.
  * @param[in] value The value.
@@ -294,14 +263,9 @@ static inline void JOIN(FSTACK_NAME, push)(FSTACK_TYPE* stack_ptr, const VALUE_T
 }
 
 /**
- * @brief Pop a value away from the stack.
- *
- * Assumes:
- * @li `stack_ptr` is not `NULL`.
- * @li The stack is not empty.
+ * @brief Pop a value away from a non-empty stack.
  *
  * @param[in] stack_ptr The stack pointer.
- *
  * @return The top value.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, pop)(FSTACK_TYPE* stack_ptr)
@@ -315,8 +279,6 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, pop)(FSTACK_TYPE* stack_ptr)
 /**
  * @brief Clear the elements in the stack.
  *
- * Assumes `stack_ptr` is not `NULL`.
- *
  * @param[in] stack_ptr The stack pointer.
  */
 static inline void JOIN(FSTACK_NAME, clear)(FSTACK_TYPE* stack_ptr)
@@ -327,12 +289,6 @@ static inline void JOIN(FSTACK_NAME, clear)(FSTACK_TYPE* stack_ptr)
 
 /**
  * @brief Copy the values from a source stack to a destination stack.
- *
- * Assumes:
- * @li Source and destination stack pointers are not pointing to the same memory.
- * @li The stack pointers are not `NULL`.
- * @li The destination stack has a capacity that is greater than or equal to source stack count.
- * @li The destination stack is an empty stack.
  *
  * @param[in,out] dest_stack_ptr The destination stack.
  * @param[in] src_stack_ptr The source stack.

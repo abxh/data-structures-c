@@ -150,8 +150,6 @@ typedef struct RBTREE_NODE_TYPE {
 /**
  * @brief Initialize a red-black tree struct
  *
- * Assumes the given pointer is not NULL.
- *
  * @note This should be initialized with the address to a pointer to a node.
  *
  * @param[in] rootptr_ptr A pointer to the pointer to the root node.
@@ -201,10 +199,8 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_parent_ptr))(RBTREE
 /**
  * @brief Initialize a red-black tree node
  *
- * Assumes the given pointer is not NULL.
- *
  * @param[in] node_ptr The node pointer.
- * @param[in]     key      The key to initialize the node with.
+ * @param[in] key The key to initialize the node with.
  */
 static inline void JOIN(RBTREE_NAME, node_init)(RBTREE_NODE_TYPE* node_ptr, KEY_TYPE key)
 {
@@ -218,8 +214,6 @@ static inline void JOIN(RBTREE_NAME, node_init)(RBTREE_NODE_TYPE* node_ptr, KEY_
 /**
  * @brief Extract the parent pointer of a node.
  *
- * Assumes the given pointer is not NULL.
- *
  * @param[in] node_ptr The node pointer.
  */
 static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, node_get_parent_ptr)(RBTREE_NODE_TYPE* node_ptr)
@@ -231,8 +225,6 @@ static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, node_get_parent_ptr)(RBTREE_NO
 
 /**
  * @brief Check if the given node is colored black.
- *
- * Assumes the given pointer is not NULL.
  *
  * @param[in] node_ptr The node pointer.
  */
@@ -246,8 +238,6 @@ static inline bool JOIN(RBTREE_NAME, node_is_black)(const RBTREE_NODE_TYPE* node
 /**
  * @brief Check if the given node is colored red.
  *
- * Assumes the given pointer is not NULL.
- *
  * @param[in] node_ptr The node pointer.
  */
 static inline bool JOIN(RBTREE_NAME, node_is_red)(const RBTREE_NODE_TYPE* node_ptr)
@@ -260,10 +250,7 @@ static inline bool JOIN(RBTREE_NAME, node_is_red)(const RBTREE_NODE_TYPE* node_p
 /**
  * @brief Check if the tree is empty.
  *
- * Assumes the given pointer is not NULL.
- *
  * @param[in] rootptr_ptr A pointer to the pointer to the root node.
- *
  * @return Whether the tree is empty.
  */
 static inline bool JOIN(RBTREE_NAME, is_empty)(RBTREE_NODE_TYPE** rootptr_ptr)
@@ -276,11 +263,8 @@ static inline bool JOIN(RBTREE_NAME, is_empty)(RBTREE_NODE_TYPE** rootptr_ptr)
 /**
  * @brief Check if the tree contains a given key.
  *
- * Assumes the given pointer is not NULL.
- *
  * @param[in] rootptr_ptr A pointer to the pointer to the root node.
  * @param[in] key The key
- *
  * @return Whether the tree contains the key.
  */
 static inline bool JOIN(RBTREE_NAME, contains_key)(RBTREE_NODE_TYPE** rootptr_ptr, const KEY_TYPE key)
@@ -309,11 +293,8 @@ static inline bool JOIN(RBTREE_NAME, contains_key)(RBTREE_NODE_TYPE** rootptr_pt
 /**
  * @brief Search for a given node and return a pointer to the node.
  *
- * Assumes the given pointer is not NULL.
- *
  * @param[in] rootptr_ptr A pointer to the pointer to the root node.
- * @param[in] key      The key of the node being searched for.
- *
+ * @param[in] key The key of the node being searched for.
  * @return A pointer to the searched node
  *  @retval `NULL` If a node with the given key wasn't found.
  */
@@ -438,11 +419,7 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(RBTREE_NODE_T
 /// @endcond
 
 /**
- * @brief Insert a given node in the tree.
- *
- * Assumes:
- * @li The node key is not already contained in the tree. (no duplicate keys)
- * @li The given pointers are not NULL.
+ * @brief Insert a given node with a non-duplicate key in the tree.
  *
  * @param[in] rootptr_ptr A pointer to the pointer to the root node.
  * @param[in] node_ptr The node pointer.
@@ -578,11 +555,8 @@ Case_6:
 /**
  * @brief Delete a given node from the tree.
  *
- * Assumes The given pointers are not NULL.
- *
  * @param[in] rootptr_ptr A pointer to the pointer to the root node.
  * @param[in] node_ptr The node pointer.
- *
  * @return Pointer to the deleted node reinitialized.
  */
 static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, delete_node)(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* node_ptr)
