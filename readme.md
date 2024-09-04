@@ -5,6 +5,9 @@
 
 Generic, header-only and performant data structures. New memory allocation is kept to a minimum.
 
+All data types are expected to be Plain-Old-Datas (PODs). No explicit iterator mechanism is provided, but
+macros can provide a primitive syntactical replacement.
+
 Made for my own exploration and use.
 
 Run `make test` to run all tests and examples.
