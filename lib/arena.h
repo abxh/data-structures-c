@@ -57,6 +57,13 @@ typedef struct {
     size_t current_offset;     ///< Current offset describing space allocated in buffer.
 } arena_type;
 
+/// @cond DO_NOT_DOCUMENT
+
+/* align pointer to the next alignment boundary */
+static inline uintptr_t internal_align_forward(const uintptr_t ptr, const size_t align);
+
+/// @endcond
+
 /**
  * @brief Initialize the arena.
  *
@@ -84,37 +91,6 @@ static inline void arena_deallocate_all(arena_type* arena_ptr)
     assert(arena_ptr);
     arena_ptr->current_offset = 0;
     arena_ptr->previous_offset = 0;
-}
-
-/* align pointer to the next alignment boundary */
-static inline uintptr_t internal_align_forward(const uintptr_t ptr, const size_t align)
-{
-    assert(is_pow2(align));
-
-    const uintptr_t p = ptr;
-    const uintptr_t a = (uintptr_t)align;
-    const uintptr_t r = p & (a - 1); // Same as (p % a) but faster as 'a' is a power of two
-
-    // % is defined so for r = (p % a), q: some integer
-    //     p = q * a + r
-
-    // assuming r != 0:
-    //
-    //           (q+1)*a
-    //         ----------->
-    //           r    a-r
-    //         ----> ----->
-    //       q*a   p     p+a-r
-    // <------|----|------|------>
-
-    if (r != 0) {
-        // If 'p' address is not aligned, push the address to the
-        // next value which is aligned
-        return p + a - r;
-    }
-    else {
-        return p;
-    }
 }
 
 /**
@@ -231,3 +207,24 @@ static inline void* arena_reallocate(arena_type* arena_ptr, void* old_memory_ptr
     assert(arena_ptr);
     return arena_reallocate_aligned(arena_ptr, old_memory_ptr, DEFAULT_ALIGNMENT, old_size, new_size);
 }
+
+/// @cond DO_NOT_DOCUMENT
+static inline uintptr_t internal_align_forward(const uintptr_t ptr, const size_t align)
+{
+    assert(is_pow2(align));
+
+    const uintptr_t p = ptr;
+    const uintptr_t a = (uintptr_t)align;
+    const uintptr_t r = p & (a - 1); // Same as (p % a) but faster as 'a' is a power of two
+
+    /*
+        for alignment 8:
+            alignment_padding = ... , 0, 7, 6, 5, 4, 3, 2, 1, 0, ...
+                                     /|\                     /|\
+           (at alignment boundaries)  |                       |
+    */
+    const uintptr_t alignment_padding = ((r != 0) ? 1 : 0) * (a - r);
+
+    return p + alignment_padding;
+}
+/// @endcond

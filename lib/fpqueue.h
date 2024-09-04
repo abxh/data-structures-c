@@ -143,6 +143,16 @@ typedef struct {
 
 // function definitions: {{{
 
+/// @cond DO_NOT_DOCUMENT
+
+/* push a node down the heap. for restoring the heap property after insertion */
+static inline void JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(FPQUEUE_TYPE* pqueue_ptr, const uint32_t index);
+
+/* push a node up the heap. for restoring the heap property after deletion */
+static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE* pqueue_ptr, uint32_t index);
+
+/// @endcond
+
 /**
  * @brief Create an priority queue with a given capacity with malloc().
  *
@@ -234,35 +244,6 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, peek)(const FPQUEUE_TYPE* pqueue_ptr
     return JOIN(FPQUEUE_NAME, get_max)(pqueue_ptr);
 }
 
-/// @cond DO_NOT_DOCUMENT
-static inline void JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(FPQUEUE_TYPE* pqueue_ptr, const uint32_t index)
-{
-    assert(pqueue_ptr != NULL);
-    assert(pqueue_ptr->count == 0 || index < pqueue_ptr->count);
-
-    const uint32_t l = fpqueue_left_child(index);
-    const uint32_t r = fpqueue_right_child(index);
-
-    uint32_t largest = index;
-    if (l < pqueue_ptr->count && pqueue_ptr->elements[l].priority > pqueue_ptr->elements[index].priority) {
-        largest = l;
-    }
-    if (r < pqueue_ptr->count && pqueue_ptr->elements[r].priority > pqueue_ptr->elements[largest].priority) {
-        largest = r;
-    }
-
-    if (largest == index) {
-        return;
-    }
-
-    const FPQUEUE_ELEMENT_TYPE temp = pqueue_ptr->elements[index];
-    pqueue_ptr->elements[index] = pqueue_ptr->elements[largest];
-    pqueue_ptr->elements[largest] = temp;
-
-    JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(pqueue_ptr, largest);
-}
-/// @endcond
-
 /**
  * @brief Pop the max value away from a non-empty priority queue.
  *
@@ -284,26 +265,6 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE* pqueue_ptr)
 
     return max;
 }
-
-/// @cond DO_NOT_DOCUMENT
-static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE* pqueue_ptr, uint32_t index)
-{
-    assert(pqueue_ptr != NULL);
-    assert(index < pqueue_ptr->count);
-
-    uint32_t parent;
-    while (index > 0 && (parent = fpqueue_parent(index),
-
-                         pqueue_ptr->elements[parent].priority < pqueue_ptr->elements[index].priority)) {
-
-        const FPQUEUE_ELEMENT_TYPE temp = pqueue_ptr->elements[index];
-        pqueue_ptr->elements[index] = pqueue_ptr->elements[parent];
-        pqueue_ptr->elements[parent] = temp;
-
-        index = parent;
-    }
-}
-/// @endcond
 
 /**
  * @brief Push a value with given priority onto a non-full priority queue.
@@ -356,6 +317,54 @@ static inline void JOIN(FPQUEUE_NAME, copy)(FPQUEUE_TYPE* restrict dest_pqueue_p
     }
     dest_pqueue_ptr->count = src_pqueue_ptr->count;
 }
+
+/// @cond DO_NOT_DOCUMENT
+
+static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE* pqueue_ptr, uint32_t index)
+{
+    assert(pqueue_ptr != NULL);
+    assert(index < pqueue_ptr->count);
+
+    uint32_t parent;
+    while (index > 0 && (parent = fpqueue_parent(index),
+
+                         pqueue_ptr->elements[parent].priority < pqueue_ptr->elements[index].priority)) {
+
+        const FPQUEUE_ELEMENT_TYPE temp = pqueue_ptr->elements[index];
+        pqueue_ptr->elements[index] = pqueue_ptr->elements[parent];
+        pqueue_ptr->elements[parent] = temp;
+
+        index = parent;
+    }
+}
+
+static inline void JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(FPQUEUE_TYPE* pqueue_ptr, const uint32_t index)
+{
+    assert(pqueue_ptr != NULL);
+    assert(pqueue_ptr->count == 0 || index < pqueue_ptr->count);
+
+    const uint32_t l = fpqueue_left_child(index);
+    const uint32_t r = fpqueue_right_child(index);
+
+    uint32_t largest = index;
+    if (l < pqueue_ptr->count && pqueue_ptr->elements[l].priority > pqueue_ptr->elements[index].priority) {
+        largest = l;
+    }
+    if (r < pqueue_ptr->count && pqueue_ptr->elements[r].priority > pqueue_ptr->elements[largest].priority) {
+        largest = r;
+    }
+
+    if (largest == index) {
+        return;
+    }
+
+    const FPQUEUE_ELEMENT_TYPE temp = pqueue_ptr->elements[index];
+    pqueue_ptr->elements[index] = pqueue_ptr->elements[largest];
+    pqueue_ptr->elements[largest] = temp;
+
+    JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(pqueue_ptr, largest);
+}
+/// @endcond
 
 // }}}
 

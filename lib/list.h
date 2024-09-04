@@ -50,6 +50,16 @@ typedef struct list_node_type {
  */
 #define list_node_entry(node_ptr, container_type, node_member_name) container_of(node_ptr, container_type, node_member_name)
 
+/// @cond DO_NOT_DOCUMENT
+
+// Add a node between two (known) nodes.
+static inline void internal_list_node_add_between(list_node_type* node_ptr, list_node_type* before_ptr, list_node_type* after_ptr);
+
+// Attach two nodes together, so anything in between is ignored.
+static inline void internal_list_node_attach(list_node_type* prev_ptr, list_node_type* next_ptr);
+
+/// @endcond
+
 /**
  * @brief Initialize a list node
  *
@@ -122,23 +132,6 @@ static inline bool list_node_is_tail(const list_node_type* node_ptr, const list_
     return node_ptr == tail_ptr;
 }
 
-/// @cond DO_NOT_DOCUMENT
-
-// Add a node between two (known) nodes.
-static inline void internal_list_node_add_between(list_node_type* node_ptr, list_node_type* before_ptr, list_node_type* after_ptr)
-{
-    assert(node_ptr != NULL);
-    assert(before_ptr != NULL);
-    assert(after_ptr != NULL);
-
-    before_ptr->next_ptr = node_ptr;
-    node_ptr->prev_ptr = before_ptr;
-
-    after_ptr->prev_ptr = node_ptr;
-    node_ptr->next_ptr = after_ptr;
-}
-/// @endcond
-
 /**
  * @brief Add a node *after* the given node.
  *
@@ -170,19 +163,6 @@ static inline void list_node_add_before(list_node_type* node_ptr, list_node_type
 
     internal_list_node_add_between(node_ptr, next_ptr->prev_ptr, next_ptr);
 }
-
-/// @cond DO_NOT_DOCUMENT
-
-// Attach two nodes together, so anything in between is ignored.
-static inline void internal_list_node_attach(list_node_type* prev_ptr, list_node_type* next_ptr)
-{
-    assert(prev_ptr != NULL);
-    assert(next_ptr != NULL);
-
-    prev_ptr->next_ptr = next_ptr;
-    next_ptr->prev_ptr = prev_ptr;
-}
-/// @endcond
 
 /**
  * @brief Remove a node and deattach it from the list it resides in.
@@ -226,5 +206,31 @@ static inline void list_node_replace(list_node_type* old_ptr, list_node_type* ne
     internal_list_node_add_between(new_ptr, old_ptr->prev_ptr, old_ptr->next_ptr);
     list_node_init(old_ptr);
 }
+
+/// @cond DO_NOT_DOCUMENT
+
+static inline void internal_list_node_add_between(list_node_type* node_ptr, list_node_type* before_ptr, list_node_type* after_ptr)
+{
+    assert(node_ptr != NULL);
+    assert(before_ptr != NULL);
+    assert(after_ptr != NULL);
+
+    before_ptr->next_ptr = node_ptr;
+    node_ptr->prev_ptr = before_ptr;
+
+    after_ptr->prev_ptr = node_ptr;
+    node_ptr->next_ptr = after_ptr;
+}
+
+static inline void internal_list_node_attach(list_node_type* prev_ptr, list_node_type* next_ptr)
+{
+    assert(prev_ptr != NULL);
+    assert(next_ptr != NULL);
+
+    prev_ptr->next_ptr = next_ptr;
+    next_ptr->prev_ptr = prev_ptr;
+}
+
+/// @endcond
 
 // vim: ft=c

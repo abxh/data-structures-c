@@ -147,6 +147,29 @@ typedef struct RBTREE_NODE_TYPE {
 
 // function definitions: {{{
 
+/// @cond DO_NOT_DOCUMENT
+static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_red))(RBTREE_NODE_TYPE* node_ptr);
+static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_black))(RBTREE_NODE_TYPE* node_ptr);
+static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_color_of_other))(RBTREE_NODE_TYPE* node_ptr,
+                                                                                       const RBTREE_NODE_TYPE* other_ptr);
+static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_parent_ptr))(RBTREE_NODE_TYPE* node_ptr, RBTREE_NODE_TYPE* parent_ptr);
+
+// rotate a subtree around a given subtree root node and direction (0: left or 1: right). returns the new subtree root
+static inline RBTREE_NODE_TYPE* JOIN(internal, JOIN(RBTREE_NAME, rotate_dir))(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* P,
+                                                                              const uint8_t dir);
+
+// rebalance tree after insert. see explanation in the sources linked above.
+static inline void JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* N);
+
+// move the parent of a node (src) to another node (dest).
+static inline void JOIN(internal, JOIN(RBTREE_NAME, node_transplant))(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* src_node,
+                                                                      RBTREE_NODE_TYPE* dest_node);
+
+// rebalance tree after delete. see explanation in the sources linked above. for the special case where:
+// (P's child) was not root and was black and had no children
+static inline void JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* P, int dir);
+/// @endcond
+
 /**
  * @brief Initialize a red-black tree struct
  *
@@ -160,41 +183,6 @@ static inline void JOIN(RBTREE_NAME, init)(RBTREE_NODE_TYPE** rootptr_ptr)
 
     *rootptr_ptr = NULL;
 }
-
-/// @cond DO_NOT_DOCUMENT
-static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_red))(RBTREE_NODE_TYPE* node_ptr)
-{
-    assert(node_ptr != NULL);
-
-    node_ptr->__parent_ptr_with_color &= ~1;
-}
-static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_black))(RBTREE_NODE_TYPE* node_ptr)
-{
-    assert(node_ptr != NULL);
-
-    node_ptr->__parent_ptr_with_color |= 1;
-}
-static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_color_of_other))(RBTREE_NODE_TYPE* node_ptr,
-                                                                                       const RBTREE_NODE_TYPE* other_ptr)
-{
-    assert(other_ptr != NULL);
-    assert(node_ptr != NULL);
-
-    const bool is_black = other_ptr->__parent_ptr_with_color & 1;
-
-    node_ptr->__parent_ptr_with_color &= ~1;
-    node_ptr->__parent_ptr_with_color += is_black;
-}
-static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_parent_ptr))(RBTREE_NODE_TYPE* node_ptr, RBTREE_NODE_TYPE* parent_ptr)
-{
-    assert(node_ptr != NULL);
-
-    const bool is_black = node_ptr->__parent_ptr_with_color & 1;
-
-    node_ptr->__parent_ptr_with_color = (uintptr_t)parent_ptr;
-    node_ptr->__parent_ptr_with_color += is_black;
-}
-/// @endcond
 
 /**
  * @brief Initialize a red-black tree node
@@ -320,7 +308,167 @@ static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, search_node)(RBTREE_NODE_TYPE*
     return NULL;
 }
 
+/**
+ * @brief Insert a given node with a non-duplicate key in the tree.
+ *
+ * @param[in] rootptr_ptr A pointer to the pointer to the root node.
+ * @param[in] node_ptr The node pointer.
+ */
+static inline void JOIN(RBTREE_NAME, insert_node)(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* node_ptr)
+{
+    assert(rootptr_ptr != NULL);
+    assert(node_ptr != NULL);
+    assert(RBTREE_CONTAINS_KEY(rootptr_ptr, node_ptr->key) == false);
+
+    RBTREE_NODE_TYPE* parent_ptr = NULL;
+    RBTREE_NODE_TYPE* current_ptr = *rootptr_ptr;
+
+    while (current_ptr != NULL) {
+        parent_ptr = current_ptr;
+
+        if (KEY_IS_STRICTLY_LESS(node_ptr->key, current_ptr->key)) {
+            current_ptr = current_ptr->left_ptr;
+        }
+        else {
+            current_ptr = current_ptr->right_ptr;
+        }
+    }
+
+    node_ptr->left_ptr = node_ptr->right_ptr = NULL;
+    RBTREE_NODE_SET_PARENT_PTR(node_ptr, parent_ptr);
+    RBTREE_NODE_SET_COLOR_TO_RED(node_ptr);
+
+    if (parent_ptr == NULL) {
+        *rootptr_ptr = node_ptr;
+    }
+    else {
+        const uint8_t dir = KEY_IS_STRICTLY_LESS(parent_ptr->key, node_ptr->key);
+        parent_ptr->child_ptrs[dir] = node_ptr;
+
+        JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(rootptr_ptr, node_ptr);
+    }
+}
+
+/**
+ * @brief Delete a given node from the tree.
+ *
+ * @param[in] rootptr_ptr A pointer to the pointer to the root node.
+ * @param[in] node_ptr The node pointer.
+ * @return Pointer to the deleted node reinitialized.
+ */
+static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, delete_node)(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* node_ptr)
+{
+    assert(rootptr_ptr != NULL);
+    assert(node_ptr != NULL);
+
+    if (node_ptr->left_ptr == NULL && node_ptr->right_ptr == NULL) {
+        if (node_ptr == *rootptr_ptr || RBTREE_NODE_IS_RED(node_ptr)) {
+            RBTREE_NODE_TRANSPLANT(rootptr_ptr, node_ptr, NULL);
+        }
+        else {
+            RBTREE_NODE_TYPE* const parent_ptr = RBTREE_NODE_GET_PARENT_PTR(node_ptr);
+            const int dir = RBTREE_CHILD_DIR(node_ptr);
+
+            RBTREE_NODE_TRANSPLANT(rootptr_ptr, node_ptr, NULL);
+
+            JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(rootptr_ptr, parent_ptr, dir);
+        }
+    }
+    else if (node_ptr->left_ptr == NULL || node_ptr->right_ptr == NULL) {
+        const uint8_t dir = node_ptr->left_ptr == NULL;
+
+        assert(RBTREE_NODE_IS_BLACK(node_ptr));
+        assert(RBTREE_NODE_IS_RED(node_ptr->child_ptrs[dir]));
+
+        RBTREE_NODE_SET_COLOR_TO_BLACK(node_ptr->child_ptrs[dir]);
+
+        RBTREE_NODE_TRANSPLANT(rootptr_ptr, node_ptr, node_ptr->child_ptrs[dir]);
+    }
+    else {
+        RBTREE_NODE_TYPE* successor_ptr = node_ptr->right_ptr;
+
+        while (successor_ptr->left_ptr != NULL) {
+            successor_ptr = successor_ptr->left_ptr;
+        }
+
+        const bool prev_successor_black = RBTREE_NODE_IS_BLACK(successor_ptr);
+        const int prev_successor_dir = RBTREE_CHILD_DIR(successor_ptr);
+        RBTREE_NODE_TYPE* const prev_successor_parent_ptr = RBTREE_NODE_GET_PARENT_PTR(successor_ptr);
+        RBTREE_NODE_TYPE* const prev_successor_child_ptr = successor_ptr->right_ptr;
+
+        {
+            if (RBTREE_NODE_GET_PARENT_PTR(successor_ptr) != node_ptr) {
+                RBTREE_NODE_TRANSPLANT(rootptr_ptr, successor_ptr, successor_ptr->right_ptr);
+
+                successor_ptr->right_ptr = node_ptr->right_ptr;
+                RBTREE_NODE_SET_PARENT_PTR(node_ptr->right_ptr, successor_ptr);
+            }
+            RBTREE_NODE_TRANSPLANT(rootptr_ptr, node_ptr, successor_ptr);
+
+            successor_ptr->left_ptr = node_ptr->left_ptr;
+            RBTREE_NODE_SET_PARENT_PTR(node_ptr->left_ptr, successor_ptr);
+        }
+
+        {
+            RBTREE_NODE_SET_COLOR_TO_COLOR_OF_OTHER(successor_ptr, node_ptr);
+
+            if (prev_successor_child_ptr != NULL) {
+                assert(prev_successor_black);
+                assert(RBTREE_NODE_IS_RED(prev_successor_child_ptr));
+
+                RBTREE_NODE_SET_COLOR_TO_BLACK(prev_successor_child_ptr);
+            }
+            else if (prev_successor_child_ptr == NULL && prev_successor_black) {
+                if (prev_successor_parent_ptr == node_ptr) {
+                    JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(rootptr_ptr, successor_ptr, prev_successor_dir);
+                }
+                else {
+                    JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(rootptr_ptr, prev_successor_parent_ptr, prev_successor_dir);
+                }
+            }
+        }
+    }
+
+    node_ptr->left_ptr = node_ptr->right_ptr = NULL;
+    RBTREE_NODE_SET_PARENT_PTR(node_ptr, NULL);
+
+    return node_ptr;
+}
+
 /// @cond DO_NOT_DOCUMENT
+
+static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_red))(RBTREE_NODE_TYPE* node_ptr)
+{
+    assert(node_ptr != NULL);
+
+    node_ptr->__parent_ptr_with_color &= ~1;
+}
+static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_black))(RBTREE_NODE_TYPE* node_ptr)
+{
+    assert(node_ptr != NULL);
+
+    node_ptr->__parent_ptr_with_color |= 1;
+}
+static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_color_of_other))(RBTREE_NODE_TYPE* node_ptr,
+                                                                                       const RBTREE_NODE_TYPE* other_ptr)
+{
+    assert(other_ptr != NULL);
+    assert(node_ptr != NULL);
+
+    const bool is_black = other_ptr->__parent_ptr_with_color & 1;
+
+    node_ptr->__parent_ptr_with_color &= ~1;
+    node_ptr->__parent_ptr_with_color += is_black;
+}
+static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_parent_ptr))(RBTREE_NODE_TYPE* node_ptr, RBTREE_NODE_TYPE* parent_ptr)
+{
+    assert(node_ptr != NULL);
+
+    const bool is_black = node_ptr->__parent_ptr_with_color & 1;
+
+    node_ptr->__parent_ptr_with_color = (uintptr_t)parent_ptr;
+    node_ptr->__parent_ptr_with_color += is_black;
+}
 
 // rotate a subtree around a given subtree root node and direction (0: left or 1: right). returns the new subtree root
 static inline RBTREE_NODE_TYPE* JOIN(internal, JOIN(RBTREE_NAME, rotate_dir))(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* P,
@@ -416,51 +564,6 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(RBTREE_NODE_T
     } while (P != NULL);
 }
 
-/// @endcond
-
-/**
- * @brief Insert a given node with a non-duplicate key in the tree.
- *
- * @param[in] rootptr_ptr A pointer to the pointer to the root node.
- * @param[in] node_ptr The node pointer.
- */
-static inline void JOIN(RBTREE_NAME, insert_node)(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* node_ptr)
-{
-    assert(rootptr_ptr != NULL);
-    assert(node_ptr != NULL);
-    assert(RBTREE_CONTAINS_KEY(rootptr_ptr, node_ptr->key) == false);
-
-    RBTREE_NODE_TYPE* parent_ptr = NULL;
-    RBTREE_NODE_TYPE* current_ptr = *rootptr_ptr;
-
-    while (current_ptr != NULL) {
-        parent_ptr = current_ptr;
-
-        if (KEY_IS_STRICTLY_LESS(node_ptr->key, current_ptr->key)) {
-            current_ptr = current_ptr->left_ptr;
-        }
-        else {
-            current_ptr = current_ptr->right_ptr;
-        }
-    }
-
-    node_ptr->left_ptr = node_ptr->right_ptr = NULL;
-    RBTREE_NODE_SET_PARENT_PTR(node_ptr, parent_ptr);
-    RBTREE_NODE_SET_COLOR_TO_RED(node_ptr);
-
-    if (parent_ptr == NULL) {
-        *rootptr_ptr = node_ptr;
-    }
-    else {
-        const uint8_t dir = KEY_IS_STRICTLY_LESS(parent_ptr->key, node_ptr->key);
-        parent_ptr->child_ptrs[dir] = node_ptr;
-
-        JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(rootptr_ptr, node_ptr);
-    }
-}
-
-/// @cond DO_NOT_DOCUMENT
-
 // move the parent of a node (src) to another node (dest).
 static inline void JOIN(internal, JOIN(RBTREE_NAME, node_transplant))(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* src_node,
                                                                       RBTREE_NODE_TYPE* dest_node)
@@ -549,94 +652,7 @@ Case_6:
     RBTREE_NODE_SET_COLOR_TO_BLACK(D);
     return;
 }
-
 /// @endcond
-
-/**
- * @brief Delete a given node from the tree.
- *
- * @param[in] rootptr_ptr A pointer to the pointer to the root node.
- * @param[in] node_ptr The node pointer.
- * @return Pointer to the deleted node reinitialized.
- */
-static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, delete_node)(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* node_ptr)
-{
-    assert(rootptr_ptr != NULL);
-    assert(node_ptr != NULL);
-
-    if (node_ptr->left_ptr == NULL && node_ptr->right_ptr == NULL) {
-        if (node_ptr == *rootptr_ptr || RBTREE_NODE_IS_RED(node_ptr)) {
-            RBTREE_NODE_TRANSPLANT(rootptr_ptr, node_ptr, NULL);
-        }
-        else {
-            RBTREE_NODE_TYPE* const parent_ptr = RBTREE_NODE_GET_PARENT_PTR(node_ptr);
-            const int dir = RBTREE_CHILD_DIR(node_ptr);
-
-            RBTREE_NODE_TRANSPLANT(rootptr_ptr, node_ptr, NULL);
-
-            JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(rootptr_ptr, parent_ptr, dir);
-        }
-    }
-    else if (node_ptr->left_ptr == NULL || node_ptr->right_ptr == NULL) {
-        const uint8_t dir = node_ptr->left_ptr == NULL;
-
-        assert(RBTREE_NODE_IS_BLACK(node_ptr));
-        assert(RBTREE_NODE_IS_RED(node_ptr->child_ptrs[dir]));
-
-        RBTREE_NODE_SET_COLOR_TO_BLACK(node_ptr->child_ptrs[dir]);
-
-        RBTREE_NODE_TRANSPLANT(rootptr_ptr, node_ptr, node_ptr->child_ptrs[dir]);
-    }
-    else {
-        RBTREE_NODE_TYPE* successor_ptr = node_ptr->right_ptr;
-
-        while (successor_ptr->left_ptr != NULL) {
-            successor_ptr = successor_ptr->left_ptr;
-        }
-
-        const bool prev_successor_black = RBTREE_NODE_IS_BLACK(successor_ptr);
-        const int prev_successor_dir = RBTREE_CHILD_DIR(successor_ptr);
-        RBTREE_NODE_TYPE* const prev_successor_parent_ptr = RBTREE_NODE_GET_PARENT_PTR(successor_ptr);
-        RBTREE_NODE_TYPE* const prev_successor_child_ptr = successor_ptr->right_ptr;
-
-        {
-            if (RBTREE_NODE_GET_PARENT_PTR(successor_ptr) != node_ptr) {
-                RBTREE_NODE_TRANSPLANT(rootptr_ptr, successor_ptr, successor_ptr->right_ptr);
-
-                successor_ptr->right_ptr = node_ptr->right_ptr;
-                RBTREE_NODE_SET_PARENT_PTR(node_ptr->right_ptr, successor_ptr);
-            }
-            RBTREE_NODE_TRANSPLANT(rootptr_ptr, node_ptr, successor_ptr);
-
-            successor_ptr->left_ptr = node_ptr->left_ptr;
-            RBTREE_NODE_SET_PARENT_PTR(node_ptr->left_ptr, successor_ptr);
-        }
-
-        {
-            RBTREE_NODE_SET_COLOR_TO_COLOR_OF_OTHER(successor_ptr, node_ptr);
-
-            if (prev_successor_child_ptr != NULL) {
-                assert(prev_successor_black);
-                assert(RBTREE_NODE_IS_RED(prev_successor_child_ptr));
-
-                RBTREE_NODE_SET_COLOR_TO_BLACK(prev_successor_child_ptr);
-            }
-            else if (prev_successor_child_ptr == NULL && prev_successor_black) {
-                if (prev_successor_parent_ptr == node_ptr) {
-                    JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(rootptr_ptr, successor_ptr, prev_successor_dir);
-                }
-                else {
-                    JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(rootptr_ptr, prev_successor_parent_ptr, prev_successor_dir);
-                }
-            }
-        }
-    }
-
-    node_ptr->left_ptr = node_ptr->right_ptr = NULL;
-    RBTREE_NODE_SET_PARENT_PTR(node_ptr, NULL);
-
-    return node_ptr;
-}
 
 // }}}
 
