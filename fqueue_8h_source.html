@@ -228,7 +228,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    assert(queue_ptr != NULL);</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    assert(index &lt; queue_ptr-&gt;count);</div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> index_mask = (queue_ptr-&gt;capacity - 1);</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    <span class="keyword">const</span> uint32_t index_mask = (queue_ptr-&gt;capacity - 1);</div>
 <div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
 <div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <span class="keywordflow">return</span> queue_ptr-&gt;values[(queue_ptr-&gt;begin_index + index) &amp; index_mask];</div>
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>}</div>
@@ -250,7 +250,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    assert(queue_ptr != NULL);</div>
 <div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    assert(!FQUEUE_IS_EMPTY(queue_ptr));</div>
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> index_mask = (queue_ptr-&gt;capacity - 1);</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keyword">const</span> uint32_t index_mask = (queue_ptr-&gt;capacity - 1);</div>
 <div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    <span class="keywordflow">return</span> queue_ptr-&gt;values[(queue_ptr-&gt;end_index - 1) &amp; index_mask];</div>
 <div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>}</div>
@@ -269,7 +269,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    assert(queue_ptr != NULL);</div>
 <div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    assert(!FQUEUE_IS_FULL(queue_ptr));</div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> </div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> index_mask = (queue_ptr-&gt;capacity - 1);</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    <span class="keyword">const</span> uint32_t index_mask = (queue_ptr-&gt;capacity - 1);</div>
 <div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
 <div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    queue_ptr-&gt;values[queue_ptr-&gt;end_index] = value;</div>
 <div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    queue_ptr-&gt;end_index++;</div>
@@ -286,7 +286,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    assert(queue_ptr != NULL);</div>
 <div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    assert(!FQUEUE_IS_EMPTY(queue_ptr));</div>
 <div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> </div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> index_mask = (queue_ptr-&gt;capacity - 1);</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>    <span class="keyword">const</span> uint32_t index_mask = (queue_ptr-&gt;capacity - 1);</div>
 <div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> </div>
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <span class="keyword">const</span> <a class="code hl_define" href="fqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value = queue_ptr-&gt;values[queue_ptr-&gt;begin_index];</div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    queue_ptr-&gt;begin_index++;</div>

@@ -115,7 +115,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    assert(0 &lt; x &amp;&amp; x &lt;= UINT32_MAX / 4);</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#if defined(__GNUC__) &amp;&amp; (__GNUC__ &gt; 3 || (__GNUC__ == 3 &amp;&amp; (__GNUC_MINOR__ &gt; 4 || __GNUC_MINOR__ == 4))) </span><span class="comment">// Test for GCC &gt;= 3.4.0</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordflow">return</span> x == 1 ? 1 : 1 &lt;&lt; (32 - __builtin_clz(x - 1));</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordflow">return</span> x == 1U ? 1U : 1U &lt;&lt; (32 - __builtin_clz(x - 1U));</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#else</span></div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    x--;</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    x |= x &gt;&gt; 1;</div>
