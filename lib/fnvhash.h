@@ -33,7 +33,8 @@ static inline uint32_t fnvhash_32_str(const char* char_p)
 {
     uint32_t hash = 0x811c9dc5;
     while (*char_p != '\0') {
-        hash ^= *(char_p++);
+        const uint32_t c = (uint32_t)*(char_p++);
+        hash ^= c;
         hash *= 0x01000193;
     }
     return hash;

@@ -40,7 +40,7 @@ static inline uint32_t round_up_pow2_32(uint32_t x)
     assert(0 < x && x <= UINT32_MAX / 4);
 
 #if defined(__GNUC__) && (__GNUC__ > 3 || (__GNUC__ == 3 && (__GNUC_MINOR__ > 4 || __GNUC_MINOR__ == 4))) // Test for GCC >= 3.4.0
-    return x == 1 ? 1 : 1 << (32 - __builtin_clz(x - 1));
+    return x == 1U ? 1U : 1U << (32 - __builtin_clz(x - 1U));
 #else
     x--;
     x |= x >> 1;

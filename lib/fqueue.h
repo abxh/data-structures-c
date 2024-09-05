@@ -208,7 +208,7 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, at)(const FQUEUE_TYPE* queue_ptr, con
     assert(queue_ptr != NULL);
     assert(index < queue_ptr->count);
 
-    const int index_mask = (queue_ptr->capacity - 1);
+    const uint32_t index_mask = (queue_ptr->capacity - 1);
 
     return queue_ptr->values[(queue_ptr->begin_index + index) & index_mask];
 }
@@ -238,7 +238,7 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, get_back)(const FQUEUE_TYPE* queue_pt
     assert(queue_ptr != NULL);
     assert(!FQUEUE_IS_EMPTY(queue_ptr));
 
-    const int index_mask = (queue_ptr->capacity - 1);
+    const uint32_t index_mask = (queue_ptr->capacity - 1);
 
     return queue_ptr->values[(queue_ptr->end_index - 1) & index_mask];
 }
@@ -265,7 +265,7 @@ static inline bool JOIN(FQUEUE_NAME, enqueue)(FQUEUE_TYPE* queue_ptr, const VALU
     assert(queue_ptr != NULL);
     assert(!FQUEUE_IS_FULL(queue_ptr));
 
-    const int index_mask = (queue_ptr->capacity - 1);
+    const uint32_t index_mask = (queue_ptr->capacity - 1);
 
     queue_ptr->values[queue_ptr->end_index] = value;
     queue_ptr->end_index++;
@@ -286,7 +286,7 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, dequeue)(FQUEUE_TYPE* queue_ptr)
     assert(queue_ptr != NULL);
     assert(!FQUEUE_IS_EMPTY(queue_ptr));
 
-    const int index_mask = (queue_ptr->capacity - 1);
+    const uint32_t index_mask = (queue_ptr->capacity - 1);
 
     const VALUE_TYPE value = queue_ptr->values[queue_ptr->begin_index];
     queue_ptr->begin_index++;

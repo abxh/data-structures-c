@@ -70,7 +70,7 @@ static inline bool check_ordered_values(const i64_que_type* que_p, const size_t 
 
     bool res = true;
     for (size_t i = 0; i < n; i++) {
-        res &= i64_que_at(que_p, i) == expected_value[i];
+        res &= i64_que_at(que_p, (uint32_t)i) == expected_value[i];
     }
     {
         size_t index = 0;
@@ -101,7 +101,7 @@ static inline bool copy_values_and_check_ordered_values(const i64_que_type* que_
 {
     assert(n != 0);
 
-    i64_que_type* que_copy_p = i64_que_create(n);
+    i64_que_type* que_copy_p = i64_que_create((uint32_t)n);
     if (!que_copy_p) {
         return false;
     }
@@ -263,7 +263,7 @@ int main(void)
             assert(false);
         }
         for (size_t i = 0; i < 5; i++) {
-            i64_que_enqueue(que_p, i);
+            i64_que_enqueue(que_p, (int)i);
         }
         for (size_t i = 0; i < 5; i++) {
             i64_que_dequeue(que_p);
@@ -302,7 +302,7 @@ int main(void)
             assert(false);
         }
         for (size_t i = 0; i < 10; i++) {
-            i64_que_enqueue(que_p, 420 + i);
+            i64_que_enqueue(que_p, 420 + (int)i);
         }
         i64_que_clear(que_p);
 
@@ -328,7 +328,7 @@ int main(void)
             assert(false);
         }
         for (size_t i = 0; i < 1e+6; i++) {
-            i64_que_enqueue(que_p, 420 + i);
+            i64_que_enqueue(que_p, 420 + (int)i);
         }
         assert(check_count_invariance(que_p, 1e+6, 0));
         assert(check_capacity_invariance(que_p, 1e+6));
@@ -344,7 +344,7 @@ int main(void)
             assert(false);
         }
         for (size_t i = 0; i < 1e+6; i++) {
-            i64_que_enqueue(que_p, 420 + i);
+            i64_que_enqueue(que_p, 420 + (int)i);
         }
         for (size_t i = 0; i < 1e+3; i++) {
             assert(i64_que_dequeue(que_p) == (int64_t)(420 + i));

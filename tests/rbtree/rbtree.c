@@ -35,11 +35,6 @@
 #define KEY_IS_STRICTLY_LESS(a, b) ((a) < (b))
 #include "rbtree.h"
 
-typedef struct {
-    unsigned int value;
-    bst_node_type node;
-} extended_bst_node;
-
 static int max_int(const int a, const int b)
 {
     return (a >= b) ? a : b;
@@ -65,11 +60,11 @@ static bool is_valid_binary_search_tree(const float left_key, const bst_node_typ
     if (root_ptr == NULL) {
         return true;
     }
-    if (!(left_key < root_ptr->key && root_ptr->key < right_key)) {
+    if (!(left_key <= root_ptr->key && root_ptr->key <= right_key)) {
         return false;
     }
-    return is_valid_binary_search_tree(left_key, root_ptr->left_ptr, root_ptr->key) &&
-           is_valid_binary_search_tree(root_ptr->key, root_ptr->right_ptr, right_key);
+    return is_valid_binary_search_tree(left_key, root_ptr->left_ptr, (float)root_ptr->key) &&
+           is_valid_binary_search_tree((float)root_ptr->key, root_ptr->right_ptr, right_key);
 }
 
 static bool rbtree_check_for_no_consecutive_reds(const bst_node_type* parent_ptr, const bst_node_type* root_ptr)
@@ -212,25 +207,17 @@ int main(void)
         bst_node_type* bst;
         bst_init(&bst);
 
-        srand(seed);
+        srand((unsigned int)seed);
 
-        extended_bst_node* node_buf = calloc(lim * 2, sizeof(extended_bst_node));
+        bst_node_type* node_buf = calloc((size_t)(lim * 2), sizeof(bst_node_type));
         size_t node_count = 0;
 
         for (int i = 0; i < lim; i++) {
-            const int val = ((unsigned int)rand()) % lim;
+            const int val = (int)((unsigned int)rand()) % lim;
 
-            bst_node_type* node_ptr = bst_search_node(&bst, val);
-
-            if (!node_ptr) {
-                node_buf[node_count].value = 0;
-                bst_node_init(&node_buf[node_count].node, val);
-                bst_insert_node(&bst, &node_buf[node_count].node);
-                node_count++;
-            }
-            else {
-                rbtree_node_entry(node_ptr, extended_bst_node, node)->value++;
-            }
+            bst_node_init(&node_buf[node_count], val);
+            bst_insert_node(&bst, &node_buf[node_count]);
+            node_count++;
 
             assert(is_valid_red_black_tree(bst));
         }
@@ -238,34 +225,21 @@ int main(void)
         assert(count_height(bst) <= 2 * log2(lim));
 
         for (int i = 0; i < lim; i++) {
-            int val = ((unsigned int)rand()) % lim;
+            const int val = (int)((unsigned int)rand()) % lim;
             bst_node_type* node_ptr = bst_search_node(&bst, val);
             if (node_ptr) {
-                unsigned int* value_ptr = &rbtree_node_entry(node_ptr, extended_bst_node, node)->value;
-                if (*value_ptr > 1) {
-                    (*value_ptr)--;
-                }
-                else {
-                    bst_delete_node(&bst, node_ptr);
-                }
+                bst_delete_node(&bst, node_ptr);
             }
             assert(is_valid_red_black_tree(bst));
         }
 
         for (int i = 0; i < lim; i++) {
-            int val = ((unsigned int)rand()) % lim;
+            const int val = (int)((unsigned int)rand()) % lim;
 
-            bst_node_type* node_ptr = bst_search_node(&bst, val);
+            bst_node_init(&node_buf[node_count], val);
+            bst_insert_node(&bst, &node_buf[node_count]);
+            node_count++;
 
-            if (!node_ptr) {
-                node_buf[node_count].value = 0;
-                bst_node_init(&node_buf[node_count].node, val);
-                bst_insert_node(&bst, &node_buf[node_count].node);
-                node_count++;
-            }
-            else {
-                rbtree_node_entry(node_ptr, extended_bst_node, node)->value++;
-            }
             assert(is_valid_red_black_tree(bst));
         }
 

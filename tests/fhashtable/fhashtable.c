@@ -235,26 +235,26 @@ void int_int_full_test()
         if (!ht_p) {
             assert(false);
         }
-        for (int i = 0; i < 1e+3; i++) {
-            int_to_int_ht_insert(ht_p, 1e+6 - 690 - i, 1e+6 - i);
+        for (int i = 0; i < (int)1e+3; i++) {
+            int_to_int_ht_insert(ht_p, (int)1e+6 - 690 - i, (int)1e+6 - i);
         }
         int_to_int_ht_clear(ht_p);
-        for (int i = -1e+3; i < 1e+3; i++) {
-            int_to_int_ht_delete(ht_p, 1e+6 - 690 - i);
+        for (int i = -(int)1e+3; i < (int)1e+3; i++) {
+            int_to_int_ht_delete(ht_p, (int)1e+6 - 690 - i);
         }
-        for (int i = 0; i < 1e+2; i++) {
-            int_to_int_ht_update(ht_p, 1e+6 - 690 - i, 1e+6 - 420 - i);
-        }
-
-        for (int i = 0; i < 1e+2; i++) {
-            assert(*int_to_int_ht_get_value_mut(ht_p, 1e+6 - 690 - i) == 1e+6 - 420 - i);
-        }
-        for (int i = 1e+2; i < 1e+3; i++) {
-            assert(int_to_int_ht_get_value_mut(ht_p, 1e+6 - 690 - i) == NULL);
+        for (int i = 0; i < (int)1e+2; i++) {
+            int_to_int_ht_update(ht_p, (int)1e+6 - 690 - i, (int)1e+6 - 420 - i);
         }
 
-        assert(ht_p->count == 1e+2);
-        assert(ht_p->capacity >= 1e+3);
+        for (int i = 0; i < (int)1e+2; i++) {
+            assert(*int_to_int_ht_get_value_mut(ht_p, (int)1e+6 - 690 - i) == (int)1e+6 - 420 - i);
+        }
+        for (int i = (int)1e+2; i < (int)1e+3; i++) {
+            assert(int_to_int_ht_get_value_mut(ht_p, (int)1e+6 - 690 - i) == NULL);
+        }
+
+        assert(ht_p->count == (int)1e+2);
+        assert(ht_p->capacity >= (int)1e+3);
         assert(!int_to_int_ht_is_empty(ht_p));
         assert(!int_to_int_ht_is_full(ht_p));
 
@@ -262,29 +262,29 @@ void int_int_full_test()
     }
     // N = 1e+6, insert 1e+6, delete 10000, update 10000
     {
-        int_to_int_ht_type* ht_p = int_to_int_ht_create(1e+6);
+        int_to_int_ht_type* ht_p = int_to_int_ht_create((int)1e+6);
         if (!ht_p) {
             assert(false);
         }
-        for (int i = 0; i < 1e+6; i++) {
-            int_to_int_ht_insert(ht_p, 1e+6 - 420 - i, 1e+6 - i);
+        for (int i = 0; i < (int)1e+6; i++) {
+            int_to_int_ht_insert(ht_p, (int)1e+6 - 420 - i, (int)1e+6 - i);
         }
         for (int i = 0; i < 10000; i++) {
-            int_to_int_ht_delete(ht_p, 1e+6 - 420 - i);
+            int_to_int_ht_delete(ht_p, (int)1e+6 - 420 - i);
         }
         for (int i = 500; i < 10500; i++) {
-            int_to_int_ht_update(ht_p, 1e+6 - 420 - i, 1e+6 - i);
+            int_to_int_ht_update(ht_p, (int)1e+6 - 420 - i, (int)1e+6 - i);
         }
 
         for (int i = 0; i < 500; i++) {
-            assert(int_to_int_ht_get_value_mut(ht_p, 1e+6 - 420 - i) == NULL);
+            assert(int_to_int_ht_get_value_mut(ht_p, (int)1e+6 - 420 - i) == NULL);
         }
         for (int i = 500; i < 1e+6; i++) {
-            assert(*int_to_int_ht_get_value_mut(ht_p, 1e+6 - 420 - i) == 1e+6 - i);
+            assert(*int_to_int_ht_get_value_mut(ht_p, (int)1e+6 - 420 - i) == 1e+6 - i);
         }
 
-        assert(ht_p->count == 1e+6 - 500);
-        assert(ht_p->capacity >= 1e+6);
+        assert(ht_p->count == (int)1e+6 - 500);
+        assert(ht_p->capacity >= (int)1e+6);
         assert(!int_to_int_ht_is_empty(ht_p));
         assert(!int_to_int_ht_is_full(ht_p));
 
@@ -296,24 +296,24 @@ void int_int_full_test()
 #define KEY_TYPE           char*
 #define VALUE_TYPE         int
 #define KEY_IS_EQUAL(a, b) (strcmp(a, b) == 0)
-#define HASH_FUNCTION(key) (0)
+#define HASH_FUNCTION(key) (0U)
 #include "fhashtable.h"
 
 static inline size_t first_char(const char* c)
 {
-    return *c;
+    return (size_t)*c;
 }
 
 #define NAME               strmap
 #define KEY_TYPE           char*
 #define VALUE_TYPE         char*
 #define KEY_IS_EQUAL(a, b) (strcmp(a, b) == 0)
-#define HASH_FUNCTION(key) (first_char(key))
+#define HASH_FUNCTION(key) ((uint32_t)(first_char(key)))
 #include "fhashtable.h"
 
 void bad_hash_func_test()
 {
-    const size_t m = ('z' - 'a' + 1);
+    const int m = ('z' - 'a' + 1);
     // N = 1000, insert 1000
     {
         bd_ht_type* bd_ht_p = bd_ht_create(1000);
@@ -321,16 +321,16 @@ void bad_hash_func_test()
             assert(false);
         }
         for (int i = 0; i < 1000; i++) {
-            char c1 = i % m + 'a';
-            char c2 = (i / m) % m + 'a';
-            char c3 = (i / m / m) % m + 'a';
+            char c1 = (char)(i % m) + 'a';
+            char c2 = (char)((i / m) % m) + 'a';
+            char c3 = (char)((i / m / m) % m) + 'a';
             bd_ht_insert(bd_ht_p, strdup((char[]){c3, c2, c1, '\0'}), // slow [and potentially leaky] way to do this.
                          i);
         }
         for (int i = 0; i < 1000; i++) {
-            char c1 = i % m + 'a';
-            char c2 = (i / m) % m + 'a';
-            char c3 = (i / m / m) % m + 'a';
+            char c1 = (char)(i % m) + 'a';
+            char c2 = (char)((i / m) % m) + 'a';
+            char c3 = (char)((i / m / m) % m) + 'a';
             assert(bd_ht_get_value(bd_ht_p, (char[]){c3, c2, c1, '\0'}, -1) == i);
         }
         {
@@ -351,17 +351,17 @@ void bad_hash_func_test()
     {
         strmap_type* strmap_p = strmap_create(1000);
 
-        for (size_t i = 0; i < 1000; i++) {
-            char c1 = i % m + 'a';
-            char c2 = (i / m) % m + 'a';
-            char c3 = (i / m / m) % m + 'a';
+        for (int i = 0; i < 1000; i++) {
+            char c1 = (char)(i % m) + 'a';
+            char c2 = (char)((i / m) % m) + 'a';
+            char c3 = (char)((i / m / m) % m) + 'a';
             strmap_insert(strmap_p, strdup((char[]){c3, c2, c1, '\0'}),
                           strdup((char[]){c1, c2, c3, '\0'})); // slow [and potentially leaky] way to do this.
         }
-        for (size_t i = 0; i < 1000; i++) {
-            char c1 = i % m + 'a';
-            char c2 = (i / m) % m + 'a';
-            char c3 = (i / m / m) % m + 'a';
+        for (int i = 0; i < 1000; i++) {
+            char c1 = (char)(i % m) + 'a';
+            char c2 = (char)((i / m) % m) + 'a';
+            char c3 = (char)((i / m / m) % m) + 'a';
             assert(strcmp(*strmap_get_value_mut(strmap_p, (char[]){c3, c2, c1, '\0'}), (char[]){c1, c2, c3, '\0'}) == 0);
         }
         {
@@ -409,13 +409,13 @@ void struct_key_value_test()
         a_ht_type* a_ht = a_ht_create(1000);
 
         for (int i = 0; i < 1000; i++) {
-            a_ht_insert(a_ht, (a_struct){.foo = i, .bar = i + 42.f}, (b_struct){.i = i, .j = i + 1});
+            a_ht_insert(a_ht, (a_struct){.foo = i, .bar = (float)i + 42.f}, (b_struct){.i = i, .j = i + 1});
         }
         for (int i = 0; i < 1000; i += 2) {
-            a_ht_update(a_ht, (a_struct){.foo = i, .bar = i + 42.f}, (b_struct){.i = i + 1, .j = i + 2});
+            a_ht_update(a_ht, (a_struct){.foo = i, .bar = (float)i + 42.f}, (b_struct){.i = i + 1, .j = i + 2});
         }
         for (int i = 0; i < 1000; i++) {
-            b_struct b = *a_ht_get_value_mut(a_ht, (a_struct){.foo = i, .bar = i + 42.f});
+            b_struct b = *a_ht_get_value_mut(a_ht, (a_struct){.foo = i, .bar = (float)i + 42.f});
             if (i % 2 == 0) {
                 assert(b.i == i + 1);
                 assert(b.j == i + 2);

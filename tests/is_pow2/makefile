@@ -2,7 +2,7 @@ EXEC_NAME := a.out
 
 CC         := gcc
 CFLAGS     += -I./../../lib
-CFLAGS     += -Wall -Wextra -pedantic
+CFLAGS     += -Wall -Wextra -Wshadow -Wconversion -pedantic 
 CFLAGS     += -ggdb3
 CFLAGS     += -fsanitize=undefined
 CFLAGS     += -fsanitize=address

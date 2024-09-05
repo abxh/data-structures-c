@@ -69,7 +69,7 @@ static inline bool check_ordered_values(const i64_stk_type* stk_p, const size_t 
 
     bool res = true;
     for (size_t i = 0; i < n; i++) {
-        res &= i64_stk_at(stk_p, i) == expected_value[i];
+        res &= i64_stk_at(stk_p, (uint32_t)i) == expected_value[i];
     }
     {
         size_t index = 0;
@@ -100,7 +100,7 @@ static inline bool copy_values_and_check_ordered_values(const i64_stk_type* stk_
 {
     assert(n != 0);
 
-    i64_stk_type* stk_copy_p = i64_stk_create(n);
+    i64_stk_type* stk_copy_p = i64_stk_create((uint32_t)n);
     if (!stk_copy_p) {
         return false;
     }
@@ -298,7 +298,7 @@ int main(void)
             assert(false);
         }
         for (size_t i = 0; i < 10; i++) {
-            i64_stk_push(stk_p, 420 + i);
+            i64_stk_push(stk_p, 420 + (int)i);
         }
         i64_stk_clear(stk_p);
 
@@ -324,7 +324,7 @@ int main(void)
             assert(false);
         }
         for (size_t i = 0; i < 1e+6; i++) {
-            i64_stk_push(stk_p, 420 + i);
+            i64_stk_push(stk_p, 420 + (int)i);
         }
         assert(check_count_invariance(stk_p, 1e+6, 0));
         assert(check_capacity_invariance(stk_p, 1e+6));
@@ -340,10 +340,10 @@ int main(void)
             assert(false);
         }
         for (size_t i = 0; i < 1e+6; i++) {
-            i64_stk_push(stk_p, 420 + i);
+            i64_stk_push(stk_p, 420 + (int)i);
         }
         for (size_t i = 0; i < 1e+3; i++) {
-            assert(i64_stk_pop(stk_p) == 420 + (1e+6 - i - 1));
+            assert(i64_stk_pop(stk_p) == 420 + ((int)1e+6 - (int)i - 1));
         }
         assert(check_count_invariance(stk_p, 1e+6, 1e+3));
         assert(check_capacity_invariance(stk_p, 1e+6));
