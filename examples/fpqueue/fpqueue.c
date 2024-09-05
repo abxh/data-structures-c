@@ -20,6 +20,8 @@ static void preorder_traverse_and_print(pqueue_int_type* pq, uint32_t index)
 
 static void int_example(void)
 {
+    (void)(preorder_traverse_and_print);
+
     pqueue_int_type* pq = pqueue_int_create(10);
 
     if (!pq) {
@@ -38,8 +40,8 @@ static void int_example(void)
 
         pqueue_int_push(pq, values[i], priority);
 
-        preorder_traverse_and_print(pq, 0);
-        printf("\n");
+        /* preorder_traverse_and_print(pq, 0); */
+        /* printf("\n"); */
     }
 
     assert(pq->count == 10);

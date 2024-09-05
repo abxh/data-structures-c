@@ -67,7 +67,8 @@ void hello_world(void)
         assert(false);
     }
 
-    inorder_traverse_and_putchar(rb);
+    /* inorder_traverse_and_putchar(rb); */
+    (void)(inorder_traverse_and_putchar);
 }
 
 int main(void)
