@@ -36,6 +36,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdalign.h>
 
 /**
  * @def DEFAULT_ALIGNMENT
@@ -44,7 +45,7 @@
  * Can be defined before including the header.
  */
 #ifndef DEFAULT_ALIGNMENT
-#define DEFAULT_ALIGNMENT (2 * sizeof(void*))
+#define DEFAULT_ALIGNMENT (alignof(max_align_t))
 #endif
 
 /**

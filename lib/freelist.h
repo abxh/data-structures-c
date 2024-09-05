@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdalign.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -13,7 +14,7 @@
  * Can be defined before including the header.
  */
 #ifndef DEFAULT_ALIGNMENT
-#define DEFAULT_ALIGNMENT (2 * sizeof(void*))
+#define DEFAULT_ALIGNMENT (alignof(max_align_t))
 #endif
 
 #define NAME                       internal_freelist
@@ -24,7 +25,7 @@
 typedef struct {
     size_t block_size;
     size_t padding;
-} freelist_allocation_header;
+} internal_freelist_allocation_header_type;
 
 typedef struct {
     unsigned char* buffer_ptr;
@@ -43,7 +44,7 @@ static inline internal_freelist_node_type* internal_freelist_find_best(freelist_
 static inline void internal_freelist_coalescence(freelist_type* freelist_ptr, internal_freelist_node_type* free_node);
 /// @endcond
 
-static inline void freelist_free_all(freelist_type* freelist_ptr)
+static inline void freelist_deallocate_all(freelist_type* freelist_ptr)
 {
     assert(freelist_ptr);
 
@@ -60,7 +61,7 @@ static inline void freelist_init(freelist_type* freelist_ptr, const size_t n, un
 
     freelist_ptr->buffer_ptr = backing_buffer;
     freelist_ptr->buffer_length = n;
-    freelist_free_all(freelist_ptr);
+    freelist_deallocate_all(freelist_ptr);
 }
 
 static inline void* freelist_allocate_aligned(freelist_type* freelist_ptr, const size_t size, const size_t alignment)
@@ -69,16 +70,17 @@ static inline void* freelist_allocate_aligned(freelist_type* freelist_ptr, const
     assert(is_pow2(alignment));
 
     const size_t size_ = size < sizeof(internal_freelist_node_type) ? sizeof(internal_freelist_node_type) : size;
-    const size_t alignment_ = alignment < 8 ? 8 : alignment;
+    const size_t alignment_ = alignment < DEFAULT_ALIGNMENT ? DEFAULT_ALIGNMENT : alignment;
 
     size_t padding_with_header_size = 0;
-    internal_freelist_node_type* node = internal_freelist_find_best(freelist_ptr, alignment, size, &padding_with_header_size);
+    internal_freelist_node_type* node = internal_freelist_find_best(freelist_ptr, alignment_, size_, &padding_with_header_size);
+
     if (node == NULL) {
         return NULL;
     }
 
-    const size_t alignment_padding = padding_with_header_size - sizeof(freelist_allocation_header);
-    const size_t required_space = padding_with_header_size + size;
+    const size_t alignment_padding = padding_with_header_size - sizeof(internal_freelist_allocation_header_type);
+    const size_t required_space = padding_with_header_size + size_;
     const size_t block_size = node->key;
     const size_t remaining = block_size - required_space;
 
@@ -90,18 +92,37 @@ static inline void* freelist_allocate_aligned(freelist_type* freelist_ptr, const
 
     internal_freelist_delete_node(&freelist_ptr->rb_rootptr, node);
 
-    freelist_allocation_header* header_ptr = (freelist_allocation_header*)((char*)node + alignment_padding);
+    internal_freelist_allocation_header_type* header_ptr;
+    header_ptr = (internal_freelist_allocation_header_type*)((char*)node + alignment_padding);
     header_ptr->block_size = required_space;
     header_ptr->padding = alignment_padding;
 
     freelist_ptr->used_length += required_space;
 
-    return (void*)((char*)header_ptr + sizeof(freelist_allocation_header));
+    return (void*)((char*)header_ptr + sizeof(internal_freelist_allocation_header_type));
 }
 
 static inline void* freelist_allocate(freelist_type* freelist_ptr, const size_t size)
 {
     return freelist_allocate_aligned(freelist_ptr, size, DEFAULT_ALIGNMENT);
+}
+
+static inline void freelist_deallocate(freelist_type* freelist_ptr, void* ptr)
+{
+    assert(freelist_ptr);
+    assert(ptr);
+
+    internal_freelist_allocation_header_type* header;
+    header = (internal_freelist_allocation_header_type*)((char*)ptr - sizeof(internal_freelist_allocation_header_type));
+    internal_freelist_node_type* free_node = (internal_freelist_node_type*)header;
+
+    internal_freelist_node_init(free_node, header->padding + header->block_size);
+
+    internal_freelist_insert_node(&freelist_ptr->rb_rootptr, free_node);
+
+    freelist_ptr->used_length -= free_node->key;
+
+    internal_freelist_coalescence(freelist_ptr, free_node);
 }
 
 /// @cond DO_NOT_DOCUMENT
@@ -160,8 +181,8 @@ static inline internal_freelist_node_type* internal_freelist_find_best(freelist_
     internal_freelist_node_type* best_node = NULL;
 
     while (node != NULL) {
-        const size_t padding_with_header_size =
-            internal_calculate_padding_with_header_size((uintptr_t)node, (uintptr_t)alignment, sizeof(freelist_allocation_header));
+        const size_t padding_with_header_size = internal_calculate_padding_with_header_size(
+            (uintptr_t)node, (uintptr_t)alignment, sizeof(internal_freelist_allocation_header_type));
         const size_t required_space = padding_with_header_size + size;
 
         if (internal_freelist_node_is_best(node, required_space, smallest_diff)) {
@@ -169,17 +190,50 @@ static inline internal_freelist_node_type* internal_freelist_find_best(freelist_
             const size_t block_size = node->key;
             smallest_diff = block_size - required_space;
         }
-        if (node->left_ptr != NULL && node->left_ptr->key >= required_space) {
+        if (node->left_ptr != NULL) {
             node = node->left_ptr;
+        }
+        else {
+            break;
         }
     }
 
     if (padding_) {
         *padding_ = (!best_node) ? 0
                                  : internal_calculate_padding_with_header_size((uintptr_t)best_node, (uintptr_t)alignment,
-                                                                               sizeof(freelist_allocation_header));
+                                                                               sizeof(internal_freelist_allocation_header_type));
     }
 
     return best_node;
+}
+
+static inline void internal_freelist_coalescence(freelist_type* freelist_ptr, internal_freelist_node_type* node_ptr)
+{
+    void* next_ptr = (char*)node_ptr + node_ptr->key;
+    if (node_ptr->left_ptr != NULL && next_ptr == node_ptr->left_ptr) {
+        const size_t new_block_size = node_ptr->key + node_ptr->left_ptr->key;
+        internal_freelist_delete_node(&freelist_ptr->rb_rootptr, node_ptr->left_ptr);
+        internal_freelist_delete_node(&freelist_ptr->rb_rootptr, node_ptr);
+        internal_freelist_node_init(node_ptr, new_block_size);
+        internal_freelist_insert_node(&freelist_ptr->rb_rootptr, node_ptr);
+
+        // note:
+        // possible optimization with some specialized rbtree operation to increase key?
+    }
+    if (node_ptr->right_ptr != NULL && next_ptr == node_ptr->right_ptr) {
+        const size_t new_block_size = node_ptr->key + node_ptr->right_ptr->key;
+        internal_freelist_delete_node(&freelist_ptr->rb_rootptr, node_ptr->right_ptr);
+        internal_freelist_delete_node(&freelist_ptr->rb_rootptr, node_ptr);
+        internal_freelist_node_init(node_ptr, new_block_size);
+        internal_freelist_insert_node(&freelist_ptr->rb_rootptr, node_ptr);
+    }
+    internal_freelist_node_type* parent_ptr = internal_freelist_node_get_parent_ptr(node_ptr);
+    if (parent_ptr != NULL && (void*)((char*)parent_ptr + parent_ptr->key) == node_ptr) {
+        const size_t new_block_size = parent_ptr->key + node_ptr->key;
+        internal_freelist_delete_node(&freelist_ptr->rb_rootptr, node_ptr);
+        internal_freelist_delete_node(&freelist_ptr->rb_rootptr, parent_ptr);
+        internal_freelist_node_init(parent_ptr, new_block_size);
+        internal_freelist_insert_node(&freelist_ptr->rb_rootptr, parent_ptr);
+    }
 }
 /// @endcond

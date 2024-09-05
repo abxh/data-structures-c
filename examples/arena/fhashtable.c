@@ -25,8 +25,8 @@ void str_int_ht_test_alt(void)
     assert(ht->count == 0);
 
     arena_type arena;
-    arena_init(&arena, sizeof(buf), buf); // note that the arena also considers alignment details
-    // and can be used to store different types simultaneously.
+    arena_init(&arena, sizeof(buf), buf); /* note that the arena also considers alignment details
+                                             and can be used to store different types simultaneously. */
 
     char* egg_str_ptr = arena_allocate_aligned(&arena, alignof(char), sizeof("egg"));
     if (!egg_str_ptr) {
