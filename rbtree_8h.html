@@ -157,7 +157,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a0befbba8132e748956d546893515e030"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search for a given node and return a pointer to the node.  <br /></td></tr>
 <tr class="separator:a0befbba8132e748956d546893515e030"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0363191df47836001954409c0d88a50c" id="r_a0363191df47836001954409c0d88a50c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0363191df47836001954409c0d88a50c">rbtree_insert_node</a> (<a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **rootptr_ptr, <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *node_ptr)</td></tr>
-<tr class="memdesc:a0363191df47836001954409c0d88a50c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a given node with a non-duplicate key in the tree.  <br /></td></tr>
+<tr class="memdesc:a0363191df47836001954409c0d88a50c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a given node with a key in the tree.  <br /></td></tr>
 <tr class="separator:a0363191df47836001954409c0d88a50c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49e157d208e3124be62ea9c2fb51f8d0" id="r_a49e157d208e3124be62ea9c2fb51f8d0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49e157d208e3124be62ea9c2fb51f8d0">rbtree_delete_node</a> (<a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> **rootptr_ptr, <a class="el" href="structrbtree__node__type.html">rbtree_node_type</a> *node_ptr)</td></tr>
 <tr class="memdesc:a49e157d208e3124be62ea9c2fb51f8d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a given node from the tree.  <br /></td></tr>
@@ -165,7 +165,13 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Intrusive red-black tree. </p>
-<p>Duplicates are not allowed. For supporting duplicate keys, you may store a counter for each node, and count up when a node key already exists.</p>
+<p>Keys are sorted in the following manner: </p><ul>
+<li>left &lt; key &lt; right</li>
+</ul>
+<p>Duplicates are allowed with a macro. Then the keys are sorted in this manner: </p><ul>
+<li>left &lt;= key &lt;= right</li>
+</ul>
+<p>Note allowing duplicates this way incurs performance penalties as the number of duplicates increase. For supporting duplicate keys efficiently, you can store a counter for each node, and count up when a node key already exists. Or use a list.</p>
 <p>The memory of the nodes are expected to managed seperately.</p>
 <p>Inspired by: </p><ul>
 <li><a href="https://github.com/torvalds/linux/blob/master/include/linux/rbtree.h">https://github.com/torvalds/linux/blob/master/include/linux/rbtree.h</a></li>
@@ -363,7 +369,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Insert a given node with a non-duplicate key in the tree. </p>
+<p>Insert a given node with a key in the tree. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">rootptr_ptr</td><td>A pointer to the pointer to the root node. </td></tr>
