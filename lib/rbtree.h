@@ -13,8 +13,15 @@
  * @file rbtree.h
  * @brief Intrusive red-black tree
  *
- * Duplicates are not allowed. For supporting duplicate keys, you may store a counter for each node,
- * and count up when a node key already exists.
+ * Keys are sorted in the following manner:
+ * @li left < key < right
+ *
+ * Duplicates are allowed with a macro. Then the keys are sorted in this manner:
+ * @li left <= key <= right
+ *
+ * Note allowing duplicates this way incurs performance penalties as the number of
+ * duplicates increase. For supporting duplicate keys efficiently, you can store a
+ * counter for each node, and count up when a node key already exists. Or use a list.
  *
  * The memory of the nodes are expected to managed seperately.
  *
@@ -106,6 +113,20 @@
 #define KEY_IS_STRICTLY_LESS(a, b) ((a) < (b))
 #endif
 
+/**
+ * @def ALLOW_DUPLICATES
+ * @brief Allow duplicates builtin.
+ *
+ * Then the keys are sorted in this manner:
+ * @li left <= key <= right
+ *
+ * @note Allowing duplicates this way incurs performance penalties as the number of
+ * duplicates increase. For supporting duplicate keys efficiently, you can store a
+ * counter for each node, and count up when a node key already exists. Or use a list.
+ */
+#ifdef ALLOW_DUPLICATES
+#endif
+
 /// @cond DO_NOT_DOCUMENT
 #define RBTREE_TYPE                             JOIN(RBTREE_NAME, type)
 #define RBTREE_NODE_TYPE                        JOIN(RBTREE_NAME, node_type)
@@ -156,7 +177,7 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_parent_ptr))(RBTREE
 
 // rotate a subtree around a given subtree root node and direction (0: left or 1: right). returns the new subtree root
 static inline RBTREE_NODE_TYPE* JOIN(internal, JOIN(RBTREE_NAME, rotate_dir))(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* P,
-                                                                              const uint8_t dir);
+                                                                              const int dir);
 
 // rebalance tree after insert. see explanation in the sources linked above.
 static inline void JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* N);
@@ -208,7 +229,7 @@ static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, node_get_parent_ptr)(RBTREE_NO
 {
     assert(node_ptr != NULL);
 
-    return (RBTREE_NODE_TYPE*)(node_ptr->__parent_ptr_with_color & ~1);
+    return (RBTREE_NODE_TYPE*)(node_ptr->__parent_ptr_with_color & ~(uintptr_t)1);
 }
 
 /**
@@ -264,8 +285,9 @@ static inline bool JOIN(RBTREE_NAME, contains_key)(RBTREE_NODE_TYPE** rootptr_pt
     while (node_ptr != NULL) {
         const bool is_strictly_less = KEY_IS_STRICTLY_LESS(key, node_ptr->key);
         const bool is_strictly_greater = KEY_IS_STRICTLY_LESS(node_ptr->key, key);
+        const bool is_equal = !is_strictly_less && !is_strictly_greater;
 
-        if (!is_strictly_less && !is_strictly_greater) {
+        if (is_equal) {
             return true;
         }
         else if (is_strictly_less) {
@@ -294,8 +316,9 @@ static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, search_node)(RBTREE_NODE_TYPE*
     while (node_ptr != NULL) {
         const bool is_strictly_less = KEY_IS_STRICTLY_LESS(key, node_ptr->key);
         const bool is_strictly_greater = KEY_IS_STRICTLY_LESS(node_ptr->key, key);
+        const bool is_equal = !is_strictly_less && !is_strictly_greater;
 
-        if (!is_strictly_less && !is_strictly_greater) {
+        if (is_equal) {
             return node_ptr;
         }
         else if (is_strictly_less) {
@@ -309,7 +332,7 @@ static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, search_node)(RBTREE_NODE_TYPE*
 }
 
 /**
- * @brief Insert a given node with a non-duplicate key in the tree.
+ * @brief Insert a given node with a key in the tree.
  *
  * @param[in] rootptr_ptr A pointer to the pointer to the root node.
  * @param[in] node_ptr The node pointer.
@@ -318,19 +341,23 @@ static inline void JOIN(RBTREE_NAME, insert_node)(RBTREE_NODE_TYPE** rootptr_ptr
 {
     assert(rootptr_ptr != NULL);
     assert(node_ptr != NULL);
+#ifndef ALLOW_DUPLICATES
     assert(RBTREE_CONTAINS_KEY(rootptr_ptr, node_ptr->key) == false);
+#endif
 
     RBTREE_NODE_TYPE* parent_ptr = NULL;
     RBTREE_NODE_TYPE* current_ptr = *rootptr_ptr;
 
     while (current_ptr != NULL) {
+        const bool is_strictly_greater = KEY_IS_STRICTLY_LESS(current_ptr->key, node_ptr->key);
+
         parent_ptr = current_ptr;
 
-        if (KEY_IS_STRICTLY_LESS(node_ptr->key, current_ptr->key)) {
-            current_ptr = current_ptr->left_ptr;
+        if (is_strictly_greater) {
+            current_ptr = current_ptr->right_ptr;
         }
         else {
-            current_ptr = current_ptr->right_ptr;
+            current_ptr = current_ptr->left_ptr;
         }
     }
 
@@ -342,7 +369,8 @@ static inline void JOIN(RBTREE_NAME, insert_node)(RBTREE_NODE_TYPE** rootptr_ptr
         *rootptr_ptr = node_ptr;
     }
     else {
-        const uint8_t dir = KEY_IS_STRICTLY_LESS(parent_ptr->key, node_ptr->key);
+        const int dir = KEY_IS_STRICTLY_LESS(parent_ptr->key, node_ptr->key) ? 1 : 0;
+
         parent_ptr->child_ptrs[dir] = node_ptr;
 
         JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(rootptr_ptr, node_ptr);
@@ -367,7 +395,7 @@ static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, delete_node)(RBTREE_NODE_TYPE*
         }
         else {
             RBTREE_NODE_TYPE* const parent_ptr = RBTREE_NODE_GET_PARENT_PTR(node_ptr);
-            const int dir = RBTREE_CHILD_DIR(node_ptr);
+            const int dir = RBTREE_CHILD_DIR(node_ptr) ? 1 : 0;
 
             RBTREE_NODE_TRANSPLANT(rootptr_ptr, node_ptr, NULL);
 
@@ -375,7 +403,7 @@ static inline RBTREE_NODE_TYPE* JOIN(RBTREE_NAME, delete_node)(RBTREE_NODE_TYPE*
         }
     }
     else if (node_ptr->left_ptr == NULL || node_ptr->right_ptr == NULL) {
-        const uint8_t dir = node_ptr->left_ptr == NULL;
+        const int dir = node_ptr->left_ptr == NULL;
 
         assert(RBTREE_NODE_IS_BLACK(node_ptr));
         assert(RBTREE_NODE_IS_RED(node_ptr->child_ptrs[dir]));
@@ -441,7 +469,7 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_red))(RBTR
 {
     assert(node_ptr != NULL);
 
-    node_ptr->__parent_ptr_with_color &= ~1;
+    node_ptr->__parent_ptr_with_color &= ~(uintptr_t)1;
 }
 static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_black))(RBTREE_NODE_TYPE* node_ptr)
 {
@@ -457,7 +485,7 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_color_of_o
 
     const bool is_black = other_ptr->__parent_ptr_with_color & 1;
 
-    node_ptr->__parent_ptr_with_color &= ~1;
+    node_ptr->__parent_ptr_with_color &= ~(uintptr_t)1;
     node_ptr->__parent_ptr_with_color += is_black;
 }
 static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_parent_ptr))(RBTREE_NODE_TYPE* node_ptr, RBTREE_NODE_TYPE* parent_ptr)
@@ -472,7 +500,7 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_parent_ptr))(RBTREE
 
 // rotate a subtree around a given subtree root node and direction (0: left or 1: right). returns the new subtree root
 static inline RBTREE_NODE_TYPE* JOIN(internal, JOIN(RBTREE_NAME, rotate_dir))(RBTREE_NODE_TYPE** rootptr_ptr, RBTREE_NODE_TYPE* P,
-                                                                              const uint8_t dir)
+                                                                              const int dir)
 {
     assert(rootptr_ptr != NULL);
     assert(P != NULL);
@@ -540,7 +568,7 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(RBTREE_NODE_T
             RBTREE_NODE_SET_COLOR_TO_BLACK(P);
             return;
         }
-        const uint8_t dir = RBTREE_CHILD_DIR(P);
+        const int dir = RBTREE_CHILD_DIR(P);
         U = G->child_ptrs[1 - dir];
 
         if (U == NULL || RBTREE_NODE_IS_BLACK(U)) {
@@ -662,6 +690,7 @@ Case_6:
 #undef KEY_TYPE
 #undef VALUE_TYPE
 #undef KEY_IS_STRICTLY_LESS
+#undef ALLOW_DUPLICATES
 
 #undef RBTREE_TYPE
 #undef RBTREE_NAME

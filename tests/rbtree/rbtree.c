@@ -35,6 +35,17 @@
 #define KEY_IS_STRICTLY_LESS(a, b) ((a) < (b))
 #include "rbtree.h"
 
+#define NAME                       bstd
+#define KEY_TYPE                   int
+#define KEY_IS_STRICTLY_LESS(a, b) ((a) < (b))
+#define ALLOW_DUPLICATES
+#include "rbtree.h"
+
+typedef struct {
+    unsigned int value;
+    bst_node_type node;
+} extended_bst_node;
+
 static int max_int(const int a, const int b)
 {
     return (a >= b) ? a : b;
@@ -60,11 +71,23 @@ static bool is_valid_binary_search_tree(const float left_key, const bst_node_typ
     if (root_ptr == NULL) {
         return true;
     }
-    if (!(left_key <= root_ptr->key && root_ptr->key <= right_key)) {
+    if (!(left_key < root_ptr->key && root_ptr->key < right_key)) { // note this depends on particulars
         return false;
     }
     return is_valid_binary_search_tree(left_key, root_ptr->left_ptr, (float)root_ptr->key) &&
            is_valid_binary_search_tree((float)root_ptr->key, root_ptr->right_ptr, right_key);
+}
+
+static bool is_valid_binary_search_tree_w_duplicates(const float left_key, const bst_node_type* root_ptr, const float right_key)
+{
+    if (root_ptr == NULL) {
+        return true;
+    }
+    if (!(left_key <= root_ptr->key && root_ptr->key <= right_key)) { // note this depends on particulars
+        return false;
+    }
+    return is_valid_binary_search_tree_w_duplicates(left_key, root_ptr->left_ptr, (float)root_ptr->key) &&
+           is_valid_binary_search_tree_w_duplicates((float)root_ptr->key, root_ptr->right_ptr, right_key);
 }
 
 static bool rbtree_check_for_no_consecutive_reds(const bst_node_type* parent_ptr, const bst_node_type* root_ptr)
@@ -105,6 +128,15 @@ static bool is_valid_red_black_tree(const bst_node_type* root_ptr)
     const bool balanced_black_height = rbtree_check_equal_black_height(root_ptr, rbtree_get_black_height_of_some_path(root_ptr));
 
     return is_valid_bst && is_valid_234 && balanced_black_height;
+}
+
+static bool is_valid_red_black_tree_w_duplicates(const bst_node_type* root_ptr)
+{
+    const bool is_valid_bst_w_duplicates = is_valid_binary_search_tree_w_duplicates(-INFINITY, root_ptr, INFINITY);
+    const bool is_valid_234 = rbtree_check_for_no_consecutive_reds(NULL, root_ptr);
+    const bool balanced_black_height = rbtree_check_equal_black_height(root_ptr, rbtree_get_black_height_of_some_path(root_ptr));
+
+    return is_valid_bst_w_duplicates && is_valid_234 && balanced_black_height;
 }
 
 static void preorder_traverse_and_print(const bst_node_type* root_ptr, bool print_children)
@@ -201,23 +233,32 @@ int main(void)
         assert(count_height(bst) == 4);
     }
 
-    // N = 8192, 8 * (insert_node * 1024, delete_node * 1024, insert_node * 1024)
     const int lim = 1024;
+
+    // N = 8192, 8 * (insert_node * 1024, delete_node * 1024, insert_node * 1024)
     for (int seed = 0; seed < 8; seed++) {
         bst_node_type* bst;
         bst_init(&bst);
 
         srand((unsigned int)seed);
 
-        bst_node_type* node_buf = calloc((size_t)(lim * 2), sizeof(bst_node_type));
+        extended_bst_node* node_buf = calloc((size_t)(lim * 2), sizeof(extended_bst_node));
         size_t node_count = 0;
 
         for (int i = 0; i < lim; i++) {
             const int val = (int)((unsigned int)rand()) % lim;
 
-            bst_node_init(&node_buf[node_count], val);
-            bst_insert_node(&bst, &node_buf[node_count]);
-            node_count++;
+            bst_node_type* node_ptr = bst_search_node(&bst, val);
+
+            if (!node_ptr) {
+                node_buf[node_count].value = 0;
+                bst_node_init(&node_buf[node_count].node, val);
+                bst_insert_node(&bst, &node_buf[node_count].node);
+                node_count++;
+            }
+            else {
+                rbtree_node_entry(node_ptr, extended_bst_node, node)->value++;
+            }
 
             assert(is_valid_red_black_tree(bst));
         }
@@ -226,9 +267,16 @@ int main(void)
 
         for (int i = 0; i < lim; i++) {
             const int val = (int)((unsigned int)rand()) % lim;
+
             bst_node_type* node_ptr = bst_search_node(&bst, val);
             if (node_ptr) {
-                bst_delete_node(&bst, node_ptr);
+                unsigned int* value_ptr = &rbtree_node_entry(node_ptr, extended_bst_node, node)->value;
+                if (*value_ptr > 1) {
+                    (*value_ptr)--;
+                }
+                else {
+                    bst_delete_node(&bst, node_ptr);
+                }
             }
             assert(is_valid_red_black_tree(bst));
         }
@@ -236,11 +284,61 @@ int main(void)
         for (int i = 0; i < lim; i++) {
             const int val = (int)((unsigned int)rand()) % lim;
 
-            bst_node_init(&node_buf[node_count], val);
-            bst_insert_node(&bst, &node_buf[node_count]);
+            bst_node_type* node_ptr = bst_search_node(&bst, val);
+
+            if (!node_ptr) {
+                node_buf[node_count].value = 0;
+                bst_node_init(&node_buf[node_count].node, val);
+                bst_insert_node(&bst, &node_buf[node_count].node);
+                node_count++;
+            }
+            else {
+                rbtree_node_entry(node_ptr, extended_bst_node, node)->value++;
+            }
+            assert(is_valid_red_black_tree(bst));
+        }
+
+        free(node_buf);
+    }
+
+    for (int seed = 0; seed < 8; seed++) {
+        bstd_node_type* bstd;
+        bstd_init(&bstd);
+
+        srand((unsigned int)seed);
+
+        bstd_node_type* node_buf = calloc((size_t)(lim * 2), sizeof(bstd_node_type));
+        size_t node_count = 0;
+
+        for (int i = 0; i < lim; i++) {
+            const int val = (int)((unsigned int)rand()) % lim;
+
+            bstd_node_init(&node_buf[node_count], val);
+            bstd_insert_node(&bstd, &node_buf[node_count]);
             node_count++;
 
-            assert(is_valid_red_black_tree(bst));
+            assert(is_valid_red_black_tree_w_duplicates((bst_node_type*)bstd));
+        }
+
+        assert(count_height((bst_node_type*)bstd) <= 2 * log2(lim));
+
+        for (int i = 0; i < lim; i++) {
+            const int val = (int)((unsigned int)rand()) % lim;
+            bstd_node_type* node_ptr = bstd_search_node(&bstd, val);
+            if (node_ptr) {
+                bstd_delete_node(&bstd, node_ptr);
+            }
+            assert(is_valid_red_black_tree_w_duplicates((bst_node_type*)bstd));
+        }
+
+        for (int i = 0; i < lim; i++) {
+            const int val = (int)((unsigned int)rand()) % lim;
+
+            bstd_node_init(&node_buf[node_count], val);
+            bstd_insert_node(&bstd, &node_buf[node_count]);
+            node_count++;
+
+            assert(is_valid_red_black_tree_w_duplicates((bst_node_type*)bstd));
         }
 
         free(node_buf);
