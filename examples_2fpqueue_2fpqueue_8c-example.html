@@ -110,6 +110,8 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> int_example(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
+<div class="line">    (void)(preorder_traverse_and_print);</div>
+<div class="line"> </div>
 <div class="line">    pqueue_int_type* pq = pqueue_int_create(10);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span> (!pq) {</div>
@@ -128,8 +130,8 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line">        pqueue_int_push(pq, values[i], priority);</div>
 <div class="line"> </div>
-<div class="line">        preorder_traverse_and_print(pq, 0);</div>
-<div class="line">        printf(<span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">        <span class="comment">/* preorder_traverse_and_print(pq, 0); */</span></div>
+<div class="line">        <span class="comment">/* printf(&quot;\n&quot;); */</span></div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    assert(pq-&gt;count == 10);</div>
