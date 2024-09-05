@@ -20,6 +20,7 @@
 #define NAME                       internal_freelist
 #define KEY_TYPE                   size_t
 #define KEY_IS_STRICTLY_LESS(a, b) ((a) < (b))
+#define ALLOW_DUPLICATES
 #include "rbtree.h"
 
 typedef struct {
@@ -41,6 +42,8 @@ static inline bool internal_freelist_node_is_best(internal_freelist_node_type* n
                                                   const size_t smallest_diff);
 static inline internal_freelist_node_type* internal_freelist_find_best(freelist_type* freelist_ptr, const size_t alignment,
                                                                        const size_t size, size_t* padding_);
+static inline void internal_freelist_merge_nodes(freelist_type* freelist_ptr, internal_freelist_node_type* a,
+                                                 internal_freelist_node_type* b);
 static inline void internal_freelist_coalescence(freelist_type* freelist_ptr, internal_freelist_node_type* free_node);
 /// @endcond
 
@@ -207,33 +210,49 @@ static inline internal_freelist_node_type* internal_freelist_find_best(freelist_
     return best_node;
 }
 
+static inline void internal_freelist_merge_nodes(freelist_type* freelist_ptr, internal_freelist_node_type* a,
+                                                 internal_freelist_node_type* b)
+{
+    const size_t new_block_size = a->key + b->key;
+
+    internal_freelist_delete_node(&freelist_ptr->rb_rootptr, b);
+    internal_freelist_delete_node(&freelist_ptr->rb_rootptr, a);
+
+    internal_freelist_node_init(a, new_block_size);
+
+    internal_freelist_insert_node(&freelist_ptr->rb_rootptr, a);
+
+    // note:
+    // possible optimization with some specialized rbtree operation to increase key?
+}
+
+static inline void* internal_freelist_get_next_addr(const internal_freelist_node_type* n)
+{
+    return (void*)((char*)n + n->key);
+}
+
 static inline void internal_freelist_coalescence(freelist_type* freelist_ptr, internal_freelist_node_type* node_ptr)
 {
-    void* next_ptr = (char*)node_ptr + node_ptr->key;
-    if (node_ptr->left_ptr != NULL && next_ptr == node_ptr->left_ptr) {
-        const size_t new_block_size = node_ptr->key + node_ptr->left_ptr->key;
-        internal_freelist_delete_node(&freelist_ptr->rb_rootptr, node_ptr->left_ptr);
-        internal_freelist_delete_node(&freelist_ptr->rb_rootptr, node_ptr);
-        internal_freelist_node_init(node_ptr, new_block_size);
-        internal_freelist_insert_node(&freelist_ptr->rb_rootptr, node_ptr);
+    internal_freelist_node_type* const parent_ptr = internal_freelist_node_get_parent_ptr(node_ptr);
 
-        // note:
-        // possible optimization with some specialized rbtree operation to increase key?
+    if (node_ptr->left_ptr != NULL && internal_freelist_get_next_addr(node_ptr) == node_ptr->left_ptr) {
+        internal_freelist_merge_nodes(freelist_ptr, node_ptr, node_ptr->left_ptr);
     }
-    if (node_ptr->right_ptr != NULL && next_ptr == node_ptr->right_ptr) {
-        const size_t new_block_size = node_ptr->key + node_ptr->right_ptr->key;
-        internal_freelist_delete_node(&freelist_ptr->rb_rootptr, node_ptr->right_ptr);
-        internal_freelist_delete_node(&freelist_ptr->rb_rootptr, node_ptr);
-        internal_freelist_node_init(node_ptr, new_block_size);
-        internal_freelist_insert_node(&freelist_ptr->rb_rootptr, node_ptr);
+    else if (node_ptr->right_ptr != NULL && internal_freelist_get_next_addr(node_ptr) == node_ptr->right_ptr) {
+        internal_freelist_merge_nodes(freelist_ptr, node_ptr, node_ptr->right_ptr);
     }
-    internal_freelist_node_type* parent_ptr = internal_freelist_node_get_parent_ptr(node_ptr);
-    if (parent_ptr != NULL && (void*)((char*)parent_ptr + parent_ptr->key) == node_ptr) {
-        const size_t new_block_size = parent_ptr->key + node_ptr->key;
-        internal_freelist_delete_node(&freelist_ptr->rb_rootptr, node_ptr);
-        internal_freelist_delete_node(&freelist_ptr->rb_rootptr, parent_ptr);
-        internal_freelist_node_init(parent_ptr, new_block_size);
-        internal_freelist_insert_node(&freelist_ptr->rb_rootptr, parent_ptr);
+    else if (parent_ptr != NULL && internal_freelist_get_next_addr(node_ptr) == parent_ptr) {
+        internal_freelist_merge_nodes(freelist_ptr, parent_ptr, node_ptr);
+    }
+
+    if (node_ptr->left_ptr != NULL && internal_freelist_get_next_addr(node_ptr->left_ptr) == node_ptr) {
+        internal_freelist_merge_nodes(freelist_ptr, node_ptr, node_ptr->left_ptr);
+    }
+    else if (node_ptr->right_ptr != NULL && internal_freelist_get_next_addr(node_ptr->right_ptr) == node_ptr) {
+        internal_freelist_merge_nodes(freelist_ptr, node_ptr, node_ptr->right_ptr);
+    }
+    else if (parent_ptr != NULL && internal_freelist_get_next_addr(parent_ptr) == node_ptr) {
+        internal_freelist_merge_nodes(freelist_ptr, parent_ptr, node_ptr);
     }
 }
 /// @endcond

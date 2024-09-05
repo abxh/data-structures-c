@@ -5,6 +5,29 @@
 
 static unsigned char buf[4096];
 
+static int count_nodes(const internal_freelist_node_type* root_ptr)
+{
+    if (root_ptr == NULL) {
+        return 0;
+    }
+    return 1 + count_nodes(root_ptr->left_ptr) + count_nodes(root_ptr->right_ptr);
+}
+
+static void preorder_traverse_and_print(const internal_freelist_node_type* root_ptr, bool print_children)
+{
+    if (root_ptr == NULL) {
+        if (print_children) {
+            printf(" ()");
+        }
+        return;
+    }
+    printf(" ( %zu", root_ptr->key);
+    bool dont_print_children = root_ptr->left_ptr == NULL && root_ptr->right_ptr == NULL;
+    preorder_traverse_and_print(root_ptr->left_ptr, !dont_print_children);
+    preorder_traverse_and_print(root_ptr->right_ptr, !dont_print_children);
+    printf(" )");
+}
+
 void chars_test(void)
 {
     freelist_type fl;
@@ -29,9 +52,22 @@ void chars_test(void)
         }
     }
 
-    /* for (size_t i = 0; i < 'z' - 'a' + 1; i += 2) { */
-    /*     freelist_deallocate(&fl, ptrs[i]); */
-    /* } */
+    for (size_t i = 0; i < 'z' - 'a'; i++) {
+        freelist_deallocate(&fl, ptrs[i]);
+    }
+    
+    preorder_traverse_and_print(fl.rb_rootptr, true);
+    printf("\n");
+
+    freelist_deallocate(&fl, ptrs[n - 1]);
+
+    preorder_traverse_and_print(fl.rb_rootptr, true);
+    printf("\n");
+
+    printf("%d\n", count_nodes(fl.rb_rootptr));
+    printf("root block_size: %zu\n", fl.rb_rootptr->key);
+    printf("left block_size: %zu\n", !fl.rb_rootptr->left_ptr ? 0 : fl.rb_rootptr->left_ptr->key);
+    printf("right block_size: %zu\n", !fl.rb_rootptr->right_ptr ? 0 : fl.rb_rootptr->right_ptr->key);
 
     freelist_deallocate_all(&fl);
 }
