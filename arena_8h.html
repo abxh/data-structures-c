@@ -104,6 +104,7 @@ $(function(){ initResizable(false); });
 <code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;stdalign.h&gt;</code><br />
 </div>
 <p><a href="arena_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -115,7 +116,7 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a03d83b460541e5ff9cae283d9f55afb2" id="r_a03d83b460541e5ff9cae283d9f55afb2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03d83b460541e5ff9cae283d9f55afb2">DEFAULT_ALIGNMENT</a>&#160;&#160;&#160;(2 * sizeof(void*))</td></tr>
+<tr class="memitem:a03d83b460541e5ff9cae283d9f55afb2" id="r_a03d83b460541e5ff9cae283d9f55afb2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03d83b460541e5ff9cae283d9f55afb2">DEFAULT_ALIGNMENT</a>&#160;&#160;&#160;(alignof(max_align_t))</td></tr>
 <tr class="memdesc:a03d83b460541e5ff9cae283d9f55afb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default alignment when no alignment size is given.  <br /></td></tr>
 <tr class="separator:a03d83b460541e5ff9cae283d9f55afb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -151,7 +152,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DEFAULT_ALIGNMENT&#160;&#160;&#160;(2 * sizeof(void*))</td>
+          <td class="memname">#define DEFAULT_ALIGNMENT&#160;&#160;&#160;(alignof(max_align_t))</td>
         </tr>
       </table>
 </div><div class="memdoc">
