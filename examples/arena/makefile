@@ -3,14 +3,14 @@ EXEC_NAME := a.out
 CFLAGS     += -I./../../lib
 CFLAGS     += -Wall -Wextra -pedantic
 CFLAGS     += -ggdb3
-CFLAGS     += -fsanitize=undefined
-CFLAGS     += -fsanitize=address
+# CFLAGS     += -fsanitize=undefined
+# CFLAGS     += -fsanitize=address
 
 EXAMPLE_FILES  := $(wildcard *.c)
 OBJ_FILES      := $(EXAMPLE_FILES:.c=.o)
 
-LD_FLAGS   += -fsanitize=undefined
-LD_FLAGS   += -fsanitize=address
+# LD_FLAGS   += -fsanitize=undefined
+# LD_FLAGS   += -fsanitize=address
 
 .PHONY: all clean test
 

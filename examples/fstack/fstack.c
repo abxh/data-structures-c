@@ -8,7 +8,7 @@
 
 void int_stack_example(void)
 {
-    int_stack_type* s = int_stack_create(3);
+    struct int_stack *s = int_stack_create(3);
 
     if (!s) {
         assert(false);
@@ -57,7 +57,7 @@ void uintstk_example(void)
 {
     const size_t lim = 1e+6;
 
-    uintstk_type* s = uintstk_create(lim);
+    struct uintstk *s = uintstk_create(lim);
     if (!s) {
         assert(false);
     }
@@ -66,7 +66,7 @@ void uintstk_example(void)
         uintstk_push(s, i);
     }
 
-    uintstk_type* s_copy = uintstk_create(s->capacity);
+    struct uintstk *s_copy = uintstk_create(s->capacity);
     if (!s_copy) {
         assert(false);
     }

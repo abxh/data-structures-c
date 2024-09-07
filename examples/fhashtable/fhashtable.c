@@ -6,20 +6,19 @@
 #include "fnvhash.h"
 
 #define NAME               strint_ht
-#define KEY_TYPE           char*
+#define KEY_TYPE           char *
 #define VALUE_TYPE         int
 #define KEY_IS_EQUAL(a, b) (strcmp((a), (b)) == 0)
 #define HASH_FUNCTION(key) (fnvhash_32_str(key))
 #include "fhashtable.h"
 
-static char buf[4096]; /* a static / heap-allocated buffer should be used, should the key/values's lifetime
-                          extend beyond the function scope */
+static char buf[4096]; /* a static / heap-allocated buffer should be used, should the
+                          key/values's lifetime extend beyond the function scope */
 
 void str_int_ht_test_alt(void)
 {
 
-    strint_ht_type* ht =
-        strint_ht_create(3 * 4 / 3); // (4/3) scaling factor is to ensure hashtable performance by reducing maximum laod
+    struct strint_ht *ht = strint_ht_create(3);
     if (!ht) {
         assert(false);
     }
@@ -28,14 +27,14 @@ void str_int_ht_test_alt(void)
     size_t buf_offset = 0;
 
     strcpy(&buf[buf_offset], "egg");
-    char* egg_str_p = &buf[buf_offset];
+    char *egg_str_p = &buf[buf_offset];
     buf_offset += sizeof("egg");
 
     strint_ht_insert(ht, egg_str_p, 1);
     strint_ht_update(ht, egg_str_p, 2);
 
     strcpy(&buf[buf_offset], "milk");
-    char* milk_str_p = &buf[buf_offset];
+    char *milk_str_p = &buf[buf_offset];
     buf_offset += sizeof("milk");
 
     strint_ht_update(ht, milk_str_p, 3);
@@ -47,7 +46,7 @@ void str_int_ht_test_alt(void)
 
     assert(strint_ht_get_value(ht, "egg", -1) == 2);
 
-    int* res = strint_ht_get_value_mut(ht, "milk");
+    int *res = strint_ht_get_value_mut(ht, "milk");
     if (res == NULL) {
         assert(false);
     }
@@ -78,15 +77,16 @@ void str_int_ht_test_alt(void)
 #define KEY_TYPE           int
 #define VALUE_TYPE         int
 #define KEY_IS_EQUAL(a, b) ((a) == (b))
-#define HASH_FUNCTION(key) (murmur3_32((uint8_t*)&(key), sizeof(int), 0))
+#define HASH_FUNCTION(key) (murmur3_32((uint8_t *)&(key), sizeof(int), 0))
 #include "fhashtable.h"
 
 #define LIM ((int)(1e+6))
 
 void int_to_int_hashtable_test(void)
 {
-    int_to_int_hashtable_type* ht =
-        int_to_int_hashtable_create(LIM * 4 / 3); // (4/3) scaling factor is to ensure hashtable performance by reducing maximum laod
+    struct int_to_int_hashtable *ht =
+        int_to_int_hashtable_create(LIM * 4 / 3); // (4/3) scaling factor is to ensure hashtable
+                                                  // performance by reducing maximum laod
     if (!ht) {
         assert(false);
     }
@@ -97,7 +97,7 @@ void int_to_int_hashtable_test(void)
         assert(int_to_int_hashtable_get_value(ht, i, -1) == LIM - i);
     }
 
-    int_to_int_hashtable_type* ht_copy = int_to_int_hashtable_create(ht->capacity);
+    struct int_to_int_hashtable *ht_copy = int_to_int_hashtable_create(ht->capacity);
     if (!ht_copy) {
         assert(false);
     }

@@ -14,6 +14,7 @@
     - get_front / peek
     - get_back
     - at + fqueue_for_each + fqueue_for_each_reverse
+    - init, calc_sizeof (this is indirectly tested for)
 
     Mutating operation types:
     - enqueue
@@ -30,18 +31,20 @@
 #define VALUE_TYPE int64_t
 #include "fqueue.h"
 
-static inline bool check_count_invariance(const i64_que_type* que_p, const size_t enqueue_op_count, const size_t dequeue_op_count)
+static inline bool check_count_invariance(const struct i64_que *que_p, const size_t enqueue_op_count,
+                                          const size_t dequeue_op_count)
 {
     // enqueue and dequeue operations *after* the stack is cleared / created
     return que_p->count == (enqueue_op_count - dequeue_op_count);
 }
 
-static inline bool check_capacity_invariance(const i64_que_type* que_p, const size_t suggested_capacity)
+static inline bool check_capacity_invariance(const struct i64_que *que_p, const size_t suggested_capacity)
 {
     return que_p->capacity >= suggested_capacity;
 }
 
-static inline bool check_empty_full(const i64_que_type* que_p, const size_t enqueue_op_count, const size_t dequeue_op_count)
+static inline bool check_empty_full(const struct i64_que *que_p, const size_t enqueue_op_count,
+                                    const size_t dequeue_op_count)
 {
     // enqueue and dequeue operations *after* the stack is cleared / created
     const size_t diff = enqueue_op_count - dequeue_op_count;
@@ -57,14 +60,14 @@ static inline bool check_empty_full(const i64_que_type* que_p, const size_t enqu
     }
 }
 
-static inline bool check_front_back(const i64_que_type* que_p, const int64_t latest_value_enqueueed,
+static inline bool check_front_back(const struct i64_que *que_p, const int64_t latest_value_enqueueed,
                                     const int64_t first_value_enqueueed)
 {
     // first and last value enqueueed *after* the stack is cleared / created
     return i64_que_get_front(que_p) == latest_value_enqueueed && i64_que_get_back(que_p) == first_value_enqueueed;
 }
 
-static inline bool check_ordered_values(const i64_que_type* que_p, const size_t n, const int64_t expected_value[n])
+static inline bool check_ordered_values(const struct i64_que *que_p, const size_t n, const int64_t expected_value[n])
 {
     assert(n != 0);
 
@@ -97,11 +100,12 @@ static inline bool check_ordered_values(const i64_que_type* que_p, const size_t 
     return res;
 }
 
-static inline bool copy_values_and_check_ordered_values(const i64_que_type* que_p, const size_t n, const int64_t expected_value[n])
+static inline bool copy_values_and_check_ordered_values(const struct i64_que *que_p, const size_t n,
+                                                        const int64_t expected_value[n])
 {
     assert(n != 0);
 
-    i64_que_type* que_copy_p = i64_que_create((uint32_t)n);
+    struct i64_que *que_copy_p = i64_que_create((uint32_t)n);
     if (!que_copy_p) {
         return false;
     }
@@ -115,14 +119,14 @@ int main(void)
 {
     // N = 0
     {
-        i64_que_type* que_p = i64_que_create(0);
+        struct i64_que *que_p = i64_que_create(0);
         if (que_p) {
             assert(false);
         }
     }
     // N = 1
     {
-        i64_que_type* que_p = i64_que_create(1);
+        struct i64_que *que_p = i64_que_create(1);
         if (!que_p) {
             assert(false);
         }
@@ -135,7 +139,7 @@ int main(void)
     }
     // N = 1, enqueue
     {
-        i64_que_type* que_p = i64_que_create(1);
+        struct i64_que *que_p = i64_que_create(1);
         if (!que_p) {
             assert(false);
         }
@@ -150,7 +154,7 @@ int main(void)
     }
     // N = 1, enqueue -> dequeue
     {
-        i64_que_type* que_p = i64_que_create(1);
+        struct i64_que *que_p = i64_que_create(1);
         if (!que_p) {
             assert(false);
         }
@@ -165,7 +169,7 @@ int main(void)
     }
     // N = 2, enqueue * 2
     {
-        i64_que_type* que_p = i64_que_create(2);
+        struct i64_que *que_p = i64_que_create(2);
         if (!que_p) {
             assert(false);
         }
@@ -183,7 +187,7 @@ int main(void)
     }
     // N = 2, enqueue * 2 -> dequeue
     {
-        i64_que_type* que_p = i64_que_create(2);
+        struct i64_que *que_p = i64_que_create(2);
         if (!que_p) {
             assert(false);
         }
@@ -200,7 +204,7 @@ int main(void)
     }
     // N = 10, enqueue * 10
     {
-        i64_que_type* que_p = i64_que_create(10);
+        struct i64_que *que_p = i64_que_create(10);
         if (!que_p) {
             assert(false);
         }
@@ -220,13 +224,14 @@ int main(void)
         assert(check_empty_full(que_p, 10, 0));
         assert(check_front_back(que_p, 421, 430));
         assert(check_ordered_values(que_p, 10, (int64_t[10]){421, 422, 423, 424, 425, 426, 427, 428, 429, 430}));
-        assert(copy_values_and_check_ordered_values(que_p, 10, (int64_t[10]){421, 422, 423, 424, 425, 426, 427, 428, 429, 430}));
+        assert(copy_values_and_check_ordered_values(que_p, 10,
+                                                    (int64_t[10]){421, 422, 423, 424, 425, 426, 427, 428, 429, 430}));
 
         i64_que_destroy(que_p);
     }
     // N = 10, enqueue * 10 -> dequeue * 5
     {
-        i64_que_type* que_p = i64_que_create(10);
+        struct i64_que *que_p = i64_que_create(10);
         if (!que_p) {
             assert(false);
         }
@@ -256,9 +261,10 @@ int main(void)
 
         i64_que_destroy(que_p);
     }
-    // N = 10, enqueue * 3, dequeue * 3, enqueue * 10 -> dequeue * 5 -> enqueue * 3
+    // N = 10, enqueue * 3, dequeue * 3, enqueue * 10 -> dequeue * 5 ->
+    // enqueue * 3
     {
-        i64_que_type* que_p = i64_que_create(10);
+        struct i64_que *que_p = i64_que_create(10);
         if (!que_p) {
             assert(false);
         }
@@ -297,7 +303,7 @@ int main(void)
     }
     // N = 10, enqueue * 10 -> clear() -> enqueue * 5
     {
-        i64_que_type* que_p = i64_que_create(10);
+        struct i64_que *que_p = i64_que_create(10);
         if (!que_p) {
             assert(false);
         }
@@ -323,7 +329,7 @@ int main(void)
     }
     // N = 1e+6, enqueue * 1e+6
     {
-        i64_que_type* que_p = i64_que_create(1e+6);
+        struct i64_que *que_p = i64_que_create(1e+6);
         if (!que_p) {
             assert(false);
         }
@@ -339,7 +345,7 @@ int main(void)
     }
     // N = 1e+6, enqueue * 1e+6 -> dequeue * 1e+3
     {
-        i64_que_type* que_p = i64_que_create(1e+6);
+        struct i64_que *que_p = i64_que_create(1e+6);
         if (!que_p) {
             assert(false);
         }

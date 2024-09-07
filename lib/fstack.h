@@ -14,8 +14,8 @@
  * @brief Fixed-size array-based stack
  *
  * The following macros must be defined:
- *  @li `NAME`
- *  @li `VALUE_TYPE`
+ *      @li `NAME`
+ *      @li `VALUE_TYPE`
  */
 
 /**
@@ -38,50 +38,41 @@
 #include <stdlib.h>
 
 /**
- * @def fstack_for_each(stack_ptr, index, value)
+ * @def fstack_for_each(self, index, value)
  * @brief Iterate over the values in the stack from the top to bottom.
+ *
  * @warning Modifying the stack under the iteration may result in errors.
  *
- * @param[in] stack_ptr Stack pointer.
- * @param[in] index Temporary indexing variable. Should be `uint32_t`
- * @param[out] value Current value. Should be `VALUE_TYPE`.
+ * @param[in] self      Stack pointer.
+ * @param[in] index     Temporary indexing variable. Should be able to contain
+ *                      `uint32_t`.
+ * @param[out] value    Current value. Should be `VALUE_TYPE`.
  */
-#define fstack_for_each(stack_ptr, index, value)             \
-    for ((index) = (stack_ptr)->count;                       \
-                                                             \
-         (index) > 0 &&                                      \
-                                                             \
-         ((value) = (stack_ptr)->values[(index) - 1], true); \
-                                                             \
-         (index)--)
+#define fstack_for_each(self, index, value) \
+    for ((index) = (self)->count; (index) > 0 && ((value) = (self)->values[(index) - 1], true); (index)--)
 
 /**
- * @def fstack_for_each_reverse(stack_ptr, index, value)
+ * @def fstack_for_each_reverse(self, index, value)
  * @brief Iterate over the values in the stack from the bottom to top.
+ *
  * @warning Modifying the stack under the iteration may result in errors.
  *
- * @param[in] stack_ptr Stack pointer.
- * @param[in] index Temporary indexing variable. Should be `uint32_t`
- * @param[out] value Current value. Should be `VALUE_TYPE`.
+ * @param[in] self      Stack pointer.
+ * @param[in] index     Temporary indexing variable. Should be able to contain
+ *                      `uint32_t`.
+ * @param[out] value    Current value. Should be `VALUE_TYPE`.
  */
-#define fstack_for_each_reverse(stack_ptr, index, value) \
-    for ((index) = 0;                                    \
-                                                         \
-         (index) < (stack_ptr)->count &&                 \
-                                                         \
-         ((value) = (stack_ptr)->values[(index)], true); \
-                                                         \
-         (index)++)
+#define fstack_for_each_reverse(self, index, value) \
+    for ((index) = 0; (index) < (self)->count && ((value) = (self)->values[(index)], true); (index)++)
 
 #endif // FSTACK_H
 
 /**
  * @def NAME
- * @brief Prefix to stack type and operations.
+ * @brief Prefix to stack type and operations. This must be manually defined
+ *        before including this header file.
  *
  * Is undefined after header is included.
- *
- * @attention This must be manually defined before including this header file.
  */
 #ifndef NAME
 #define NAME fstack
@@ -92,11 +83,10 @@
 
 /**
  * @def VALUE_TYPE
- * @brief Stack value type.
+ * @brief Stack value type. This must be manually defined before including this
+ *        header file.
  *
  * Is undefined after header is included.
- *
- * @attention This must be manually defined before including this header file.
  */
 #ifndef VALUE_TYPE
 #define VALUE_TYPE int
@@ -104,9 +94,11 @@
 #endif
 
 /// @cond DO_NOT_DOCUMENT
-#define FSTACK_TYPE     JOIN(FSTACK_NAME, type)
-#define FSTACK_IS_EMPTY JOIN(FSTACK_NAME, is_empty)
-#define FSTACK_IS_FULL  JOIN(FSTACK_NAME, is_full)
+#define FSTACK_TYPE        struct FSTACK_NAME
+#define FSTACK_IS_EMPTY    JOIN(FSTACK_NAME, is_empty)
+#define FSTACK_IS_FULL     JOIN(FSTACK_NAME, is_full)
+#define FSTACK_INIT        JOIN(FSTACK_NAME, init)
+#define FSTACK_CALC_SIZEOF JOIN(FSTACK_NAME, calc_sizeof)
 /// @endcond
 
 // }}}
@@ -116,194 +108,244 @@
 /**
  * @brief Generated stack struct type for a given `VALUE_TYPE`.
  */
-typedef struct {
-    uint32_t count;      ///< number of values in the stack.
-    uint32_t capacity;   ///< maximum number of values allocated for in the stack.
+struct FSTACK_NAME {
+    uint32_t count;      ///< number of values.
+    uint32_t capacity;   ///< maximum number of values allocated for.
     VALUE_TYPE values[]; ///< array of values.
-} FSTACK_TYPE;
+};
 
 // }}}
 
 // function definitions: {{{
 
 /**
- * @brief Create an stack with a given capacity with malloc().
+ * @brief Calculate the size of the stack struct.
  *
- * @param[in] capacity Maximum number of elements expected to be stored in the stack.
- * @return A pointer to the stack.
- * @retval `NULL`
- *   @li If capacity is 0 or is larger than UINT32_MAX.
- *   @li If malloc fails.
+ * @param[in,out]  capacity_ptr  Pointer to orignal capacity
+ * @param[out]     size_ptr      Pointer to size (to be outputted)
+ *
+ * @retval false If capacity is 0 or the equivalent size is larger than
+ *               UINT32_MAX.
+ * @retval true  Otherwise.
  */
-static inline FSTACK_TYPE* JOIN(FSTACK_NAME, create)(const uint32_t capacity)
+static inline bool JOIN(FSTACK_NAME, calc_sizeof)(uint32_t *capacity_ptr, uint32_t *size_ptr)
 {
-    if (capacity == 0 || capacity > (UINT32_MAX - offsetof(FSTACK_TYPE, values)) / sizeof(VALUE_TYPE)) {
-        return NULL;
-    }
-    FSTACK_TYPE* stack_ptr = (FSTACK_TYPE*)calloc(1, offsetof(FSTACK_TYPE, values) + capacity * sizeof(VALUE_TYPE));
+    assert(capacity_ptr);
+    assert(size_ptr);
 
-    if (!stack_ptr) {
-        return NULL;
+    if (*capacity_ptr == 0 || *capacity_ptr > (UINT32_MAX - offsetof(FSTACK_TYPE, values)) / sizeof(VALUE_TYPE)) {
+        return false;
     }
 
-    stack_ptr->count = 0;
-    stack_ptr->capacity = capacity;
+    *size_ptr = (uint32_t)(offsetof(FSTACK_TYPE, values) + *capacity_ptr * sizeof(VALUE_TYPE));
 
-    return stack_ptr;
+    return true;
 }
 
 /**
- * @brief Destroy an stack and free the underlying memory with free().
+ * @brief Initialize a stack struct, given a capacity.
+ *
+ * @param[in] self              Stack pointer
+ * @param[in] capacity          Capacity
+ */
+static inline FSTACK_TYPE *JOIN(FSTACK_NAME, init)(FSTACK_TYPE *self, const uint32_t capacity)
+{
+    assert(self);
+
+    self->count = 0;
+    self->capacity = capacity;
+
+    return self;
+}
+
+/**
+ * @brief Create an stack struct with a given capacity with malloc().
+ *
+ * @param[in] capacity      Maximum number of elements.
+ *
+ * @return A pointer to the stack.
+ * @retval NULL
+ *   @li If capacity is 0 or the equivalent size cannot be stored in
+ *       UINT32_MAX.
+ *   @li If malloc fails.
+ */
+static inline FSTACK_TYPE *JOIN(FSTACK_NAME, create)(uint32_t capacity)
+{
+    uint32_t size = 0;
+    if (!FSTACK_CALC_SIZEOF(&capacity, &size)) {
+        return NULL;
+    }
+    FSTACK_TYPE *self = (FSTACK_TYPE *)calloc(1, size);
+
+    if (!self) {
+        return NULL;
+    }
+
+    FSTACK_INIT(self, capacity);
+
+    return self;
+}
+
+/**
+ * @brief Destroy an stack struct and free the underlying memory with free().
  *
  * @warning May not be called twice in a row on the same object.
  *
- * @param[in] stack_ptr The stack pointer.
+ * @param[in] self      The stack pointer.
  */
-static inline void JOIN(FSTACK_NAME, destroy)(FSTACK_TYPE* stack_ptr)
+static inline void JOIN(FSTACK_NAME, destroy)(FSTACK_TYPE *self)
 {
-    assert(stack_ptr != NULL);
+    assert(self != NULL);
 
-    free(stack_ptr);
+    free(self);
 }
 
 /**
  * @brief Return whether the stack is empty.
  *
- * @param[in] stack_ptr The stack pointer.
- * @return whether the stack is empty.
+ * @param[in] self      The stack pointer.
+ *
+ * @return Whether the stack is empty.
  */
-static inline bool JOIN(FSTACK_NAME, is_empty)(const FSTACK_TYPE* stack_ptr)
+static inline bool JOIN(FSTACK_NAME, is_empty)(const FSTACK_TYPE *self)
 {
-    assert(stack_ptr != NULL);
+    assert(self != NULL);
 
-    return stack_ptr->count == 0;
+    return self->count == 0;
 }
 
 /**
  * @brief Return whether the stack is full.
  *
- * @param[in] stack_ptr The stack pointer.
- * @return whether the stack is full.
+ * @param[in] self      The stack pointer.
+ *
+ * @return Whether the stack is full.
  */
-static inline bool JOIN(FSTACK_NAME, is_full)(const FSTACK_TYPE* stack_ptr)
+static inline bool JOIN(FSTACK_NAME, is_full)(const FSTACK_TYPE *self)
 {
-    assert(stack_ptr != NULL);
+    assert(self != NULL);
 
-    return stack_ptr->count == stack_ptr->capacity;
+    return self->count == self->capacity;
 }
 
 /**
  * @brief Get the value at index.
  *
- * index starts from the top as `0` and is counted upward to `count - 1` as bottom.
+ * @note Index starts from the top as `0` and is counted upward to `count - 1`
+ * as bottom.
  *
- * @param[in] stack_ptr The stack pointer.
- * @param[in] index The index to retrieve to value from.
+ * @param[in] self      The stack pointer.
+ * @param[in] index     The index to retrieve to value from.
+ *
  * @return The value at `index`.
  */
-static inline VALUE_TYPE JOIN(FSTACK_NAME, at)(const FSTACK_TYPE* stack_ptr, const uint32_t index)
+static inline VALUE_TYPE JOIN(FSTACK_NAME, at)(const FSTACK_TYPE *self, const uint32_t index)
 {
-    assert(stack_ptr != NULL);
-    assert(index < stack_ptr->count);
+    assert(self != NULL);
+    assert(index < self->count);
 
-    return stack_ptr->values[stack_ptr->count - 1 - index];
+    return self->values[self->count - 1 - index];
 }
 
 /**
  * @brief Get the value from the top of a non-empty stack.
  *
- * @param[in] stack_ptr The stack pointer.
+ * @param[in] self      The stack pointer.
+ *
  * @return The top value.
  */
-static inline VALUE_TYPE JOIN(FSTACK_NAME, get_top)(const FSTACK_TYPE* stack_ptr)
+static inline VALUE_TYPE JOIN(FSTACK_NAME, get_top)(const FSTACK_TYPE *self)
 {
-    assert(stack_ptr != NULL);
-    assert(FSTACK_IS_EMPTY(stack_ptr) == false);
+    assert(self != NULL);
+    assert(FSTACK_IS_EMPTY(self) == false);
 
-    return stack_ptr->values[stack_ptr->count - 1];
+    return self->values[self->count - 1];
 }
 
 /**
  * @brief Get the value from the bottom of a non-empty stack.
  *
- * @param[in] stack_ptr The stack pointer.
+ * @param[in] self      The stack pointer.
+ *
  * @return The bottom value.
  */
-static inline VALUE_TYPE JOIN(FSTACK_NAME, get_bottom)(const FSTACK_TYPE* stack_ptr)
+static inline VALUE_TYPE JOIN(FSTACK_NAME, get_bottom)(const FSTACK_TYPE *self)
 {
-    assert(stack_ptr != NULL);
-    assert(FSTACK_IS_EMPTY(stack_ptr) == false);
+    assert(self != NULL);
+    assert(FSTACK_IS_EMPTY(self) == false);
 
-    return stack_ptr->values[0];
+    return self->values[0];
 }
 
 /**
  * @brief Peek a non-empty stack and get it's next to-be-popped value.
  *
- * @param[in] stack_ptr The stack pointer.
+ * @param[in] self      The stack pointer.
+ *
  * @return The next to-be-popped value.
  */
-static inline VALUE_TYPE JOIN(FSTACK_NAME, peek)(const FSTACK_TYPE* stack_ptr)
+static inline VALUE_TYPE JOIN(FSTACK_NAME, peek)(const FSTACK_TYPE *self)
 {
-    return JOIN(FSTACK_NAME, get_top)(stack_ptr);
+    return JOIN(FSTACK_NAME, get_top)(self);
 }
 
 /**
  * @brief Push a value onto a non-full stack.
  *
- * @param[in] stack_ptr The stack pointer.
- * @param[in] value The value.
+ * @param[in] self      The stack pointer.
+ * @param[in] value     The value.
  */
-static inline void JOIN(FSTACK_NAME, push)(FSTACK_TYPE* stack_ptr, const VALUE_TYPE value)
+static inline void JOIN(FSTACK_NAME, push)(FSTACK_TYPE *self, const VALUE_TYPE value)
 {
-    assert(stack_ptr != NULL);
-    assert(FSTACK_IS_FULL(stack_ptr) == false);
+    assert(self != NULL);
+    assert(FSTACK_IS_FULL(self) == false);
 
-    stack_ptr->values[stack_ptr->count++] = value;
+    self->values[self->count++] = value;
 }
 
 /**
  * @brief Pop a value away from a non-empty stack.
  *
- * @param[in] stack_ptr The stack pointer.
+ * @param[in] self      The stack pointer.
+ *
  * @return The top value.
  */
-static inline VALUE_TYPE JOIN(FSTACK_NAME, pop)(FSTACK_TYPE* stack_ptr)
+static inline VALUE_TYPE JOIN(FSTACK_NAME, pop)(FSTACK_TYPE *self)
 {
-    assert(stack_ptr != NULL);
-    assert(FSTACK_IS_EMPTY(stack_ptr) == false);
+    assert(self != NULL);
+    assert(FSTACK_IS_EMPTY(self) == false);
 
-    return stack_ptr->values[--stack_ptr->count];
+    return self->values[--self->count];
 }
 
 /**
  * @brief Clear the elements in the stack.
  *
- * @param[in] stack_ptr The stack pointer.
+ * @param[in] self      The stack pointer.
  */
-static inline void JOIN(FSTACK_NAME, clear)(FSTACK_TYPE* stack_ptr)
+static inline void JOIN(FSTACK_NAME, clear)(FSTACK_TYPE *self)
 {
-    assert(stack_ptr != NULL);
-    stack_ptr->count = 0;
+    assert(self != NULL);
+    self->count = 0;
 }
 
 /**
  * @brief Copy the values from a source stack to a destination stack.
  *
- * @param[in,out] dest_stack_ptr The destination stack.
- * @param[in] src_stack_ptr The source stack.
+ * @param[in,out] dest_ptr      The destination stack.
+ * @param[in] src_ptr           The source stack.
  */
-static inline void JOIN(FSTACK_NAME, copy)(FSTACK_TYPE* restrict dest_stack_ptr, const FSTACK_TYPE* restrict src_stack_ptr)
+static inline void JOIN(FSTACK_NAME, copy)(FSTACK_TYPE *restrict dest_ptr, const FSTACK_TYPE *restrict src_ptr)
 {
-    assert(src_stack_ptr != NULL);
-    assert(dest_stack_ptr != NULL);
-    assert(src_stack_ptr->count <= dest_stack_ptr->capacity);
-    assert(FSTACK_IS_EMPTY(dest_stack_ptr));
+    assert(src_ptr != NULL);
+    assert(dest_ptr != NULL);
+    assert(src_ptr->count <= dest_ptr->capacity);
+    assert(FSTACK_IS_EMPTY(dest_ptr));
 
-    for (uint32_t i = 0; i < src_stack_ptr->count; i++) {
-        dest_stack_ptr->values[i] = src_stack_ptr->values[i];
+    for (uint32_t i = 0; i < src_ptr->count; i++) {
+        dest_ptr->values[i] = src_ptr->values[i];
     }
-    dest_stack_ptr->count = src_stack_ptr->count;
+    dest_ptr->count = src_ptr->count;
 }
 
 // }}}
@@ -315,7 +357,9 @@ static inline void JOIN(FSTACK_NAME, copy)(FSTACK_TYPE* restrict dest_stack_ptr,
 #undef FSTACK_NAME
 #undef FSTACK_TYPE
 #undef FSTACK_IS_EMPTY
-#undef FSTACK_ISFULL
+#undef FSTACK_IS_FULL
+#undef FSTACK_INIT
+#undef FSTACK_CALC_SIZEOF
 // }}}
 
 // vim: ft=c fdm=marker

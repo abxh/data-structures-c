@@ -18,41 +18,46 @@ extern "C" {
 #endif
 #endif
 
-#define NAME uint_ht
-#define KEY_TYPE uint64_t
-#define VALUE_TYPE uint64_t
+#define NAME               uint_ht
+#define KEY_TYPE           uint64_t
+#define VALUE_TYPE         uint64_t
 #define KEY_IS_EQUAL(a, b) ((a) == (b))
-#define HASH_FUNCTION(key) (murmur3_32((uint8_t*)&(key), sizeof(KEY_TYPE), 0))
+#define HASH_FUNCTION(key) (murmur3_32((uint8_t *)&(key), sizeof(KEY_TYPE), 0))
 #include "fhashtable.h"
 
-void benchmark_uint_ht(size_t n) {
-    uint_ht_type* ht_p = uint_ht_create(n);
+void benchmark_uint_ht(size_t n)
+{
+    struct uint_ht *ht_p = uint_ht_create(n);
     for (size_t i = 0; i < n; i++) {
         uint64_t key = rand();
-        uint64_t* value_p = uint_ht_get_value_mut(ht_p, key);
+        uint64_t *value_p = uint_ht_get_value_mut(ht_p, key);
         if (value_p == NULL) {
             uint_ht_update(ht_p, key, 1);
-        } else {
+        }
+        else {
             *value_p = *value_p + 1;
         }
     }
 }
 }
 
-void benchmark_std_unordered_map(size_t n) {
+void benchmark_std_unordered_map(size_t n)
+{
     std::unordered_map<uint64_t, uint64_t> map;
     for (size_t i = 0; i < n; i++) {
         uint64_t key = rand();
         std::unordered_map<uint64_t, uint64_t>::iterator res_iterator = map.find(key);
         if (res_iterator == map.end()) {
             map.insert_or_assign(key, 1);
-        } else {
+        }
+        else {
             res_iterator->second = res_iterator->second + 1;
         }
     }
 }
 
-int main(void) {
+int main(void)
+{
     using std::chrono::duration;
     using std::chrono::duration_cast;
     using std::chrono::high_resolution_clock;
@@ -70,8 +75,10 @@ int main(void) {
         auto c_end2 = high_resolution_clock::now();
 
         std::cout << "time elapsed for " << N << " elements:" << std::endl;
-        std::cout << " custom hashtable: " << duration_cast<microseconds>(c_end1 - c_start1).count() << " μs" << std::endl;
-        std::cout << " c++ unordered map: " << duration_cast<microseconds>(c_end2 - c_start2).count() << " μs" << std::endl;
+        std::cout << " custom hashtable: " << duration_cast<microseconds>(c_end1 - c_start1).count() << " μs"
+                  << std::endl;
+        std::cout << " c++ unordered map: " << duration_cast<microseconds>(c_end2 - c_start2).count() << " μs"
+                  << std::endl;
     }
 
     return 0;

@@ -4,7 +4,7 @@ BasedOnStyle: LLVM
 Language: Cpp
 Standard: "c++11"
 
-ColumnLimit: 135
+ColumnLimit: 120
 
 AccessModifierOffset: -4
 IndentWidth: 4
@@ -18,7 +18,9 @@ BreakConstructorInitializers: BeforeComma
 
 # IndentPPDirectives: AfterHash
 
-PointerAlignment: Left
+PointerAlignment: Right
 
 AlignConsecutiveMacros: "AcrossEmptyLines"
+AlignOperands: "AlignAfterOperator"
+BreakBeforeBinaryOperators: "NonAssignment"
 BreakBeforeBraces: Stroustrup

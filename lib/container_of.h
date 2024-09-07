@@ -13,27 +13,27 @@
  * @file container_of.h
  * @brief container_of definition
  *
- * See:
- * https://radek.io/posts/magical-container_of-macro/
+ * For more info, see:
+ * @li https://radek.io/posts/magical-container_of-macro/
+ * @li https://github.com/clibs/container_of
  */
 
 #pragma once
 
 /**
  * @def container_of(ptr, type, member)
- * @brief Get the pointer to the container instance, given a pointer to
- *        to the member instance, container type, and member name.
+ * @brief Obtain a pointer to the struct that contains the struct member
  *
- * @param[in] ptr A pointer to the member.
- * @param[in] type The container type.
- * @param[in] member The member name.
+ * @param[in] ptr       Pointer to the member.
+ * @param[in] type      Container type
+ * @param[in] member    Member name.
  *
- * @return A pointer to the container instance.
+ * @return A pointer to the struct containing the member.
  */
 #ifndef container_of
-#define container_of(ptr, type, member)                   \
-    __extension__({                                       \
-        const typeof(((type*)0)->member)* __mptr = (ptr); \
-        (type*)((char*)__mptr - offsetof(type, member));  \
+#define container_of(ptr, type, member)                    \
+    __extension__({                                        \
+        const typeof(((type *)0)->member) *__mptr = (ptr); \
+        (type *)((char *)__mptr - offsetof(type, member)); \
     })
 #endif

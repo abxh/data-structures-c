@@ -12,6 +12,7 @@
 /**
  * @file murmurhash.h
  * @brief Murmur3 hash hashing function
+ *
  * @note Murmur3 hash is **not** a cryptographic hashing function.
  *
  * Original Source:
@@ -20,7 +21,8 @@
  * Source used:
  * https://en.wikipedia.org/wiki/MurmurHash#Algorithm
  *
- * MurmurHash3 was written by Austin Appleby, and is placed in the public domain.
+ * MurmurHash3 was written by Austin Appleby, and is placed in the public
+ * domain.
  */
 
 #pragma once
@@ -30,7 +32,7 @@
 #include <string.h>
 
 /// @cond DO_NOT_DOCUMENT
-static inline uint32_t murmur_32_scramble(uint32_t k)
+static inline uint32_t internal_murmur_32_scramble(uint32_t k)
 {
     k *= 0xcc9e2d51;
     k = (k << 15) | (k >> 17);
@@ -42,12 +44,14 @@ static inline uint32_t murmur_32_scramble(uint32_t k)
 /**
  * @brief Get the Murmur3 (32-bit) hash of a string of bytes.
  *
- * @param key_ptr Pointer to the string of bytes.
- * @param len Number of bytes.
- * @param seed A seed, for whom matched with a given key, makes the hash function produce the same hash for the key.
+ * @param[in] key_ptr       Pointer to the string of bytes.
+ * @param[in] len           Number of bytes.
+ * @param[in] seed          A seed, for whom matched with a given key, makes the
+ *                          hash function produce the same hash for the key.
+ *
  * @return A `uint32_t`-sized hash of the bytes.
  */
-static inline uint32_t murmur3_32(const uint8_t* key_ptr, const uint32_t len, const uint32_t seed)
+static inline uint32_t murmur3_32(const uint8_t *key_ptr, const uint32_t len, const uint32_t seed)
 {
     uint32_t h = seed;
     uint32_t k;
@@ -58,7 +62,7 @@ static inline uint32_t murmur3_32(const uint8_t* key_ptr, const uint32_t len, co
         // A swap here has no effects on hash properties though.
         memcpy(&k, key_ptr, sizeof(uint32_t));
         key_ptr += sizeof(uint32_t);
-        h ^= murmur_32_scramble(k);
+        h ^= internal_murmur_32_scramble(k);
         h = (h << 13) | (h >> 19);
         h = h * 5 + 0xe6546b64;
     }
@@ -71,9 +75,10 @@ static inline uint32_t murmur3_32(const uint8_t* key_ptr, const uint32_t len, co
     }
 
     // A swap is *not* necessary here because the preceding loop already
-    // places the low bytes in the low places according to whatever endianness
-    // we use. Swaps only apply when the memory is copied in a chunk.
-    h ^= murmur_32_scramble(k);
+    // places the low bytes in the low places according to whatever
+    // endianness we use. Swaps only apply when the memory is copied in a
+    // chunk.
+    h ^= internal_murmur_32_scramble(k);
 
     /* Finalize. */
     h ^= len;

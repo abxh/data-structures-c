@@ -6,7 +6,7 @@
 #define VALUE_TYPE int
 #include "fpqueue.h"
 
-static void preorder_traverse_and_print(pqueue_int_type* pq, uint32_t index)
+static void preorder_traverse_and_print(struct pqueue_int *pq, uint32_t index)
 {
     if (index >= pq->count) {
         printf(" ()");
@@ -22,7 +22,7 @@ static void int_example(void)
 {
     (void)(preorder_traverse_and_print);
 
-    pqueue_int_type* pq = pqueue_int_create(10);
+    struct pqueue_int *pq = pqueue_int_create(10);
 
     if (!pq) {
         assert(false);
@@ -50,8 +50,8 @@ static void int_example(void)
     assert(pqueue_int_peek(pq) == 10);
     assert(pqueue_int_get_max(pq) == 10);
 
-    pqueue_int_type* pq_copy = pqueue_int_create(10);
-    pqueue_int_type* pq_copy_copy = pqueue_int_create(10);
+    struct pqueue_int *pq_copy = pqueue_int_create(10);
+    struct pqueue_int *pq_copy_copy = pqueue_int_create(10);
     if (!pq_copy || !pq_copy_copy) {
         assert(false);
     }

@@ -6,21 +6,21 @@
 
 typedef struct {
     char c;
-    list_node_type node;
+    struct list_node node;
 } con_type;
 
 void list_stack(void)
 {
-    unsigned char* buf = malloc(4096);
+    unsigned char *buf = malloc(4096);
 
-    arena_type arena;
+    struct arena arena;
     arena_init(&arena, 4096, buf);
 
-    list_node_type head;
+    struct list_node head;
     list_node_init(&head);
 
     for (size_t i = 0; i <= 'z' - 'a'; i++) {
-        con_type* ptr = arena_allocate_aligned(&arena, alignof(con_type), sizeof(con_type));
+        con_type *ptr = arena_allocate_aligned(&arena, alignof(con_type), sizeof(con_type));
         if (!ptr) {
             assert(false);
         }
@@ -32,17 +32,17 @@ void list_stack(void)
 
     {
         char c = 'z';
-        list_node_type* node_ptr = head.next_ptr;
+        struct list_node *node_ptr = head.next_ptr;
 
         while (!list_node_is_head(node_ptr, &head)) {
-            list_node_type* next_ptr =
-                node_ptr->next_ptr; // this must be stored, should the list be modified under iteration (not in this particular case)
-            con_type* elm = list_node_entry(node_ptr, con_type, node);
+            struct list_node *next_ptr = node_ptr->next_ptr; // this must be stored, should the list be modified under
+                                                             // iteration (not in this particular case)
+            con_type *elm = list_node_entry(node_ptr, con_type, node);
 
             assert(c == elm->c);
 
             if (c == 'm') {
-                con_type* ptr = arena_allocate_aligned(&arena, alignof(con_type), sizeof(con_type));
+                con_type *ptr = arena_allocate_aligned(&arena, alignof(con_type), sizeof(con_type));
                 if (!ptr) {
                     assert(false);
                 }
@@ -60,9 +60,9 @@ void list_stack(void)
 
     {
         char c = 'z';
-        list_node_type* node_ptr = head.next_ptr;
+        struct list_node *node_ptr = head.next_ptr;
         while (!list_node_is_head(node_ptr, &head)) {
-            con_type* elm = list_node_entry(node_ptr, con_type, node);
+            con_type *elm = list_node_entry(node_ptr, con_type, node);
 
             if (c == 'm') {
                 assert(elm->c == 'M');
@@ -80,8 +80,8 @@ void list_stack(void)
     {
         char c = 'z';
         while (!list_node_is_head(head.next_ptr, &head)) {
-            list_node_type* node_ptr = list_node_remove(head.next_ptr);
-            con_type* elm = list_node_entry(node_ptr, con_type, node);
+            struct list_node *node_ptr = list_node_remove(head.next_ptr);
+            con_type *elm = list_node_entry(node_ptr, con_type, node);
 
             if (c == 'm') {
                 assert(elm->c == 'M');
@@ -100,15 +100,15 @@ void list_stack(void)
 
 void list_queue(void)
 {
-    unsigned char* buf = malloc(4096);
+    unsigned char *buf = malloc(4096);
 
-    arena_type arena;
+    struct arena arena;
     arena_init(&arena, 4096, buf);
 
-    list_node_type tail;
+    struct list_node tail;
     list_node_init(&tail);
 
-    con_type* first_elm_ptr = arena_allocate_aligned(&arena, alignof(con_type), sizeof(con_type));
+    con_type *first_elm_ptr = arena_allocate_aligned(&arena, alignof(con_type), sizeof(con_type));
     if (!first_elm_ptr) {
         assert(false);
     }
@@ -118,7 +118,7 @@ void list_queue(void)
     list_node_add_before(&first_elm_ptr->node, &tail);
 
     for (size_t i = 1; i <= 'z' - 'a'; i++) {
-        con_type* ptr = arena_allocate_aligned(&arena, alignof(con_type), sizeof(con_type));
+        con_type *ptr = arena_allocate_aligned(&arena, alignof(con_type), sizeof(con_type));
         if (!ptr) {
             assert(false);
         }
@@ -133,11 +133,12 @@ void list_queue(void)
     size_t count = 0;
     {
         char c = 'a';
-        list_node_type* node_ptr = &first_elm_ptr->node;
+        struct list_node *node_ptr = &first_elm_ptr->node;
 
         while (!list_node_is_tail(node_ptr, &tail)) {
-            list_node_type* next_ptr = node_ptr->next_ptr; // this must be stored, should the list be modified under iteration
-            con_type* elm = list_node_entry(node_ptr, con_type, node);
+            struct list_node *next_ptr =
+                node_ptr->next_ptr; // this must be stored, should the list be modified under iteration
+            con_type *elm = list_node_entry(node_ptr, con_type, node);
 
             assert(c == elm->c);
 
@@ -154,7 +155,7 @@ void list_queue(void)
 
     {
         size_t new_count = 0;
-        list_node_type* node_ptr = &first_elm_ptr->node;
+        struct list_node *node_ptr = &first_elm_ptr->node;
         while (!list_node_is_tail(node_ptr, &tail)) {
             node_ptr = node_ptr->next_ptr;
             new_count++;
@@ -166,8 +167,8 @@ void list_queue(void)
         char c = 'z';
 
         while (!list_node_is_tail(tail.prev_ptr, &tail)) {
-            list_node_type* node_ptr = list_node_remove(tail.prev_ptr);
-            con_type* elm = list_node_entry(node_ptr, con_type, node);
+            struct list_node *node_ptr = list_node_remove(tail.prev_ptr);
+            con_type *elm = list_node_entry(node_ptr, con_type, node);
 
             if (c == 'm') {
                 c--;

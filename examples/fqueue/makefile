@@ -2,6 +2,7 @@ EXEC_NAME := a.out
 
 CFLAGS     += -I./../../lib
 CFLAGS     += -Wall -Wextra -pedantic
+CFLAGS     += -ggdb3
 
 EXAMPLE_FILES  := $(wildcard *.c)
 OBJ_FILES      := $(EXAMPLE_FILES:.c=.o)

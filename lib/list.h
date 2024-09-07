@@ -33,39 +33,40 @@
 /**
  * @brief Intrusive list node structure.
  */
-typedef struct list_node_type {
-    struct list_node_type* prev_ptr; ///< prev node pointer.
-    struct list_node_type* next_ptr; ///< next node pointer.
-} list_node_type;
+struct list_node {
+    struct list_node *prev_ptr; ///< prev node pointer.
+    struct list_node *next_ptr; ///< next node pointer.
+};
 
 /**
- * @def list_node_entry(node_ptr, container_type, node_member_name)
- * @brief Get the pointer to the container instance, given a pointer to
- *        to the node member instance, container type, and node member name.
+ * @def list_node_entry(ptr, type, member)
+ * @brief Obtain a pointer to the struct that contains the list node as a member.
  *
- * @param[in] node_ptr A pointer to the node member.
- * @param[in] container_type The container type.
- * @param[in] node_member_name The node member name.
- * @return A pointer to the container instance.
+ * @param[in] ptr       Node pointer.
+ * @param[in] type      Container type.
+ * @param[in] member    Node member name.
+ *
+ * @return A pointer to the struct containing the node member.
  */
-#define list_node_entry(node_ptr, container_type, node_member_name) container_of(node_ptr, container_type, node_member_name)
+#define list_node_entry(ptr, type, member) container_of(ptr, type, member)
 
 /// @cond DO_NOT_DOCUMENT
 
 // Add a node between two (known) nodes.
-static inline void internal_list_node_add_between(list_node_type* node_ptr, list_node_type* before_ptr, list_node_type* after_ptr);
+static inline void internal_list_node_add_between(struct list_node *node_ptr, struct list_node *before_ptr,
+                                                  struct list_node *after_ptr);
 
 // Attach two nodes together, so anything in between is ignored.
-static inline void internal_list_node_attach(list_node_type* prev_ptr, list_node_type* next_ptr);
+static inline void internal_list_node_attach(struct list_node *prev_ptr, struct list_node *next_ptr);
 
 /// @endcond
 
 /**
  * @brief Initialize a list node
  *
- * @param[in] node_ptr The node pointer.
+ * @param[in] node_ptr      The node pointer.
  */
-static inline void list_node_init(list_node_type* node_ptr)
+static inline void list_node_init(struct list_node *node_ptr)
 {
     assert(node_ptr != NULL);
 
@@ -75,11 +76,12 @@ static inline void list_node_init(list_node_type* node_ptr)
 /**
  * @brief Check if a given list node is first in the list (aka after the head).
  *
- * @param[in] node_ptr The node pointer.
- * @param[in] head_ptr The head node pointer.
+ * @param[in] node_ptr      The node pointer.
+ * @param[in] head_ptr      The head node pointer.
+ *
  * @return Whether the list node is first in the list.
  */
-static inline bool list_node_is_first(const list_node_type* node_ptr, const list_node_type* head_ptr)
+static inline bool list_node_is_first(const struct list_node *node_ptr, const struct list_node *head_ptr)
 {
     assert(node_ptr != NULL);
     assert(head_ptr != NULL);
@@ -88,13 +90,15 @@ static inline bool list_node_is_first(const list_node_type* node_ptr, const list
 }
 
 /**
- * @brief Check if a given list node is the last of the list (aka before the tail).
+ * @brief Check if a given list node is the last of the list (aka before the
+ *        tail).
  *
- * @param[in] node_ptr The node pointer.
- * @param[in] tail_ptr The tail node pointer.
+ * @param[in] node_ptr      The node pointer.
+ * @param[in] tail_ptr      The tail node pointer.
+ *
  * @return Whether the list node is the last in the list.
  */
-static inline bool list_node_is_last(const list_node_type* node_ptr, const list_node_type* tail_ptr)
+static inline bool list_node_is_last(const struct list_node *node_ptr, const struct list_node *tail_ptr)
 {
     assert(node_ptr != NULL);
     assert(tail_ptr != NULL);
@@ -105,11 +109,12 @@ static inline bool list_node_is_last(const list_node_type* node_ptr, const list_
 /**
  * @brief Check if a given list node is the head of the list.
  *
- * @param[in] node_ptr The node pointer.
- * @param[in] head_ptr The head node pointer.
+ * @param[in] node_ptr      The node pointer.
+ * @param[in] head_ptr      The head node pointer.
+ *
  * @return Whether the list node is head of the list.
  */
-static inline bool list_node_is_head(const list_node_type* node_ptr, const list_node_type* head_ptr)
+static inline bool list_node_is_head(const struct list_node *node_ptr, const struct list_node *head_ptr)
 {
     assert(node_ptr != NULL);
     assert(head_ptr != NULL);
@@ -120,11 +125,12 @@ static inline bool list_node_is_head(const list_node_type* node_ptr, const list_
 /**
  * @brief Check if a given list node is the tail of the list.
  *
- * @param[in] node_ptr The node pointer.
- * @param[in] tail_ptr The tail node pointer.
+ * @param[in] node_ptr      The node pointer.
+ * @param[in] tail_ptr      The tail node pointer.
+ *
  * @return Whether the list node is the tail of the list.
  */
-static inline bool list_node_is_tail(const list_node_type* node_ptr, const list_node_type* tail_ptr)
+static inline bool list_node_is_tail(const struct list_node *node_ptr, const struct list_node *tail_ptr)
 {
     assert(node_ptr != NULL);
     assert(tail_ptr != NULL);
@@ -137,10 +143,10 @@ static inline bool list_node_is_tail(const list_node_type* node_ptr, const list_
  *
  * @note This can be used to construct a stack.
  *
- * @param[in] prev_ptr The prev node pointer.
- * @param[in] node_ptr The node pointer.
+ * @param[in] prev_ptr      The prev node pointer.
+ * @param[in] node_ptr      The node pointer.
  */
-static inline void list_node_add_after(list_node_type* node_ptr, list_node_type* prev_ptr)
+static inline void list_node_add_after(struct list_node *node_ptr, struct list_node *prev_ptr)
 {
     assert(node_ptr != NULL);
     assert(prev_ptr != NULL);
@@ -153,10 +159,10 @@ static inline void list_node_add_after(list_node_type* node_ptr, list_node_type*
  *
  * @note This can be used to construct a queue.
  *
- * @param[in] next_ptr The next node pointer.
- * @param[in] node_ptr The node pointer.
+ * @param[in] next_ptr      The next node pointer.
+ * @param[in] node_ptr      The node pointer.
  */
-static inline void list_node_add_before(list_node_type* node_ptr, list_node_type* next_ptr)
+static inline void list_node_add_before(struct list_node *node_ptr, struct list_node *next_ptr)
 {
     assert(node_ptr != NULL);
     assert(next_ptr != NULL);
@@ -171,11 +177,11 @@ static inline void list_node_add_before(list_node_type* node_ptr, list_node_type
  * @li node_ptr node is a part of a list.
  * @li node_ptr node is not the head or tail node.
  *
- * @param[in] node_ptr The node pointer.
+ * @param[in] node_ptr      The node pointer.
  *
  * @return pointer to the removed node
  */
-static inline list_node_type* list_node_remove(list_node_type* node_ptr)
+static inline struct list_node *list_node_remove(struct list_node *node_ptr)
 {
     assert(node_ptr != NULL);
     assert(node_ptr->prev_ptr != node_ptr);
@@ -190,12 +196,14 @@ static inline list_node_type* list_node_remove(list_node_type* node_ptr)
 /**
  * @brief Replace a given node by a new node.
  *
- * Assumes the node is a part of a list and not the head or tail node.
+ * Assumes:
+ * @li The node is a part of a list.
+ * @li The node is not the head or tail node (points to self).
  *
- * @param[in] old_ptr Pointer to old node.
- * @param[in] new_ptr Pointer to new node.
+ * @param[in] old_ptr       Pointer to old node.
+ * @param[in] new_ptr       Pointer to new node.
  */
-static inline void list_node_replace(list_node_type* old_ptr, list_node_type* new_ptr)
+static inline void list_node_replace(struct list_node *old_ptr, struct list_node *new_ptr)
 {
     assert(old_ptr != NULL);
     assert(new_ptr != NULL);
@@ -209,7 +217,8 @@ static inline void list_node_replace(list_node_type* old_ptr, list_node_type* ne
 
 /// @cond DO_NOT_DOCUMENT
 
-static inline void internal_list_node_add_between(list_node_type* node_ptr, list_node_type* before_ptr, list_node_type* after_ptr)
+static inline void internal_list_node_add_between(struct list_node *node_ptr, struct list_node *before_ptr,
+                                                  struct list_node *after_ptr)
 {
     assert(node_ptr != NULL);
     assert(before_ptr != NULL);
@@ -222,7 +231,7 @@ static inline void internal_list_node_add_between(list_node_type* node_ptr, list
     node_ptr->next_ptr = after_ptr;
 }
 
-static inline void internal_list_node_attach(list_node_type* prev_ptr, list_node_type* next_ptr)
+static inline void internal_list_node_attach(struct list_node *prev_ptr, struct list_node *next_ptr)
 {
     assert(prev_ptr != NULL);
     assert(next_ptr != NULL);

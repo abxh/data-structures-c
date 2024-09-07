@@ -14,6 +14,7 @@
     - get_top / peek
     - get_bottom
     - at + fstack_for_each + fstack_for_each_reverse
+    - init, calc_sizeof (this is indirectly tested for)
 
     Mutating operation types:
     - push
@@ -30,18 +31,19 @@
 #define VALUE_TYPE int64_t
 #include "fstack.h"
 
-static inline bool check_count_invariance(const i64_stk_type* stk_p, const size_t push_op_count, const size_t pop_op_count)
+static inline bool check_count_invariance(const struct i64_stk *stk_p, const size_t push_op_count,
+                                          const size_t pop_op_count)
 {
     // push and pop operations *after* the stack is cleared / created
     return stk_p->count == (push_op_count - pop_op_count);
 }
 
-static inline bool check_capacity_invariance(const i64_stk_type* stk_p, const size_t old_capacity)
+static inline bool check_capacity_invariance(const struct i64_stk *stk_p, const size_t old_capacity)
 {
     return stk_p->capacity >= old_capacity;
 }
 
-static inline bool check_empty_full(const i64_stk_type* stk_p, const size_t push_op_count, const size_t pop_op_count)
+static inline bool check_empty_full(const struct i64_stk *stk_p, const size_t push_op_count, const size_t pop_op_count)
 {
     // push and pop operations *after* the stack is cleared / created
     const size_t diff = push_op_count - pop_op_count;
@@ -57,13 +59,14 @@ static inline bool check_empty_full(const i64_stk_type* stk_p, const size_t push
     }
 }
 
-static inline bool check_top_bottom(const i64_stk_type* stk_p, const int64_t latest_value_pushed, const int64_t first_value_pushed)
+static inline bool check_top_bottom(const struct i64_stk *stk_p, const int64_t latest_value_pushed,
+                                    const int64_t first_value_pushed)
 {
     // first and last value pushed *after* the stack is cleared / created
     return i64_stk_get_top(stk_p) == latest_value_pushed && i64_stk_get_bottom(stk_p) == first_value_pushed;
 }
 
-static inline bool check_ordered_values(const i64_stk_type* stk_p, const size_t n, const int64_t expected_value[n])
+static inline bool check_ordered_values(const struct i64_stk *stk_p, const size_t n, const int64_t expected_value[n])
 {
     assert(n != 0);
 
@@ -96,11 +99,12 @@ static inline bool check_ordered_values(const i64_stk_type* stk_p, const size_t 
     return res;
 }
 
-static inline bool copy_values_and_check_ordered_values(const i64_stk_type* stk_p, const size_t n, const int64_t expected_value[n])
+static inline bool copy_values_and_check_ordered_values(const struct i64_stk *stk_p, const size_t n,
+                                                        const int64_t expected_value[n])
 {
     assert(n != 0);
 
-    i64_stk_type* stk_copy_p = i64_stk_create((uint32_t)n);
+    struct i64_stk *stk_copy_p = i64_stk_create((uint32_t)n);
     if (!stk_copy_p) {
         return false;
     }
@@ -114,14 +118,14 @@ int main(void)
 {
     // N = 0
     {
-        i64_stk_type* stk_p = i64_stk_create(0);
+        struct i64_stk *stk_p = i64_stk_create(0);
         if (stk_p) {
             assert(false);
         }
     }
     // N = 1
     {
-        i64_stk_type* stk_p = i64_stk_create(1);
+        struct i64_stk *stk_p = i64_stk_create(1);
         if (!stk_p) {
             assert(false);
         }
@@ -134,7 +138,7 @@ int main(void)
     }
     // N = 1, push
     {
-        i64_stk_type* stk_p = i64_stk_create(1);
+        struct i64_stk *stk_p = i64_stk_create(1);
         if (!stk_p) {
             assert(false);
         }
@@ -149,7 +153,7 @@ int main(void)
     }
     // N = 1, push -> pop
     {
-        i64_stk_type* stk_p = i64_stk_create(1);
+        struct i64_stk *stk_p = i64_stk_create(1);
         if (!stk_p) {
             assert(false);
         }
@@ -164,7 +168,7 @@ int main(void)
     }
     // N = 2, push * 2
     {
-        i64_stk_type* stk_p = i64_stk_create(2);
+        struct i64_stk *stk_p = i64_stk_create(2);
         if (!stk_p) {
             assert(false);
         }
@@ -182,7 +186,7 @@ int main(void)
     }
     // N = 2, push * 2 -> pop
     {
-        i64_stk_type* stk_p = i64_stk_create(2);
+        struct i64_stk *stk_p = i64_stk_create(2);
         if (!stk_p) {
             assert(false);
         }
@@ -199,7 +203,7 @@ int main(void)
     }
     // N = 10, push * 10
     {
-        i64_stk_type* stk_p = i64_stk_create(10);
+        struct i64_stk *stk_p = i64_stk_create(10);
         if (!stk_p) {
             assert(false);
         }
@@ -219,13 +223,14 @@ int main(void)
         assert(check_empty_full(stk_p, 10, 0));
         assert(check_top_bottom(stk_p, 430, 421));
         assert(check_ordered_values(stk_p, 10, (int64_t[10]){430, 429, 428, 427, 426, 425, 424, 423, 422, 421}));
-        assert(copy_values_and_check_ordered_values(stk_p, 10, (int64_t[10]){430, 429, 428, 427, 426, 425, 424, 423, 422, 421}));
+        assert(copy_values_and_check_ordered_values(stk_p, 10,
+                                                    (int64_t[10]){430, 429, 428, 427, 426, 425, 424, 423, 422, 421}));
 
         i64_stk_destroy(stk_p);
     }
     // N = 10, push * 10 -> pop * 5
     {
-        i64_stk_type* stk_p = i64_stk_create(10);
+        struct i64_stk *stk_p = i64_stk_create(10);
         if (!stk_p) {
             assert(false);
         }
@@ -257,7 +262,7 @@ int main(void)
     }
     // N = 10, push * 10 -> pop * 5 -> push * 5
     {
-        i64_stk_type* stk_p = i64_stk_create(10);
+        struct i64_stk *stk_p = i64_stk_create(10);
         if (!stk_p) {
             assert(false);
         }
@@ -287,13 +292,14 @@ int main(void)
         assert(check_empty_full(stk_p, 15, 5));
         assert(check_top_bottom(stk_p, 435, 421));
         assert(check_ordered_values(stk_p, 10, (int64_t[10]){435, 434, 433, 432, 431, 425, 424, 423, 422, 421}));
-        assert(copy_values_and_check_ordered_values(stk_p, 10, (int64_t[10]){435, 434, 433, 432, 431, 425, 424, 423, 422, 421}));
+        assert(copy_values_and_check_ordered_values(stk_p, 10,
+                                                    (int64_t[10]){435, 434, 433, 432, 431, 425, 424, 423, 422, 421}));
 
         i64_stk_destroy(stk_p);
     }
     // N = 10, push * 10 -> clear() -> push * 5
     {
-        i64_stk_type* stk_p = i64_stk_create(10);
+        struct i64_stk *stk_p = i64_stk_create(10);
         if (!stk_p) {
             assert(false);
         }
@@ -319,7 +325,7 @@ int main(void)
     }
     // N = 1e+6, push * 1e+6
     {
-        i64_stk_type* stk_p = i64_stk_create(1e+6);
+        struct i64_stk *stk_p = i64_stk_create(1e+6);
         if (!stk_p) {
             assert(false);
         }
@@ -335,7 +341,7 @@ int main(void)
     }
     // N = 1e+6, push * 1e+6 -> pop * 1e+3
     {
-        i64_stk_type* stk_p = i64_stk_create(1e+6);
+        struct i64_stk *stk_p = i64_stk_create(1e+6);
         if (!stk_p) {
             assert(false);
         }

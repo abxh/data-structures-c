@@ -29,17 +29,19 @@
  * Round up to the next power of two.
  *
  * Assumes:
- * @li x is strictly larger than 0.
- * @li x is smaller than than the defined UINT32_MAX / 4.
+ * @li `x` is strictly larger than 0.
+ * @li `x` is smaller than than the defined UINT32_MAX / 4.
  *
- * @param x The number at hand.
+ * @param x     The number at hand.
+ *
  * @return A power of two that is larger than or equal to the given number.
  */
 static inline uint32_t round_up_pow2_32(uint32_t x)
 {
     assert(0 < x && x <= UINT32_MAX / 4);
 
-#if defined(__GNUC__) && (__GNUC__ > 3 || (__GNUC__ == 3 && (__GNUC_MINOR__ > 4 || __GNUC_MINOR__ == 4))) // Test for GCC >= 3.4.0
+#if defined(__GNUC__) \
+    && (__GNUC__ > 3 || (__GNUC__ == 3 && (__GNUC_MINOR__ > 4 || __GNUC_MINOR__ == 4))) // Test for GCC >= 3.4.0
     return x == 1U ? 1U : 1U << (32 - __builtin_clz(x - 1U));
 #else
     x--;

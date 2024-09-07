@@ -7,7 +7,7 @@
 
 void chque_example(void)
 {
-    chque_type* q = chque_create(4);
+    struct chque *q = chque_create(4);
     if (!q) {
         assert(false);
     }
@@ -56,7 +56,7 @@ void int_queue_example(const bool offset)
 {
     const int lim = 1e+6;
 
-    int_queue_type* q = int_queue_create(lim);
+    struct int_queue *q = int_queue_create(lim);
 
     if (!q) {
         assert(false);
@@ -75,7 +75,7 @@ void int_queue_example(const bool offset)
         int_queue_enqueue(q, i);
     }
 
-    int_queue_type* q_copy = int_queue_create(lim);
+    struct int_queue *q_copy = int_queue_create(lim);
     if (!q_copy) {
         assert(false);
     }
