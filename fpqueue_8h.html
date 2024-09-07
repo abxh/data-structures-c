@@ -96,7 +96,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>Fixed-size priority queue based on binary heap.  
+<p>Fixed-size priority queue based on binary (max-)heap.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="paste_8h_source.html">paste.h</a>&quot;</code><br />
 <code>#include &lt;assert.h&gt;</code><br />
@@ -109,11 +109,11 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfpqueue__element__type.html">fpqueue_element_type</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generated priority queue element struct type for a given <code>VALUE_TYPE</code>.  <a href="structfpqueue__element__type.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfpqueue__element.html">fpqueue_element</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generated priority queue element struct type for a given <code>VALUE_TYPE</code>.  <a href="structfpqueue__element.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfpqueue__type.html">fpqueue_type</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generated priority queue struct type for a given <code>VALUE_TYPE</code>.  <a href="structfpqueue__type.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfpqueue.html">fpqueue</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generated priority queue struct type for a given <code>VALUE_TYPE</code>.  <a href="structfpqueue.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -127,59 +127,67 @@ Macros</h2></td></tr>
 <tr class="memitem:a3c59e6a912e4d691e90e47d5f9754843" id="r_a3c59e6a912e4d691e90e47d5f9754843"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c59e6a912e4d691e90e47d5f9754843">fpqueue_parent</a>(index)</td></tr>
 <tr class="memdesc:a3c59e6a912e4d691e90e47d5f9754843"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given an element index, get the index of the parent.  <br /></td></tr>
 <tr class="separator:a3c59e6a912e4d691e90e47d5f9754843"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46464e70eaa13c211bb08f5a9c0dc3a9" id="r_a46464e70eaa13c211bb08f5a9c0dc3a9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a46464e70eaa13c211bb08f5a9c0dc3a9">fpqueue_for_each</a>(pqueue_ptr,  index,  value_)</td></tr>
-<tr class="memdesc:a46464e70eaa13c211bb08f5a9c0dc3a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the priority queue in breadth-first order.  <br /></td></tr>
-<tr class="separator:a46464e70eaa13c211bb08f5a9c0dc3a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47f2e62c0dbebc787052c165afcada0e" id="r_a47f2e62c0dbebc787052c165afcada0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47f2e62c0dbebc787052c165afcada0e">NAME</a>&#160;&#160;&#160;fpqueue</td></tr>
-<tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to priority queue types and operations.  <br /></td></tr>
+<tr class="memitem:a7c6041e987df98589e3ead1d70b86cb7" id="r_a7c6041e987df98589e3ead1d70b86cb7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c6041e987df98589e3ead1d70b86cb7">fpqueue_for_each</a>(self,  index,  value_)</td></tr>
+<tr class="memdesc:a7c6041e987df98589e3ead1d70b86cb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the priority queue in breadth-first order.  <br /></td></tr>
+<tr class="separator:a7c6041e987df98589e3ead1d70b86cb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47f2e62c0dbebc787052c165afcada0e" id="r_a47f2e62c0dbebc787052c165afcada0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47f2e62c0dbebc787052c165afcada0e">NAME</a>&#160;&#160;&#160;<a class="el" href="structfpqueue.html">fpqueue</a></td></tr>
+<tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to priority queue types and operations. This must be manually defined before including this header file.  <br /></td></tr>
 <tr class="separator:a47f2e62c0dbebc787052c165afcada0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae17cb099b4c9aee7835032339b5a9e0d" id="r_ae17cb099b4c9aee7835032339b5a9e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;&#160;&#160;int</td></tr>
-<tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority queue value type.  <br /></td></tr>
+<tr class="memdesc:ae17cb099b4c9aee7835032339b5a9e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority queue value type. This must be manually defined before including this header file.  <br /></td></tr>
 <tr class="separator:ae17cb099b4c9aee7835032339b5a9e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3b2f3dee2855a734e823860d6bb7dc14" id="r_a3b2f3dee2855a734e823860d6bb7dc14"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structfpqueue__type.html">fpqueue_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b2f3dee2855a734e823860d6bb7dc14">fpqueue_create</a> (const uint32_t capacity)</td></tr>
-<tr class="memdesc:a3b2f3dee2855a734e823860d6bb7dc14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an priority queue with a given capacity with malloc().  <br /></td></tr>
-<tr class="separator:a3b2f3dee2855a734e823860d6bb7dc14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a766494841c011ba26a0b5a55e9eac675" id="r_a766494841c011ba26a0b5a55e9eac675"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a766494841c011ba26a0b5a55e9eac675">fpqueue_destroy</a> (<a class="el" href="structfpqueue__type.html">fpqueue_type</a> *pqueue_ptr)</td></tr>
-<tr class="memdesc:a766494841c011ba26a0b5a55e9eac675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy an priority queue and free the underlying memory with free().  <br /></td></tr>
-<tr class="separator:a766494841c011ba26a0b5a55e9eac675"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5fb5b2058c0d1274a91066574388d510" id="r_a5fb5b2058c0d1274a91066574388d510"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5fb5b2058c0d1274a91066574388d510">fpqueue_is_empty</a> (const <a class="el" href="structfpqueue__type.html">fpqueue_type</a> *pqueue_ptr)</td></tr>
-<tr class="memdesc:a5fb5b2058c0d1274a91066574388d510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the priority queue is empty.  <br /></td></tr>
-<tr class="separator:a5fb5b2058c0d1274a91066574388d510"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20a36f75d2c05a2332f064b1fc74f899" id="r_a20a36f75d2c05a2332f064b1fc74f899"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20a36f75d2c05a2332f064b1fc74f899">fpqueue_is_full</a> (const <a class="el" href="structfpqueue__type.html">fpqueue_type</a> *pqueue_ptr)</td></tr>
-<tr class="memdesc:a20a36f75d2c05a2332f064b1fc74f899"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the priority queue is full.  <br /></td></tr>
-<tr class="separator:a20a36f75d2c05a2332f064b1fc74f899"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b94fa8941ceceff88019660a7bb017b" id="r_a1b94fa8941ceceff88019660a7bb017b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b94fa8941ceceff88019660a7bb017b">fpqueue_get_max</a> (const <a class="el" href="structfpqueue__type.html">fpqueue_type</a> *pqueue_ptr)</td></tr>
-<tr class="memdesc:a1b94fa8941ceceff88019660a7bb017b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the max value in a non-empty priority queue.  <br /></td></tr>
-<tr class="separator:a1b94fa8941ceceff88019660a7bb017b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abaad8227c2a2e713dca34b29ed356a36" id="r_abaad8227c2a2e713dca34b29ed356a36"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abaad8227c2a2e713dca34b29ed356a36">fpqueue_peek</a> (const <a class="el" href="structfpqueue__type.html">fpqueue_type</a> *pqueue_ptr)</td></tr>
-<tr class="memdesc:abaad8227c2a2e713dca34b29ed356a36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek a non-empty priority queue and get it's next to-be-popped (max) value.  <br /></td></tr>
-<tr class="separator:abaad8227c2a2e713dca34b29ed356a36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a1a1f20754dca9ce3eea47243e0f134" id="r_a8a1a1f20754dca9ce3eea47243e0f134"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a1a1f20754dca9ce3eea47243e0f134">fpqueue_pop_max</a> (<a class="el" href="structfpqueue__type.html">fpqueue_type</a> *pqueue_ptr)</td></tr>
-<tr class="memdesc:a8a1a1f20754dca9ce3eea47243e0f134"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop the max value away from a non-empty priority queue.  <br /></td></tr>
-<tr class="separator:a8a1a1f20754dca9ce3eea47243e0f134"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a579cebd954e1ca46d49b5769d07cc760" id="r_a579cebd954e1ca46d49b5769d07cc760"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a579cebd954e1ca46d49b5769d07cc760">fpqueue_push</a> (<a class="el" href="structfpqueue__type.html">fpqueue_type</a> *pqueue_ptr, <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value, uint32_t priority)</td></tr>
-<tr class="memdesc:a579cebd954e1ca46d49b5769d07cc760"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value with given priority onto a non-full priority queue.  <br /></td></tr>
-<tr class="separator:a579cebd954e1ca46d49b5769d07cc760"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a614e5de36c8b34f7e941772aae3ac495" id="r_a614e5de36c8b34f7e941772aae3ac495"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a614e5de36c8b34f7e941772aae3ac495">fpqueue_clear</a> (<a class="el" href="structfpqueue__type.html">fpqueue_type</a> *pqueue_ptr)</td></tr>
-<tr class="memdesc:a614e5de36c8b34f7e941772aae3ac495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the elements in the priority queue.  <br /></td></tr>
-<tr class="separator:a614e5de36c8b34f7e941772aae3ac495"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ef82655cf07771ce9628d366dbe3c58" id="r_a8ef82655cf07771ce9628d366dbe3c58"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ef82655cf07771ce9628d366dbe3c58">fpqueue_copy</a> (<a class="el" href="structfpqueue__type.html">fpqueue_type</a> *restrict dest_pqueue_ptr, const <a class="el" href="structfpqueue__type.html">fpqueue_type</a> *restrict src_pqueue_ptr)</td></tr>
-<tr class="memdesc:a8ef82655cf07771ce9628d366dbe3c58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy the values from a source priority queue to a destination priority queue.  <br /></td></tr>
-<tr class="separator:a8ef82655cf07771ce9628d366dbe3c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9deeb0187956dce34e7b0d9d5ca96cce" id="r_a9deeb0187956dce34e7b0d9d5ca96cce"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9deeb0187956dce34e7b0d9d5ca96cce">fpqueue_calc_sizeof</a> (uint32_t *capacity_ptr, uint32_t *size_ptr)</td></tr>
+<tr class="memdesc:a9deeb0187956dce34e7b0d9d5ca96cce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the size of the priority queue struct.  <br /></td></tr>
+<tr class="separator:a9deeb0187956dce34e7b0d9d5ca96cce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd2df10597a56764a23d3c9c276be5e4" id="r_afd2df10597a56764a23d3c9c276be5e4"><td class="memItemLeft" align="right" valign="top">static fpqueue_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd2df10597a56764a23d3c9c276be5e4">fpqueue_init</a> (fpqueue_type *self, const uint32_t capacity)</td></tr>
+<tr class="memdesc:afd2df10597a56764a23d3c9c276be5e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a priority queue struct, given a capacity.  <br /></td></tr>
+<tr class="separator:afd2df10597a56764a23d3c9c276be5e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a656d2bd2814c91abbd8e7397e64d7ead" id="r_a656d2bd2814c91abbd8e7397e64d7ead"><td class="memItemLeft" align="right" valign="top">static fpqueue_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a656d2bd2814c91abbd8e7397e64d7ead">fpqueue_create</a> (uint32_t capacity)</td></tr>
+<tr class="memdesc:a656d2bd2814c91abbd8e7397e64d7ead"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an priority queue struct with a given capacity with malloc().  <br /></td></tr>
+<tr class="separator:a656d2bd2814c91abbd8e7397e64d7ead"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60f9a8b480ceb1ba3200f5faaf64849d" id="r_a60f9a8b480ceb1ba3200f5faaf64849d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a60f9a8b480ceb1ba3200f5faaf64849d">fpqueue_destroy</a> (fpqueue_type *self)</td></tr>
+<tr class="memdesc:a60f9a8b480ceb1ba3200f5faaf64849d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy an priority queue struct and free the underlying memory with free().  <br /></td></tr>
+<tr class="separator:a60f9a8b480ceb1ba3200f5faaf64849d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5e70e8eb3008ac1fee4a576d35d4826" id="r_ad5e70e8eb3008ac1fee4a576d35d4826"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad5e70e8eb3008ac1fee4a576d35d4826">fpqueue_is_empty</a> (const fpqueue_type *self)</td></tr>
+<tr class="memdesc:ad5e70e8eb3008ac1fee4a576d35d4826"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the priority queue is empty.  <br /></td></tr>
+<tr class="separator:ad5e70e8eb3008ac1fee4a576d35d4826"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44c428f73f9773cf9381561b88d83d29" id="r_a44c428f73f9773cf9381561b88d83d29"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44c428f73f9773cf9381561b88d83d29">fpqueue_is_full</a> (const fpqueue_type *self)</td></tr>
+<tr class="memdesc:a44c428f73f9773cf9381561b88d83d29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the priority queue is full.  <br /></td></tr>
+<tr class="separator:a44c428f73f9773cf9381561b88d83d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56c4d79d6ce3ddfb0b6fd9a7e5b010f3" id="r_a56c4d79d6ce3ddfb0b6fd9a7e5b010f3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a56c4d79d6ce3ddfb0b6fd9a7e5b010f3">fpqueue_get_max</a> (const fpqueue_type *self)</td></tr>
+<tr class="memdesc:a56c4d79d6ce3ddfb0b6fd9a7e5b010f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the max value in a non-empty priority queue.  <br /></td></tr>
+<tr class="separator:a56c4d79d6ce3ddfb0b6fd9a7e5b010f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae21092f36f89b75cfd1883d11e532f9c" id="r_ae21092f36f89b75cfd1883d11e532f9c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae21092f36f89b75cfd1883d11e532f9c">fpqueue_peek</a> (const fpqueue_type *self)</td></tr>
+<tr class="memdesc:ae21092f36f89b75cfd1883d11e532f9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek a non-empty priority queue and get it's next to-be-popped (max) value.  <br /></td></tr>
+<tr class="separator:ae21092f36f89b75cfd1883d11e532f9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2215760c64bf6359a37bc85881b91467" id="r_a2215760c64bf6359a37bc85881b91467"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2215760c64bf6359a37bc85881b91467">fpqueue_pop_max</a> (fpqueue_type *self)</td></tr>
+<tr class="memdesc:a2215760c64bf6359a37bc85881b91467"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop the max value away from a non-empty priority queue.  <br /></td></tr>
+<tr class="separator:a2215760c64bf6359a37bc85881b91467"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af31edd409a87cfd6c6e385121bc46bc1" id="r_af31edd409a87cfd6c6e385121bc46bc1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af31edd409a87cfd6c6e385121bc46bc1">fpqueue_push</a> (fpqueue_type *self, <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value, uint32_t priority)</td></tr>
+<tr class="memdesc:af31edd409a87cfd6c6e385121bc46bc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value with given priority onto a non-full priority queue.  <br /></td></tr>
+<tr class="separator:af31edd409a87cfd6c6e385121bc46bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d419913419c044b6fec740b0a2f1b13" id="r_a5d419913419c044b6fec740b0a2f1b13"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d419913419c044b6fec740b0a2f1b13">fpqueue_clear</a> (fpqueue_type *self)</td></tr>
+<tr class="memdesc:a5d419913419c044b6fec740b0a2f1b13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the elements in the priority queue.  <br /></td></tr>
+<tr class="separator:a5d419913419c044b6fec740b0a2f1b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec84bc9bbc5597679b91ceeb1ffc8aac" id="r_aec84bc9bbc5597679b91ceeb1ffc8aac"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec84bc9bbc5597679b91ceeb1ffc8aac">fpqueue_copy</a> (fpqueue_type *restrict dest_ptr, const fpqueue_type *restrict src_ptr)</td></tr>
+<tr class="memdesc:aec84bc9bbc5597679b91ceeb1ffc8aac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy the values from a source priority queue to a destination priority queue.  <br /></td></tr>
+<tr class="separator:aec84bc9bbc5597679b91ceeb1ffc8aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Fixed-size priority queue based on binary heap. </p>
+<div class="textblock"><p>Fixed-size priority queue based on binary (max-)heap. </p>
 <p>The following macros must be defined: </p><ul>
 <li><code>NAME</code> </li>
 <li><code>VALUE_TYPE</code></li>
 </ul>
-<p>Sources used: CLRS </p>
+<p>Source used: </p><ul>
+<li>CLRS </li>
+</ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a46464e70eaa13c211bb08f5a9c0dc3a9" name="a46464e70eaa13c211bb08f5a9c0dc3a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46464e70eaa13c211bb08f5a9c0dc3a9">&#9670;&#160;</a></span>fpqueue_for_each</h2>
+<a id="a7c6041e987df98589e3ead1d70b86cb7" name="a7c6041e987df98589e3ead1d70b86cb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c6041e987df98589e3ead1d70b86cb7">&#9670;&#160;</a></span>fpqueue_for_each</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -187,7 +195,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">#define fpqueue_for_each</td>
           <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>pqueue_ptr</em></span>, </td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -201,20 +209,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((index) = 0;                                              \</div>
-<div class="line">                                                                   \</div>
-<div class="line">         (index) &lt; (pqueue_ptr)-&gt;count &amp;&amp;                          \</div>
-<div class="line">                                                                   \</div>
-<div class="line">         ((value_) = (pqueue_ptr)-&gt;elements[(index)].value, <span class="keyword">true</span>); \</div>
-<div class="line">                                                                   \</div>
-<div class="line">         (index)++)</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((index) = 0; (index) &lt; (self)-&gt;count &amp;&amp; ((value_) = (self)-&gt;elements[(index)].value, <span class="keyword">true</span>); (index)++)</div>
 </div><!-- fragment -->
 <p>Iterate over the values in the priority queue in breadth-first order. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the priority queue under the iteration may result in errors.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>Priority queue pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>Temporary indexing variable. Should be <code>uint32_t</code> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>Priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>Temporary indexing variable. Should be able to contain <code>uint32_t</code>. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">value_</td><td>Current value. Should be <code>VALUE_TYPE</code>. </td></tr>
   </table>
   </dd>
@@ -313,14 +315,13 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NAME&#160;&#160;&#160;fpqueue</td>
+          <td class="memname">#define NAME&#160;&#160;&#160;<a class="el" href="structfpqueue.html">fpqueue</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Prefix to priority queue types and operations. </p>
-<p>Is undefined after header is included.</p>
-<dl class="section attention"><dt>Attention</dt><dd>This must be manually defined before including this header file. </dd></dl>
+<p>Prefix to priority queue types and operations. This must be manually defined before including this header file. </p>
+<p>Is undefined after header is included. </p>
 
 </div>
 </div>
@@ -336,15 +337,59 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Priority queue value type. </p>
-<p>Is undefined after header is included.</p>
-<dl class="section attention"><dt>Attention</dt><dd>This must be manually defined before including this header file. </dd></dl>
+<p>Priority queue value type. This must be manually defined before including this header file. </p>
+<p>Is undefined after header is included. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a614e5de36c8b34f7e941772aae3ac495" name="a614e5de36c8b34f7e941772aae3ac495"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a614e5de36c8b34f7e941772aae3ac495">&#9670;&#160;</a></span>fpqueue_clear()</h2>
+<a id="a9deeb0187956dce34e7b0d9d5ca96cce" name="a9deeb0187956dce34e7b0d9d5ca96cce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9deeb0187956dce34e7b0d9d5ca96cce">&#9670;&#160;</a></span>fpqueue_calc_sizeof()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool fpqueue_calc_sizeof </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t *</td>          <td class="paramname"><span class="paramname"><em>capacity_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *</td>          <td class="paramname"><span class="paramname"><em>size_ptr</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculate the size of the priority queue struct. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">capacity_ptr</td><td>Pointer to orignal capacity </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">size_ptr</td><td>Pointer to size (to be outputted)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">false</td><td>If capacity is 0 or the equivalent size is larger than UINT32_MAX. </td></tr>
+    <tr><td class="paramname">true</td><td>Otherwise. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5d419913419c044b6fec740b0a2f1b13" name="a5d419913419c044b6fec740b0a2f1b13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d419913419c044b6fec740b0a2f1b13">&#9670;&#160;</a></span>fpqueue_clear()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -355,7 +400,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void fpqueue_clear </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structfpqueue__type.html">fpqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>pqueue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">fpqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -369,15 +414,15 @@ Functions</h2></td></tr>
 <p>Clear the elements in the priority queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The priority queue pointer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a8ef82655cf07771ce9628d366dbe3c58" name="a8ef82655cf07771ce9628d366dbe3c58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ef82655cf07771ce9628d366dbe3c58">&#9670;&#160;</a></span>fpqueue_copy()</h2>
+<a id="aec84bc9bbc5597679b91ceeb1ffc8aac" name="aec84bc9bbc5597679b91ceeb1ffc8aac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec84bc9bbc5597679b91ceeb1ffc8aac">&#9670;&#160;</a></span>fpqueue_copy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -388,12 +433,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void fpqueue_copy </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structfpqueue__type.html">fpqueue_type</a> *restrict</td>          <td class="paramname"><span class="paramname"><em>dest_pqueue_ptr</em></span>, </td>
+          <td class="paramtype">fpqueue_type *restrict</td>          <td class="paramname"><span class="paramname"><em>dest_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structfpqueue__type.html">fpqueue_type</a> *restrict</td>          <td class="paramname"><span class="paramname"><em>src_pqueue_ptr</em></span>&#160;)</td>
+          <td class="paramtype">const fpqueue_type *restrict</td>          <td class="paramname"><span class="paramname"><em>src_ptr</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -406,16 +451,16 @@ Functions</h2></td></tr>
 <p>Copy the values from a source priority queue to a destination priority queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">dest_pqueue_ptr</td><td>The destination priority queue. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">src_pqueue_ptr</td><td>The source priority queue. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">dest_ptr</td><td>The destination priority queue. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">src_ptr</td><td>The source priority queue. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a3b2f3dee2855a734e823860d6bb7dc14" name="a3b2f3dee2855a734e823860d6bb7dc14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b2f3dee2855a734e823860d6bb7dc14">&#9670;&#160;</a></span>fpqueue_create()</h2>
+<a id="a656d2bd2814c91abbd8e7397e64d7ead" name="a656d2bd2814c91abbd8e7397e64d7ead"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a656d2bd2814c91abbd8e7397e64d7ead">&#9670;&#160;</a></span>fpqueue_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -424,9 +469,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="structfpqueue__type.html">fpqueue_type</a> * fpqueue_create </td>
+          <td class="memname">static fpqueue_type * fpqueue_create </td>
           <td>(</td>
-          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span></td><td>)</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -437,18 +482,18 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Create an priority queue with a given capacity with malloc(). </p>
+<p>Create an priority queue struct with a given capacity with malloc(). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the priority queue. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the priority queue. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">`NULL`</td><td><ul>
-<li>If capacity is 0 or is larger than UINT32_MAX. </li>
+    <tr><td class="paramname">NULL</td><td><ul>
+<li>If capacity is 0 or the equivalent size is larger than UINT32_MAX. </li>
 <li>If malloc fails. </li>
 </ul>
 </td></tr>
@@ -458,8 +503,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a766494841c011ba26a0b5a55e9eac675" name="a766494841c011ba26a0b5a55e9eac675"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a766494841c011ba26a0b5a55e9eac675">&#9670;&#160;</a></span>fpqueue_destroy()</h2>
+<a id="a60f9a8b480ceb1ba3200f5faaf64849d" name="a60f9a8b480ceb1ba3200f5faaf64849d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60f9a8b480ceb1ba3200f5faaf64849d">&#9670;&#160;</a></span>fpqueue_destroy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -470,7 +515,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void fpqueue_destroy </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structfpqueue__type.html">fpqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>pqueue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">fpqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -481,19 +526,19 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Destroy an priority queue and free the underlying memory with free(). </p>
+<p>Destroy an priority queue struct and free the underlying memory with free(). </p>
 <dl class="section warning"><dt>Warning</dt><dd>May not be called twice in a row on the same object.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The priority queue pointer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a1b94fa8941ceceff88019660a7bb017b" name="a1b94fa8941ceceff88019660a7bb017b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b94fa8941ceceff88019660a7bb017b">&#9670;&#160;</a></span>fpqueue_get_max()</h2>
+<a id="a56c4d79d6ce3ddfb0b6fd9a7e5b010f3" name="a56c4d79d6ce3ddfb0b6fd9a7e5b010f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56c4d79d6ce3ddfb0b6fd9a7e5b010f3">&#9670;&#160;</a></span>fpqueue_get_max()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -504,7 +549,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> fpqueue_get_max </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structfpqueue__type.html">fpqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>pqueue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const fpqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -518,7 +563,7 @@ Functions</h2></td></tr>
 <p>Get the max value in a non-empty priority queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The priority queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -526,8 +571,46 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5fb5b2058c0d1274a91066574388d510" name="a5fb5b2058c0d1274a91066574388d510"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5fb5b2058c0d1274a91066574388d510">&#9670;&#160;</a></span>fpqueue_is_empty()</h2>
+<a id="afd2df10597a56764a23d3c9c276be5e4" name="afd2df10597a56764a23d3c9c276be5e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd2df10597a56764a23d3c9c276be5e4">&#9670;&#160;</a></span>fpqueue_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static fpqueue_type * fpqueue_init </td>
+          <td>(</td>
+          <td class="paramtype">fpqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initialize a priority queue struct, given a capacity. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>Priority queue pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Capacity </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad5e70e8eb3008ac1fee4a576d35d4826" name="ad5e70e8eb3008ac1fee4a576d35d4826"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5e70e8eb3008ac1fee4a576d35d4826">&#9670;&#160;</a></span>fpqueue_is_empty()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -538,7 +621,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static bool fpqueue_is_empty </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structfpqueue__type.html">fpqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>pqueue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const fpqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -552,16 +635,16 @@ Functions</h2></td></tr>
 <p>Return whether the priority queue is empty. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The priority queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>whether the priority queue is empty. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the priority queue is empty. </dd></dl>
 
 </div>
 </div>
-<a id="a20a36f75d2c05a2332f064b1fc74f899" name="a20a36f75d2c05a2332f064b1fc74f899"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20a36f75d2c05a2332f064b1fc74f899">&#9670;&#160;</a></span>fpqueue_is_full()</h2>
+<a id="a44c428f73f9773cf9381561b88d83d29" name="a44c428f73f9773cf9381561b88d83d29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44c428f73f9773cf9381561b88d83d29">&#9670;&#160;</a></span>fpqueue_is_full()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -572,7 +655,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static bool fpqueue_is_full </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structfpqueue__type.html">fpqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>pqueue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const fpqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -586,16 +669,16 @@ Functions</h2></td></tr>
 <p>Return whether the priority queue is full. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The priority queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>whether the priority queue is full. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the priority queue is full. </dd></dl>
 
 </div>
 </div>
-<a id="abaad8227c2a2e713dca34b29ed356a36" name="abaad8227c2a2e713dca34b29ed356a36"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abaad8227c2a2e713dca34b29ed356a36">&#9670;&#160;</a></span>fpqueue_peek()</h2>
+<a id="ae21092f36f89b75cfd1883d11e532f9c" name="ae21092f36f89b75cfd1883d11e532f9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae21092f36f89b75cfd1883d11e532f9c">&#9670;&#160;</a></span>fpqueue_peek()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -606,7 +689,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> fpqueue_peek </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structfpqueue__type.html">fpqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>pqueue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const fpqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -620,7 +703,7 @@ Functions</h2></td></tr>
 <p>Peek a non-empty priority queue and get it's next to-be-popped (max) value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The priority queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -628,8 +711,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8a1a1f20754dca9ce3eea47243e0f134" name="a8a1a1f20754dca9ce3eea47243e0f134"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a1a1f20754dca9ce3eea47243e0f134">&#9670;&#160;</a></span>fpqueue_pop_max()</h2>
+<a id="a2215760c64bf6359a37bc85881b91467" name="a2215760c64bf6359a37bc85881b91467"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2215760c64bf6359a37bc85881b91467">&#9670;&#160;</a></span>fpqueue_pop_max()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -640,7 +723,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> fpqueue_pop_max </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structfpqueue__type.html">fpqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>pqueue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">fpqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -654,7 +737,7 @@ Functions</h2></td></tr>
 <p>Pop the max value away from a non-empty priority queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The priority queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -662,8 +745,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a579cebd954e1ca46d49b5769d07cc760" name="a579cebd954e1ca46d49b5769d07cc760"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a579cebd954e1ca46d49b5769d07cc760">&#9670;&#160;</a></span>fpqueue_push()</h2>
+<a id="af31edd409a87cfd6c6e385121bc46bc1" name="af31edd409a87cfd6c6e385121bc46bc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af31edd409a87cfd6c6e385121bc46bc1">&#9670;&#160;</a></span>fpqueue_push()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -674,7 +757,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void fpqueue_push </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structfpqueue__type.html">fpqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>pqueue_ptr</em></span>, </td>
+          <td class="paramtype">fpqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -697,7 +780,7 @@ Functions</h2></td></tr>
 <p>Push a value with given priority onto a non-full priority queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pqueue_ptr</td><td>The priority queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The priority queue pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The priority (with large number meaning high priority and vice versa). </td></tr>
   </table>

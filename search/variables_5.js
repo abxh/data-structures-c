@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['left_5fptr_0',['left_ptr',['../structrbtree__node__type.html#aec20e07fa0ce04328e172552031775ea',1,'rbtree_node_type']]]
+  ['left_5fptr_0',['left_ptr',['../structrbtree__node.html#a67811326865204c4e1af7973d1a45734',1,'rbtree_node']]]
 ];

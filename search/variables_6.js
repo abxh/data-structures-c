@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['next_5fptr_0',['next_ptr',['../structlist__node__type.html#a854d8ff4881eac59fc52af844e977816',1,'list_node_type']]]
+  ['next_5fptr_0',['next_ptr',['../structlist__node.html#ab5153c10b495e00e144df378a45662d5',1,'list_node']]]
 ];

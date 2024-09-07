@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['value_0',['value',['../structfhashtable__slot__type.html#a26411369e95f68e6b61128261536c68d',1,'fhashtable_slot_type::value'],['../structfpqueue__element__type.html#a7c5b68c2b1af543e231b912737e76a93',1,'fpqueue_element_type::value']]],
-  ['values_1',['values',['../structfqueue__type.html#a4748d3edba3ed21b15f90c27cf41dacb',1,'fqueue_type::values'],['../structfstack__type.html#a89c607abf9825e717dacd72c45822f57',1,'fstack_type::values']]]
+  ['value_0',['value',['../structfhashtable__slot.html#aae6ce7a1077ea3d1c0caf2b123f6017f',1,'fhashtable_slot::value'],['../structfpqueue__element.html#a80d0b6b3ba68f984f15dccd33a812da6',1,'fpqueue_element::value']]],
+  ['values_1',['values',['../structfqueue.html#a8d244db690ef40b6522029273b950a0d',1,'fqueue::values'],['../structfstack.html#a954c117435c1c92ce1351049b760391e',1,'fstack::values']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>data-structures-c: fqueue_type Struct Reference</title>
+<title>data-structures-c: fpqueue Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -86,43 +86,35 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structfqueue__type-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">fqueue_type Struct Reference</div></div>
+<a href="structfpqueue-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">fpqueue Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Generated queue struct type for a <code>VALUE_TYPE</code>.  
+<p>Generated priority queue struct type for a given <code>VALUE_TYPE</code>.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="fqueue_8h_source.html">fqueue.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="fpqueue_8h_source.html">fpqueue.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ac251b40e64c75ab389df1836863801a6" id="r_ac251b40e64c75ab389df1836863801a6"><td class="memItemLeft" align="right" valign="top"><a id="ac251b40e64c75ab389df1836863801a6" name="ac251b40e64c75ab389df1836863801a6"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>begin_index</b></td></tr>
-<tr class="memdesc:ac251b40e64c75ab389df1836863801a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">index used to track the front of the queue. <br /></td></tr>
-<tr class="separator:ac251b40e64c75ab389df1836863801a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a481691530f1c7bcd3612c9e13c09874d" id="r_a481691530f1c7bcd3612c9e13c09874d"><td class="memItemLeft" align="right" valign="top"><a id="a481691530f1c7bcd3612c9e13c09874d" name="a481691530f1c7bcd3612c9e13c09874d"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>end_index</b></td></tr>
-<tr class="memdesc:a481691530f1c7bcd3612c9e13c09874d"><td class="mdescLeft">&#160;</td><td class="mdescRight">index used to track the back of the queue. <br /></td></tr>
-<tr class="separator:a481691530f1c7bcd3612c9e13c09874d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a403424ab39715341668d147958961235" id="r_a403424ab39715341668d147958961235"><td class="memItemLeft" align="right" valign="top"><a id="a403424ab39715341668d147958961235" name="a403424ab39715341668d147958961235"></a>
+<tr class="memitem:ad5650736fc6cceac53a9a9b03dbd06a0" id="r_ad5650736fc6cceac53a9a9b03dbd06a0"><td class="memItemLeft" align="right" valign="top"><a id="ad5650736fc6cceac53a9a9b03dbd06a0" name="ad5650736fc6cceac53a9a9b03dbd06a0"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>count</b></td></tr>
-<tr class="memdesc:a403424ab39715341668d147958961235"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of values in the ring buffer <br /></td></tr>
-<tr class="separator:a403424ab39715341668d147958961235"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2a3a9f5b1fd945f97176301e07ab4ac" id="r_af2a3a9f5b1fd945f97176301e07ab4ac"><td class="memItemLeft" align="right" valign="top"><a id="af2a3a9f5b1fd945f97176301e07ab4ac" name="af2a3a9f5b1fd945f97176301e07ab4ac"></a>
+<tr class="memdesc:ad5650736fc6cceac53a9a9b03dbd06a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of non-empty elements. <br /></td></tr>
+<tr class="separator:ad5650736fc6cceac53a9a9b03dbd06a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fe40d9724b7d07db5e4a04a8046fdef" id="r_a3fe40d9724b7d07db5e4a04a8046fdef"><td class="memItemLeft" align="right" valign="top"><a id="a3fe40d9724b7d07db5e4a04a8046fdef" name="a3fe40d9724b7d07db5e4a04a8046fdef"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>capacity</b></td></tr>
-<tr class="memdesc:af2a3a9f5b1fd945f97176301e07ab4ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">maximum number of values allocated for in the queue. <br /></td></tr>
-<tr class="separator:af2a3a9f5b1fd945f97176301e07ab4ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4748d3edba3ed21b15f90c27cf41dacb" id="r_a4748d3edba3ed21b15f90c27cf41dacb"><td class="memItemLeft" align="right" valign="top"><a id="a4748d3edba3ed21b15f90c27cf41dacb" name="a4748d3edba3ed21b15f90c27cf41dacb"></a>
-<a class="el" href="fqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>values</b> []</td></tr>
-<tr class="memdesc:a4748d3edba3ed21b15f90c27cf41dacb"><td class="mdescLeft">&#160;</td><td class="mdescRight">array of values. <br /></td></tr>
-<tr class="separator:a4748d3edba3ed21b15f90c27cf41dacb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:a3fe40d9724b7d07db5e4a04a8046fdef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of elements allocated for. <br /></td></tr>
+<tr class="separator:a3fe40d9724b7d07db5e4a04a8046fdef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f00c668ccaa1346f1e84efe688f6205" id="r_a5f00c668ccaa1346f1e84efe688f6205"><td class="memItemLeft" align="right" valign="top"><a id="a5f00c668ccaa1346f1e84efe688f6205" name="a5f00c668ccaa1346f1e84efe688f6205"></a>
+fpqueue_element_type&#160;</td><td class="memItemRight" valign="bottom"><b>elements</b> []</td></tr>
+<tr class="memdesc:a5f00c668ccaa1346f1e84efe688f6205"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of elements. <br /></td></tr>
+<tr class="separator:a5f00c668ccaa1346f1e84efe688f6205"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Generated queue struct type for a <code>VALUE_TYPE</code>. </p>
+<div class="textblock"><p>Generated priority queue struct type for a given <code>VALUE_TYPE</code>. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>lib/<a class="el" href="fqueue_8h_source.html">fqueue.h</a></li>
+<li>lib/<a class="el" href="fpqueue_8h_source.html">fpqueue.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

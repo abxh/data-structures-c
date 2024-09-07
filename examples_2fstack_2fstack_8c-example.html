@@ -98,7 +98,7 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> int_stack_example(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
-<div class="line">    int_stack_type* s = int_stack_create(3);</div>
+<div class="line">    <span class="keyword">struct </span>int_stack *s = int_stack_create(3);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span> (!s) {</div>
 <div class="line">        assert(<span class="keyword">false</span>);</div>
@@ -147,7 +147,7 @@ $(function(){ initResizable(false); });
 <div class="line">{</div>
 <div class="line">    <span class="keyword">const</span> <span class="keywordtype">size_t</span> lim = 1e+6;</div>
 <div class="line"> </div>
-<div class="line">    uintstk_type* s = uintstk_create(lim);</div>
+<div class="line">    <span class="keyword">struct </span>uintstk *s = uintstk_create(lim);</div>
 <div class="line">    <span class="keywordflow">if</span> (!s) {</div>
 <div class="line">        assert(<span class="keyword">false</span>);</div>
 <div class="line">    }</div>
@@ -156,7 +156,7 @@ $(function(){ initResizable(false); });
 <div class="line">        uintstk_push(s, i);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    uintstk_type* s_copy = uintstk_create(s-&gt;capacity);</div>
+<div class="line">    <span class="keyword">struct </span>uintstk *s_copy = uintstk_create(s-&gt;capacity);</div>
 <div class="line">    <span class="keywordflow">if</span> (!s_copy) {</div>
 <div class="line">        assert(<span class="keyword">false</span>);</div>
 <div class="line">    }</div>
@@ -171,7 +171,7 @@ $(function(){ initResizable(false); });
 <div class="line">        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> value;</div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordtype">size_t</span> tempi;</div>
-<div class="line">        <a id="a0" name="a0"></a><a class="code hl_define" href="fstack_8h.html#af49eab3b3cfb87396b6e4de58219a084">fstack_for_each_reverse</a>(s_copy, tempi, value)</div>
+<div class="line">        <a id="a0" name="a0"></a><a class="code hl_define" href="fstack_8h.html#ac664ccbf9926caf6c7dcbaeeefaa9d55">fstack_for_each_reverse</a>(s_copy, tempi, value)</div>
 <div class="line">        {</div>
 <div class="line">            assert(value == x++);</div>
 <div class="line">        }</div>
@@ -183,7 +183,7 @@ $(function(){ initResizable(false); });
 <div class="line">        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> value;</div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordtype">size_t</span> tempi;</div>
-<div class="line">        <a id="a1" name="a1"></a><a class="code hl_define" href="fstack_8h.html#ab4ce686da462284572ef631b7a201151">fstack_for_each</a>(s_copy, tempi, value)</div>
+<div class="line">        <a id="a1" name="a1"></a><a class="code hl_define" href="fstack_8h.html#adaad22c1231dc5366a49ede0571174a2">fstack_for_each</a>(s_copy, tempi, value)</div>
 <div class="line">        {</div>
 <div class="line">            assert(value == x--);</div>
 <div class="line">            cpy_count++;</div>
@@ -205,8 +205,8 @@ $(function(){ initResizable(false); });
 <div class="line">    uintstk_example();</div>
 <div class="line">}</div>
 <div class="ttc" id="afstack_8h_html"><div class="ttname"><a href="fstack_8h.html">fstack.h</a></div><div class="ttdoc">Fixed-size array-based stack.</div></div>
-<div class="ttc" id="afstack_8h_html_ab4ce686da462284572ef631b7a201151"><div class="ttname"><a href="fstack_8h.html#ab4ce686da462284572ef631b7a201151">fstack_for_each</a></div><div class="ttdeci">#define fstack_for_each(stack_ptr, index, value)</div><div class="ttdoc">Iterate over the values in the stack from the top to bottom.</div><div class="ttdef"><b>Definition</b> fstack.h:49</div></div>
-<div class="ttc" id="afstack_8h_html_af49eab3b3cfb87396b6e4de58219a084"><div class="ttname"><a href="fstack_8h.html#af49eab3b3cfb87396b6e4de58219a084">fstack_for_each_reverse</a></div><div class="ttdeci">#define fstack_for_each_reverse(stack_ptr, index, value)</div><div class="ttdoc">Iterate over the values in the stack from the bottom to top.</div><div class="ttdef"><b>Definition</b> fstack.h:67</div></div>
+<div class="ttc" id="afstack_8h_html_ac664ccbf9926caf6c7dcbaeeefaa9d55"><div class="ttname"><a href="fstack_8h.html#ac664ccbf9926caf6c7dcbaeeefaa9d55">fstack_for_each_reverse</a></div><div class="ttdeci">#define fstack_for_each_reverse(self, index, value)</div><div class="ttdoc">Iterate over the values in the stack from the bottom to top.</div><div class="ttdef"><b>Definition</b> fstack.h:65</div></div>
+<div class="ttc" id="afstack_8h_html_adaad22c1231dc5366a49ede0571174a2"><div class="ttname"><a href="fstack_8h.html#adaad22c1231dc5366a49ede0571174a2">fstack_for_each</a></div><div class="ttdeci">#define fstack_for_each(self, index, value)</div><div class="ttdoc">Iterate over the values in the stack from the top to bottom.</div><div class="ttdef"><b>Definition</b> fstack.h:51</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

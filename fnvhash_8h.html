@@ -104,14 +104,18 @@ $(function(){ initResizable(false); });
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a61e23f79deaf20d3880e6f35fd39878f" id="r_a61e23f79deaf20d3880e6f35fd39878f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61e23f79deaf20d3880e6f35fd39878f">fnvhash_32_str</a> (const char *char_p)</td></tr>
+<tr class="memdesc:a61e23f79deaf20d3880e6f35fd39878f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the FNV-1a 32-bit hash of a char array (ending with a <code>\0</code>).  <br /></td></tr>
 <tr class="separator:a61e23f79deaf20d3880e6f35fd39878f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8ab4359590f8a5dee7d9fe8e2fa7913" id="r_ab8ab4359590f8a5dee7d9fe8e2fa7913"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8ab4359590f8a5dee7d9fe8e2fa7913">fnvhash_32</a> (const uint8_t *char_p, const size_t length)</td></tr>
+<tr class="memdesc:ab8ab4359590f8a5dee7d9fe8e2fa7913"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the FNV-1a 32-bit hash of a string of bytes.  <br /></td></tr>
 <tr class="separator:ab8ab4359590f8a5dee7d9fe8e2fa7913"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>FNV-1a hashing function. </p>
 <dl class="section note"><dt>Note</dt><dd>FNV-1a is <b>not</b> a cryptographic hashing function.</dd></dl>
-<p>Source: <a href="https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function">https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function</a> </p>
+<p>Source: </p><ul>
+<li><a href="https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function">https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function</a> </li>
+</ul>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="ab8ab4359590f8a5dee7d9fe8e2fa7913" name="ab8ab4359590f8a5dee7d9fe8e2fa7913"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab8ab4359590f8a5dee7d9fe8e2fa7913">&#9670;&#160;</a></span>fnvhash_32()</h2>
@@ -139,11 +143,12 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Get the FNV-1a 32-bit hash of a string of bytes.</p>
+
+<p>Get the FNV-1a 32-bit hash of a string of bytes. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">char_p</td><td>Pointer to the string of bytes. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Number of bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Number of bytes.</td></tr>
   </table>
   </dd>
 </dl>
@@ -173,10 +178,11 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Get the FNV-1a 32-bit hash of a char array (ending with a <code>\0</code>).</p>
+
+<p>Get the FNV-1a 32-bit hash of a char array (ending with a <code>\0</code>). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">char_p</td><td>Pointer to the string of bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">char_p</td><td>Pointer to the string of bytes.</td></tr>
   </table>
   </dd>
 </dl>

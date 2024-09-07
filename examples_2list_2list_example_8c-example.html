@@ -96,63 +96,63 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">    <span class="keywordtype">char</span> c;</div>
-<div class="line">    <a id="_a0" name="_a0"></a><a class="code hl_struct" href="structlist__node__type.html">list_node_type</a> node;</div>
+<div class="line">    <span class="keyword">struct </span><a id="_a0" name="_a0"></a><a class="code hl_struct" href="structlist__node.html">list_node</a> node;</div>
 <div class="line">} con_type;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> list_stack(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>* buf = malloc(4096);</div>
+<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *buf = malloc(4096);</div>
 <div class="line"> </div>
-<div class="line">    <a id="_a1" name="_a1"></a><a class="code hl_struct" href="structarena__type.html">arena_type</a> arena;</div>
-<div class="line">    <a id="a2" name="a2"></a><a class="code hl_function" href="arena_8h.html#a67ada6b5c6f09a6b530b75ef8d553a45">arena_init</a>(&amp;arena, 4096, buf);</div>
+<div class="line">    <span class="keyword">struct </span><a id="_a1" name="_a1"></a><a class="code hl_struct" href="structarena.html">arena</a> <a class="code hl_struct" href="structarena.html">arena</a>;</div>
+<div class="line">    <a id="a2" name="a2"></a><a class="code hl_function" href="arena_8h.html#a7db71fb9cc2f471dab7268922ea8c58f">arena_init</a>(&amp;<a class="code hl_struct" href="structarena.html">arena</a>, 4096, buf);</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a> head;</div>
-<div class="line">    <a id="a3" name="a3"></a><a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;head);</div>
+<div class="line">    <span class="keyword">struct </span><a class="code hl_struct" href="structlist__node.html">list_node</a> head;</div>
+<div class="line">    <a id="a3" name="a3"></a><a class="code hl_function" href="list_8h.html#af87c2290e61fd5c0583d39646140d838">list_node_init</a>(&amp;head);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt;= <span class="charliteral">&#39;z&#39;</span> - <span class="charliteral">&#39;a&#39;</span>; i++) {</div>
-<div class="line">        con_type* ptr = <a id="a4" name="a4"></a><a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(con_type), <span class="keyword">sizeof</span>(con_type));</div>
+<div class="line">        con_type *ptr = <a id="a4" name="a4"></a><a class="code hl_function" href="arena_8h.html#a1cf73dd3affc5697031b8904243976b0">arena_allocate_aligned</a>(&amp;<a class="code hl_struct" href="structarena.html">arena</a>, <span class="keyword">alignof</span>(con_type), <span class="keyword">sizeof</span>(con_type));</div>
 <div class="line">        <span class="keywordflow">if</span> (!ptr) {</div>
 <div class="line">            assert(<span class="keyword">false</span>);</div>
 <div class="line">        }</div>
 <div class="line">        ptr-&gt;c = <span class="charliteral">&#39;a&#39;</span> + i;</div>
 <div class="line"> </div>
-<div class="line">        <a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;ptr-&gt;node);</div>
-<div class="line">        <a id="a5" name="a5"></a><a class="code hl_function" href="list_8h.html#a548d598fa8d11a081e18f1023f8ddc4b">list_node_add_after</a>(&amp;ptr-&gt;node, &amp;head);</div>
+<div class="line">        <a class="code hl_function" href="list_8h.html#af87c2290e61fd5c0583d39646140d838">list_node_init</a>(&amp;ptr-&gt;node);</div>
+<div class="line">        <a id="a5" name="a5"></a><a class="code hl_function" href="list_8h.html#a0b1980996c2ccf521b8a9be8386a2eee">list_node_add_after</a>(&amp;ptr-&gt;node, &amp;head);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    {</div>
 <div class="line">        <span class="keywordtype">char</span> c = <span class="charliteral">&#39;z&#39;</span>;</div>
-<div class="line">        <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* node_ptr = head.<a id="a6" name="a6"></a><a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>;</div>
+<div class="line">        <span class="keyword">struct </span><a class="code hl_struct" href="structlist__node.html">list_node</a> *node_ptr = head.<a id="a6" name="a6"></a><a class="code hl_variable" href="structlist__node.html#ab5153c10b495e00e144df378a45662d5">next_ptr</a>;</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">while</span> (!<a id="a7" name="a7"></a><a class="code hl_function" href="list_8h.html#a309f918c33372b4df39c3e60abf2f6f2">list_node_is_head</a>(node_ptr, &amp;head)) {</div>
-<div class="line">            <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* next_ptr =</div>
-<div class="line">                node_ptr-&gt;<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>; <span class="comment">// this must be stored, should the list be modified under iteration (not in this particular case)</span></div>
-<div class="line">            con_type* elm = <a id="a8" name="a8"></a><a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, con_type, node);</div>
+<div class="line">        <span class="keywordflow">while</span> (!<a id="a7" name="a7"></a><a class="code hl_function" href="list_8h.html#a6c14d6cd16ffd4988a3ef0bd951d94c0">list_node_is_head</a>(node_ptr, &amp;head)) {</div>
+<div class="line">            <span class="keyword">struct </span><a class="code hl_struct" href="structlist__node.html">list_node</a> *<a class="code hl_variable" href="structlist__node.html#ab5153c10b495e00e144df378a45662d5">next_ptr</a> = node_ptr-&gt;<a class="code hl_variable" href="structlist__node.html#ab5153c10b495e00e144df378a45662d5">next_ptr</a>; <span class="comment">// this must be stored, should the list be modified under</span></div>
+<div class="line">                                                             <span class="comment">// iteration (not in this particular case)</span></div>
+<div class="line">            con_type *elm = <a id="a8" name="a8"></a><a class="code hl_define" href="list_8h.html#a7d31316f0891242498a62d0c50caef77">list_node_entry</a>(node_ptr, con_type, node);</div>
 <div class="line"> </div>
 <div class="line">            assert(c == elm-&gt;c);</div>
 <div class="line"> </div>
 <div class="line">            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;m&#39;</span>) {</div>
-<div class="line">                con_type* ptr = <a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(con_type), <span class="keyword">sizeof</span>(con_type));</div>
+<div class="line">                con_type *ptr = <a class="code hl_function" href="arena_8h.html#a1cf73dd3affc5697031b8904243976b0">arena_allocate_aligned</a>(&amp;<a class="code hl_struct" href="structarena.html">arena</a>, <span class="keyword">alignof</span>(con_type), <span class="keyword">sizeof</span>(con_type));</div>
 <div class="line">                <span class="keywordflow">if</span> (!ptr) {</div>
 <div class="line">                    assert(<span class="keyword">false</span>);</div>
 <div class="line">                }</div>
 <div class="line">                ptr-&gt;c = <span class="charliteral">&#39;M&#39;</span>;</div>
 <div class="line"> </div>
-<div class="line">                <a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;ptr-&gt;node);</div>
-<div class="line">                <a id="a9" name="a9"></a><a class="code hl_function" href="list_8h.html#a720a9582420c136a02875abafe8cddcd">list_node_replace</a>(node_ptr, &amp;ptr-&gt;node);</div>
+<div class="line">                <a class="code hl_function" href="list_8h.html#af87c2290e61fd5c0583d39646140d838">list_node_init</a>(&amp;ptr-&gt;node);</div>
+<div class="line">                <a id="a9" name="a9"></a><a class="code hl_function" href="list_8h.html#af6577d1da1572ba8142469c603d51782">list_node_replace</a>(node_ptr, &amp;ptr-&gt;node);</div>
 <div class="line">            }</div>
 <div class="line"> </div>
 <div class="line">            c--;</div>
-<div class="line">            node_ptr = next_ptr;</div>
+<div class="line">            node_ptr = <a class="code hl_variable" href="structlist__node.html#ab5153c10b495e00e144df378a45662d5">next_ptr</a>;</div>
 <div class="line">        }</div>
 <div class="line">        assert(c + 1 == <span class="charliteral">&#39;a&#39;</span>);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    {</div>
 <div class="line">        <span class="keywordtype">char</span> c = <span class="charliteral">&#39;z&#39;</span>;</div>
-<div class="line">        <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* node_ptr = head.<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>;</div>
-<div class="line">        <span class="keywordflow">while</span> (!<a class="code hl_function" href="list_8h.html#a309f918c33372b4df39c3e60abf2f6f2">list_node_is_head</a>(node_ptr, &amp;head)) {</div>
-<div class="line">            con_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, con_type, node);</div>
+<div class="line">        <span class="keyword">struct </span><a class="code hl_struct" href="structlist__node.html">list_node</a> *node_ptr = head.<a class="code hl_variable" href="structlist__node.html#ab5153c10b495e00e144df378a45662d5">next_ptr</a>;</div>
+<div class="line">        <span class="keywordflow">while</span> (!<a class="code hl_function" href="list_8h.html#a6c14d6cd16ffd4988a3ef0bd951d94c0">list_node_is_head</a>(node_ptr, &amp;head)) {</div>
+<div class="line">            con_type *elm = <a class="code hl_define" href="list_8h.html#a7d31316f0891242498a62d0c50caef77">list_node_entry</a>(node_ptr, con_type, node);</div>
 <div class="line"> </div>
 <div class="line">            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;m&#39;</span>) {</div>
 <div class="line">                assert(elm-&gt;c == <span class="charliteral">&#39;M&#39;</span>);</div>
@@ -162,16 +162,16 @@ $(function(){ initResizable(false); });
 <div class="line">            }</div>
 <div class="line"> </div>
 <div class="line">            c--;</div>
-<div class="line">            node_ptr = node_ptr-&gt;<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>;</div>
+<div class="line">            node_ptr = node_ptr-&gt;<a class="code hl_variable" href="structlist__node.html#ab5153c10b495e00e144df378a45662d5">next_ptr</a>;</div>
 <div class="line">        }</div>
 <div class="line">        assert(c + 1 == <span class="charliteral">&#39;a&#39;</span>);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    {</div>
 <div class="line">        <span class="keywordtype">char</span> c = <span class="charliteral">&#39;z&#39;</span>;</div>
-<div class="line">        <span class="keywordflow">while</span> (!<a class="code hl_function" href="list_8h.html#a309f918c33372b4df39c3e60abf2f6f2">list_node_is_head</a>(head.<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>, &amp;head)) {</div>
-<div class="line">            <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* node_ptr = <a id="a10" name="a10"></a><a class="code hl_function" href="list_8h.html#a20ac6c43a6726b638982d485288c56a2">list_node_remove</a>(head.<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>);</div>
-<div class="line">            con_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, con_type, node);</div>
+<div class="line">        <span class="keywordflow">while</span> (!<a class="code hl_function" href="list_8h.html#a6c14d6cd16ffd4988a3ef0bd951d94c0">list_node_is_head</a>(head.next_ptr, &amp;head)) {</div>
+<div class="line">            <span class="keyword">struct </span><a class="code hl_struct" href="structlist__node.html">list_node</a> *node_ptr = <a id="a10" name="a10"></a><a class="code hl_function" href="list_8h.html#ad3400e39953f3b6c0254d0717f2db8b5">list_node_remove</a>(head.next_ptr);</div>
+<div class="line">            con_type *elm = <a class="code hl_define" href="list_8h.html#a7d31316f0891242498a62d0c50caef77">list_node_entry</a>(node_ptr, con_type, node);</div>
 <div class="line"> </div>
 <div class="line">            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;m&#39;</span>) {</div>
 <div class="line">                assert(elm-&gt;c == <span class="charliteral">&#39;M&#39;</span>);</div>
@@ -190,53 +190,54 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> list_queue(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>* buf = malloc(4096);</div>
+<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *buf = malloc(4096);</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_struct" href="structarena__type.html">arena_type</a> arena;</div>
-<div class="line">    <a class="code hl_function" href="arena_8h.html#a67ada6b5c6f09a6b530b75ef8d553a45">arena_init</a>(&amp;arena, 4096, buf);</div>
+<div class="line">    <span class="keyword">struct </span><a class="code hl_struct" href="structarena.html">arena</a> <a class="code hl_struct" href="structarena.html">arena</a>;</div>
+<div class="line">    <a class="code hl_function" href="arena_8h.html#a7db71fb9cc2f471dab7268922ea8c58f">arena_init</a>(&amp;<a class="code hl_struct" href="structarena.html">arena</a>, 4096, buf);</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a> tail;</div>
-<div class="line">    <a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;tail);</div>
+<div class="line">    <span class="keyword">struct </span><a class="code hl_struct" href="structlist__node.html">list_node</a> tail;</div>
+<div class="line">    <a class="code hl_function" href="list_8h.html#af87c2290e61fd5c0583d39646140d838">list_node_init</a>(&amp;tail);</div>
 <div class="line"> </div>
-<div class="line">    con_type* first_elm_ptr = <a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(con_type), <span class="keyword">sizeof</span>(con_type));</div>
+<div class="line">    con_type *first_elm_ptr = <a class="code hl_function" href="arena_8h.html#a1cf73dd3affc5697031b8904243976b0">arena_allocate_aligned</a>(&amp;<a class="code hl_struct" href="structarena.html">arena</a>, <span class="keyword">alignof</span>(con_type), <span class="keyword">sizeof</span>(con_type));</div>
 <div class="line">    <span class="keywordflow">if</span> (!first_elm_ptr) {</div>
 <div class="line">        assert(<span class="keyword">false</span>);</div>
 <div class="line">    }</div>
 <div class="line">    first_elm_ptr-&gt;c = <span class="charliteral">&#39;a&#39;</span>;</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;first_elm_ptr-&gt;node);</div>
-<div class="line">    <a id="a11" name="a11"></a><a class="code hl_function" href="list_8h.html#a18ec80c25f28e1c569502dfe53ae9669">list_node_add_before</a>(&amp;first_elm_ptr-&gt;node, &amp;tail);</div>
+<div class="line">    <a class="code hl_function" href="list_8h.html#af87c2290e61fd5c0583d39646140d838">list_node_init</a>(&amp;first_elm_ptr-&gt;node);</div>
+<div class="line">    <a id="a11" name="a11"></a><a class="code hl_function" href="list_8h.html#acaee45c5c17db219e69e5ef14bd76ea0">list_node_add_before</a>(&amp;first_elm_ptr-&gt;node, &amp;tail);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 1; i &lt;= <span class="charliteral">&#39;z&#39;</span> - <span class="charliteral">&#39;a&#39;</span>; i++) {</div>
-<div class="line">        con_type* ptr = <a class="code hl_function" href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a>(&amp;arena, <span class="keyword">alignof</span>(con_type), <span class="keyword">sizeof</span>(con_type));</div>
+<div class="line">        con_type *ptr = <a class="code hl_function" href="arena_8h.html#a1cf73dd3affc5697031b8904243976b0">arena_allocate_aligned</a>(&amp;<a class="code hl_struct" href="structarena.html">arena</a>, <span class="keyword">alignof</span>(con_type), <span class="keyword">sizeof</span>(con_type));</div>
 <div class="line">        <span class="keywordflow">if</span> (!ptr) {</div>
 <div class="line">            assert(<span class="keyword">false</span>);</div>
 <div class="line">        }</div>
 <div class="line">        ptr-&gt;c = <span class="charliteral">&#39;a&#39;</span> + i;</div>
 <div class="line"> </div>
-<div class="line">        <a class="code hl_function" href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a>(&amp;ptr-&gt;node);</div>
-<div class="line">        <a class="code hl_function" href="list_8h.html#a18ec80c25f28e1c569502dfe53ae9669">list_node_add_before</a>(&amp;ptr-&gt;node, &amp;tail);</div>
+<div class="line">        <a class="code hl_function" href="list_8h.html#af87c2290e61fd5c0583d39646140d838">list_node_init</a>(&amp;ptr-&gt;node);</div>
+<div class="line">        <a class="code hl_function" href="list_8h.html#acaee45c5c17db219e69e5ef14bd76ea0">list_node_add_before</a>(&amp;ptr-&gt;node, &amp;tail);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    assert(<a id="a12" name="a12"></a><a class="code hl_function" href="list_8h.html#a36f071a104ea93d5a56874a6e54a07db">list_node_is_first</a>(&amp;first_elm_ptr-&gt;node, &amp;tail));</div>
+<div class="line">    assert(<a id="a12" name="a12"></a><a class="code hl_function" href="list_8h.html#a9946efaacd234ba31379f917a4988c5c">list_node_is_first</a>(&amp;first_elm_ptr-&gt;node, &amp;tail));</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordtype">size_t</span> count = 0;</div>
 <div class="line">    {</div>
 <div class="line">        <span class="keywordtype">char</span> c = <span class="charliteral">&#39;a&#39;</span>;</div>
-<div class="line">        <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* node_ptr = &amp;first_elm_ptr-&gt;node;</div>
+<div class="line">        <span class="keyword">struct </span><a class="code hl_struct" href="structlist__node.html">list_node</a> *node_ptr = &amp;first_elm_ptr-&gt;node;</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">while</span> (!<a id="a13" name="a13"></a><a class="code hl_function" href="list_8h.html#af2dce9872ec5d321810eb173adf2533e">list_node_is_tail</a>(node_ptr, &amp;tail)) {</div>
-<div class="line">            <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* next_ptr = node_ptr-&gt;<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>; <span class="comment">// this must be stored, should the list be modified under iteration</span></div>
-<div class="line">            con_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, con_type, node);</div>
+<div class="line">        <span class="keywordflow">while</span> (!<a id="a13" name="a13"></a><a class="code hl_function" href="list_8h.html#a9e5e0cd79b3efdd067dc39a5e5970c10">list_node_is_tail</a>(node_ptr, &amp;tail)) {</div>
+<div class="line">            <span class="keyword">struct </span><a class="code hl_struct" href="structlist__node.html">list_node</a> *<a class="code hl_variable" href="structlist__node.html#ab5153c10b495e00e144df378a45662d5">next_ptr</a> =</div>
+<div class="line">                node_ptr-&gt;<a class="code hl_variable" href="structlist__node.html#ab5153c10b495e00e144df378a45662d5">next_ptr</a>; <span class="comment">// this must be stored, should the list be modified under iteration</span></div>
+<div class="line">            con_type *elm = <a class="code hl_define" href="list_8h.html#a7d31316f0891242498a62d0c50caef77">list_node_entry</a>(node_ptr, con_type, node);</div>
 <div class="line"> </div>
 <div class="line">            assert(c == elm-&gt;c);</div>
 <div class="line"> </div>
 <div class="line">            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;m&#39;</span>) {</div>
-<div class="line">                <a class="code hl_function" href="list_8h.html#a20ac6c43a6726b638982d485288c56a2">list_node_remove</a>(node_ptr);</div>
+<div class="line">                <a class="code hl_function" href="list_8h.html#ad3400e39953f3b6c0254d0717f2db8b5">list_node_remove</a>(node_ptr);</div>
 <div class="line">            }</div>
 <div class="line"> </div>
 <div class="line">            c++;</div>
-<div class="line">            node_ptr = next_ptr;</div>
+<div class="line">            node_ptr = <a class="code hl_variable" href="structlist__node.html#ab5153c10b495e00e144df378a45662d5">next_ptr</a>;</div>
 <div class="line"> </div>
 <div class="line">            count++;</div>
 <div class="line">        }</div>
@@ -244,9 +245,9 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line">    {</div>
 <div class="line">        <span class="keywordtype">size_t</span> new_count = 0;</div>
-<div class="line">        <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* node_ptr = &amp;first_elm_ptr-&gt;node;</div>
-<div class="line">        <span class="keywordflow">while</span> (!<a class="code hl_function" href="list_8h.html#af2dce9872ec5d321810eb173adf2533e">list_node_is_tail</a>(node_ptr, &amp;tail)) {</div>
-<div class="line">            node_ptr = node_ptr-&gt;<a class="code hl_variable" href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">next_ptr</a>;</div>
+<div class="line">        <span class="keyword">struct </span><a class="code hl_struct" href="structlist__node.html">list_node</a> *node_ptr = &amp;first_elm_ptr-&gt;node;</div>
+<div class="line">        <span class="keywordflow">while</span> (!<a class="code hl_function" href="list_8h.html#a9e5e0cd79b3efdd067dc39a5e5970c10">list_node_is_tail</a>(node_ptr, &amp;tail)) {</div>
+<div class="line">            node_ptr = node_ptr-&gt;<a class="code hl_variable" href="structlist__node.html#ab5153c10b495e00e144df378a45662d5">next_ptr</a>;</div>
 <div class="line">            new_count++;</div>
 <div class="line">        }</div>
 <div class="line">        assert(count - 1 == new_count);</div>
@@ -255,9 +256,9 @@ $(function(){ initResizable(false); });
 <div class="line">    {</div>
 <div class="line">        <span class="keywordtype">char</span> c = <span class="charliteral">&#39;z&#39;</span>;</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">while</span> (!<a class="code hl_function" href="list_8h.html#af2dce9872ec5d321810eb173adf2533e">list_node_is_tail</a>(tail.<a id="a14" name="a14"></a><a class="code hl_variable" href="structlist__node__type.html#a3fa0a386042f5f3ded236f5b3f4e06f1">prev_ptr</a>, &amp;tail)) {</div>
-<div class="line">            <a class="code hl_struct" href="structlist__node__type.html">list_node_type</a>* node_ptr = <a class="code hl_function" href="list_8h.html#a20ac6c43a6726b638982d485288c56a2">list_node_remove</a>(tail.<a class="code hl_variable" href="structlist__node__type.html#a3fa0a386042f5f3ded236f5b3f4e06f1">prev_ptr</a>);</div>
-<div class="line">            con_type* elm = <a class="code hl_define" href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr, con_type, node);</div>
+<div class="line">        <span class="keywordflow">while</span> (!<a class="code hl_function" href="list_8h.html#a9e5e0cd79b3efdd067dc39a5e5970c10">list_node_is_tail</a>(tail.prev_ptr, &amp;tail)) {</div>
+<div class="line">            <span class="keyword">struct </span><a class="code hl_struct" href="structlist__node.html">list_node</a> *node_ptr = <a class="code hl_function" href="list_8h.html#ad3400e39953f3b6c0254d0717f2db8b5">list_node_remove</a>(tail.prev_ptr);</div>
+<div class="line">            con_type *elm = <a class="code hl_define" href="list_8h.html#a7d31316f0891242498a62d0c50caef77">list_node_entry</a>(node_ptr, con_type, node);</div>
 <div class="line"> </div>
 <div class="line">            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;m&#39;</span>) {</div>
 <div class="line">                c--;</div>
@@ -277,22 +278,21 @@ $(function(){ initResizable(false); });
 <div class="line">    list_queue();</div>
 <div class="line">}</div>
 <div class="ttc" id="aarena_8h_html"><div class="ttname"><a href="arena_8h.html">arena.h</a></div><div class="ttdoc">Arena allocator.</div></div>
-<div class="ttc" id="aarena_8h_html_a67ada6b5c6f09a6b530b75ef8d553a45"><div class="ttname"><a href="arena_8h.html#a67ada6b5c6f09a6b530b75ef8d553a45">arena_init</a></div><div class="ttdeci">static void arena_init(arena_type *arena_ptr, const size_t n, unsigned char backing_buffer[n])</div><div class="ttdoc">Initialize the arena.</div><div class="ttdef"><b>Definition</b> arena.h:76</div></div>
-<div class="ttc" id="aarena_8h_html_acf3c879986d619cef7734aaccc2ea8da"><div class="ttname"><a href="arena_8h.html#acf3c879986d619cef7734aaccc2ea8da">arena_allocate_aligned</a></div><div class="ttdeci">static void * arena_allocate_aligned(arena_type *arena_ptr, const size_t alignment, const size_t size)</div><div class="ttdoc">Get the pointer to a chunk of the arena. With alignment.</div><div class="ttdef"><b>Definition</b> arena.h:107</div></div>
+<div class="ttc" id="aarena_8h_html_a1cf73dd3affc5697031b8904243976b0"><div class="ttname"><a href="arena_8h.html#a1cf73dd3affc5697031b8904243976b0">arena_allocate_aligned</a></div><div class="ttdeci">static void * arena_allocate_aligned(struct arena *self, const size_t alignment, const size_t size)</div><div class="ttdoc">Get the pointer to a chunk of the arena. With specific alignment.</div><div class="ttdef"><b>Definition</b> arena.h:94</div></div>
+<div class="ttc" id="aarena_8h_html_a7db71fb9cc2f471dab7268922ea8c58f"><div class="ttname"><a href="arena_8h.html#a7db71fb9cc2f471dab7268922ea8c58f">arena_init</a></div><div class="ttdeci">static void arena_init(struct arena *self, const size_t n, unsigned char backing_buf[n])</div><div class="ttdoc">Initialize the arena.</div><div class="ttdef"><b>Definition</b> arena.h:60</div></div>
 <div class="ttc" id="alist_8h_html"><div class="ttname"><a href="list_8h.html">list.h</a></div><div class="ttdoc">Intrusive circular doubly linked list.</div></div>
-<div class="ttc" id="alist_8h_html_a18ec80c25f28e1c569502dfe53ae9669"><div class="ttname"><a href="list_8h.html#a18ec80c25f28e1c569502dfe53ae9669">list_node_add_before</a></div><div class="ttdeci">static void list_node_add_before(list_node_type *node_ptr, list_node_type *next_ptr)</div><div class="ttdoc">Add a node before the given node.</div><div class="ttdef"><b>Definition</b> list.h:159</div></div>
-<div class="ttc" id="alist_8h_html_a20ac6c43a6726b638982d485288c56a2"><div class="ttname"><a href="list_8h.html#a20ac6c43a6726b638982d485288c56a2">list_node_remove</a></div><div class="ttdeci">static list_node_type * list_node_remove(list_node_type *node_ptr)</div><div class="ttdoc">Remove a node and deattach it from the list it resides in.</div><div class="ttdef"><b>Definition</b> list.h:178</div></div>
-<div class="ttc" id="alist_8h_html_a309f918c33372b4df39c3e60abf2f6f2"><div class="ttname"><a href="list_8h.html#a309f918c33372b4df39c3e60abf2f6f2">list_node_is_head</a></div><div class="ttdeci">static bool list_node_is_head(const list_node_type *node_ptr, const list_node_type *head_ptr)</div><div class="ttdoc">Check if a given list node is the head of the list.</div><div class="ttdef"><b>Definition</b> list.h:112</div></div>
-<div class="ttc" id="alist_8h_html_a36f071a104ea93d5a56874a6e54a07db"><div class="ttname"><a href="list_8h.html#a36f071a104ea93d5a56874a6e54a07db">list_node_is_first</a></div><div class="ttdeci">static bool list_node_is_first(const list_node_type *node_ptr, const list_node_type *head_ptr)</div><div class="ttdoc">Check if a given list node is first in the list (aka after the head).</div><div class="ttdef"><b>Definition</b> list.h:82</div></div>
-<div class="ttc" id="alist_8h_html_a548d598fa8d11a081e18f1023f8ddc4b"><div class="ttname"><a href="list_8h.html#a548d598fa8d11a081e18f1023f8ddc4b">list_node_add_after</a></div><div class="ttdeci">static void list_node_add_after(list_node_type *node_ptr, list_node_type *prev_ptr)</div><div class="ttdoc">Add a node after the given node.</div><div class="ttdef"><b>Definition</b> list.h:143</div></div>
-<div class="ttc" id="alist_8h_html_a720a9582420c136a02875abafe8cddcd"><div class="ttname"><a href="list_8h.html#a720a9582420c136a02875abafe8cddcd">list_node_replace</a></div><div class="ttdeci">static void list_node_replace(list_node_type *old_ptr, list_node_type *new_ptr)</div><div class="ttdoc">Replace a given node by a new node.</div><div class="ttdef"><b>Definition</b> list.h:198</div></div>
-<div class="ttc" id="alist_8h_html_ae56b2024a6cdbe8d77b858189e7482e1"><div class="ttname"><a href="list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a></div><div class="ttdeci">static void list_node_init(list_node_type *node_ptr)</div><div class="ttdoc">Initialize a list node.</div><div class="ttdef"><b>Definition</b> list.h:68</div></div>
-<div class="ttc" id="alist_8h_html_af2dce9872ec5d321810eb173adf2533e"><div class="ttname"><a href="list_8h.html#af2dce9872ec5d321810eb173adf2533e">list_node_is_tail</a></div><div class="ttdeci">static bool list_node_is_tail(const list_node_type *node_ptr, const list_node_type *tail_ptr)</div><div class="ttdoc">Check if a given list node is the tail of the list.</div><div class="ttdef"><b>Definition</b> list.h:127</div></div>
-<div class="ttc" id="alist_8h_html_af8cb8fcd688faaa3dfc35d7d3d285946"><div class="ttname"><a href="list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a></div><div class="ttdeci">#define list_node_entry(node_ptr, container_type, node_member_name)</div><div class="ttdoc">Get the pointer to the container instance, given a pointer to to the node member instance,...</div><div class="ttdef"><b>Definition</b> list.h:51</div></div>
-<div class="ttc" id="astructarena__type_html"><div class="ttname"><a href="structarena__type.html">arena_type</a></div><div class="ttdoc">Arena data struct.</div><div class="ttdef"><b>Definition</b> arena.h:55</div></div>
-<div class="ttc" id="astructlist__node__type_html"><div class="ttname"><a href="structlist__node__type.html">list_node_type</a></div><div class="ttdoc">Intrusive list node structure.</div><div class="ttdef"><b>Definition</b> list.h:36</div></div>
-<div class="ttc" id="astructlist__node__type_html_a3fa0a386042f5f3ded236f5b3f4e06f1"><div class="ttname"><a href="structlist__node__type.html#a3fa0a386042f5f3ded236f5b3f4e06f1">list_node_type::prev_ptr</a></div><div class="ttdeci">struct list_node_type * prev_ptr</div><div class="ttdoc">prev node pointer.</div><div class="ttdef"><b>Definition</b> list.h:37</div></div>
-<div class="ttc" id="astructlist__node__type_html_a854d8ff4881eac59fc52af844e977816"><div class="ttname"><a href="structlist__node__type.html#a854d8ff4881eac59fc52af844e977816">list_node_type::next_ptr</a></div><div class="ttdeci">struct list_node_type * next_ptr</div><div class="ttdoc">next node pointer.</div><div class="ttdef"><b>Definition</b> list.h:38</div></div>
+<div class="ttc" id="alist_8h_html_a0b1980996c2ccf521b8a9be8386a2eee"><div class="ttname"><a href="list_8h.html#a0b1980996c2ccf521b8a9be8386a2eee">list_node_add_after</a></div><div class="ttdeci">static void list_node_add_after(struct list_node *node_ptr, struct list_node *prev_ptr)</div><div class="ttdoc">Add a node after the given node.</div><div class="ttdef"><b>Definition</b> list.h:149</div></div>
+<div class="ttc" id="alist_8h_html_a6c14d6cd16ffd4988a3ef0bd951d94c0"><div class="ttname"><a href="list_8h.html#a6c14d6cd16ffd4988a3ef0bd951d94c0">list_node_is_head</a></div><div class="ttdeci">static bool list_node_is_head(const struct list_node *node_ptr, const struct list_node *head_ptr)</div><div class="ttdoc">Check if a given list node is the head of the list.</div><div class="ttdef"><b>Definition</b> list.h:117</div></div>
+<div class="ttc" id="alist_8h_html_a7d31316f0891242498a62d0c50caef77"><div class="ttname"><a href="list_8h.html#a7d31316f0891242498a62d0c50caef77">list_node_entry</a></div><div class="ttdeci">#define list_node_entry(ptr, type, member)</div><div class="ttdoc">Obtain a pointer to the struct that contains the list node as a member.</div><div class="ttdef"><b>Definition</b> list.h:51</div></div>
+<div class="ttc" id="alist_8h_html_a9946efaacd234ba31379f917a4988c5c"><div class="ttname"><a href="list_8h.html#a9946efaacd234ba31379f917a4988c5c">list_node_is_first</a></div><div class="ttdeci">static bool list_node_is_first(const struct list_node *node_ptr, const struct list_node *head_ptr)</div><div class="ttdoc">Check if a given list node is first in the list (aka after the head).</div><div class="ttdef"><b>Definition</b> list.h:84</div></div>
+<div class="ttc" id="alist_8h_html_a9e5e0cd79b3efdd067dc39a5e5970c10"><div class="ttname"><a href="list_8h.html#a9e5e0cd79b3efdd067dc39a5e5970c10">list_node_is_tail</a></div><div class="ttdeci">static bool list_node_is_tail(const struct list_node *node_ptr, const struct list_node *tail_ptr)</div><div class="ttdoc">Check if a given list node is the tail of the list.</div><div class="ttdef"><b>Definition</b> list.h:133</div></div>
+<div class="ttc" id="alist_8h_html_acaee45c5c17db219e69e5ef14bd76ea0"><div class="ttname"><a href="list_8h.html#acaee45c5c17db219e69e5ef14bd76ea0">list_node_add_before</a></div><div class="ttdeci">static void list_node_add_before(struct list_node *node_ptr, struct list_node *next_ptr)</div><div class="ttdoc">Add a node before the given node.</div><div class="ttdef"><b>Definition</b> list.h:165</div></div>
+<div class="ttc" id="alist_8h_html_ad3400e39953f3b6c0254d0717f2db8b5"><div class="ttname"><a href="list_8h.html#ad3400e39953f3b6c0254d0717f2db8b5">list_node_remove</a></div><div class="ttdeci">static struct list_node * list_node_remove(struct list_node *node_ptr)</div><div class="ttdoc">Remove a node and deattach it from the list it resides in.</div><div class="ttdef"><b>Definition</b> list.h:184</div></div>
+<div class="ttc" id="alist_8h_html_af6577d1da1572ba8142469c603d51782"><div class="ttname"><a href="list_8h.html#af6577d1da1572ba8142469c603d51782">list_node_replace</a></div><div class="ttdeci">static void list_node_replace(struct list_node *old_ptr, struct list_node *new_ptr)</div><div class="ttdoc">Replace a given node by a new node.</div><div class="ttdef"><b>Definition</b> list.h:206</div></div>
+<div class="ttc" id="alist_8h_html_af87c2290e61fd5c0583d39646140d838"><div class="ttname"><a href="list_8h.html#af87c2290e61fd5c0583d39646140d838">list_node_init</a></div><div class="ttdeci">static void list_node_init(struct list_node *node_ptr)</div><div class="ttdoc">Initialize a list node.</div><div class="ttdef"><b>Definition</b> list.h:69</div></div>
+<div class="ttc" id="astructarena_html"><div class="ttname"><a href="structarena.html">arena</a></div><div class="ttdoc">Arena data struct.</div><div class="ttdef"><b>Definition</b> arena.h:46</div></div>
+<div class="ttc" id="astructlist__node_html"><div class="ttname"><a href="structlist__node.html">list_node</a></div><div class="ttdoc">Intrusive list node structure.</div><div class="ttdef"><b>Definition</b> list.h:36</div></div>
+<div class="ttc" id="astructlist__node_html_ab5153c10b495e00e144df378a45662d5"><div class="ttname"><a href="structlist__node.html#ab5153c10b495e00e144df378a45662d5">list_node::next_ptr</a></div><div class="ttdeci">struct list_node * next_ptr</div><div class="ttdoc">next node pointer.</div><div class="ttdef"><b>Definition</b> list.h:38</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

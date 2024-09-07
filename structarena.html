@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>data-structures-c: fpqueue_element_type Struct Reference</title>
+<title>data-structures-c: arena Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -86,31 +86,41 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structfpqueue__element__type-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">fpqueue_element_type Struct Reference</div></div>
+<a href="structarena-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">arena Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Generated priority queue element struct type for a given <code>VALUE_TYPE</code>.  
+<p>Arena data struct.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="fpqueue_8h_source.html">fpqueue.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="arena_8h_source.html">arena.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ac14415e79706160d0fbc6185fdc029c8" id="r_ac14415e79706160d0fbc6185fdc029c8"><td class="memItemLeft" align="right" valign="top"><a id="ac14415e79706160d0fbc6185fdc029c8" name="ac14415e79706160d0fbc6185fdc029c8"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>priority</b></td></tr>
-<tr class="memdesc:ac14415e79706160d0fbc6185fdc029c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">element priority (highest is next to-be-popped). <br /></td></tr>
-<tr class="separator:ac14415e79706160d0fbc6185fdc029c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c5b68c2b1af543e231b912737e76a93" id="r_a7c5b68c2b1af543e231b912737e76a93"><td class="memItemLeft" align="right" valign="top"><a id="a7c5b68c2b1af543e231b912737e76a93" name="a7c5b68c2b1af543e231b912737e76a93"></a>
-<a class="el" href="fpqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>value</b></td></tr>
-<tr class="memdesc:a7c5b68c2b1af543e231b912737e76a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">element value member. <br /></td></tr>
-<tr class="separator:a7c5b68c2b1af543e231b912737e76a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07e54cf966866b64fff846b0015f2090" id="r_a07e54cf966866b64fff846b0015f2090"><td class="memItemLeft" align="right" valign="top"><a id="a07e54cf966866b64fff846b0015f2090" name="a07e54cf966866b64fff846b0015f2090"></a>
+unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><b>buf_ptr</b></td></tr>
+<tr class="memdesc:a07e54cf966866b64fff846b0015f2090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Underlying buffer pointer. <br /></td></tr>
+<tr class="separator:a07e54cf966866b64fff846b0015f2090"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a204c96cdb64b536a060e7d40bcfc693e" id="r_a204c96cdb64b536a060e7d40bcfc693e"><td class="memItemLeft" align="right" valign="top"><a id="a204c96cdb64b536a060e7d40bcfc693e" name="a204c96cdb64b536a060e7d40bcfc693e"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>buf_len</b></td></tr>
+<tr class="memdesc:a204c96cdb64b536a060e7d40bcfc693e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Underlying buffer length. <br /></td></tr>
+<tr class="separator:a204c96cdb64b536a060e7d40bcfc693e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f4902f130313a403f0f716eadf49d57" id="r_a0f4902f130313a403f0f716eadf49d57"><td class="memItemLeft" align="right" valign="top"><a id="a0f4902f130313a403f0f716eadf49d57" name="a0f4902f130313a403f0f716eadf49d57"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>prev_offset</b></td></tr>
+<tr class="memdesc:a0f4902f130313a403f0f716eadf49d57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Previous offset relative to buf_ptr. <br /></td></tr>
+<tr class="separator:a0f4902f130313a403f0f716eadf49d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa815d65c75ae9cb7de86694a7d4740ee" id="r_aa815d65c75ae9cb7de86694a7d4740ee"><td class="memItemLeft" align="right" valign="top"><a id="aa815d65c75ae9cb7de86694a7d4740ee" name="aa815d65c75ae9cb7de86694a7d4740ee"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>curr_offset</b></td></tr>
+<tr class="memdesc:aa815d65c75ae9cb7de86694a7d4740ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current offset relative to buf_ptr. <br /></td></tr>
+<tr class="separator:aa815d65c75ae9cb7de86694a7d4740ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Generated priority queue element struct type for a given <code>VALUE_TYPE</code>. </p>
+<div class="textblock"><p>Arena data struct. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2arena_2char_array_8c-example.html#_a0">examples/arena/char_array.c</a>, <a class="el" href="examples_2arena_2fhashtable_8c-example.html#_a0">examples/arena/fhashtable.c</a>, and <a class="el" href="examples_2list_2list_example_8c-example.html#_a1">examples/list/list_example.c</a>.</dd>
+</dl>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>lib/<a class="el" href="fpqueue_8h_source.html">fpqueue.h</a></li>
+<li>lib/<a class="el" href="arena_8h_source.html">arena.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

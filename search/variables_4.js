@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['key_0',['key',['../structfhashtable__slot__type.html#af5ba0630ddb1ac9645cfe6b4c3d00dcf',1,'fhashtable_slot_type::key'],['../structrbtree__node__type.html#aed2348907a89ae0aa10971a8ce5add0e',1,'rbtree_node_type::key']]]
+  ['key_0',['key',['../structfhashtable__slot.html#ab6775ebd4fc4d0a7c047f6b8ea7fe9b0',1,'fhashtable_slot::key'],['../structrbtree__node.html#ab3cecc675e2f8741378d376666325f2b',1,'rbtree_node::key']]]
 ];

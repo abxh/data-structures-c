@@ -91,7 +91,6 @@ $(function(){ initResizable(false); });
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">list.h File Reference</div></div>
 </div><!--header-->
@@ -108,52 +107,45 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlist__node__type.html">list_node_type</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intrusive list node structure.  <a href="structlist__node__type.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlist__node.html">list_node</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intrusive list node structure.  <a href="structlist__node.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:af8cb8fcd688faaa3dfc35d7d3d285946" id="r_af8cb8fcd688faaa3dfc35d7d3d285946"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8cb8fcd688faaa3dfc35d7d3d285946">list_node_entry</a>(node_ptr,  container_type,  node_member_name)</td></tr>
-<tr class="memdesc:af8cb8fcd688faaa3dfc35d7d3d285946"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the pointer to the container instance, given a pointer to to the node member instance, container type, and node member name.  <br /></td></tr>
-<tr class="separator:af8cb8fcd688faaa3dfc35d7d3d285946"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:aae33b2001a10848d7d84e171b2574289" id="r_aae33b2001a10848d7d84e171b2574289"><td class="memItemLeft" align="right" valign="top"><a id="aae33b2001a10848d7d84e171b2574289" name="aae33b2001a10848d7d84e171b2574289"></a>
-typedef struct list_node_type&#160;</td><td class="memItemRight" valign="bottom"><b>list_node_type</b></td></tr>
-<tr class="memdesc:aae33b2001a10848d7d84e171b2574289"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intrusive list node structure. <br /></td></tr>
-<tr class="separator:aae33b2001a10848d7d84e171b2574289"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d31316f0891242498a62d0c50caef77" id="r_a7d31316f0891242498a62d0c50caef77"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d31316f0891242498a62d0c50caef77">list_node_entry</a>(ptr,  type,  member)</td></tr>
+<tr class="memdesc:a7d31316f0891242498a62d0c50caef77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtain a pointer to the struct that contains the list node as a member.  <br /></td></tr>
+<tr class="separator:a7d31316f0891242498a62d0c50caef77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae56b2024a6cdbe8d77b858189e7482e1" id="r_ae56b2024a6cdbe8d77b858189e7482e1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae56b2024a6cdbe8d77b858189e7482e1">list_node_init</a> (<a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr)</td></tr>
-<tr class="memdesc:ae56b2024a6cdbe8d77b858189e7482e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a list node.  <br /></td></tr>
-<tr class="separator:ae56b2024a6cdbe8d77b858189e7482e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36f071a104ea93d5a56874a6e54a07db" id="r_a36f071a104ea93d5a56874a6e54a07db"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36f071a104ea93d5a56874a6e54a07db">list_node_is_first</a> (const <a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, const <a class="el" href="structlist__node__type.html">list_node_type</a> *head_ptr)</td></tr>
-<tr class="memdesc:a36f071a104ea93d5a56874a6e54a07db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is first in the list (aka after the head).  <br /></td></tr>
-<tr class="separator:a36f071a104ea93d5a56874a6e54a07db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a755a6ea8f577798c108045b8321ab192" id="r_a755a6ea8f577798c108045b8321ab192"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a755a6ea8f577798c108045b8321ab192">list_node_is_last</a> (const <a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, const <a class="el" href="structlist__node__type.html">list_node_type</a> *tail_ptr)</td></tr>
-<tr class="memdesc:a755a6ea8f577798c108045b8321ab192"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is the last of the list (aka before the tail).  <br /></td></tr>
-<tr class="separator:a755a6ea8f577798c108045b8321ab192"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a309f918c33372b4df39c3e60abf2f6f2" id="r_a309f918c33372b4df39c3e60abf2f6f2"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a309f918c33372b4df39c3e60abf2f6f2">list_node_is_head</a> (const <a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, const <a class="el" href="structlist__node__type.html">list_node_type</a> *head_ptr)</td></tr>
-<tr class="memdesc:a309f918c33372b4df39c3e60abf2f6f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is the head of the list.  <br /></td></tr>
-<tr class="separator:a309f918c33372b4df39c3e60abf2f6f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2dce9872ec5d321810eb173adf2533e" id="r_af2dce9872ec5d321810eb173adf2533e"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af2dce9872ec5d321810eb173adf2533e">list_node_is_tail</a> (const <a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, const <a class="el" href="structlist__node__type.html">list_node_type</a> *tail_ptr)</td></tr>
-<tr class="memdesc:af2dce9872ec5d321810eb173adf2533e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is the tail of the list.  <br /></td></tr>
-<tr class="separator:af2dce9872ec5d321810eb173adf2533e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a548d598fa8d11a081e18f1023f8ddc4b" id="r_a548d598fa8d11a081e18f1023f8ddc4b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a548d598fa8d11a081e18f1023f8ddc4b">list_node_add_after</a> (<a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, <a class="el" href="structlist__node__type.html">list_node_type</a> *prev_ptr)</td></tr>
-<tr class="memdesc:a548d598fa8d11a081e18f1023f8ddc4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a node <em>after</em> the given node.  <br /></td></tr>
-<tr class="separator:a548d598fa8d11a081e18f1023f8ddc4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18ec80c25f28e1c569502dfe53ae9669" id="r_a18ec80c25f28e1c569502dfe53ae9669"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a18ec80c25f28e1c569502dfe53ae9669">list_node_add_before</a> (<a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr, <a class="el" href="structlist__node__type.html">list_node_type</a> *next_ptr)</td></tr>
-<tr class="memdesc:a18ec80c25f28e1c569502dfe53ae9669"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a node <em>before</em> the given node.  <br /></td></tr>
-<tr class="separator:a18ec80c25f28e1c569502dfe53ae9669"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20ac6c43a6726b638982d485288c56a2" id="r_a20ac6c43a6726b638982d485288c56a2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structlist__node__type.html">list_node_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20ac6c43a6726b638982d485288c56a2">list_node_remove</a> (<a class="el" href="structlist__node__type.html">list_node_type</a> *node_ptr)</td></tr>
-<tr class="memdesc:a20ac6c43a6726b638982d485288c56a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a node and deattach it from the list it resides in.  <br /></td></tr>
-<tr class="separator:a20ac6c43a6726b638982d485288c56a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a720a9582420c136a02875abafe8cddcd" id="r_a720a9582420c136a02875abafe8cddcd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a720a9582420c136a02875abafe8cddcd">list_node_replace</a> (<a class="el" href="structlist__node__type.html">list_node_type</a> *old_ptr, <a class="el" href="structlist__node__type.html">list_node_type</a> *new_ptr)</td></tr>
-<tr class="memdesc:a720a9582420c136a02875abafe8cddcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace a given node by a new node.  <br /></td></tr>
-<tr class="separator:a720a9582420c136a02875abafe8cddcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af87c2290e61fd5c0583d39646140d838" id="r_af87c2290e61fd5c0583d39646140d838"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af87c2290e61fd5c0583d39646140d838">list_node_init</a> (struct <a class="el" href="structlist__node.html">list_node</a> *node_ptr)</td></tr>
+<tr class="memdesc:af87c2290e61fd5c0583d39646140d838"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a list node.  <br /></td></tr>
+<tr class="separator:af87c2290e61fd5c0583d39646140d838"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9946efaacd234ba31379f917a4988c5c" id="r_a9946efaacd234ba31379f917a4988c5c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9946efaacd234ba31379f917a4988c5c">list_node_is_first</a> (const struct <a class="el" href="structlist__node.html">list_node</a> *node_ptr, const struct <a class="el" href="structlist__node.html">list_node</a> *head_ptr)</td></tr>
+<tr class="memdesc:a9946efaacd234ba31379f917a4988c5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is first in the list (aka after the head).  <br /></td></tr>
+<tr class="separator:a9946efaacd234ba31379f917a4988c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c4c8d08807b3d9c4d1d586c5ce33deb" id="r_a7c4c8d08807b3d9c4d1d586c5ce33deb"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c4c8d08807b3d9c4d1d586c5ce33deb">list_node_is_last</a> (const struct <a class="el" href="structlist__node.html">list_node</a> *node_ptr, const struct <a class="el" href="structlist__node.html">list_node</a> *tail_ptr)</td></tr>
+<tr class="memdesc:a7c4c8d08807b3d9c4d1d586c5ce33deb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is the last of the list (aka before the tail).  <br /></td></tr>
+<tr class="separator:a7c4c8d08807b3d9c4d1d586c5ce33deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c14d6cd16ffd4988a3ef0bd951d94c0" id="r_a6c14d6cd16ffd4988a3ef0bd951d94c0"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c14d6cd16ffd4988a3ef0bd951d94c0">list_node_is_head</a> (const struct <a class="el" href="structlist__node.html">list_node</a> *node_ptr, const struct <a class="el" href="structlist__node.html">list_node</a> *head_ptr)</td></tr>
+<tr class="memdesc:a6c14d6cd16ffd4988a3ef0bd951d94c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is the head of the list.  <br /></td></tr>
+<tr class="separator:a6c14d6cd16ffd4988a3ef0bd951d94c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e5e0cd79b3efdd067dc39a5e5970c10" id="r_a9e5e0cd79b3efdd067dc39a5e5970c10"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9e5e0cd79b3efdd067dc39a5e5970c10">list_node_is_tail</a> (const struct <a class="el" href="structlist__node.html">list_node</a> *node_ptr, const struct <a class="el" href="structlist__node.html">list_node</a> *tail_ptr)</td></tr>
+<tr class="memdesc:a9e5e0cd79b3efdd067dc39a5e5970c10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a given list node is the tail of the list.  <br /></td></tr>
+<tr class="separator:a9e5e0cd79b3efdd067dc39a5e5970c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b1980996c2ccf521b8a9be8386a2eee" id="r_a0b1980996c2ccf521b8a9be8386a2eee"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b1980996c2ccf521b8a9be8386a2eee">list_node_add_after</a> (struct <a class="el" href="structlist__node.html">list_node</a> *node_ptr, struct <a class="el" href="structlist__node.html">list_node</a> *prev_ptr)</td></tr>
+<tr class="memdesc:a0b1980996c2ccf521b8a9be8386a2eee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a node <em>after</em> the given node.  <br /></td></tr>
+<tr class="separator:a0b1980996c2ccf521b8a9be8386a2eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaee45c5c17db219e69e5ef14bd76ea0" id="r_acaee45c5c17db219e69e5ef14bd76ea0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acaee45c5c17db219e69e5ef14bd76ea0">list_node_add_before</a> (struct <a class="el" href="structlist__node.html">list_node</a> *node_ptr, struct <a class="el" href="structlist__node.html">list_node</a> *next_ptr)</td></tr>
+<tr class="memdesc:acaee45c5c17db219e69e5ef14bd76ea0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a node <em>before</em> the given node.  <br /></td></tr>
+<tr class="separator:acaee45c5c17db219e69e5ef14bd76ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3400e39953f3b6c0254d0717f2db8b5" id="r_ad3400e39953f3b6c0254d0717f2db8b5"><td class="memItemLeft" align="right" valign="top">static struct <a class="el" href="structlist__node.html">list_node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3400e39953f3b6c0254d0717f2db8b5">list_node_remove</a> (struct <a class="el" href="structlist__node.html">list_node</a> *node_ptr)</td></tr>
+<tr class="memdesc:ad3400e39953f3b6c0254d0717f2db8b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a node and deattach it from the list it resides in.  <br /></td></tr>
+<tr class="separator:ad3400e39953f3b6c0254d0717f2db8b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6577d1da1572ba8142469c603d51782" id="r_af6577d1da1572ba8142469c603d51782"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af6577d1da1572ba8142469c603d51782">list_node_replace</a> (struct <a class="el" href="structlist__node.html">list_node</a> *old_ptr, struct <a class="el" href="structlist__node.html">list_node</a> *new_ptr)</td></tr>
+<tr class="memdesc:af6577d1da1572ba8142469c603d51782"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace a given node by a new node.  <br /></td></tr>
+<tr class="separator:af6577d1da1572ba8142469c603d51782"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Intrusive circular doubly linked list. </p>
@@ -161,8 +153,8 @@ Functions</h2></td></tr>
 <li><a href="https://github.com/torvalds/linux/blob/master/include/linux/list.h">https://github.com/torvalds/linux/blob/master/include/linux/list.h</a> </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="af8cb8fcd688faaa3dfc35d7d3d285946" name="af8cb8fcd688faaa3dfc35d7d3d285946"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8cb8fcd688faaa3dfc35d7d3d285946">&#9670;&#160;</a></span>list_node_entry</h2>
+<a id="a7d31316f0891242498a62d0c50caef77" name="a7d31316f0891242498a62d0c50caef77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d31316f0891242498a62d0c50caef77">&#9670;&#160;</a></span>list_node_entry</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -170,41 +162,41 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">#define list_node_entry</td>
           <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>container_type</em></span>, </td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>node_member_name</em></span>&#160;)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>member</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code hl_define" href="container__of_8h.html#af8c317a42292b61c93aae91e59118a46">container_of</a>(node_ptr, container_type, node_member_name)</div>
-<div class="ttc" id="acontainer__of_8h_html_af8c317a42292b61c93aae91e59118a46"><div class="ttname"><a href="container__of_8h.html#af8c317a42292b61c93aae91e59118a46">container_of</a></div><div class="ttdeci">#define container_of(ptr, type, member)</div><div class="ttdoc">Get the pointer to the container instance, given a pointer to to the member instance,...</div><div class="ttdef"><b>Definition</b> container_of.h:34</div></div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code hl_define" href="container__of_8h.html#af8c317a42292b61c93aae91e59118a46">container_of</a>(ptr, type, member)</div>
+<div class="ttc" id="acontainer__of_8h_html_af8c317a42292b61c93aae91e59118a46"><div class="ttname"><a href="container__of_8h.html#af8c317a42292b61c93aae91e59118a46">container_of</a></div><div class="ttdeci">#define container_of(ptr, type, member)</div><div class="ttdoc">Obtain a pointer to the struct that contains the struct member.</div><div class="ttdef"><b>Definition</b> container_of.h:34</div></div>
 </div><!-- fragment -->
-<p>Get the pointer to the container instance, given a pointer to to the node member instance, container type, and node member name. </p>
+<p>Obtain a pointer to the struct that contains the list node as a member. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>A pointer to the node member. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">container_type</td><td>The container type. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">node_member_name</td><td>The node member name. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptr</td><td>Node pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Container type. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">member</td><td>Node member name.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to the container instance. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the struct containing the node member. </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2list_2list_example_8c-example.html#a8">examples/list/list_example.c</a>.</dd>
 </dl>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a548d598fa8d11a081e18f1023f8ddc4b" name="a548d598fa8d11a081e18f1023f8ddc4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a548d598fa8d11a081e18f1023f8ddc4b">&#9670;&#160;</a></span>list_node_add_after()</h2>
+<a id="a0b1980996c2ccf521b8a9be8386a2eee" name="a0b1980996c2ccf521b8a9be8386a2eee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b1980996c2ccf521b8a9be8386a2eee">&#9670;&#160;</a></span>list_node_add_after()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,12 +207,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void list_node_add_after </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
+          <td class="paramtype">struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>prev_ptr</em></span>&#160;)</td>
+          <td class="paramtype">struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>prev_ptr</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -244,8 +236,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a18ec80c25f28e1c569502dfe53ae9669" name="a18ec80c25f28e1c569502dfe53ae9669"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18ec80c25f28e1c569502dfe53ae9669">&#9670;&#160;</a></span>list_node_add_before()</h2>
+<a id="acaee45c5c17db219e69e5ef14bd76ea0" name="acaee45c5c17db219e69e5ef14bd76ea0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acaee45c5c17db219e69e5ef14bd76ea0">&#9670;&#160;</a></span>list_node_add_before()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -256,12 +248,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void list_node_add_before </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
+          <td class="paramtype">struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>next_ptr</em></span>&#160;)</td>
+          <td class="paramtype">struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>next_ptr</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -285,8 +277,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae56b2024a6cdbe8d77b858189e7482e1" name="ae56b2024a6cdbe8d77b858189e7482e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae56b2024a6cdbe8d77b858189e7482e1">&#9670;&#160;</a></span>list_node_init()</h2>
+<a id="af87c2290e61fd5c0583d39646140d838" name="af87c2290e61fd5c0583d39646140d838"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af87c2290e61fd5c0583d39646140d838">&#9670;&#160;</a></span>list_node_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -297,7 +289,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void list_node_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span></td><td>)</td>
+          <td class="paramtype">struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -320,8 +312,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a36f071a104ea93d5a56874a6e54a07db" name="a36f071a104ea93d5a56874a6e54a07db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36f071a104ea93d5a56874a6e54a07db">&#9670;&#160;</a></span>list_node_is_first()</h2>
+<a id="a9946efaacd234ba31379f917a4988c5c" name="a9946efaacd234ba31379f917a4988c5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9946efaacd234ba31379f917a4988c5c">&#9670;&#160;</a></span>list_node_is_first()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -332,12 +324,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static bool list_node_is_first </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
+          <td class="paramtype">const struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>head_ptr</em></span>&#160;)</td>
+          <td class="paramtype">const struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>head_ptr</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -351,7 +343,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">head_ptr</td><td>The head node pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">head_ptr</td><td>The head node pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -361,8 +353,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a309f918c33372b4df39c3e60abf2f6f2" name="a309f918c33372b4df39c3e60abf2f6f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a309f918c33372b4df39c3e60abf2f6f2">&#9670;&#160;</a></span>list_node_is_head()</h2>
+<a id="a6c14d6cd16ffd4988a3ef0bd951d94c0" name="a6c14d6cd16ffd4988a3ef0bd951d94c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c14d6cd16ffd4988a3ef0bd951d94c0">&#9670;&#160;</a></span>list_node_is_head()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -373,12 +365,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static bool list_node_is_head </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
+          <td class="paramtype">const struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>head_ptr</em></span>&#160;)</td>
+          <td class="paramtype">const struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>head_ptr</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -392,7 +384,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">head_ptr</td><td>The head node pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">head_ptr</td><td>The head node pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -402,8 +394,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a755a6ea8f577798c108045b8321ab192" name="a755a6ea8f577798c108045b8321ab192"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a755a6ea8f577798c108045b8321ab192">&#9670;&#160;</a></span>list_node_is_last()</h2>
+<a id="a7c4c8d08807b3d9c4d1d586c5ce33deb" name="a7c4c8d08807b3d9c4d1d586c5ce33deb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c4c8d08807b3d9c4d1d586c5ce33deb">&#9670;&#160;</a></span>list_node_is_last()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -414,12 +406,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static bool list_node_is_last </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
+          <td class="paramtype">const struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>tail_ptr</em></span>&#160;)</td>
+          <td class="paramtype">const struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>tail_ptr</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -433,7 +425,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">tail_ptr</td><td>The tail node pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tail_ptr</td><td>The tail node pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -441,8 +433,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af2dce9872ec5d321810eb173adf2533e" name="af2dce9872ec5d321810eb173adf2533e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2dce9872ec5d321810eb173adf2533e">&#9670;&#160;</a></span>list_node_is_tail()</h2>
+<a id="a9e5e0cd79b3efdd067dc39a5e5970c10" name="a9e5e0cd79b3efdd067dc39a5e5970c10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e5e0cd79b3efdd067dc39a5e5970c10">&#9670;&#160;</a></span>list_node_is_tail()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -453,12 +445,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static bool list_node_is_tail </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
+          <td class="paramtype">const struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>tail_ptr</em></span>&#160;)</td>
+          <td class="paramtype">const struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>tail_ptr</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -472,7 +464,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">node_ptr</td><td>The node pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">tail_ptr</td><td>The tail node pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tail_ptr</td><td>The tail node pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -482,8 +474,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a20ac6c43a6726b638982d485288c56a2" name="a20ac6c43a6726b638982d485288c56a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20ac6c43a6726b638982d485288c56a2">&#9670;&#160;</a></span>list_node_remove()</h2>
+<a id="ad3400e39953f3b6c0254d0717f2db8b5" name="ad3400e39953f3b6c0254d0717f2db8b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3400e39953f3b6c0254d0717f2db8b5">&#9670;&#160;</a></span>list_node_remove()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -492,9 +484,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="structlist__node__type.html">list_node_type</a> * list_node_remove </td>
+          <td class="memname">static struct <a class="el" href="structlist__node.html">list_node</a> * list_node_remove </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span></td><td>)</td>
+          <td class="paramtype">struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>node_ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -522,8 +514,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a720a9582420c136a02875abafe8cddcd" name="a720a9582420c136a02875abafe8cddcd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a720a9582420c136a02875abafe8cddcd">&#9670;&#160;</a></span>list_node_replace()</h2>
+<a id="af6577d1da1572ba8142469c603d51782" name="af6577d1da1572ba8142469c603d51782"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6577d1da1572ba8142469c603d51782">&#9670;&#160;</a></span>list_node_replace()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -534,12 +526,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void list_node_replace </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>old_ptr</em></span>, </td>
+          <td class="paramtype">struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>old_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structlist__node__type.html">list_node_type</a> *</td>          <td class="paramname"><span class="paramname"><em>new_ptr</em></span>&#160;)</td>
+          <td class="paramtype">struct <a class="el" href="structlist__node.html">list_node</a> *</td>          <td class="paramname"><span class="paramname"><em>new_ptr</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -550,7 +542,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Replace a given node by a new node. </p>
-<p>Assumes the node is a part of a list and not the head or tail node.</p>
+<p>Assumes: </p><ul>
+<li>The node is a part of a list. </li>
+<li>The node is not the head or tail node (points to self).</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">old_ptr</td><td>Pointer to old node. </td></tr>

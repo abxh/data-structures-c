@@ -98,7 +98,8 @@ $(function(){ initResizable(false); });
 
 <p>Fixed-size queue based on ring buffer.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="paste_8h_source.html">paste.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="is__pow2_8h_source.html">is_pow2.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="paste_8h_source.html">paste.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="round__up__pow2_8h_source.html">round_up_pow2.h</a>&quot;</code><br />
 <code>#include &lt;assert.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
@@ -109,19 +110,19 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfqueue__type.html">fqueue_type</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generated queue struct type for a <code>VALUE_TYPE</code>.  <a href="structfqueue__type.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfqueue.html">fqueue</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generated queue struct type for a <code>VALUE_TYPE</code>.  <a href="structfqueue.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:aacbd4197f2a375c6c01bfa42210908d6" id="r_aacbd4197f2a375c6c01bfa42210908d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aacbd4197f2a375c6c01bfa42210908d6">fqueue_for_each</a>(queue_ptr,  index,  value)</td></tr>
-<tr class="memdesc:aacbd4197f2a375c6c01bfa42210908d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the queue from the front to back.  <br /></td></tr>
-<tr class="separator:aacbd4197f2a375c6c01bfa42210908d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0ce28c75df33692a240f64df8eb5070" id="r_ae0ce28c75df33692a240f64df8eb5070"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae0ce28c75df33692a240f64df8eb5070">fqueue_for_each_reverse</a>(queue_ptr,  index,  value)</td></tr>
-<tr class="memdesc:ae0ce28c75df33692a240f64df8eb5070"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the queue from the back to front.  <br /></td></tr>
-<tr class="separator:ae0ce28c75df33692a240f64df8eb5070"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47f2e62c0dbebc787052c165afcada0e" id="r_a47f2e62c0dbebc787052c165afcada0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47f2e62c0dbebc787052c165afcada0e">NAME</a>&#160;&#160;&#160;fqueue</td></tr>
+<tr class="memitem:a16842bbfd154126b1614e6cee96eaa0b" id="r_a16842bbfd154126b1614e6cee96eaa0b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16842bbfd154126b1614e6cee96eaa0b">fqueue_for_each</a>(self,  index,  value)</td></tr>
+<tr class="memdesc:a16842bbfd154126b1614e6cee96eaa0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the queue from the front to back.  <br /></td></tr>
+<tr class="separator:a16842bbfd154126b1614e6cee96eaa0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d5aeb9883eed49261b7589f1634c798" id="r_a7d5aeb9883eed49261b7589f1634c798"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d5aeb9883eed49261b7589f1634c798">fqueue_for_each_reverse</a>(self,  index,  value)</td></tr>
+<tr class="memdesc:a7d5aeb9883eed49261b7589f1634c798"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the queue from the back to front.  <br /></td></tr>
+<tr class="separator:a7d5aeb9883eed49261b7589f1634c798"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47f2e62c0dbebc787052c165afcada0e" id="r_a47f2e62c0dbebc787052c165afcada0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47f2e62c0dbebc787052c165afcada0e">NAME</a>&#160;&#160;&#160;<a class="el" href="structfqueue.html">fqueue</a></td></tr>
 <tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to queue type and operations. This must be manually defined before including this header file.  <br /></td></tr>
 <tr class="separator:a47f2e62c0dbebc787052c165afcada0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae17cb099b4c9aee7835032339b5a9e0d" id="r_ae17cb099b4c9aee7835032339b5a9e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;&#160;&#160;int</td></tr>
@@ -130,42 +131,48 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac17e82a1ec97c80c42f5d20dc76fae3f" id="r_ac17e82a1ec97c80c42f5d20dc76fae3f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structfqueue__type.html">fqueue_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac17e82a1ec97c80c42f5d20dc76fae3f">fqueue_create</a> (const uint32_t capacity)</td></tr>
-<tr class="memdesc:ac17e82a1ec97c80c42f5d20dc76fae3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an queue with a given capacity with malloc().  <br /></td></tr>
-<tr class="separator:ac17e82a1ec97c80c42f5d20dc76fae3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff092cbd018e4c9b7ef72ac68657be63" id="r_aff092cbd018e4c9b7ef72ac68657be63"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff092cbd018e4c9b7ef72ac68657be63">fqueue_destroy</a> (<a class="el" href="structfqueue__type.html">fqueue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:aff092cbd018e4c9b7ef72ac68657be63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy an queue and free the underlying memory with free().  <br /></td></tr>
-<tr class="separator:aff092cbd018e4c9b7ef72ac68657be63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fd8ad59fb033cfa7fe2873d9fead939" id="r_a3fd8ad59fb033cfa7fe2873d9fead939"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3fd8ad59fb033cfa7fe2873d9fead939">fqueue_is_empty</a> (const <a class="el" href="structfqueue__type.html">fqueue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:a3fd8ad59fb033cfa7fe2873d9fead939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the queue is empty.  <br /></td></tr>
-<tr class="separator:a3fd8ad59fb033cfa7fe2873d9fead939"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9aeaf352ec10b2542c37ae4cbddf8ed2" id="r_a9aeaf352ec10b2542c37ae4cbddf8ed2"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9aeaf352ec10b2542c37ae4cbddf8ed2">fqueue_is_full</a> (const <a class="el" href="structfqueue__type.html">fqueue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:a9aeaf352ec10b2542c37ae4cbddf8ed2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the queue is full.  <br /></td></tr>
-<tr class="separator:a9aeaf352ec10b2542c37ae4cbddf8ed2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06f8d5f00a9d7a318cb766576d696bee" id="r_a06f8d5f00a9d7a318cb766576d696bee"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a06f8d5f00a9d7a318cb766576d696bee">fqueue_at</a> (const <a class="el" href="structfqueue__type.html">fqueue_type</a> *queue_ptr, const uint32_t index)</td></tr>
-<tr class="memdesc:a06f8d5f00a9d7a318cb766576d696bee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value at index.  <br /></td></tr>
-<tr class="separator:a06f8d5f00a9d7a318cb766576d696bee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08f8a5659248b6c6eb9fcc28ba1b4172" id="r_a08f8a5659248b6c6eb9fcc28ba1b4172"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08f8a5659248b6c6eb9fcc28ba1b4172">fqueue_get_front</a> (const <a class="el" href="structfqueue__type.html">fqueue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:a08f8a5659248b6c6eb9fcc28ba1b4172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the front of a non-empty queue.  <br /></td></tr>
-<tr class="separator:a08f8a5659248b6c6eb9fcc28ba1b4172"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af35d8f52bd197b24153637669c0b657a" id="r_af35d8f52bd197b24153637669c0b657a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af35d8f52bd197b24153637669c0b657a">fqueue_get_back</a> (const <a class="el" href="structfqueue__type.html">fqueue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:af35d8f52bd197b24153637669c0b657a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the back of a non-empty queue.  <br /></td></tr>
-<tr class="separator:af35d8f52bd197b24153637669c0b657a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6014294c747d7281db09a994b653ebc3" id="r_a6014294c747d7281db09a994b653ebc3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6014294c747d7281db09a994b653ebc3">fqueue_peek</a> (const <a class="el" href="structfqueue__type.html">fqueue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:a6014294c747d7281db09a994b653ebc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek a non-empty queue and get it's next to-be-dequeued value.  <br /></td></tr>
-<tr class="separator:a6014294c747d7281db09a994b653ebc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac976826a1cdf0f2cad8a21f4df61456f" id="r_ac976826a1cdf0f2cad8a21f4df61456f"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac976826a1cdf0f2cad8a21f4df61456f">fqueue_enqueue</a> (<a class="el" href="structfqueue__type.html">fqueue_type</a> *queue_ptr, const <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
-<tr class="memdesc:ac976826a1cdf0f2cad8a21f4df61456f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueue a value at the back of a non-full queue.  <br /></td></tr>
-<tr class="separator:ac976826a1cdf0f2cad8a21f4df61456f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29db911aa96bfe997cc7a5a3653f5f4a" id="r_a29db911aa96bfe997cc7a5a3653f5f4a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29db911aa96bfe997cc7a5a3653f5f4a">fqueue_dequeue</a> (<a class="el" href="structfqueue__type.html">fqueue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:a29db911aa96bfe997cc7a5a3653f5f4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeue a value from the front of a non-empty queue.  <br /></td></tr>
-<tr class="separator:a29db911aa96bfe997cc7a5a3653f5f4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab24528e4c991e194ff0fb3c48c0222e0" id="r_ab24528e4c991e194ff0fb3c48c0222e0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab24528e4c991e194ff0fb3c48c0222e0">fqueue_clear</a> (<a class="el" href="structfqueue__type.html">fqueue_type</a> *queue_ptr)</td></tr>
-<tr class="memdesc:ab24528e4c991e194ff0fb3c48c0222e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the elements in the queue.  <br /></td></tr>
-<tr class="separator:ab24528e4c991e194ff0fb3c48c0222e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c9049e918c462a7f56f058cedaa0f1c" id="r_a3c9049e918c462a7f56f058cedaa0f1c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c9049e918c462a7f56f058cedaa0f1c">fqueue_copy</a> (<a class="el" href="structfqueue__type.html">fqueue_type</a> *restrict dest_queue_ptr, const <a class="el" href="structfqueue__type.html">fqueue_type</a> *restrict src_queue_ptr)</td></tr>
-<tr class="memdesc:a3c9049e918c462a7f56f058cedaa0f1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy the values from a source queue to a destination queue.  <br /></td></tr>
-<tr class="separator:a3c9049e918c462a7f56f058cedaa0f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c93dc845e28150a7790861eb2702624" id="r_a1c93dc845e28150a7790861eb2702624"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c93dc845e28150a7790861eb2702624">fqueue_calc_sizeof</a> (uint32_t *capacity_ptr, uint32_t *size_ptr)</td></tr>
+<tr class="memdesc:a1c93dc845e28150a7790861eb2702624"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the size of the queue struct and round the capacity to a power of 2.  <br /></td></tr>
+<tr class="separator:a1c93dc845e28150a7790861eb2702624"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5e171002fb7a1c481ab9d5866738b95" id="r_aa5e171002fb7a1c481ab9d5866738b95"><td class="memItemLeft" align="right" valign="top">static fqueue_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5e171002fb7a1c481ab9d5866738b95">fqueue_init</a> (fqueue_type *self, const uint32_t pow2_capacity)</td></tr>
+<tr class="memdesc:aa5e171002fb7a1c481ab9d5866738b95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a queue struct, given a (power-of-2) capacity.  <br /></td></tr>
+<tr class="separator:aa5e171002fb7a1c481ab9d5866738b95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46c571313fe05cf381655e2650ee5a74" id="r_a46c571313fe05cf381655e2650ee5a74"><td class="memItemLeft" align="right" valign="top">static fqueue_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a46c571313fe05cf381655e2650ee5a74">fqueue_create</a> (uint32_t capacity)</td></tr>
+<tr class="memdesc:a46c571313fe05cf381655e2650ee5a74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an queue struct with a given capacity with malloc().  <br /></td></tr>
+<tr class="separator:a46c571313fe05cf381655e2650ee5a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27096da4d98dd149d137f0ce69952f72" id="r_a27096da4d98dd149d137f0ce69952f72"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27096da4d98dd149d137f0ce69952f72">fqueue_destroy</a> (fqueue_type *self)</td></tr>
+<tr class="memdesc:a27096da4d98dd149d137f0ce69952f72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy an queue struct and free the underlying memory with free().  <br /></td></tr>
+<tr class="separator:a27096da4d98dd149d137f0ce69952f72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c436ae330a88398a3d88cd1406afe3c" id="r_a6c436ae330a88398a3d88cd1406afe3c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c436ae330a88398a3d88cd1406afe3c">fqueue_is_empty</a> (const fqueue_type *self)</td></tr>
+<tr class="memdesc:a6c436ae330a88398a3d88cd1406afe3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the queue is empty.  <br /></td></tr>
+<tr class="separator:a6c436ae330a88398a3d88cd1406afe3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4823b1461593a94757721fa626ccc412" id="r_a4823b1461593a94757721fa626ccc412"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4823b1461593a94757721fa626ccc412">fqueue_is_full</a> (const fqueue_type *self)</td></tr>
+<tr class="memdesc:a4823b1461593a94757721fa626ccc412"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the queue is full.  <br /></td></tr>
+<tr class="separator:a4823b1461593a94757721fa626ccc412"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34ce9d75ab262af3423df761b7e1f417" id="r_a34ce9d75ab262af3423df761b7e1f417"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34ce9d75ab262af3423df761b7e1f417">fqueue_at</a> (const fqueue_type *self, const uint32_t index)</td></tr>
+<tr class="memdesc:a34ce9d75ab262af3423df761b7e1f417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value at index.  <br /></td></tr>
+<tr class="separator:a34ce9d75ab262af3423df761b7e1f417"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84206371cb0feb1aa0ef26b36d1095f9" id="r_a84206371cb0feb1aa0ef26b36d1095f9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84206371cb0feb1aa0ef26b36d1095f9">fqueue_get_front</a> (const fqueue_type *self)</td></tr>
+<tr class="memdesc:a84206371cb0feb1aa0ef26b36d1095f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the front of a non-empty queue.  <br /></td></tr>
+<tr class="separator:a84206371cb0feb1aa0ef26b36d1095f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91871cd6d2ad7f491d5fa0fedddd58ad" id="r_a91871cd6d2ad7f491d5fa0fedddd58ad"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a91871cd6d2ad7f491d5fa0fedddd58ad">fqueue_get_back</a> (const fqueue_type *self)</td></tr>
+<tr class="memdesc:a91871cd6d2ad7f491d5fa0fedddd58ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from the back of a non-empty queue.  <br /></td></tr>
+<tr class="separator:a91871cd6d2ad7f491d5fa0fedddd58ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e8ec977d5553de444042c2e11e1325c" id="r_a4e8ec977d5553de444042c2e11e1325c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e8ec977d5553de444042c2e11e1325c">fqueue_peek</a> (const fqueue_type *self)</td></tr>
+<tr class="memdesc:a4e8ec977d5553de444042c2e11e1325c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek a non-empty queue and get it's next to-be-dequeued value.  <br /></td></tr>
+<tr class="separator:a4e8ec977d5553de444042c2e11e1325c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98d9afb1b2d0aab208b69ab2121bbf9f" id="r_a98d9afb1b2d0aab208b69ab2121bbf9f"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98d9afb1b2d0aab208b69ab2121bbf9f">fqueue_enqueue</a> (fqueue_type *self, const <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> value)</td></tr>
+<tr class="memdesc:a98d9afb1b2d0aab208b69ab2121bbf9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueue a value at the back of a non-full queue.  <br /></td></tr>
+<tr class="separator:a98d9afb1b2d0aab208b69ab2121bbf9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab505886e951563eddbcebceed6294a68" id="r_ab505886e951563eddbcebceed6294a68"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab505886e951563eddbcebceed6294a68">fqueue_dequeue</a> (fqueue_type *self)</td></tr>
+<tr class="memdesc:ab505886e951563eddbcebceed6294a68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dequeue a value from the front of a non-empty queue.  <br /></td></tr>
+<tr class="separator:ab505886e951563eddbcebceed6294a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af555174dcb1a164363f4b0cacf5b36a1" id="r_af555174dcb1a164363f4b0cacf5b36a1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af555174dcb1a164363f4b0cacf5b36a1">fqueue_clear</a> (fqueue_type *self)</td></tr>
+<tr class="memdesc:af555174dcb1a164363f4b0cacf5b36a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the elements in the queue.  <br /></td></tr>
+<tr class="separator:af555174dcb1a164363f4b0cacf5b36a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ff051808a8ecdf9f422d642e51e4456" id="r_a6ff051808a8ecdf9f422d642e51e4456"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ff051808a8ecdf9f422d642e51e4456">fqueue_copy</a> (fqueue_type *restrict dest_ptr, const fqueue_type *restrict src_ptr)</td></tr>
+<tr class="memdesc:a6ff051808a8ecdf9f422d642e51e4456"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy the values from a source queue to a destination queue.  <br /></td></tr>
+<tr class="separator:a6ff051808a8ecdf9f422d642e51e4456"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Fixed-size queue based on ring buffer. </p>
@@ -174,8 +181,8 @@ Functions</h2></td></tr>
 <li><code>VALUE_TYPE</code> </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="aacbd4197f2a375c6c01bfa42210908d6" name="aacbd4197f2a375c6c01bfa42210908d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aacbd4197f2a375c6c01bfa42210908d6">&#9670;&#160;</a></span>fqueue_for_each</h2>
+<a id="a16842bbfd154126b1614e6cee96eaa0b" name="a16842bbfd154126b1614e6cee96eaa0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16842bbfd154126b1614e6cee96eaa0b">&#9670;&#160;</a></span>fqueue_for_each</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,7 +190,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">#define fqueue_for_each</td>
           <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span>, </td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -197,20 +204,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((index) = 0;                                                                                               \</div>
-<div class="line">                                                                                                                    \</div>
-<div class="line">         (index) &lt; (queue_ptr)-&gt;count &amp;&amp;                                                                            \</div>
-<div class="line">                                                                                                                    \</div>
-<div class="line">         ((value) = (queue_ptr)-&gt;values[((queue_ptr)-&gt;begin_index + (index)) &amp; ((queue_ptr)-&gt;capacity - 1)], <span class="keyword">true</span>); \</div>
-<div class="line">                                                                                                                    \</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((index) = 0; (index) &lt; (self)-&gt;count                                                                        \</div>
+<div class="line">                      &amp;&amp; ((value) = (self)-&gt;values[((self)-&gt;begin_index + (index)) &amp; ((self)-&gt;capacity - 1)], <span class="keyword">true</span>); \</div>
 <div class="line">         (index)++)</div>
 </div><!-- fragment -->
 <p>Iterate over the values in the queue from the front to back. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the queue under the iteration may result in errors.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>Queue pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>Temporary indexing variable. Should be <code>uint32_t</code> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>Queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>Temporary indexing variable. Should be able to contain <code>uint32_t</code>. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>Current value. Should be <code>VALUE_TYPE</code>. </td></tr>
   </table>
   </dd>
@@ -220,8 +223,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae0ce28c75df33692a240f64df8eb5070" name="ae0ce28c75df33692a240f64df8eb5070"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0ce28c75df33692a240f64df8eb5070">&#9670;&#160;</a></span>fqueue_for_each_reverse</h2>
+<a id="a7d5aeb9883eed49261b7589f1634c798" name="a7d5aeb9883eed49261b7589f1634c798"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d5aeb9883eed49261b7589f1634c798">&#9670;&#160;</a></span>fqueue_for_each_reverse</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -229,7 +232,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">#define fqueue_for_each_reverse</td>
           <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span>, </td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -243,20 +246,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((index) = 0;                                                                                                 \</div>
-<div class="line">                                                                                                                      \</div>
-<div class="line">         (index) &lt; (queue_ptr)-&gt;count &amp;&amp;                                                                              \</div>
-<div class="line">                                                                                                                      \</div>
-<div class="line">         ((value) = (queue_ptr)-&gt;values[((queue_ptr)-&gt;end_index - 1 - (index)) &amp; ((queue_ptr)-&gt;capacity - 1)], <span class="keyword">true</span>); \</div>
-<div class="line">                                                                                                                      \</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((index) = 0; (index) &lt; (self)-&gt;count                                                                          \</div>
+<div class="line">                      &amp;&amp; ((value) = (self)-&gt;values[((self)-&gt;end_index - 1 - (index)) &amp; ((self)-&gt;capacity - 1)], <span class="keyword">true</span>); \</div>
 <div class="line">         (index)++)</div>
 </div><!-- fragment -->
 <p>Iterate over the values in the queue from the back to front. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the queue under the iteration may result in errors.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>Queue pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>Temporary indexing variable. Should be <code>uint32_t</code> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>Queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>Temporary indexing variable. Should be able to contain <code>uint32_t</code>. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>Current value. Should be <code>VALUE_TYPE</code>. </td></tr>
   </table>
   </dd>
@@ -273,7 +272,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NAME&#160;&#160;&#160;fqueue</td>
+          <td class="memname">#define NAME&#160;&#160;&#160;<a class="el" href="structfqueue.html">fqueue</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -301,8 +300,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a06f8d5f00a9d7a318cb766576d696bee" name="a06f8d5f00a9d7a318cb766576d696bee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06f8d5f00a9d7a318cb766576d696bee">&#9670;&#160;</a></span>fqueue_at()</h2>
+<a id="a34ce9d75ab262af3423df761b7e1f417" name="a34ce9d75ab262af3423df761b7e1f417"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34ce9d75ab262af3423df761b7e1f417">&#9670;&#160;</a></span>fqueue_at()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -313,7 +312,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> fqueue_at </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structfqueue__type.html">fqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span>, </td>
+          <td class="paramtype">const fqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -329,11 +328,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the value at index. </p>
-<dl class="section note"><dt>Note</dt><dd>index starts from the front as <code>0</code> and is counted upward to <code>count - 1</code> as back.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Index starts from the front as <code>0</code> and is counted upward to <code>count - 1</code> as back.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>The index to retrieve to value from. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>The index to retrieve to value from.</td></tr>
   </table>
   </dd>
 </dl>
@@ -341,8 +340,53 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab24528e4c991e194ff0fb3c48c0222e0" name="ab24528e4c991e194ff0fb3c48c0222e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab24528e4c991e194ff0fb3c48c0222e0">&#9670;&#160;</a></span>fqueue_clear()</h2>
+<a id="a1c93dc845e28150a7790861eb2702624" name="a1c93dc845e28150a7790861eb2702624"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c93dc845e28150a7790861eb2702624">&#9670;&#160;</a></span>fqueue_calc_sizeof()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool fqueue_calc_sizeof </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t *</td>          <td class="paramname"><span class="paramname"><em>capacity_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *</td>          <td class="paramname"><span class="paramname"><em>size_ptr</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculate the size of the queue struct and round the capacity to a power of 2. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">capacity_ptr</td><td>Pointer to orignal capacity </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">size_ptr</td><td>Pointer to size (to be outputted)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">false</td><td>If capacity is equal to 0 or [capacity rounded up to the power of 2] is larger than UINT32_MAX / 4. </td></tr>
+    <tr><td class="paramname">true</td><td>Otherwise. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af555174dcb1a164363f4b0cacf5b36a1" name="af555174dcb1a164363f4b0cacf5b36a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af555174dcb1a164363f4b0cacf5b36a1">&#9670;&#160;</a></span>fqueue_clear()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -353,7 +397,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void fqueue_clear </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structfqueue__type.html">fqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">fqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -367,15 +411,15 @@ Functions</h2></td></tr>
 <p>Clear the elements in the queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The queue pointer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a3c9049e918c462a7f56f058cedaa0f1c" name="a3c9049e918c462a7f56f058cedaa0f1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c9049e918c462a7f56f058cedaa0f1c">&#9670;&#160;</a></span>fqueue_copy()</h2>
+<a id="a6ff051808a8ecdf9f422d642e51e4456" name="a6ff051808a8ecdf9f422d642e51e4456"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ff051808a8ecdf9f422d642e51e4456">&#9670;&#160;</a></span>fqueue_copy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -386,12 +430,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void fqueue_copy </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structfqueue__type.html">fqueue_type</a> *restrict</td>          <td class="paramname"><span class="paramname"><em>dest_queue_ptr</em></span>, </td>
+          <td class="paramtype">fqueue_type *restrict</td>          <td class="paramname"><span class="paramname"><em>dest_ptr</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structfqueue__type.html">fqueue_type</a> *restrict</td>          <td class="paramname"><span class="paramname"><em>src_queue_ptr</em></span>&#160;)</td>
+          <td class="paramtype">const fqueue_type *restrict</td>          <td class="paramname"><span class="paramname"><em>src_ptr</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -404,16 +448,16 @@ Functions</h2></td></tr>
 <p>Copy the values from a source queue to a destination queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">dest_queue_ptr</td><td>The destination queue. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">src_queue_ptr</td><td>The source queue. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">dest_src</td><td>The destination queue. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">src_src</td><td>The source queue. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ac17e82a1ec97c80c42f5d20dc76fae3f" name="ac17e82a1ec97c80c42f5d20dc76fae3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac17e82a1ec97c80c42f5d20dc76fae3f">&#9670;&#160;</a></span>fqueue_create()</h2>
+<a id="a46c571313fe05cf381655e2650ee5a74" name="a46c571313fe05cf381655e2650ee5a74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46c571313fe05cf381655e2650ee5a74">&#9670;&#160;</a></span>fqueue_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -422,9 +466,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="structfqueue__type.html">fqueue_type</a> * fqueue_create </td>
+          <td class="memname">static fqueue_type * fqueue_create </td>
           <td>(</td>
-          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span></td><td>)</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -435,10 +479,10 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Create an queue with a given capacity with malloc(). </p>
+<p>Create an queue struct with a given capacity with malloc(). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the queue. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the queue.</td></tr>
   </table>
   </dd>
 </dl>
@@ -456,8 +500,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a29db911aa96bfe997cc7a5a3653f5f4a" name="a29db911aa96bfe997cc7a5a3653f5f4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29db911aa96bfe997cc7a5a3653f5f4a">&#9670;&#160;</a></span>fqueue_dequeue()</h2>
+<a id="ab505886e951563eddbcebceed6294a68" name="ab505886e951563eddbcebceed6294a68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab505886e951563eddbcebceed6294a68">&#9670;&#160;</a></span>fqueue_dequeue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -468,7 +512,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> fqueue_dequeue </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structfqueue__type.html">fqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">fqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -482,7 +526,7 @@ Functions</h2></td></tr>
 <p>Dequeue a value from the front of a non-empty queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -490,8 +534,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aff092cbd018e4c9b7ef72ac68657be63" name="aff092cbd018e4c9b7ef72ac68657be63"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff092cbd018e4c9b7ef72ac68657be63">&#9670;&#160;</a></span>fqueue_destroy()</h2>
+<a id="a27096da4d98dd149d137f0ce69952f72" name="a27096da4d98dd149d137f0ce69952f72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27096da4d98dd149d137f0ce69952f72">&#9670;&#160;</a></span>fqueue_destroy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -502,7 +546,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void fqueue_destroy </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structfqueue__type.html">fqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">fqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -513,19 +557,19 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Destroy an queue and free the underlying memory with free(). </p>
+<p>Destroy an queue struct and free the underlying memory with free(). </p>
 <dl class="section warning"><dt>Warning</dt><dd>May not be called twice in a row on the same object.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The queue pointer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ac976826a1cdf0f2cad8a21f4df61456f" name="ac976826a1cdf0f2cad8a21f4df61456f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac976826a1cdf0f2cad8a21f4df61456f">&#9670;&#160;</a></span>fqueue_enqueue()</h2>
+<a id="a98d9afb1b2d0aab208b69ab2121bbf9f" name="a98d9afb1b2d0aab208b69ab2121bbf9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98d9afb1b2d0aab208b69ab2121bbf9f">&#9670;&#160;</a></span>fqueue_enqueue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -536,7 +580,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static bool fqueue_enqueue </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structfqueue__type.html">fqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span>, </td>
+          <td class="paramtype">fqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -554,7 +598,7 @@ Functions</h2></td></tr>
 <p>Enqueue a value at the back of a non-full queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The queue pointer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value to enqueue. </td></tr>
   </table>
   </dd>
@@ -562,8 +606,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af35d8f52bd197b24153637669c0b657a" name="af35d8f52bd197b24153637669c0b657a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af35d8f52bd197b24153637669c0b657a">&#9670;&#160;</a></span>fqueue_get_back()</h2>
+<a id="a91871cd6d2ad7f491d5fa0fedddd58ad" name="a91871cd6d2ad7f491d5fa0fedddd58ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91871cd6d2ad7f491d5fa0fedddd58ad">&#9670;&#160;</a></span>fqueue_get_back()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -574,7 +618,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> fqueue_get_back </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structfqueue__type.html">fqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const fqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -588,7 +632,7 @@ Functions</h2></td></tr>
 <p>Get the value from the back of a non-empty queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -596,8 +640,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a08f8a5659248b6c6eb9fcc28ba1b4172" name="a08f8a5659248b6c6eb9fcc28ba1b4172"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08f8a5659248b6c6eb9fcc28ba1b4172">&#9670;&#160;</a></span>fqueue_get_front()</h2>
+<a id="a84206371cb0feb1aa0ef26b36d1095f9" name="a84206371cb0feb1aa0ef26b36d1095f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84206371cb0feb1aa0ef26b36d1095f9">&#9670;&#160;</a></span>fqueue_get_front()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -608,7 +652,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> fqueue_get_front </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structfqueue__type.html">fqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const fqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -622,7 +666,7 @@ Functions</h2></td></tr>
 <p>Get the value from the front of a non-empty queue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -630,8 +674,46 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3fd8ad59fb033cfa7fe2873d9fead939" name="a3fd8ad59fb033cfa7fe2873d9fead939"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fd8ad59fb033cfa7fe2873d9fead939">&#9670;&#160;</a></span>fqueue_is_empty()</h2>
+<a id="aa5e171002fb7a1c481ab9d5866738b95" name="aa5e171002fb7a1c481ab9d5866738b95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5e171002fb7a1c481ab9d5866738b95">&#9670;&#160;</a></span>fqueue_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static fqueue_type * fqueue_init </td>
+          <td>(</td>
+          <td class="paramtype">fqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>pow2_capacity</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initialize a queue struct, given a (power-of-2) capacity. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>Queue pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pow2_capacity</td><td>(Power-of-2) capacity </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6c436ae330a88398a3d88cd1406afe3c" name="a6c436ae330a88398a3d88cd1406afe3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c436ae330a88398a3d88cd1406afe3c">&#9670;&#160;</a></span>fqueue_is_empty()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -642,7 +724,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static bool fqueue_is_empty </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structfqueue__type.html">fqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const fqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -656,16 +738,16 @@ Functions</h2></td></tr>
 <p>Return whether the queue is empty. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>whether the queue is empty. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the queue is empty. </dd></dl>
 
 </div>
 </div>
-<a id="a9aeaf352ec10b2542c37ae4cbddf8ed2" name="a9aeaf352ec10b2542c37ae4cbddf8ed2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9aeaf352ec10b2542c37ae4cbddf8ed2">&#9670;&#160;</a></span>fqueue_is_full()</h2>
+<a id="a4823b1461593a94757721fa626ccc412" name="a4823b1461593a94757721fa626ccc412"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4823b1461593a94757721fa626ccc412">&#9670;&#160;</a></span>fqueue_is_full()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -676,7 +758,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static bool fqueue_is_full </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structfqueue__type.html">fqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const fqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -690,16 +772,16 @@ Functions</h2></td></tr>
 <p>Return whether the queue is full. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The queue pointer.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>whether the queue is full. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the queue is full. </dd></dl>
 
 </div>
 </div>
-<a id="a6014294c747d7281db09a994b653ebc3" name="a6014294c747d7281db09a994b653ebc3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6014294c747d7281db09a994b653ebc3">&#9670;&#160;</a></span>fqueue_peek()</h2>
+<a id="a4e8ec977d5553de444042c2e11e1325c" name="a4e8ec977d5553de444042c2e11e1325c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e8ec977d5553de444042c2e11e1325c">&#9670;&#160;</a></span>fqueue_peek()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -710,7 +792,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="fhashtable_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> fqueue_peek </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structfqueue__type.html">fqueue_type</a> *</td>          <td class="paramname"><span class="paramname"><em>queue_ptr</em></span></td><td>)</td>
+          <td class="paramtype">const fqueue_type *</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -724,7 +806,7 @@ Functions</h2></td></tr>
 <p>Peek a non-empty queue and get it's next to-be-dequeued value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_ptr</td><td>The queue pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>The queue pointer.</td></tr>
   </table>
   </dd>
 </dl>

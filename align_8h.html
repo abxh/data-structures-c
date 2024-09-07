@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>data-structures-c: lib/container_of.h File Reference</title>
+<title>data-structures-c: lib/align.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,67 +89,87 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
-  <div class="headertitle"><div class="title">container_of.h File Reference</div></div>
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">align.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>container_of definition  
+<p>Align memory.  
 <a href="#details">More...</a></p>
-
-<p><a href="container__of_8h_source.html">Go to the source code of this file.</a></p>
+<div class="textblock"><code>#include &lt;assert.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="is__pow2_8h_source.html">is_pow2.h</a>&quot;</code><br />
+</div>
+<p><a href="align_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:af8c317a42292b61c93aae91e59118a46" id="r_af8c317a42292b61c93aae91e59118a46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8c317a42292b61c93aae91e59118a46">container_of</a>(ptr,  type,  member)</td></tr>
-<tr class="memdesc:af8c317a42292b61c93aae91e59118a46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtain a pointer to the struct that contains the struct member.  <br /></td></tr>
-<tr class="separator:af8c317a42292b61c93aae91e59118a46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:afd8e69174fdd8e730fe248b284eacfd0" id="r_afd8e69174fdd8e730fe248b284eacfd0"><td class="memItemLeft" align="right" valign="top">static void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd8e69174fdd8e730fe248b284eacfd0">align</a> (const size_t alignment, const size_t size, void **ptr_ptr, size_t *space_ptr)</td></tr>
+<tr class="memdesc:afd8e69174fdd8e730fe248b284eacfd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Align pointer to the next alignment boundary.  <br /></td></tr>
+<tr class="separator:afd8e69174fdd8e730fe248b284eacfd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>container_of definition </p>
-<p>For more info, see: </p><ul>
-<li><a href="https://radek.io/posts/magical-container_of-macro/">https://radek.io/posts/magical-container_of-macro/</a> </li>
-<li><a href="https://github.com/clibs/container_of">https://github.com/clibs/container_of</a> </li>
+<div class="textblock"><p>Align memory. </p>
+<p>This is a direct translation of the std::align implementation in libstdc++.</p>
+<p>See: </p><ul>
+<li><a href="https://en.cppreference.com/w/cpp/memory/align">https://en.cppreference.com/w/cpp/memory/align</a> </li>
 </ul>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="af8c317a42292b61c93aae91e59118a46" name="af8c317a42292b61c93aae91e59118a46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8c317a42292b61c93aae91e59118a46">&#9670;&#160;</a></span>container_of</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="afd8e69174fdd8e730fe248b284eacfd0" name="afd8e69174fdd8e730fe248b284eacfd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd8e69174fdd8e730fe248b284eacfd0">&#9670;&#160;</a></span>align()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">#define container_of</td>
+          <td class="memname">static void * align </td>
           <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>ptr</em></span>, </td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>alignment</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type</em></span>, </td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>member</em></span>&#160;)</td>
+          <td class="paramtype">void **</td>          <td class="paramname"><span class="paramname"><em>ptr_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *</td>          <td class="paramname"><span class="paramname"><em>space_ptr</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    __extension__({                                        \</div>
-<div class="line">        <span class="keyword">const</span> typeof(((type *)0)-&gt;member) *__mptr = (ptr); \</div>
-<div class="line">        (type *)((<span class="keywordtype">char</span> *)__mptr - offsetof(type, member)); \</div>
-<div class="line">    })</div>
-</div><!-- fragment -->
-<p>Obtain a pointer to the struct that contains the struct member. </p>
+
+<p>Align pointer to the next alignment boundary. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptr</td><td>Pointer to the member. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Container type </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">member</td><td>Member name.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>The desired alignment </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The size of the storage to be aligned </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">ptr_ptr</td><td>Pointer to contiguous storage (a buffer) of at least space bytes. Given it's pointer. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">space_ptr</td><td>The size of the buffer in which to operate. Given it's pointer.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to the struct containing the member. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The adjusted value of <code>*ptr_ptr</code>. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NULL</td><td>If the space provided is too small. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -1,16 +1,16 @@
 var searchData=
 [
-  ['left_5fptr_0',['left_ptr',['../structrbtree__node__type.html#aec20e07fa0ce04328e172552031775ea',1,'rbtree_node_type']]],
+  ['left_5fptr_0',['left_ptr',['../structrbtree__node.html#a67811326865204c4e1af7973d1a45734',1,'rbtree_node']]],
   ['list_2eh_1',['list.h',['../list_8h.html',1,'']]],
-  ['list_5fnode_5fadd_5fafter_2',['list_node_add_after',['../list_8h.html#a548d598fa8d11a081e18f1023f8ddc4b',1,'list.h']]],
-  ['list_5fnode_5fadd_5fbefore_3',['list_node_add_before',['../list_8h.html#a18ec80c25f28e1c569502dfe53ae9669',1,'list.h']]],
-  ['list_5fnode_5fentry_4',['list_node_entry',['../list_8h.html#af8cb8fcd688faaa3dfc35d7d3d285946',1,'list.h']]],
-  ['list_5fnode_5finit_5',['list_node_init',['../list_8h.html#ae56b2024a6cdbe8d77b858189e7482e1',1,'list.h']]],
-  ['list_5fnode_5fis_5ffirst_6',['list_node_is_first',['../list_8h.html#a36f071a104ea93d5a56874a6e54a07db',1,'list.h']]],
-  ['list_5fnode_5fis_5fhead_7',['list_node_is_head',['../list_8h.html#a309f918c33372b4df39c3e60abf2f6f2',1,'list.h']]],
-  ['list_5fnode_5fis_5flast_8',['list_node_is_last',['../list_8h.html#a755a6ea8f577798c108045b8321ab192',1,'list.h']]],
-  ['list_5fnode_5fis_5ftail_9',['list_node_is_tail',['../list_8h.html#af2dce9872ec5d321810eb173adf2533e',1,'list.h']]],
-  ['list_5fnode_5fremove_10',['list_node_remove',['../list_8h.html#a20ac6c43a6726b638982d485288c56a2',1,'list.h']]],
-  ['list_5fnode_5freplace_11',['list_node_replace',['../list_8h.html#a720a9582420c136a02875abafe8cddcd',1,'list.h']]],
-  ['list_5fnode_5ftype_12',['list_node_type',['../structlist__node__type.html',1,'list_node_type'],['../list_8h.html#aae33b2001a10848d7d84e171b2574289',1,'list_node_type:&#160;list.h']]]
+  ['list_5fnode_2',['list_node',['../structlist__node.html',1,'']]],
+  ['list_5fnode_5fadd_5fafter_3',['list_node_add_after',['../list_8h.html#a0b1980996c2ccf521b8a9be8386a2eee',1,'list.h']]],
+  ['list_5fnode_5fadd_5fbefore_4',['list_node_add_before',['../list_8h.html#acaee45c5c17db219e69e5ef14bd76ea0',1,'list.h']]],
+  ['list_5fnode_5fentry_5',['list_node_entry',['../list_8h.html#a7d31316f0891242498a62d0c50caef77',1,'list.h']]],
+  ['list_5fnode_5finit_6',['list_node_init',['../list_8h.html#af87c2290e61fd5c0583d39646140d838',1,'list.h']]],
+  ['list_5fnode_5fis_5ffirst_7',['list_node_is_first',['../list_8h.html#a9946efaacd234ba31379f917a4988c5c',1,'list.h']]],
+  ['list_5fnode_5fis_5fhead_8',['list_node_is_head',['../list_8h.html#a6c14d6cd16ffd4988a3ef0bd951d94c0',1,'list.h']]],
+  ['list_5fnode_5fis_5flast_9',['list_node_is_last',['../list_8h.html#a7c4c8d08807b3d9c4d1d586c5ce33deb',1,'list.h']]],
+  ['list_5fnode_5fis_5ftail_10',['list_node_is_tail',['../list_8h.html#a9e5e0cd79b3efdd067dc39a5e5970c10',1,'list.h']]],
+  ['list_5fnode_5fremove_11',['list_node_remove',['../list_8h.html#ad3400e39953f3b6c0254d0717f2db8b5',1,'list.h']]],
+  ['list_5fnode_5freplace_12',['list_node_replace',['../list_8h.html#af6577d1da1572ba8142469c603d51782',1,'list.h']]]
 ];
