@@ -98,91 +98,91 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> preorder_traverse_and_print(<span class="keyword">struct</span> pqueue_int *pq, uint32_t index)</div>
 <div class="line">{</div>
-<div class="line">        <span class="keywordflow">if</span> (index &gt;= pq-&gt;count) {</div>
-<div class="line">                printf(<span class="stringliteral">&quot; ()&quot;</span>);</div>
-<div class="line">                <span class="keywordflow">return</span>;</div>
-<div class="line">        }</div>
-<div class="line">        printf(<span class="stringliteral">&quot; ( %d&quot;</span>, index);</div>
-<div class="line">        preorder_traverse_and_print(pq, <a id="a0" name="a0"></a><a class="code hl_define" href="fpqueue_8h.html#a79c322cf0fdabf69d9cffa001e00c24e">fpqueue_left_child</a>(index));</div>
-<div class="line">        preorder_traverse_and_print(pq, <a id="a1" name="a1"></a><a class="code hl_define" href="fpqueue_8h.html#ae097270739ec82485b2e444bc8ce9d2c">fpqueue_right_child</a>(index));</div>
-<div class="line">        printf(<span class="stringliteral">&quot; )&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">if</span> (index &gt;= pq-&gt;count) {</div>
+<div class="line">        printf(<span class="stringliteral">&quot; ()&quot;</span>);</div>
+<div class="line">        <span class="keywordflow">return</span>;</div>
+<div class="line">    }</div>
+<div class="line">    printf(<span class="stringliteral">&quot; ( %d&quot;</span>, index);</div>
+<div class="line">    preorder_traverse_and_print(pq, <a id="a0" name="a0"></a><a class="code hl_define" href="fpqueue_8h.html#a79c322cf0fdabf69d9cffa001e00c24e">fpqueue_left_child</a>(index));</div>
+<div class="line">    preorder_traverse_and_print(pq, <a id="a1" name="a1"></a><a class="code hl_define" href="fpqueue_8h.html#ae097270739ec82485b2e444bc8ce9d2c">fpqueue_right_child</a>(index));</div>
+<div class="line">    printf(<span class="stringliteral">&quot; )&quot;</span>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> int_example(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
-<div class="line">        (void)(preorder_traverse_and_print);</div>
+<div class="line">    (void)(preorder_traverse_and_print);</div>
 <div class="line"> </div>
-<div class="line">        <span class="keyword">struct </span>pqueue_int *pq = pqueue_int_create(10);</div>
+<div class="line">    <span class="keyword">struct </span>pqueue_int *pq = pqueue_int_create(10);</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">if</span> (!pq) {</div>
-<div class="line">                assert(<span class="keyword">false</span>);</div>
-<div class="line">        }</div>
+<div class="line">    <span class="keywordflow">if</span> (!pq) {</div>
+<div class="line">        assert(<span class="keyword">false</span>);</div>
+<div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">        assert(pq-&gt;capacity &gt;= 10);</div>
+<div class="line">    assert(pq-&gt;capacity &gt;= 10);</div>
 <div class="line"> </div>
-<div class="line">        <span class="keyword">const</span> <span class="keywordtype">int</span> values[10] = {3, 1, 5, 2, 4, 7, 6, 10, 9, 8};</div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">int</span> values[10] = {3, 1, 5, 2, 4, 7, 6, 10, 9, 8};</div>
 <div class="line"> </div>
-<div class="line">        assert(pqueue_int_is_empty(pq));</div>
-<div class="line">        assert(pq-&gt;count == 0);</div>
+<div class="line">    assert(pqueue_int_is_empty(pq));</div>
+<div class="line">    assert(pq-&gt;count == 0);</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 10; i++) {</div>
-<div class="line">                <span class="keyword">const</span> uint32_t priority = values[i];</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 10; i++) {</div>
+<div class="line">        <span class="keyword">const</span> uint32_t priority = values[i];</div>
 <div class="line"> </div>
-<div class="line">                pqueue_int_push(pq, values[i], priority);</div>
+<div class="line">        pqueue_int_push(pq, values[i], priority);</div>
 <div class="line"> </div>
-<div class="line">                <span class="comment">/* preorder_traverse_and_print(pq, 0); */</span></div>
-<div class="line">                <span class="comment">/* printf(&quot;\n&quot;); */</span></div>
-<div class="line">        }</div>
+<div class="line">        <span class="comment">/* preorder_traverse_and_print(pq, 0); */</span></div>
+<div class="line">        <span class="comment">/* printf(&quot;\n&quot;); */</span></div>
+<div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">        assert(pq-&gt;count == 10);</div>
-<div class="line">        assert(pqueue_int_is_full(pq));</div>
+<div class="line">    assert(pq-&gt;count == 10);</div>
+<div class="line">    assert(pqueue_int_is_full(pq));</div>
 <div class="line"> </div>
-<div class="line">        assert(pqueue_int_peek(pq) == 10);</div>
-<div class="line">        assert(pqueue_int_get_max(pq) == 10);</div>
+<div class="line">    assert(pqueue_int_peek(pq) == 10);</div>
+<div class="line">    assert(pqueue_int_get_max(pq) == 10);</div>
 <div class="line"> </div>
-<div class="line">        <span class="keyword">struct </span>pqueue_int *pq_copy = pqueue_int_create(10);</div>
-<div class="line">        <span class="keyword">struct </span>pqueue_int *pq_copy_copy = pqueue_int_create(10);</div>
-<div class="line">        <span class="keywordflow">if</span> (!pq_copy || !pq_copy_copy) {</div>
-<div class="line">                assert(<span class="keyword">false</span>);</div>
-<div class="line">        }</div>
-<div class="line">        pqueue_int_copy(pq_copy, pq);</div>
-<div class="line">        pqueue_int_copy(pq_copy_copy, pq_copy);</div>
+<div class="line">    <span class="keyword">struct </span>pqueue_int *pq_copy = pqueue_int_create(10);</div>
+<div class="line">    <span class="keyword">struct </span>pqueue_int *pq_copy_copy = pqueue_int_create(10);</div>
+<div class="line">    <span class="keywordflow">if</span> (!pq_copy || !pq_copy_copy) {</div>
+<div class="line">        assert(<span class="keyword">false</span>);</div>
+<div class="line">    }</div>
+<div class="line">    pqueue_int_copy(pq_copy, pq);</div>
+<div class="line">    pqueue_int_copy(pq_copy_copy, pq_copy);</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 10; i++) {</div>
-<div class="line">                assert(pqueue_int_pop_max(pq) == 10 - i);</div>
-<div class="line">        }</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 10; i++) {</div>
+<div class="line">        assert(pqueue_int_pop_max(pq) == 10 - i);</div>
+<div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordtype">bool</span> covered[11] = {<span class="keyword">true</span>, <span class="keyword">false</span>};</div>
-<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 10; i++) {</div>
-<div class="line">                assert(!covered[pqueue_int_get_max(pq_copy)]);</div>
+<div class="line">    <span class="keywordtype">bool</span> covered[11] = {<span class="keyword">true</span>, <span class="keyword">false</span>};</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 10; i++) {</div>
+<div class="line">        assert(!covered[pqueue_int_get_max(pq_copy)]);</div>
 <div class="line"> </div>
-<div class="line">                covered[pqueue_int_pop_max(pq_copy)] = <span class="keyword">true</span>;</div>
-<div class="line">        }</div>
+<div class="line">        covered[pqueue_int_pop_max(pq_copy)] = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordtype">size_t</span> count = 0;</div>
+<div class="line">    <span class="keywordtype">size_t</span> count = 0;</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordtype">int</span> value;</div>
+<div class="line">        <span class="keywordtype">size_t</span> tempi;</div>
+<div class="line"> </div>
+<div class="line">        (void)(value); <span class="comment">// mark unused</span></div>
+<div class="line">        <a id="a2" name="a2"></a><a class="code hl_define" href="fpqueue_8h.html#a7c6041e987df98589e3ead1d70b86cb7">fpqueue_for_each</a>(pq_copy_copy, tempi, value)</div>
 <div class="line">        {</div>
-<div class="line">                <span class="keywordtype">int</span> value;</div>
-<div class="line">                <span class="keywordtype">size_t</span> tempi;</div>
-<div class="line"> </div>
-<div class="line">                (void)(value); <span class="comment">// mark unused</span></div>
-<div class="line">                <a id="a2" name="a2"></a><a class="code hl_define" href="fpqueue_8h.html#a7c6041e987df98589e3ead1d70b86cb7">fpqueue_for_each</a>(pq_copy_copy, tempi, value)</div>
-<div class="line">                {</div>
-<div class="line">                        count++;</div>
-<div class="line">                }</div>
+<div class="line">            count++;</div>
 <div class="line">        }</div>
-<div class="line">        assert(count == 10);</div>
-<div class="line">        pqueue_int_clear(pq_copy_copy);</div>
-<div class="line">        assert(pq_copy_copy-&gt;count == 0);</div>
+<div class="line">    }</div>
+<div class="line">    assert(count == 10);</div>
+<div class="line">    pqueue_int_clear(pq_copy_copy);</div>
+<div class="line">    assert(pq_copy_copy-&gt;count == 0);</div>
 <div class="line"> </div>
-<div class="line">        pqueue_int_destroy(pq);</div>
-<div class="line">        pqueue_int_destroy(pq_copy);</div>
-<div class="line">        pqueue_int_destroy(pq_copy_copy);</div>
+<div class="line">    pqueue_int_destroy(pq);</div>
+<div class="line">    pqueue_int_destroy(pq_copy);</div>
+<div class="line">    pqueue_int_destroy(pq_copy_copy);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
-<div class="line">        int_example();</div>
-<div class="line">        <span class="keywordflow">return</span> 0;</div>
+<div class="line">    int_example();</div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="afpqueue_8h_html"><div class="ttname"><a href="fpqueue_8h.html">fpqueue.h</a></div><div class="ttdoc">Fixed-size priority queue based on binary (max-)heap.</div></div>
 <div class="ttc" id="afpqueue_8h_html_a79c322cf0fdabf69d9cffa001e00c24e"><div class="ttname"><a href="fpqueue_8h.html#a79c322cf0fdabf69d9cffa001e00c24e">fpqueue_left_child</a></div><div class="ttdeci">#define fpqueue_left_child(index)</div><div class="ttdoc">Given an element index, get the index of the left child.</div><div class="ttdef"><b>Definition</b> fpqueue.h:48</div></div>

@@ -97,46 +97,45 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> chque_example(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
-<div class="line">        <span class="keyword">struct </span>chque *q = chque_create(4);</div>
-<div class="line">        <span class="keywordflow">if</span> (!q) {</div>
-<div class="line">                assert(<span class="keyword">false</span>);</div>
-<div class="line">        }</div>
-<div class="line">        chque_is_empty(q);</div>
+<div class="line">    <span class="keyword">struct </span>chque *q = chque_create(4);</div>
+<div class="line">    <span class="keywordflow">if</span> (!q) {</div>
+<div class="line">        assert(<span class="keyword">false</span>);</div>
+<div class="line">    }</div>
+<div class="line">    chque_is_empty(q);</div>
 <div class="line"> </div>
-<div class="line">        assert(chque_is_empty(q));</div>
-<div class="line">        assert(!chque_is_full(q));</div>
+<div class="line">    assert(chque_is_empty(q));</div>
+<div class="line">    assert(!chque_is_full(q));</div>
 <div class="line"> </div>
-<div class="line">        chque_enqueue(q, <span class="charliteral">&#39;a&#39;</span>);</div>
-<div class="line">        chque_enqueue(q, <span class="charliteral">&#39;b&#39;</span>);</div>
-<div class="line">        chque_enqueue(q, <span class="charliteral">&#39;c&#39;</span>);</div>
-<div class="line">        chque_enqueue(q, <span class="charliteral">&#39;d&#39;</span>);</div>
+<div class="line">    chque_enqueue(q, <span class="charliteral">&#39;a&#39;</span>);</div>
+<div class="line">    chque_enqueue(q, <span class="charliteral">&#39;b&#39;</span>);</div>
+<div class="line">    chque_enqueue(q, <span class="charliteral">&#39;c&#39;</span>);</div>
+<div class="line">    chque_enqueue(q, <span class="charliteral">&#39;d&#39;</span>);</div>
 <div class="line"> </div>
-<div class="line">        assert(!chque_is_empty(q));</div>
-<div class="line">        assert(chque_is_full(</div>
-<div class="line">            q)); <span class="comment">// note: capacity is rounded up to the next power of 2.</span></div>
+<div class="line">    assert(!chque_is_empty(q));</div>
+<div class="line">    assert(chque_is_full(q)); <span class="comment">// note: capacity is rounded up to the next power of 2.</span></div>
 <div class="line"> </div>
-<div class="line">        assert(q-&gt;count == 4);</div>
+<div class="line">    assert(q-&gt;count == 4);</div>
 <div class="line"> </div>
-<div class="line">        assert(<span class="charliteral">&#39;a&#39;</span> == chque_get_front(q));</div>
-<div class="line">        assert(<span class="charliteral">&#39;d&#39;</span> == chque_get_back(q));</div>
+<div class="line">    assert(<span class="charliteral">&#39;a&#39;</span> == chque_get_front(q));</div>
+<div class="line">    assert(<span class="charliteral">&#39;d&#39;</span> == chque_get_back(q));</div>
 <div class="line"> </div>
-<div class="line">        assert(<span class="charliteral">&#39;a&#39;</span> == chque_peek(q));</div>
+<div class="line">    assert(<span class="charliteral">&#39;a&#39;</span> == chque_peek(q));</div>
 <div class="line"> </div>
-<div class="line">        assert(<span class="charliteral">&#39;a&#39;</span> == chque_at(q, 0));</div>
-<div class="line">        assert(<span class="charliteral">&#39;b&#39;</span> == chque_at(q, 1));</div>
-<div class="line">        assert(<span class="charliteral">&#39;c&#39;</span> == chque_at(q, 2));</div>
-<div class="line">        assert(<span class="charliteral">&#39;d&#39;</span> == chque_at(q, 3));</div>
+<div class="line">    assert(<span class="charliteral">&#39;a&#39;</span> == chque_at(q, 0));</div>
+<div class="line">    assert(<span class="charliteral">&#39;b&#39;</span> == chque_at(q, 1));</div>
+<div class="line">    assert(<span class="charliteral">&#39;c&#39;</span> == chque_at(q, 2));</div>
+<div class="line">    assert(<span class="charliteral">&#39;d&#39;</span> == chque_at(q, 3));</div>
 <div class="line"> </div>
-<div class="line">        <span class="keyword">const</span> <span class="keywordtype">char</span> res = chque_dequeue(q);</div>
-<div class="line">        assert(<span class="charliteral">&#39;a&#39;</span> == res);</div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">char</span> res = chque_dequeue(q);</div>
+<div class="line">    assert(<span class="charliteral">&#39;a&#39;</span> == res);</div>
 <div class="line"> </div>
-<div class="line">        assert(q-&gt;count == 3);</div>
+<div class="line">    assert(q-&gt;count == 3);</div>
 <div class="line"> </div>
-<div class="line">        chque_clear(q);</div>
+<div class="line">    chque_clear(q);</div>
 <div class="line"> </div>
-<div class="line">        assert(q-&gt;count == 0);</div>
+<div class="line">    assert(q-&gt;count == 0);</div>
 <div class="line"> </div>
-<div class="line">        chque_destroy(q);</div>
+<div class="line">    chque_destroy(q);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#define NAME       int_queue</span></div>
@@ -145,74 +144,74 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> int_queue_example(<span class="keyword">const</span> <span class="keywordtype">bool</span> offset)</div>
 <div class="line">{</div>
-<div class="line">        <span class="keyword">const</span> <span class="keywordtype">int</span> lim = 1e+6;</div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">int</span> lim = 1e+6;</div>
 <div class="line"> </div>
-<div class="line">        <span class="keyword">struct </span>int_queue *q = int_queue_create(lim);</div>
+<div class="line">    <span class="keyword">struct </span>int_queue *q = int_queue_create(lim);</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">if</span> (!q) {</div>
-<div class="line">                assert(<span class="keyword">false</span>);</div>
+<div class="line">    <span class="keywordflow">if</span> (!q) {</div>
+<div class="line">        assert(<span class="keyword">false</span>);</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span> (offset) { <span class="comment">// this is just for some light testing</span></div>
+<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt;= lim / 3; i++) {</div>
+<div class="line">            int_queue_enqueue(q, i);</div>
 <div class="line">        }</div>
-<div class="line"> </div>
-<div class="line">        <span class="keywordflow">if</span> (offset) { <span class="comment">// this is just for some light testing</span></div>
-<div class="line">                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt;= lim / 3; i++) {</div>
-<div class="line">                        int_queue_enqueue(q, i);</div>
-<div class="line">                }</div>
-<div class="line">                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt;= lim / 3; i++) {</div>
-<div class="line">                        int_queue_dequeue(q);</div>
-<div class="line">                }</div>
+<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt;= lim / 3; i++) {</div>
+<div class="line">            int_queue_dequeue(q);</div>
 <div class="line">        }</div>
+<div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt;= lim; i++) {</div>
-<div class="line">                int_queue_enqueue(q, i);</div>
-<div class="line">        }</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt;= lim; i++) {</div>
+<div class="line">        int_queue_enqueue(q, i);</div>
+<div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">        <span class="keyword">struct </span>int_queue *q_copy = int_queue_create(lim);</div>
-<div class="line">        <span class="keywordflow">if</span> (!q_copy) {</div>
-<div class="line">                assert(<span class="keyword">false</span>);</div>
-<div class="line">        }</div>
-<div class="line">        int_queue_copy(q_copy, q);</div>
+<div class="line">    <span class="keyword">struct </span>int_queue *q_copy = int_queue_create(lim);</div>
+<div class="line">    <span class="keywordflow">if</span> (!q_copy) {</div>
+<div class="line">        assert(<span class="keyword">false</span>);</div>
+<div class="line">    }</div>
+<div class="line">    int_queue_copy(q_copy, q);</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt;= lim; i++) {</div>
-<div class="line">                assert(i == int_queue_dequeue(q));</div>
-<div class="line">        }</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt;= lim; i++) {</div>
+<div class="line">        assert(i == int_queue_dequeue(q));</div>
+<div class="line">    }</div>
 <div class="line"> </div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordtype">int</span> x = lim;</div>
+<div class="line">        <span class="keywordtype">int</span> value;</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordtype">size_t</span> tempi;</div>
+<div class="line">        <a id="a0" name="a0"></a><a class="code hl_define" href="fqueue_8h.html#a7d5aeb9883eed49261b7589f1634c798">fqueue_for_each_reverse</a>(q_copy, tempi, value)</div>
 <div class="line">        {</div>
-<div class="line">                <span class="keywordtype">int</span> x = lim;</div>
-<div class="line">                <span class="keywordtype">int</span> value;</div>
-<div class="line"> </div>
-<div class="line">                <span class="keywordtype">size_t</span> tempi;</div>
-<div class="line">                <a id="a0" name="a0"></a><a class="code hl_define" href="fqueue_8h.html#a7d5aeb9883eed49261b7589f1634c798">fqueue_for_each_reverse</a>(q_copy, tempi, value)</div>
-<div class="line">                {</div>
-<div class="line">                        assert(value == x--);</div>
-<div class="line">                }</div>
+<div class="line">            assert(value == x--);</div>
 <div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordtype">int</span> x = 1;</div>
+<div class="line">        <span class="keywordtype">int</span> count = 0;</div>
+<div class="line">        <span class="keywordtype">int</span> value;</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordtype">size_t</span> tempi;</div>
+<div class="line">        <a id="a1" name="a1"></a><a class="code hl_define" href="fqueue_8h.html#a16842bbfd154126b1614e6cee96eaa0b">fqueue_for_each</a>(q_copy, tempi, value)</div>
 <div class="line">        {</div>
-<div class="line">                <span class="keywordtype">int</span> x = 1;</div>
-<div class="line">                <span class="keywordtype">int</span> count = 0;</div>
-<div class="line">                <span class="keywordtype">int</span> value;</div>
-<div class="line"> </div>
-<div class="line">                <span class="keywordtype">size_t</span> tempi;</div>
-<div class="line">                <a id="a1" name="a1"></a><a class="code hl_define" href="fqueue_8h.html#a16842bbfd154126b1614e6cee96eaa0b">fqueue_for_each</a>(q_copy, tempi, value)</div>
-<div class="line">                {</div>
-<div class="line">                        assert(value == x++);</div>
-<div class="line">                        count++;</div>
-<div class="line">                }</div>
+<div class="line">            assert(value == x++);</div>
+<div class="line">            count++;</div>
 <div class="line">        }</div>
+<div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">        assert(q_copy-&gt;count == (<span class="keywordtype">size_t</span>)lim);</div>
-<div class="line">        int_queue_clear(q_copy);</div>
-<div class="line">        assert(q_copy-&gt;count == 0);</div>
+<div class="line">    assert(q_copy-&gt;count == (<span class="keywordtype">size_t</span>)lim);</div>
+<div class="line">    int_queue_clear(q_copy);</div>
+<div class="line">    assert(q_copy-&gt;count == 0);</div>
 <div class="line"> </div>
-<div class="line">        int_queue_destroy(q);</div>
-<div class="line">        int_queue_destroy(q_copy);</div>
+<div class="line">    int_queue_destroy(q);</div>
+<div class="line">    int_queue_destroy(q_copy);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
-<div class="line">        chque_example();</div>
-<div class="line">        int_queue_example(<span class="keyword">true</span>);</div>
-<div class="line">        int_queue_example(<span class="keyword">false</span>);</div>
-<div class="line">        <span class="keywordflow">return</span> 0;</div>
+<div class="line">    chque_example();</div>
+<div class="line">    int_queue_example(<span class="keyword">true</span>);</div>
+<div class="line">    int_queue_example(<span class="keyword">false</span>);</div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="afqueue_8h_html"><div class="ttname"><a href="fqueue_8h.html">fqueue.h</a></div><div class="ttdoc">Fixed-size queue based on ring buffer.</div></div>
 <div class="ttc" id="afqueue_8h_html_a16842bbfd154126b1614e6cee96eaa0b"><div class="ttname"><a href="fqueue_8h.html#a16842bbfd154126b1614e6cee96eaa0b">fqueue_for_each</a></div><div class="ttdeci">#define fqueue_for_each(self, index, value)</div><div class="ttdoc">Iterate over the values in the queue from the front to back.</div><div class="ttdef"><b>Definition</b> fqueue.h:51</div></div>
