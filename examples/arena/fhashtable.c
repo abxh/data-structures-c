@@ -19,16 +19,18 @@ static unsigned char backing_buf[4096];
 void str_int_ht_test_alt(void)
 {
     struct arena arena;
-    arena_init(&arena, sizeof(backing_buf), backing_buf);
+    arena_init(&arena, sizeof(backing_buf) - 1, &backing_buf[1]);
 
     uint32_t capacity = 3;
     uint32_t size;
     assert(strint_ht_calc_sizeof(&capacity, &size) == true);
 
-    struct strint_ht *ht = strint_ht_init(arena_allocate_aligned(&arena, alignof(struct strint_ht), size), capacity);
+    struct strint_ht *ht = arena_allocate_aligned(&arena, alignof(struct strint_ht), size);
     if (!ht) {
         assert(false);
     }
+    strint_ht_init(ht, capacity);
+
     assert(ht->count == 0);
 
     char *egg_str_ptr = arena_allocate_aligned(&arena, alignof(char), sizeof("egg"));

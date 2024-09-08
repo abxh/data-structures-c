@@ -364,8 +364,8 @@ static inline void JOIN(FQUEUE_NAME, clear)(FQUEUE_TYPE *self)
 /**
  * @brief Copy the values from a source queue to a destination queue.
  *
- * @param[in,out] dest_src      The destination queue.
- * @param[in] src_src           The source queue.
+ * @param[in,out] dest_ptr      The destination queue.
+ * @param[in] src_ptr           The source queue.
  */
 static inline void JOIN(FQUEUE_NAME, copy)(FQUEUE_TYPE *restrict dest_ptr, const FQUEUE_TYPE *restrict src_ptr)
 {

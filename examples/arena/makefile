@@ -1,7 +1,7 @@
 EXEC_NAME := a.out
 
 CFLAGS     += -I./../../lib
-CFLAGS     += -Wall -Wextra -pedantic
+CFLAGS     += -Wall -Wextra -pedantic -Wconversion -Wshadow
 CFLAGS     += -ggdb3
 # CFLAGS     += -fsanitize=undefined
 # CFLAGS     += -fsanitize=address

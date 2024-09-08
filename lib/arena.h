@@ -29,7 +29,7 @@
 
 #pragma once
 
-#include "align.h"   // align
+#include "align.h"   // align, calc_alignment_padding
 #include "is_pow2.h" // is_pow2
 
 #include <assert.h>
@@ -62,8 +62,10 @@ static inline void arena_init(struct arena *self, const size_t n, unsigned char 
     assert(self);
     assert(backing_buf);
 
-    self->buf_ptr = &backing_buf[0];
-    self->buf_len = n;
+    const uintptr_t padding = calc_alignment_padding(alignof(max_align_t), (uintptr_t)backing_buf);
+
+    self->buf_ptr = &backing_buf[padding];
+    self->buf_len = n - padding;
     self->curr_offset = 0;
     self->prev_offset = 0;
 }
@@ -103,7 +105,7 @@ static inline void *arena_allocate_aligned(struct arena *self, const size_t alig
         return NULL;
     }
 
-    const uintptr_t relative_offset = (unsigned char *)ptr - &self->buf_ptr[0];
+    const uintptr_t relative_offset = (uintptr_t)((unsigned char *)ptr - &self->buf_ptr[0]);
 
     self->prev_offset = relative_offset;
     self->curr_offset = relative_offset + size;

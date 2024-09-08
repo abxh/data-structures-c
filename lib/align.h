@@ -79,3 +79,27 @@ static inline void *align(const size_t alignment, const size_t size, void **ptr_
         return (*ptr_ptr = (void *)aligned);
     }
 }
+
+/**
+ * @brief Calculate the alignment padding required to align a pointer.
+ *
+ * @param[in] alignment	        The alignment
+ * @param[in] ptr               Pointer to a buffer as `uintptr_t`.
+ *
+ * @return The padding to be added to `ptr` to align `ptr`.
+ */
+static inline uintptr_t calc_alignment_padding(const size_t alignment, const uintptr_t ptr)
+{
+    assert(is_pow2(alignment));
+
+    const uintptr_t aligned = (ptr - 1u + alignment) & -alignment;
+    const uintptr_t padding = aligned - ptr;
+
+    return padding;
+}
+
+/**
+ * @def CALC_ALIGNMENT_PADDING(alignment, ptr)
+ * @brief compile time `calc_alignment_padding`.
+ */
+#define CALC_ALIGNMENT_PADDING(alignment, ptr) ((((ptr) - 1u + (alignment)) & -(alignment)) - (ptr))

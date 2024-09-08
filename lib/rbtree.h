@@ -127,6 +127,13 @@
 #ifdef ALLOW_DUPLICATES
 #endif
 
+/**
+ * @def KEY_MEMBER_IS_FIRST
+ * @brief Put key member in front of every other member.
+ */
+#ifdef KEY_MEMBER_IS_FIRST
+#endif
+
 /// @cond DO_NOT_DOCUMENT
 #define RBTREE_NODE_TYPE                        struct JOIN(RBTREE_NAME, node)
 #define RBTREE_CONTAINS_KEY                     JOIN(RBTREE_NAME, contains_key)
@@ -154,6 +161,9 @@
  * @brief Generated red-black tree node struct type for a given `KEY_TYPE`.
  */
 struct JOIN(RBTREE_NAME, node) {
+#ifdef KEY_MEMBER_IS_FIRST
+    KEY_TYPE key; ///< node key
+#endif
     uintptr_t __parent_ptr_with_color_bit; ///< variable containing both the
                                            ///< parent pointer and color bit
     union {
@@ -163,7 +173,9 @@ struct JOIN(RBTREE_NAME, node) {
         };
         RBTREE_NODE_TYPE *child_ptrs[2]; ///< array of child pointers
     };
+#ifndef KEY_MEMBER_IS_FIRST
     KEY_TYPE key; ///< node key
+#endif
 };
 
 // }}}
@@ -700,10 +712,10 @@ Case_6:
 #undef VALUE_TYPE
 #undef KEY_IS_STRICTLY_LESS
 #undef ALLOW_DUPLICATES
-#undef KEY_IS_FIRST
+#undef KEY_MEMBER_IS_FIRST
 
-#undef RBTREE_TYPE
 #undef RBTREE_NAME
+#undef RBTREE_TYPE
 #undef RBTREE_NODE_TYPE
 
 #undef RBTREE_NODE_IS_RED

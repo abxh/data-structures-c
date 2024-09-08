@@ -23,6 +23,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <stdio.h>
+
 static inline uintptr_t align_forward(size_t p, size_t a)
 {
     void *ptr = (void *)p;
@@ -40,13 +42,15 @@ int main(void)
 
     size_t A[] = {1, 2, 4, 8};
 
-    for (size_t i = 0; i < 129; i++) {
-        for (size_t j = 0; j < sizeof(A) / sizeof(*A); j++) {
+    for (size_t j = 0; j < sizeof(A) / sizeof(*A); j++) {
+        for (size_t i = 0; i < 129; i++) {
             if (P[i] % A[j] == 0) {
                 assert(align_forward(P[i], A[j]) == P[i]);
+                assert(calc_alignment_padding(A[j], P[i]) + P[i] == P[i]);
             }
             else {
                 assert(align_forward(P[i], A[j]) == P[i] + A[j] - (P[i] % A[j]));
+                assert(calc_alignment_padding(A[j], P[i]) + P[i] == P[i] + A[j] - (P[i] % A[j]));
             }
         }
     }

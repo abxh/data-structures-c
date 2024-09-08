@@ -24,7 +24,7 @@ void list_stack(void)
         if (!ptr) {
             assert(false);
         }
-        ptr->c = 'a' + i;
+        ptr->c = 'a' + (char)i;
 
         list_node_init(&ptr->node);
         list_node_add_after(&ptr->node, &head);
@@ -122,7 +122,7 @@ void list_queue(void)
         if (!ptr) {
             assert(false);
         }
-        ptr->c = 'a' + i;
+        ptr->c = 'a' + (char)i;
 
         list_node_init(&ptr->node);
         list_node_add_before(&ptr->node, &tail);

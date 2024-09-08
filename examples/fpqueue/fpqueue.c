@@ -30,7 +30,7 @@ static void int_example(void)
 
     assert(pq->capacity >= 10);
 
-    const int values[10] = {3, 1, 5, 2, 4, 7, 6, 10, 9, 8};
+    const uint32_t values[10] = {3, 1, 5, 2, 4, 7, 6, 10, 9, 8};
 
     assert(pqueue_int_is_empty(pq));
     assert(pq->count == 0);
@@ -38,7 +38,7 @@ static void int_example(void)
     for (int i = 0; i < 10; i++) {
         const uint32_t priority = values[i];
 
-        pqueue_int_push(pq, values[i], priority);
+        pqueue_int_push(pq, (int)values[i], priority);
 
         /* preorder_traverse_and_print(pq, 0); */
         /* printf("\n"); */

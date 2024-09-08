@@ -57,7 +57,7 @@ void uintstk_example(void)
 {
     const size_t lim = 1e+6;
 
-    struct uintstk *s = uintstk_create(lim);
+    struct uintstk *s = uintstk_create((uint32_t)lim);
     if (!s) {
         assert(false);
     }
@@ -72,7 +72,7 @@ void uintstk_example(void)
     }
     uintstk_copy(s_copy, s);
 
-    for (unsigned int i = lim; i >= 1; i--) {
+    for (unsigned int i = (unsigned int)lim; i >= 1; i--) {
         assert(i == uintstk_pop(s));
     }
 

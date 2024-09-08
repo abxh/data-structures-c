@@ -13,6 +13,7 @@
     - contains_key
     - get_value / get_value_mut
     - search_node
+    - search_best_node
 
     Mutating operation types:
     - init

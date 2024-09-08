@@ -56,7 +56,7 @@ void int_queue_example(const bool offset)
 {
     const int lim = 1e+6;
 
-    struct int_queue *q = int_queue_create(lim);
+    struct int_queue *q = int_queue_create((uint32_t)lim);
 
     if (!q) {
         assert(false);
@@ -75,7 +75,7 @@ void int_queue_example(const bool offset)
         int_queue_enqueue(q, i);
     }
 
-    struct int_queue *q_copy = int_queue_create(lim);
+    struct int_queue *q_copy = int_queue_create((uint32_t)lim);
     if (!q_copy) {
         assert(false);
     }
