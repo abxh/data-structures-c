@@ -118,15 +118,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ab5d94812943c8ac66f9c349c1b8551e2" id="r_ab5d94812943c8ac66f9c349c1b8551e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab5d94812943c8ac66f9c349c1b8551e2">rbtree_node_entry</a>(ptr,  type,  member)</td></tr>
 <tr class="memdesc:ab5d94812943c8ac66f9c349c1b8551e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtain a pointer to the struct that contains the rbtree node as a member.  <br /></td></tr>
 <tr class="separator:ab5d94812943c8ac66f9c349c1b8551e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47f2e62c0dbebc787052c165afcada0e" id="r_a47f2e62c0dbebc787052c165afcada0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47f2e62c0dbebc787052c165afcada0e">NAME</a>&#160;&#160;&#160;rbtree</td></tr>
-<tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to red black tree types and operations. This must be manually defined before including this header file.  <br /></td></tr>
-<tr class="separator:a47f2e62c0dbebc787052c165afcada0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae35c40bc2f912c11f0e36ac66cba4489" id="r_ae35c40bc2f912c11f0e36ac66cba4489"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a>&#160;&#160;&#160;int</td></tr>
-<tr class="memdesc:ae35c40bc2f912c11f0e36ac66cba4489"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key type. This must be manually defined before including this header file.  <br /></td></tr>
-<tr class="separator:ae35c40bc2f912c11f0e36ac66cba4489"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd9413d137c1a812985b1435f404f5af" id="r_afd9413d137c1a812985b1435f404f5af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a>(a,  b)</td></tr>
-<tr class="memdesc:afd9413d137c1a812985b1435f404f5af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to compare two keys. This must be manually defined before including this header file.  <br /></td></tr>
-<tr class="separator:afd9413d137c1a812985b1435f404f5af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb481d2e5ec4606423fe0878e35e01a0" id="r_aeb481d2e5ec4606423fe0878e35e01a0"><td class="memItemLeft" align="right" valign="top"><a id="aeb481d2e5ec4606423fe0878e35e01a0" name="aeb481d2e5ec4606423fe0878e35e01a0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RBTREE_NAME</b>&#160;&#160;&#160;<a class="el" href="fhashtable_8h.html#a47f2e62c0dbebc787052c165afcada0e">NAME</a></td></tr>
+<tr class="separator:aeb481d2e5ec4606423fe0878e35e01a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -180,75 +174,6 @@ Functions</h2></td></tr>
 <li>CLRS </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="afd9413d137c1a812985b1435f404f5af" name="afd9413d137c1a812985b1435f404f5af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd9413d137c1a812985b1435f404f5af">&#9670;&#160;</a></span>KEY_IS_STRICTLY_LESS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define KEY_IS_STRICTLY_LESS</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>b</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">((a) &lt; (b))</div>
-</div><!-- fragment -->
-<p>Used to compare two keys. This must be manually defined before including this header file. </p>
-<p>Is undefined once header is included.</p>
-<p>Equality for two keys a and b is defined as: </p><ul>
-<li><code>!KEY_IS_STRICTLY_LESS(a,b) &amp;&amp; !KEY_IS_STRICTLY_LESS(b,a)</code></li>
-</ul>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>If key a is strictly less than b. </td></tr>
-    <tr><td class="paramname">false</td><td>If key a is greater than or equal to b. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ae35c40bc2f912c11f0e36ac66cba4489" name="ae35c40bc2f912c11f0e36ac66cba4489"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae35c40bc2f912c11f0e36ac66cba4489">&#9670;&#160;</a></span>KEY_TYPE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define KEY_TYPE&#160;&#160;&#160;int</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The key type. This must be manually defined before including this header file. </p>
-<p>Is undefined once header is included. </p>
-
-</div>
-</div>
-<a id="a47f2e62c0dbebc787052c165afcada0e" name="a47f2e62c0dbebc787052c165afcada0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47f2e62c0dbebc787052c165afcada0e">&#9670;&#160;</a></span>NAME</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define NAME&#160;&#160;&#160;rbtree</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Prefix to red black tree types and operations. This must be manually defined before including this header file. </p>
-<p>Is undefined after header is included. </p>
-
-</div>
-</div>
 <a id="ab5d94812943c8ac66f9c349c1b8551e2" name="ab5d94812943c8ac66f9c349c1b8551e2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab5d94812943c8ac66f9c349c1b8551e2">&#9670;&#160;</a></span>rbtree_node_entry</h2>
 

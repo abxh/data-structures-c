@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['right_5fptr_0',['right_ptr',['../structrbtree__node.html#affdb052d7620448a03b0350e90df2be0',1,'rbtree_node']]]
+  ['prev_5foffset_0',['prev_offset',['../structarena.html#a0f4902f130313a403f0f716eadf49d57',1,'arena']]],
+  ['prev_5fptr_1',['prev_ptr',['../structlist__node.html#add47be736de689c60869890312b7a14f',1,'list_node']]],
+  ['priority_2',['priority',['../structfpqueue__element.html#a39eb48be1a21880bf15694e54cf19a29',1,'fpqueue_element']]]
 ];

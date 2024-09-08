@@ -146,7 +146,7 @@ $(function(){ initResizable(false); });
 <div class="line">{</div>
 <div class="line">    <span class="keyword">const</span> <span class="keywordtype">int</span> lim = 1e+6;</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">struct </span>int_queue *q = int_queue_create(lim);</div>
+<div class="line">    <span class="keyword">struct </span>int_queue *q = int_queue_create((uint32_t)lim);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span> (!q) {</div>
 <div class="line">        assert(<span class="keyword">false</span>);</div>
@@ -165,7 +165,7 @@ $(function(){ initResizable(false); });
 <div class="line">        int_queue_enqueue(q, i);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">struct </span>int_queue *q_copy = int_queue_create(lim);</div>
+<div class="line">    <span class="keyword">struct </span>int_queue *q_copy = int_queue_create((uint32_t)lim);</div>
 <div class="line">    <span class="keywordflow">if</span> (!q_copy) {</div>
 <div class="line">        assert(<span class="keyword">false</span>);</div>
 <div class="line">    }</div>

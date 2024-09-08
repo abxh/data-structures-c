@@ -151,6 +151,21 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    }</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>}</div>
 </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="foldopen" id="foldopen00091" data-start="{" data-end="}">
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="align_8h.html#a77e7ae79fc43f1474ddf5ce8e977c9d0">   91</a></span><span class="keyword">static</span> <span class="keyword">inline</span> uintptr_t <a class="code hl_function" href="align_8h.html#a77e7ae79fc43f1474ddf5ce8e977c9d0">calc_alignment_padding</a>(<span class="keyword">const</span> <span class="keywordtype">size_t</span> alignment, <span class="keyword">const</span> uintptr_t ptr)</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>{</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    assert(<a class="code hl_function" href="is__pow2_8h.html#afdfaaa82d5cd20478f11fa9ed7ae0080">is_pow2</a>(alignment));</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keyword">const</span> uintptr_t aligned = (ptr - 1u + alignment) &amp; -alignment;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keyword">const</span> uintptr_t padding = aligned - ptr;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordflow">return</span> padding;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>}</div>
+</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="align_8h.html#aa420b091d1b3c803fec2f508079188b6">  105</a></span><span class="preprocessor">#define CALC_ALIGNMENT_PADDING(alignment, ptr) ((((ptr) - 1u + (alignment)) &amp; -(alignment)) - (ptr))</span></div>
+<div class="ttc" id="aalign_8h_html_a77e7ae79fc43f1474ddf5ce8e977c9d0"><div class="ttname"><a href="align_8h.html#a77e7ae79fc43f1474ddf5ce8e977c9d0">calc_alignment_padding</a></div><div class="ttdeci">static uintptr_t calc_alignment_padding(const size_t alignment, const uintptr_t ptr)</div><div class="ttdoc">Calculate the alignment padding required to align a pointer.</div><div class="ttdef"><b>Definition</b> align.h:91</div></div>
 <div class="ttc" id="aalign_8h_html_afd8e69174fdd8e730fe248b284eacfd0"><div class="ttname"><a href="align_8h.html#afd8e69174fdd8e730fe248b284eacfd0">align</a></div><div class="ttdeci">static void * align(const size_t alignment, const size_t size, void **ptr_ptr, size_t *space_ptr)</div><div class="ttdoc">Align pointer to the next alignment boundary.</div><div class="ttdef"><b>Definition</b> align.h:43</div></div>
 <div class="ttc" id="ais__pow2_8h_html"><div class="ttname"><a href="is__pow2_8h.html">is_pow2.h</a></div><div class="ttdoc">Check if a number is a power of two.</div></div>
 <div class="ttc" id="ais__pow2_8h_html_afdfaaa82d5cd20478f11fa9ed7ae0080"><div class="ttname"><a href="is__pow2_8h.html#afdfaaa82d5cd20478f11fa9ed7ae0080">is_pow2</a></div><div class="ttdeci">static size_t is_pow2(const size_t x)</div><div class="ttdoc">Check if a number is a power of two.</div><div class="ttdef"><b>Definition</b> is_pow2.h:34</div></div>

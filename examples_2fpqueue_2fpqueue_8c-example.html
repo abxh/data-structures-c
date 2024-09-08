@@ -120,7 +120,7 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line">    assert(pq-&gt;capacity &gt;= 10);</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">int</span> values[10] = {3, 1, 5, 2, 4, 7, 6, 10, 9, 8};</div>
+<div class="line">    <span class="keyword">const</span> uint32_t values[10] = {3, 1, 5, 2, 4, 7, 6, 10, 9, 8};</div>
 <div class="line"> </div>
 <div class="line">    assert(pqueue_int_is_empty(pq));</div>
 <div class="line">    assert(pq-&gt;count == 0);</div>
@@ -128,7 +128,7 @@ $(function(){ initResizable(false); });
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 10; i++) {</div>
 <div class="line">        <span class="keyword">const</span> uint32_t priority = values[i];</div>
 <div class="line"> </div>
-<div class="line">        pqueue_int_push(pq, values[i], priority);</div>
+<div class="line">        pqueue_int_push(pq, (<span class="keywordtype">int</span>)values[i], priority);</div>
 <div class="line"> </div>
 <div class="line">        <span class="comment">/* preorder_traverse_and_print(pq, 0); */</span></div>
 <div class="line">        <span class="comment">/* printf(&quot;\n&quot;); */</span></div>

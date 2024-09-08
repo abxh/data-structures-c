@@ -109,16 +109,18 @@ $(function(){ initResizable(false); });
 <div class="line"><span class="keywordtype">void</span> str_int_ht_test_alt(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="keyword">struct </span><a id="_a0" name="_a0"></a><a class="code hl_struct" href="structarena.html">arena</a> <a class="code hl_struct" href="structarena.html">arena</a>;</div>
-<div class="line">    <a id="a1" name="a1"></a><a class="code hl_function" href="arena_8h.html#a7db71fb9cc2f471dab7268922ea8c58f">arena_init</a>(&amp;<a class="code hl_struct" href="structarena.html">arena</a>, <span class="keyword">sizeof</span>(backing_buf), backing_buf);</div>
+<div class="line">    <a id="a1" name="a1"></a><a class="code hl_function" href="arena_8h.html#a7db71fb9cc2f471dab7268922ea8c58f">arena_init</a>(&amp;<a class="code hl_struct" href="structarena.html">arena</a>, <span class="keyword">sizeof</span>(backing_buf) - 1, &amp;backing_buf[1]);</div>
 <div class="line"> </div>
 <div class="line">    uint32_t capacity = 3;</div>
 <div class="line">    uint32_t size;</div>
 <div class="line">    assert(strint_ht_calc_sizeof(&amp;capacity, &amp;size) == <span class="keyword">true</span>);</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">struct </span>strint_ht *ht = strint_ht_init(<a id="a2" name="a2"></a><a class="code hl_function" href="arena_8h.html#a1cf73dd3affc5697031b8904243976b0">arena_allocate_aligned</a>(&amp;<a class="code hl_struct" href="structarena.html">arena</a>, <span class="keyword">alignof</span>(<span class="keyword">struct</span> strint_ht), size), capacity);</div>
+<div class="line">    <span class="keyword">struct </span>strint_ht *ht = <a id="a2" name="a2"></a><a class="code hl_function" href="arena_8h.html#a1cf73dd3affc5697031b8904243976b0">arena_allocate_aligned</a>(&amp;<a class="code hl_struct" href="structarena.html">arena</a>, <span class="keyword">alignof</span>(<span class="keyword">struct</span> strint_ht), size);</div>
 <div class="line">    <span class="keywordflow">if</span> (!ht) {</div>
 <div class="line">        assert(<span class="keyword">false</span>);</div>
 <div class="line">    }</div>
+<div class="line">    strint_ht_init(ht, capacity);</div>
+<div class="line"> </div>
 <div class="line">    assert(ht-&gt;count == 0);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordtype">char</span> *egg_str_ptr = <a class="code hl_function" href="arena_8h.html#a1cf73dd3affc5697031b8904243976b0">arena_allocate_aligned</a>(&amp;<a class="code hl_struct" href="structarena.html">arena</a>, <span class="keyword">alignof</span>(<span class="keywordtype">char</span>), <span class="keyword">sizeof</span>(<span class="stringliteral">&quot;egg&quot;</span>));</div>
@@ -168,9 +170,9 @@ $(function(){ initResizable(false); });
 <div class="line">    assert(!strint_ht_contains_key(ht, <span class="stringliteral">&quot;egg&quot;</span>));</div>
 <div class="line">}</div>
 <div class="ttc" id="aarena_8h_html"><div class="ttname"><a href="arena_8h.html">arena.h</a></div><div class="ttdoc">Arena allocator.</div></div>
-<div class="ttc" id="aarena_8h_html_a1cf73dd3affc5697031b8904243976b0"><div class="ttname"><a href="arena_8h.html#a1cf73dd3affc5697031b8904243976b0">arena_allocate_aligned</a></div><div class="ttdeci">static void * arena_allocate_aligned(struct arena *self, const size_t alignment, const size_t size)</div><div class="ttdoc">Get the pointer to a chunk of the arena. With specific alignment.</div><div class="ttdef"><b>Definition</b> arena.h:94</div></div>
+<div class="ttc" id="aarena_8h_html_a1cf73dd3affc5697031b8904243976b0"><div class="ttname"><a href="arena_8h.html#a1cf73dd3affc5697031b8904243976b0">arena_allocate_aligned</a></div><div class="ttdeci">static void * arena_allocate_aligned(struct arena *self, const size_t alignment, const size_t size)</div><div class="ttdoc">Get the pointer to a chunk of the arena. With specific alignment.</div><div class="ttdef"><b>Definition</b> arena.h:96</div></div>
 <div class="ttc" id="aarena_8h_html_a7db71fb9cc2f471dab7268922ea8c58f"><div class="ttname"><a href="arena_8h.html#a7db71fb9cc2f471dab7268922ea8c58f">arena_init</a></div><div class="ttdeci">static void arena_init(struct arena *self, const size_t n, unsigned char backing_buf[n])</div><div class="ttdoc">Initialize the arena.</div><div class="ttdef"><b>Definition</b> arena.h:60</div></div>
-<div class="ttc" id="aarena_8h_html_af7d11d272a1064a0155820e998df1ea2"><div class="ttname"><a href="arena_8h.html#af7d11d272a1064a0155820e998df1ea2">arena_allocate</a></div><div class="ttdeci">static void * arena_allocate(struct arena *self, const size_t size)</div><div class="ttdoc">Get the pointer to a chunk of the arena.</div><div class="ttdef"><b>Definition</b> arena.h:125</div></div>
+<div class="ttc" id="aarena_8h_html_af7d11d272a1064a0155820e998df1ea2"><div class="ttname"><a href="arena_8h.html#af7d11d272a1064a0155820e998df1ea2">arena_allocate</a></div><div class="ttdeci">static void * arena_allocate(struct arena *self, const size_t size)</div><div class="ttdoc">Get the pointer to a chunk of the arena.</div><div class="ttdef"><b>Definition</b> arena.h:127</div></div>
 <div class="ttc" id="afhashtable_8h_html"><div class="ttname"><a href="fhashtable_8h.html">fhashtable.h</a></div><div class="ttdoc">Fixed-size open-adressing hashtable (robin hood hashing)</div></div>
 <div class="ttc" id="afnvhash_8h_html"><div class="ttname"><a href="fnvhash_8h.html">fnvhash.h</a></div><div class="ttdoc">FNV-1a hashing function.</div></div>
 <div class="ttc" id="astructarena_html"><div class="ttname"><a href="structarena.html">arena</a></div><div class="ttdoc">Arena data struct.</div><div class="ttdef"><b>Definition</b> arena.h:46</div></div>
