@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hash_5ffunction_0',['HASH_FUNCTION',['../fhashtable_8h.html#a261e2befaaf40b08c99064bb53bf0b44',1,'fhashtable.h']]]
+  ['is_5fpow2_0',['IS_POW2',['../is__pow2_8h.html#a36d931d2e505ad8cd048c723c3581e54',1,'is_pow2.h']]]
 ];

@@ -121,19 +121,19 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">#ifndef NAME</span></div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="preprocessor">#error &quot;Must define NAME.&quot;</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="preprocessor">#define NAME rbtree</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="rbtree_8h.html#a47f2e62c0dbebc787052c165afcada0e">   80</a></span><span class="preprocessor">#define NAME rbtree</span></div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="preprocessor">#else</span></div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="preprocessor">#define RBTREE_NAME NAME</span></div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="preprocessor">#ifndef KEY_TYPE</span></div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#error &quot;Must define KEY_TYPE.&quot;</span></div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">#define KEY_TYPE int</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="rbtree_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">   94</a></span><span class="preprocessor">#define KEY_TYPE int</span></div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="preprocessor">#ifndef KEY_IS_STRICTLY_LESS</span></div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="preprocessor">#error &quot;Must define KEY_IS_STRICTLY_LESS.&quot;</span></div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="preprocessor">#define KEY_IS_STRICTLY_LESS(a, b) ((a) &lt; (b))</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="rbtree_8h.html#afd9413d137c1a812985b1435f404f5af">  112</a></span><span class="preprocessor">#define KEY_IS_STRICTLY_LESS(a, b) ((a) &lt; (b))</span></div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="preprocessor">#ifdef ALLOW_DUPLICATES</span></div>
@@ -166,7 +166,7 @@ $(function(){ initResizable(false); });
 <div class="foldopen" id="foldopen00163" data-start="{" data-end="};">
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno"><a class="line" href="structrbtree__node.html">  163</a></span><span class="keyword">struct </span><a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(RBTREE_NAME, node) {</div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="preprocessor">#ifdef KEY_MEMBER_IS_FIRST</span></div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno"><a class="line" href="structrbtree__node.html#ab3cecc675e2f8741378d376666325f2b">  165</a></span>    <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> <a class="code hl_variable" href="structrbtree__node.html#ab3cecc675e2f8741378d376666325f2b">key</a>; </div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key; </div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="structrbtree__node.html#a406a3b3318108039c0aca1fc5aaa85fa">  167</a></span>    uintptr_t <a class="code hl_variable" href="structrbtree__node.html#a406a3b3318108039c0aca1fc5aaa85fa">__parent_ptr_with_color_bit</a>; </div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    <span class="keyword">union </span>{</div>
@@ -177,7 +177,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="structrbtree__node.html#a1a6afe6f498a3018a12f23eb63f6c8de">  174</a></span>        RBTREE_NODE_TYPE *child_ptrs[2]; </div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    };</div>
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="preprocessor">#ifndef KEY_MEMBER_IS_FIRST</span></div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key; </div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno"><a class="line" href="structrbtree__node.html#ab3cecc675e2f8741378d376666325f2b">  177</a></span>    <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> <a class="code hl_variable" href="structrbtree__node.html#ab3cecc675e2f8741378d376666325f2b">key</a>; </div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>};</div>
 </div>
@@ -255,7 +255,7 @@ $(function(){ initResizable(false); });
 </div>
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
 <div class="foldopen" id="foldopen00266" data-start="{" data-end="}">
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno"><a class="line" href="rbtree_8h.html#a0e1490185762247223539bb1373f5c9f">  266</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(RBTREE_NAME, node_init)(RBTREE_NODE_TYPE *node_ptr, <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno"><a class="line" href="rbtree_8h.html#a0e1490185762247223539bb1373f5c9f">  266</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(RBTREE_NAME, node_init)(RBTREE_NODE_TYPE *node_ptr, <a class="code hl_define" href="rbtree_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>{</div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    assert(node_ptr != NULL);</div>
 <div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
@@ -302,15 +302,15 @@ $(function(){ initResizable(false); });
 </div>
 <div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span> </div>
 <div class="foldopen" id="foldopen00333" data-start="{" data-end="}">
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno"><a class="line" href="rbtree_8h.html#a75ff31d07cf30f7bbe777e6dfbd03849">  333</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(RBTREE_NAME, contains_key)(RBTREE_NODE_TYPE **rootptr_ptr, <span class="keyword">const</span> <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno"><a class="line" href="rbtree_8h.html#a75ff31d07cf30f7bbe777e6dfbd03849">  333</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(RBTREE_NAME, contains_key)(RBTREE_NODE_TYPE **rootptr_ptr, <span class="keyword">const</span> <a class="code hl_define" href="rbtree_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</div>
 <div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>{</div>
 <div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>    assert(rootptr_ptr != NULL);</div>
 <div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span> </div>
 <div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    RBTREE_NODE_TYPE *node_ptr = *rootptr_ptr;</div>
 <div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span> </div>
 <div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    <span class="keywordflow">while</span> (node_ptr != NULL) {</div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> is_strictly_less = <a class="code hl_define" href="freelist_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a>(key, node_ptr-&gt;key);</div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> is_strictly_greater = <a class="code hl_define" href="freelist_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a>(node_ptr-&gt;key, key);</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> is_strictly_less = <a class="code hl_define" href="rbtree_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a>(key, node_ptr-&gt;key);</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> is_strictly_greater = <a class="code hl_define" href="rbtree_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a>(node_ptr-&gt;key, key);</div>
 <div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> is_equal = !is_strictly_less &amp;&amp; !is_strictly_greater;</div>
 <div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span> </div>
 <div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>        <span class="keywordflow">if</span> (is_equal) {</div>
@@ -328,14 +328,14 @@ $(function(){ initResizable(false); });
 </div>
 <div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span> </div>
 <div class="foldopen" id="foldopen00366" data-start="{" data-end="}">
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno"><a class="line" href="rbtree_8h.html#a0befbba8132e748956d546893515e030">  366</a></span><span class="keyword">static</span> <span class="keyword">inline</span> RBTREE_NODE_TYPE *<a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(RBTREE_NAME, search_node)(RBTREE_NODE_TYPE **rootptr_ptr, <span class="keyword">const</span> <a class="code hl_define" href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno"><a class="line" href="rbtree_8h.html#a0befbba8132e748956d546893515e030">  366</a></span><span class="keyword">static</span> <span class="keyword">inline</span> RBTREE_NODE_TYPE *<a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(RBTREE_NAME, search_node)(RBTREE_NODE_TYPE **rootptr_ptr, <span class="keyword">const</span> <a class="code hl_define" href="rbtree_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a> key)</div>
 <div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>{</div>
 <div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    assert(rootptr_ptr != NULL);</div>
 <div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span> </div>
 <div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>    RBTREE_NODE_TYPE *node_ptr = *rootptr_ptr;</div>
 <div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>    <span class="keywordflow">while</span> (node_ptr != NULL) {</div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> is_strictly_less = <a class="code hl_define" href="freelist_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a>(key, node_ptr-&gt;key);</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> is_strictly_greater = <a class="code hl_define" href="freelist_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a>(node_ptr-&gt;key, key);</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> is_strictly_less = <a class="code hl_define" href="rbtree_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a>(key, node_ptr-&gt;key);</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> is_strictly_greater = <a class="code hl_define" href="rbtree_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a>(node_ptr-&gt;key, key);</div>
 <div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> is_equal = !is_strictly_less &amp;&amp; !is_strictly_greater;</div>
 <div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span> </div>
 <div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        <span class="keywordflow">if</span> (is_equal) {</div>
@@ -365,7 +365,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>    RBTREE_NODE_TYPE *current_ptr = *rootptr_ptr;</div>
 <div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span> </div>
 <div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>    <span class="keywordflow">while</span> (current_ptr != NULL) {</div>
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> is_strictly_greater = <a class="code hl_define" href="freelist_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a>(current_ptr-&gt;key, node_ptr-&gt;key);</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> is_strictly_greater = <a class="code hl_define" href="rbtree_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a>(current_ptr-&gt;key, node_ptr-&gt;key);</div>
 <div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span> </div>
 <div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>        parent_ptr = current_ptr;</div>
 <div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span> </div>
@@ -385,7 +385,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>        *rootptr_ptr = node_ptr;</div>
 <div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>    }</div>
 <div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>    <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>        <span class="keyword">const</span> <span class="keywordtype">int</span> dir = <a class="code hl_define" href="freelist_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a>(parent_ptr-&gt;key, node_ptr-&gt;key) ? 1 : 0;</div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>        <span class="keyword">const</span> <span class="keywordtype">int</span> dir = <a class="code hl_define" href="rbtree_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a>(parent_ptr-&gt;key, node_ptr-&gt;key) ? 1 : 0;</div>
 <div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span> </div>
 <div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>        parent_ptr-&gt;child_ptrs[dir] = node_ptr;</div>
 <div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span> </div>
@@ -691,12 +691,13 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span><span class="comment">// vim: ft=c fdm=marker</span></div>
 <div class="ttc" id="acontainer__of_8h_html"><div class="ttname"><a href="container__of_8h.html">container_of.h</a></div><div class="ttdoc">container_of definition</div></div>
 <div class="ttc" id="afhashtable_8h_html_ae35c40bc2f912c11f0e36ac66cba4489"><div class="ttname"><a href="fhashtable_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></div><div class="ttdeci">#define KEY_TYPE</div><div class="ttdoc">The key type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:112</div></div>
-<div class="ttc" id="afreelist_8h_html_afd9413d137c1a812985b1435f404f5af"><div class="ttname"><a href="freelist_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a></div><div class="ttdeci">#define KEY_IS_STRICTLY_LESS(a, b)</div><div class="ttdoc">Used to compare two keys. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> freelist.h:48</div></div>
 <div class="ttc" id="apaste_8h_html"><div class="ttname"><a href="paste_8h.html">paste.h</a></div><div class="ttdoc">C preprocessor macros for pasting tokens together.</div></div>
 <div class="ttc" id="apaste_8h_html_a1665af4d61d120cdba4d77101d179703"><div class="ttname"><a href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a></div><div class="ttdeci">#define JOIN(a, b)</div><div class="ttdoc">First expand tokens, then paste them together with a _ in between.</div><div class="ttdef"><b>Definition</b> paste.h:35</div></div>
+<div class="ttc" id="arbtree_8h_html_ae35c40bc2f912c11f0e36ac66cba4489"><div class="ttname"><a href="rbtree_8h.html#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></div><div class="ttdeci">#define KEY_TYPE</div><div class="ttdoc">The key type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> rbtree.h:94</div></div>
+<div class="ttc" id="arbtree_8h_html_afd9413d137c1a812985b1435f404f5af"><div class="ttname"><a href="rbtree_8h.html#afd9413d137c1a812985b1435f404f5af">KEY_IS_STRICTLY_LESS</a></div><div class="ttdeci">#define KEY_IS_STRICTLY_LESS(a, b)</div><div class="ttdoc">Used to compare two keys. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> rbtree.h:112</div></div>
 <div class="ttc" id="astructrbtree__node_html_a406a3b3318108039c0aca1fc5aaa85fa"><div class="ttname"><a href="structrbtree__node.html#a406a3b3318108039c0aca1fc5aaa85fa">rbtree_node::__parent_ptr_with_color_bit</a></div><div class="ttdeci">uintptr_t __parent_ptr_with_color_bit</div><div class="ttdef"><b>Definition</b> rbtree.h:167</div></div>
 <div class="ttc" id="astructrbtree__node_html_a67811326865204c4e1af7973d1a45734"><div class="ttname"><a href="structrbtree__node.html#a67811326865204c4e1af7973d1a45734">rbtree_node::left_ptr</a></div><div class="ttdeci">rbtree_node_type * left_ptr</div><div class="ttdoc">pointer to left node</div><div class="ttdef"><b>Definition</b> rbtree.h:171</div></div>
-<div class="ttc" id="astructrbtree__node_html_ab3cecc675e2f8741378d376666325f2b"><div class="ttname"><a href="structrbtree__node.html#ab3cecc675e2f8741378d376666325f2b">rbtree_node::key</a></div><div class="ttdeci">KEY_TYPE key</div><div class="ttdoc">node key</div><div class="ttdef"><b>Definition</b> rbtree.h:165</div></div>
+<div class="ttc" id="astructrbtree__node_html_ab3cecc675e2f8741378d376666325f2b"><div class="ttname"><a href="structrbtree__node.html#ab3cecc675e2f8741378d376666325f2b">rbtree_node::key</a></div><div class="ttdeci">KEY_TYPE key</div><div class="ttdoc">node key</div><div class="ttdef"><b>Definition</b> rbtree.h:177</div></div>
 <div class="ttc" id="astructrbtree__node_html_affdb052d7620448a03b0350e90df2be0"><div class="ttname"><a href="structrbtree__node.html#affdb052d7620448a03b0350e90df2be0">rbtree_node::right_ptr</a></div><div class="ttdeci">rbtree_node_type * right_ptr</div><div class="ttdoc">pointer to right node</div><div class="ttdef"><b>Definition</b> rbtree.h:172</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

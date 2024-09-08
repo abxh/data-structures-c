@@ -5,7 +5,7 @@ var indexSectionsWithContent =
   2: "acfilmpr",
   3: "acfilmrs",
   4: "_bcehklnoprsv",
-  5: "acfhijklnprvx",
+  5: "cfhijklnprvx",
   6: "cds"
 };
 
