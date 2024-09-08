@@ -43,11 +43,13 @@ struct freelist_header {
     char : CALC_ALIGNMENT_PADDING(alignof(max_align_t), 2 * sizeof(size_t)); ///< Padding for aligning user data
 };
 
+/// @cond DO_NOT_DOCUMENT
 #define NAME                       freetree
 #define KEY_TYPE                   struct freelist_header
 #define KEY_IS_STRICTLY_LESS(a, b) ((a).curr_block_size < (b).curr_block_size)
 #define KEY_MEMBER_IS_FIRST
 #define ALLOW_DUPLICATES
+/// @endcond
 #include "rbtree.h"
 
 /**
