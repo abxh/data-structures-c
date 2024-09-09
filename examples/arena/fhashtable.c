@@ -22,7 +22,7 @@ void str_int_ht_test_alt(void)
     arena_init(&arena, sizeof(backing_buf) - 1, &backing_buf[1]);
 
     uint32_t capacity = 3;
-    uint32_t size;
+    uint32_t size = 0;
     assert(strint_ht_calc_sizeof(&capacity, &size) == true);
 
     struct strint_ht *ht = arena_allocate_aligned(&arena, alignof(struct strint_ht), size);
