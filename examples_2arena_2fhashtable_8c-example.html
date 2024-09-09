@@ -113,8 +113,10 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line">    uint32_t capacity = 3;</div>
 <div class="line">    uint32_t size = 0;</div>
-<div class="line">    assert(strint_ht_calc_sizeof(&amp;capacity, &amp;size) == <span class="keyword">true</span>);</div>
-<div class="line"> </div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">bool</span> r = strint_ht_calc_sizeof(&amp;capacity, &amp;size);</div>
+<div class="line">    <span class="keywordflow">if</span> (!r) {</div>
+<div class="line">        assert(<span class="keyword">false</span>);</div>
+<div class="line">    }</div>
 <div class="line">    <span class="keyword">struct </span>strint_ht *ht = <a id="a2" name="a2"></a><a class="code hl_function" href="arena_8h.html#a1cf73dd3affc5697031b8904243976b0">arena_allocate_aligned</a>(&amp;<a class="code hl_struct" href="structarena.html">arena</a>, <span class="keyword">alignof</span>(<span class="keyword">struct</span> strint_ht), size);</div>
 <div class="line">    <span class="keywordflow">if</span> (!ht) {</div>
 <div class="line">        assert(<span class="keyword">false</span>);</div>
