@@ -328,25 +328,17 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>            freetree_delete_node(&amp;self-&gt;<a class="code hl_variable" href="structfreelist.html#a32e020872558736d7840b952fb9bdce6">rb_rootptr</a>, (<span class="keyword">struct</span> freetree_node *)next);</div>
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        }</div>
 <div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    }</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> diff = header_new.<a class="code hl_variable" href="structfreelist__header.html#a3d3c77e7e1eb63397a1fac069e2ab591">curr_block_size</a> - header-&gt;<a class="code hl_variable" href="structfreelist__header.html#a3d3c77e7e1eb63397a1fac069e2ab591">curr_block_size</a>;</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    <span class="keywordflow">if</span> (header_next) {</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        *header_next =</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>            freelist_header_from(freelist_header_is_freed(header_next), freelist_header_prev_size(header_next) + diff,</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>                                 header_next-&gt;<a class="code hl_variable" href="structfreelist__header.html#a3d3c77e7e1eb63397a1fac069e2ab591">curr_block_size</a>);</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    }</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <span class="keywordflow">if</span> (freelist_header_is_in_freetree(header)) {</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        freetree_delete_node(&amp;self-&gt;<a class="code hl_variable" href="structfreelist.html#a32e020872558736d7840b952fb9bdce6">rb_rootptr</a>, (<span class="keyword">struct</span> freetree_node *)header);</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    }</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    header_new.<a class="code hl_variable" href="structfreelist__header.html#a1ea97180ec54a8a2792daf41bcfb53f9">__prev_block_size_w_freed_bit</a> |= 1;</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    <span class="keywordflow">if</span> (freelist_header_is_in_freetree(&amp;header_new)) {</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        <span class="keyword">struct </span>freetree_node *node_addr = (<span class="keyword">struct </span>freetree_node *)header_addr;</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        freetree_node_init(node_addr, header_new);</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        freetree_insert_node(&amp;self-&gt;<a class="code hl_variable" href="structfreelist.html#a32e020872558736d7840b952fb9bdce6">rb_rootptr</a>, node_addr);</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    }</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        *header_addr = header_new;</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    }</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>}</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="keywordflow">if</span> (header_next) {</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        *header_next = freelist_header_from(freelist_header_is_freed(header_next), header_new.<a class="code hl_variable" href="structfreelist__header.html#a3d3c77e7e1eb63397a1fac069e2ab591">curr_block_size</a>,</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>                                            header_next-&gt;<a class="code hl_variable" href="structfreelist__header.html#a3d3c77e7e1eb63397a1fac069e2ab591">curr_block_size</a>);</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    }</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    header_new.<a class="code hl_variable" href="structfreelist__header.html#a1ea97180ec54a8a2792daf41bcfb53f9">__prev_block_size_w_freed_bit</a> |= 1;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    assert(freelist_header_is_in_freetree(&amp;header_new));</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    <span class="keyword">struct </span>freetree_node *node_addr = (<span class="keyword">struct </span>freetree_node *)header_addr;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    freetree_node_init(node_addr, header_new);</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    freetree_insert_node(&amp;self-&gt;<a class="code hl_variable" href="structfreelist.html#a32e020872558736d7840b952fb9bdce6">rb_rootptr</a>, node_addr);</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>}</div>
 <div class="ttc" id="aalign_8h_html"><div class="ttname"><a href="align_8h.html">align.h</a></div><div class="ttdoc">Align memory.</div></div>
 <div class="ttc" id="aalign_8h_html_a77e7ae79fc43f1474ddf5ce8e977c9d0"><div class="ttname"><a href="align_8h.html#a77e7ae79fc43f1474ddf5ce8e977c9d0">calc_alignment_padding</a></div><div class="ttdeci">static uintptr_t calc_alignment_padding(const size_t alignment, const uintptr_t ptr)</div><div class="ttdoc">Calculate the alignment padding required to align a pointer.</div><div class="ttdef"><b>Definition</b> align.h:91</div></div>
 <div class="ttc" id="aalign_8h_html_aa420b091d1b3c803fec2f508079188b6"><div class="ttname"><a href="align_8h.html#aa420b091d1b3c803fec2f508079188b6">CALC_ALIGNMENT_PADDING</a></div><div class="ttdeci">#define CALC_ALIGNMENT_PADDING(alignment, ptr)</div><div class="ttdoc">compile time calc_alignment_padding.</div><div class="ttdef"><b>Definition</b> align.h:105</div></div>

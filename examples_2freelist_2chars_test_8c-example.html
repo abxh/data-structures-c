@@ -89,18 +89,65 @@ $(function(){ initResizable(false); });
 <div class="contents">
 <p>Example of how <code><a class="el" href="arena_8h.html" title="Arena allocator.">arena.h</a></code> header file is used in practice.</p>
 <div class="fragment"><div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;assert.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="freelist_8h.html">freelist.h</a>&quot;</span></div>
 <div class="line"> </div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> traverse_freelist_header_and_print(<span class="keyword">struct</span> <a id="_a0" name="_a0"></a><a class="code hl_struct" href="structfreelist__header.html">freelist_header</a> *head, <span class="keyword">struct</span> <a id="_a1" name="_a1"></a><a class="code hl_struct" href="structfreelist.html">freelist</a> *fl,</div>
+<div class="line">                                               <span class="keyword">const</span> <span class="keywordtype">size_t</span> prev_size, <span class="keywordtype">char</span> *marked_ptr, <span class="keyword">const</span> <span class="keywordtype">int</span> freetree_node_count)</div>
+<div class="line">{</div>
+<div class="line">    assert(fl);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span> (!head) {</div>
+<div class="line">        assert(freetree_node_count == 0);</div>
+<div class="line">        <span class="keywordflow">return</span>;</div>
+<div class="line">    }</div>
+<div class="line">    assert(prev_size == freelist_header_prev_size(head));</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">bool</span> fl_is_marked = marked_ptr != NULL &amp;&amp; head == (<span class="keywordtype">void</span> *)(marked_ptr - <span class="keyword">sizeof</span>(<span class="keyword">struct</span> <a class="code hl_struct" href="structfreelist__header.html">freelist_header</a>));</div>
+<div class="line"> </div>
+<div class="line">    printf(<span class="stringliteral">&quot; -&gt; %s%s %zu&quot;</span>, fl_is_marked ? <span class="stringliteral">&quot;*&quot;</span> : <span class="stringliteral">&quot;&quot;</span>, freelist_header_is_freed(head) ? <span class="stringliteral">&quot;[freed]&quot;</span> : <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line">           head-&gt;<a id="a2" name="a2"></a><a class="code hl_variable" href="structfreelist__header.html#a3d3c77e7e1eb63397a1fac069e2ab591">curr_block_size</a>);</div>
+<div class="line"> </div>
+<div class="line">    traverse_freelist_header_and_print(freelist_header_next(head, fl), fl, head-&gt;<a class="code hl_variable" href="structfreelist__header.html#a3d3c77e7e1eb63397a1fac069e2ab591">curr_block_size</a>, marked_ptr,</div>
+<div class="line">                                       freetree_node_count - (freelist_header_is_in_freetree(head) ? 1 : 0));</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span> count_freetree_nodes(<span class="keyword">const</span> <span class="keyword">struct</span> freetree_node *root_ptr)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">if</span> (root_ptr == NULL) {</div>
+<div class="line">        <span class="keywordflow">return</span> 0;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">return</span> 1 + count_freetree_nodes(root_ptr-&gt;left_ptr) + count_freetree_nodes(root_ptr-&gt;right_ptr);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> preorder_traverse_freetree_and_print(<span class="keyword">const</span> <span class="keyword">struct</span> freetree_node *root_ptr, <span class="keywordtype">bool</span> print_children)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">if</span> (root_ptr == NULL) {</div>
+<div class="line">        <span class="keywordflow">if</span> (print_children) {</div>
+<div class="line">            printf(<span class="stringliteral">&quot; ()&quot;</span>);</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">return</span>;</div>
+<div class="line">    }</div>
+<div class="line">    printf(<span class="stringliteral">&quot; ( %zu&quot;</span>, root_ptr-&gt;key.curr_block_size);</div>
+<div class="line">    <span class="keywordtype">bool</span> dont_print_children = root_ptr-&gt;left_ptr == NULL &amp;&amp; root_ptr-&gt;right_ptr == NULL;</div>
+<div class="line">    preorder_traverse_freetree_and_print(root_ptr-&gt;left_ptr, !dont_print_children);</div>
+<div class="line">    preorder_traverse_freetree_and_print(root_ptr-&gt;right_ptr, !dont_print_children);</div>
+<div class="line">    printf(<span class="stringliteral">&quot; )&quot;</span>);</div>
+<div class="line">}</div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> buf[4096];</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> chars_test(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keyword">struct </span><a id="_a0" name="_a0"></a><a class="code hl_struct" href="structfreelist.html">freelist</a> fl;</div>
+<div class="line">    (void)(traverse_freelist_header_and_print);</div>
+<div class="line">    (void)(count_freetree_nodes);</div>
+<div class="line">    (void)(preorder_traverse_freetree_and_print);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">struct </span><a class="code hl_struct" href="structfreelist.html">freelist</a> fl;</div>
 <div class="line">    freelist_init(&amp;fl, 4096, buf);</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">char</span> *ptrs[(<span class="charliteral">&#39;z&#39;</span> - <span class="charliteral">&#39;a&#39;</span> + 1) * 3] = {0};</div>
+<div class="line">    <span class="keywordtype">char</span> *ptrs[<span class="charliteral">&#39;z&#39;</span> - <span class="charliteral">&#39;a&#39;</span> + 1] = {0};</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; <span class="charliteral">&#39;z&#39;</span> - <span class="charliteral">&#39;a&#39;</span> + 1; i++) {</div>
 <div class="line">        ptrs[i] = freelist_allocate(&amp;fl, i + 2);</div>
@@ -121,6 +168,16 @@ $(function(){ initResizable(false); });
 <div class="line">        <span class="keywordflow">if</span> (!(i % 3 == 0 || i % 4 == 0)) {</div>
 <div class="line">            <span class="keywordflow">continue</span>;</div>
 <div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">/*</span></div>
+<div class="line"><span class="comment">        printf(&quot;%zu\n&quot;, i);</span></div>
+<div class="line"><span class="comment">        traverse_freelist_header_and_print(fl.head, &amp;fl, 0, ptrs[i], (int)count_freetree_nodes(fl.rb_rootptr));</span></div>
+<div class="line"><span class="comment">        printf(&quot;\n&quot;);</span></div>
+<div class="line"><span class="comment">        printf(&quot;%zu (tree):\n&quot;, i);</span></div>
+<div class="line"><span class="comment">        preorder_traverse_and_print(fl.rb_rootptr, false);</span></div>
+<div class="line"><span class="comment">        printf(&quot;\n&quot;);</span></div>
+<div class="line"><span class="comment">        */</span></div>
+<div class="line"> </div>
 <div class="line">        freelist_deallocate(&amp;fl, ptrs[i]);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
@@ -142,6 +199,28 @@ $(function(){ initResizable(false); });
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"> </div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; <span class="charliteral">&#39;z&#39;</span> - <span class="charliteral">&#39;a&#39;</span> + 1; i++) {</div>
+<div class="line">        <span class="comment">/*</span></div>
+<div class="line"><span class="comment">        printf(&quot;%zu\n&quot;, i);</span></div>
+<div class="line"><span class="comment">        traverse_freelist_header_and_print(fl.head, &amp;fl, 0, ptrs[i], (int)count_freetree_nodes(fl.rb_rootptr));</span></div>
+<div class="line"><span class="comment">        printf(&quot;\n&quot;);</span></div>
+<div class="line"><span class="comment">        printf(&quot;%zu (tree):\n&quot;, i);</span></div>
+<div class="line"><span class="comment">        preorder_traverse_and_print(fl.rb_rootptr, false);</span></div>
+<div class="line"><span class="comment">        printf(&quot;\n&quot;);</span></div>
+<div class="line"><span class="comment">        */</span></div>
+<div class="line"> </div>
+<div class="line">        freelist_deallocate(&amp;fl, ptrs[i]);</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">/*</span></div>
+<div class="line"><span class="comment">    printf(&quot;end:\n&quot;);</span></div>
+<div class="line"><span class="comment">    traverse_freelist_header_and_print(fl.head, &amp;fl, 0, NULL, (int)count_freetree_nodes(fl.rb_rootptr));</span></div>
+<div class="line"><span class="comment">    printf(&quot;\n&quot;);</span></div>
+<div class="line"><span class="comment">    printf(&quot;end (tree):\n&quot;);</span></div>
+<div class="line"><span class="comment">    preorder_traverse_and_print(fl.rb_rootptr, false);</span></div>
+<div class="line"><span class="comment">    printf(&quot;\n&quot;);</span></div>
+<div class="line"><span class="comment">    */</span></div>
+<div class="line"> </div>
 <div class="line">    freelist_deallocate_all(&amp;fl);</div>
 <div class="line">}</div>
 <div class="line"> </div>
@@ -150,6 +229,8 @@ $(function(){ initResizable(false); });
 <div class="line">    chars_test();</div>
 <div class="line">}</div>
 <div class="ttc" id="afreelist_8h_html"><div class="ttname"><a href="freelist_8h.html">freelist.h</a></div><div class="ttdoc">Free list allocator (with underlying free tree)</div></div>
+<div class="ttc" id="astructfreelist__header_html"><div class="ttname"><a href="structfreelist__header.html">freelist_header</a></div><div class="ttdoc">Freelist header definition. This lies at the front of every block.</div><div class="ttdef"><b>Definition</b> freelist.h:39</div></div>
+<div class="ttc" id="astructfreelist__header_html_a3d3c77e7e1eb63397a1fac069e2ab591"><div class="ttname"><a href="structfreelist__header.html#a3d3c77e7e1eb63397a1fac069e2ab591">freelist_header::curr_block_size</a></div><div class="ttdeci">size_t curr_block_size</div><div class="ttdoc">Current block size.</div><div class="ttdef"><b>Definition</b> freelist.h:42</div></div>
 <div class="ttc" id="astructfreelist_html"><div class="ttname"><a href="structfreelist.html">freelist</a></div><div class="ttdoc">Freelist struct definition.</div><div class="ttdef"><b>Definition</b> freelist.h:58</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
