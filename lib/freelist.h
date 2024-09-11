@@ -146,19 +146,16 @@ static inline void freelist_init(struct freelist *self, const size_t len, unsign
     freelist_deallocate_all(self);
 }
 
-/* Get the pointer to a block of the freelist. With specific alignment.*/
-static inline void *freelist_allocate_aligned(struct freelist *self, const size_t requested_size,
-                                              const size_t requested_alignment)
+/* Get the pointer to a block of the freelist.*/
+static inline void *freelist_allocate(struct freelist *self, const size_t requested_size)
 {
     assert(self);
-    assert(is_pow2(requested_alignment));
     assert(requested_size != 0);
 
-    const size_t alignment = requested_alignment < alignof(max_align_t) ? alignof(max_align_t) : requested_alignment;
     size_t curr_block_size = sizeof(struct freelist_header) + requested_size;
     curr_block_size = curr_block_size < sizeof(struct freetree_node)
                         ? sizeof(struct freetree_node)
-                        : curr_block_size + calc_alignment_padding(alignment, curr_block_size);
+                        : curr_block_size + calc_alignment_padding(alignof(max_align_t), curr_block_size);
 
     struct freetree_node *node = internal_freetree_search_best_block(&self->rb_rootptr, curr_block_size);
 
@@ -188,12 +185,6 @@ static inline void *freelist_allocate_aligned(struct freelist *self, const size_
     *curr_header = freelist_header_from(false, freelist_header_prev_size(&node->key), curr_block_size);
 
     return (void *)((char *)curr_header + sizeof(struct freelist_header));
-}
-
-/* Get the pointer to a block of the freelist. */
-static inline void *freelist_allocate(struct freelist *self, const size_t size)
-{
-    return freelist_allocate_aligned(self, size, alignof(max_align_t));
 }
 
 /* Deallocate a block from the freelist for further use. */
