@@ -256,23 +256,15 @@ static inline void internal_freelist_coalescence(struct freelist *self, struct f
             freetree_delete_node(&self->rb_rootptr, (struct freetree_node *)next);
         }
     }
-    const size_t diff = header_new.curr_block_size - header->curr_block_size;
     if (header_next) {
-        *header_next =
-            freelist_header_from(freelist_header_is_freed(header_next), freelist_header_prev_size(header_next) + diff,
-                                 header_next->curr_block_size);
-    }
-    if (freelist_header_is_in_freetree(header)) {
-        freetree_delete_node(&self->rb_rootptr, (struct freetree_node *)header);
+        *header_next = freelist_header_from(freelist_header_is_freed(header_next), header_new.curr_block_size,
+                                            header_next->curr_block_size);
     }
     header_new.__prev_block_size_w_freed_bit |= 1;
-    if (freelist_header_is_in_freetree(&header_new)) {
-        struct freetree_node *node_addr = (struct freetree_node *)header_addr;
-        freetree_node_init(node_addr, header_new);
-        freetree_insert_node(&self->rb_rootptr, node_addr);
-    }
-    else {
-        *header_addr = header_new;
-    }
+    assert(freelist_header_is_in_freetree(&header_new));
+
+    struct freetree_node *node_addr = (struct freetree_node *)header_addr;
+    freetree_node_init(node_addr, header_new);
+    freetree_insert_node(&self->rb_rootptr, node_addr);
 }
 /// @endcond
