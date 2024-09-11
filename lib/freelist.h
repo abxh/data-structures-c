@@ -13,8 +13,10 @@
  * @file freelist.h
  * @brief Free list allocator (with underlying free tree)
  *
- * For a comprehensive source, read:
+ * Sources used:
  * @li https://www.gingerbill.org/article/2021/11/30/memory-allocation-strategies-005/
+ * @li https://github.com/csehydrogen/malloclab/blob/master/mm.c
+ * @li https://www.boost.org/doc/libs/1_46_1/doc/html/interprocess/memory_algorithms.html
  */
 
 /**
