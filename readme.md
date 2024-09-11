@@ -26,4 +26,6 @@ Asserts are used to check various assumptions. Use `NDEBUG` flag to turn off ass
 | [rbtree.h](https://github.com/abxh/data-structures-c/blob/main/lib/rbtree.h)         | Intrusive red-black tree                                 | [Documentation](https://abxh.github.io/data-structures-c/rbtree_8h.html)  [Example](https://github.com/abxh/data-structures-c/blob/main/examples/rbtree/rbtree.c)             |
 
 ## TODO
-- test everything
+- write tests for the ones not tested.
+- vector impl
+- chaining hashtable impl.
