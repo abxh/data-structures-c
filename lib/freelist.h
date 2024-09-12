@@ -32,8 +32,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "align.h"   // align, calc_alignment_padding, CALC_ALIGNMENT_PADDING
-#include "is_pow2.h" // is_pow2
+#include "align.h" // align, calc_alignment_padding, CALC_ALIGNMENT_PADDING
 
 /**
  * @brief Freelist header definition. This lies at the front of every block.
@@ -111,7 +110,7 @@ static inline struct freelist_header *freelist_header_next(struct freelist_heade
 }
 
 /* Check if the freelist header *should* be in the freetree */
-static inline bool freelist_header_is_in_freetree(const struct freelist_header *header)
+static inline bool freelist_header_should_be_in_freetree(const struct freelist_header *header)
 {
     return freelist_header_is_freed(header) && header->curr_block_size >= sizeof(struct freetree_node);
 }
@@ -136,7 +135,7 @@ static inline void freelist_init(struct freelist *self, const size_t len, unsign
     assert(self);
     assert(backing_buf);
 
-    const uintptr_t padding = calc_alignment_padding(alignof(max_align_t), (uintptr_t)&backing_buf[0]);
+    const uintptr_t padding = calc_alignment_padding(alignof(struct freelist_header), (uintptr_t)&backing_buf[0]);
 
     assert(len - padding >= sizeof(struct freetree_node));
 
@@ -146,18 +145,41 @@ static inline void freelist_init(struct freelist *self, const size_t len, unsign
     freelist_deallocate_all(self);
 }
 
+static inline void *internal_freelist_init_block(struct freelist *self, char *block_ptr, struct freelist_header *next,
+                                                 const size_t prev_size, const size_t block_size,
+                                                 const size_t remaining_size)
+{
+    if (remaining_size > 0) {
+        struct freelist_header *remaining_header = (struct freelist_header *)(block_ptr + block_size);
+        *remaining_header = freelist_header_from(true, block_size, remaining_size);
+
+        if (next) {
+            *next = freelist_header_from(freelist_header_is_freed(next), remaining_size, next->curr_block_size);
+        }
+
+        if (freelist_header_should_be_in_freetree(remaining_header)) {
+            struct freetree_node *new_node = (struct freetree_node *)remaining_header;
+            freetree_node_init(new_node, *remaining_header);
+            freetree_insert_node(&self->rb_rootptr, new_node);
+        }
+    }
+    struct freelist_header *curr_header = (struct freelist_header *)block_ptr;
+    *curr_header = freelist_header_from(false, prev_size, block_size);
+
+    return (void *)((char *)curr_header + sizeof(struct freelist_header));
+}
+
 /* Get the pointer to a block of the freelist.*/
 static inline void *freelist_allocate(struct freelist *self, const size_t requested_size)
 {
     assert(self);
     assert(requested_size != 0);
 
-    size_t curr_block_size = sizeof(struct freelist_header) + requested_size;
-    curr_block_size = curr_block_size < sizeof(struct freetree_node)
-                        ? sizeof(struct freetree_node)
-                        : curr_block_size + calc_alignment_padding(alignof(max_align_t), curr_block_size);
+    size_t block_size = sizeof(struct freelist_header) + requested_size;
+    block_size = block_size >= sizeof(struct freetree_node) ? block_size : sizeof(struct freetree_node);
+    block_size = block_size + calc_alignment_padding(alignof(struct freetree_node), block_size);
 
-    struct freetree_node *node = internal_freetree_search_best_block(&self->rb_rootptr, curr_block_size);
+    struct freetree_node *node = internal_freetree_search_best_block(&self->rb_rootptr, block_size);
 
     if (node == NULL) {
         return NULL;
@@ -165,27 +187,40 @@ static inline void *freelist_allocate(struct freelist *self, const size_t reques
 
     freetree_delete_node(&self->rb_rootptr, node);
 
-    const size_t remaining_size = node->key.curr_block_size - curr_block_size;
-    if (remaining_size > 0) {
-        struct freelist_header *remaining_header = (struct freelist_header *)((char *)node + curr_block_size);
-        *remaining_header = freelist_header_from(true, curr_block_size, remaining_size);
+    return internal_freelist_init_block(self, (char *)node, freelist_header_next(&node->key, self),
+                                        freelist_header_prev_size(&node->key), block_size,
+                                        node->key.curr_block_size - block_size);
+}
 
-        struct freelist_header *next = freelist_header_next(&node->key, self);
-        if (next) {
-            *next = freelist_header_from(freelist_header_is_freed(next), remaining_size, next->curr_block_size);
+/*
+static inline void *freelist_reallocate(struct freelist *self, void *ptr, const size_t new_size)
+{
+    assert(self);
+    assert(new_size != 0);
+
+    struct freelist_header *header = (struct freelist_header *)((char *)ptr - sizeof(struct freelist_header));
+
+    assert(freelist_header_is_freed(header) && "reallocating freed block!");
+
+    if (new_size < header->curr_block_size - sizeof(struct freelist_header)) {
+        size_t block_size = sizeof(struct freelist_header) + new_size;
+        block_size = block_size >= sizeof(struct freetree_node) ? block_size : sizeof(struct freetree_node);
+        block_size = block_size + calc_alignment_padding(alignof(max_align_t), block_size);
+
+        if (block_size == header->curr_block_size) {
+            return ptr;
         }
-
-        if (freelist_header_is_in_freetree(remaining_header)) {
-            struct freetree_node *new_node = (struct freetree_node *)remaining_header;
-            freetree_node_init(new_node, *remaining_header);
-            freetree_insert_node(&self->rb_rootptr, new_node);
+        else {
+            return internal_freelist_init_block(self, (char *)header, freelist_header_next(header, self),
+                                                freelist_header_prev_size(header), block_size,
+                                                header->curr_block_size - block_size);
         }
     }
-    struct freelist_header *curr_header = (struct freelist_header *)node;
-    *curr_header = freelist_header_from(false, freelist_header_prev_size(&node->key), curr_block_size);
-
-    return (void *)((char *)curr_header + sizeof(struct freelist_header));
+    else if (new_size <= header->curr_block_size - sizeof(struct freelist_header)) {
+        return ptr;
+    }
 }
+*/
 
 /* Deallocate a block from the freelist for further use. */
 static inline void freelist_deallocate(struct freelist *self, void *ptr)
@@ -237,7 +272,7 @@ static inline void internal_freelist_coalescence(struct freelist *self, struct f
         header_new.__prev_block_size_w_freed_bit = prev->__prev_block_size_w_freed_bit & ~(uintptr_t)1;
         header_addr = prev;
 
-        if (freelist_header_is_in_freetree(prev)) {
+        if (freelist_header_should_be_in_freetree(prev)) {
             freetree_delete_node(&self->rb_rootptr, (struct freetree_node *)prev);
         }
     }
@@ -245,7 +280,7 @@ static inline void internal_freelist_coalescence(struct freelist *self, struct f
         header_new.curr_block_size += next->curr_block_size;
         header_next = freelist_header_next(next, self);
 
-        if (freelist_header_is_in_freetree(next)) {
+        if (freelist_header_should_be_in_freetree(next)) {
             freetree_delete_node(&self->rb_rootptr, (struct freetree_node *)next);
         }
     }
@@ -254,7 +289,7 @@ static inline void internal_freelist_coalescence(struct freelist *self, struct f
                                             header_next->curr_block_size);
     }
     header_new.__prev_block_size_w_freed_bit |= 1;
-    assert(freelist_header_is_in_freetree(&header_new));
+    assert(freelist_header_should_be_in_freetree(&header_new));
 
     struct freetree_node *node_addr = (struct freetree_node *)header_addr;
     freetree_node_init(node_addr, header_new);
