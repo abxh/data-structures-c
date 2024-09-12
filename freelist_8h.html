@@ -103,7 +103,6 @@ $(function(){ initResizable(false); });
 <code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="align_8h_source.html">align.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="is__pow2_8h_source.html">is_pow2.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="rbtree_8h_source.html">rbtree.h</a>&quot;</code><br />
 </div>
 <p><a href="freelist_8h_source.html">Go to the source code of this file.</a></p>
@@ -134,15 +133,18 @@ static struct <a class="el" href="structfreelist__header.html">freelist_header</
 <tr class="memitem:a80288736ddff57831a8fd7e8e5f65b43" id="r_a80288736ddff57831a8fd7e8e5f65b43"><td class="memItemLeft" align="right" valign="top"><a id="a80288736ddff57831a8fd7e8e5f65b43" name="a80288736ddff57831a8fd7e8e5f65b43"></a>
 static struct <a class="el" href="structfreelist__header.html">freelist_header</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>freelist_header_next</b> (struct <a class="el" href="structfreelist__header.html">freelist_header</a> *header, const struct <a class="el" href="structfreelist.html">freelist</a> *freelist_ptr)</td></tr>
 <tr class="separator:a80288736ddff57831a8fd7e8e5f65b43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13196ba6dda31407c9551109f7a36d4e" id="r_a13196ba6dda31407c9551109f7a36d4e"><td class="memItemLeft" align="right" valign="top"><a id="a13196ba6dda31407c9551109f7a36d4e" name="a13196ba6dda31407c9551109f7a36d4e"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>freelist_header_is_in_freetree</b> (const struct <a class="el" href="structfreelist__header.html">freelist_header</a> *header)</td></tr>
-<tr class="separator:a13196ba6dda31407c9551109f7a36d4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a988b6216f55e1048ce990f5dd90ba26f" id="r_a988b6216f55e1048ce990f5dd90ba26f"><td class="memItemLeft" align="right" valign="top"><a id="a988b6216f55e1048ce990f5dd90ba26f" name="a988b6216f55e1048ce990f5dd90ba26f"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>freelist_header_should_be_in_freetree</b> (const struct <a class="el" href="structfreelist__header.html">freelist_header</a> *header)</td></tr>
+<tr class="separator:a988b6216f55e1048ce990f5dd90ba26f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ef744a9fb3b90a8e859d3298a9d6633" id="r_a9ef744a9fb3b90a8e859d3298a9d6633"><td class="memItemLeft" align="right" valign="top"><a id="a9ef744a9fb3b90a8e859d3298a9d6633" name="a9ef744a9fb3b90a8e859d3298a9d6633"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>freelist_deallocate_all</b> (struct <a class="el" href="structfreelist.html">freelist</a> *self)</td></tr>
 <tr class="separator:a9ef744a9fb3b90a8e859d3298a9d6633"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d986441dd69bb2d6cc1171b17c5d678" id="r_a2d986441dd69bb2d6cc1171b17c5d678"><td class="memItemLeft" align="right" valign="top"><a id="a2d986441dd69bb2d6cc1171b17c5d678" name="a2d986441dd69bb2d6cc1171b17c5d678"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>freelist_init</b> (struct <a class="el" href="structfreelist.html">freelist</a> *self, const size_t len, unsigned char backing_buf[len])</td></tr>
 <tr class="separator:a2d986441dd69bb2d6cc1171b17c5d678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f302bac4ba4b8a5b66ab99fa7dab417" id="r_a9f302bac4ba4b8a5b66ab99fa7dab417"><td class="memItemLeft" align="right" valign="top"><a id="a9f302bac4ba4b8a5b66ab99fa7dab417" name="a9f302bac4ba4b8a5b66ab99fa7dab417"></a>
+static void *&#160;</td><td class="memItemRight" valign="bottom"><b>internal_freelist_init_block</b> (struct <a class="el" href="structfreelist.html">freelist</a> *self, char *block_ptr, struct <a class="el" href="structfreelist__header.html">freelist_header</a> *next, const size_t prev_size, const size_t block_size, const size_t remaining_size)</td></tr>
+<tr class="separator:a9f302bac4ba4b8a5b66ab99fa7dab417"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a440cc353b689f9b06d28fa52f34292dc" id="r_a440cc353b689f9b06d28fa52f34292dc"><td class="memItemLeft" align="right" valign="top"><a id="a440cc353b689f9b06d28fa52f34292dc" name="a440cc353b689f9b06d28fa52f34292dc"></a>
 static void *&#160;</td><td class="memItemRight" valign="bottom"><b>freelist_allocate</b> (struct <a class="el" href="structfreelist.html">freelist</a> *self, const size_t requested_size)</td></tr>
 <tr class="separator:a440cc353b689f9b06d28fa52f34292dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
