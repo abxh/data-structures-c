@@ -10,7 +10,7 @@ macros can provide a primitive syntactical replacement.
 
 Made for my own exploration and use.
 
-Run `make test` to run all tests and examples.
+Run `make test` to run all tests and examples. The `libsan` and `ubsan` sanitizers is required for building the tests.
 
 Asserts are used to check various assumptions. Use `NDEBUG` flag to turn off asserts in release builds.
 
