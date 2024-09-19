@@ -20,7 +20,7 @@
  */
 
 /**
- * @example examples/freelist/chars_test.c
+ * @example examples/freelist/chars_example.c
  * Example of how `arena.h` header file is used in practice.
  */
 
