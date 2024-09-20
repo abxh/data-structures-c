@@ -1,4 +1,4 @@
-/* Not my code. Following is used as an example. */
+/* Not my code (the trap function implementation). Following is used as an example. */
 
 #include "freelist.h"
 
