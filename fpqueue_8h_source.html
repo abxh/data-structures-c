@@ -257,7 +257,7 @@ $(function(){ initResizable(false); });
 </div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
 <div class="foldopen" id="foldopen00273" data-start="{" data-end="}">
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno"><a class="line" href="fpqueue_8h.html#a3e3c9780c881332419be5c66edc5ba61">  273</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="fpqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, get_value_w_max_priority)(<span class="keyword">const</span> FPQUEUE_TYPE *self)</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno"><a class="line" href="fpqueue_8h.html#a56c4d79d6ce3ddfb0b6fd9a7e5b010f3">  273</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="fpqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, get_max)(<span class="keyword">const</span> FPQUEUE_TYPE *self)</div>
 <div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>{</div>
 <div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    assert(self != NULL);</div>
 <div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    assert(FPQUEUE_IS_EMPTY(self) == <span class="keyword">false</span>);</div>
@@ -269,7 +269,7 @@ $(function(){ initResizable(false); });
 <div class="foldopen" id="foldopen00289" data-start="{" data-end="}">
 <div class="line"><a id="l00289" name="l00289"></a><span class="lineno"><a class="line" href="fpqueue_8h.html#ae21092f36f89b75cfd1883d11e532f9c">  289</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_define" href="fpqueue_8h.html#ae17cb099b4c9aee7835032339b5a9e0d">VALUE_TYPE</a> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, peek)(<span class="keyword">const</span> FPQUEUE_TYPE *self)</div>
 <div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>{</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <span class="keywordflow">return</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, get_value_w_max_priority)(self);</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <span class="keywordflow">return</span> <a class="code hl_define" href="paste_8h.html#a1665af4d61d120cdba4d77101d179703">JOIN</a>(FPQUEUE_NAME, get_max)(self);</div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>}</div>
 </div>
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
