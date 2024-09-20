@@ -57,11 +57,11 @@ struct freelist_header {
  * @brief Freelist struct definition.
  */
 struct freelist {
-    unsigned char *buf_ptr;           ///< Underlying buffer
     size_t buf_len;                   ///< Buffer length
     size_t buf_used;                  ///< Number of bytes used of buffer.
     struct freelist_header *head;     ///< Header of freelist headers (all memory blocks)
     struct freetree_node *rb_rootptr; ///< Header of freetree (freed memory blocks)
+    unsigned char *buf_ptr;           ///< Underlying buffer
 };
 
 /// @cond DO_NOT_DOCUMENT
@@ -186,6 +186,8 @@ static inline void *freelist_allocate(struct freelist *self, const size_t reques
     }
 
     freetree_delete_node(&self->rb_rootptr, node);
+
+    self->buf_used += block_size;
 
     return internal_freelist_init_block(self, (char *)node, freelist_header_next(&node->key, self),
                                         freelist_header_prev_size(&node->key), block_size,
