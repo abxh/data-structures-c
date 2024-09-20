@@ -48,7 +48,7 @@ static void preorder_traverse_freetree_and_print(const struct freetree_node *roo
 }
 static unsigned char buf[4096];
 
-void chars_example(void)
+extern void chars_example(void)
 {
     (void)(traverse_freelist_header_and_print);
     (void)(count_freetree_nodes);
@@ -110,16 +110,19 @@ void chars_example(void)
     }
 
     for (size_t i = 0; i < 'z' - 'a' + 1; i++) {
+        /*
         printf("%zu\n", i);
         traverse_freelist_header_and_print(fl.head, &fl, 0, ptrs[i], (int)count_freetree_nodes(fl.rb_rootptr));
         printf("\n");
         printf("%zu (tree):\n", i);
         preorder_traverse_freetree_and_print(fl.rb_rootptr, false);
         printf("\n");
+        */
 
         freelist_deallocate(&fl, ptrs[i]);
     }
 
+    /*
     printf("end:\n");
     traverse_freelist_header_and_print(fl.head, &fl, 0, NULL, (int)count_freetree_nodes(fl.rb_rootptr));
     printf("\n");
@@ -128,11 +131,8 @@ void chars_example(void)
     printf("\n");
 
     printf("%zu\n", alignof(max_align_t));
+    */
 
     freelist_deallocate_all(&fl);
 }
 
-int main(void)
-{
-    chars_example();
-}
