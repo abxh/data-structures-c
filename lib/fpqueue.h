@@ -270,7 +270,7 @@ static inline bool JOIN(FPQUEUE_NAME, is_full)(const FPQUEUE_TYPE *self)
  *
  * @return The max priority value.
  */
-static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_value_w_max_priority)(const FPQUEUE_TYPE *self)
+static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_max)(const FPQUEUE_TYPE *self)
 {
     assert(self != NULL);
     assert(FPQUEUE_IS_EMPTY(self) == false);
@@ -288,7 +288,7 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_value_w_max_priority)(const FPQU
  */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, peek)(const FPQUEUE_TYPE *self)
 {
-    return JOIN(FPQUEUE_NAME, get_value_w_max_priority)(self);
+    return JOIN(FPQUEUE_NAME, get_max)(self);
 }
 
 /**
