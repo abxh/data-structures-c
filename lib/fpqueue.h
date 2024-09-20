@@ -264,13 +264,13 @@ static inline bool JOIN(FPQUEUE_NAME, is_full)(const FPQUEUE_TYPE *self)
 }
 
 /**
- * @brief Get the max value in a non-empty priority queue.
+ * @brief Get the max priority value in a non-empty priority queue.
  *
  * @param[in] self      The priority queue pointer.
  *
- * @return The max value.
+ * @return The max priority value.
  */
-static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_max)(const FPQUEUE_TYPE *self)
+static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_value_w_max_priority)(const FPQUEUE_TYPE *self)
 {
     assert(self != NULL);
     assert(FPQUEUE_IS_EMPTY(self) == false);
@@ -279,20 +279,20 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_max)(const FPQUEUE_TYPE *self)
 }
 
 /**
- * @brief Peek a non-empty priority queue and get it's next to-be-popped (max)
+ * @brief Peek a non-empty priority queue and get it's next to-be-popped (max priority)
  *        value.
  *
  * @param[in] self      The priority queue pointer.
  *
- * @return The next to-be-popped (max) value.
+ * @return The next to-be-popped (max priority) value.
  */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, peek)(const FPQUEUE_TYPE *self)
 {
-    return JOIN(FPQUEUE_NAME, get_max)(self);
+    return JOIN(FPQUEUE_NAME, get_value_w_max_priority)(self);
 }
 
 /**
- * @brief Pop the max value away from a non-empty priority queue.
+ * @brief Pop the max priority value away from a non-empty priority queue.
  *
  * @param[in] self      The priority queue pointer.
  *
@@ -303,7 +303,7 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE *self)
     assert(self != NULL);
     assert(FPQUEUE_IS_EMPTY(self) == false);
 
-    VALUE_TYPE max = self->elements[0].value;
+    VALUE_TYPE max_priority_value = self->elements[0].value;
 
     self->elements[0] = self->elements[self->count - 1];
 
@@ -311,7 +311,7 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE *self)
 
     JOIN(internal, JOIN(FPQUEUE_NAME, downheap))(self, 0);
 
-    return max;
+    return max_priority_value;
 }
 
 /**
