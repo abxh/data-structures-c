@@ -1,7 +1,3 @@
-#include "is_pow2.h"
-
-#include <assert.h>
-
 /*
     Test cases (N):
     - N := 0
@@ -15,6 +11,10 @@
     - N := 128
     - N := 129
 */
+
+#include "is_pow2.h"
+
+#include <assert.h>
 
 int main(void)
 {

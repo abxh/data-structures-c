@@ -1,7 +1,10 @@
 /*
     The test below previously tested a function named `align_forward`.
+
     `align_forward` is replaced by `align`, but a translation of `align` to
     `align_forward` is tested instead here.
+
+    Why? I am lazy.
 
     Pointer offsets (P):
     P := 0

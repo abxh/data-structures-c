@@ -14,7 +14,7 @@
     - get_top / peek
     - get_bottom
     - at + fstack_for_each + fstack_for_each_reverse
-    - init, calc_sizeof (this is indirectly tested for)
+    - calc_sizeof (this is indirectly tested for with `create`)
 
     Mutating operation types:
     - push
@@ -22,6 +22,7 @@
     - clear
 
     Memory operations [to also be tested with sanitizers]:
+    - init (this is indirectly tested for with `create`)
     - create
     - destroy
     - copy

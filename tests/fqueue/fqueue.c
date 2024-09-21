@@ -14,7 +14,7 @@
     - get_front / peek
     - get_back
     - at + fqueue_for_each + fqueue_for_each_reverse
-    - init, calc_sizeof (this is indirectly tested for)
+    - calc_sizeof (this is indirectly tested for with `create`)
 
     Mutating operation types:
     - enqueue
@@ -22,6 +22,7 @@
     - clear
 
     Memory operations [to also be tested with sanitizers]:
+    - init (this is indirectly tested for with `create`)
     - create
     - destroy
     - copy
@@ -261,8 +262,7 @@ int main(void)
 
         i64_que_destroy(que_p);
     }
-    // N = 10, enqueue * 3, dequeue * 3, enqueue * 10 -> dequeue * 5 ->
-    // enqueue * 3
+    // N = 10, enqueue * 3, dequeue * 3, enqueue * 10 -> dequeue * 5 -> enqueue * 3
     {
         struct i64_que *que_p = i64_que_create(10);
         if (!que_p) {

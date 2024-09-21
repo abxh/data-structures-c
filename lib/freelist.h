@@ -15,8 +15,8 @@
  *
  * Sources used:
  * @li https://www.gingerbill.org/article/2021/11/30/memory-allocation-strategies-005/
- * @li https://github.com/csehydrogen/malloclab/blob/master/mm.c
  * @li https://www.boost.org/doc/libs/1_46_1/doc/html/interprocess/memory_algorithms.html
+ * @li https://github.com/csehydrogen/malloclab/blob/master/mm.c
  */
 
 /**
@@ -194,6 +194,19 @@ static inline void *freelist_allocate(struct freelist *self, const size_t reques
                                         node->key.curr_block_size - block_size);
 }
 
+/* Deallocate a block from the freelist for further use. */
+static inline void freelist_deallocate(struct freelist *self, void *ptr)
+{
+    struct freelist_header *header = (struct freelist_header *)((char *)ptr - sizeof(struct freelist_header));
+
+    assert(!freelist_header_is_freed(header) && "double free detected!");
+
+    self->buf_used -= header->curr_block_size;
+
+    internal_freelist_coalescence(self, header);
+}
+
+/* Reallocate a block and grow / shrink the block. */
 /*
 static inline void *freelist_reallocate(struct freelist *self, void *ptr, const size_t new_size)
 {
@@ -201,10 +214,11 @@ static inline void *freelist_reallocate(struct freelist *self, void *ptr, const 
     assert(new_size != 0);
 
     struct freelist_header *header = (struct freelist_header *)((char *)ptr - sizeof(struct freelist_header));
+    const size_t old_size = header->curr_block_size - sizeof(struct freelist_header);
 
     assert(freelist_header_is_freed(header) && "reallocating freed block!");
 
-    if (new_size < header->curr_block_size - sizeof(struct freelist_header)) {
+    if (new_size <= old_size) {
         size_t block_size = sizeof(struct freelist_header) + new_size;
         block_size = block_size >= sizeof(struct freetree_node) ? block_size : sizeof(struct freetree_node);
         block_size = block_size + calc_alignment_padding(alignof(max_align_t), block_size);
@@ -218,23 +232,29 @@ static inline void *freelist_reallocate(struct freelist *self, void *ptr, const 
                                                 header->curr_block_size - block_size);
         }
     }
-    else if (new_size <= header->curr_block_size - sizeof(struct freelist_header)) {
-        return ptr;
+
+    size_t bytes_acc = header->curr_block_size;
+    struct freelist_header *next = freelist_header_next(header, self);
+    while (bytes_acc < new_size && next != NULL && !freelist_header_is_freed(next)) {
+        bytes_acc += next->curr_block_size;
+        next = freelist_header_next(next, self);
     }
+
+    if (bytes_acc >= new_size) {
+        return internal_freelist_init_block(self, (char *)header, freelist_header_next(header, self),
+                                            freelist_header_prev_size(header),
+                                            new_size + sizeof(struct freelist_header), header->curr_block_size -);
+    }
+
+    void *ptr_new = freelist_allocate(self, new_size);
+    if (!ptr_new) {
+        return NULL;
+    }
+    memcpy(ptr_new, ptr, header->curr_block_size - sizeof(struct freelist_header));
+    freelist_deallocate(self, ptr);
+    return ptr_new;
 }
 */
-
-/* Deallocate a block from the freelist for further use. */
-static inline void freelist_deallocate(struct freelist *self, void *ptr)
-{
-    struct freelist_header *header = (struct freelist_header *)((char *)ptr - sizeof(struct freelist_header));
-
-    assert(!freelist_header_is_freed(header) && "double free detected!");
-
-    self->buf_used -= header->curr_block_size;
-
-    internal_freelist_coalescence(self, header);
-}
 
 /// @cond DO_NOT_DOCUMENT
 static inline struct freetree_node *internal_freetree_search_best_block(struct freetree_node **rootptr_ptr,

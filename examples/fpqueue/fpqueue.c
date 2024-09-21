@@ -12,7 +12,7 @@ static void preorder_traverse_and_print(struct pqueue_int *pq, uint32_t index)
         printf(" ()");
         return;
     }
-    printf(" ( %d", index);
+    printf(" ( %d", pq->elements[index].priority);
     preorder_traverse_and_print(pq, fpqueue_left_child(index));
     preorder_traverse_and_print(pq, fpqueue_right_child(index));
     printf(" )");

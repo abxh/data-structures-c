@@ -11,7 +11,7 @@
 
 /**
  * @file fpqueue.h
- * @brief Fixed-size priority queue based on binary (max-)heap
+ * @brief Fixed-size priority queue based on binary (max-)heap.
  *
  * The following macros must be defined:
  *  @li `NAME`
@@ -158,8 +158,7 @@ static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE *self
  * @param[in,out]  capacity_ptr  Pointer to orignal capacity
  * @param[out]     size_ptr      Pointer to size (to be outputted)
  *
- * @retval false If capacity is 0 or the equivalent size is larger than
- *               UINT32_MAX.
+ * @retval false If capacity is 0 or the equivalent size can overflow.
  * @retval true  Otherwise.
  */
 static inline bool JOIN(FPQUEUE_NAME, calc_sizeof)(uint32_t *capacity_ptr, uint32_t *size_ptr)
@@ -168,7 +167,7 @@ static inline bool JOIN(FPQUEUE_NAME, calc_sizeof)(uint32_t *capacity_ptr, uint3
     assert(size_ptr);
 
     if (*capacity_ptr == 0
-        || *capacity_ptr > (UINT32_MAX - offsetof(FPQUEUE_TYPE, elements)) / sizeof(FPQUEUE_ELEMENT_TYPE)) {
+        || *capacity_ptr > (((UINT32_MAX - offsetof(FPQUEUE_TYPE, elements)) / sizeof(FPQUEUE_ELEMENT_TYPE) - 2) / 2)) {
         return false;
     }
 

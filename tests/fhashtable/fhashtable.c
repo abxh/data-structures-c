@@ -12,7 +12,7 @@
     - is_empty
     - is_full
     - contains_key + get_value + get_value_mut / search + fhashtable_for_each
-    - init, calc_sizeof (this is indirectly tested for)
+    - calc_sizeof (this is indirectly tested for with `create`)
 
     Mutating operation types:
     - insert
@@ -21,6 +21,7 @@
     - clear
 
     Memory operations [to also be tested with sanitizers]:
+    - init (this is indirectly tested for with `create`)
     - create
     - destroy
     - copy

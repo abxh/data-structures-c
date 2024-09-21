@@ -1,6 +1,3 @@
-#include "round_up_pow2.h"
-#include "math.h"
-
 /*
     Test cases (N):
     - N := 1
@@ -13,6 +10,11 @@
     - N := 1e+9
     - N := UINT32_MAX / 4
 */
+
+
+
+#include "round_up_pow2.h"
+#include "math.h"
 
 int main(void)
 {
