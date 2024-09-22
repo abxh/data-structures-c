@@ -111,7 +111,7 @@
 struct FSTACK_NAME {
     uint32_t count;      ///< number of values.
     uint32_t capacity;   ///< maximum number of values allocated for.
-    VALUE_TYPE values[100]; ///< array of values.
+    VALUE_TYPE values[]; ///< array of values.
 };
 
 // }}}
