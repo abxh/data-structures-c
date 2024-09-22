@@ -102,7 +102,7 @@ $(function(){ initResizable(false); });
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:af8c317a42292b61c93aae91e59118a46" id="r_af8c317a42292b61c93aae91e59118a46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8c317a42292b61c93aae91e59118a46">container_of</a>(ptr,  type,  member)</td></tr>
-<tr class="memdesc:af8c317a42292b61c93aae91e59118a46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtain a pointer to the struct that contains the struct member.  <br /></td></tr>
+<tr class="memdesc:af8c317a42292b61c93aae91e59118a46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtain a pointer to the struct that contains the member.  <br /></td></tr>
 <tr class="separator:af8c317a42292b61c93aae91e59118a46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -140,7 +140,7 @@ Macros</h2></td></tr>
 <div class="line">        (type *)((<span class="keywordtype">char</span> *)__mptr - offsetof(type, member)); \</div>
 <div class="line">    })</div>
 </div><!-- fragment -->
-<p>Obtain a pointer to the struct that contains the struct member. </p>
+<p>Obtain a pointer to the struct that contains the member. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptr</td><td>Pointer to the member. </td></tr>
