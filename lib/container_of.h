@@ -22,7 +22,7 @@
 
 /**
  * @def container_of(ptr, type, member)
- * @brief Obtain a pointer to the struct that contains the struct member
+ * @brief Obtain a pointer to the struct that contains the member
  *
  * @param[in] ptr       Pointer to the member.
  * @param[in] type      Container type
