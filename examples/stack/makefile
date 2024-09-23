@@ -1,11 +1,17 @@
 EXEC_NAME := a.out
 
+CC         := gcc
 CFLAGS     += -I./../../lib
-CFLAGS     += -Wall -Wextra -pedantic -Wshadow -Wconversion
+CFLAGS     += -Wall -Wextra -Wshadow -Wconversion -pedantic 
 CFLAGS     += -ggdb3
+CFLAGS     += -fsanitize=undefined
+CFLAGS     += -fsanitize=address
 
-EXAMPLE_FILES  := $(wildcard *.c)
-OBJ_FILES      := $(EXAMPLE_FILES:.c=.o)
+C_FILES     := $(wildcard *.c)
+OBJ_FILES   := $(C_FILES:.c=.o)
+
+LD_FLAGS   += -fsanitize=undefined
+LD_FLAGS   += -fsanitize=address
 
 .PHONY: all clean test
 
