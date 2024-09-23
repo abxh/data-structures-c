@@ -117,9 +117,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7db71fb9cc2f471dab7268922ea8c58f" id="r_a7db71fb9cc2f471dab7268922ea8c58f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7db71fb9cc2f471dab7268922ea8c58f">arena_init</a> (struct <a class="el" href="structarena.html">arena</a> *self, const size_t n, unsigned char backing_buf[n])</td></tr>
-<tr class="memdesc:a7db71fb9cc2f471dab7268922ea8c58f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the arena.  <br /></td></tr>
-<tr class="separator:a7db71fb9cc2f471dab7268922ea8c58f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d451f328091e8ca4ff0ac33a67a053d" id="r_a2d451f328091e8ca4ff0ac33a67a053d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d451f328091e8ca4ff0ac33a67a053d">arena_init</a> (struct <a class="el" href="structarena.html">arena</a> *self, const size_t len, unsigned char backing_buf[len])</td></tr>
+<tr class="memdesc:a2d451f328091e8ca4ff0ac33a67a053d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the arena.  <br /></td></tr>
+<tr class="separator:a2d451f328091e8ca4ff0ac33a67a053d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a021fe44855f3a796a29e82762dd6eb56" id="r_a021fe44855f3a796a29e82762dd6eb56"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a021fe44855f3a796a29e82762dd6eb56">arena_deallocate_all</a> (struct <a class="el" href="structarena.html">arena</a> *self)</td></tr>
 <tr class="memdesc:a021fe44855f3a796a29e82762dd6eb56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deallocate all allocations in the arena.  <br /></td></tr>
 <tr class="separator:a021fe44855f3a796a29e82762dd6eb56"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,8 +184,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2arena_2fhashtable_8c-example.html#a3">examples/arena/fhashtable.c</a>.</dd>
-</dl>
 
 </div>
 </div>
@@ -237,8 +235,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2arena_2char_array_8c-example.html#a2">examples/arena/char_array.c</a>, <a class="el" href="examples_2arena_2fhashtable_8c-example.html#a2">examples/arena/fhashtable.c</a>, and <a class="el" href="examples_2list_2list_example_8c-example.html#a4">examples/list/list_example.c</a>.</dd>
-</dl>
 
 </div>
 </div>
@@ -272,13 +268,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2arena_2char_array_8c-example.html#a4">examples/arena/char_array.c</a>.</dd>
-</dl>
 
 </div>
 </div>
-<a id="a7db71fb9cc2f471dab7268922ea8c58f" name="a7db71fb9cc2f471dab7268922ea8c58f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7db71fb9cc2f471dab7268922ea8c58f">&#9670;&#160;</a></span>arena_init()</h2>
+<a id="a2d451f328091e8ca4ff0ac33a67a053d" name="a2d451f328091e8ca4ff0ac33a67a053d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d451f328091e8ca4ff0ac33a67a053d">&#9670;&#160;</a></span>arena_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -294,12 +288,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>n</em></span>, </td>
+          <td class="paramtype">const size_t</td>          <td class="paramname"><span class="paramname"><em>len</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">unsigned char</td>          <td class="paramname"><span class="paramname"><em>backing_buf</em></span>[n]&#160;)</td>
+          <td class="paramtype">unsigned char</td>          <td class="paramname"><span class="paramname"><em>backing_buf</em></span>[len]&#160;)</td>
         </tr>
       </table>
   </td>
@@ -313,12 +307,10 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>arena pointer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>backing buffer length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>backing buffer length. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">backing_buf</td><td>backing buffer </td></tr>
   </table>
   </dd>
-</dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2arena_2char_array_8c-example.html#a1">examples/arena/char_array.c</a>, <a class="el" href="examples_2arena_2fhashtable_8c-example.html#a1">examples/arena/fhashtable.c</a>, and <a class="el" href="examples_2list_2list_example_8c-example.html#a2">examples/list/list_example.c</a>.</dd>
 </dl>
 
 </div>
@@ -439,8 +431,6 @@ Functions</h2></td></tr>
     <tr><td class="paramname">NULL</td><td>If arena doesn't have enough memory for the reallocation. </td></tr>
   </table>
   </dd>
-</dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="examples_2arena_2char_array_8c-example.html#a3">examples/arena/char_array.c</a>.</dd>
 </dl>
 
 </div>
