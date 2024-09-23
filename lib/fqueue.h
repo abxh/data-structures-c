@@ -18,11 +18,6 @@
  *      @li `VALUE_TYPE`
  */
 
-/**
- * @example examples/fqueue/fqueue.c
- * Examples of how `fqueue.h` header file is used in practice.
- */
-
 // macro definitions: {{{
 
 #ifndef FQUEUE_H

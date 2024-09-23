@@ -39,11 +39,6 @@
  * https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/
  */
 
-/**
- * @example examples/fhashtable/fhashtable.c
- * Example of how `fhashtable.h` header file is used in practice.
- */
-
 // macro definitions: {{{
 
 #ifndef FHASHTABLE_H

@@ -21,11 +21,6 @@
  * @li CLRS
  */
 
-/**
- * @example examples/fpqueue/fpqueue.c
- * Example of how `fpqueue.h` header file is used in practice.
- */
-
 // macro definitions: {{{
 
 #ifndef FPQUEUE_H

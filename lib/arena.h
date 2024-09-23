@@ -17,16 +17,6 @@
  * @li https://www.gingerbill.org/article/2019/02/08/memory-allocation-strategies-002/
  */
 
-/**
- * @example examples/arena/fhashtable.c
- * Example of how `arena.h` header file is used in practice.
- */
-
-/**
- * @example examples/arena/char_array.c
- * Example of how `arena.h` header file is used in practice.
- */
-
 #pragma once
 
 #include "align.h"   // align, calc_alignment_padding
@@ -44,28 +34,30 @@
  * @brief Arena data struct.
  */
 struct arena {
-    unsigned char *buf_ptr; ///< Underlying buffer pointer.
     size_t buf_len;         ///< Underlying buffer length.
     size_t prev_offset;     ///< Previous offset relative to buf_ptr.
     size_t curr_offset;     ///< Current offset relative to buf_ptr.
+    unsigned char *buf_ptr; ///< Underlying buffer pointer.
 };
 
 /**
  * @brief Initialize the arena.
  *
  * @param[in] self              arena pointer
- * @param[in] n                 backing buffer length.
+ * @param[in] len               backing buffer length.
  * @param[in] backing_buf       backing buffer
  */
-static inline void arena_init(struct arena *self, const size_t n, unsigned char backing_buf[n])
+static inline void arena_init(struct arena *self, const size_t len, unsigned char backing_buf[len])
 {
     assert(self);
     assert(backing_buf);
 
     const uintptr_t padding = calc_alignment_padding(alignof(max_align_t), (uintptr_t)backing_buf);
 
+    assert(len >= padding);
+
     self->buf_ptr = &backing_buf[padding];
-    self->buf_len = n - padding;
+    self->buf_len = len - padding;
     self->curr_offset = 0;
     self->prev_offset = 0;
 }
@@ -101,7 +93,8 @@ static inline void *arena_allocate_aligned(struct arena *self, const size_t alig
 
     size_t space_left = self->buf_len - (size_t)self->curr_offset;
 
-    if (!align(alignment, size, &ptr, &space_left)) {
+    const bool has_space_left = align(alignment, size, &ptr, &space_left);
+    if (!has_space_left) {
         return NULL;
     }
 
@@ -132,8 +125,8 @@ static inline void *arena_allocate(struct arena *self, const size_t size)
 }
 
 /// @cond DO_NOT_DOCUMENT
-static inline void *internal_arena_optimize_w_prev_offset(struct arena *self, unsigned char *old_ptr,
-                                                          const size_t old_size, const size_t new_size)
+static inline void *internal_arena_try_optimizing_w_prev_offset(struct arena *self, unsigned char *old_ptr,
+                                                                const size_t old_size, const size_t new_size)
 {
     if (&self->buf_ptr[self->prev_offset] != old_ptr) {
         return NULL;
@@ -172,17 +165,15 @@ static inline void *arena_reallocate_aligned(struct arena *self, void *old_ptr_,
 
     unsigned char *old_ptr = (unsigned char *)old_ptr_;
 
-    if (old_ptr == NULL || old_size == 0) {
-        return arena_allocate_aligned(self, alignment, new_size);
-    }
-
-    const bool inside_buf = self->buf_ptr <= old_ptr && old_ptr < self->buf_ptr + self->buf_len;
-
-    if (!inside_buf) {
+    const bool misc_input = old_ptr == NULL || old_size == 0 || new_size == 0;
+    const bool inside_arena_buf = &self->buf_ptr[0] <= old_ptr && old_ptr <= &self->buf_ptr[self->buf_len - 1];
+    if (misc_input || !inside_arena_buf) {
         return NULL;
     }
 
-    if (internal_arena_optimize_w_prev_offset(self, old_ptr, old_size, new_size)) {
+    const bool has_optimized_w_prev_buf =
+        internal_arena_try_optimizing_w_prev_offset(self, old_ptr, old_size, new_size);
+    if (has_optimized_w_prev_buf) {
         return old_ptr;
     }
 

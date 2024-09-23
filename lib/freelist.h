@@ -11,7 +11,7 @@
 
 /**
  * @file freelist.h
- * @brief Free list allocator (with underlying free tree)
+ * @brief Best-fit free list allocator
  *
  * Sources used:
  * @li https://www.gingerbill.org/article/2021/11/30/memory-allocation-strategies-005/
@@ -137,7 +137,7 @@ static inline void freelist_init(struct freelist *self, const size_t len, unsign
 
     const uintptr_t padding = calc_alignment_padding(alignof(struct freelist_header), (uintptr_t)&backing_buf[0]);
 
-    assert(len - padding >= sizeof(struct freetree_node));
+    assert(len >= sizeof(struct freetree_node) + padding);
 
     self->buf_ptr = &backing_buf[padding];
     self->buf_len = len - padding;

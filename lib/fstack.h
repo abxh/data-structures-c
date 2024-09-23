@@ -19,7 +19,7 @@
  */
 
 /**
- * @example examples/fstack/fstack.c
+ * @example examples/fstack/valid_parentheses.c
  * Examples of how `fstack.h` header file is used in practice.
  */
 
