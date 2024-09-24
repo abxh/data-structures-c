@@ -35,7 +35,7 @@ int main(void)
         assert(!arena_reallocate_aligned(&a, &buf[0], 1, 1, 0));
         assert(!arena_reallocate_aligned(&a, &a, 1, 1, 1));
     }
-    // reallocate with same + check NULL cases for allocate_aligned():
+    // reallocate with same size + check NULL cases for allocate_aligned():
     {
         struct arena a;
         unsigned char buf[sizeof(max_align_t)];
@@ -141,6 +141,24 @@ int main(void)
 
         (void)(arena_allocate_aligned(&a, 2, 2));
         int *i2 = arena_allocate_aligned(&a, alignof(int), sizeof(int));
+        *i2 = 2;
+
+        assert(!arena_allocate_aligned(&a, 1, 1));
+    }
+    // bad alignment test with rellocate():
+    {
+        struct arena a;
+        unsigned char buf[sizeof(int) * 5];
+
+        arena_init(&a, sizeof(buf), buf);
+
+        (void)(arena_allocate_aligned(&a, 1, 1));
+        int *i1 = arena_allocate_aligned(&a, alignof(int), sizeof(int));
+        *i1 = 1;
+
+        (void)(arena_allocate_aligned(&a, 2, 2));
+        int *i2 = arena_reallocate_aligned(&a, i1, alignof(int), sizeof(int), sizeof(int) * 2);
+        assert(*i1 == 1);
         *i2 = 2;
 
         assert(!arena_allocate_aligned(&a, 1, 1));
