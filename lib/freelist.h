@@ -16,6 +16,8 @@
  * Sources used:
  * @li https://www.gingerbill.org/article/2021/11/30/memory-allocation-strategies-005/
  * @li https://www.boost.org/doc/libs/1_46_1/doc/html/interprocess/memory_algorithms.html
+ *
+ * Inspiration:
  * @li https://github.com/csehydrogen/malloclab/blob/master/mm.c
  */
 

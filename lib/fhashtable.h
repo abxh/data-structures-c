@@ -493,7 +493,7 @@ static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE *self, KEY_TYPE
             break;
         }
 
-        if (current_slot.offset > self->slots[index].offset) {
+        if (current_slot.offset < self->slots[index].offset) {
             FHASHTABLE_SWAP_SLOTS(&self->slots[index], &current_slot);
         }
 
@@ -539,7 +539,7 @@ static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE *self, KEY_TYPE
             return;
         }
 
-        if (current_slot.offset > self->slots[index].offset) {
+        if (current_slot.offset < self->slots[index].offset) {
             FHASHTABLE_SWAP_SLOTS(&current_slot, &self->slots[index]);
         }
 

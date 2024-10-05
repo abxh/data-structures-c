@@ -155,7 +155,7 @@ static inline void *internal_arena_try_optimizing_w_prev_offset(struct arena *se
  * @param[in] new_size          new size to grow/shrink to.
  *
  * @return A pointer to reallocated the memory chunk.
- *      @retval NULL If arena doesn't have enough memory for the reallocation.
+ *      @retval NULL If arena doesn't have enough memory for the reallocation or invalid parameters are given.
  */
 static inline void *arena_reallocate_aligned(struct arena *self, void *old_ptr_, const size_t alignment,
                                              const size_t old_size, const size_t new_size)
@@ -195,7 +195,7 @@ static inline void *arena_reallocate_aligned(struct arena *self, void *old_ptr_,
  * @param[in] new_size          New size to grow/shrink to.
  *
  * @return A pointer to reallocated the memory chunk.
- *      @retval NULL            If arena doesn't have enough memory for the reallocation.
+ *      @retval NULL If arena doesn't have enough memory for the reallocation or invalid parameters are given.
  */
 static inline void *arena_reallocate(struct arena *self, void *old_ptr, const size_t old_size, const size_t new_size)
 {
