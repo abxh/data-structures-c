@@ -21,11 +21,6 @@
  * @li https://github.com/csehydrogen/malloclab/blob/master/mm.c
  */
 
-/**
- * @example examples/freelist/chars_example.c
- * Example of how `arena.h` header file is used in practice.
- */
-
 #pragma once
 
 #include <stdalign.h>
@@ -132,7 +127,7 @@ static inline void freelist_deallocate_all(struct freelist *self)
 }
 
 /* Initialize the freelist */
-static inline void freelist_init(struct freelist *self, const size_t len, unsigned char backing_buf[len])
+static inline void freelist_init(struct freelist *self, const size_t len, unsigned char *backing_buf)
 {
     assert(self);
     assert(backing_buf);
@@ -147,6 +142,7 @@ static inline void freelist_init(struct freelist *self, const size_t len, unsign
     freelist_deallocate_all(self);
 }
 
+/// @cond DO_NOT_DOCUMENT
 static inline void *internal_freelist_init_block(struct freelist *self, char *block_ptr, struct freelist_header *next,
                                                  const size_t prev_size, const size_t block_size,
                                                  const size_t remaining_size)
@@ -171,15 +167,23 @@ static inline void *internal_freelist_init_block(struct freelist *self, char *bl
     return (void *)((char *)curr_header + sizeof(struct freelist_header));
 }
 
+static inline size_t internal_freelist_calc_block_size(size_t requested_size)
+{
+    size_t block_size = sizeof(struct freelist_header) + requested_size;
+    block_size = block_size >= sizeof(struct freetree_node) ? block_size : sizeof(struct freetree_node);
+    block_size = block_size + calc_alignment_padding(alignof(struct freetree_node), block_size);
+
+    return block_size;
+}
+/// @endcond
+
 /* Get the pointer to a block of the freelist.*/
 static inline void *freelist_allocate(struct freelist *self, const size_t requested_size)
 {
     assert(self);
     assert(requested_size != 0);
 
-    size_t block_size = sizeof(struct freelist_header) + requested_size;
-    block_size = block_size >= sizeof(struct freetree_node) ? block_size : sizeof(struct freetree_node);
-    block_size = block_size + calc_alignment_padding(alignof(struct freetree_node), block_size);
+    const size_t block_size = internal_freelist_calc_block_size(requested_size);
 
     struct freetree_node *node = internal_freetree_search_best_block(&self->rb_rootptr, block_size);
 
@@ -199,6 +203,8 @@ static inline void *freelist_allocate(struct freelist *self, const size_t reques
 /* Deallocate a block from the freelist for further use. */
 static inline void freelist_deallocate(struct freelist *self, void *ptr)
 {
+    assert(self->buf_ptr <= (unsigned char *)ptr && (unsigned char *)ptr < &self->buf_ptr[self->buf_len]);
+
     struct freelist_header *header = (struct freelist_header *)((char *)ptr - sizeof(struct freelist_header));
 
     assert(!freelist_header_is_freed(header) && "double free detected!");
@@ -209,30 +215,27 @@ static inline void freelist_deallocate(struct freelist *self, void *ptr)
 }
 
 /* Reallocate a block and grow / shrink the block. */
-/*
 static inline void *freelist_reallocate(struct freelist *self, void *ptr, const size_t new_size)
 {
     assert(self);
     assert(new_size != 0);
 
+    assert(self->buf_ptr <= (unsigned char *)ptr && (unsigned char *)ptr < &self->buf_ptr[self->buf_len]);
+
     struct freelist_header *header = (struct freelist_header *)((char *)ptr - sizeof(struct freelist_header));
+    const size_t prev_size = freelist_header_prev_size(header);
     const size_t old_size = header->curr_block_size - sizeof(struct freelist_header);
 
     assert(freelist_header_is_freed(header) && "reallocating freed block!");
 
     if (new_size <= old_size) {
-        size_t block_size = sizeof(struct freelist_header) + new_size;
-        block_size = block_size >= sizeof(struct freetree_node) ? block_size : sizeof(struct freetree_node);
-        block_size = block_size + calc_alignment_padding(alignof(max_align_t), block_size);
+        const size_t block_size = internal_freelist_calc_block_size(new_size);
 
         if (block_size == header->curr_block_size) {
             return ptr;
         }
-        else {
-            return internal_freelist_init_block(self, (char *)header, freelist_header_next(header, self),
-                                                freelist_header_prev_size(header), block_size,
-                                                header->curr_block_size - block_size);
-        }
+        return internal_freelist_init_block(self, (char *)header, freelist_header_next(header, self), prev_size,
+                                            block_size, header->curr_block_size - block_size);
     }
 
     size_t bytes_acc = header->curr_block_size;
@@ -243,20 +246,20 @@ static inline void *freelist_reallocate(struct freelist *self, void *ptr, const 
     }
 
     if (bytes_acc >= new_size) {
-        return internal_freelist_init_block(self, (char *)header, freelist_header_next(header, self),
-                                            freelist_header_prev_size(header),
-                                            new_size + sizeof(struct freelist_header), header->curr_block_size -);
+        return internal_freelist_init_block(self, (char *)header, next, prev_size, new_size, bytes_acc - new_size);
     }
 
     void *ptr_new = freelist_allocate(self, new_size);
     if (!ptr_new) {
         return NULL;
     }
-    memcpy(ptr_new, ptr, header->curr_block_size - sizeof(struct freelist_header));
+
+    memcpy(ptr_new, ptr, old_size);
+
     freelist_deallocate(self, ptr);
+
     return ptr_new;
 }
-*/
 
 /// @cond DO_NOT_DOCUMENT
 static inline struct freetree_node *internal_freetree_search_best_block(struct freetree_node **rootptr_ptr,

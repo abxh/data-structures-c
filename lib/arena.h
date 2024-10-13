@@ -81,7 +81,7 @@ void temp_arena_memory_end(struct temp_arena_state temp)
  * @param[in] len               backing buffer length.
  * @param[in] backing_buf       backing buffer
  */
-static inline void arena_init(struct arena *self, const size_t len, unsigned char backing_buf[len])
+static inline void arena_init(struct arena *self, const size_t len, unsigned char *backing_buf)
 {
     assert(self);
     assert(backing_buf);
