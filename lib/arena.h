@@ -41,6 +41,40 @@ struct arena {
 };
 
 /**
+ * @brief Tempory arena state struct.
+ */
+struct temp_arena_state {
+    struct arena *arena_ptr; ///< arena pointer
+    size_t prev_offset;      ///< arena original prev offset
+    size_t curr_offset;      ///< arena original curr offset
+};
+
+/**
+ * @brief Store the arena state temporarily.
+ *
+ * @param[in] arena_ptr The arena whose state to store.
+ */
+struct temp_arena_state temp_arena_memory_begin(struct arena *arena_ptr)
+{
+    struct temp_arena_state temp;
+    temp.arena_ptr = arena_ptr;
+    temp.prev_offset = arena_ptr->prev_offset;
+    temp.curr_offset = arena_ptr->curr_offset;
+    return temp;
+}
+
+/**
+ * @brief Restore the arena state.
+ *
+ * @param[in] temp  Stored arena state.
+ */
+void temp_arena_memory_end(struct temp_arena_state temp)
+{
+    temp.arena_ptr->prev_offset = temp.prev_offset;
+    temp.arena_ptr->curr_offset = temp.curr_offset;
+}
+
+/**
  * @brief Initialize the arena.
  *
  * @param[in] self              arena pointer

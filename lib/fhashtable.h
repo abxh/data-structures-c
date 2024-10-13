@@ -34,9 +34,8 @@
  *      @li `HASH_FUNCTION(key)`
  *
  * Source(s) used:
- *      @li https://thenumb.at/Hashtables/#robin-hood-linear-probing
- *      @li
- * https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/
+ *  @li https://thenumb.at/Hashtables/#robin-hood-linear-probing
+ *  @li https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/
  */
 
 // macro definitions: {{{
