@@ -240,7 +240,7 @@ Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> ((index) = 0; (index) &lt; (self)-&gt;capacity; (index)++)              \</div>
 <div class="line">        <span class="keywordflow">if</span> ((self)-&gt;slots[(index)].offset != <a class="code hl_define" href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a> \</div>
 <div class="line">            &amp;&amp; ((key_) = (self)-&gt;slots[(index)].key, (value_) = (self)-&gt;slots[(index)].value, <span class="keyword">true</span>))</div>
-<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:62</div></div>
+<div class="ttc" id="afhashtable_8h_html_aa799886ed218fb21a6ca4787cf83e8d4"><div class="ttname"><a href="#aa799886ed218fb21a6ca4787cf83e8d4">FHASHTABLE_EMPTY_SLOT_OFFSET</a></div><div class="ttdeci">#define FHASHTABLE_EMPTY_SLOT_OFFSET</div><div class="ttdoc">Offset constant used to flag empty slots.</div><div class="ttdef"><b>Definition</b> fhashtable.h:61</div></div>
 </div><!-- fragment -->
 <p>Iterate over the non-empty slots in the hashtable in arbitary order. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Modifying the hashtable under the iteration may result in errors.</dd></dl>
@@ -271,7 +271,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">(<a class="code hl_function" href="murmurhash_8h.html#af0297b844d4ae991464f73a57bb6d2d2">murmur3_32</a>((uint8_t *)&amp;(key), <span class="keyword">sizeof</span>(<a class="code hl_define" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a>), 0))</div>
-<div class="ttc" id="afhashtable_8h_html_ae35c40bc2f912c11f0e36ac66cba4489"><div class="ttname"><a href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></div><div class="ttdeci">#define KEY_TYPE</div><div class="ttdoc">The key type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:107</div></div>
+<div class="ttc" id="afhashtable_8h_html_ae35c40bc2f912c11f0e36ac66cba4489"><div class="ttname"><a href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></div><div class="ttdeci">#define KEY_TYPE</div><div class="ttdoc">The key type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:106</div></div>
 <div class="ttc" id="amurmurhash_8h_html_af0297b844d4ae991464f73a57bb6d2d2"><div class="ttname"><a href="murmurhash_8h.html#af0297b844d4ae991464f73a57bb6d2d2">murmur3_32</a></div><div class="ttdeci">static uint32_t murmur3_32(const uint8_t *key_ptr, const uint32_t len, const uint32_t seed)</div><div class="ttdoc">Get the Murmur3 (32-bit) hash of a string of bytes.</div><div class="ttdef"><b>Definition</b> murmurhash.h:54</div></div>
 </div><!-- fragment -->
 <p>Used to compute indicies of keys. This must be manually defined before including this header file. </p>
