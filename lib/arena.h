@@ -45,22 +45,22 @@ struct arena {
  */
 struct temp_arena_state {
     struct arena *arena_ptr; ///< arena pointer
-    size_t prev_offset;      ///< arena original prev offset
-    size_t curr_offset;      ///< arena original curr offset
+    size_t prev_offset;      ///< arena prev offset
+    size_t curr_offset;      ///< arena curr offset
 };
 
 /**
- * @brief Store the arena state temporarily.
+ * @brief Save the arena state temporarily.
  *
- * @param[in] arena_ptr The arena whose state to store.
+ * @param[in] arena_ptr The arena whose state to save.
  */
-struct temp_arena_state temp_arena_memory_begin(struct arena *arena_ptr)
+struct temp_arena_state temp_arena_state_save(struct arena *arena_ptr)
 {
-    struct temp_arena_state temp;
-    temp.arena_ptr = arena_ptr;
-    temp.prev_offset = arena_ptr->prev_offset;
-    temp.curr_offset = arena_ptr->curr_offset;
-    return temp;
+    struct temp_arena_state curr_state;
+    curr_state.arena_ptr = arena_ptr;
+    curr_state.prev_offset = arena_ptr->prev_offset;
+    curr_state.curr_offset = arena_ptr->curr_offset;
+    return curr_state;
 }
 
 /**
@@ -68,10 +68,10 @@ struct temp_arena_state temp_arena_memory_begin(struct arena *arena_ptr)
  *
  * @param[in] temp  Stored arena state.
  */
-void temp_arena_memory_end(struct temp_arena_state temp)
+void temp_arena_state_restore(struct temp_arena_state prev_state)
 {
-    temp.arena_ptr->prev_offset = temp.prev_offset;
-    temp.arena_ptr->curr_offset = temp.curr_offset;
+    prev_state.arena_ptr->prev_offset = prev_state.prev_offset;
+    prev_state.arena_ptr->curr_offset = prev_state.curr_offset;
 }
 
 /**
