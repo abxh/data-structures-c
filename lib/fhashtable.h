@@ -78,6 +78,33 @@
         if ((self)->slots[(index)].offset != FHASHTABLE_EMPTY_SLOT_OFFSET \
             && ((key_) = (self)->slots[(index)].key, (value_) = (self)->slots[(index)].value, true))
 
+/**
+ * @def fhashtable_calc_sizeof(fhashtable_name, capacity)
+ *
+ * @brief Calculate the size of the hashtable struct. No overflow checks.
+ *
+ * @param[in] fhashtable_name      Defined hashtable NAME.
+ * @param[in] capacity             Capacity input.
+ *
+ * @return The equivalent size.
+ */
+#define fhashtable_calc_sizeof(fhashtable_name, capacity) \
+    (uint32_t)(offsetof(struct fhashtable_name, slots) + capacity * sizeof(((struct fhashtable_name *)0)->slots[0]))
+
+/**
+ * @def fhashtable_calc_sizeof_overflows(fhashtable_name, capacity)
+ *
+ * @brief Check for a given capacity, if the equivalent size of the hashtable struct overflows.
+ *
+ * @param[in] fhashtable_name      Defined hashtable NAME.
+ * @param[in] capacity             Capacity input.
+ *
+ * @return The equivalent size.
+ */
+#define fhashtable_calc_sizeof_overflows(fhashtable_name, capacity) \
+    (capacity                                                       \
+     > (UINT32_MAX - offsetof(struct fhashtable_name, slots)) / sizeof(((struct fhashtable_name *)0)->slots[0]))
+
 #endif // FHASHTABLE_H
 
 /**
@@ -196,37 +223,10 @@ struct FHASHTABLE_NAME {
 // function definitions: {{{
 
 /**
- * @brief Calculate the size of the hashtable struct and round the capacity to a
- *        power of 2.
- *
- * @param[in,out]  capacity_ptr  Pointer to orignal capacity
- * @param[out]     size_ptr      Pointer to size (to be outputted)
- *
- * @retval false If capacity is equal to 0 or [capacity rounded up to the power
- *               of 2] is larger than UINT32_MAX / 4.
- * @retval true Otherwise.
- */
-static inline bool JOIN(FHASHTABLE_NAME, calc_sizeof)(uint32_t *capacity_ptr, uint32_t *size_ptr)
-{
-    assert(capacity_ptr);
-    assert(size_ptr);
-
-    if (*capacity_ptr == 0 || *capacity_ptr > UINT32_MAX / 4) {
-        return false;
-    }
-
-    *capacity_ptr = round_up_pow2_32(*capacity_ptr);
-
-    *size_ptr = (uint32_t)(offsetof(FHASHTABLE_TYPE, slots) + *capacity_ptr * sizeof(FHASHTABLE_SLOT_TYPE));
-
-    return true;
-}
-
-/**
  * @brief Initialize a hashtable struct, given a (power-of-2) capacity.
  *
  * @param[in] self              Hashtable pointer
- * @param[in] pow2_capacity     (Power-of-2) capacity
+ * @param[in] pow2_capacity     Power of 2 capacity.
  */
 static inline FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, init)(FHASHTABLE_TYPE *self, const uint32_t pow2_capacity)
 {
@@ -246,20 +246,26 @@ static inline FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, init)(FHASHTABLE_TYPE *self
 /**
  * @brief Create an hashtable with a given capacity with malloc().
  *
- * @param[in] capacity          Maximum number of elements to be stored.
+ * @param[in] min_capacity          Maximum number of elements to be stored.
  *
  * @return A pointer to the queue.
  * @retval `NULL`
  *   @li If malloc fails.
- *   @li If capacity is equal to 0 or [capacity rounded up to the power of 2] is
- *       larger than UINT32_MAX / 4.
+ *   @li If capacity is equal to 0 or larger than UINT32_MAX / 2 + 1 or the equivalent size overflows.
  */
-static inline FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, create)(uint32_t capacity)
+static inline FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, create)(const uint32_t min_capacity)
 {
-    uint32_t size = 0;
-    if (!FHASHTABLE_CALC_SIZEOF(&capacity, &size)) {
+    if (min_capacity == 0 || min_capacity > UINT32_MAX / 2 + 1) {
         return NULL;
     }
+
+    const uint32_t capacity = round_up_pow2_32(min_capacity);
+
+    if (fhashtable_calc_sizeof_overflows(FHASHTABLE_NAME, capacity)) {
+        return NULL;
+    }
+
+    const uint32_t size = fhashtable_calc_sizeof(FHASHTABLE_NAME, capacity);
 
     FHASHTABLE_TYPE *self = (FHASHTABLE_TYPE *)calloc(1, size);
 

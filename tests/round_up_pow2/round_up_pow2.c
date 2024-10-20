@@ -8,10 +8,8 @@
     - N := 768
     - N := 1e+6
     - N := 1e+9
-    - N := UINT32_MAX / 4
+    - N := UINT32_MAX / 2 + 1
 */
-
-
 
 #include "round_up_pow2.h"
 #include "math.h"
@@ -25,8 +23,8 @@ int main(void)
         assert(round_up_pow2_32(128) == 128);
         assert(round_up_pow2_32(129) == 256);
         assert(round_up_pow2_32(768) == 1024);
-        assert(round_up_pow2_32(1e+6) == (int)pow(2, round(log2(1e+6))));
-        assert(round_up_pow2_32(1e+9) == (int)pow(2, round(log2(1e+9))));
-        assert(round_up_pow2_32(UINT32_MAX / 4) == (int)pow(2, 30));
+        assert(round_up_pow2_32(1e+6) == (uint32_t)pow(2, round(log2(1e+6))));
+        assert(round_up_pow2_32(1e+9) == (uint32_t)pow(2, round(log2(1e+9))));
+        assert(round_up_pow2_32(UINT32_MAX / 2 + 1) == (uint32_t)pow(2, 31));
     }
 }

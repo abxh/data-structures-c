@@ -63,6 +63,33 @@
     for ((index) = 0; (index) < (self)->count                                                                          \
                       && ((value) = (self)->values[((self)->end_index - 1 - (index)) & ((self)->capacity - 1)], true); \
          (index)++)
+
+/**
+ * @def fqueue_calc_sizeof(fqueue_name, capacity)
+ *
+ * @brief Calculate the size of the queue struct. No overflow checks.
+ *
+ * @param[in] fqueue_name       Defined queue NAME.
+ * @param[in] capacity          Capacity input.
+ *
+ * @return The equivalent size.
+ */
+#define fqueue_calc_sizeof(fqueue_name, capacity) \
+    (uint32_t)(offsetof(struct fqueue_name, values) + capacity * sizeof(((struct fqueue_name *)0)->values[0]))
+
+/**
+ * @def fqueue_calc_sizeof_overflows(fqueue_name, capacity)
+ *
+ * @brief Check for a given capacity, if the equivalent size of the queue struct overflows.
+ *
+ * @param[in] fqueue_name       Defined queue NAME.
+ * @param[in] capacity          Capacity input.
+ *
+ * @return The equivalent size.
+ */
+#define fqueue_calc_sizeof_overflows(fqueue_name, capacity) \
+    (capacity > (UINT32_MAX - offsetof(struct fqueue_name, values)) / sizeof(((struct fqueue_name *)0)->values[0]))
+
 #endif // FQUEUE_H
 
 /**
@@ -119,37 +146,10 @@ struct FQUEUE_NAME {
 // function definitions: {{{
 
 /**
- * @brief Calculate the size of the queue struct and round the capacity to a
- *        power of 2.
- *
- * @param[in,out]  capacity_ptr  Pointer to orignal capacity
- * @param[out]     size_ptr      Pointer to size (to be outputted)
- *
- * @retval false If capacity is equal to 0 or [capacity rounded up to the power
- *               of 2] is larger than UINT32_MAX / 4.
- * @retval true Otherwise.
- */
-static inline bool JOIN(FQUEUE_NAME, calc_sizeof)(uint32_t *capacity_ptr, uint32_t *size_ptr)
-{
-    assert(capacity_ptr);
-    assert(size_ptr);
-
-    if (*capacity_ptr == 0 || *capacity_ptr > UINT32_MAX / 4) {
-        return false;
-    }
-
-    *capacity_ptr = round_up_pow2_32(*capacity_ptr);
-
-    *size_ptr = (uint32_t)(offsetof(FQUEUE_TYPE, values) + *capacity_ptr * sizeof(VALUE_TYPE));
-
-    return true;
-}
-
-/**
  * @brief Initialize a queue struct, given a (power-of-2) capacity.
  *
  * @param[in] self              Queue pointer
- * @param[in] pow2_capacity     (Power-of-2) capacity
+ * @param[in] pow2_capacity     Power of 2 capacity
  */
 static inline FQUEUE_TYPE *JOIN(FQUEUE_NAME, init)(FQUEUE_TYPE *self, const uint32_t pow2_capacity)
 {
@@ -166,21 +166,26 @@ static inline FQUEUE_TYPE *JOIN(FQUEUE_NAME, init)(FQUEUE_TYPE *self, const uint
 /**
  * @brief Create an queue struct with a given capacity with malloc().
  *
- * @param[in] capacity          Maximum number of elements expected to be stored
- *                              in the queue.
+ * @param[in] min_capacity      Maximum number of elements expected to be stored
  *
  * @return A pointer to the queue.
  * @retval `NULL`
  *   @li If malloc fails.
- *   @li If capacity is 0 or [capacity rounded up to the power of 2] is larger
- *       than UINT32_MAX / 4.
+ *   @li If capacity is 0 or larger than UINT32_MAX / 2 + 1 or the equivalent size overflows.
  */
-static inline FQUEUE_TYPE *JOIN(FQUEUE_NAME, create)(uint32_t capacity)
+static inline FQUEUE_TYPE *JOIN(FQUEUE_NAME, create)(const uint32_t min_capacity)
 {
-    uint32_t size = 0;
-    if (!FQUEUE_CALC_SIZEOF(&capacity, &size)) {
+    if (min_capacity == 0 || min_capacity > UINT32_MAX / 2 + 1) {
         return NULL;
     }
+
+    const uint32_t capacity = round_up_pow2_32(min_capacity);
+
+    if (fqueue_calc_sizeof_overflows(FQUEUE_NAME, capacity)) {
+        return NULL;
+    }
+
+    const uint32_t size = fqueue_calc_sizeof(FQUEUE_NAME, capacity);
 
     FQUEUE_TYPE *self = (FQUEUE_TYPE *)calloc(1, size);
 

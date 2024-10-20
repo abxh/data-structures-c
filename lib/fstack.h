@@ -65,6 +65,32 @@
 #define fstack_for_each_reverse(self, index, value) \
     for ((index) = 0; (index) < (self)->count && ((value) = (self)->values[(index)], true); (index)++)
 
+/**
+ * @def fstack_calc_sizeof(fstack_name, capacity)
+ *
+ * @brief Calculate the size of the stack struct. No overflow checks.
+ *
+ * @param[in] fstack_name      Defined stack NAME.
+ * @param[in] capacity          Capacity input.
+ *
+ * @return The equivalent size.
+ */
+#define fstack_calc_sizeof(fstack_name, capacity) \
+    (uint32_t)(offsetof(struct fstack_name, values) + capacity * sizeof(((struct fstack_name *)0)->values[0]))
+
+/**
+ * @def fstack_calc_sizeof_overflows(fstack_name, capacity)
+ *
+ * @brief Check for a given capacity, if the equivalent size of the stack struct overflows.
+ *
+ * @param[in] fstack_name      Defined stack NAME.
+ * @param[in] capacity          Capacity input.
+ *
+ * @return The equivalent size.
+ */
+#define fstack_calc_sizeof_overflows(fstack_name, capacity) \
+    (capacity > (UINT32_MAX - offsetof(struct fstack_name, values)) / sizeof(((struct fstack_name *)0)->values[0]))
+
 #endif // FSTACK_H
 
 /**
@@ -119,30 +145,6 @@ struct FSTACK_NAME {
 // function definitions: {{{
 
 /**
- * @brief Calculate the size of the stack struct.
- *
- * @param[in,out]  capacity_ptr  Pointer to orignal capacity
- * @param[out]     size_ptr      Pointer to size (to be outputted)
- *
- * @retval false If capacity is 0 or the equivalent size is larger than
- *               UINT32_MAX.
- * @retval true  Otherwise.
- */
-static inline bool JOIN(FSTACK_NAME, calc_sizeof)(uint32_t *capacity_ptr, uint32_t *size_ptr)
-{
-    assert(capacity_ptr);
-    assert(size_ptr);
-
-    if (*capacity_ptr == 0 || *capacity_ptr > (UINT32_MAX - offsetof(FSTACK_TYPE, values)) / sizeof(VALUE_TYPE)) {
-        return false;
-    }
-
-    *size_ptr = (uint32_t)(offsetof(FSTACK_TYPE, values) + *capacity_ptr * sizeof(VALUE_TYPE));
-
-    return true;
-}
-
-/**
  * @brief Initialize a stack struct, given a capacity.
  *
  * @param[in] self              Stack pointer
@@ -164,17 +166,18 @@ static inline FSTACK_TYPE *JOIN(FSTACK_NAME, init)(FSTACK_TYPE *self, const uint
  * @param[in] capacity      Maximum number of elements.
  *
  * @return A pointer to the stack.
- * @retval NULL
- *   @li If capacity is 0 or the equivalent size cannot be stored in
- *       UINT32_MAX.
+ * @retval `NULL`
+ *   @li If capacity is 0 or the equivalent size overflows
  *   @li If malloc fails.
  */
-static inline FSTACK_TYPE *JOIN(FSTACK_NAME, create)(uint32_t capacity)
+static inline FSTACK_TYPE *JOIN(FSTACK_NAME, create)(const uint32_t capacity)
 {
-    uint32_t size = 0;
-    if (!FSTACK_CALC_SIZEOF(&capacity, &size)) {
+    if (capacity == 0 || fstack_calc_sizeof_overflows(FSTACK_NAME, capacity)) {
         return NULL;
     }
+
+    const uint32_t size = fstack_calc_sizeof(FSTACK_NAME, capacity);
+
     FSTACK_TYPE *self = (FSTACK_TYPE *)calloc(1, size);
 
     if (!self) {

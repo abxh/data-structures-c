@@ -15,7 +15,6 @@ struct pool {
     unsigned char *buf_ptr;
     size_t buf_len;
     size_t chunk_size;
-
     struct pool_free_node *head;
 };
 

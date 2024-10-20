@@ -73,6 +73,33 @@
 #define fpqueue_for_each(self, index, value_) \
     for ((index) = 0; (index) < (self)->count && ((value_) = (self)->elements[(index)].value, true); (index)++)
 
+/**
+ * @def fpqueue_calc_sizeof(fpqueue_name, capacity)
+ *
+ * @brief Calculate the size of the pqueue struct. No overflow checks.
+ *
+ * @param[in] fpqueue_name      Defined pqueue NAME.
+ * @param[in] capacity          Capacity input.
+ *
+ * @return The equivalent size.
+ */
+#define fpqueue_calc_sizeof(fpqueue_name, capacity) \
+    (uint32_t)(offsetof(struct fpqueue_name, elements) + capacity * sizeof(((struct fpqueue_name *)0)->elements[0]))
+
+/**
+ * @def fpqueue_calc_sizeof_overflows(fpqueue_name, capacity)
+ *
+ * @brief Check for a given capacity, if the equivalent size of the pqueue struct overflows.
+ *
+ * @param[in] fpqueue_name      Defined pqueue NAME.
+ * @param[in] capacity          Capacity input.
+ *
+ * @return The equivalent size.
+ */
+#define fpqueue_calc_sizeof_overflows(fpqueue_name, capacity) \
+    (capacity                                                 \
+     > (UINT32_MAX - offsetof(struct fpqueue_name, elements)) / sizeof(((struct fpqueue_name *)0)->elements[0]))
+
 #endif // FPQUEUE_H
 
 /**
@@ -148,30 +175,6 @@ static inline void JOIN(internal, JOIN(FPQUEUE_NAME, upheap))(FPQUEUE_TYPE *self
 /// @endcond
 
 /**
- * @brief Calculate the size of the priority queue struct.
- *
- * @param[in,out]  capacity_ptr  Pointer to orignal capacity
- * @param[out]     size_ptr      Pointer to size (to be outputted)
- *
- * @retval false If capacity is 0 or the equivalent size can overflow.
- * @retval true  Otherwise.
- */
-static inline bool JOIN(FPQUEUE_NAME, calc_sizeof)(uint32_t *capacity_ptr, uint32_t *size_ptr)
-{
-    assert(capacity_ptr);
-    assert(size_ptr);
-
-    if (*capacity_ptr == 0
-        || *capacity_ptr > (((UINT32_MAX - offsetof(FPQUEUE_TYPE, elements)) / sizeof(FPQUEUE_ELEMENT_TYPE) - 2) / 2)) {
-        return false;
-    }
-
-    *size_ptr = (uint32_t)(offsetof(FPQUEUE_TYPE, elements) + *capacity_ptr * sizeof(FPQUEUE_ELEMENT_TYPE));
-
-    return true;
-}
-
-/**
  * @brief Initialize a priority queue struct, given a capacity.
  *
  * @param[in] self              Priority queue pointer
@@ -194,15 +197,16 @@ static inline FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, init)(FPQUEUE_TYPE *self, const u
  *
  * @return A pointer to the priority queue.
  * @retval NULL
- *   @li If capacity is 0 or the equivalent size is larger than UINT32_MAX.
+ *   @li If capacity is 0 or the equivalent size overflows.
  *   @li If malloc fails.
  */
-static inline FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, create)(uint32_t capacity)
+static inline FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, create)(const uint32_t capacity)
 {
-    uint32_t size = 0;
-    if (!FPQUEUE_CALC_SIZEOF(&capacity, &size)) {
+    if (capacity == 0 || fpqueue_calc_sizeof_overflows(FPQUEUE_NAME, capacity)) {
         return NULL;
     }
+
+    const uint32_t size = fpqueue_calc_sizeof(FPQUEUE_NAME, capacity);
 
     FPQUEUE_TYPE *self = (FPQUEUE_TYPE *)calloc(1, size);
 

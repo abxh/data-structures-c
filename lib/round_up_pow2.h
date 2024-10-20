@@ -30,7 +30,7 @@
  *
  * Assumes:
  * @li `x` is strictly larger than 0.
- * @li `x` is smaller than than the defined UINT32_MAX / 4.
+ * @li `x` is smaller than than the defined UINT32_MAX / 2 + 1.
  *
  * @param x     The number at hand.
  *
@@ -38,11 +38,13 @@
  */
 static inline uint32_t round_up_pow2_32(uint32_t x)
 {
-    assert(0 < x && x <= UINT32_MAX / 4);
+    assert(0 < x && x <= UINT32_MAX / 2 + 1);
 
-#if defined(__GNUC__) \
-    && (__GNUC__ > 3 || (__GNUC__ == 3 && (__GNUC_MINOR__ > 4 || __GNUC_MINOR__ == 4))) // Test for GCC >= 3.4.0
+// Test for GCC >= 3.4.0
+#if defined(__GNUC__) && (__GNUC__ > 3 || (__GNUC__ == 3 && (__GNUC_MINOR__ > 4 || __GNUC_MINOR__ == 4)))
+
     return x == 1U ? 1U : 1U << (32 - __builtin_clz(x - 1U));
+
 #else
     x--;
     x |= x >> 1;
