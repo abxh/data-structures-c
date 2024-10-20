@@ -65,10 +65,9 @@
  * @warning Modifying the priority queue under the iteration may result in
  *          errors.
  *
- * @param[in] self      Priority queue pointer.
- * @param[in] index     Temporary indexing variable. Should be able to contain
- *                      `uint32_t`.
- * @param[out] value_   Current value. Should be `VALUE_TYPE`.
+ * @param[in] self              Priority queue pointer.
+ * @param[in] index             Temporary indexing variable. Should be `uint32_t`.
+ * @param[out] value_           Current value. Should be `VALUE_TYPE`.
  */
 #define fpqueue_for_each(self, index, value_) \
     for ((index) = 0; (index) < (self)->count && ((value_) = (self)->elements[(index)].value, true); (index)++)
@@ -81,7 +80,7 @@
  * @param[in] fpqueue_name      Defined pqueue NAME.
  * @param[in] capacity          Capacity input.
  *
- * @return The equivalent size.
+ * @return                      The equivalent size.
  */
 #define fpqueue_calc_sizeof(fpqueue_name, capacity) \
     (uint32_t)(offsetof(struct fpqueue_name, elements) + capacity * sizeof(((struct fpqueue_name *)0)->elements[0]))
@@ -94,7 +93,7 @@
  * @param[in] fpqueue_name      Defined pqueue NAME.
  * @param[in] capacity          Capacity input.
  *
- * @return The equivalent size.
+ * @return                      Whether the equivalent size overflows.
  */
 #define fpqueue_calc_sizeof_overflows(fpqueue_name, capacity) \
     (capacity                                                 \
@@ -193,12 +192,12 @@ static inline FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, init)(FPQUEUE_TYPE *self, const u
 /**
  * @brief Create an priority queue struct with a given capacity with malloc().
  *
- * @param[in] capacity      Maximum number of elements expected to be stored.
+ * @param[in] capacity          Maximum number of elements expected to be stored.
  *
- * @return A pointer to the priority queue.
+ * @return                      A pointer to the priority queue.
  * @retval NULL
- *   @li If capacity is 0 or the equivalent size overflows.
- *   @li If malloc fails.
+ *   @li                        If capacity is 0 or the equivalent size overflows.
+ *   @li                        If malloc fails.
  */
 static inline FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, create)(const uint32_t capacity)
 {
@@ -224,7 +223,7 @@ static inline FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, create)(const uint32_t capacity)
  *
  * @warning May not be called twice in a row on the same object.
  *
- * @param[in] self      The priority queue pointer.
+ * @param[in] self              The priority queue pointer.
  */
 static inline void JOIN(FPQUEUE_NAME, destroy)(FPQUEUE_TYPE *self)
 {
@@ -236,9 +235,9 @@ static inline void JOIN(FPQUEUE_NAME, destroy)(FPQUEUE_TYPE *self)
 /**
  * @brief Return whether the priority queue is empty.
  *
- * @param[in] self      The priority queue pointer.
+ * @param[in] self              The priority queue pointer.
  *
- * @return Whether the priority queue is empty.
+ * @return                      Whether the priority queue is empty.
  */
 static inline bool JOIN(FPQUEUE_NAME, is_empty)(const FPQUEUE_TYPE *self)
 {
@@ -250,9 +249,9 @@ static inline bool JOIN(FPQUEUE_NAME, is_empty)(const FPQUEUE_TYPE *self)
 /**
  * @brief Return whether the priority queue is full.
  *
- * @param[in] self      The priority queue pointer.
+ * @param[in] self              The priority queue pointer.
  *
- * @return Whether the priority queue is full.
+ * @return                      Whether the priority queue is full.
  */
 static inline bool JOIN(FPQUEUE_NAME, is_full)(const FPQUEUE_TYPE *self)
 {
@@ -264,9 +263,9 @@ static inline bool JOIN(FPQUEUE_NAME, is_full)(const FPQUEUE_TYPE *self)
 /**
  * @brief Get the max priority value in a non-empty priority queue.
  *
- * @param[in] self      The priority queue pointer.
+ * @param[in] self              The priority queue pointer.
  *
- * @return The max priority value.
+ * @return                      The max priority value.
  */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_max)(const FPQUEUE_TYPE *self)
 {
@@ -280,9 +279,9 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, get_max)(const FPQUEUE_TYPE *self)
  * @brief Peek a non-empty priority queue and get it's next to-be-popped (max priority)
  *        value.
  *
- * @param[in] self      The priority queue pointer.
+ * @param[in] self              The priority queue pointer.
  *
- * @return The next to-be-popped (max priority) value.
+ * @return                      The next to-be-popped (max priority) value.
  */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, peek)(const FPQUEUE_TYPE *self)
 {
@@ -292,9 +291,9 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, peek)(const FPQUEUE_TYPE *self)
 /**
  * @brief Pop the max priority value away from a non-empty priority queue.
  *
- * @param[in] self      The priority queue pointer.
+ * @param[in] self              The priority queue pointer.
  *
- * @return The max value.
+ * @return                      The max value.
  */
 static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE *self)
 {
@@ -315,10 +314,10 @@ static inline VALUE_TYPE JOIN(FPQUEUE_NAME, pop_max)(FPQUEUE_TYPE *self)
 /**
  * @brief Push a value with given priority onto a non-full priority queue.
  *
- * @param[in] self          The priority queue pointer.
- * @param[in] value         The value.
- * @param[in] priority      The priority (with large number meaning high
- *                          priority and vice versa).
+ * @param[in] self              The priority queue pointer.
+ * @param[in] value             The value.
+ * @param[in] priority          The priority (with large number meaning high
+ *                              priority and vice versa).
  */
 static inline void JOIN(FPQUEUE_NAME, push)(FPQUEUE_TYPE *self, VALUE_TYPE value, uint32_t priority)
 {
@@ -337,7 +336,7 @@ static inline void JOIN(FPQUEUE_NAME, push)(FPQUEUE_TYPE *self, VALUE_TYPE value
 /**
  * @brief Clear the elements in the priority queue.
  *
- * @param[in] self      The priority queue pointer.
+ * @param[in] self              The priority queue pointer.
  */
 static inline void JOIN(FPQUEUE_NAME, clear)(FPQUEUE_TYPE *self)
 {

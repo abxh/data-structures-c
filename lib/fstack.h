@@ -43,10 +43,9 @@
  *
  * @warning Modifying the stack under the iteration may result in errors.
  *
- * @param[in] self      Stack pointer.
- * @param[in] index     Temporary indexing variable. Should be able to contain
- *                      `uint32_t`.
- * @param[out] value    Current value. Should be `VALUE_TYPE`.
+ * @param[in] self              Stack pointer.
+ * @param[in] index             Temporary indexing variable. Should be `uint32_t`.
+ * @param[out] value            Current value. Should be `VALUE_TYPE`.
  */
 #define fstack_for_each(self, index, value) \
     for ((index) = (self)->count; (index) > 0 && ((value) = (self)->values[(index) - 1], true); (index)--)
@@ -57,10 +56,9 @@
  *
  * @warning Modifying the stack under the iteration may result in errors.
  *
- * @param[in] self      Stack pointer.
- * @param[in] index     Temporary indexing variable. Should be able to contain
- *                      `uint32_t`.
- * @param[out] value    Current value. Should be `VALUE_TYPE`.
+ * @param[in] self              Stack pointer.
+ * @param[in] index             Temporary indexing variable. Should be `uint32_t`.
+ * @param[out] value            Current value. Should be `VALUE_TYPE`.
  */
 #define fstack_for_each_reverse(self, index, value) \
     for ((index) = 0; (index) < (self)->count && ((value) = (self)->values[(index)], true); (index)++)
@@ -70,10 +68,10 @@
  *
  * @brief Calculate the size of the stack struct. No overflow checks.
  *
- * @param[in] fstack_name      Defined stack NAME.
+ * @param[in] fstack_name       Defined stack NAME.
  * @param[in] capacity          Capacity input.
  *
- * @return The equivalent size.
+ * @return                      The equivalent size.
  */
 #define fstack_calc_sizeof(fstack_name, capacity) \
     (uint32_t)(offsetof(struct fstack_name, values) + capacity * sizeof(((struct fstack_name *)0)->values[0]))
@@ -83,10 +81,10 @@
  *
  * @brief Check for a given capacity, if the equivalent size of the stack struct overflows.
  *
- * @param[in] fstack_name      Defined stack NAME.
+ * @param[in] fstack_name       Defined stack NAME.
  * @param[in] capacity          Capacity input.
  *
- * @return The equivalent size.
+ * @return                      Whether the equivalent size overflows.
  */
 #define fstack_calc_sizeof_overflows(fstack_name, capacity) \
     (capacity > (UINT32_MAX - offsetof(struct fstack_name, values)) / sizeof(((struct fstack_name *)0)->values[0]))
@@ -163,12 +161,12 @@ static inline FSTACK_TYPE *JOIN(FSTACK_NAME, init)(FSTACK_TYPE *self, const uint
 /**
  * @brief Create an stack struct with a given capacity with malloc().
  *
- * @param[in] capacity      Maximum number of elements.
+ * @param[in] capacity          Maximum number of elements.
  *
- * @return A pointer to the stack.
- * @retval `NULL`
- *   @li If capacity is 0 or the equivalent size overflows
- *   @li If malloc fails.
+ * @return                      A pointer to the stack.
+ * @retval NULL
+ *   @li                        If capacity is 0 or the equivalent size overflows
+ *   @li                        If malloc fails.
  */
 static inline FSTACK_TYPE *JOIN(FSTACK_NAME, create)(const uint32_t capacity)
 {
@@ -194,7 +192,7 @@ static inline FSTACK_TYPE *JOIN(FSTACK_NAME, create)(const uint32_t capacity)
  *
  * @warning May not be called twice in a row on the same object.
  *
- * @param[in] self      The stack pointer.
+ * @param[in] self              The stack pointer.
  */
 static inline void JOIN(FSTACK_NAME, destroy)(FSTACK_TYPE *self)
 {
@@ -206,9 +204,9 @@ static inline void JOIN(FSTACK_NAME, destroy)(FSTACK_TYPE *self)
 /**
  * @brief Return whether the stack is empty.
  *
- * @param[in] self      The stack pointer.
+ * @param[in] self              The stack pointer.
  *
- * @return Whether the stack is empty.
+ * @return                      Whether the stack is empty.
  */
 static inline bool JOIN(FSTACK_NAME, is_empty)(const FSTACK_TYPE *self)
 {
@@ -220,9 +218,9 @@ static inline bool JOIN(FSTACK_NAME, is_empty)(const FSTACK_TYPE *self)
 /**
  * @brief Return whether the stack is full.
  *
- * @param[in] self      The stack pointer.
+ * @param[in] self              The stack pointer.
  *
- * @return Whether the stack is full.
+ * @return                      Whether the stack is full.
  */
 static inline bool JOIN(FSTACK_NAME, is_full)(const FSTACK_TYPE *self)
 {
@@ -235,12 +233,12 @@ static inline bool JOIN(FSTACK_NAME, is_full)(const FSTACK_TYPE *self)
  * @brief Get the value at index.
  *
  * @note Index starts from the top as `0` and is counted upward to `count - 1`
- * as bottom.
+ *       as bottom.
  *
- * @param[in] self      The stack pointer.
- * @param[in] index     The index to retrieve to value from.
+ * @param[in] self              The stack pointer.
+ * @param[in] index             The index to retrieve to value from.
  *
- * @return The value at `index`.
+ * @return                      The value at `index`.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, at)(const FSTACK_TYPE *self, const uint32_t index)
 {
@@ -253,9 +251,9 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, at)(const FSTACK_TYPE *self, const ui
 /**
  * @brief Get the value from the top of a non-empty stack.
  *
- * @param[in] self      The stack pointer.
+ * @param[in] self              The stack pointer.
  *
- * @return The top value.
+ * @return                      The top value.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, get_top)(const FSTACK_TYPE *self)
 {
@@ -268,9 +266,9 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, get_top)(const FSTACK_TYPE *self)
 /**
  * @brief Get the value from the bottom of a non-empty stack.
  *
- * @param[in] self      The stack pointer.
+ * @param[in] self              The stack pointer.
  *
- * @return The bottom value.
+ * @return                      The bottom value.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, get_bottom)(const FSTACK_TYPE *self)
 {
@@ -283,9 +281,9 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, get_bottom)(const FSTACK_TYPE *self)
 /**
  * @brief Peek a non-empty stack and get it's next to-be-popped value.
  *
- * @param[in] self      The stack pointer.
+ * @param[in] self              The stack pointer.
  *
- * @return The next to-be-popped value.
+ * @return                      The next to-be-popped value.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, peek)(const FSTACK_TYPE *self)
 {
@@ -295,8 +293,8 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, peek)(const FSTACK_TYPE *self)
 /**
  * @brief Push a value onto a non-full stack.
  *
- * @param[in] self      The stack pointer.
- * @param[in] value     The value.
+ * @param[in] self              The stack pointer.
+ * @param[in] value             The value.
  */
 static inline void JOIN(FSTACK_NAME, push)(FSTACK_TYPE *self, const VALUE_TYPE value)
 {
@@ -309,9 +307,9 @@ static inline void JOIN(FSTACK_NAME, push)(FSTACK_TYPE *self, const VALUE_TYPE v
 /**
  * @brief Pop a value away from a non-empty stack.
  *
- * @param[in] self      The stack pointer.
+ * @param[in] self              The stack pointer.
  *
- * @return The top value.
+ * @return                      The top value.
  */
 static inline VALUE_TYPE JOIN(FSTACK_NAME, pop)(FSTACK_TYPE *self)
 {
@@ -324,7 +322,7 @@ static inline VALUE_TYPE JOIN(FSTACK_NAME, pop)(FSTACK_TYPE *self)
 /**
  * @brief Clear the elements in the stack.
  *
- * @param[in] self      The stack pointer.
+ * @param[in] self              The stack pointer.
  */
 static inline void JOIN(FSTACK_NAME, clear)(FSTACK_TYPE *self)
 {

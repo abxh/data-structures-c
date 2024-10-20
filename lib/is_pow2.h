@@ -27,9 +27,9 @@
 /**
  * @brief Check if a number is a power of two.
  *
- * @param[in] x     The number at hand.
+ * @param[in] x             The number at hand.
  *
- * @return A boolean value indicating whether the number is a power of two.
+ * @return                  A boolean value indicating whether the number is a power of two.
  */
 static inline size_t is_pow2(const size_t x)
 {

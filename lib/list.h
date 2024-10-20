@@ -37,11 +37,11 @@ struct list_node {
  * @def list_node_entry(ptr, type, member)
  * @brief Obtain a pointer to the struct that contains the list node as a member.
  *
- * @param[in] ptr       Node pointer.
- * @param[in] type      Container type.
- * @param[in] member    Node member name.
+ * @param[in] ptr               Node pointer.
+ * @param[in] type              Container type.
+ * @param[in] member            Node member name.
  *
- * @return A pointer to the struct containing the node member.
+ * @return                      A pointer to the struct containing the node member.
  */
 #define list_node_entry(ptr, type, member) container_of(ptr, type, member)
 
@@ -59,7 +59,7 @@ static inline void internal_list_node_attach(struct list_node *prev_ptr, struct 
 /**
  * @brief Initialize a list node
  *
- * @param[in] node_ptr      The node pointer.
+ * @param[in] node_ptr          The node pointer.
  */
 static inline void list_node_init(struct list_node *node_ptr)
 {
@@ -71,10 +71,10 @@ static inline void list_node_init(struct list_node *node_ptr)
 /**
  * @brief Check if a given list node is first in the list (aka after the head).
  *
- * @param[in] node_ptr      The node pointer.
- * @param[in] head_ptr      The head node pointer.
+ * @param[in] node_ptr          The node pointer.
+ * @param[in] head_ptr          The head node pointer.
  *
- * @return Whether the list node is first in the list.
+ * @return                      Whether the list node is first in the list.
  */
 static inline bool list_node_is_first(const struct list_node *node_ptr, const struct list_node *head_ptr)
 {
@@ -88,10 +88,10 @@ static inline bool list_node_is_first(const struct list_node *node_ptr, const st
  * @brief Check if a given list node is the last of the list (aka before the
  *        tail).
  *
- * @param[in] node_ptr      The node pointer.
- * @param[in] tail_ptr      The tail node pointer.
+ * @param[in] node_ptr          The node pointer.
+ * @param[in] tail_ptr          The tail node pointer.
  *
- * @return Whether the list node is the last in the list.
+ * @return                      Whether the list node is the last in the list.
  */
 static inline bool list_node_is_last(const struct list_node *node_ptr, const struct list_node *tail_ptr)
 {
@@ -104,10 +104,10 @@ static inline bool list_node_is_last(const struct list_node *node_ptr, const str
 /**
  * @brief Check if a given list node is the head of the list.
  *
- * @param[in] node_ptr      The node pointer.
- * @param[in] head_ptr      The head node pointer.
+ * @param[in] node_ptr          The node pointer.
+ * @param[in] head_ptr          The head node pointer.
  *
- * @return Whether the list node is head of the list.
+ * @return                      Whether the list node is head of the list.
  */
 static inline bool list_node_is_head(const struct list_node *node_ptr, const struct list_node *head_ptr)
 {
@@ -120,10 +120,10 @@ static inline bool list_node_is_head(const struct list_node *node_ptr, const str
 /**
  * @brief Check if a given list node is the tail of the list.
  *
- * @param[in] node_ptr      The node pointer.
- * @param[in] tail_ptr      The tail node pointer.
+ * @param[in] node_ptr          The node pointer.
+ * @param[in] tail_ptr          The tail node pointer.
  *
- * @return Whether the list node is the tail of the list.
+ * @return                      Whether the list node is the tail of the list.
  */
 static inline bool list_node_is_tail(const struct list_node *node_ptr, const struct list_node *tail_ptr)
 {
@@ -138,8 +138,8 @@ static inline bool list_node_is_tail(const struct list_node *node_ptr, const str
  *
  * @note This can be used to construct a stack.
  *
- * @param[in] prev_ptr      The prev node pointer.
- * @param[in] node_ptr      The node pointer.
+ * @param[in] prev_ptr          The prev node pointer.
+ * @param[in] node_ptr          The node pointer.
  */
 static inline void list_node_add_after(struct list_node *node_ptr, struct list_node *prev_ptr)
 {
@@ -154,8 +154,8 @@ static inline void list_node_add_after(struct list_node *node_ptr, struct list_n
  *
  * @note This can be used to construct a queue.
  *
- * @param[in] next_ptr      The next node pointer.
- * @param[in] node_ptr      The node pointer.
+ * @param[in] next_ptr          The next node pointer.
+ * @param[in] node_ptr          The node pointer.
  */
 static inline void list_node_add_before(struct list_node *node_ptr, struct list_node *next_ptr)
 {
@@ -172,9 +172,9 @@ static inline void list_node_add_before(struct list_node *node_ptr, struct list_
  * @li node_ptr node is a part of a list.
  * @li node_ptr node is not the head or tail node.
  *
- * @param[in] node_ptr      The node pointer.
+ * @param[in] node_ptr          The node pointer.
  *
- * @return pointer to the removed node
+ * @return                      Pointer to the removed node
  */
 static inline struct list_node *list_node_remove(struct list_node *node_ptr)
 {
@@ -195,8 +195,8 @@ static inline struct list_node *list_node_remove(struct list_node *node_ptr)
  * @li The node is a part of a list.
  * @li The node is not the head or tail node (points to self).
  *
- * @param[in] old_ptr       Pointer to old node.
- * @param[in] new_ptr       Pointer to new node.
+ * @param[in] old_ptr           Pointer to old node.
+ * @param[in] new_ptr           Pointer to new node.
  */
 static inline void list_node_replace(struct list_node *old_ptr, struct list_node *new_ptr)
 {

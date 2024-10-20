@@ -38,10 +38,9 @@
  *
  * @warning Modifying the queue under the iteration may result in errors.
  *
- * @param[in] self      Queue pointer.
- * @param[in] index     Temporary indexing variable. Should be able to contain
- *                      `uint32_t`.
- * @param[out] value    Current value. Should be `VALUE_TYPE`.
+ * @param[in] self              Queue pointer.
+ * @param[in] index             Temporary indexing variable. Should be `uint32_t`.
+ * @param[out] value            Current value. Should be `VALUE_TYPE`.
  */
 #define fqueue_for_each(self, index, value)                                                                          \
     for ((index) = 0; (index) < (self)->count                                                                        \
@@ -54,10 +53,9 @@
  *
  * @warning Modifying the queue under the iteration may result in errors.
  *
- * @param[in] self      Queue pointer.
- * @param[in] index     Temporary indexing variable. Should be able to contain
- *                      `uint32_t`.
- * @param[out] value    Current value. Should be `VALUE_TYPE`.
+ * @param[in] self              Queue pointer.
+ * @param[in] index             Temporary indexing variable. Should be `uint32_t`.
+ * @param[out] value            Current value. Should be `VALUE_TYPE`.
  */
 #define fqueue_for_each_reverse(self, index, value)                                                                    \
     for ((index) = 0; (index) < (self)->count                                                                          \
@@ -72,7 +70,7 @@
  * @param[in] fqueue_name       Defined queue NAME.
  * @param[in] capacity          Capacity input.
  *
- * @return The equivalent size.
+ * @return                      The equivalent size.
  */
 #define fqueue_calc_sizeof(fqueue_name, capacity) \
     (uint32_t)(offsetof(struct fqueue_name, values) + capacity * sizeof(((struct fqueue_name *)0)->values[0]))
@@ -85,7 +83,7 @@
  * @param[in] fqueue_name       Defined queue NAME.
  * @param[in] capacity          Capacity input.
  *
- * @return The equivalent size.
+ * @return                      Whether the equivalent size overflows.
  */
 #define fqueue_calc_sizeof_overflows(fqueue_name, capacity) \
     (capacity > (UINT32_MAX - offsetof(struct fqueue_name, values)) / sizeof(((struct fqueue_name *)0)->values[0]))
@@ -168,10 +166,10 @@ static inline FQUEUE_TYPE *JOIN(FQUEUE_NAME, init)(FQUEUE_TYPE *self, const uint
  *
  * @param[in] min_capacity      Maximum number of elements expected to be stored
  *
- * @return A pointer to the queue.
- * @retval `NULL`
- *   @li If malloc fails.
- *   @li If capacity is 0 or larger than UINT32_MAX / 2 + 1 or the equivalent size overflows.
+ * @return                      A pointer to the queue.
+ * @retval NULL
+ *   @li                        If malloc fails.
+ *   @li                        If capacity is 0 or larger than UINT32_MAX / 2 + 1 or the equivalent size overflows.
  */
 static inline FQUEUE_TYPE *JOIN(FQUEUE_NAME, create)(const uint32_t min_capacity)
 {
@@ -203,7 +201,7 @@ static inline FQUEUE_TYPE *JOIN(FQUEUE_NAME, create)(const uint32_t min_capacity
  *
  * @warning May not be called twice in a row on the same object.
  *
- * @param[in] self      The queue pointer.
+ * @param[in] self              The queue pointer.
  */
 static inline void JOIN(FQUEUE_NAME, destroy)(FQUEUE_TYPE *self)
 {
@@ -215,9 +213,9 @@ static inline void JOIN(FQUEUE_NAME, destroy)(FQUEUE_TYPE *self)
 /**
  * @brief Return whether the queue is empty.
  *
- * @param[in] self      The queue pointer.
+ * @param[in] self              The queue pointer.
  *
- * @return Whether the queue is empty.
+ * @return                      Whether the queue is empty.
  */
 static inline bool JOIN(FQUEUE_NAME, is_empty)(const FQUEUE_TYPE *self)
 {
@@ -229,9 +227,9 @@ static inline bool JOIN(FQUEUE_NAME, is_empty)(const FQUEUE_TYPE *self)
 /**
  * @brief Return whether the queue is full.
  *
- * @param[in] self      The queue pointer.
+ * @param[in] self              The queue pointer.
  *
- * @return Whether the queue is full.
+ * @return                      Whether the queue is full.
  */
 static inline bool JOIN(FQUEUE_NAME, is_full)(const FQUEUE_TYPE *self)
 {
@@ -246,10 +244,10 @@ static inline bool JOIN(FQUEUE_NAME, is_full)(const FQUEUE_TYPE *self)
  * @note Index starts from the front as `0` and is counted upward to `count - 1`
  *       as back.
  *
- * @param[in] self      The queue pointer.
- * @param[in] index     The index to retrieve to value from.
+ * @param[in] self              The queue pointer.
+ * @param[in] index             The index to retrieve to value from.
  *
- * @return The value at `index`.
+ * @return                      The value at `index`.
  */
 static inline VALUE_TYPE JOIN(FQUEUE_NAME, at)(const FQUEUE_TYPE *self, const uint32_t index)
 {
@@ -264,9 +262,9 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, at)(const FQUEUE_TYPE *self, const ui
 /**
  * @brief Get the value from the front of a non-empty queue.
  *
- * @param[in] self      The queue pointer.
+ * @param[in] self              The queue pointer.
  *
- * @return The front value.
+ * @return                      The front value.
  */
 static inline VALUE_TYPE JOIN(FQUEUE_NAME, get_front)(const FQUEUE_TYPE *self)
 {
@@ -279,9 +277,9 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, get_front)(const FQUEUE_TYPE *self)
 /**
  * @brief Get the value from the back of a non-empty queue.
  *
- * @param[in] self      The queue pointer.
+ * @param[in] self              The queue pointer.
  *
- * @return The back value.
+ * @return                      The back value.
  */
 static inline VALUE_TYPE JOIN(FQUEUE_NAME, get_back)(const FQUEUE_TYPE *self)
 {
@@ -296,9 +294,9 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, get_back)(const FQUEUE_TYPE *self)
 /**
  * @brief Peek a non-empty queue and get it's next to-be-dequeued value.
  *
- * @param[in] self      The queue pointer.
+ * @param[in] self              The queue pointer.
  *
- * @return The next to-be-dequeued value.
+ * @return                      The next to-be-dequeued value.
  */
 static inline VALUE_TYPE JOIN(FQUEUE_NAME, peek)(const FQUEUE_TYPE *self)
 {
@@ -308,8 +306,8 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, peek)(const FQUEUE_TYPE *self)
 /**
  * @brief Enqueue a value at the back of a non-full queue.
  *
- * @param[in] self      The queue pointer.
- * @param[in] value     The value to enqueue.
+ * @param[in] self              The queue pointer.
+ * @param[in] value             The value to enqueue.
  */
 static inline bool JOIN(FQUEUE_NAME, enqueue)(FQUEUE_TYPE *self, const VALUE_TYPE value)
 {
@@ -329,9 +327,9 @@ static inline bool JOIN(FQUEUE_NAME, enqueue)(FQUEUE_TYPE *self, const VALUE_TYP
 /**
  * @brief Dequeue a value from the front of a non-empty queue.
  *
- * @param[in] self      The queue pointer.
+ * @param[in] self              The queue pointer.
  *
- * @return The front value.
+ * @return                      The front value.
  */
 static inline VALUE_TYPE JOIN(FQUEUE_NAME, dequeue)(FQUEUE_TYPE *self)
 {
@@ -351,7 +349,7 @@ static inline VALUE_TYPE JOIN(FQUEUE_NAME, dequeue)(FQUEUE_TYPE *self)
 /**
  * @brief Clear the elements in the queue.
  *
- * @param[in] self      The queue pointer.
+ * @param[in] self              The queue pointer.
  */
 static inline void JOIN(FQUEUE_NAME, clear)(FQUEUE_TYPE *self)
 {

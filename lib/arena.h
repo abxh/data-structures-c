@@ -44,42 +44,17 @@ struct arena {
  * @brief Tempory arena state struct.
  */
 struct temp_arena_state {
-    struct arena *arena_ptr; ///< arena pointer
-    size_t prev_offset;      ///< arena prev offset
-    size_t curr_offset;      ///< arena curr offset
+    struct arena *arena_ptr; ///< Arena pointer.
+    size_t prev_offset;      ///< Arena prev offset.
+    size_t curr_offset;      ///< Arena curr offset.
 };
-
-/**
- * @brief Save the arena state temporarily.
- *
- * @param[in] arena_ptr The arena whose state to save.
- */
-struct temp_arena_state temp_arena_state_save(struct arena *arena_ptr)
-{
-    struct temp_arena_state curr_state;
-    curr_state.arena_ptr = arena_ptr;
-    curr_state.prev_offset = arena_ptr->prev_offset;
-    curr_state.curr_offset = arena_ptr->curr_offset;
-    return curr_state;
-}
-
-/**
- * @brief Restore the arena state.
- *
- * @param[in] temp  Stored arena state.
- */
-void temp_arena_state_restore(struct temp_arena_state prev_state)
-{
-    prev_state.arena_ptr->prev_offset = prev_state.prev_offset;
-    prev_state.arena_ptr->curr_offset = prev_state.curr_offset;
-}
 
 /**
  * @brief Initialize the arena.
  *
- * @param[in] self              arena pointer
- * @param[in] len               backing buffer length.
- * @param[in] backing_buf       backing buffer
+ * @param[in] self              Arena pointer.
+ * @param[in] len               Backing buffer length.
+ * @param[in] backing_buf       Backing buffer.
  */
 static inline void arena_init(struct arena *self, const size_t len, unsigned char *backing_buf)
 {
@@ -99,7 +74,7 @@ static inline void arena_init(struct arena *self, const size_t len, unsigned cha
 /**
  * @brief Deallocate all allocations in the arena.
  *
- * @param[in] self      arena pointer.
+ * @param[in] self              Arena pointer.
  */
 static inline void arena_deallocate_all(struct arena *self)
 {
@@ -116,8 +91,8 @@ static inline void arena_deallocate_all(struct arena *self)
  * @param[in] alignment         alignment size
  * @param[in] size              chunk size
  *
- * @return A pointer to the memory chunk.
- *      @retval NULL If the arena doesn't have enough memory for the allocation.
+ * @return                      A pointer to a zeroed-out memory chunk.
+ * @retval NULL                 If the arena doesn't have enough memory for the allocation.
  */
 static inline void *arena_allocate_aligned(struct arena *self, const size_t alignment, const size_t size)
 {
@@ -145,11 +120,11 @@ static inline void *arena_allocate_aligned(struct arena *self, const size_t alig
 /**
  * @brief Get the pointer to a chunk of the arena.
  *
- * @param[in] self      The arena pointer.
- * @param[in] size      The section size in bytes.
+ * @param[in] self              The arena pointer.
+ * @param[in] size              The section size in bytes.
  *
- * @return A pointer to the memory chunk.
- *      @retval NULL If the arena doesn't have enough memory for the allocation.
+ * @return                      A pointer to a zeroed-out memory chunk.
+ * @retval NULL                 If the arena doesn't have enough memory for the allocation.
  */
 static inline void *arena_allocate(struct arena *self, const size_t size)
 {
@@ -182,14 +157,15 @@ static inline void *internal_arena_try_optimizing_w_prev_offset(struct arena *se
  * @brief Reallocate a previously allocated chunk in the arena. With specific
  *        aligment.
  *
- * @param[in] self              arena pointer.
- * @param[in] old_ptr_          pointer to the buffer to reallocate
- * @param[in] alignment         alignment size.
- * @param[in] old_size          old size.
- * @param[in] new_size          new size to grow/shrink to.
+ * @param[in] self              Arena pointer.
+ * @param[in] old_ptr_          Pointer to the buffer to reallocate
+ * @param[in] alignment         Alignment size.
+ * @param[in] old_size          Old size.
+ * @param[in] new_size          New size to grow/shrink to.
  *
- * @return A pointer to reallocated the memory chunk.
- *      @retval NULL If arena doesn't have enough memory for the reallocation or invalid parameters are given.
+ * @return                      A pointer to the reallocated memory chunk.
+ * @retval NULL                 If arena doesn't have enough memory for the reallocation or invalid parameters are
+ *                              given.
  */
 static inline void *arena_reallocate_aligned(struct arena *self, void *old_ptr_, const size_t alignment,
                                              const size_t old_size, const size_t new_size)
@@ -228,12 +204,38 @@ static inline void *arena_reallocate_aligned(struct arena *self, void *old_ptr_,
  * @param[in] old_size          Old size.
  * @param[in] new_size          New size to grow/shrink to.
  *
- * @return A pointer to reallocated the memory chunk.
- *      @retval NULL If arena doesn't have enough memory for the reallocation or invalid parameters are given.
+ * @return                      A pointer to the reallocated memory chunk.
+ * @retval NULL                 If arena doesn't have enough memory for the reallocation or invalid parameters are
+ *                              given.
  */
 static inline void *arena_reallocate(struct arena *self, void *old_ptr, const size_t old_size, const size_t new_size)
 {
     assert(self);
 
     return arena_reallocate_aligned(self, old_ptr, alignof(max_align_t), old_size, new_size);
+}
+
+/**
+ * @brief Save the arena state temporarily.
+ *
+ * @param[in] arena_ptr         The arena whose state to save.
+ */
+static inline struct temp_arena_state temp_arena_state_save(struct arena *arena_ptr)
+{
+    struct temp_arena_state curr_state;
+    curr_state.arena_ptr = arena_ptr;
+    curr_state.prev_offset = arena_ptr->prev_offset;
+    curr_state.curr_offset = arena_ptr->curr_offset;
+    return curr_state;
+}
+
+/**
+ * @brief Restore the arena state.
+ *
+ * @param[in] prev_state        Stored arena state.
+ */
+static inline void temp_arena_state_restore(struct temp_arena_state prev_state)
+{
+    prev_state.arena_ptr->prev_offset = prev_state.prev_offset;
+    prev_state.arena_ptr->curr_offset = prev_state.curr_offset;
 }

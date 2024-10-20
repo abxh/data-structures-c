@@ -35,11 +35,6 @@
  * @li CLRS
  */
 
-/**
- * @example examples/rbtree/rbtree.c
- * Examples of how `rbtree.h` header file is used in practice.
- */
-
 // macro definitions: {{{
 
 #ifndef RBTREE_H
@@ -58,11 +53,11 @@
  * @brief Obtain a pointer to the struct that contains the rbtree node as a
  *        member.
  *
- * @param[in] ptr       Node pointer.
- * @param[in] type      Container type.
- * @param[in] member    Node member name.
+ * @param[in] ptr               Node pointer.
+ * @param[in] type              Container type.
+ * @param[in] member            Node member name.
  *
- * @return A pointer to the struct containing the node member.
+ * @return                      A pointer to the struct containing the node member.
  */
 #define rbtree_node_entry(ptr, type, member) container_of(ptr, type, member)
 
@@ -104,8 +99,8 @@
  * Equality for two keys a and b is defined as:
  * @li `!KEY_IS_STRICTLY_LESS(a,b) && !KEY_IS_STRICTLY_LESS(b,a)`
  *
- * @retval true If key a is strictly less than b.
- * @retval false If key a is greater than or equal to b.
+ * @retval true                 If key a is strictly less than b.
+ * @retval false                If key a is greater than or equal to b.
  */
 #ifndef KEY_IS_STRICTLY_LESS
 #error "Must define KEY_IS_STRICTLY_LESS."
@@ -235,9 +230,8 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, node_transplant))(RBTREE_NOD
                                                                       RBTREE_NODE_TYPE *src_node,
                                                                       RBTREE_NODE_TYPE *dest_node);
 
-// rebalance tree after delete. see explanation in the sources linked above. for
-// the special case where: (P's child) was not root and was black and had no
-// children
+// rebalance tree after delete. see explanation in the sources linked above.
+// for the special case where: (P's child) was not root and was black and had no children.
 static inline void JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(RBTREE_NODE_TYPE **rootptr_ptr, RBTREE_NODE_TYPE *P,
                                                                    int dir);
 
@@ -260,8 +254,8 @@ static inline void JOIN(RBTREE_NAME, init)(RBTREE_NODE_TYPE **rootptr_ptr)
 /**
  * @brief Initialize a red-black tree node
  *
- * @param[in] node_ptr      The node pointer.
- * @param[in] key           The key to initialize the node with.
+ * @param[in] node_ptr          The node pointer.
+ * @param[in] key               The key to initialize the node with.
  */
 static inline void JOIN(RBTREE_NAME, node_init)(RBTREE_NODE_TYPE *node_ptr, KEY_TYPE key)
 {
@@ -275,7 +269,7 @@ static inline void JOIN(RBTREE_NAME, node_init)(RBTREE_NODE_TYPE *node_ptr, KEY_
 /**
  * @brief Extract the parent pointer of a node.
  *
- * @param[in] node_ptr      The node pointer.
+ * @param[in] node_ptr          The node pointer.
  */
 static inline RBTREE_NODE_TYPE *JOIN(RBTREE_NAME, node_get_parent_ptr)(RBTREE_NODE_TYPE *node_ptr)
 {
@@ -287,7 +281,7 @@ static inline RBTREE_NODE_TYPE *JOIN(RBTREE_NAME, node_get_parent_ptr)(RBTREE_NO
 /**
  * @brief Check if the given node is colored black.
  *
- * @param[in] node_ptr      The node pointer.
+ * @param[in] node_ptr          The node pointer.
  */
 static inline bool JOIN(RBTREE_NAME, node_is_black)(const RBTREE_NODE_TYPE *node_ptr)
 {
@@ -299,7 +293,7 @@ static inline bool JOIN(RBTREE_NAME, node_is_black)(const RBTREE_NODE_TYPE *node
 /**
  * @brief Check if the given node is colored red.
  *
- * @param[in] node_ptr      The node pointer.
+ * @param[in] node_ptr          The node pointer.
  */
 static inline bool JOIN(RBTREE_NAME, node_is_red)(const RBTREE_NODE_TYPE *node_ptr)
 {
@@ -313,7 +307,7 @@ static inline bool JOIN(RBTREE_NAME, node_is_red)(const RBTREE_NODE_TYPE *node_p
  *
  * @param[in] rootptr_ptr       A pointer to the pointer to the root node.
  *
- * @return Whether the tree is empty.
+ * @return                      Whether the tree is empty.
  */
 static inline bool JOIN(RBTREE_NAME, is_empty)(RBTREE_NODE_TYPE **rootptr_ptr)
 {
@@ -328,7 +322,7 @@ static inline bool JOIN(RBTREE_NAME, is_empty)(RBTREE_NODE_TYPE **rootptr_ptr)
  * @param[in] rootptr_ptr       A pointer to the pointer to the root node.
  * @param[in] key               The key
  *
- * @return Whether the tree contains the key.
+ * @return                      Whether the tree contains the key.
  */
 static inline bool JOIN(RBTREE_NAME, contains_key)(RBTREE_NODE_TYPE **rootptr_ptr, const KEY_TYPE key)
 {
@@ -360,8 +354,8 @@ static inline bool JOIN(RBTREE_NAME, contains_key)(RBTREE_NODE_TYPE **rootptr_pt
  * @param[in] rootptr_ptr       A pointer to the pointer to the root node.
  * @param[in] key               The key of the node being searched for.
  *
- * @return A pointer to the searched node
- *      @retval `NULL` If a node with the given key wasn't found.
+ * @return                      A pointer to the searched node
+ * @retval NULL                 If a node with the given key wasn't found.
  */
 static inline RBTREE_NODE_TYPE *JOIN(RBTREE_NAME, search_node)(RBTREE_NODE_TYPE **rootptr_ptr, const KEY_TYPE key)
 {
@@ -438,7 +432,7 @@ static inline void JOIN(RBTREE_NAME, insert_node)(RBTREE_NODE_TYPE **rootptr_ptr
  * @param[in] rootptr_ptr       A pointer to the pointer to the root node.
  * @param[in] node_ptr          The node pointer.
  *
- * @return Pointer to the deleted node reinitialized.
+ * @return                      Pointer to the deleted node reinitialized.
  */
 static inline RBTREE_NODE_TYPE *JOIN(RBTREE_NAME, delete_node)(RBTREE_NODE_TYPE **rootptr_ptr,
                                                                RBTREE_NODE_TYPE *node_ptr)

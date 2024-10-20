@@ -10,8 +10,8 @@
  *  information. */
 
 /**
- * @file arena.h
- * @brief Arena allocator
+ * @file pool.h
+ * @brief Pool allocator
  *
  * For a comprehensive source, read:
  * @li https://www.gingerbill.org/article/2019/02/16/memory-allocation-strategies-004/
@@ -102,9 +102,9 @@ static inline void pool_init(struct pool *self, const size_t len, unsigned char 
 /**
  * @brief Get a pointer to a free block of previously given data size
  *
- * @param[in] self      pool pointer
+ * @param[in] self              Pool pointer
  *
- * @returns A pointer to a memory chunk of data size.
+ * @returns                     A pointer to a zeroed-out memory chunk of data size.
  */
 static inline void *pool_allocate(struct pool *self)
 {
@@ -124,8 +124,8 @@ static inline void *pool_allocate(struct pool *self)
 /**
  * @brief Free a memory chunk for further reuse.
  *
- * @param[in] self      pool pointer
- * @param[in] ptr       Pointer to memory chunk
+ * @param[in] self              Pool pointer
+ * @param[in] ptr               Pointer to memory chunk
  */
 static inline void pool_deallocate(struct pool *self, void *ptr)
 {

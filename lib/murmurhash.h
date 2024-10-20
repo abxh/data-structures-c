@@ -44,12 +44,12 @@ static inline uint32_t internal_murmur_32_scramble(uint32_t k)
 /**
  * @brief Get the Murmur3 (32-bit) hash of a string of bytes.
  *
- * @param[in] key_ptr       Pointer to the string of bytes.
- * @param[in] len           Number of bytes.
- * @param[in] seed          A seed, for whom matched with a given key, makes the
- *                          hash function produce the same hash for the key.
+ * @param[in] key_ptr           Pointer to the string of bytes.
+ * @param[in] len               Number of bytes.
+ * @param[in] seed              A seed, for whom matched with a given key, makes the
+ *                              hash function produce the same hash for the key.
  *
- * @return A `uint32_t`-sized hash of the bytes.
+ * @return                      A `uint32_t`-sized hash of the bytes.
  */
 static inline uint32_t murmur3_32(const uint8_t *key_ptr, const uint32_t len, const uint32_t seed)
 {

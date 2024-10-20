@@ -30,15 +30,15 @@
 /**
  * @brief Align pointer to the next alignment boundary.
  *
- * @param[in] alignment	        The desired alignment
- * @param[in] size              The size of the storage to be aligned
+ * @param[in] alignment	        The desired alignment.
+ * @param[in] size              The size of the storage to be aligned.
  * @param[in, out] ptr_ptr      Pointer to contiguous storage (a buffer) of at
  *                              least space bytes. Given it's pointer.
  * @param[in, out] space_ptr	The size of the buffer in which to operate.
  *                              Given it's pointer.
  *
- * @return The adjusted value of `*ptr_ptr`.
- *      @retval NULL            If the space provided is too small.
+ * @return                      The adjusted value of `*ptr_ptr`.
+ * @retval NULL                 If the space provided is too small.
  */
 static inline void *align(const size_t alignment, const size_t size, void **ptr_ptr, size_t *space_ptr)
 {
@@ -83,10 +83,10 @@ static inline void *align(const size_t alignment, const size_t size, void **ptr_
 /**
  * @brief Calculate the alignment padding required to align a pointer.
  *
- * @param[in] alignment	        The alignment
+ * @param[in] alignment	        The desired alignment.
  * @param[in] ptr               Pointer to a buffer as `uintptr_t`.
  *
- * @return The padding to be added to `ptr` to align `ptr`.
+ * @return                      The padding to be added to `ptr` to align `ptr`.
  */
 static inline uintptr_t calc_alignment_padding(const size_t alignment, const uintptr_t ptr)
 {

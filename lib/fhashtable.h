@@ -67,11 +67,10 @@
  *
  * @warning Modifying the hashtable under the iteration may result in errors.
  *
- * @param[in] self      Hashtable pointer.
- * @param[in] index     Temporary indexing variable. Should be able to contain
- *                      `uint32_t`.
- * @param[out] key_     Current key. Should be `KEY_TYPE`.
- * @param[out] value_   Current value. Should be `VALUE_TYPE`.
+ * @param[in] self              Hashtable pointer.
+ * @param[in] index             Temporary indexing variable. Should be `uint32_t`.
+ * @param[out] key_             Current key. Should be `KEY_TYPE`.
+ * @param[out] value_           Current value. Should be `VALUE_TYPE`.
  */
 #define fhashtable_for_each(self, index, key_, value_)                    \
     for ((index) = 0; (index) < (self)->capacity; (index)++)              \
@@ -83,10 +82,10 @@
  *
  * @brief Calculate the size of the hashtable struct. No overflow checks.
  *
- * @param[in] fhashtable_name      Defined hashtable NAME.
- * @param[in] capacity             Capacity input.
+ * @param[in] fhashtable_name   Defined hashtable NAME.
+ * @param[in] capacity          Capacity input.
  *
- * @return The equivalent size.
+ * @return                      The equivalent size.
  */
 #define fhashtable_calc_sizeof(fhashtable_name, capacity) \
     (uint32_t)(offsetof(struct fhashtable_name, slots) + capacity * sizeof(((struct fhashtable_name *)0)->slots[0]))
@@ -96,10 +95,10 @@
  *
  * @brief Check for a given capacity, if the equivalent size of the hashtable struct overflows.
  *
- * @param[in] fhashtable_name      Defined hashtable NAME.
- * @param[in] capacity             Capacity input.
+ * @param[in] fhashtable_name   Defined hashtable NAME.
+ * @param[in] capacity          Capacity input.
  *
- * @return The equivalent size.
+ * @return                      Whether the equivalent size overflows.
  */
 #define fhashtable_calc_sizeof_overflows(fhashtable_name, capacity) \
     (capacity                                                       \
@@ -246,12 +245,13 @@ static inline FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, init)(FHASHTABLE_TYPE *self
 /**
  * @brief Create an hashtable with a given capacity with malloc().
  *
- * @param[in] min_capacity          Maximum number of elements to be stored.
+ * @param[in] min_capacity      Maximum number of elements to be stored.
  *
- * @return A pointer to the queue.
- * @retval `NULL`
- *   @li If malloc fails.
- *   @li If capacity is equal to 0 or larger than UINT32_MAX / 2 + 1 or the equivalent size overflows.
+ * @return                      A pointer to the queue.
+ * @retval NULL
+ *   @li                        If malloc fails.
+ *   @li                        If capacity is equal to 0 or larger than UINT32_MAX / 2 + 1 or the equivalent size
+ *                              overflows.
  */
 static inline FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, create)(const uint32_t min_capacity)
 {
@@ -280,11 +280,11 @@ static inline FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, create)(const uint32_t min_
 
 /**
  * @brief Destroy an hashtable struct and free the underlying memory with
- * free().
+ *        free().
  *
  * @warning May not be called twice in a row on the same object.
  *
- * @param[in] self      The hashtable pointer.
+ * @param[in] self              The hashtable pointer.
  */
 static inline void JOIN(FHASHTABLE_NAME, destroy)(FHASHTABLE_TYPE *self)
 {
@@ -296,9 +296,9 @@ static inline void JOIN(FHASHTABLE_NAME, destroy)(FHASHTABLE_TYPE *self)
 /**
  * @brief Return whether the hashtable is empty.
  *
- * @param[in] self      The hashtable pointer.
+ * @param[in] self              The hashtable pointer.
  *
- * @return Whether the hashtable is empty.
+ * @return                      Whether the hashtable is empty.
  */
 static inline bool JOIN(FHASHTABLE_NAME, is_empty)(const FHASHTABLE_TYPE *self)
 {
@@ -310,9 +310,9 @@ static inline bool JOIN(FHASHTABLE_NAME, is_empty)(const FHASHTABLE_TYPE *self)
 /**
  * @brief Return whether the hashtable is full.
  *
- * @param[in] self      The hashtable pointer.
+ * @param[in] self              The hashtable pointer.
  *
- * @return Whether the hashtable is full.
+ * @return                      Whether the hashtable is full.
  */
 static inline bool JOIN(FHASHTABLE_NAME, is_full)(const FHASHTABLE_TYPE *self)
 {
@@ -324,10 +324,10 @@ static inline bool JOIN(FHASHTABLE_NAME, is_full)(const FHASHTABLE_TYPE *self)
 /**
  * @brief Check if hashtable contains a key.
  *
- * @param[in] self      The hashtable pointer.
- * @param[in] key       The key.
+ * @param[in] self              The hashtable pointer.
+ * @param[in] key               The key.
  *
- * @return A boolean indicating whether the hashtable contains the given key.
+ * @return                      A boolean indicating whether the hashtable contains the given key.
  */
 static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE *self, const KEY_TYPE key)
 {
@@ -361,16 +361,16 @@ static inline bool JOIN(FHASHTABLE_NAME, contains_key)(const FHASHTABLE_TYPE *se
 
 /**
  * @brief From a given key, get the pointer to the corresponding value in the
- * hashtable.
+ *        hashtable.
  *
  * @note The returned pointer is **not** garanteed to point to the same value if
- * the hashtable is modified.
+ *       the hashtable is modified.
  *
- * @param[in] self      The hashtable pointer.
- * @param[in] key       The key to search for.
+ * @param[in] self              The hashtable pointer.
+ * @param[in] key               The key to search for.
  *
- * @return A pointer to the corresponding key.
- *  @retval NULL If the hashtable did not contain the key.
+ * @return                      A pointer to the corresponding key.
+ *  @retval NULL                If the hashtable did not contain the key.
  */
 static inline VALUE_TYPE *JOIN(FHASHTABLE_NAME, get_value_mut)(FHASHTABLE_TYPE *self, const KEY_TYPE key)
 {
@@ -411,8 +411,8 @@ static inline VALUE_TYPE *JOIN(FHASHTABLE_NAME, get_value_mut)(FHASHTABLE_TYPE *
  * @param[in] default_value     The default value returned if the hashtable did
  *                              not contain the key.
  *
- * @return The corresponding key.
- *      @retval `default_value` If the hashtable did not contain the key.
+ * @return                      The corresponding key.
+ * @retval `default_value`      If the hashtable did not contain the key.
  */
 static inline VALUE_TYPE JOIN(FHASHTABLE_NAME, get_value)(const FHASHTABLE_TYPE *self, const KEY_TYPE key,
                                                           VALUE_TYPE default_value)
@@ -452,11 +452,11 @@ static inline VALUE_TYPE JOIN(FHASHTABLE_NAME, get_value)(const FHASHTABLE_TYPE 
  * @note The returned pointer is **not** garanteed to point to the same value if
  *       the hashtable is modified.
  *
- * @param[in] self      The hashtable pointer.
- * @param[in] key       The key to search for.
+ * @param[in] self              The hashtable pointer.
+ * @param[in] key               The key to search for.
  *
- * @return A pointer to the corresponding key.
- *      @retval NULL If the hashtable did not contain the key.
+ * @return                      A pointer to the corresponding key.
+ * @retval NULL                 If the hashtable did not contain the key.
  */
 static inline VALUE_TYPE *JOIN(FHASHTABLE_NAME, search)(FHASHTABLE_TYPE *self, const KEY_TYPE key)
 {
@@ -476,9 +476,9 @@ static inline void JOIN(internal, JOIN(FHASHTABLE_NAME, swap_slots))(FHASHTABLE_
  * @brief Insert a non-duplicate key and it's corresponding value inside the
  *        hashtable.
  *
- * @param[in] self      The hashtable pointer.
- * @param[in] key       The key.
- * @param[in] value     The value.
+ * @param[in] self              The hashtable pointer.
+ * @param[in] key               The key.
+ * @param[in] value             The value.
  */
 static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE *self, KEY_TYPE key, VALUE_TYPE value)
 {
@@ -514,9 +514,9 @@ static inline void JOIN(FHASHTABLE_NAME, insert)(FHASHTABLE_TYPE *self, KEY_TYPE
  * @brief Update a key's corresponding value inside the hashtable. Allows
  *        duplicates.
  *
- * @param[in] self      The hashtable pointer.
- * @param[in] key       The key.
- * @param[in] value     The value.
+ * @param[in] self              The hashtable pointer.
+ * @param[in] key               The key.
+ * @param[in] value             The value.
  */
 static inline void JOIN(FHASHTABLE_NAME, update)(FHASHTABLE_TYPE *self, KEY_TYPE key, VALUE_TYPE value)
 {
@@ -588,8 +588,8 @@ static inline void JOIN(internal, JOIN(FHASHTABLE_NAME, backshift))(FHASHTABLE_T
 /**
  * @brief Delete a key and it's corresponding value from the hashtable.
  *
- * @param[in] self      The hashtable pointer.
- * @param[in] key       The key.
+ * @param[in] self              The hashtable pointer.
+ * @param[in] key               The key.
  *
  * @return A boolean indicating whether the key was previously contained in the
  *         hashtable.
@@ -634,7 +634,7 @@ static inline bool JOIN(FHASHTABLE_NAME, delete)(FHASHTABLE_TYPE *self, const KE
 /**
  * @brief Clear an existing hashtable and flag all slots as empty.
  *
- * @param[in] self      The pointer of the hashtable to clear.
+ * @param[in] self              The pointer of the hashtable to clear.
  */
 static inline void JOIN(FHASHTABLE_NAME, clear)(FHASHTABLE_TYPE *self)
 {
