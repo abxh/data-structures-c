@@ -219,8 +219,7 @@ static inline void *freelist_reallocate(struct freelist *self, void *ptr, const 
 {
     assert(self);
     assert(new_size != 0);
-
-    assert(self->buf_ptr <= (unsigned char *)ptr && (unsigned char *)ptr < &self->buf_ptr[self->buf_len]);
+    assert(&self->buf_ptr[0] <= (unsigned char *)ptr && (unsigned char *)ptr < &self->buf_ptr[self->buf_len]);
 
     struct freelist_header *header = (struct freelist_header *)((char *)ptr - sizeof(struct freelist_header));
     const size_t prev_size = freelist_header_prev_size(header);
