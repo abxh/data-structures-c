@@ -120,12 +120,12 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:abc428276f630344afbe45a1726e3deed" id="r_abc428276f630344afbe45a1726e3deed"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structtemp__arena__state.html">temp_arena_state</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc428276f630344afbe45a1726e3deed">temp_arena_memory_begin</a> (struct <a class="el" href="structarena.html">arena</a> *arena_ptr)</td></tr>
-<tr class="memdesc:abc428276f630344afbe45a1726e3deed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store the arena state temporarily.  <br /></td></tr>
-<tr class="separator:abc428276f630344afbe45a1726e3deed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64cd89f4e38757e55bef4940b4296ad3" id="r_a64cd89f4e38757e55bef4940b4296ad3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a64cd89f4e38757e55bef4940b4296ad3">temp_arena_memory_end</a> (struct <a class="el" href="structtemp__arena__state.html">temp_arena_state</a> temp)</td></tr>
-<tr class="memdesc:a64cd89f4e38757e55bef4940b4296ad3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restore the arena state.  <br /></td></tr>
-<tr class="separator:a64cd89f4e38757e55bef4940b4296ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad488c093713eea8d5b86b3b161b55c91" id="r_ad488c093713eea8d5b86b3b161b55c91"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structtemp__arena__state.html">temp_arena_state</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad488c093713eea8d5b86b3b161b55c91">temp_arena_state_save</a> (struct <a class="el" href="structarena.html">arena</a> *arena_ptr)</td></tr>
+<tr class="memdesc:ad488c093713eea8d5b86b3b161b55c91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save the arena state temporarily.  <br /></td></tr>
+<tr class="separator:ad488c093713eea8d5b86b3b161b55c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7f48f763ebce20c1b840a03b93c7e14" id="r_ab7f48f763ebce20c1b840a03b93c7e14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab7f48f763ebce20c1b840a03b93c7e14">temp_arena_state_restore</a> (struct <a class="el" href="structtemp__arena__state.html">temp_arena_state</a> prev_state)</td></tr>
+<tr class="memdesc:ab7f48f763ebce20c1b840a03b93c7e14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restore the arena state.  <br /></td></tr>
+<tr class="separator:ab7f48f763ebce20c1b840a03b93c7e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad3adbb804fa674f7d5726882160099c" id="r_aad3adbb804fa674f7d5726882160099c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad3adbb804fa674f7d5726882160099c">arena_init</a> (struct <a class="el" href="structarena.html">arena</a> *self, const size_t len, unsigned char *backing_buf)</td></tr>
 <tr class="memdesc:aad3adbb804fa674f7d5726882160099c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the arena.  <br /></td></tr>
 <tr class="separator:aad3adbb804fa674f7d5726882160099c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -444,41 +444,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abc428276f630344afbe45a1726e3deed" name="abc428276f630344afbe45a1726e3deed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc428276f630344afbe45a1726e3deed">&#9670;&#160;</a></span>temp_arena_memory_begin()</h2>
+<a id="ab7f48f763ebce20c1b840a03b93c7e14" name="ab7f48f763ebce20c1b840a03b93c7e14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7f48f763ebce20c1b840a03b93c7e14">&#9670;&#160;</a></span>temp_arena_state_restore()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct <a class="el" href="structtemp__arena__state.html">temp_arena_state</a> temp_arena_memory_begin </td>
+          <td class="memname">void temp_arena_state_restore </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="structarena.html">arena</a> *</td>          <td class="paramname"><span class="paramname"><em>arena_ptr</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Store the arena state temporarily. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena whose state to store. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a64cd89f4e38757e55bef4940b4296ad3" name="a64cd89f4e38757e55bef4940b4296ad3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64cd89f4e38757e55bef4940b4296ad3">&#9670;&#160;</a></span>temp_arena_memory_end()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void temp_arena_memory_end </td>
-          <td>(</td>
-          <td class="paramtype">struct <a class="el" href="structtemp__arena__state.html">temp_arena_state</a></td>          <td class="paramname"><span class="paramname"><em>temp</em></span></td><td>)</td>
+          <td class="paramtype">struct <a class="el" href="structtemp__arena__state.html">temp_arena_state</a></td>          <td class="paramname"><span class="paramname"><em>prev_state</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -488,6 +463,31 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">temp</td><td>Stored arena state. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad488c093713eea8d5b86b3b161b55c91" name="ad488c093713eea8d5b86b3b161b55c91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad488c093713eea8d5b86b3b161b55c91">&#9670;&#160;</a></span>temp_arena_state_save()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structtemp__arena__state.html">temp_arena_state</a> temp_arena_state_save </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structarena.html">arena</a> *</td>          <td class="paramname"><span class="paramname"><em>arena_ptr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Save the arena state temporarily. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">arena_ptr</td><td>The arena whose state to save. </td></tr>
   </table>
   </dd>
 </dl>
