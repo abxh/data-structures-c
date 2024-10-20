@@ -1,5 +1,5 @@
 var searchData=
 [
   ['name_0',['NAME',['../fhashtable_8h.html#a47f2e62c0dbebc787052c165afcada0e',1,'NAME:&#160;fhashtable.h'],['../fpqueue_8h.html#a47f2e62c0dbebc787052c165afcada0e',1,'NAME:&#160;fpqueue.h'],['../fqueue_8h.html#a47f2e62c0dbebc787052c165afcada0e',1,'NAME:&#160;fqueue.h'],['../fstack_8h.html#a47f2e62c0dbebc787052c165afcada0e',1,'NAME:&#160;fstack.h'],['../rbtree_8h.html#a47f2e62c0dbebc787052c165afcada0e',1,'NAME:&#160;rbtree.h']]],
-  ['next_5fptr_1',['next_ptr',['../structlist__node.html#ab5153c10b495e00e144df378a45662d5',1,'list_node']]]
+  ['next_5fptr_1',['next_ptr',['../structlist__node.html#ab5153c10b495e00e144df378a45662d5',1,'list_node::next_ptr'],['../structpool__free__node.html#af87caafed46c1995a84c1d5b74aaa031',1,'pool_free_node::next_ptr']]]
 ];

@@ -99,8 +99,8 @@ $(function(){ initResizable(false); });
 
 <h3><a id="index_b" name="index_b"></a>- b -</h3><ul>
 <li>begin_index&#160;:&#160;<a class="el" href="structfqueue.html#acd9a374e8caf474af36e68ad3feeaae5">fqueue</a></li>
-<li>buf_len&#160;:&#160;<a class="el" href="structarena.html#a204c96cdb64b536a060e7d40bcfc693e">arena</a>, <a class="el" href="structfreelist.html#ae7b56f37eca99b5a161090fc42e1ced5">freelist</a></li>
-<li>buf_ptr&#160;:&#160;<a class="el" href="structarena.html#a07e54cf966866b64fff846b0015f2090">arena</a>, <a class="el" href="structfreelist.html#a34ca7eeb95bcb0784f7c101e4ef375fd">freelist</a></li>
+<li>buf_len&#160;:&#160;<a class="el" href="structarena.html#a204c96cdb64b536a060e7d40bcfc693e">arena</a>, <a class="el" href="structfreelist.html#ae7b56f37eca99b5a161090fc42e1ced5">freelist</a>, <a class="el" href="structpool.html#aef4db34c4db84642f61909214b99be30">pool</a></li>
+<li>buf_ptr&#160;:&#160;<a class="el" href="structarena.html#a07e54cf966866b64fff846b0015f2090">arena</a>, <a class="el" href="structfreelist.html#a34ca7eeb95bcb0784f7c101e4ef375fd">freelist</a>, <a class="el" href="structpool.html#aee1fc65b9a37341977fbaa93a99b53af">pool</a></li>
 <li>buf_used&#160;:&#160;<a class="el" href="structfreelist.html#a59056ceee1886e744b56215f99d619d5">freelist</a></li>
 </ul>
 
@@ -108,6 +108,7 @@ $(function(){ initResizable(false); });
 <h3><a id="index_c" name="index_c"></a>- c -</h3><ul>
 <li>capacity&#160;:&#160;<a class="el" href="structfhashtable.html#ab161d7b2d81699f8ddb95cc24cfa58ba">fhashtable</a>, <a class="el" href="structfpqueue.html#a3fe40d9724b7d07db5e4a04a8046fdef">fpqueue</a>, <a class="el" href="structfqueue.html#acff22780a3338f80e2ca072274268795">fqueue</a>, <a class="el" href="structfstack.html#a08946712c9bc4c517c17a0ede512dc0b">fstack</a></li>
 <li>child_ptrs&#160;:&#160;<a class="el" href="structrbtree__node.html#a1a6afe6f498a3018a12f23eb63f6c8de">rbtree_node</a></li>
+<li>chunk_size&#160;:&#160;<a class="el" href="structpool.html#a3746b092694b594c60f724e7513ff3f1">pool</a></li>
 <li>count&#160;:&#160;<a class="el" href="structfhashtable.html#a56d7e63cb119739f48637a6b4e40ef49">fhashtable</a>, <a class="el" href="structfpqueue.html#ad5650736fc6cceac53a9a9b03dbd06a0">fpqueue</a>, <a class="el" href="structfqueue.html#a60daac021455bca162222e82b0a3f19f">fqueue</a>, <a class="el" href="structfstack.html#aeb41a887306264610259e13828b06fbb">fstack</a></li>
 <li>curr_block_size&#160;:&#160;<a class="el" href="structfreelist__header.html#a3d3c77e7e1eb63397a1fac069e2ab591">freelist_header</a></li>
 <li>curr_offset&#160;:&#160;<a class="el" href="structarena.html#aa815d65c75ae9cb7de86694a7d4740ee">arena</a>, <a class="el" href="structtemp__arena__state.html#a0bd28b0a8958232974e8ce7ff6dcd049">temp_arena_state</a></li>
@@ -122,6 +123,7 @@ $(function(){ initResizable(false); });
 
 <h3><a id="index_h" name="index_h"></a>- h -</h3><ul>
 <li>head&#160;:&#160;<a class="el" href="structfreelist.html#ac4bdac5d68432ae39de4c5250897a09f">freelist</a></li>
+<li>head_ptr&#160;:&#160;<a class="el" href="structpool.html#aa519bba90b7ab378aeed973bd93a2b78">pool</a></li>
 </ul>
 
 
@@ -136,7 +138,7 @@ $(function(){ initResizable(false); });
 
 
 <h3><a id="index_n" name="index_n"></a>- n -</h3><ul>
-<li>next_ptr&#160;:&#160;<a class="el" href="structlist__node.html#ab5153c10b495e00e144df378a45662d5">list_node</a></li>
+<li>next_ptr&#160;:&#160;<a class="el" href="structlist__node.html#ab5153c10b495e00e144df378a45662d5">list_node</a>, <a class="el" href="structpool__free__node.html#af87caafed46c1995a84c1d5b74aaa031">pool_free_node</a></li>
 </ul>
 
 
