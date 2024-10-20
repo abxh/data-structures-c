@@ -122,6 +122,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ac664ccbf9926caf6c7dcbaeeefaa9d55" id="r_ac664ccbf9926caf6c7dcbaeeefaa9d55"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac664ccbf9926caf6c7dcbaeeefaa9d55">fstack_for_each_reverse</a>(self,  index,  value)</td></tr>
 <tr class="memdesc:ac664ccbf9926caf6c7dcbaeeefaa9d55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the stack from the bottom to top.  <br /></td></tr>
 <tr class="separator:ac664ccbf9926caf6c7dcbaeeefaa9d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a746bd730b5d3fbda14de8e2d0f01b748" id="r_a746bd730b5d3fbda14de8e2d0f01b748"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a746bd730b5d3fbda14de8e2d0f01b748">fstack_calc_sizeof</a>(fstack_name,  capacity)</td></tr>
+<tr class="memdesc:a746bd730b5d3fbda14de8e2d0f01b748"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the size of the stack struct. No overflow checks.  <br /></td></tr>
+<tr class="separator:a746bd730b5d3fbda14de8e2d0f01b748"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae67b5adb11b3283a9d9559c779273cac" id="r_ae67b5adb11b3283a9d9559c779273cac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae67b5adb11b3283a9d9559c779273cac">fstack_calc_sizeof_overflows</a>(fstack_name,  capacity)</td></tr>
+<tr class="memdesc:ae67b5adb11b3283a9d9559c779273cac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check for a given capacity, if the equivalent size of the stack struct overflows.  <br /></td></tr>
+<tr class="separator:ae67b5adb11b3283a9d9559c779273cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47f2e62c0dbebc787052c165afcada0e" id="r_a47f2e62c0dbebc787052c165afcada0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47f2e62c0dbebc787052c165afcada0e">NAME</a>&#160;&#160;&#160;<a class="el" href="structfstack.html">fstack</a></td></tr>
 <tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to stack type and operations. This must be manually defined before including this header file.  <br /></td></tr>
 <tr class="separator:a47f2e62c0dbebc787052c165afcada0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,15 +137,12 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae7d96cd754a2618a48d30569850a3ef8" id="r_ae7d96cd754a2618a48d30569850a3ef8"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae7d96cd754a2618a48d30569850a3ef8">fstack_calc_sizeof</a> (uint32_t *capacity_ptr, uint32_t *size_ptr)</td></tr>
-<tr class="memdesc:ae7d96cd754a2618a48d30569850a3ef8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the size of the stack struct.  <br /></td></tr>
-<tr class="separator:ae7d96cd754a2618a48d30569850a3ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59a79062215675adb40c39a6d784d0b0" id="r_a59a79062215675adb40c39a6d784d0b0"><td class="memItemLeft" align="right" valign="top">static fstack_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59a79062215675adb40c39a6d784d0b0">fstack_init</a> (fstack_type *self, const uint32_t capacity)</td></tr>
 <tr class="memdesc:a59a79062215675adb40c39a6d784d0b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a stack struct, given a capacity.  <br /></td></tr>
 <tr class="separator:a59a79062215675adb40c39a6d784d0b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03d71bff37bb2cd5e0c46d4b1a1a15f4" id="r_a03d71bff37bb2cd5e0c46d4b1a1a15f4"><td class="memItemLeft" align="right" valign="top">static fstack_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03d71bff37bb2cd5e0c46d4b1a1a15f4">fstack_create</a> (uint32_t capacity)</td></tr>
-<tr class="memdesc:a03d71bff37bb2cd5e0c46d4b1a1a15f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an stack struct with a given capacity with malloc().  <br /></td></tr>
-<tr class="separator:a03d71bff37bb2cd5e0c46d4b1a1a15f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae21db93f52ef49428faa45b834aebffa" id="r_ae21db93f52ef49428faa45b834aebffa"><td class="memItemLeft" align="right" valign="top">static fstack_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae21db93f52ef49428faa45b834aebffa">fstack_create</a> (const uint32_t capacity)</td></tr>
+<tr class="memdesc:ae21db93f52ef49428faa45b834aebffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an stack struct with a given capacity with malloc().  <br /></td></tr>
+<tr class="separator:ae21db93f52ef49428faa45b834aebffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbede6dbdb4cd4b2351d9b0d41672d02" id="r_adbede6dbdb4cd4b2351d9b0d41672d02"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adbede6dbdb4cd4b2351d9b0d41672d02">fstack_destroy</a> (fstack_type *self)</td></tr>
 <tr class="memdesc:adbede6dbdb4cd4b2351d9b0d41672d02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy an stack struct and free the underlying memory with free().  <br /></td></tr>
 <tr class="separator:adbede6dbdb4cd4b2351d9b0d41672d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,6 +184,70 @@ Functions</h2></td></tr>
 <li><code>VALUE_TYPE</code> </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a746bd730b5d3fbda14de8e2d0f01b748" name="a746bd730b5d3fbda14de8e2d0f01b748"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a746bd730b5d3fbda14de8e2d0f01b748">&#9670;&#160;</a></span>fstack_calc_sizeof</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define fstack_calc_sizeof</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>fstack_name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    (uint32_t)(offsetof(<span class="keyword">struct</span> fstack_name, values) + capacity * <span class="keyword">sizeof</span>(((<span class="keyword">struct</span> fstack_name *)0)-&gt;values[0]))</div>
+</div><!-- fragment -->
+<p>Calculate the size of the stack struct. No overflow checks. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">fstack_name</td><td>Defined stack NAME. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Capacity input.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The equivalent size. </dd></dl>
+
+</div>
+</div>
+<a id="ae67b5adb11b3283a9d9559c779273cac" name="ae67b5adb11b3283a9d9559c779273cac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae67b5adb11b3283a9d9559c779273cac">&#9670;&#160;</a></span>fstack_calc_sizeof_overflows</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define fstack_calc_sizeof_overflows</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>fstack_name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    (capacity &gt; (UINT32_MAX - offsetof(<span class="keyword">struct</span> fstack_name, values)) / <span class="keyword">sizeof</span>(((<span class="keyword">struct </span>fstack_name *)0)-&gt;values[0]))</div>
+</div><!-- fragment -->
+<p>Check for a given capacity, if the equivalent size of the stack struct overflows. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">fstack_name</td><td>Defined stack NAME. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Capacity input.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The equivalent size. </dd></dl>
+
+</div>
+</div>
 <a id="adaad22c1231dc5366a49ede0571174a2" name="adaad22c1231dc5366a49ede0571174a2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adaad22c1231dc5366a49ede0571174a2">&#9670;&#160;</a></span>fstack_for_each</h2>
 
@@ -332,51 +399,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae7d96cd754a2618a48d30569850a3ef8" name="ae7d96cd754a2618a48d30569850a3ef8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7d96cd754a2618a48d30569850a3ef8">&#9670;&#160;</a></span>fstack_calc_sizeof()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool fstack_calc_sizeof </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t *</td>          <td class="paramname"><span class="paramname"><em>capacity_ptr</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *</td>          <td class="paramname"><span class="paramname"><em>size_ptr</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Calculate the size of the stack struct. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">capacity_ptr</td><td>Pointer to orignal capacity </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">size_ptr</td><td>Pointer to size (to be outputted)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">false</td><td>If capacity is 0 or the equivalent size is larger than UINT32_MAX. </td></tr>
-    <tr><td class="paramname">true</td><td>Otherwise. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a012b870901aa015ece1ea3a7137005af" name="a012b870901aa015ece1ea3a7137005af"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a012b870901aa015ece1ea3a7137005af">&#9670;&#160;</a></span>fstack_clear()</h2>
 
@@ -448,8 +470,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a03d71bff37bb2cd5e0c46d4b1a1a15f4" name="a03d71bff37bb2cd5e0c46d4b1a1a15f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03d71bff37bb2cd5e0c46d4b1a1a15f4">&#9670;&#160;</a></span>fstack_create()</h2>
+<a id="ae21db93f52ef49428faa45b834aebffa" name="ae21db93f52ef49428faa45b834aebffa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae21db93f52ef49428faa45b834aebffa">&#9670;&#160;</a></span>fstack_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -460,7 +482,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static fstack_type * fstack_create </td>
           <td>(</td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span></td><td>)</td>
+          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -481,8 +503,8 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the stack. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NULL</td><td><ul>
-<li>If capacity is 0 or the equivalent size cannot be stored in UINT32_MAX. </li>
+    <tr><td class="paramname">`NULL`</td><td><ul>
+<li>If capacity is 0 or the equivalent size overflows </li>
 <li>If malloc fails. </li>
 </ul>
 </td></tr>

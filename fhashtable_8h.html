@@ -128,6 +128,12 @@ Macros</h2></td></tr>
 <tr class="memitem:acf924459ef40f7bf8059bdfe4cda2d83" id="r_acf924459ef40f7bf8059bdfe4cda2d83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf924459ef40f7bf8059bdfe4cda2d83">fhashtable_for_each</a>(self,  index,  key_,  value_)</td></tr>
 <tr class="memdesc:acf924459ef40f7bf8059bdfe4cda2d83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the non-empty slots in the hashtable in arbitary order.  <br /></td></tr>
 <tr class="separator:acf924459ef40f7bf8059bdfe4cda2d83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5984d2ce28a747b868de70a124999e4" id="r_af5984d2ce28a747b868de70a124999e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af5984d2ce28a747b868de70a124999e4">fhashtable_calc_sizeof</a>(fhashtable_name,  capacity)</td></tr>
+<tr class="memdesc:af5984d2ce28a747b868de70a124999e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the size of the hashtable struct. No overflow checks.  <br /></td></tr>
+<tr class="separator:af5984d2ce28a747b868de70a124999e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4895e0cc2e55088acc04ab09ea907974" id="r_a4895e0cc2e55088acc04ab09ea907974"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4895e0cc2e55088acc04ab09ea907974">fhashtable_calc_sizeof_overflows</a>(fhashtable_name,  capacity)</td></tr>
+<tr class="memdesc:a4895e0cc2e55088acc04ab09ea907974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check for a given capacity, if the equivalent size of the hashtable struct overflows.  <br /></td></tr>
+<tr class="separator:a4895e0cc2e55088acc04ab09ea907974"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47f2e62c0dbebc787052c165afcada0e" id="r_a47f2e62c0dbebc787052c165afcada0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47f2e62c0dbebc787052c165afcada0e">NAME</a>&#160;&#160;&#160;<a class="el" href="structfhashtable.html">fhashtable</a></td></tr>
 <tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to hashtable types and operations. This must be manually defined before including this header file.  <br /></td></tr>
 <tr class="separator:a47f2e62c0dbebc787052c165afcada0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,15 +152,12 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a212dd2975b7f393d4252de9adc075b29" id="r_a212dd2975b7f393d4252de9adc075b29"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a212dd2975b7f393d4252de9adc075b29">fhashtable_calc_sizeof</a> (uint32_t *capacity_ptr, uint32_t *size_ptr)</td></tr>
-<tr class="memdesc:a212dd2975b7f393d4252de9adc075b29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the size of the hashtable struct and round the capacity to a power of 2.  <br /></td></tr>
-<tr class="separator:a212dd2975b7f393d4252de9adc075b29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac687729717801d3cf288525d729a0c73" id="r_ac687729717801d3cf288525d729a0c73"><td class="memItemLeft" align="right" valign="top">static fhashtable_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac687729717801d3cf288525d729a0c73">fhashtable_init</a> (fhashtable_type *self, const uint32_t pow2_capacity)</td></tr>
 <tr class="memdesc:ac687729717801d3cf288525d729a0c73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a hashtable struct, given a (power-of-2) capacity.  <br /></td></tr>
 <tr class="separator:ac687729717801d3cf288525d729a0c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f2aeb3a46e630e9c1edb3fe399e26f5" id="r_a1f2aeb3a46e630e9c1edb3fe399e26f5"><td class="memItemLeft" align="right" valign="top">static fhashtable_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f2aeb3a46e630e9c1edb3fe399e26f5">fhashtable_create</a> (uint32_t capacity)</td></tr>
-<tr class="memdesc:a1f2aeb3a46e630e9c1edb3fe399e26f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an hashtable with a given capacity with malloc().  <br /></td></tr>
-<tr class="separator:a1f2aeb3a46e630e9c1edb3fe399e26f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7e76d1db4357ac51912b028765c3ff3" id="r_ab7e76d1db4357ac51912b028765c3ff3"><td class="memItemLeft" align="right" valign="top">static fhashtable_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab7e76d1db4357ac51912b028765c3ff3">fhashtable_create</a> (const uint32_t min_capacity)</td></tr>
+<tr class="memdesc:ab7e76d1db4357ac51912b028765c3ff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an hashtable with a given capacity with malloc().  <br /></td></tr>
+<tr class="separator:ab7e76d1db4357ac51912b028765c3ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b6cbecebc42aaebdf92dd9ff6771ad0" id="r_a8b6cbecebc42aaebdf92dd9ff6771ad0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b6cbecebc42aaebdf92dd9ff6771ad0">fhashtable_destroy</a> (fhashtable_type *self)</td></tr>
 <tr class="memdesc:a8b6cbecebc42aaebdf92dd9ff6771ad0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy an hashtable struct and free the underlying memory with free().  <br /></td></tr>
 <tr class="separator:a8b6cbecebc42aaebdf92dd9ff6771ad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -209,6 +212,71 @@ Functions</h2></td></tr>
 <li><a href="https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/">https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/</a> </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="af5984d2ce28a747b868de70a124999e4" name="af5984d2ce28a747b868de70a124999e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5984d2ce28a747b868de70a124999e4">&#9670;&#160;</a></span>fhashtable_calc_sizeof</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define fhashtable_calc_sizeof</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>fhashtable_name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    (uint32_t)(offsetof(<span class="keyword">struct</span> fhashtable_name, slots) + capacity * <span class="keyword">sizeof</span>(((<span class="keyword">struct</span> fhashtable_name *)0)-&gt;slots[0]))</div>
+</div><!-- fragment -->
+<p>Calculate the size of the hashtable struct. No overflow checks. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">fhashtable_name</td><td>Defined hashtable NAME. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Capacity input.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The equivalent size. </dd></dl>
+
+</div>
+</div>
+<a id="a4895e0cc2e55088acc04ab09ea907974" name="a4895e0cc2e55088acc04ab09ea907974"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4895e0cc2e55088acc04ab09ea907974">&#9670;&#160;</a></span>fhashtable_calc_sizeof_overflows</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define fhashtable_calc_sizeof_overflows</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>fhashtable_name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    (capacity                                                       \</div>
+<div class="line">     &gt; (UINT32_MAX - offsetof(<span class="keyword">struct</span> fhashtable_name, slots)) / <span class="keyword">sizeof</span>(((<span class="keyword">struct </span>fhashtable_name *)0)-&gt;slots[0]))</div>
+</div><!-- fragment -->
+<p>Check for a given capacity, if the equivalent size of the hashtable struct overflows. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">fhashtable_name</td><td>Defined hashtable NAME. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Capacity input.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The equivalent size. </dd></dl>
+
+</div>
+</div>
 <a id="acf924459ef40f7bf8059bdfe4cda2d83" name="acf924459ef40f7bf8059bdfe4cda2d83"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acf924459ef40f7bf8059bdfe4cda2d83">&#9670;&#160;</a></span>fhashtable_for_each</h2>
 
@@ -271,7 +339,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">(<a class="code hl_function" href="murmurhash_8h.html#af0297b844d4ae991464f73a57bb6d2d2">murmur3_32</a>((uint8_t *)&amp;(key), <span class="keyword">sizeof</span>(<a class="code hl_define" href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a>), 0))</div>
-<div class="ttc" id="afhashtable_8h_html_ae35c40bc2f912c11f0e36ac66cba4489"><div class="ttname"><a href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></div><div class="ttdeci">#define KEY_TYPE</div><div class="ttdoc">The key type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:106</div></div>
+<div class="ttc" id="afhashtable_8h_html_ae35c40bc2f912c11f0e36ac66cba4489"><div class="ttname"><a href="#ae35c40bc2f912c11f0e36ac66cba4489">KEY_TYPE</a></div><div class="ttdeci">#define KEY_TYPE</div><div class="ttdoc">The key type. This must be manually defined before including this header file.</div><div class="ttdef"><b>Definition</b> fhashtable.h:133</div></div>
 <div class="ttc" id="amurmurhash_8h_html_af0297b844d4ae991464f73a57bb6d2d2"><div class="ttname"><a href="murmurhash_8h.html#af0297b844d4ae991464f73a57bb6d2d2">murmur3_32</a></div><div class="ttdeci">static uint32_t murmur3_32(const uint8_t *key_ptr, const uint32_t len, const uint32_t seed)</div><div class="ttdoc">Get the Murmur3 (32-bit) hash of a string of bytes.</div><div class="ttdef"><b>Definition</b> murmurhash.h:54</div></div>
 </div><!-- fragment -->
 <p>Used to compute indicies of keys. This must be manually defined before including this header file. </p>
@@ -376,51 +444,6 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a212dd2975b7f393d4252de9adc075b29" name="a212dd2975b7f393d4252de9adc075b29"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a212dd2975b7f393d4252de9adc075b29">&#9670;&#160;</a></span>fhashtable_calc_sizeof()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool fhashtable_calc_sizeof </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t *</td>          <td class="paramname"><span class="paramname"><em>capacity_ptr</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *</td>          <td class="paramname"><span class="paramname"><em>size_ptr</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Calculate the size of the hashtable struct and round the capacity to a power of 2. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">capacity_ptr</td><td>Pointer to orignal capacity </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">size_ptr</td><td>Pointer to size (to be outputted)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">false</td><td>If capacity is equal to 0 or [capacity rounded up to the power of 2] is larger than UINT32_MAX / 4. </td></tr>
-    <tr><td class="paramname">true</td><td>Otherwise. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ab2f0b84e313990b0c9288a60449b6c2f" name="ab2f0b84e313990b0c9288a60449b6c2f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab2f0b84e313990b0c9288a60449b6c2f">&#9670;&#160;</a></span>fhashtable_clear()</h2>
 
@@ -531,8 +554,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1f2aeb3a46e630e9c1edb3fe399e26f5" name="a1f2aeb3a46e630e9c1edb3fe399e26f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f2aeb3a46e630e9c1edb3fe399e26f5">&#9670;&#160;</a></span>fhashtable_create()</h2>
+<a id="ab7e76d1db4357ac51912b028765c3ff3" name="ab7e76d1db4357ac51912b028765c3ff3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7e76d1db4357ac51912b028765c3ff3">&#9670;&#160;</a></span>fhashtable_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -543,7 +566,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static fhashtable_type * fhashtable_create </td>
           <td>(</td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span></td><td>)</td>
+          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>min_capacity</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -557,7 +580,7 @@ Functions</h2></td></tr>
 <p>Create an hashtable with a given capacity with malloc(). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements to be stored.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">min_capacity</td><td>Maximum number of elements to be stored.</td></tr>
   </table>
   </dd>
 </dl>
@@ -566,7 +589,7 @@ Functions</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">`NULL`</td><td><ul>
 <li>If malloc fails. </li>
-<li>If capacity is equal to 0 or [capacity rounded up to the power of 2] is larger than UINT32_MAX / 4. </li>
+<li>If capacity is equal to 0 or larger than UINT32_MAX / 2 + 1 or the equivalent size overflows. </li>
 </ul>
 </td></tr>
   </table>
@@ -776,7 +799,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>Hashtable pointer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pow2_capacity</td><td>(Power-of-2) capacity </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pow2_capacity</td><td>Power of 2 capacity. </td></tr>
   </table>
   </dd>
 </dl>

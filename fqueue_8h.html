@@ -122,6 +122,12 @@ Macros</h2></td></tr>
 <tr class="memitem:a7d5aeb9883eed49261b7589f1634c798" id="r_a7d5aeb9883eed49261b7589f1634c798"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d5aeb9883eed49261b7589f1634c798">fqueue_for_each_reverse</a>(self,  index,  value)</td></tr>
 <tr class="memdesc:a7d5aeb9883eed49261b7589f1634c798"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the values in the queue from the back to front.  <br /></td></tr>
 <tr class="separator:a7d5aeb9883eed49261b7589f1634c798"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cc5faf927774fec89b232bb2217e492" id="r_a0cc5faf927774fec89b232bb2217e492"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0cc5faf927774fec89b232bb2217e492">fqueue_calc_sizeof</a>(fqueue_name,  capacity)</td></tr>
+<tr class="memdesc:a0cc5faf927774fec89b232bb2217e492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the size of the queue struct. No overflow checks.  <br /></td></tr>
+<tr class="separator:a0cc5faf927774fec89b232bb2217e492"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89d3d114202c3c2bac685213c29462c8" id="r_a89d3d114202c3c2bac685213c29462c8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a89d3d114202c3c2bac685213c29462c8">fqueue_calc_sizeof_overflows</a>(fqueue_name,  capacity)</td></tr>
+<tr class="memdesc:a89d3d114202c3c2bac685213c29462c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check for a given capacity, if the equivalent size of the queue struct overflows.  <br /></td></tr>
+<tr class="separator:a89d3d114202c3c2bac685213c29462c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47f2e62c0dbebc787052c165afcada0e" id="r_a47f2e62c0dbebc787052c165afcada0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47f2e62c0dbebc787052c165afcada0e">NAME</a>&#160;&#160;&#160;<a class="el" href="structfqueue.html">fqueue</a></td></tr>
 <tr class="memdesc:a47f2e62c0dbebc787052c165afcada0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to queue type and operations. This must be manually defined before including this header file.  <br /></td></tr>
 <tr class="separator:a47f2e62c0dbebc787052c165afcada0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,15 +137,12 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a1c93dc845e28150a7790861eb2702624" id="r_a1c93dc845e28150a7790861eb2702624"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c93dc845e28150a7790861eb2702624">fqueue_calc_sizeof</a> (uint32_t *capacity_ptr, uint32_t *size_ptr)</td></tr>
-<tr class="memdesc:a1c93dc845e28150a7790861eb2702624"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the size of the queue struct and round the capacity to a power of 2.  <br /></td></tr>
-<tr class="separator:a1c93dc845e28150a7790861eb2702624"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5e171002fb7a1c481ab9d5866738b95" id="r_aa5e171002fb7a1c481ab9d5866738b95"><td class="memItemLeft" align="right" valign="top">static fqueue_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5e171002fb7a1c481ab9d5866738b95">fqueue_init</a> (fqueue_type *self, const uint32_t pow2_capacity)</td></tr>
 <tr class="memdesc:aa5e171002fb7a1c481ab9d5866738b95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a queue struct, given a (power-of-2) capacity.  <br /></td></tr>
 <tr class="separator:aa5e171002fb7a1c481ab9d5866738b95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46c571313fe05cf381655e2650ee5a74" id="r_a46c571313fe05cf381655e2650ee5a74"><td class="memItemLeft" align="right" valign="top">static fqueue_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a46c571313fe05cf381655e2650ee5a74">fqueue_create</a> (uint32_t capacity)</td></tr>
-<tr class="memdesc:a46c571313fe05cf381655e2650ee5a74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an queue struct with a given capacity with malloc().  <br /></td></tr>
-<tr class="separator:a46c571313fe05cf381655e2650ee5a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09dc10ddda50de5f26d635bce6b20add" id="r_a09dc10ddda50de5f26d635bce6b20add"><td class="memItemLeft" align="right" valign="top">static fqueue_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a09dc10ddda50de5f26d635bce6b20add">fqueue_create</a> (const uint32_t min_capacity)</td></tr>
+<tr class="memdesc:a09dc10ddda50de5f26d635bce6b20add"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an queue struct with a given capacity with malloc().  <br /></td></tr>
+<tr class="separator:a09dc10ddda50de5f26d635bce6b20add"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27096da4d98dd149d137f0ce69952f72" id="r_a27096da4d98dd149d137f0ce69952f72"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27096da4d98dd149d137f0ce69952f72">fqueue_destroy</a> (fqueue_type *self)</td></tr>
 <tr class="memdesc:a27096da4d98dd149d137f0ce69952f72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy an queue struct and free the underlying memory with free().  <br /></td></tr>
 <tr class="separator:a27096da4d98dd149d137f0ce69952f72"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,6 +184,70 @@ Functions</h2></td></tr>
 <li><code>VALUE_TYPE</code> </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a0cc5faf927774fec89b232bb2217e492" name="a0cc5faf927774fec89b232bb2217e492"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cc5faf927774fec89b232bb2217e492">&#9670;&#160;</a></span>fqueue_calc_sizeof</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define fqueue_calc_sizeof</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>fqueue_name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    (uint32_t)(offsetof(<span class="keyword">struct</span> fqueue_name, values) + capacity * <span class="keyword">sizeof</span>(((<span class="keyword">struct</span> fqueue_name *)0)-&gt;values[0]))</div>
+</div><!-- fragment -->
+<p>Calculate the size of the queue struct. No overflow checks. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">fqueue_name</td><td>Defined queue NAME. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Capacity input.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The equivalent size. </dd></dl>
+
+</div>
+</div>
+<a id="a89d3d114202c3c2bac685213c29462c8" name="a89d3d114202c3c2bac685213c29462c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89d3d114202c3c2bac685213c29462c8">&#9670;&#160;</a></span>fqueue_calc_sizeof_overflows</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define fqueue_calc_sizeof_overflows</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>fqueue_name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    (capacity &gt; (UINT32_MAX - offsetof(<span class="keyword">struct</span> fqueue_name, values)) / <span class="keyword">sizeof</span>(((<span class="keyword">struct </span>fqueue_name *)0)-&gt;values[0]))</div>
+</div><!-- fragment -->
+<p>Check for a given capacity, if the equivalent size of the queue struct overflows. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">fqueue_name</td><td>Defined queue NAME. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Capacity input.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The equivalent size. </dd></dl>
+
+</div>
+</div>
 <a id="a16842bbfd154126b1614e6cee96eaa0b" name="a16842bbfd154126b1614e6cee96eaa0b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a16842bbfd154126b1614e6cee96eaa0b">&#9670;&#160;</a></span>fqueue_for_each</h2>
 
@@ -336,51 +403,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1c93dc845e28150a7790861eb2702624" name="a1c93dc845e28150a7790861eb2702624"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c93dc845e28150a7790861eb2702624">&#9670;&#160;</a></span>fqueue_calc_sizeof()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool fqueue_calc_sizeof </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t *</td>          <td class="paramname"><span class="paramname"><em>capacity_ptr</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *</td>          <td class="paramname"><span class="paramname"><em>size_ptr</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Calculate the size of the queue struct and round the capacity to a power of 2. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">capacity_ptr</td><td>Pointer to orignal capacity </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">size_ptr</td><td>Pointer to size (to be outputted)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">false</td><td>If capacity is equal to 0 or [capacity rounded up to the power of 2] is larger than UINT32_MAX / 4. </td></tr>
-    <tr><td class="paramname">true</td><td>Otherwise. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="af555174dcb1a164363f4b0cacf5b36a1" name="af555174dcb1a164363f4b0cacf5b36a1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af555174dcb1a164363f4b0cacf5b36a1">&#9670;&#160;</a></span>fqueue_clear()</h2>
 
@@ -452,8 +474,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a46c571313fe05cf381655e2650ee5a74" name="a46c571313fe05cf381655e2650ee5a74"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46c571313fe05cf381655e2650ee5a74">&#9670;&#160;</a></span>fqueue_create()</h2>
+<a id="a09dc10ddda50de5f26d635bce6b20add" name="a09dc10ddda50de5f26d635bce6b20add"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09dc10ddda50de5f26d635bce6b20add">&#9670;&#160;</a></span>fqueue_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -464,7 +486,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static fqueue_type * fqueue_create </td>
           <td>(</td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span></td><td>)</td>
+          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>min_capacity</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -478,7 +500,7 @@ Functions</h2></td></tr>
 <p>Create an queue struct with a given capacity with malloc(). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Maximum number of elements expected to be stored in the queue.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">min_capacity</td><td>Maximum number of elements expected to be stored</td></tr>
   </table>
   </dd>
 </dl>
@@ -487,7 +509,7 @@ Functions</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">`NULL`</td><td><ul>
 <li>If malloc fails. </li>
-<li>If capacity is 0 or [capacity rounded up to the power of 2] is larger than UINT32_MAX / 4. </li>
+<li>If capacity is 0 or larger than UINT32_MAX / 2 + 1 or the equivalent size overflows. </li>
 </ul>
 </td></tr>
   </table>
@@ -701,7 +723,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">self</td><td>Queue pointer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pow2_capacity</td><td>(Power-of-2) capacity </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pow2_capacity</td><td>Power of 2 capacity </td></tr>
   </table>
   </dd>
 </dl>
