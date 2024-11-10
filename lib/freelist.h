@@ -225,7 +225,7 @@ static inline void *freelist_reallocate(struct freelist *self, void *ptr, const 
     const size_t prev_size = freelist_header_prev_size(header);
     const size_t old_size = header->curr_block_size - sizeof(struct freelist_header);
 
-    assert(freelist_header_is_freed(header) && "reallocating freed block!");
+    assert(!freelist_header_is_freed(header) && "reallocating freed block!");
 
     if (new_size <= old_size) {
         const size_t block_size = internal_freelist_calc_block_size(new_size);
@@ -237,8 +237,10 @@ static inline void *freelist_reallocate(struct freelist *self, void *ptr, const 
                                             block_size, header->curr_block_size - block_size);
     }
 
-    size_t bytes_acc = header->curr_block_size;
+
     struct freelist_header *next = freelist_header_next(header, self);
+
+    size_t bytes_acc = header->curr_block_size;
     while (bytes_acc < new_size && next != NULL && !freelist_header_is_freed(next)) {
         bytes_acc += next->curr_block_size;
         next = freelist_header_next(next, self);
