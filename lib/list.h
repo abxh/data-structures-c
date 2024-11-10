@@ -86,19 +86,19 @@ static inline bool list_node_is_first(const struct list_node *node_ptr, const st
 
 /**
  * @brief Check if a given list node is the last of the list (aka before the
- *        tail).
+ *        head).
  *
  * @param[in] node_ptr          The node pointer.
- * @param[in] tail_ptr          The tail node pointer.
+ * @param[in] head_ptr          The head node pointer.
  *
  * @return                      Whether the list node is the last in the list.
  */
-static inline bool list_node_is_last(const struct list_node *node_ptr, const struct list_node *tail_ptr)
+static inline bool list_node_is_last(const struct list_node *node_ptr, const struct list_node *head_ptr)
 {
     assert(node_ptr != NULL);
-    assert(tail_ptr != NULL);
+    assert(head_ptr != NULL);
 
-    return node_ptr->next_ptr == tail_ptr;
+    return node_ptr->next_ptr == head_ptr;
 }
 
 /**
@@ -115,22 +115,6 @@ static inline bool list_node_is_head(const struct list_node *node_ptr, const str
     assert(head_ptr != NULL);
 
     return node_ptr == head_ptr;
-}
-
-/**
- * @brief Check if a given list node is the tail of the list.
- *
- * @param[in] node_ptr          The node pointer.
- * @param[in] tail_ptr          The tail node pointer.
- *
- * @return                      Whether the list node is the tail of the list.
- */
-static inline bool list_node_is_tail(const struct list_node *node_ptr, const struct list_node *tail_ptr)
-{
-    assert(node_ptr != NULL);
-    assert(tail_ptr != NULL);
-
-    return node_ptr == tail_ptr;
 }
 
 /**
@@ -170,7 +154,7 @@ static inline void list_node_add_before(struct list_node *node_ptr, struct list_
  *
  * Assumes:
  * @li node_ptr node is a part of a list.
- * @li node_ptr node is not the head or tail node.
+ * @li node_ptr node is not the head node.
  *
  * @param[in] node_ptr          The node pointer.
  *
@@ -193,7 +177,7 @@ static inline struct list_node *list_node_remove(struct list_node *node_ptr)
  *
  * Assumes:
  * @li The node is a part of a list.
- * @li The node is not the head or tail node (points to self).
+ * @li The node is not the head node (points to self).
  *
  * @param[in] old_ptr           Pointer to old node.
  * @param[in] new_ptr           Pointer to new node.
@@ -215,10 +199,6 @@ static inline void list_node_replace(struct list_node *old_ptr, struct list_node
 static inline void internal_list_node_add_between(struct list_node *node_ptr, struct list_node *before_ptr,
                                                   struct list_node *after_ptr)
 {
-    assert(node_ptr != NULL);
-    assert(before_ptr != NULL);
-    assert(after_ptr != NULL);
-
     before_ptr->next_ptr = node_ptr;
     node_ptr->prev_ptr = before_ptr;
 
@@ -228,9 +208,6 @@ static inline void internal_list_node_add_between(struct list_node *node_ptr, st
 
 static inline void internal_list_node_attach(struct list_node *prev_ptr, struct list_node *next_ptr)
 {
-    assert(prev_ptr != NULL);
-    assert(next_ptr != NULL);
-
     prev_ptr->next_ptr = next_ptr;
     next_ptr->prev_ptr = prev_ptr;
 }

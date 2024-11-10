@@ -181,15 +181,11 @@ struct JOIN(RBTREE_NAME, node) {
 
 static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_red))(RBTREE_NODE_TYPE *node_ptr)
 {
-    assert(node_ptr != NULL);
-
     node_ptr->__parent_ptr_with_color_bit &= ~(uintptr_t)1;
 }
 
 static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_black))(RBTREE_NODE_TYPE *node_ptr)
 {
-    assert(node_ptr != NULL);
-
     node_ptr->__parent_ptr_with_color_bit |= 1;
 }
 
@@ -197,9 +193,6 @@ static inline void JOIN(internal,
                         JOIN(RBTREE_NAME, node_set_color_to_color_of_other))(RBTREE_NODE_TYPE *node_ptr,
                                                                              const RBTREE_NODE_TYPE *other_ptr)
 {
-    assert(other_ptr != NULL);
-    assert(node_ptr != NULL);
-
     const bool is_black = other_ptr->__parent_ptr_with_color_bit & 1;
 
     node_ptr->__parent_ptr_with_color_bit &= ~(uintptr_t)1;
@@ -209,8 +202,6 @@ static inline void JOIN(internal,
 static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_parent_ptr))(RBTREE_NODE_TYPE *node_ptr,
                                                                           RBTREE_NODE_TYPE *parent_ptr)
 {
-    assert(node_ptr != NULL);
-
     const bool is_black = node_ptr->__parent_ptr_with_color_bit & 1;
 
     node_ptr->__parent_ptr_with_color_bit = (uintptr_t)parent_ptr;
@@ -519,10 +510,6 @@ static inline RBTREE_NODE_TYPE *JOIN(RBTREE_NAME, delete_node)(RBTREE_NODE_TYPE 
 static inline RBTREE_NODE_TYPE *JOIN(internal, JOIN(RBTREE_NAME, rotate_dir))(RBTREE_NODE_TYPE **rootptr_ptr,
                                                                               RBTREE_NODE_TYPE *P, const int dir)
 {
-    assert(rootptr_ptr != NULL);
-    assert(P != NULL);
-    assert(dir == 0 || dir == 1);
-
     /*  Right rotate around P:
              P                   S
            /   \                /  \
@@ -567,8 +554,6 @@ static inline RBTREE_NODE_TYPE *JOIN(internal, JOIN(RBTREE_NAME, rotate_dir))(RB
 
 static inline void JOIN(internal, JOIN(RBTREE_NAME, insert_fixup))(RBTREE_NODE_TYPE **rootptr_ptr, RBTREE_NODE_TYPE *N)
 {
-    assert(rootptr_ptr != NULL);
-    assert(N != NULL);
     assert(RBTREE_NODE_IS_RED(N));
     assert(N != *rootptr_ptr);
 
@@ -612,9 +597,6 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, node_transplant))(RBTREE_NOD
                                                                       RBTREE_NODE_TYPE *src_node,
                                                                       RBTREE_NODE_TYPE *dest_node)
 {
-    assert(rootptr_ptr != NULL);
-    assert(src_node != NULL);
-
     RBTREE_NODE_TYPE *src_node_parent_ptr = RBTREE_NODE_GET_PARENT_PTR(src_node);
 
     if (src_node_parent_ptr == NULL) {
@@ -632,10 +614,6 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, node_transplant))(RBTREE_NOD
 static inline void JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(RBTREE_NODE_TYPE **rootptr_ptr, RBTREE_NODE_TYPE *P,
                                                                    int dir)
 {
-    assert(rootptr_ptr != NULL);
-    assert(P != NULL);
-    assert(dir == 0 || dir == 1);
-
     RBTREE_NODE_TYPE *N = NULL; // node (temp)
     RBTREE_NODE_TYPE *S = NULL; // sibling
     RBTREE_NODE_TYPE *C = NULL; // close nephew
