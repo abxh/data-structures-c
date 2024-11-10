@@ -1,9 +1,8 @@
 # data-structures-c
 
-[doxygen documentation](https://abxh.github.io/data-structures-c/)
- | ![tests](https://github.com/abxh/data-structures-c/actions/workflows/tests.yml/badge.svg?event=push)
+[doxygen documentation](https://abxh.github.io/data-structures-c/) | ![tests](https://github.com/abxh/data-structures-c/actions/workflows/tests.yml/badge.svg?event=push)
 
-Generic, header-only and performant data structures. New memory allocation is kept to a minimum.
+Generic, header-only and performant data structures. New memory allocation is kept to a minimum. Not thread-friendly.
 
 All data types are expected to be Plain-Old-Datas (PODs). No explicit iterator mechanism is provided, but
 macros can provide a primitive syntactical replacement.
@@ -25,8 +24,3 @@ Asserts are used to check various assumptions. Use `NDEBUG` flag to turn off ass
 | [freelist.h](https://github.com/abxh/data-structures-c/blob/main/lib/freelist.h)     | Best-fit free list allocator (with underlying free tree) | [Documentation](https://abxh.github.io/data-structures-c/freelist_8h.html)                                                                                  |
 | [list.h](https://github.com/abxh/data-structures-c/blob/main/lib/list.h)             | Intrusive circular doubly linked list                    | [Documentation](https://abxh.github.io/data-structures-c/list_8h.html)                                                                                      |
 | [rbtree.h](https://github.com/abxh/data-structures-c/blob/main/lib/rbtree.h)         | Intrusive red-black tree                                 | [Documentation](https://abxh.github.io/data-structures-c/rbtree_8h.html)                                                                                    |
-
-## TODO
-- write tests for the ones not tested.
-- vector impl
-- chaining hashtable impl.
