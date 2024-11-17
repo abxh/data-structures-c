@@ -1,6 +1,6 @@
 EXEC_NAME := a.out
 
-CXXFLAGS   += -I./../../lib
+CXXFLAGS   += -I./../../dsa
 CXXFLAGS   += -Wall -Wextra
 CXXFLAGS   += -std=c++20
 CXXFLAGS   += -O3

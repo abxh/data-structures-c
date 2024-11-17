@@ -1,7 +1,7 @@
 EXEC_NAME := a.out
 
 CC         := gcc
-CFLAGS     += -I./../../lib
+CFLAGS     += -I./../../dsa
 CFLAGS     += -Wall -Wextra -Wshadow -Wconversion -pedantic 
 CFLAGS     += -ggdb3
 CFLAGS     += -fsanitize=undefined

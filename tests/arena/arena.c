@@ -1,5 +1,5 @@
 /*
-    Arena struct should be opaque if the library is made non-header-only. So their values are not tested.
+    Arena struct should be opaque if the library is made non-header-only. So arena's struct member are not tested.
     Neither is the temporary arena functions, since the functions contain no branches and are simple.
 
     Mutating operation types:
