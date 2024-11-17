@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['c_0',['data-structures-c',['../index.html',1,'']]]
+  ['c_0',['dsa-c',['../index.html',1,'']]]
 ];
