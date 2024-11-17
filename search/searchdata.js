@@ -1,18 +1,33 @@
 var indexSectionsWithContent =
 {
-  0: "cd",
-  1: "cd"
+  0: "_abcdefhijklmnoprstvx",
+  1: "aflprt",
+  2: "acfilmpr",
+  3: "acfilmprst",
+  4: "_abcehklnoprsv",
+  5: "cfhijklnprvx",
+  6: "cd"
 };
 
 var indexSectionNames =
 {
   0: "all",
-  1: "pages"
+  1: "classes",
+  2: "files",
+  3: "functions",
+  4: "variables",
+  5: "defines",
+  6: "pages"
 };
 
 var indexSectionLabels =
 {
   0: "All",
-  1: "Pages"
+  1: "Classes",
+  2: "Files",
+  3: "Functions",
+  4: "Variables",
+  5: "Macros",
+  6: "Pages"
 };
 
