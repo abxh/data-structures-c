@@ -1,7 +1,7 @@
-PROJECT_NAME = "data-structures-c"
+PROJECT_NAME = "dsa-c"
 
 RECURSIVE    = YES
-INPUT        = "./lib"
+INPUT        = "./dsa"
 
 INPUT       += readme.md
 USE_MDFILE_AS_MAINPAGE = readme.md
