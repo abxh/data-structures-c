@@ -38,6 +38,7 @@ void benchmark_uint_ht(size_t n)
             *value_p = *value_p + 1;
         }
     }
+    uint_ht_destroy(ht_p);
 }
 }
 
