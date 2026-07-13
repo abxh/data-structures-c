@@ -167,6 +167,8 @@ extern "C" {
  * @brief Define the types
  */
 
+struct JOIN(RBTREE_NAME, node);
+
 #ifdef TYPE_DEFINITIONS
 
 /**

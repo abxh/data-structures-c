@@ -44,7 +44,6 @@ extern "C" {
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 // macro definitions: {{{
@@ -240,6 +239,9 @@ extern "C" {
 // }}}
 
 // type definitions: {{{
+
+struct JOIN(FHASHTABLE_NAME, slot);
+struct FHASHTABLE_NAME;
 
 /**
  * @def TYPE_DEFINITIONS

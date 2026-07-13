@@ -92,6 +92,9 @@ extern "C" {
 
 // type definitions: {{{
 
+struct ARENA_NAME;
+struct JOIN(ARENA_NAME, state);
+
 /**
  * @def TYPE_DEFINITIONS
  * @brief Define the types
@@ -266,7 +269,7 @@ FUNCTION_LINKAGE void *JOIN(ARENA_NAME, allocate_aligned)(ARENA_TYPE *self, cons
 
     size_t space_left = self->buf_len - (size_t)self->curr_offset;
 
-    const void* has_space_left = align(alignment, size, &ptr, &space_left);
+    const void *has_space_left = align(alignment, size, &ptr, &space_left);
     if (!has_space_left) {
         return NULL;
     }

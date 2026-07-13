@@ -21,7 +21,6 @@ extern "C" {
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 // macro definitions: {{{
@@ -171,6 +170,8 @@ extern "C" {
 // }}}
 
 // type definitions: {{{
+
+struct FQUEUE_NAME;
 
 /**
  * @def TYPE_DEFINITIONS

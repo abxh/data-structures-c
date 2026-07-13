@@ -182,6 +182,9 @@ extern "C" {
 
 // type definitions: {{{
 
+struct JOIN(FPQUEUE_NAME, element);
+struct FPQUEUE_NAME;
+
 /**
  * @def TYPE_DEFINITIONS
  * @brief Define the types
