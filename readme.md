@@ -3,7 +3,7 @@
 
 [doxygen documentation](https://abxh.github.io/data-structures-c/) | ![tests](https://github.com/abxh/data-structures-c/actions/workflows/tests.yml/badge.svg?event=push)
 
-Generic, header-only and performant data structures. New memory allocation is kept to a minimum. Not thread-friendly.
+Generic data structures in C.
 
 All data types are expected to be Plain-Old-Datas (PODs). No explicit iterator mechanism is provided, but
 macros can provide a primitive syntactical replacement.
