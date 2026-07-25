@@ -1,28 +1,31 @@
-# reference:
-# https://github.com/marketplace/actions/python-action
-
 name: tests
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   build-and-analyze:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Setup GCC
-      uses: Dup4/actions-setup-gcc@v1
-      with:
-        version: latest
+      - name: Check out repository
+        uses: actions/checkout@v5
 
-    - uses: Bacondish2023/setup-googletest@v1
-      with:
-        tag: v1.14.0
+      - name: Setup GCC
+        uses: Dup4/actions-setup-gcc@v1
+        with:
+          version: latest
 
-    - name: test application
-      run: make test
+      - name: Setup GoogleTest
+        uses: Bacondish2023/setup-googletest@v1
+        with:
+          tag: v1.14.0
+
+      - name: Run tests
+        run: make test
