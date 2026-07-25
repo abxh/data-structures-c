@@ -1,3 +1,6 @@
+// Copyright (c) 2026 abxh
+// SPDX-License-Identifier: MIT
+
 /**
  * @file murmurhash.h
  * @brief Murmur3 hash hashing function

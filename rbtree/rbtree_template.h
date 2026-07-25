@@ -1,3 +1,6 @@
+// Copyright (c) 2026 abxh
+// SPDX-License-Identifier: MIT
+
 /**
  * @file rbtree_template.h
  * @brief Intrusive red-black tree

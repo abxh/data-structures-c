@@ -1,3 +1,6 @@
+// Copyright (c) 2026 abxh
+// SPDX-License-Identifier: MIT
+
 /**
  * @file fpqueue_template.h
  * @brief Fixed-size priority queue based on binary (max-)heap.

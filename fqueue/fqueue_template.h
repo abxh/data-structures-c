@@ -1,3 +1,6 @@
+// Copyright (c) 2026 abxh
+// SPDX-License-Identifier: MIT
+
 /**
  * @file fqueue_template.h
  * @brief Fixed-size queue based on ring buffer

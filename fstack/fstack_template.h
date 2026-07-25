@@ -1,3 +1,6 @@
+// Copyright (c) 2026 abxh
+// SPDX-License-Identifier: MIT
+
 /**
  * @file fstack_template.h
  * @brief Fixed-size array-based stack

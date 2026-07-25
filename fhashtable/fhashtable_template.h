@@ -1,3 +1,6 @@
+// Copyright (c) 2026 abxh
+// SPDX-License-Identifier: MIT
+
 /**
  * @file fhashtable_template.h
  * @brief Fixed-size open-adressing hashtable (robin hood hashing)
