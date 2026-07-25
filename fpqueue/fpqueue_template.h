@@ -252,7 +252,7 @@ FUNCTION_LINKAGE FPQUEUE_TYPE *JOIN(FPQUEUE_NAME,
 FUNCTION_LINKAGE FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, create)(const uint32_t capacity);
 
 /**
- * @brief Destroy an priority queue struct and free the underlying memory with free().
+ * @brief Destroy an priority queue struct and free the underlying memory with a custom allocator.
  *
  * @warning May not be called twice in a row on the same object.
  *

@@ -1,4 +1,4 @@
-PROJECT_NAME = "dsa-c"
+PROJECT_NAME = "data-structures-c"
 
 # RECURSIVE    = YES
 INPUT        = readme.md
@@ -7,7 +7,7 @@ INPUT       += ./fqueue/fqueue_template.h
 INPUT       += ./fhashtable/fhashtable_template.h
 INPUT       += ./fpqueue/fpqueue_template.h
 INPUT       += ./rbtree/rbtree_template.h
-INPUT       += ./arena/arena_template.h
+INPUT       += ./arena/arena.h
 
 USE_MDFILE_AS_MAINPAGE = readme.md
 

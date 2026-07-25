@@ -317,7 +317,7 @@ FUNCTION_LINKAGE FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, create)(const uint32_t m
 
 /**
  * @brief Destroy an hashtable struct and free the underlying memory with
- *        free().
+ *        a custom allocator.
  *
  * @warning May not be called twice in a row on the same object.
  *
