@@ -189,6 +189,22 @@ struct FSTACK_NAME {
 FUNCTION_LINKAGE FSTACK_TYPE *JOIN(FSTACK_NAME, init)(FSTACK_TYPE *self, const uint32_t capacity);
 
 /**
+ * @brief Create an stack struct with a given capacity with custom allocator.
+ *
+ * @param[in] capacity          Maximum number of elements.
+ * @param[in] context_ptr       Allocator context.
+ * @param[in] allocate          Allocate function.
+ *
+ * @return                      A pointer to the stack.
+ * @retval NULL
+ *   @li                        If capacity is 0 or the equivalent size overflows
+ *   @li                        If allocate returns NULL.
+ */
+FUNCTION_LINKAGE FSTACK_TYPE *JOIN(FSTACK_NAME,
+                                   create_custom)(const uint32_t capacity, void *context_ptr,
+                                                  void *(*allocate)(void *context_ptr, size_t alignment, size_t size));
+
+/**
  * @brief Create an stack struct with a given capacity with malloc().
  *
  * @param[in] capacity          Maximum number of elements.
@@ -199,6 +215,16 @@ FUNCTION_LINKAGE FSTACK_TYPE *JOIN(FSTACK_NAME, init)(FSTACK_TYPE *self, const u
  *   @li                        If malloc fails.
  */
 FUNCTION_LINKAGE FSTACK_TYPE *JOIN(FSTACK_NAME, create)(const uint32_t capacity);
+
+/**
+ * @brief Destroy an stack struct and free the underlying memory with custom allocator
+ *
+ * @param[in] self              The stack pointer.
+ * @param[in] context_ptr       Allocator context
+ * @param[in] deallocate        Deallocate function
+ */
+FUNCTION_LINKAGE void JOIN(FSTACK_NAME, destroy_custom)(FSTACK_TYPE *self, void *context_ptr,
+                                                        void (*deallocate)(void *context_ptr, void *mem));
 
 /**
  * @brief Destroy an stack struct and free the underlying memory with free().
@@ -309,8 +335,10 @@ FUNCTION_LINKAGE void JOIN(FSTACK_NAME, copy)(FSTACK_TYPE *restrict dest_ptr, co
  */
 #ifdef FUNCTION_DEFINITIONS
 
-#include <stdlib.h>
 #include <assert.h>
+#include <stdalign.h>
+#include <stdlib.h>
+#include <string.h>
 
 FUNCTION_LINKAGE FSTACK_TYPE *JOIN(FSTACK_NAME, init)(FSTACK_TYPE *self, const uint32_t capacity)
 {
@@ -322,7 +350,9 @@ FUNCTION_LINKAGE FSTACK_TYPE *JOIN(FSTACK_NAME, init)(FSTACK_TYPE *self, const u
     return self;
 }
 
-FUNCTION_LINKAGE FSTACK_TYPE *JOIN(FSTACK_NAME, create)(const uint32_t capacity)
+FUNCTION_LINKAGE FSTACK_TYPE *JOIN(FSTACK_NAME,
+                                   create_custom)(const uint32_t capacity, void *context_ptr,
+                                                  void *(*allocate)(void *context_ptr, size_t alignment, size_t size))
 {
     if (capacity == 0 || FSTACK_CALC_SIZEOF_OVERFLOWS(FSTACK_NAME, capacity)) {
         return NULL;
@@ -330,22 +360,53 @@ FUNCTION_LINKAGE FSTACK_TYPE *JOIN(FSTACK_NAME, create)(const uint32_t capacity)
 
     const uint32_t size = FSTACK_CALC_SIZEOF(FSTACK_NAME, capacity);
 
-    FSTACK_TYPE *self = (FSTACK_TYPE *)calloc(1, size);
+    FSTACK_TYPE *self = (FSTACK_TYPE *)allocate(context_ptr, alignof(FSTACK_TYPE), size);
 
     if (!self) {
         return NULL;
     }
 
+    memset(self, 0, size);
     FSTACK_INIT(self, capacity);
 
     return self;
 }
 
+/// @cond DO_NOT_DOCUMENT
+static inline void *JOIN(internal, JOIN(FSTACK_NAME, allocate))(void *context_ptr, size_t alignment, size_t size)
+{
+    (void)context_ptr;
+    (void)alignment;
+    return malloc(size);
+}
+/// @endcond
+
+FUNCTION_LINKAGE FSTACK_TYPE *JOIN(FSTACK_NAME, create)(const uint32_t capacity)
+{
+    return JOIN(FSTACK_NAME, create_custom)(capacity, NULL, JOIN(internal, JOIN(FSTACK_NAME, allocate)));
+}
+
+FUNCTION_LINKAGE void JOIN(FSTACK_NAME, destroy_custom)(FSTACK_TYPE *self, void *context_ptr,
+                                                        void (*deallocate)(void *context_ptr, void *mem))
+{
+    assert(self != NULL);
+
+    deallocate(context_ptr, self);
+}
+
+/// @cond DO_NOT_DOCUMENT
+static inline void JOIN(internal, JOIN(FSTACK_NAME, deallocate))(void *context_ptr, void *mem)
+{
+    (void)context_ptr;
+    free(mem);
+}
+/// @endcond
+
 FUNCTION_LINKAGE void JOIN(FSTACK_NAME, destroy)(FSTACK_TYPE *self)
 {
     assert(self != NULL);
 
-    free(self);
+    JOIN(FSTACK_NAME, destroy_custom)(self, NULL, JOIN(internal, JOIN(FSTACK_NAME, deallocate)));
 }
 
 FUNCTION_LINKAGE bool JOIN(FSTACK_NAME, is_empty)(const FSTACK_TYPE *self)

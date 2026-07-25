@@ -224,6 +224,22 @@ struct FPQUEUE_NAME {
 FUNCTION_LINKAGE FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, init)(FPQUEUE_TYPE *self, const uint32_t capacity);
 
 /**
+ * @brief Create an priority queue struct with a given capacity with a custom allocator
+ *
+ * @param[in] capacity          Maximum number of elements expected to be stored.
+ * @param[in] context_ptr       Allocator context.
+ * @param[in] allocate          Allocate function.
+ *
+ * @return                      A pointer to the priority queue.
+ * @retval NULL
+ *   @li                        If capacity is 0 or the equivalent size overflows.
+ *   @li                        If allocate returns NULL.
+ */
+FUNCTION_LINKAGE FPQUEUE_TYPE *JOIN(FPQUEUE_NAME,
+                                    create_custom)(const uint32_t capacity, void *context_ptr,
+                                                   void *(*allocate)(void *context_ptr, size_t alignment, size_t size));
+
+/**
  * @brief Create an priority queue struct with a given capacity with malloc().
  *
  * @param[in] capacity          Maximum number of elements expected to be stored.
@@ -234,6 +250,18 @@ FUNCTION_LINKAGE FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, init)(FPQUEUE_TYPE *self, cons
  *   @li                        If malloc fails.
  */
 FUNCTION_LINKAGE FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, create)(const uint32_t capacity);
+
+/**
+ * @brief Destroy an priority queue struct and free the underlying memory with free().
+ *
+ * @warning May not be called twice in a row on the same object.
+ *
+ * @param[in] self              The priority queue pointer.
+ * @param[in] context_ptr       Allocator context.
+ * @param[in] allocate          Allocate function.
+ */
+FUNCTION_LINKAGE void JOIN(FPQUEUE_NAME, destroy_custom)(FPQUEUE_TYPE *self, void *context_ptr,
+                                                         void (*deallocate)(void *context_ptr, void *mem));
 
 /**
  * @brief Destroy an priority queue struct and free the underlying memory with free().
@@ -337,7 +365,9 @@ FUNCTION_LINKAGE void JOIN(FPQUEUE_NAME, copy)(FPQUEUE_TYPE *restrict dest_ptr, 
 #ifdef FUNCTION_DEFINITIONS
 
 #include <assert.h>
+#include <stdalign.h>
 #include <stdlib.h>
+#include <string.h>
 
 /// @cond DO_NOT_DOCUMENT
 
@@ -359,7 +389,9 @@ FUNCTION_LINKAGE FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, init)(FPQUEUE_TYPE *self, cons
     return self;
 }
 
-FUNCTION_LINKAGE FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, create)(const uint32_t capacity)
+FUNCTION_LINKAGE FPQUEUE_TYPE *JOIN(FPQUEUE_NAME,
+                                    create_custom)(const uint32_t capacity, void *context_ptr,
+                                                   void *(*allocate)(void *context_ptr, size_t alignment, size_t size))
 {
     if (capacity == 0 || FPQUEUE_CALC_SIZEOF_OVERFLOWS(FPQUEUE_NAME, capacity)) {
         return NULL;
@@ -367,22 +399,53 @@ FUNCTION_LINKAGE FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, create)(const uint32_t capacit
 
     const uint32_t size = FPQUEUE_CALC_SIZEOF(FPQUEUE_NAME, capacity);
 
-    FPQUEUE_TYPE *self = (FPQUEUE_TYPE *)calloc(1, size);
+    FPQUEUE_TYPE *self = (FPQUEUE_TYPE *)allocate(context_ptr, alignof(FPQUEUE_TYPE), size);
 
     if (!self) {
         return NULL;
     }
 
+    memset(self, 0, size);
     FPQUEUE_INIT(self, capacity);
 
     return self;
 }
 
+/// @cond DO_NOT_DOCUMENT
+static inline void *JOIN(internal, JOIN(FPQUEUE_NAME, allocate))(void *context_ptr, size_t alignment, size_t size)
+{
+    (void)context_ptr;
+    (void)alignment;
+    return malloc(size);
+}
+/// @endcond
+
+FUNCTION_LINKAGE FPQUEUE_TYPE *JOIN(FPQUEUE_NAME, create)(const uint32_t capacity)
+{
+    return JOIN(FPQUEUE_NAME, create_custom)(capacity, NULL, JOIN(internal, JOIN(FPQUEUE_NAME, allocate)));
+}
+
+FUNCTION_LINKAGE void JOIN(FPQUEUE_NAME, destroy_custom)(FPQUEUE_TYPE *self, void *context_ptr,
+                                                         void (*deallocate)(void *context_ptr, void *mem))
+{
+    assert(self != NULL);
+
+    deallocate(context_ptr, self);
+}
+
+/// @cond DO_NOT_DOCUMENT
+static inline void JOIN(internal, JOIN(FPQUEUE_NAME, deallocate))(void *context_ptr, void *mem)
+{
+    (void)context_ptr;
+    free(mem);
+}
+/// @endcond
+
 FUNCTION_LINKAGE void JOIN(FPQUEUE_NAME, destroy)(FPQUEUE_TYPE *self)
 {
     assert(self != NULL);
 
-    free(self);
+    JOIN(FPQUEUE_NAME, destroy_custom)(self, NULL, JOIN(internal, JOIN(FPQUEUE_NAME, deallocate)));
 }
 
 FUNCTION_LINKAGE bool JOIN(FPQUEUE_NAME, is_empty)(const FPQUEUE_TYPE *self)
