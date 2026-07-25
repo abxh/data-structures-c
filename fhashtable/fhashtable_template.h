@@ -44,10 +44,9 @@
 extern "C" {
 #endif
 
-#include <assert.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
-#include <stdlib.h>
 
 // macro definitions: {{{
 
@@ -439,6 +438,9 @@ FUNCTION_LINKAGE void JOIN(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE *restrict dest
  */
 #ifdef FUNCTION_DEFINITIONS
 
+#include <assert.h>
+#include <stdlib.h>
+
 #include "round_up_pow2_32.h" // round_up_pow2_32
 
 FUNCTION_LINKAGE FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, init)(FHASHTABLE_TYPE *self, const uint32_t pow2_capacity)
@@ -762,7 +764,8 @@ FUNCTION_LINKAGE void JOIN(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE *restrict dest
     uint32_t index;
     KEY_TYPE key;
     VALUE_TYPE value;
-    FHASHTABLE_FOR_EACH(src_ptr, index, key, value) {
+    FHASHTABLE_FOR_EACH(src_ptr, index, key, value)
+    {
         JOIN(FHASHTABLE_NAME, insert)(dest_ptr, key, value);
     }
 }

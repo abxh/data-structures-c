@@ -20,11 +20,9 @@
 extern "C" {
 #endif
 
-#include <assert.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <stdlib.h>
 
 // macro definitions: {{{
 
@@ -310,6 +308,9 @@ FUNCTION_LINKAGE void JOIN(FSTACK_NAME, copy)(FSTACK_TYPE *restrict dest_ptr, co
  * @brief Define the functions
  */
 #ifdef FUNCTION_DEFINITIONS
+
+#include <stdlib.h>
+#include <assert.h>
 
 FUNCTION_LINKAGE FSTACK_TYPE *JOIN(FSTACK_NAME, init)(FSTACK_TYPE *self, const uint32_t capacity)
 {

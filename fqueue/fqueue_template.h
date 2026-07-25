@@ -20,11 +20,9 @@
 extern "C" {
 #endif
 
-#include <assert.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <stdlib.h>
 
 // macro definitions: {{{
 
@@ -327,6 +325,9 @@ FUNCTION_LINKAGE void JOIN(FQUEUE_NAME, copy)(FQUEUE_TYPE *restrict dest_ptr, co
  * @brief Define the functions
  */
 #ifdef FUNCTION_DEFINITIONS
+
+#include <assert.h>
+#include <stdlib.h>
 
 #include "round_up_pow2_32.h" // round_up_pow2_32
 

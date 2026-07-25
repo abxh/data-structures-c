@@ -27,11 +27,9 @@
 extern "C" {
 #endif
 
-#include <assert.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <stdlib.h>
 
 // macro definitions: {{{
 
@@ -337,6 +335,9 @@ FUNCTION_LINKAGE void JOIN(FPQUEUE_NAME, copy)(FPQUEUE_TYPE *restrict dest_ptr, 
  * @brief Define the functions
  */
 #ifdef FUNCTION_DEFINITIONS
+
+#include <assert.h>
+#include <stdlib.h>
 
 /// @cond DO_NOT_DOCUMENT
 

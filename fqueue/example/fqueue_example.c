@@ -97,6 +97,7 @@ void int_queue_example()
             assert(value == x++);
             count++;
         }
+        assert(count == lim);
     }
 
     assert(q_copy->count == (size_t)lim);
