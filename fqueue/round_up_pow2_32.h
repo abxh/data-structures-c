@@ -1,6 +1,3 @@
-// Copyright (c) 2026 abxh
-// SPDX-License-Identifier: MIT
-
 /**
  * @file round_up_pow2_32.h
  * @brief Round up to the next power of two
