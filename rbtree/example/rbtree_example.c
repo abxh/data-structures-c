@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <assert.h>
 
 #include "rbtree.h"
 #include "container_of.h"
@@ -40,8 +41,7 @@ void hello_world(void)
         {7, 'o'},  {10, 'd'}, {9, 'l'},  {1, 'e'}, {3, 'l'}, {8, 'r'}, {13, '\0'},
     };
 
-    struct rbtree_node *rb;
-    rbtree_init(&rb);
+    struct rbtree_node *rb = NULL;
 
     assert(rbtree_is_empty(&rb));
 

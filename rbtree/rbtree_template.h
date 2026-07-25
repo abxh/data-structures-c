@@ -36,7 +36,6 @@
 extern "C" {
 #endif
 
-#include <assert.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -202,15 +201,6 @@ struct JOIN(RBTREE_NAME, node) {
 // function declarations: {{{
 
 /**
- * @brief Initialize a red-black tree struct
- *
- * @note This should be initialized with the address to a pointer to a node.
- *
- * @param[in] rootptr_ptr       A pointer to the pointer to the root node.
- */
-FUNCTION_LINKAGE void JOIN(RBTREE_NAME, init)(RBTREE_NODE_TYPE **rootptr_ptr);
-
-/**
  * @brief Initialize a red-black tree node
  *
  * @param[in] node_ptr          The node pointer.
@@ -298,6 +288,8 @@ FUNCTION_LINKAGE RBTREE_NODE_TYPE *JOIN(RBTREE_NAME, delete_node)(RBTREE_NODE_TY
  */
 #ifdef FUNCTION_DEFINITIONS
 
+#include <assert.h>
+
 /// @cond DO_NOT_DOCUMENT
 
 static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_red))(RBTREE_NODE_TYPE *node_ptr)
@@ -349,12 +341,6 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(RBTREE_NODE_T
 
 /// @endcond
 
-FUNCTION_LINKAGE void JOIN(RBTREE_NAME, init)(RBTREE_NODE_TYPE **rootptr_ptr)
-{
-    assert(rootptr_ptr != NULL);
-
-    *rootptr_ptr = NULL;
-}
 
 FUNCTION_LINKAGE void JOIN(RBTREE_NAME, node_init)(RBTREE_NODE_TYPE *node_ptr, KEY_TYPE key)
 {

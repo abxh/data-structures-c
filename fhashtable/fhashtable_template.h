@@ -44,10 +44,9 @@
 extern "C" {
 #endif
 
-#include <assert.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
-#include <stdlib.h>
 
 // macro definitions: {{{
 
@@ -287,6 +286,23 @@ struct FHASHTABLE_NAME {
 FUNCTION_LINKAGE FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, init)(FHASHTABLE_TYPE *self, const uint32_t pow2_capacity);
 
 /**
+ * @brief Create an hashtable with a given capacity with a custom allocator.
+ *
+ * @param[in] min_capacity      Maximum number of elements to be stored.
+ * @param[in] context_ptr       Allocator context.
+ * @param[in] allocate          Allocate function.
+ *
+ * @return                      A pointer to the queue.
+ * @retval NULL
+ *   @li                        If allocate returns NULL.
+ *   @li                        If capacity is equal to 0 or larger than UINT32_MAX / 2 + 1 or the equivalent size
+ *                              overflows.
+ */
+FUNCTION_LINKAGE FHASHTABLE_TYPE *
+    JOIN(FHASHTABLE_NAME, create_custom)(const uint32_t min_capacity, void *context_ptr,
+                                         void *(*allocate)(void *context_ptr, size_t alignment, size_t size));
+
+/**
  * @brief Create an hashtable with a given capacity with malloc().
  *
  * @param[in] min_capacity      Maximum number of elements to be stored.
@@ -298,6 +314,19 @@ FUNCTION_LINKAGE FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, init)(FHASHTABLE_TYPE *s
  *                              overflows.
  */
 FUNCTION_LINKAGE FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, create)(const uint32_t min_capacity);
+
+/**
+ * @brief Destroy an hashtable struct and free the underlying memory with
+ *        free().
+ *
+ * @warning May not be called twice in a row on the same object.
+ *
+ * @param[in] self              The hashtable pointer.
+ * @param[in] context_ptr       Allocator context.
+ * @param[in] allocate          Allocate function.
+ */
+FUNCTION_LINKAGE void JOIN(FHASHTABLE_NAME, destroy_custom)(FHASHTABLE_TYPE *self, void *context_ptr,
+                                                            void (*deallocate)(void *context_ptr, void *mem));
 
 /**
  * @brief Destroy an hashtable struct and free the underlying memory with
@@ -439,6 +468,11 @@ FUNCTION_LINKAGE void JOIN(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE *restrict dest
  */
 #ifdef FUNCTION_DEFINITIONS
 
+#include <assert.h>
+#include <stdalign.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "round_up_pow2_32.h" // round_up_pow2_32
 
 FUNCTION_LINKAGE FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, init)(FHASHTABLE_TYPE *self, const uint32_t pow2_capacity)
@@ -456,7 +490,9 @@ FUNCTION_LINKAGE FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, init)(FHASHTABLE_TYPE *s
     return self;
 }
 
-FUNCTION_LINKAGE FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, create)(const uint32_t min_capacity)
+FUNCTION_LINKAGE FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, create_custom)(const uint32_t min_capacity, void *context_ptr,
+                                                                       void *(*allocate)(void *context_ptr,
+                                                                                         size_t alignment, size_t size))
 {
     if (min_capacity == 0 || min_capacity > UINT32_MAX / 2 + 1) {
         return NULL;
@@ -470,22 +506,53 @@ FUNCTION_LINKAGE FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, create)(const uint32_t m
 
     const uint32_t size = FHASHTABLE_CALC_SIZEOF(FHASHTABLE_NAME, capacity);
 
-    FHASHTABLE_TYPE *self = (FHASHTABLE_TYPE *)calloc(1, size);
+    FHASHTABLE_TYPE *self = (FHASHTABLE_TYPE *)allocate(context_ptr, alignof(FHASHTABLE_TYPE), size);
 
     if (!self) {
         return NULL;
     }
 
+    memset(self, 0, size);
     FHASHTABLE_INIT(self, capacity);
 
     return self;
 }
 
+/// @cond DO_NOT_DOCUMENT
+static inline void *JOIN(internal, JOIN(FHASHTABLE_NAME, allocate))(void *context_ptr, size_t alignment, size_t size)
+{
+    (void)context_ptr;
+    (void)alignment;
+    return malloc(size);
+}
+/// @endcond
+
+FUNCTION_LINKAGE FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, create)(const uint32_t capacity)
+{
+    return JOIN(FHASHTABLE_NAME, create_custom)(capacity, NULL, JOIN(internal, JOIN(FHASHTABLE_NAME, allocate)));
+}
+
+FUNCTION_LINKAGE void JOIN(FHASHTABLE_NAME, destroy_custom)(FHASHTABLE_TYPE *self, void *context_ptr,
+                                                            void (*deallocate)(void *context_ptr, void *mem))
+{
+    assert(self != NULL);
+
+    deallocate(context_ptr, self);
+}
+
+/// @cond DO_NOT_DOCUMENT
+static inline void JOIN(internal, JOIN(FHASHTABLE_NAME, deallocate))(void *context_ptr, void *mem)
+{
+    (void)context_ptr;
+    free(mem);
+}
+/// @endcond
+
 FUNCTION_LINKAGE void JOIN(FHASHTABLE_NAME, destroy)(FHASHTABLE_TYPE *self)
 {
-    assert(self);
+    assert(self != NULL);
 
-    free(self);
+    JOIN(FHASHTABLE_NAME, destroy_custom)(self, NULL, JOIN(internal, JOIN(FHASHTABLE_NAME, deallocate)));
 }
 
 FUNCTION_LINKAGE bool JOIN(FHASHTABLE_NAME, is_empty)(const FHASHTABLE_TYPE *self)
@@ -762,7 +829,8 @@ FUNCTION_LINKAGE void JOIN(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE *restrict dest
     uint32_t index;
     KEY_TYPE key;
     VALUE_TYPE value;
-    FHASHTABLE_FOR_EACH(src_ptr, index, key, value) {
+    FHASHTABLE_FOR_EACH(src_ptr, index, key, value)
+    {
         JOIN(FHASHTABLE_NAME, insert)(dest_ptr, key, value);
     }
 }

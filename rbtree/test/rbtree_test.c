@@ -177,28 +177,18 @@ int main(void)
 
     // N = 0
     {
-        struct bst_node *bst;
-        bst_init(&bst);
-        assert(is_valid_red_black_tree(bst));
-    }
-    // N = 1
-    {
-        struct bst_node *bst;
-        bst_init(&bst);
+        struct bst_node *bst = NULL;
 
         assert(!bst_contains_key(&bst, 42));
         assert(!bst_contains_key(&bst, 69));
 
-        assert(bst == NULL);
         assert(bst_is_empty(&bst));
 
         assert(is_valid_red_black_tree(bst));
     }
     // N = 1, insert_node
     {
-        struct bst_node *bst;
-        bst_init(&bst);
-
+        struct bst_node *bst = NULL;
         struct bst_node node;
 
         bst_node_init(&node, 42);
@@ -215,8 +205,7 @@ int main(void)
 
     // N = 15, insert_node * 8, delete_node * 4, insert_node * 11
     {
-        struct bst_node *bst;
-        bst_init(&bst);
+        struct bst_node *bst = NULL;
 
         struct bst_node node[8];
         const int values[8] = {3, 1, 5, 2, 4, 7, 6, 8};
@@ -250,8 +239,7 @@ int main(void)
     // N = 8192, (4 * 2) * (insert_node * 1024, delete_node * 1024,
     //                      insert_node * 1024)
     for (int seed = 0; seed < 4; seed++) {
-        struct bst_node *bst;
-        bst_init(&bst);
+        struct bst_node *bst = NULL;
 
         srand((unsigned int)seed);
 
@@ -315,8 +303,7 @@ int main(void)
     }
 
     for (int seed = 4; seed < 8; seed++) {
-        struct bstd_node *bstd;
-        bstd_init(&bstd);
+        struct bstd_node *bstd = NULL;
 
         srand((unsigned int)seed);
 

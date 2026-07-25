@@ -6,7 +6,7 @@ CFLAGS     += -ggdb3
 # CFLAGS     += -fsanitize=undefined
 # CFLAGS     += -fsanitize=address
 
-EXAMPLE_FILES  := $(wildcard *.c)
+EXAMPLE_FILES  := arena_example.c ../arena.c
 OBJ_FILES      := $(EXAMPLE_FILES:.c=.o)
 
 # LD_FLAGS   += -fsanitize=undefined
