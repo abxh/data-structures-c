@@ -18,8 +18,11 @@
         | otherwise -> (new chunk of memory with previous buffer copied into with correct alignment)
 */
 
-#include "arena.h"
-#include "align.h"
+
+#define TYPE_DEFINITIONS
+#define FUNCTION_DEFINITIONS
+#define FUNCTION_LINKAGE static inline
+#include "arena_template.h"
 
 #include <assert.h>
 #include <stdalign.h>

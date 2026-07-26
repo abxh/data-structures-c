@@ -7,7 +7,7 @@ INPUT       += ./fqueue/fqueue_template.h
 INPUT       += ./fhashtable/fhashtable_template.h
 INPUT       += ./fpqueue/fpqueue_template.h
 INPUT       += ./rbtree/rbtree_template.h
-INPUT       += ./arena/arena.h
+INPUT       += ./arena/arena_template.h
 
 USE_MDFILE_AS_MAINPAGE = readme.md
 
