@@ -306,7 +306,6 @@ FUNCTION_LINKAGE void *arena_reallocate_aligned(void *self_, void *old_ptr_, con
                                                 const size_t old_size, const size_t new_size)
 {
     assert(self_);
-    assert(old_ptr_);
     assert(IS_POW2(alignment));
 
     struct arena *self = (struct arena *)self_;
@@ -336,7 +335,6 @@ FUNCTION_LINKAGE void *arena_reallocate_aligned(void *self_, void *old_ptr_, con
 FUNCTION_LINKAGE void *arena_reallocate(void *self_, void *old_ptr, const size_t old_size, const size_t new_size)
 {
     assert(self_);
-    assert(old_ptr);
 
     return arena_reallocate_aligned(self_, old_ptr, alignof(max_align_t), old_size, new_size);
 }
