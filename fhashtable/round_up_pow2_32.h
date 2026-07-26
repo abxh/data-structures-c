@@ -7,7 +7,7 @@
  *   @li Intrinsics: https://en.wikipedia.org/wiki/Find_first_set#Tool_and_library_support
  */
 
-#pragma once
+#ifndef ROUND_UP_POW2_32
 
 #ifdef __cplusplus
 extern "C" {
@@ -67,6 +67,9 @@ static inline uint32_t round_up_pow2_32(uint32_t x)
 
 #ifdef __cplusplus
 }
+#endif
+
+#define ROUND_UP_POW2_32
 #endif
 
 // vim: ft=c
