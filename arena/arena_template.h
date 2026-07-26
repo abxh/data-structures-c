@@ -22,7 +22,12 @@
 
 /**
  * @example arena_example.c
- * Example of how `arena.h` header file is used in practice.
+ * Example of how `arena_template.h` header file is used in practice.
+ */
+
+/**
+ * @example fhashtable_example.c
+ * Example of how `arena_template.h` header file is used in practice.
  */
 
 #include "align.h" // align, calc_alignment_padding
@@ -43,6 +48,8 @@
  */
 #ifndef FUNCTION_LINKAGE
 #define FUNCTION_LINKAGE
+#define TYPE_DEFINITIONS
+#define FUNCTION_DEFINITIONS
 #endif
 
 /**
@@ -111,47 +118,54 @@ FUNCTION_LINKAGE void arena_state_restore(struct arena_state prev_state);
 /**
  * @brief Initialize the arena.
  *
- * @param[in] self              Arena pointer.
+ * @param[in] self_             Arena pointer.
  * @param[in] len               Backing buffer length.
  * @param[in] backing_buf       Backing buffer.
  */
-FUNCTION_LINKAGE void arena_init(struct arena *self, const size_t len, unsigned char *backing_buf);
+FUNCTION_LINKAGE void arena_init(void *self_, const size_t len, unsigned char *backing_buf);
 
 /**
  * @brief Deallocate all allocations in the arena.
  *
- * @param[in] self              Arena pointer.
+ * @param[in] self_             Arena pointer.
  */
-FUNCTION_LINKAGE void arena_deallocate_all(struct arena *self);
+FUNCTION_LINKAGE void arena_deallocate_all(void *self_);
+
+/**
+ * @brief Dummy no-op deallocate function.
+ *
+ * @param[in] self_             Arena pointer.
+ */
+FUNCTION_LINKAGE void arena_deallocate(void *self_, void *mem);
 
 /**
  * @brief Get the pointer to a chunk of the arena. With specific alignment.
  *
- * @param[in] self              arena pointer.
+ * @param[in] self_             arena pointer.
  * @param[in] alignment         alignment size
  * @param[in] size              chunk size
  *
  * @return                      A pointer to a zeroed-out memory chunk.
  * @retval NULL                 If the arena doesn't have enough memory for the allocation.
  */
-FUNCTION_LINKAGE void *arena_allocate_aligned(struct arena *self, const size_t alignment, const size_t size);
+FUNCTION_LINKAGE void *arena_allocate_aligned(void *self_, const size_t alignment, const size_t size);
 
 /**
  * @brief Get the pointer to a chunk of the arena.
  *
- * @param[in] self              The arena pointer.
+ * @param[in] self_             The arena pointer.
  * @param[in] size              The section size in bytes.
  *
  * @return                      A pointer to a zeroed-out memory chunk.
  * @retval NULL                 If the arena doesn't have enough memory for the allocation.
  */
-FUNCTION_LINKAGE void *arena_allocate(struct arena *self, const size_t size);
+FUNCTION_LINKAGE void *arena_allocate(void *self_, const size_t size);
 
 /**
  * @brief Reallocate a previously allocated chunk in the arena. With specific
  *        aligment.
  *
- * @param[in] self              Arena pointer.
+ * @param[in] self_             Arena pointer.
  * @param[in] old_ptr_          Pointer to the buffer to reallocate
  * @param[in] alignment         Alignment size.
  * @param[in] old_size          Old size.
@@ -161,13 +175,13 @@ FUNCTION_LINKAGE void *arena_allocate(struct arena *self, const size_t size);
  * @retval NULL                 If arena doesn't have enough memory for the reallocation or invalid parameters are
  *                              given.
  */
-FUNCTION_LINKAGE void *arena_reallocate_aligned(struct arena *self, void *old_ptr_, const size_t alignment,
+FUNCTION_LINKAGE void *arena_reallocate_aligned(void *self_, void *old_ptr_, const size_t alignment,
                                                 const size_t old_size, const size_t new_size);
 
 /**
  * @brief Reallocate a previously allocated chunk in the arena.
  *
- * @param[in] self              The arena pointer.
+ * @param[in] self_             The arena pointer.
  * @param[in] old_ptr           Pointer to the buffer to reallocate
  * @param[in] old_size          Old size.
  * @param[in] new_size          New size to grow/shrink to.
@@ -176,8 +190,7 @@ FUNCTION_LINKAGE void *arena_reallocate_aligned(struct arena *self, void *old_pt
  * @retval NULL                 If arena doesn't have enough memory for the reallocation or invalid parameters are
  *                              given.
  */
-FUNCTION_LINKAGE void *arena_reallocate(struct arena *self, void *old_ptr, const size_t old_size,
-                                        const size_t new_size);
+FUNCTION_LINKAGE void *arena_reallocate(void *self_, void *old_ptr, const size_t old_size, const size_t new_size);
 
 // }}}
 
@@ -204,10 +217,12 @@ FUNCTION_LINKAGE void arena_state_restore(struct arena_state prev_state)
     prev_state.arena_ptr->curr_offset = prev_state.curr_offset;
 }
 
-FUNCTION_LINKAGE void arena_init(struct arena *self, const size_t len, unsigned char *backing_buf)
+FUNCTION_LINKAGE void arena_init(void *self_, const size_t len, unsigned char *backing_buf)
 {
-    assert(self);
+    assert(self_);
     assert(backing_buf);
+
+    struct arena *self = (struct arena *)self_;
 
     const uintptr_t padding = calc_alignment_padding(alignof(max_align_t), (uintptr_t)backing_buf);
 
@@ -219,17 +234,29 @@ FUNCTION_LINKAGE void arena_init(struct arena *self, const size_t len, unsigned 
     self->prev_offset = 0;
 }
 
-FUNCTION_LINKAGE void arena_deallocate_all(struct arena *self)
+FUNCTION_LINKAGE void arena_deallocate_all(void *self_)
 {
-    assert(self);
+    assert(self_);
+
+    struct arena *self = (struct arena *)self_;
 
     self->curr_offset = 0;
     self->prev_offset = 0;
 }
 
-FUNCTION_LINKAGE void *arena_allocate_aligned(struct arena *self, const size_t alignment, const size_t size)
+FUNCTION_LINKAGE void arena_deallocate(void *self_, void *mem)
 {
-    assert(self);
+    assert(self_);
+
+    (void)self_;
+    (void)mem;
+}
+
+FUNCTION_LINKAGE void *arena_allocate_aligned(void *self_, const size_t alignment, const size_t size)
+{
+    assert(self_);
+
+    struct arena *self = (struct arena *)self_;
 
     void *ptr = (void *)&self->buf_ptr[self->curr_offset];
 
@@ -250,11 +277,11 @@ FUNCTION_LINKAGE void *arena_allocate_aligned(struct arena *self, const size_t a
     return ptr;
 }
 
-FUNCTION_LINKAGE void *arena_allocate(struct arena *self, const size_t size)
+FUNCTION_LINKAGE void *arena_allocate(void *self_, const size_t size)
 {
-    assert(self);
+    assert(self_);
 
-    return arena_allocate_aligned(self, alignof(max_align_t), size);
+    return arena_allocate_aligned(self_, alignof(max_align_t), size);
 }
 
 /// @cond DO_NOT_DOCUMENT
@@ -277,12 +304,14 @@ static inline void *internal_arena_try_optimizing_w_prev_offset(struct arena *se
 }
 /// @endcond
 
-FUNCTION_LINKAGE void *arena_reallocate_aligned(struct arena *self, void *old_ptr_, const size_t alignment,
+FUNCTION_LINKAGE void *arena_reallocate_aligned(void *self_, void *old_ptr_, const size_t alignment,
                                                 const size_t old_size, const size_t new_size)
 {
-    assert(self);
+    assert(self_);
+    assert(old_ptr_);
     assert(IS_POW2(alignment));
 
+    struct arena *self = (struct arena *)self_;
     unsigned char *old_ptr = (unsigned char *)old_ptr_;
 
     const bool misc_input = old_ptr == NULL || old_size == 0 || new_size == 0;
@@ -306,11 +335,12 @@ FUNCTION_LINKAGE void *arena_reallocate_aligned(struct arena *self, void *old_pt
     return new_mem;
 }
 
-FUNCTION_LINKAGE void *arena_reallocate(struct arena *self, void *old_ptr, const size_t old_size, const size_t new_size)
+FUNCTION_LINKAGE void *arena_reallocate(void *self_, void *old_ptr, const size_t old_size, const size_t new_size)
 {
-    assert(self);
+    assert(self_);
+    assert(old_ptr);
 
-    return arena_reallocate_aligned(self, old_ptr, alignof(max_align_t), old_size, new_size);
+    return arena_reallocate_aligned(self_, old_ptr, alignof(max_align_t), old_size, new_size);
 }
 
 #endif
