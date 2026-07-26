@@ -6,62 +6,70 @@
 
 #include "strint_ht.h"
 
-static char buf[4096]; /* a static / heap-allocated buffer should be used, should the
-                          key/values's lifetime extend beyond the function scope */
+#define TYPE_DEFINITIONS
+#define FUNCTION_DEFINITIONS
+#define FUNCTION_LINKAGE static inline
+#include "./../../arena/arena_template.h"
+
+static unsigned char buf[4096]; /* a static / heap-allocated buffer should be used, should the
+                                   key/values's lifetime extend beyond the function scope */
 
 void str_int_ht_test_alt(void)
 {
-    struct strint_ht *ht = strint_ht_create(3);
+    struct arena arena;
+    arena_init(&arena, sizeof(buf), buf);
+
+    struct strint_ht *ht = strint_ht_create_custom(3, &arena, arena_allocate_aligned);
     if (!ht) {
         assert(false);
     }
     assert(ht->count == 0);
 
-    size_t buf_offset = 0;
+    struct arena_state arena_state = arena_state_save(&arena);
+    {
+        char *egg_char_ptr = arena_allocate(&arena, sizeof("egg"));
+        strcpy(egg_char_ptr, "egg");
 
-    strcpy(&buf[buf_offset], "egg");
-    char *egg_str_p = &buf[buf_offset];
-    buf_offset += sizeof("egg");
+        strint_ht_insert(ht, egg_char_ptr, 1);
+        strint_ht_update(ht, egg_char_ptr, 2);
 
-    strint_ht_insert(ht, egg_str_p, 1);
-    strint_ht_update(ht, egg_str_p, 2);
+        char *milk_char_ptr = arena_allocate(&arena, sizeof("milk"));
+        strcpy(milk_char_ptr, "milk");
 
-    strcpy(&buf[buf_offset], "milk");
-    char *milk_str_p = &buf[buf_offset];
-    buf_offset += sizeof("milk");
+        strint_ht_update(ht, milk_char_ptr, 3);
 
-    strint_ht_update(ht, milk_str_p, 3);
+        assert(ht->count == 2);
 
-    assert(ht->count == 2);
+        assert(strint_ht_contains_key(ht, "milk"));
+        assert(!strint_ht_contains_key(ht, "chocolate"));
 
-    assert(strint_ht_contains_key(ht, "milk"));
-    assert(!strint_ht_contains_key(ht, "chocolate"));
+        assert(strint_ht_get_value(ht, "egg", -1) == 2);
 
-    assert(strint_ht_get_value(ht, "egg", -1) == 2);
+        int *res = strint_ht_get_value_mut(ht, "milk");
+        if (res == NULL) {
+            assert(false);
+        }
+        assert(*res == 3);
+        *res = 4;
 
-    int *res = strint_ht_get_value_mut(ht, "milk");
-    if (res == NULL) {
-        assert(false);
-    }
-    assert(*res == 3);
-    *res = 4;
+        assert(strint_ht_get_value(ht, "milk", -1) == 4);
 
-    assert(strint_ht_get_value(ht, "milk", -1) == 4);
+        assert(strint_ht_delete(ht, "milk"));
+        assert(!strint_ht_delete(ht, "chocolate"));
 
-    assert(strint_ht_delete(ht, "milk"));
-    assert(!strint_ht_delete(ht, "chocolate"));
+        assert(!strint_ht_contains_key(ht, "milk"));
 
-    assert(!strint_ht_contains_key(ht, "milk"));
+        assert(strint_ht_search(ht, "milk") == NULL); // alias to get_mut
 
-    assert(strint_ht_search(ht, "milk") == NULL); // alias to get_mut
+        assert(ht->count == 1);
+        strint_ht_clear(ht);
+        assert(ht->count == 0);
 
-    assert(ht->count == 1);
-    strint_ht_clear(ht);
-    assert(ht->count == 0);
+        assert(!strint_ht_contains_key(ht, "egg"));
+    };
+    arena_state_restore(arena_state);
 
-    assert(!strint_ht_contains_key(ht, "egg"));
-
-    strint_ht_destroy(ht);
+    strint_ht_destroy_custom(ht, &arena, arena_deallocate);
 }
 
 #include "murmurhash.h"
