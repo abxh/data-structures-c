@@ -48,8 +48,6 @@
  */
 #ifndef FUNCTION_LINKAGE
 #define FUNCTION_LINKAGE
-#define TYPE_DEFINITIONS
-#define FUNCTION_DEFINITIONS
 #endif
 
 /**
