@@ -30,9 +30,16 @@
  * Example of how `arena_template.h` header file is used in practice.
  */
 
-#include <stdbool.h>
+#ifdef __cplusplus
+#ifdef __GNUC__
+#define restrict __restrict__
+#else
+#define restrict
+#endif
+extern "C" {
+#endif
+
 #include <stddef.h>
-#include <stdint.h>
 
 // macro definitions: {{{
 
@@ -198,6 +205,8 @@ FUNCTION_LINKAGE void *arena_reallocate(void *self_, void *old_ptr, const size_t
 
 #include <assert.h>
 #include <stdalign.h>
+#include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -351,5 +360,9 @@ FUNCTION_LINKAGE void *arena_reallocate(void *self_, void *old_ptr, const size_t
 #undef TYPE_DEFINITIONS
 
 // }}}
+
+#ifdef __cplusplus
+}
+#endif
 
 // vim: ft=c fdm=marker
