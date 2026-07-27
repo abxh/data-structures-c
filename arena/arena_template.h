@@ -30,15 +30,9 @@
  * Example of how `arena_template.h` header file is used in practice.
  */
 
-#include "align.h" // align, calc_alignment_padding
-
-#include <assert.h>
-#include <stdalign.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
 
 // macro definitions: {{{
 
@@ -199,6 +193,13 @@ FUNCTION_LINKAGE void *arena_reallocate(void *self_, void *old_ptr, const size_t
  * @brief Define the functions
  */
 #ifdef FUNCTION_DEFINITIONS
+
+#include "align.h" // align, calc_alignment_padding
+
+#include <assert.h>
+#include <stdalign.h>
+#include <stdlib.h>
+#include <string.h>
 
 FUNCTION_LINKAGE struct arena_state arena_state_save(struct arena *arena_ptr)
 {
