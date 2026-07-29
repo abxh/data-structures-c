@@ -13,12 +13,13 @@ typedef struct {
 
 #define arr_count(arr) sizeof(arr) / sizeof(*arr)
 
-static void inorder_traverse_and_putchar(struct rbtree_node *n)
+static void inorder_traverse_and_putchar(const struct rbtree_node *n)
 {
     if (n == NULL) {
         return;
     }
-    const char c = container_of(n, con_type, node)->c;
+    const con_type* con = container_of(n, con_type, node);
+    const char c = con->c;
 
     inorder_traverse_and_putchar(n->left_ptr);
     putchar(c);

@@ -2,6 +2,7 @@ EXEC_NAME := a.out
 
 CC         := gcc
 CFLAGS     += -I../../..
+CFLAGS     += -std=c11
 CFLAGS     += -Wall -Wextra -Wshadow -Wconversion -pedantic 
 CFLAGS     += -ggdb3
 CFLAGS     += -fsanitize=undefined

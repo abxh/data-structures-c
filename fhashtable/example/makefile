@@ -1,6 +1,7 @@
 EXEC_NAME := a.out
 
 CFLAGS     += -I./..
+CFLAGS     += -std=c11
 CFLAGS     += -Wall -Wextra -pedantic -Wconversion -Wshadow
 CFLAGS     += -ggdb3
 # CFLAGS     += -fsanitize=undefined
