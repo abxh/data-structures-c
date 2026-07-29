@@ -3,12 +3,10 @@
 
 [doxygen documentation](https://abxh.github.io/data-structures-c/) | ![tests](https://github.com/abxh/data-structures-c/actions/workflows/tests.yml/badge.svg?event=push)
 
-Generic data structures in C (version C11).
+A C11 generic data structure library.
 
 All data types are expected to be Plain-Old-Datas (PODs). No explicit iterator mechanism is provided, but
 macros can provide a primitive syntactical replacement.
-
-Made for my own exploration and use.
 
 Run `make test` to run all tests and examples. The `libsan` and `ubsan` sanitizers is required for building the tests.
 
