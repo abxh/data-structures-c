@@ -22,6 +22,8 @@
  *      @li `NAME`
  *      @li `KEY_TYPE`
  *      @li `VALUE_TYPE`
+ *
+ * The following macros must be defined in the implementation:
  *      @li `KEY_IS_EQUAL(a,b)`
  *      @li `HASH_FUNCTION(key)`
  *
@@ -180,43 +182,6 @@ extern "C" {
 #ifndef VALUE_TYPE
 #define VALUE_TYPE int
 #error "Must define VALUE_TYPE."
-#endif
-
-/**
- * @def KEY_IS_EQUAL(a, b)
- * @brief Used to compare two keys This must be manually defined before
- *        including this header file.
- *
- * Is undefined once header is included.
- *
- * @attention
- *   @li If comparing two scalar values, set this macro to ((a) == (b)).
- *   @li If comparing two strings, set this macro to strcmp() or strncmp()
- *       appropiately.
- *   @li If comparing two structs, set this macro to a function that does
- *       element-wise comparison between the structs.
- *
- * @retval true If the two keys are equal. Equivalent to a non-zero int.
- * @retval false If the two key are not equal. Equivalent to the int 0.
- */
-#ifndef KEY_IS_EQUAL
-#error "Must define KEY_IS_EQUAL."
-#define KEY_IS_EQUAL(a, b) ((a) == (b))
-#endif
-
-/**
- * @def HASH_FUNCTION(key)
- * @brief Used to compute indicies of keys. This must be manually defined before
- *        including this header file.
- *
- * Is undefined once header is included.
- *
- * @param key The key.
- * @return The hash of the key as `uint32_t`.
- */
-#ifndef HASH_FUNCTION
-#error "Must define HASH_FUNCTION."
-#define HASH_FUNCTION(key) (0)
 #endif
 
 /**
@@ -474,6 +439,43 @@ FUNCTION_LINKAGE void JOIN(FHASHTABLE_NAME, copy)(FHASHTABLE_TYPE *restrict dest
 #include <string.h>
 
 #include "round_up_pow2_32.h" // round_up_pow2_32
+
+/**
+ * @def KEY_IS_EQUAL(a, b)
+ * @brief Used to compare two keys This must be manually defined before
+ *        including this header file.
+ *
+ * Is undefined once header is included.
+ *
+ * @attention
+ *   @li If comparing two scalar values, set this macro to ((a) == (b)).
+ *   @li If comparing two strings, set this macro to strcmp() or strncmp()
+ *       appropiately.
+ *   @li If comparing two structs, set this macro to a function that does
+ *       element-wise comparison between the structs.
+ *
+ * @retval true If the two keys are equal. Equivalent to a non-zero int.
+ * @retval false If the two key are not equal. Equivalent to the int 0.
+ */
+#ifndef KEY_IS_EQUAL
+#error "Must define KEY_IS_EQUAL."
+#define KEY_IS_EQUAL(a, b) ((a) == (b))
+#endif
+
+/**
+ * @def HASH_FUNCTION(key)
+ * @brief Used to compute indicies of keys. This must be manually defined before
+ *        including this header file.
+ *
+ * Is undefined once header is included.
+ *
+ * @param key The key.
+ * @return The hash of the key as `uint32_t`.
+ */
+#ifndef HASH_FUNCTION
+#error "Must define HASH_FUNCTION."
+#define HASH_FUNCTION(key) (0)
+#endif
 
 FUNCTION_LINKAGE FHASHTABLE_TYPE *JOIN(FHASHTABLE_NAME, init)(FHASHTABLE_TYPE *self, const uint32_t pow2_capacity)
 {
