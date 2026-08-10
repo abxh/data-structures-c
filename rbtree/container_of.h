@@ -17,7 +17,7 @@ extern "C" {
 
 #include <stdbool.h>
 
-#if defined(__GNUC__) && !defined(__STRICT_ANSI__) && defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201710L)
+#if defined(__GNUC__) && !defined(__STRICT_ANSI__) && defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L)
 
 /**
  * @def container_of_helper_same_type(T1, T2)
