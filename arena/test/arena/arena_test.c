@@ -19,6 +19,7 @@
 */
 
 
+#define NAME arena
 #define TYPE_DEFINITIONS
 #define FUNCTION_DEFINITIONS
 #define FUNCTION_LINKAGE static inline
