@@ -143,6 +143,8 @@ extern "C" {
  */
 #ifndef NAME
 #error "Must define NAME."
+#define FUNCTION_DEFINITIONS
+#define TYPE_DEFINITIONS
 #else
 #define FPQUEUE_NAME NAME
 #endif
@@ -156,8 +158,6 @@ extern "C" {
  */
 #ifndef VALUE_TYPE
 #define VALUE_TYPE int
-#define FUNCTION_DEFINITIONS
-#define TYPE_DEFINITIONS
 #error "Must declare VALUE_TYPE."
 #endif
 

@@ -75,6 +75,8 @@ extern "C" {
  */
 #ifndef NAME
 #error "Must define NAME."
+#define FUNCTION_DEFINITIONS
+#define TYPE_DEFINITIONS
 #else
 #define RBTREE_NAME NAME
 #endif
@@ -87,8 +89,6 @@ extern "C" {
  * Is undefined once header is included.
  */
 #ifndef KEY_TYPE
-#define FUNCTION_DEFINITIONS
-#define TYPE_DEFINITIONS
 #define KEY_TYPE int
 #error "Must define KEY_TYPE."
 #endif

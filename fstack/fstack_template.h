@@ -118,8 +118,9 @@ extern "C" {
  * Is undefined after header is included.
  */
 #ifndef NAME
-#define NAME fstack
 #error "Must define NAME."
+#define FUNCTION_DEFINITIONS
+#define TYPE_DEFINITIONS
 #else
 #define FSTACK_NAME NAME
 #endif
@@ -133,8 +134,6 @@ extern "C" {
  */
 #ifndef VALUE_TYPE
 #define VALUE_TYPE int
-#define FUNCTION_DEFINITIONS
-#define TYPE_DEFINITIONS
 #error "Must define VALUE_TYPE."
 #endif
 

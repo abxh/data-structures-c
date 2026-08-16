@@ -154,6 +154,8 @@ extern "C" {
  */
 #ifndef NAME
 #error "Must define NAME."
+#define FUNCTION_DEFINITIONS
+#define TYPE_DEFINITIONS
 #else
 #define FHASHTABLE_NAME NAME
 #endif
@@ -167,8 +169,6 @@ extern "C" {
  */
 #ifndef KEY_TYPE
 #define KEY_TYPE int
-#define FUNCTION_DEFINITIONS
-#define TYPE_DEFINITIONS
 #error "Must define KEY_TYPE."
 #endif
 
