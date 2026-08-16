@@ -17,7 +17,7 @@ extern "C" {
 
 #include <stdbool.h>
 
-#if defined(__GNUC__) && !defined(__STRICT_ANSI__) && defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201710L)
+#if defined(__GNUC__) && !defined(__STRICT_ANSI__) && defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L)
 
 /**
  * @def container_of_helper_same_type(T1, T2)
@@ -25,7 +25,8 @@ extern "C" {
  * @return boolean value
  */
 #ifndef container_of_helper_same_type
-#define container_of_helper_same_type(T1, T2) __extension__(__builtin_types_compatible_p(typeof(T1), typeof(T2)))
+#define container_of_helper_same_type(T1, T2) \
+    __extension__(__builtin_types_compatible_p(__typeof__(T1), __typeof__(T2)))
 #endif
 
 /**
@@ -61,9 +62,9 @@ extern "C" {
  * @return                      A pointer to the struct containing the member.
  */
 #ifndef container_of
-#define container_of(ptr, type, member)                                                 \
-    _Generic(ptr,                                                                       \
-        const typeof(*(ptr)) *: ((const type *)container_of_helper(ptr, type, member)), \
+#define container_of(ptr, type, member)                                                     \
+    _Generic(ptr,                                                                           \
+        const __typeof__(*(ptr)) *: ((const type *)container_of_helper(ptr, type, member)), \
         default: ((type *)container_of_helper(ptr, type, member)))
 #endif
 

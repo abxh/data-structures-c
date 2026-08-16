@@ -1,14 +1,13 @@
 
-#include <stdio.h>
 #include <assert.h>
+#include <stdio.h>
 
-#include "rbtree.h"
 #include "container_of.h"
+#include "rbtree.h"
 
 typedef struct {
-    struct rbtree_node node; // note: should be first member, if following C standard strictly.
-    // attached values:
     char c;
+    struct rbtree_node node;
 } con_type;
 
 #define arr_count(arr) sizeof(arr) / sizeof(*arr)
@@ -18,7 +17,7 @@ static void inorder_traverse_and_putchar(const struct rbtree_node *n)
     if (n == NULL) {
         return;
     }
-    const con_type* con = container_of(n, con_type, node);
+    const con_type *con = container_of(n, con_type, node);
     const char c = con->c;
 
     inorder_traverse_and_putchar(n->left_ptr);
