@@ -34,7 +34,7 @@
 
 /**
  * @example fhashtable_example.c
- * Example of how `fhashtable.h` header file is used in practice.
+ * Example of how `fhashtable_template.h` header file is used in practice.
  */
 
 #ifdef __cplusplus

@@ -29,7 +29,7 @@
 
 /**
  * @example rbtree_example.c
- * Example of how `rbtree.h` header file is used in practice.
+ * Example of how `rbtree_template.h` header file is used in practice.
  */
 
 #ifdef __cplusplus
@@ -164,13 +164,12 @@ extern "C" {
 
 // type definitions: {{{
 
+struct JOIN(RBTREE_NAME, node);
+
 /**
  * @def TYPE_DEFINITIONS
  * @brief Define the types
  */
-
-struct JOIN(RBTREE_NAME, node);
-
 #ifdef TYPE_DEFINITIONS
 
 /**

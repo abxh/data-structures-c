@@ -15,7 +15,7 @@
 
 /**
  * @example fpqueue_example.c
- * Example of how `fpqueue.h` header file is used in practice.
+ * Example of how `fpqueue_template.h` header file is used in practice.
  */
 
 #ifdef __cplusplus

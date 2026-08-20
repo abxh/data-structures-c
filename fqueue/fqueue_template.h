@@ -8,7 +8,7 @@
 
 /**
  * @example fqueue_example.c
- * Example of how `fqueue.h` header file is used in practice.
+ * Example of how `fqueue_template.h` header file is used in practice.
  */
 
 #ifdef __cplusplus

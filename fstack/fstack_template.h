@@ -8,7 +8,7 @@
 
 /**
  * @example fstack_example.c
- * Example of how `fstack.h` header file is used in practice.
+ * Example of how `fstack_template.h` header file is used in practice.
  */
 
 #ifdef __cplusplus
