@@ -52,18 +52,34 @@ extern "C" {
 
 /**
  * @def container_of(ptr, type, member)
- * @brief Obtain a pointer to the struct that contains the member, and
- *        preserve the const-ness of the pointer
+ * @brief Obtain a pointer to the struct that contains the member.
+ *
+ * @note Any const qualifier of `ptr` is discarded.
  *
  * @param[in] ptr               Pointer to the member.
- * @param[in] type              Container type
+ * @param[in] type              Container type.
  * @param[in] member            Member name.
  *
- * @return                      A pointer to the struct containing the member.
+ * @return                      Pointer to the containing struct.
  */
 #ifndef container_of
-#define container_of(ptr, type, member)                                                     \
-    _Generic(ptr,                                                                           \
+#define container_of(ptr, type, member) ((type *)container_of_helper(ptr, type, member))
+#endif
+
+/**
+ * @def container_of_const(ptr, type, member)
+ * @brief Obtain a pointer to the struct that contains the member,
+ *        preserving the const qualifier of the pointer.
+ *
+ * @param[in] ptr               Pointer to the member.
+ * @param[in] type              Container type.
+ * @param[in] member            Member name.
+ *
+ * @return                      Pointer to the containing struct.
+ */
+#ifndef container_of_const
+#define container_of_const(ptr, type, member)                                               \
+    _Generic((ptr),                                                                         \
         const __typeof__(*(ptr)) *: ((const type *)container_of_helper(ptr, type, member)), \
         default: ((type *)container_of_helper(ptr, type, member)))
 #endif
@@ -72,13 +88,15 @@ extern "C" {
 
 /**
  * @def container_of(ptr, type, member)
- * @brief Obtain a pointer to the struct that contains the member
+ * @brief Obtain a pointer to the struct that contains the member.
+ *
+ * @note Any const qualifier of `ptr` is discarded.
  *
  * @param[in] ptr               Pointer to the member.
- * @param[in] type              Container type
+ * @param[in] type              Container type.
  * @param[in] member            Member name.
  *
- * @return                      A pointer to the struct containing the member.
+ * @return                      Pointer to the containing struct.
  */
 #ifndef container_of
 #define container_of(ptr, type, member) ((type *)((char *)(ptr) - offsetof(type, member)))

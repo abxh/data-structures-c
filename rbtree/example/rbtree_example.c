@@ -17,7 +17,7 @@ static void inorder_traverse_and_putchar(const struct rbtree_node *n)
     if (n == NULL) {
         return;
     }
-    const con_type *con = container_of(n, con_type, node);
+    const con_type *con = container_of_const(n, con_type, node);
     const char c = con->c;
 
     inorder_traverse_and_putchar(n->left_ptr);
