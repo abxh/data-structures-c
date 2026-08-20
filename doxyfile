@@ -8,6 +8,7 @@ INPUT       += ./fhashtable/fhashtable_template.h
 INPUT       += ./fpqueue/fpqueue_template.h
 INPUT       += ./rbtree/rbtree_template.h
 INPUT       += ./arena/arena_template.h
+INPUT       += ./list/list_template.h
 
 USE_MDFILE_AS_MAINPAGE = readme.md
 
@@ -18,6 +19,7 @@ EXAMPLE_PATH += ./fhashtable/example
 EXAMPLE_PATH += ./fpqueue/example
 EXAMPLE_PATH += ./rbtree/example
 EXAMPLE_PATH += ./arena/example
+EXAMPLE_PATH += ./list/example
 
 EXTRACT_STATIC = YES
 
@@ -46,7 +48,10 @@ PREDEFINED = \
              \
              "ARENA_NAME=arena" \
              "ARENA_TYPE=arena_type" \
-             "ARENA_STATE_TYPE=arena_state_type"
+             "ARENA_STATE_TYPE=arena_state_type" \
+             \
+             "LIST_NAME=list" \
+             "LIST_NODE_TYPE=list_node_type"
 
 
 EXPAND_AS_DEFINED = \

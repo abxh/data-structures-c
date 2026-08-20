@@ -16,6 +16,7 @@ SUBDIRS += ./rbtree/test
 SUBDIRS += ./arena/example
 SUBDIRS += ./arena/test/arena
 SUBDIRS += ./arena/test/align
+SUBDIRS += ./list/example
 
 $(TOPTARGETS): $(SUBDIRS)
 
