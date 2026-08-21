@@ -1,3 +1,4 @@
+#pragma once
 
 #define NAME list
 #define TYPE_DEFINITIONS
