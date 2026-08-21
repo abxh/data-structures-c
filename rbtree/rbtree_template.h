@@ -94,24 +94,6 @@ extern "C" {
 #endif
 
 /**
- * @def KEY_IS_STRICTLY_LESS(a, b)
- * @brief Used to compare two keys. This must be manually defined before
- *        including this header file.
- *
- * Is undefined once header is included.
- *
- * Equality for two keys a and b is defined as:
- * @li `!KEY_IS_STRICTLY_LESS(a,b) && !KEY_IS_STRICTLY_LESS(b,a)`
- *
- * @retval true                 If key a is strictly less than b.
- * @retval false                If key a is greater than or equal to b.
- */
-#ifndef KEY_IS_STRICTLY_LESS
-#error "Must define KEY_IS_STRICTLY_LESS."
-#define KEY_IS_STRICTLY_LESS(a, b) ((a) < (b))
-#endif
-
-/**
  * @def ALLOW_DUPLICATES
  * @brief Allow duplicates builtin.
  *
@@ -289,6 +271,24 @@ FUNCTION_LINKAGE RBTREE_NODE_TYPE *JOIN(RBTREE_NAME, delete_node)(RBTREE_NODE_TY
 
 #include <assert.h>
 
+/**
+ * @def KEY_IS_STRICTLY_LESS(a, b)
+ * @brief Used to compare two keys. This must be manually defined before
+ *        including this header file.
+ *
+ * Is undefined once header is included.
+ *
+ * Equality for two keys a and b is defined as:
+ * @li `!KEY_IS_STRICTLY_LESS(a,b) && !KEY_IS_STRICTLY_LESS(b,a)`
+ *
+ * @retval true                 If key a is strictly less than b.
+ * @retval false                If key a is greater than or equal to b.
+ */
+#ifndef KEY_IS_STRICTLY_LESS
+#error "Must define KEY_IS_STRICTLY_LESS."
+#define KEY_IS_STRICTLY_LESS(a, b) ((a) < (b))
+#endif
+
 /// @cond DO_NOT_DOCUMENT
 
 static inline void JOIN(internal, JOIN(RBTREE_NAME, node_set_color_to_red))(RBTREE_NODE_TYPE *node_ptr)
@@ -339,7 +339,6 @@ static inline void JOIN(internal, JOIN(RBTREE_NAME, delete_fixup))(RBTREE_NODE_T
                                                                    int dir);
 
 /// @endcond
-
 
 FUNCTION_LINKAGE void JOIN(RBTREE_NAME, node_init)(RBTREE_NODE_TYPE *node_ptr, KEY_TYPE key)
 {
