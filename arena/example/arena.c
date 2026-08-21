@@ -1,4 +1,6 @@
 
+#include "arena.h"
+
 #define NAME arena
 #define FUNCTION_DEFINITIONS
-#include "arena.h"
+#include "arena_template.h"
