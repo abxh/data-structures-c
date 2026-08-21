@@ -90,8 +90,10 @@ extern "C" {
  * @param node_ptr              Current node pointer.
  * @param head_ptr              List head pointer.
  */
+#ifndef LIST_FOR_EACH
 #define LIST_FOR_EACH(node_ptr, head_ptr) \
     for ((node_ptr) = (head_ptr)->next_ptr; (node_ptr) != (head_ptr); (node_ptr) = (node_ptr)->next_ptr)
+#endif
 
 /**
  * @def LIST_FOR_EACH_REVERSE
@@ -100,8 +102,10 @@ extern "C" {
  * @param node_ptr              Current node pointer.
  * @param head_ptr              List head pointer.
  */
+#ifndef LIST_FOR_EACH_REVERSE
 #define LIST_FOR_EACH_REVERSE(node_ptr, head_ptr) \
     for ((node_ptr) = (head_ptr)->prev_ptr; (node_ptr) != (head_ptr); (node_ptr) = (node_ptr)->prev_ptr)
+#endif
 
 /**
  * @def LIST_FOR_EACH_SAFE(node_ptr, next_ptr, head_ptr)
@@ -111,9 +115,11 @@ extern "C" {
  * @param next_ptr              Temporary pointer to the next node.
  * @param head_ptr              List head pointer.
  */
+#ifndef LIST_FOR_EACH_SAFE
 #define LIST_FOR_EACH_SAFE(node_ptr, next_ptr, head_ptr)                                                 \
     for ((node_ptr) = (head_ptr)->next_ptr, (next_ptr) = (node_ptr)->next_ptr; (node_ptr) != (head_ptr); \
          (node_ptr) = (next_ptr), (next_ptr) = (node_ptr)->next_ptr)
+#endif
 
 /**
  * @def LIST_FOR_EACH_REVERSE_SAFE(node_ptr, prev_ptr, head_ptr)
@@ -123,9 +129,11 @@ extern "C" {
  * @param prev_ptr              Temporary pointer to the previous node.
  * @param head_ptr              List head pointer.
  */
+#ifndef LIST_FOR_EACH_REVERSE_SAFE
 #define LIST_FOR_EACH_REVERSE_SAFE(node_ptr, prev_ptr, head_ptr)                                         \
     for ((node_ptr) = (head_ptr)->prev_ptr, (prev_ptr) = (node_ptr)->prev_ptr; (node_ptr) != (head_ptr); \
          (node_ptr) = (prev_ptr), (prev_ptr) = (node_ptr)->prev_ptr)
+#endif
 
 // }}}
 
